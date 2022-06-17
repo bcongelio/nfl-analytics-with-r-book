@@ -1,5 +1,6 @@
 book_filename: "nfl-analytics"
 new_session: yes
+output_dir: "docs"
 language:
   ui:
     chapter_name: "Chapter "
