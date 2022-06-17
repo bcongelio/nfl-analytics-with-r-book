@@ -30,7 +30,15 @@ On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `
 
 <center>![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}</center>
 
-Thanks to the work
+Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb), [\@benbbaldwin](https://twitter.com/benbbaldwin), [\@TanHo](https://twitter.com/_TanHo), [\@LeeSharpeNFL](https://twitter.com/LeeSharpeNFL), and [\@thomas_mock](https://twitter.com/thomas_mock) ... to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.
+
+That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the `nflverse`, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.
+
+The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of development of `nflscrapR`, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and was ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
+
+<center>![](docs/images/farewell-nflscrapr.jpg){width="4in"}</center>
+
+As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public.
 
 ## About The Book {.unnumbered}
 

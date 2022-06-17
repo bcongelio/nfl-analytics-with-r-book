@@ -3,7 +3,7 @@
     "path": "C:/Users/Brad/Desktop/nfl-analytics-with-r/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "3062091062",
     "contents": "",
     "dirty": false,
     "created": 1655424060283.0,
@@ -12,19 +12,19 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "16,56",
+        "cursorPosition": "40,311",
         "scrollLine": "0",
         "rmdVisualMode": "true",
-        "rmdVisualModeLocation": "933:587",
+        "rmdVisualModeLocation": "2294:1281",
         "rmdVisualWrapConfigured": "true",
         "docOutlineVisible": "1"
     },
     "folds": "",
-    "lastKnownWriteTime": 1655430241,
+    "lastKnownWriteTime": 1655432212,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1655430241718,
+    "last_content_update": 1655432212763,
     "read_only": false,
     "read_only_alternatives": []
 }

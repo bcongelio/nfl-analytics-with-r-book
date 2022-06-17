@@ -17,17 +17,23 @@ github-repo: "bcongelio/nfl-analytics-with-r"
 url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
 
+
+
 # Preface {.unnumbered}
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
 
-<center>
+<center>![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}</center>
 
-![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}
+Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb), [\@benbbaldwin](https://twitter.com/benbbaldwin), [\@TanHo](https://twitter.com/_TanHo), [\@LeeSharpeNFL](https://twitter.com/LeeSharpeNFL), and [\@thomas_mock](https://twitter.com/thomas_mock) ... to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.
 
-</center>
+That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the `nflverse`, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.
 
-Thanks to the work
+The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of development of `nflscrapR`, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and was ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
+
+<center>![](docs/images/farewell-nflscrapr.jpg){width="4in"}</center>
+
+As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public.
 
 ## About The Book {.unnumbered}
 
@@ -47,7 +53,8 @@ You can render the HTML version of this example book without changing anything:
 
 Or build the book from the R console:
 
-``` {.r}
+
+```r
 bookdown::render_book()
 ```
 
@@ -57,9 +64,12 @@ To render this example to PDF as a `bookdown::pdf_book`, you'll need to install 
 
 As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
 
-``` {.r}
+
+```r
 bookdown::serve_book()
 ```
+
+
 
 ## Technical Details {.unnumbered}
 
