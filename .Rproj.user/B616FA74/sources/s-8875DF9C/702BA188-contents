@@ -14,7 +14,7 @@ description: |
   set in the _output.yml file.
 link-citations: yes
 github-repo: "bcongelio/nfl-analytics-with-r"
-url: "https://bradcongelio.com/nfl-analytics-with-r"
+url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
 
 ```{r setup-preface, include = FALSE}
