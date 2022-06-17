@@ -1,25 +1,34 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-16"
+date: "2022-06-17"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
-description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
+description: "This book provides in-depth instruction on how to use R and the nflverse family of packages to conduct advanced NFL analytics."
 link-citations: yes
-github-repo: "bcongelio/nfl-analytics-with-r"
+github-repo: "bcongelio/nfl-analytics-with-r-book"
 url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
 
 
 
 # Preface {.unnumbered}
+
+Welcome to the online home of *An Introduction to NFL Analytics with R*.
+
+<center>![](docs/images/big-ben-intro.jpg){width="7in"}</center>
+
+The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository:
+
+-   [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
+
+## Introduction  {.unnumbered}
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
 
@@ -33,44 +42,105 @@ The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat
 
 <center>![](docs/images/farewell-nflscrapr.jpg){width="4in"}</center>
 
-As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public.
+As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages were developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
+
+Unfortunately, there is a downside to this type of rapid development. Being able to understand which package does what and, moreover, which function within each package you should be using, is difficult for a newcomer to decipher.
 
 ## About The Book {.unnumbered}
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+Kevin Clark, in a 2018 article for [*The Ringer*](https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution), explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is "happening in front of you all the time." The use of analytics in the NFL did, however, predate Clark's article. In 2014, Eagles head coach Doug Pederson explained that all decisons made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. An argument can be made, therefore, that Ryan Paganetti was the first analytics-inclined hire when he was brought on board in Philadelphia to build the team's analytics department. By 2018, Pederson believed in and trusted Paganetti's approach to analytics so much that a direct line of communication was created between the two during games, with Paganetti providing the head coach with math-based recommendations for any scenario Pederson requested [@awbrey2020].
 
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
+In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. **MORE TO COME HERE**.
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+-   **Chapter 1** provides an overview of the `nflverse` with specific attention paid to the difference between using `nflfastR` versus `nflreadr`. Serving as the first dive into analytics, the chapter showcases how to use `nflreadr` to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once. To conclude, other sources of NFL data will be highlighted such as [PFF](https://premium.pff.com/nfl/teams/2021/REGPO) and [SIS](https://www.sportsinfosolutions.com/solution/football/). (*Note: As permisson is granted, example data from both PFF and SIS will be incorporated into this book as both come with unique issues to overcome during the data cleaning/prep process).*
 
-## Who This Book is For {.unnumbered}
+-   **Chapter 2** covers the process of downloading both R and RStudio, as well as the necessary packages to do NFL analytics. As one of the most important chapters in the book (especially for those new to the R programming language), readers take a deep dive into wrangling NFL data with the `tidyverse` package. To begin, readers will learn about the `dplyr` pipe (`%>%`) and use, in exercises, the six most important verbs in the `dplyr` language: `filer()`, `select()`, `arrange()`, `summarize()`, `mutate()`, and `group_by()`. At the conclusion of the chapter, multiple exercises are provided to allow readers to practice using the `dplyr` verbs, relational operators within the `filter()` function and creating "new stats" by using the `summarize()` function. Moreover, readers will determine the relationship between the `dplyr` language and important variables within the `nflverse` data such as `player_name` and `player_id`, which is important for correct manipulation and cleaning of data.
 
-You can render the HTML version of this example book without changing anything:
+-   **Chapter 3** examines the numerous and, often, bewildering amout of functions "underneath the hood" of the packages that makes up the `nflverse`. For example, `load_pbp()` and `load_player_stats()` are included in both `nflfastR` and `nflreadr`. However, `load_nextgen_stats()`, `load_pfr_stats()`, and `load_contracts()` are all part of just `nflreadr`. Because of this complexity, readers will learn how to efficiently operate within the `nflverse`. Moreover, chapter 3 provides dozens of examples and exercises related to all of the various functions included. For example, readers will learn to use `load_nextgen_stats()` to determine which running backs get to the line of scrimmage the quickest and will use `load_pfr_stats()` to explore advanced defensive metrics across multiple seasons.
 
-1.  Find the **Build** pane in the RStudio IDE, and
+-   **Chapter 4** moves readers from data cleaning and manipulation to an introduction to data visualiztion using `ggplot2`. As well, chapter 4 provides further instruction on `nflverse` functions such as `clean_player_names()`, `clean_team_abbrs()`, and `clean_homeaway()`. As well, to prep for data visualization, readers will be introduced to the `teams_colors_logos` and `load_rosters` functions as well as the `nflplotR` package, which provides "functions and geoms to help visualization of NFL related analysis" [@carl2022]. Readers will produce multiple types of visualizations, including `geom_bar`, `geom_point`, `geom_density`, and more. As well, readers will learn to use `facet_wrap` and `facet_grid` to display data over multiple seasons. For visualizations that include team logos or player headshots, instruction will cover both how to do the coding manually using `teams_colors_logos` or `load_rosters` and to use the `nflplotr` package to avoid the need to use `left_join` to merge `teams_colors_logos` to your dataframe.
 
-2.  Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
+-   **Chapter 5** introduces advanced methods in R using `nflverse` data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to `tidymodels`, a "collection of packages for modeling and machine learning using `tidyverse` principles" [@silge]. As an example, readers will first be introduced to [Tej Seth's](https://twitter.com/tejfbanalytics) Rushing Yards Over Expected model ([GitHub](https://github.com/tejseth/RYOE), [ShinyApp](https://mfbanalytics.shinyapps.io/RYOE/)). The model will serve as a learning tool to help readers understand the relationship between `nflfastR` data and machine learning (in Tej's case, in `xgboost` model). Afterward, specific attention is given to binary classification, multiclass classification, and regression computer learning models. At the conclusion of the chapter, readers will be provided exercises to allow them to develop their own supervised and unsupervised machine learning models.
 
-Or build the book from the R console:
-
-
-```r
-bookdown::render_book()
-```
-
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+-   **Chapter 6** introduces data from sources outside of the `nflverse`, including premium statistics from Pro Football Focus and Sports Info Solutions. Readers will learned to use various functions, such as `clean_team_names`, in order to prepare the data to merge with data from the `nflverse`. As well, this chapter will introduce readers to working with player tracking data. To do so, data will be provided from the [NFL's Big Data Bowl](https://operations.nfl.com/gameday/analytics/big-data-bowl/). To highlight the work being completed using player tracking, this chapter will discuss the Big Data Bowl entries of [Matt Ploenzke](https://twitter.com/MPloenzke) ([*The Importance of Ball Carrier Downfield Acceleration and Unblocked Tackler Distance and Spacing*](https://operations.nfl.com/media/4204/bdb_ploenzke.pdf)) and the team of Kellin Rumsey & Brandon DeFlon ([*The Battle Between Blocker and Defender Is Often Decided by Leverage*](https://operations.nfl.com/media/4209/bdb_rumsey_deflon.pdf)).
 
 ## About The Author {.unnumbered}
 
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+I (Bradley Congelio) am currently an Assistant Professor in the College of Business at [Kutztown University of Pennsylvania](https://www.kutztown.edu/). My main area of instruction is in Data Analytics, as well as teaching my very popular Sport Analytics (SPT 313) course.
 
+I earned my Ph.D. from the University of Western Ontario and also received a specialized certificate in R for Data Analytics from the University of California, San Diego in 2021. I am a proud undergraduate alumni of [West Liberty University](https://westliberty.edu/) and am a strong advocate of a broad-based liberal arts education.
 
-```r
-bookdown::serve_book()
-```
+My research focuses on using big data, the R programming language, and analytics to explore the impact of professional stadiums on neighboring communities. I use the proprietary Zillow ZTRAX database as well as U.S. Census and other forms of data to create robust, applied, and useful insight into how best to protect those living in areas where stadiums are proposed for construction.
+
+As well, my work in sport analytics, specifically the NFL, has been featured on numerous media outlets, including the *USA Today* and *Sports Illustrated*.
+
+Finally, my most recent academic, peer-reviewed publications include:
+
+1.  Congelio, B. (2022). 'Examining the Impact of New Stadium Construction on Local Property Prices Using Data Analytics and the Zillow ZTRAX Databse." *Journal of Business, Economics, and Technology* Spring 2022, 39-55.
+
+2.  Congelio, B. (2021). "Monitoring the Policing of Olympic Host Cities: A Novel Approach Using Data Analytics and the LA2028 Olympic Summer Games." *Journal of Olympic Studies* 2(2), 129-145.
+
+3.  Congelio, B. "Predicting the Impact of a New Stadium on Surrounding Neighborhoods Through the Use of a *k*-means Unsupervised Clustering Algorithm." [Currently under peer review.]{.ul}
+
+4.  Congelio, B. "Examining Megaevent's Impact on Foot Traffic to Local Businesses Using Mobility and Demographic Aggregation Data." [Currently under peer review and funded by a \$15,000 grant.]{.ul}
 
 
 
 ## Technical Details {.unnumbered}
 
-technical details are goig here.
+This book was written using RStudio's[Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. While writing this book, the following R version was used:
+
+
+```
+## NA
+```
+
+As well, the following packages were used in this book:
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:packages-used)Packages Used In This Book</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> package </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> version </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> source </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> dplyr </td>
+   <td style="text-align:left;"> 1.0.8 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.2) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggplot2 </td>
+   <td style="text-align:left;"> 3.3.5 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nflfastR </td>
+   <td style="text-align:left;"> 4.3.0 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nflreadr </td>
+   <td style="text-align:left;"> 1.2.0.07 </td>
+   <td style="text-align:left;"> https://nflverse.r-universe.dev (R 4.1.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nflverse </td>
+   <td style="text-align:left;"> 1.0.1 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tidymodels </td>
+   <td style="text-align:left;"> 0.2.0 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tidyverse </td>
+   <td style="text-align:left;"> 1.3.1 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+  </tr>
+</tbody>
+</table>

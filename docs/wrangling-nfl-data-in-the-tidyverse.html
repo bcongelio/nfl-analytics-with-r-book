@@ -6,21 +6,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R</title>
 <meta name="author" content="Bradley J. Congelio">
-<meta name="description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta name="description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language   Awbrey, Jake. 2020. “The Future of NFL Analytics.”...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/wrangling-nfl-data-in-the-tidyverse.html">
-<meta property="og:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta property="og:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language   Awbrey, Jake. 2020. “The Future of NFL Analytics.”...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R">
-<meta name="twitter:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta name="twitter:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language   Awbrey, Jake. 2020. “The Future of NFL Analytics.”...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -72,6 +95,20 @@
 <span class="header-section-number">2.3</span> The <code>tidyverse</code> Language<a class="anchor" aria-label="anchor" href="#the-tidyverse-language"><i class="fas fa-link"></i></a>
 </h2>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-awbrey2020" class="csl-entry">
+Awbrey, Jake. 2020. <span>“The Future of NFL Analytics.”</span> <a href="https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics">https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics</a>.
+</div>
+<div id="ref-carl2022" class="csl-entry">
+Carl, Sebastian. 2022. <span>“nflplotR.”</span> <a href="https://nflplotr.nflverse.com/">https://nflplotr.nflverse.com/</a>.
+</div>
+<div id="ref-silge" class="csl-entry">
+Silge, Julia. n.d. <span>“Tidymodels.”</span> <a href="https://tidymodels.org">https://tidymodels.org</a>.
+</div>
+<div id="ref-xie2015" class="csl-entry">
+Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.org/knitr/">http://yihui.org/knitr/</a>.
+</div>
+</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -100,7 +137,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-16.</p>
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,3 +1,4 @@
+tab:packages-used
 an-introduction-to-nfl-analytics-and-the-r-programming-language
 nflreadr-weekly-vs.-play-by-play-stats
 getting-started-grabbing-2021-season-data

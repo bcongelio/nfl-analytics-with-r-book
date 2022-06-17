@@ -24,6 +24,56 @@
             "type": "book"
         },
         {
+            "URL": "https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics",
+            "author": [
+                {
+                    "family": "Awbrey",
+                    "given": "Jake"
+                }
+            ],
+            "id": "awbrey2020",
+            "issued": {
+                "date-parts": [
+                    [
+                        2020
+                    ]
+                ]
+            },
+            "title": "The future of NFL analytics",
+            "type": ""
+        },
+        {
+            "URL": "https://nflplotr.nflverse.com/",
+            "author": [
+                {
+                    "family": "Carl",
+                    "given": "Sebastian"
+                }
+            ],
+            "id": "carl2022",
+            "issued": {
+                "date-parts": [
+                    [
+                        2022
+                    ]
+                ]
+            },
+            "title": "nflplotR",
+            "type": ""
+        },
+        {
+            "URL": "https://tidymodels.org",
+            "author": [
+                {
+                    "family": "Silge",
+                    "given": "Julia"
+                }
+            ],
+            "id": "silge",
+            "title": "Tidymodels",
+            "type": ""
+        },
+        {
             "URL": "https://www.R-project.org/",
             "author": [
                 {
