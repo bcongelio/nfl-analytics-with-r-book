@@ -13,17 +13,21 @@ description: |
   The HTML output format for this example is bookdown::gitbook,
   set in the _output.yml file.
 link-citations: yes
-github-repo: "bcongelio/nfl-analytics-with-r-book"
+github-repo: "bcongelio/nfl-analytics-with-r"
 url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
 
 # Preface {.unnumbered}
 
-On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of nflfastR, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
+On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
 
-<center>![](images/ben-baldwin-intro-tweet.jpg){width="4in"}</center>
+<center>
 
-Thanks to the work of a handful of people (\@mrcaseB, \@benbbaldwin, \@TanHo, \@LeeSharpeNFL, and \@thomas_mock) to just name a few, getting started with advanced analytics using NFL data is now easier than ever.
+![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}
+
+</center>
+
+Thanks to the work
 
 ## About The Book {.unnumbered}
 
