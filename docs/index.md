@@ -13,15 +13,17 @@ description: |
   The HTML output format for this example is bookdown::gitbook,
   set in the _output.yml file.
 link-citations: yes
-github-repo: "bcongelio/nfl-analytics-with-r"
-url: "https://bradcongelio.com/nfl-analytics-with-r"
+github-repo: "bcongelio/nfl-analytics-with-r-book"
+url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
-
-
 
 # Preface {.unnumbered}
 
-This is a *sample* book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of nflfastR, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
+
+<center>![](images/ben-baldwin-intro-tweet.jpg){width="4in"}</center>
+
+Thanks to the work of a handful of people (\@mrcaseB, \@benbbaldwin, \@TanHo, \@LeeSharpeNFL, and \@thomas_mock) to just name a few, getting started with advanced analytics using NFL data is now easier than ever.
 
 ## About The Book {.unnumbered}
 
@@ -41,8 +43,7 @@ You can render the HTML version of this example book without changing anything:
 
 Or build the book from the R console:
 
-
-```r
+``` {.r}
 bookdown::render_book()
 ```
 
@@ -52,12 +53,9 @@ To render this example to PDF as a `bookdown::pdf_book`, you'll need to install 
 
 As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
 
-
-```r
+``` {.r}
 bookdown::serve_book()
 ```
-
-
 
 ## Technical Details {.unnumbered}
 
