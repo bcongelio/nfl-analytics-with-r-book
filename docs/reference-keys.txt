@@ -1,0 +1,12 @@
+an-introduction-to-nfl-analytics-and-the-r-programming-language
+nflreadr-weekly-vs.-play-by-play-stats
+getting-started-grabbing-2021-season-data
+exercise-qb-aggresiveness-on-3rd-down
+getting-started-retrieving-2021-weekly-stats
+exercise-2021-qb-air-yards-per-attempt-leaders
+retrieving-multiple-data-for-multiple-seasons
+other-sources-of-data-for-nfl-analytics
+wrangling-nfl-data-in-the-tidyverse
+downloading-r-and-rstudio
+installing-necessary-packages
+the-tidyverse-language
