@@ -1,0 +1,5 @@
+book_filename: "nfl-analytics"
+new_session: yes
+language:
+  ui:
+    chapter_name: "Chapter "
