@@ -26,7 +26,11 @@ source("R/book-functions.R")
 
 # Preface {.unnumbered}
 
-This is a *sample* book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
+
+<center>![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}</center>
+
+Thanks to the work
 
 ## About The Book {.unnumbered}
 
