@@ -13,7 +13,8 @@ description: |
   The HTML output format for this example is bookdown::gitbook,
   set in the _output.yml file.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: "bcongelio/nfl-analytics-with-r"
+url: "https://bradcongelio.com/nfl-analytics-with-r"
 ---
 
 
