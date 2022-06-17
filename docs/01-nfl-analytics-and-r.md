@@ -44,7 +44,7 @@ The short answer: it can, but it takes a bit more leg work to make it happen. To
 ben.updated <- data %>%
   group_by(passer) %>%
   filter(passer == "B.Roethlisberger" & complete_pass == 1 & sack == 0 & !is.na(down) &
-           penalty == 0) %>%
+           penalty == 0 & season_type == "REG") %>%
   summarize(total.yards = sum(passing_yards, na.rm = T))
 
 tibble(ben.updated)
@@ -54,12 +54,12 @@ tibble(ben.updated)
 ## # A tibble: 1 x 2
 ##   passer           total.yards
 ##   <chr>                  <dbl>
-## 1 B.Roethlisberger        3889
+## 1 B.Roethlisberger        3674
 ```
 
 As you can see, numerous variables were added to the `filter()` function. To eliminate yardage loss due to sacks, we are now filtering to plays where `sack == 0`, meaning there is NOT a sack on the play. As well, we are filtering any plays where a `down` is not associated which drops any two-point conversion attempt. Finally, we are getting the yardage for just `complete_pass` and dropping any play where a penalty happened.
 
-Unfortunately, despite this, we are now overshooting Ben's total passing yards during the 2021 regular season as the code above results in an output of 3,889 yards.
+Unfortunately, despite this, we are closer but still short of Roethlisberger's total passing yards during the 2021 regular season as the code above results in an output of 3,674 yards, meaning we are still looking for a missing 66 yards somewhere in the data.
 
 This is a perfect example of the difference between `load_pbp()` and `load_player_stats()`. In the case of the first, it can be exceedingly difficult to get the "official statistics" to output because of the number of variables that need to be accounted for.
 
@@ -83,6 +83,8 @@ tibble(ben.weekly)
 ##   <chr>                  <dbl>
 ## 1 B.Roethlisberger        3740
 ```
+
+Without needing to add multiple variables into the `filter()` function, we have hit Roethlisberger's total passing yards during the 2021 regular season right on with 3,740 yards.
 
 ## Getting Started: Grabbing 2021 Season Data
 

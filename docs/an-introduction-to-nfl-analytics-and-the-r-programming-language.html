@@ -109,16 +109,16 @@
 <code class="sourceCode R"><span class="va">ben.updated</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">passer</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">sack</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span> <span class="op">&amp;</span>
-           <span class="va">penalty</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span>
+           <span class="va">penalty</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">tibble</span><span class="op">(</span><span class="va">ben.updated</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   passer           total.yards
 ##   &lt;chr&gt;                  &lt;dbl&gt;
-## 1 B.Roethlisberger        3889</code></pre>
+## 1 B.Roethlisberger        3674</code></pre>
 <p>As you can see, numerous variables were added to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function. To eliminate yardage loss due to sacks, we are now filtering to plays where <code>sack == 0</code>, meaning there is NOT a sack on the play. As well, we are filtering any plays where a <code>down</code> is not associated which drops any two-point conversion attempt. Finally, we are getting the yardage for just <code>complete_pass</code> and dropping any play where a penalty happened.</p>
-<p>Unfortunately, despite this, we are now overshooting Ben’s total passing yards during the 2021 regular season as the code above results in an output of 3,889 yards.</p>
+<p>Unfortunately, despite this, we are closer but still short of Roethlisberger’s total passing yards during the 2021 regular season as the code above results in an output of 3,674 yards, meaning we are still looking for a missing 66 yards somewhere in the data.</p>
 <p>This is a perfect example of the difference between <code>load_pbp()</code> and <code>load_player_stats()</code>. In the case of the first, it can be exceedingly difficult to get the “official statistics” to output because of the number of variables that need to be accounted for.</p>
 <p>Fortunately, the <code>nflverse</code> team developed the <code>load_player_stats()</code> function to avoid this type of problem. As an example, let’s do the same scenario as above:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -134,6 +134,7 @@
 ##   player_name      total.yards
 ##   &lt;chr&gt;                  &lt;dbl&gt;
 ## 1 B.Roethlisberger        3740</code></pre>
+<p>Without needing to add multiple variables into the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function, we have hit Roethlisberger’s total passing yards during the 2021 regular season right on with 3,740 yards.</p>
 </div>
 <div id="getting-started-grabbing-2021-season-data" class="section level2" number="1.2">
 <h2>
