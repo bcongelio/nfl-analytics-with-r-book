@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 1 An Introduction to NFL Analytics and the R Programming Language | An Introduction to NFL Analytics with R</title>
 <meta name="author" content="Bradley J. Congelio">
-<meta name="description" content="All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (#) per .Rmd file.  1.1 nflreadr: Weekly...">
+<meta name="description" content="Need to discuss nflfastR versus nflreadr prior to all of this. Basically comes down to loading both packages but, ultimately, mostly using nflreadr since it has become a “catch all” package for...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 1 An Introduction to NFL Analytics and the R Programming Language | An Introduction to NFL Analytics with R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/an-introduction-to-nfl-analytics-and-the-r-programming-language.html">
-<meta property="og:description" content="All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (#) per .Rmd file.  1.1 nflreadr: Weekly...">
+<meta property="og:description" content="Need to discuss nflfastR versus nflreadr prior to all of this. Basically comes down to loading both packages but, ultimately, mostly using nflreadr since it has become a “catch all” package for...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 1 An Introduction to NFL Analytics and the R Programming Language | An Introduction to NFL Analytics with R">
-<meta name="twitter:description" content="All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (#) per .Rmd file.  1.1 nflreadr: Weekly...">
+<meta name="twitter:description" content="Need to discuss nflfastR versus nflreadr prior to all of this. Basically comes down to loading both packages but, ultimately, mostly using nflreadr since it has become a “catch all” package for...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -80,11 +80,60 @@
 <h1>
 <span class="header-section-number">1</span> An Introduction to NFL Analytics and the R Programming Language<a class="anchor" aria-label="anchor" href="#an-introduction-to-nfl-analytics-and-the-r-programming-language"><i class="fas fa-link"></i></a>
 </h1>
-<p>All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (<code>#</code>) per .Rmd file.</p>
+<p>Need to discuss <code>nflfastR</code> versus <code>nflreadr</code> prior to all of this. Basically comes down to loading both packages but, ultimately, mostly using <code>nflreadr</code> since it has become a “catch all” package for the <code>nflverse</code>.</p>
+<p>As well, if you do not yet have R, RStudio, and the required packages loaded, please see Chapter ## for instructions on getting all of the necessary components installed on your computer.</p>
 <div id="nflreadr-weekly-vs.-play-by-play-stats" class="section level2" number="1.1">
 <h2>
 <span class="header-section-number">1.1</span> <code>nflreadr</code>: Weekly vs. Play-by-Play Stats<a class="anchor" aria-label="anchor" href="#nflreadr-weekly-vs.-play-by-play-stats"><i class="fas fa-link"></i></a>
 </h2>
+<p>Within <code>nflreadr</code>, you have two main options for retrieving NFL statistics. The first is running the function <code>load_player_stats()</code> while the other is <code>load_pbp</code>.</p>
+<p>There is a <strong>very important distinction between the two</strong>.</p>
+<p>Take this example: let’s say you want to get Ben Roethlisberger’s total passing yards from the 2021 season and start to do so using the <code>load_pbp</code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">ben.passing</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">passer</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span> <span class="op">&amp;</span> <span class="va">pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_gained</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">ben.passing</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   passer           total.yards
+##   &lt;chr&gt;                  &lt;dbl&gt;
+## 1 B.Roethlisberger        3523</code></pre>
+<p>Based on the above code, using <code>load_pbp()</code>, we get a return that Ben Roethlisberger had 3,523 passing yards during the 2021 NFL regular season. However, if you check his <a href="https://www.pro-football-reference.com/players/R/RoetBe00.htm">Pro Football Reference page</a>, you will see that his actual number of passing yards during this period was 3,740.</p>
+<p>So, what gives? Shouldn’t calcuating the total number of passing yards using the official NFL play-by-play data provide accurate results?</p>
+<p>The short answer: it can, but it takes a bit more leg work to make it happen. To try to get it as close as possible using <code>load_pbp()</code>, we will have to add some other varibles into the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ben.updated</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">passer</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">sack</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span> <span class="op">&amp;</span>
+           <span class="va">penalty</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">ben.updated</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   passer           total.yards
+##   &lt;chr&gt;                  &lt;dbl&gt;
+## 1 B.Roethlisberger        3889</code></pre>
+<p>As you can see, numerous variables were added to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function. To eliminate yardage loss due to sacks, we are now filtering to plays where <code>sack == 0</code>, meaning there is NOT a sack on the play. As well, we are filtering any plays where a <code>down</code> is not associated which drops any two-point conversion attempt. Finally, we are getting the yardage for just <code>complete_pass</code> and dropping any play where a penalty happened.</p>
+<p>Unfortunately, despite this, we are now overshooting Ben’s total passing yards during the 2021 regular season as the code above results in an output of 3,889 yards.</p>
+<p>This is a perfect example of the difference between <code>load_pbp()</code> and <code>load_player_stats()</code>. In the case of the first, it can be exceedingly difficult to get the “official statistics” to output because of the number of variables that need to be accounted for.</p>
+<p>Fortunately, the <code>nflverse</code> team developed the <code>load_player_stats()</code> function to avoid this type of problem. As an example, let’s do the same scenario as above:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">weekly.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">ben.weekly</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">ben.weekly</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   player_name      total.yards
+##   &lt;chr&gt;                  &lt;dbl&gt;
+## 1 B.Roethlisberger        3740</code></pre>
 </div>
 <div id="getting-started-grabbing-2021-season-data" class="section level2" number="1.2">
 <h2>
