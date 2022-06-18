@@ -190,6 +190,15 @@ While using `load_player_stats()` does not provide the ability to add context to
 
 ```{r 2021-air-yards-per-attempt, echo = TRUE}
 
+data <- nflreadr::load_player_stats(2021)
+
+ay.per.attempt <- data %>%
+  group_by(player_name) %>%
+  filter(season_type == "REG") %>%
+  summarize(n.attempts = sum(attempts),
+            n.airyards = sum(passing_air_yards),
+            ay.attempt = n.airyards / n.attempts) %>%
+  filter(n.attempts >= 400)
 
 ```
 

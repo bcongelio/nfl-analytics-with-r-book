@@ -86,15 +86,207 @@ tibble(ben.weekly)
 
 Without needing to add multiple variables into the `filter()` function, we have hit Roethlisberger's total passing yards during the 2021 regular season right on with 3,740 yards.
 
-## Getting Started: Grabbing 2021 Season Data
+This highlights the important distinction between `load_pbp()` and `load_player_stats()`: you should plan to use `load_pbp()` if you need the full context (meaning, looking at statistics based on down, distance, time, etc.) while `load_player_stats()` should be used when you are looking for a player's numbers regardless of other outside variables.
 
-All chapter sections start with a second-level (`##`) or higher heading followed by your section title, like the sections above and below here. You can have as many as you want within a chapter.
+That said, there could be situations where you need to use both functions. Later in this chapter we will cover how to correctly merge data collected from both the `load_pbp()` and `load_player_stats()` functions.
 
-### Exercise: QB Aggresiveness on 3rd Down
+## Using `load_pbp()` to Add Context to Statistics
 
-## Getting Started: Retrieving 2021 Weekly Stats
+As just mentioned above, using the `load_pbp()` function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics devoid of any deeper meaning.
 
-### Exercise: 2021 QB Air Yards per Attempt Leaders
+To highlight this, let's look at an example of how context can be added to a player's statistics using `load_pbp()`.
+
+### An Example: QB Aggresiveness on 3rd Down
+
+Prior to the writing of this book, I created a metric using `load_pbp()` data I coined **QB 3rd Down Aggressiveness**. The metric is designed to determine *which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line.*
+
+First, let's highlight the code used to create the results for this metric and then break it down line-by-line.
+
+
+```r
+aggressiveness <- data %>%
+  group_by(passer, passer_id, posteam) %>%
+  filter(down == 3, play_type == "pass", ydstogo >= 5, ydstogo <= 10) %>%
+  summarize(total = n(),
+            aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
+            percentage = aggressive / total) %>%
+  filter(total >= 50) %>%
+  arrange(desc(percentage))
+```
+
+```
+## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
+## using the `.groups` argument.
+```
+
+```r
+tibble(aggressiveness)
+```
+
+```
+## # A tibble: 30 x 6
+##    passer       passer_id  posteam total aggressive percentage
+##    <chr>        <chr>      <chr>   <int>      <int>      <dbl>
+##  1 D.Prescott   00-0033077 DAL        84         53      0.631
+##  2 K.Murray     00-0035228 ARI        60         37      0.617
+##  3 J.Hurts      00-0036389 PHI        65         40      0.615
+##  4 P.Mahomes    00-0033873 KC         93         56      0.602
+##  5 B.Mayfield   00-0034855 CLE        59         35      0.593
+##  6 T.Lawrence   00-0036971 JAX        78         46      0.590
+##  7 J.Herbert    00-0036355 LAC        87         51      0.586
+##  8 D.Jones      00-0035710 NYG        60         35      0.583
+##  9 T.Tagovailoa 00-0036212 MIA        60         35      0.583
+## 10 M.Stafford   00-0026498 LA         95         54      0.568
+## # ... with 20 more rows
+```
+
+As you can see in the `tibble()` output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.
+
+After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* and then appending both their unique `passer_id` as well as the `posteam` which is simply their team's abbreviation (note: the `posteam` variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4.
+
+However, there are a couple items to point out and clarify with the above code. Moreover, there are certainly arguments to be made regarding how to "capture" scenarios in the data that require "aggressiveness."
+
+After using the `group_by` function to lump data with each individual QB, we then use `filter()` function. Of course, we only want those `play_types` that are "pass" on 3rd downs. However, in the above code, we are filtering for *just* those 3rd down situations where the `yards to go` are between five and ten yards.
+
+Doing so was a personal decision on my end when creating the metric. My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to "sell out" to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything *over* ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.
+
+For the sake of curiosity, we can edit the above code to include all passing attempts on 3rd down with under 10 yards to go for the first down:
+
+
+```r
+aggressiveness.under.10 <- data %>%
+  group_by(passer, passer_id, posteam) %>%
+  filter(down == 3, play_type == "pass", ydstogo <= 10) %>%
+  summarize(total = n(),
+            aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
+            percentage = aggressive / total) %>%
+  filter(total >= 50) %>%
+  arrange(desc(percentage))
+```
+
+```
+## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
+## using the `.groups` argument.
+```
+
+```r
+tibble(aggressiveness.under.10)
+```
+
+```
+## # A tibble: 33 x 6
+##    passer       passer_id  posteam total aggressive percentage
+##    <chr>        <chr>      <chr>   <int>      <int>      <dbl>
+##  1 K.Murray     00-0035228 ARI        98         67      0.684
+##  2 J.Hurts      00-0036389 PHI       107         73      0.682
+##  3 T.Lawrence   00-0036971 JAX       131         88      0.672
+##  4 D.Prescott   00-0033077 DAL       136         89      0.654
+##  5 J.Allen      00-0034857 BUF       138         88      0.638
+##  6 J.Herbert    00-0036355 LAC       148         94      0.635
+##  7 T.Tagovailoa 00-0036212 MIA        93         59      0.634
+##  8 M.Stafford   00-0026498 LA        172        109      0.634
+##  9 A.Rodgers    00-0023459 GB        128         80      0.625
+## 10 D.Jones      00-0035710 NYG        85         53      0.624
+## # ... with 23 more rows
+```
+
+The results are quite different from the first running of this metric, as Dak Prescott is now the 4th most aggressive QB, while Kyler Murray moves to the top by approaching a nearly 70% aggressiveness rate on 3rd down. This small change highlights an important element about analytics: much of the work is the result of the coder (ie., [you]{.ul}) being able to justify your decision-making process when developing the filters for each metric you create.
+
+In this case, I stand by my argument that including just those pass attempts on 3rd down with between 5 and 10 yards to go is a more accurate assessment of aggressiveness as, for example, 3rd down with 8 yards to go is an obvious passing situation in [most]{.ul} cases.
+
+That begs the question, though: in which cases is 3rd down with 8 yards to go [not]{.ul} an obvious passing situation?
+
+#### QB Aggressiveness: Filtering for "Garbage Time?"
+
+In our initial running of the QB Aggressiveness metric, Josh Allen is the 15th most aggressive QB in the NFL on 3rd down with between 5 and 10 yards to go. But how much does the success of the Buffalo Bills play into that 15th place ranking?
+
+The Bills, at the conclusion of the 2021 season, had the largest positive point differential in the league at 194 (the Bills scored 483 points, while allowing just 289). Perhaps Allen's numbers are skewed because the Bills were so often playing with the lead late into the game?
+
+To account for this, we can add information into the `filter()` function to attempt to remove what are referenced to in the analytics community as "garbage time stats."
+
+Let's add the "garbage time" filter to the code we've already prepared:
+
+
+```r
+aggressiveness.garbage <- data %>%
+  group_by(passer, passer_id, posteam) %>%
+  filter(down == 3, play_type == "pass", ydstogo >= 5, ydstogo <= 10,
+         wp > .05, wp < .95, half_seconds_remaining > 120) %>%
+  summarize(total = n(),
+            aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
+            percentage = aggressive / total) %>%
+  filter(total >= 50) %>%
+  arrange(desc(percentage))
+```
+
+```
+## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
+## using the `.groups` argument.
+```
+
+```r
+tibble(aggressiveness.garbage)
+```
+
+```
+## # A tibble: 26 x 6
+##    passer     passer_id  posteam total aggressive percentage
+##    <chr>      <chr>      <chr>   <int>      <int>      <dbl>
+##  1 D.Prescott 00-0033077 DAL        61         40      0.656
+##  2 T.Lawrence 00-0036971 JAX        51         33      0.647
+##  3 K.Murray   00-0035228 ARI        51         31      0.608
+##  4 M.Stafford 00-0026498 LA         79         48      0.608
+##  5 P.Mahomes  00-0033873 KC         68         41      0.603
+##  6 D.Jones    00-0035710 NYG        50         30      0.6  
+##  7 J.Herbert  00-0036355 LAC        67         38      0.567
+##  8 M.Jones    00-0036972 NE         57         31      0.544
+##  9 J.Allen    00-0034857 BUF        59         32      0.542
+## 10 R.Wilson   00-0029263 SEA        56         30      0.536
+## # ... with 16 more rows
+```
+
+We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occured when the offense's `win probability` was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.
+
+The decision on range of the `win probability` numbers is, again, a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for `win probability`. However, Sebastian Carl - one of the creators of the `nflverse` explained in the package's Discord:
+
+> Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80% "garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
+
+Ben Baldwin followed up on Carl's thoughts:
+
+> Ben Baldwin: "agree with this. 20-80% should only be used as a filter for looking at how run-heavy a team is (because outside of this range is when teams change behavior a lot). and possibly how teams behave on 4th downs. but not for team or player performance."
+
+Based on that advice, I typically stick to the 5-95% range when filtering for `win probability` using play-by-play data. And, in this case, it did have an impact.
+
+As mentioned, prior to filtering for garbage time, Allen was the 15th most aggressive QB in the league at nearly 52%. However, once filtering for garbage time, Allen rose to 9th most aggressive QB, with a slight increase of percentage to 54%.
+
+What is interesting about the above example, though, is Dak Prescott and the Cowboys. Dallas maintained the second largest point differntial in the league (530 points for and 358 points against, for a 172 point difference). Without the garbage time filter, Prescott was tops in the NFL with an aggressiveness rating of 63%.
+
+Once adjusted for garbage time? Prescott remained atop the NFL with an aggressiveness rating of 65.5%.
+
+Allen's increase in the standings, and Prescott remaining best in the league, in this specific metric, is a possible indicator that the inclusion of the "garbage time" filters provides a slightly more accurate result.
+
+### The Inclusion of Contextual Statistics
+
+As seen in the above example regarding QB aggressiveness on 3rd down, the using of the `load_pbp()` function provides the ability to create situation specific metrics that would otherwise be lost in aggregated weekly statistics.
+
+## Using `load_player_stats()` To Find Leaders
+
+While using `load_player_stats()` does not provide the ability to add context to your analysis, it does provide an easy and efficient way to determine weekly or season-long leaders over many top-level, widely-used NFL statistics. In the below example, we will determine the 2021 leaders in air yards per attempt.
+
+### An Example: 2021 QB Air Yards per Attempt Leaders
+
+
+```r
+data <- nflreadr::load_player_stats(2021)
+
+ay.per.attempt <- data %>%
+  group_by(player_name) %>%
+  filter(season_type == "REG") %>%
+  summarize(n.attempts = sum(attempts),
+            n.airyards = sum(passing_air_yards),
+            ay.attempt = n.airyards / n.attempts) %>%
+  filter(n.attempts >= 400)
+```
 
 ## Retrieving Multiple Data for Multiple Seasons
 
