@@ -25,7 +25,9 @@ source("R/book-functions.R")
 
 Welcome to the online home of *An Introduction to NFL Analytics with R*.
 
-<center>![](docs/images/big-ben-intro.jpg){width="7in"}</center>
+```{r big-ben-intro-picture, echo = FALSE}
+knitr::include_graphics(rep("docs/images/big-ben-intro.jpg"))
+```
 
 The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
@@ -37,7 +39,10 @@ Please feel free to contribute to the book by filing an issue or making a pull r
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
 
-<center>![](docs/images/ben-baldwin-intro-tweet.jpg){width="3in"}</center>
+```{r ben-baldwin-intro-tweet, echo = FALSE}
+knitr::include_graphics(rep("docs/images/ben-baldwin-intro-tweet.jpg"))
+
+```
 
 Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb), [\@benbbaldwin](https://twitter.com/benbbaldwin), [\@TanHo](https://twitter.com/_TanHo), [\@LeeSharpeNFL](https://twitter.com/LeeSharpeNFL), and [\@thomas_mock](https://twitter.com/thomas_mock) ... to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.
 
@@ -45,7 +50,10 @@ That said, and without getting too far into the weeds of the history behind it a
 
 The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of development of `nflscrapR`, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and was ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
 
-<center>![](docs/images/farewell-nflscrapr.jpg){width="4in"}</center>
+```{r farwell-nflscrapr-tweet, echo = FALSE}
+knitr::include_graphics(rep("docs/images/farewell-nflscrapr.jpg"))
+
+```
 
 As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages were developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
 
