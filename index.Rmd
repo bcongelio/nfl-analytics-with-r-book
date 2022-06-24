@@ -23,7 +23,7 @@ source("R/book-functions.R")
 
 # Preface {.unnumbered}
 
-Welcome to the online home of *An Introduction to NFL Analytics with R*.
+<center>**Welcome to the online home of *An Introduction to NFL Analytics with R*.**</center>
 
 ```{r big-ben-intro-picture, echo = FALSE}
 knitr::include_graphics(rep("docs/images/big-ben-intro.jpg"))

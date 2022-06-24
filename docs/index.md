@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-23"
+date: "2022-06-24"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -18,7 +18,9 @@ url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 
 # Preface {.unnumbered}
 
-Welcome to the online home of *An Introduction to NFL Analytics with R*.
+<center>**Welcome to the online home of *An Introduction to NFL Analytics with R*.**</center>
+
+<br>
 
 <img src="docs/images/big-ben-intro.jpg" width="100%" />
 
