@@ -1,83 +1,183 @@
 # An Introduction to NFL Analytics and the R Programming Language
 
-Need to discuss `nflfastR` versus `nflreadr` prior to all of this. Basically comes down to loading both packages but, ultimately, mostly using `nflreadr` since it has become a "catch all" package for the `nflverse`.
-
-As well, if you do not yet have R, RStudio, and the required packages loaded, please see Chapter \#\# for instructions on getting all of the necessary components installed on your computer.
-
-## `nflreadr`: Weekly vs. Play-by-Play Stats
-
-Within `nflreadr`, you have two main options for retrieving NFL statistics. The first is running the function `load_player_stats()` while the other is `load_pbp`.
-
-There is a **very important distinction between the two**.
-
-Take this example: let's say you want to get Ben Roethlisberger's total passing yards from the 2021 season and start to do so using the `load_pbp` function:
-
-```{r loading-packages, include = FALSE}
+```{r loading-library, include = FALSE}
 
 library(tidyverse)
 library(nflreadr)
 
 ```
 
-```{r ben-passing-yards, echo = TRUE}
+As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current edition of the `nflverse` is comprised of five separate R packages:
 
-data <- nflreadr::load_pbp(2021)
+1.  `nflfastR`
+2.  `nflseedR`
+3.  `nfl4th`
+4.  `nflreadr`
+5.  `nflplotR`
 
-ben.passing <- data %>%
-  group_by(passer) %>%
-  filter(passer == "B.Roethlisberger" & pass == 1 & season_type == "REG") %>%
-  summarize(total.yards = sum(yards_gained, na.rm = T))
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduce the `nflfastR` package.
 
-tibble(ben.passing)
+Because of that, it is important to note that the `nflreadr` package, as explained by its author (Tan Ho), is a "minimal package for downloading data from `nflverse` repositories. It inclues caching, optional proress updates, and data dictionaries." In other words, using `nflreadr` allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.
 
+Using `nflreadr::` while coding will provide you nearly idential options as using `nflfastR::`. Moreover, the `nflreadr` packages inclues a number of data options not included in `nflfastR` such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.
+
+While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded by serving as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
+
+## `nflreadr`: An Introduction to the Data
+
+The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: player weekly stats and the more advanced and robust play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
+
+As you may imagine, there is a **very important distinction between the `load_player_stats()`** **and `load_pbp()`**. As mentioned, `load_player_stats()` will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, `load_pbp()` will provide over 350 metrics for every single play of every single game dating back to 1999.
+
+The `load_player_stats()` function includes the following offensive information:
+
+```{r load_player_stats-information, echo = TRUE}
+
+offensive.stats <- nflreadr::load_player_stats(2021)
+dplyr::glimpse(offensive.stats)
 ```
 
-Based on the above code, using `load_pbp()`, we get a return that Ben Roethlisberger had 3,523 passing yards during the 2021 NFL regular season. However, if you check his [Pro Football Reference page](https://www.pro-football-reference.com/players/R/RoetBe00.htm), you will see that his actual number of passing yards during this period was 3,740.
+As well, it contains the following kicking information:
 
-So, what gives? Shouldn't calcuating the total number of passing yards using the official NFL play-by-play data provide accurate results?
+```{r load_player_stats-kicking, echo = TRUE}
 
-The short answer: it can, but it takes a bit more leg work to make it happen. To try to get it as close as possible using `load_pbp()`, we will have to add some other varibles into the `filter()` function:
-
-```{r ben-passing-pbp, echo = TRUE}
-
-ben.updated <- data %>%
-  group_by(passer) %>%
-  filter(passer == "B.Roethlisberger" & complete_pass == 1 & sack == 0 & !is.na(down) &
-           penalty == 0 & season_type == "REG") %>%
-  summarize(total.yards = sum(passing_yards, na.rm = T))
-
-tibble(ben.updated)
+kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
+dplyr::glimpse(kicking.stats)
 ```
 
-As you can see, numerous variables were added to the `filter()` function. To eliminate yardage loss due to sacks, we are now filtering to plays where `sack == 0`, meaning there is NOT a sack on the play. As well, we are filtering any plays where a `down` is not associated which drops any two-point conversion attempt. Finally, we are getting the yardage for just `complete_pass` and dropping any play where a penalty happened.
+While the data returned is not as robust as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
 
-Unfortunately, despite this, we are closer but still short of Roethlisberger's total passing yards during the 2021 regular season as the code above results in an output of 3,674 yards, meaning we are still looking for a missing 66 yards somewhere in the data.
+As an example, let's say you need to get Ben Roethlisberger's total passing yard and attempts from the 2021 season. You could do so via `load_pbp()` but, if you do not need further context, using `load_player_stats()` is much more efficient.
 
-This is a perfect example of the difference between `load_pbp()` and `load_player_stats()`. In the case of the first, it can be exceedingly difficult to get the "official statistics" to output because of the number of variables that need to be accounted for.
-
-Fortunately, the `nflverse` team developed the `load_player_stats()` function to avoid this type of problem. As an example, let's do the same scenario as above:
+### Getting Weekly Player Stats via `load_player_stats()`
 
 ```{r ben-load-stats, echo = TRUE}
 
 weekly.data <- nflreadr::load_player_stats(2021)
+rosters <- nflreadr::load_rosters(2021)
 
 ben.weekly <- weekly.data %>%
-  group_by(player_name) %>%
-  filter(player_name == "B.Roethlisberger" & season_type == "REG") %>%
-  summarize(total.yards = sum(passing_yards))
+  group_by(player_id) %>%
+  filter(season_type == "REG") %>%
+  summarize(total.yards = sum(passing_yards),
+            n.attempts = sum(attempts)) %>%
+  left_join(rosters, by = c("player_id" = "gsis_id")) %>%
+  filter(full_name == "Ben Roethlisberger") %>%
+  select(player_id, full_name, total.yards, n.attempts)
 
 tibble(ben.weekly)
 ```
 
-Without needing to add multiple variables into the `filter()` function, we have hit Roethlisberger's total passing yards during the 2021 regular season right on with 3,740 yards.
+As you can see in the `ben.weekly` output, we have matched his official 2021 regular stats perfectly with 3,740 passing yards on 605 attempts. The code we just created is doing several things. First, we are using `nflreadr::load_player_stats(2021)` to place the data into our R environment in a DF titled `weekly.data`. Directly after, we are using another function called `load_rosters()` which populates a DF with the information for every player in the NFL during the 2021 season (more on why this is needed in a moment).
 
-This highlights the important distinction between `load_pbp()` and `load_player_stats()`: you should plan to use `load_pbp()` if you need the full context (meaning, looking at statistics based on down, distance, time, etc.) while `load_player_stats()` should be used when you are looking for a player's numbers regardless of other outside variables.
+Next, we group the data together by alike `player_id` (as every individual player has a unique ID number). After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
 
-That said, there could be situations where you need to use both functions. Later in this chapter we will cover how to correctly merge data collected from both the `load_pbp()` and `load_player_stats()` functions.
+Unfortunately, we are still not done. In order to get Roethlisberger's name attached to it, if you needed it, we needed to complete a `left_join` between our `ben.weekly` and `rosters` dataframes. To do so, we are matching up the `player_id` to the `gsis_id` within the roster information. After that information is combined, we are able to pull out just Roethlisberger's information and select the columns we want.
+
+That lengthy explanation brings about a good question: **why could we not simply do `filter(player_name == "B.Roethlisberger" & season_type == "REG"` rather than loading rosters and merging the two DFs?**
+
+Truth be told, that *would* be possible for Ben Roethliserger. As an example:
+
+```{r ben-no-merge-weekly, echo = TRUE}
+
+ben.nomerge <- weekly.data %>%
+  group_by(player_name) %>%
+  filter(player_name == "B.Roethlisberger" & season_type == "REG") %>%
+  summarize(total.yards = sum(passing_yards),
+            n.attempts = sum(attempts))
+
+tibble(ben.nomerge)
+```
+
+Again, we are matching the official statistics. And this time we are doing so with much less code and without the need to pull in roster information to merge with.
+
+But there is a reason you should not work with the data while grouping by `player_name`. An excellent example of this is Josh Allen. Let's attempt to a "no roster, no merge" calcuation of this 2021 total passing yards and attempts and see what happens:
+
+```{r josh-allen-no-merge-weekly, echo = TRUE}
+
+josh.allen.nm <- weekly.data %>%
+  group_by(player_name) %>%
+  filter(player_name == "J.Allen" & season_type == "REG") %>%
+  summarize(total.yards = sum(passing_yards),
+            n.attempts = sum(attempts))
+
+tibble(josh.allen.nm)
+```
+
+The output tells us Allen threw for 4,049 yards on 603 attempts during the 2021 regular season. A check of his [Pro Football Reference page](https://www.pro-football-reference.com/players/A/AlleJo02.htm) tells us those numbers are incorrect. In fact, he had 4,407 passing yards on 646 attempts. How did we end up 358 passing yards and 43 attempts short?
+
+The answer comes from Aaron Schatz, the creator of [Football Outsiders](https://www.footballoutsiders.com/), who explained in a [Tweet](https://twitter.com/fo_aschatz/status/1442191416826888192?s=21) that the official Buffalo Bills' scorer, during week 3 of the NFL season, decided to refer to Allen as "Jos.Allen" as a result of the Washington Commanders having a player named "Jonathan Allen."
+
+To double check this, we can run the same code as above, but group by two variables (`player_id` and `player_name`) to see what happens:
+
+```{r two-josh-allens, echo = TRUE}
+
+two.joshies <- weekly.data %>%
+  group_by(player_id, player_name) %>%
+  filter(season_type == "REG" & recent_team == "BUF") %>%
+  summarize(total.yards = sum(passing_yards),
+            n.attempts = sum(attempts))
+
+tibble(two.joshies)
+```
+
+Grouping by `player_id` and `player_name` (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same `player_id`. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page. To verify, we can include the necessary coding to merge Josh's `player_id` with the identical `gsis_id` from our roster information:
+
+```{r josh-weekly-merge, echo = TRUE}
+
+josh.weekly <- weekly.data %>%
+  group_by(player_id) %>%
+  filter(season_type == "REG") %>%
+  summarize(total.yards = sum(passing_yards),
+            n.attempts = sum(attempts)) %>%
+  left_join(rosters, by = c("player_id" = "gsis_id")) %>%
+  filter(full_name == "Josh Allen") %>%
+  select(player_id, full_name, total.yards, n.attempts)
+
+tibble(josh.weekly)
+```
+
+With the addition of merged roster information, we are able to work around the issue of Josh Allen being in the data twice under slightly varied names.
+
+### Using `load_player_stats()` To Find Leaders
+
+While using `load_player_stats()` does not provide the ability to add context to your analysis as we will soon see with `load_pbp()`, it does provide an easy and efficient way to determine weekly or season-long leaders over many top-level, widely-used NFL statistics. In the below example, we will determine the 2021 leaders in air yards per attempt.
+
+#### An Example: 2021 QB Air Yards per Attempt Leaders
+
+```{r 2021-air-yards-per-attempt, echo = TRUE}
+
+data <- nflreadr::load_player_stats(2021)
+
+ay.per.attempt <- data %>%
+  group_by(player_name) %>%
+  filter(season_type == "REG") %>%
+  summarize(n.attempts = sum(attempts),
+            n.airyards = sum(passing_air_yards),
+            ay.attempt = n.airyards / n.attempts) %>%
+  filter(n.attempts >= 400) %>%
+  arrange(desc(ay.attempt))
+
+```
+
+In the above example, we are using `group_by` to combine the desired statistics for each individual quarterback. After filtering to include just those statistics for the regular season, we use the `summarize` function to find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
+
+It is important to note that the final row created with the `summarize` function is not a statistic included within `load_player_stats()`. In order to find a QB's average air yards per attempt, we must use the first two items we've created and do some simple division (the created `n.airyards` divided by `n.attempts`).
+
+Finally, to "clear the noise" of those QBs with minimal attempts through the season, we included a filter to include those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.
+
+The end results look like this:
+
+```{r average-air-yards-tibble, echo = TRUE}
+
+tibble(ay.per.attempt)
+```
+
+Russell Wilson, who *just* made the cutoff with 400 passing attempts, led the NFL in 2021 with 9.89 air yards per attempt.
 
 ## Using `load_pbp()` to Add Context to Statistics
 
-As just mentioned above, using the `load_pbp()` function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics devoid of any deeper meaning.
+As just mentioned above, using the `load_pbp()` function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.
 
 To highlight this, let's look at an example of how context can be added to a player's statistics using `load_pbp()`.
 
@@ -88,6 +188,8 @@ Prior to the writing of this book, I created a metric using `load_pbp()` data I 
 First, let's highlight the code used to create the results for this metric and then break it down line-by-line.
 
 ```{r 3rd-down-aggressive, echo = TRUE}
+
+data <- nflreadr::load_pbp(2021)
 
 aggressiveness <- data %>%
   group_by(passer, passer_id, posteam) %>%
@@ -182,26 +284,24 @@ Allen's increase in the standings, and Prescott remaining best in the league, in
 
 As seen in the above example regarding QB aggressiveness on 3rd down, the using of the `load_pbp()` function provides the ability to create situation specific metrics that would otherwise be lost in aggregated weekly statistics.
 
-## Using `load_player_stats()` To Find Leaders
+## Retrieving & Working With Data for Multiple Seasons
 
-While using `load_player_stats()` does not provide the ability to add context to your analysis, it does provide an easy and efficient way to determine weekly or season-long leaders over many top-level, widely-used NFL statistics. In the below example, we will determine the 2021 leaders in air yards per attempt.
+In the case of both `load_pbp()` and `load_player_stats()`, it is possible to load data over multiple seasons.
 
-### An Example: 2021 QB Air Yards per Attempt Leaders
+In our above example calculating average air yard per attempt, it is important to note that Russell Wilson's league-eading average of 9.89 air yards per attempt is calculated using *all* passing attempts, meaning pass attempts that were both complete and incomplete.
 
-```{r 2021-air-yards-per-attempt, echo = TRUE}
+In our first example of working with data across multiple seasons, let's examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:
 
-data <- nflreadr::load_player_stats(2021)
+```{r avg-ay-5-years, echo = TRUE}
 
-ay.per.attempt <- data %>%
-  group_by(player_name) %>%
-  filter(season_type == "REG") %>%
-  summarize(n.attempts = sum(attempts),
-            n.airyards = sum(passing_air_yards),
-            ay.attempt = n.airyards / n.attempts) %>%
-  filter(n.attempts >= 400)
-
+ay.five.years <- nflreadr::load_pbp(2017:2021)
 ```
 
-## Retrieving Multiple Data for Multiple Seasons
+To retrieve multiple seasons of data, a colon `:` is placed between the years that you want. When you run the code, `nflreadr` will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season):
+
+```{r avg-ay-5-tibble, echo = TRUE}
+
+tibble(ay.five.years)
+```
 
 ## Other Sources of Data for NFL Analytics

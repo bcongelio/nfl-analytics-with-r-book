@@ -1,11 +1,12 @@
 h1:an-introduction-to-nfl-analytics-and-the-r-programming-language An Introduction to NFL Analytics and the R Programming Language
-h2:nflreadr-weekly-vs.-play-by-play-stats : Weekly vs. Play-by-Play Stats
+h2:nflreadr-an-introduction-to-the-data : An Introduction to the Data
+h3:getting-weekly-player-stats-via-load_player_stats Getting Weekly Player Stats via 
+h3:using-load_player_stats-to-find-leaders Using  To Find Leaders
+h4:an-example-2021-qb-air-yards-per-attempt-leaders An Example: 2021 QB Air Yards per Attempt Leaders
 h2:using-load_pbp-to-add-context-to-statistics Using  to Add Context to Statistics
 h3:an-example-qb-aggresiveness-on-3rd-down An Example: QB Aggresiveness on 3rd Down
 h4:qb-aggressiveness-filtering-for-garbage-time QB Aggressiveness: Filtering for 
 h3:the-inclusion-of-contextual-statistics The Inclusion of Contextual Statistics
-h2:using-load_player_stats-to-find-leaders Using  To Find Leaders
-h3:an-example-2021-qb-air-yards-per-attempt-leaders An Example: 2021 QB Air Yards per Attempt Leaders
-h2:retrieving-multiple-data-for-multiple-seasons Retrieving Multiple Data for Multiple Seasons
+h2:retrieving-working-with-data-for-multiple-seasons Retrieving & Working With Data for Multiple Seasons
 h2:other-sources-of-data-for-nfl-analytics Other Sources of Data for NFL Analytics
 
