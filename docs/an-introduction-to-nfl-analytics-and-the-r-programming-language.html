@@ -99,7 +99,7 @@
 <p>The most important part of the <code>nflverse</code> is, of course, the data. To begin, we will examine the core data that underpins the <code>nflverse</code>: player weekly stats and the more advanced and robust play-by–play data. Using <code>nflreadr</code>, the end user is able to collect weekly top-level stats via the <code>load_player_stats()</code> function or the much more robust play-by-play numbers by using the <code>load_pbp()</code> function.</p>
 <p>As you may imagine, there is a <strong>very important distinction between the <code>load_player_stats()</code></strong> <strong>and <code>load_pbp()</code></strong>. As mentioned, <code>load_player_stats()</code> will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, <code>load_pbp()</code> will provide over 350 metrics for every single play of every single game dating back to 1999.</p>
 <p>The <code>load_player_stats()</code> function includes the following offensive information:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">offensive.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">offensive.stats</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 5,698
@@ -153,7 +153,7 @@
 ## $ air_yards_share             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
 ## $ wopr                        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~</code></pre>
 <p>As well, it contains the following kicking information:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kicking.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span>, stat_type <span class="op">=</span> <span class="st">"kicking"</span><span class="op">)</span>
 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">kicking.stats</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 561
@@ -204,7 +204,7 @@
 <h3>
 <span class="header-section-number">1.1.1</span> Getting Weekly Player Stats via <code>load_player_stats()</code><a class="anchor" aria-label="anchor" href="#getting-weekly-player-stats-via-load_player_stats"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">weekly.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 <span class="va">rosters</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 
@@ -227,7 +227,7 @@
 <p>Unfortunately, we are still not done. In order to get Roethlisberger’s name attached to it, if you needed it, we needed to complete a <code>left_join</code> between our <code>ben.weekly</code> and <code>rosters</code> dataframes. To do so, we are matching up the <code>player_id</code> to the <code>gsis_id</code> within the roster information. After that information is combined, we are able to pull out just Roethlisberger’s information and select the columns we want.</p>
 <p>That lengthy explanation brings about a good question: <strong>why could we not simply do <code>filter(player_name == "B.Roethlisberger" &amp; season_type == "REG"</code> rather than loading rosters and merging the two DFs?</strong></p>
 <p>Truth be told, that <em>would</em> be possible for Ben Roethliserger. As an example:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben.nomerge</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -241,7 +241,7 @@
 ## 1 B.Roethlisberger        3740        605</code></pre>
 <p>Again, we are matching the official statistics. And this time we are doing so with much less code and without the need to pull in roster information to merge with.</p>
 <p>But there is a reason you should not work with the data while grouping by <code>player_name</code>. An excellent example of this is Josh Allen. Let’s attempt to a “no roster, no merge” calcuation of this 2021 total passing yards and attempts and see what happens:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">josh.allen.nm</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -256,7 +256,7 @@
 <p>The output tells us Allen threw for 4,049 yards on 603 attempts during the 2021 regular season. A check of his <a href="https://www.pro-football-reference.com/players/A/AlleJo02.htm">Pro Football Reference page</a> tells us those numbers are incorrect. In fact, he had 4,407 passing yards on 646 attempts. How did we end up 358 passing yards and 43 attempts short?</p>
 <p>The answer comes from Aaron Schatz, the creator of <a href="https://www.footballoutsiders.com/">Football Outsiders</a>, who explained in a <a href="https://twitter.com/fo_aschatz/status/1442191416826888192?s=21">Tweet</a> that the official Buffalo Bills’ scorer, during week 3 of the NFL season, decided to refer to Allen as “Jos.Allen” as a result of the Washington Commanders having a player named “Jonathan Allen.”</p>
 <p>To double check this, we can run the same code as above, but group by two variables (<code>player_id</code> and <code>player_name</code>) to see what happens:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">two.joshies</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span>, <span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">recent_team</span> <span class="op">==</span> <span class="st">"BUF"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -264,7 +264,7 @@
             n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'player_id'. You can override using the
 ## `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">two.joshies</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 17 x 4
 ##    player_id  player_name  total.yards n.attempts
@@ -287,7 +287,7 @@
 ## 16 00-0036196 G.Davis                0          0
 ## 17 00-0036251 Z.Moss                 0          0</code></pre>
 <p>Grouping by <code>player_id</code> and <code>player_name</code> (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same <code>player_id</code>. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page. To verify, we can include the necessary coding to merge Josh’s <code>player_id</code> with the identical <code>gsis_id</code> from our roster information:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">josh.weekly</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -313,7 +313,7 @@
 <h4>
 <span class="header-section-number">1.1.2.1</span> An Example: 2021 QB Air Yards per Attempt Leaders<a class="anchor" aria-label="anchor" href="#an-example-2021-qb-air-yards-per-attempt-leaders"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 
 <span class="va">ay.per.attempt</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
@@ -328,7 +328,7 @@
 <p>It is important to note that the final row created with the <code>summarize</code> function is not a statistic included within <code>load_player_stats()</code>. In order to find a QB’s average air yards per attempt, we must use the first two items we’ve created and do some simple division (the created <code>n.airyards</code> divided by <code>n.attempts</code>).</p>
 <p>Finally, to “clear the noise” of those QBs with minimal attempts through the season, we included a filter to include those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.</p>
 <p>The end results look like this:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.per.attempt</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 24 x 4
 ##    player_name   n.attempts n.airyards ay.attempt
@@ -360,7 +360,7 @@
 </h3>
 <p>Prior to the writing of this book, I created a metric using <code>load_pbp()</code> data I coined <strong>QB 3rd Down Aggressiveness</strong>. The metric is designed to determine <em>which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line.</em></p>
 <p>First, let’s highlight the code used to create the results for this metric and then break it down line-by-line.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 
 <span class="va">aggressiveness</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
@@ -373,7 +373,7 @@
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
 ## using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 30 x 6
 ##    passer       passer_id  posteam total aggressive percentage
@@ -395,7 +395,7 @@
 <p>After using the <code>group_by</code> function to lump data with each individual QB, we then use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function. Of course, we only want those <code>play_types</code> that are “pass” on 3rd downs. However, in the above code, we are filtering for <em>just</em> those 3rd down situations where the <code>yards to go</code> are between five and ten yards.</p>
 <p>Doing so was a personal decision on my end when creating the metric. My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to “sell out” to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything <em>over</em> ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.</p>
 <p>For the sake of curiosity, we can edit the above code to include all passing attempts on 3rd down with under 10 yards to go for the first down:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aggressiveness.under.10</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">passer_id</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -406,7 +406,7 @@
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
 ## using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.under.10</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    passer       passer_id  posteam total aggressive percentage
@@ -433,7 +433,7 @@
 <p>The Bills, at the conclusion of the 2021 season, had the largest positive point differential in the league at 194 (the Bills scored 483 points, while allowing just 289). Perhaps Allen’s numbers are skewed because the Bills were so often playing with the lead late into the game?</p>
 <p>To account for this, we can add information into the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to attempt to remove what are referenced to in the analytics community as “garbage time stats.”</p>
 <p>Let’s add the “garbage time” filter to the code we’ve already prepared:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aggressiveness.garbage</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">passer_id</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&gt;=</span> <span class="fl">5</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span>,
@@ -445,7 +445,7 @@
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
 ## using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.garbage</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 26 x 6
 ##    passer     passer_id  posteam total aggressive percentage
@@ -491,10 +491,10 @@
 <p>In the case of both <code>load_pbp()</code> and <code>load_player_stats()</code>, it is possible to load data over multiple seasons.</p>
 <p>In our above example calculating average air yard per attempt, it is important to note that Russell Wilson’s league-eading average of 9.89 air yards per attempt is calculated using <em>all</em> passing attempts, meaning pass attempts that were both complete and incomplete.</p>
 <p>In our first example of working with data across multiple seasons, let’s examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ay.five.years</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2017</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span></code></pre></div>
 <p>To retrieve multiple seasons of data, a colon <code>:</code> is placed between the years that you want. When you run the code, <code>nflreadr</code> will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season):</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.five.years</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 243,131 x 372
 ##    play_id game_id     old_game_id home_team away_team season_type  week posteam
@@ -561,7 +561,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-26.</p>
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

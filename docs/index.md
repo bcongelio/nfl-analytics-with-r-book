@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-26"
+date: "2022-06-27"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -62,25 +62,87 @@ Given that Tomlin's quote is from 2015, perhaps the Steelers pivoted since and a
 
 There is large gap between the least analytically inclined teams (Washington, Tenessee, Cincinnati, New York Giants, and Pittsburgh) and those voted as the most analytically inclined (Baltimore, Cleveland, Philadelphia, and Houston). In the ESPN poll, the Browns were voted as the analytics department producing the highest level of work. One of those polled spoke to the fact that much of this outstanding work is a result of General Manager Andrew Berry being a "true believer," explaining that he is one of the "rare guys you'll come across in life where you think to yoursef, 'Man, this guy think at a different level. Just pure genius.' He's one of them."
 
-In his article for the *Washington Post*, Sam Fortier argues that many teams became inspired to more intimately introduce analytics into game planning and on-field decisions after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
+[In his article for the *Washington Post*](https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/), Sam Fortier argues that many teams became inspired to more intimately introduce analytics into game planning and on-field decisions after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
 
 <img src="docs/images/4th-down-attempts.png" width="100%" />
 
 There has been a 96.3% increase in the number of 4th down attempts from just 2017 to 2021. In fact, the numbers may actually be higher as I was quite conservative in building the above plot by only considering that 4th down attempts that took place when the offenseive team had between a 5-to-95% winning probability and those prior to the two-minute warning of either half. Even with those conservative limitations, the increase is staggering. The numbers, however, support this aggression. During week one of both the 2020 and 2021 season, *not* going for it on 4th down "cost teams a cumulative 170 percentage points of win probability" [@bushnell2021].
 
-Ben Baldwin, using the `nfl4th` package that is part of the `nflverse`, tracked the shift in NFL coaching mentality regarding 4th down decisions by comparing 2014's "go for it percentage" against the same for 2020. The results are clear:
+Ben Baldwin, using the `nfl4th` package that is part of the `nflverse`, tracked the shift in NFL coaching mentality regarding 4th down decisions by comparing 2014's "go for it percentage" against the same for 2020. When compared to the 2014 season, NFL coaches are now much more in agreement with analytics on when to "go for it" on 4th down in relation to the expected gain in win probability.
 
 <img src="docs/images/baldwin-graph-goforit.png" width="100%" />
 
-And, considering both Mike Tomlin's quote from above and other NFL analytics staffers voting the Steelers as one of the least analytically driven teams in the league, it should not be surprising that Baldwin, again using the `nfl4th` package, found that Pittsburgh lost the most win probability by either kicking or punting in "go situations" during the 2020 NFL season:
+It should not be surprising then, considering Mike Tomlin's quote from above and other NFL analytics staffers voting the Steelers as one of the least analytically driven temas in the league, that Pittsburgh lost the most win probability by either kicking or punting in "go for it" situations during the 2020 NFL season. On the other end, the Ravens and Browns - two teams voted as the most analytically inclined - are the two best organizations at knowing when to "go for it" on 4th down based on win probablity added. There seems to be a defined relationship between teams buying into analytics and those who do not:
 
 <img src="docs/images/tomlin-go-for-it.png" width="100%" />
 
-The NFL's turn towards more aggressive 4th-down decisions is just one of the many analytics-driven changes occuring in the league. Some of these changes are apparent on televisions screens on Sunday afternoons in the Fall, while others are occuring behing the scenes (analytics departments working on scouting and draft preparation, for example). Indeed, the use of analytics in the NFL is not as tightly engrained as we see in other prominent leagues. And we must remember that there are certainly continued hold outs among some NFL coaches (like Mike Tomlin).
+The NFL's turn towards more aggressive 4th-down decisions is just one of the many analytics-driven changes occuring in the league. Another significant example is Defense-Adjusted Value over Average (or DVOA), a formula created by Aaron Schatz, now the editor in chief of [Football Outsiders](https://www.footballoutsiders.com/info/methods#dvoa), that sought to challenge the notion that teams should, first, establish the running game in order to open up the passing game. Some of these changes are apparent on televisions screens on Sunday afternoons in the Fall, while others are occuring behing the scenes (analytics departments working on scouting and draft preparation, for example). Indeed, the use of analytics in the NFL is not as tightly engrained as we see in other prominent leagues. And we must remember that there are certainly continued hold outs among some NFL coaches (like Mike Tomlin).
 
-Despite that, the "thirst for knowledge in football is as excessive as any other sport and the desire to get the most wins per dollar is just as high." As the pipeline of data continues to grow, both internally in the league and data that becomes publically accessible, "smart teams will continue to leave no rock unturned as they push the limits on how far data can take them." Joe Banner explained that while the NFL has long been a league of coaches saying "well, that is the way we've always done it," the league is ripe for a major shift [@bechtold2021].
+Despite some coaching hold outs on fully embracing analytics, the "thirst for knowledge in football is as excessive as any other sport and the desire to get the most wins per dollar is just as high." As the pipeline of data continues to grow, both internally in the league and data that becomes publically accessible, "smart teams will continue to leave no rock unturned as they push the limits on how far data can take them." Joe Banner explained that while the NFL has long been a league of coaches saying "well, that is the way we've always done it," the league is ripe for a major shift [@bechtold2021].
 
-Banner's belief that those teams searching for every competitive advantage will "leave no rock unturned" is the driving force behind this book. For all intents and purposes, the age of analytics in the NFL is stil in its infancy. It seems that every new NFL season results in an amateur analyst bringing a groundbreaking model and/or approach to the table. **NEED TO FLESH THIS OUT JUST A BIT MORE...**
+Banner's belief that those teams searching for every competitive advantage will "leave no rock unturned" is the driving force behind this book. For all intents and purposes, the age of analytics in the NFL is stil in its infancy. Turning back, again, to the 2017 season, the Eagles' management praised and credited the team's analytics department as part of the reason they were able to win Super Bowl LII. Doing so Danney Heifetz argues, "changed the language of football." The NFL, he explains, is a "copycat league" and, as witnessed with the increase in 4th down aggressivenes since 2017, teams immediately began to carbon copy Philadelphia's approach to folding traditional football strategy with a new age analytics approach. Because of the modernity of this relationship between long-held football dogmas and analytics, nobody can be quite sure what other impacts it will create on the gamemanship of football.
+
+However, as Heifetz opins, both the NBA and MLB can serve as a roadmap to where analytics will take the NFL. Importantly, the NFL's relationship with analytics is still in its "first frontier of what will likely be a sweeping change over the next two decades." Because of this, we cannot be sure what the next major impact analytics will make, nor when it may occur. But, with the ever-growing amount of publicly accessible data, it is only a matter of time until it is discovered. For example, in an interview with Heifetz, Brian Burke - one of the forefather's of NFL analytics and now a writer for ESPN - expressed his belief that the next major impact will be "quantifying how often quarterbacks make the correct decision on the field."
+
+It seems that every new NFL season results in an amateur analyst bringing a groundbreaking model and/or approach to the table. And that is the underpinning reasoning for the writing of this book. The analytics revolution in the NFL is very much in its infancy. Unlike, for example, MLB where there is little left to discover in terms of sabermetrics and new approaches to understanding the game and its associated strategy, the NFL is - for lack of a better phrase - an open playing field. With more and more data becoming avaliable to the public, it is now easier than ever investigate your own ideas and suspicions and to create your own models to confirm your intuition.
+
+For example, I am originally from Pittsbugh and am a big Steelers fan (which certainly explains some of the Steelers-centric examples I use in the writing of this book). I was adamant Pittsburgh's TJ Watt should win the 2021 Defensive Player of the Year, despite many others calling for Los Angeles' Aaron Donald to claim the title. In effort to prove my point, I sought out to design what I coined ***Adjusted Defensive Impact***. To begin, I wanted to explore the idea that not all defensive sacks are created equal, as a player's true impact is not always perfectly represented by top-level statistics.
+
+To account for that, I opted to adjust and add statistical weight to sack statistics. This was done over multiple areas. For instance, not all players competed in all 17 regular-season games in 2021. To adjust for this, I took the total of game played in the data (2,936) and divided by 17 (a full season) to achieve a weighted adjustment of 0.0058. TJ Watt played in just 15 games in 2021. His adjusted equation, therefore, is (17-'games') \* 0.0058. The result? He gets a bit more credit for this adjustment than, say, Myles Garrett who played all 17 regular-season games.
+
+Going further with the model, I created a weighted adjustment for solo sacks (0.90), a negative weighted adjustment (-0.14) for any sack charted as "unblocked," and a weighted adjustment to account for how many times a player actually rushed the QB compared to how many defensive snapes they played. Using data from the SIS Data Hub, the full code is below:
+
+
+```r
+options(digits = 2)
+
+## selecting just information I want and then renaming
+pass.data <- pass_rush_data %>%
+  select(Player, Team, Games, `Pass Snaps`, `Pass Rushes`,
+         `Solo Sacks`, `Ast. Sacks`, `Comb. Sacks`, 
+         `Unblocked Sacks`, Hurries, Hits) %>%
+  rename(total.snaps = `Pass Snaps`,
+         total.rushes = `Pass Rushes`,
+         solo.sacks = `Solo Sacks`,
+         asst.sacks = `Ast. Sacks`,
+         comb.sacks = `Comb. Sacks`,
+         unblocked.sacks = `Unblocked Sacks`,
+         player = Player,
+         team = Team,
+         games = Games,
+         hurries = Hurries,
+         hits = Hits)
+
+## creating a new column to get percentages of snaps where player rushed
+pass.data$rush.percent <- pass.data$total.rushes / pass.data$total.snaps
+
+## getting weights to add to the equation
+## for example, a solo sack is "more impressive" than an assisted sack. 
+## to account for this, we will take the sum of combined sacks (995) and divide 
+## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will
+## be placed on solo sacks.
+
+## as well, a negative weight will be applied to unblocked sacks. Using the total
+## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a
+## NEGATIVE weight of 0.14 to be applied to unblocked sacks
+
+## further, a weight must be applied to those players who played less than a complete season.
+## the weight here works out to be 0.0058.
+
+## summarizing information
+calculated.impact <- pass.data %>%
+  group_by(player) %>%
+  summarize(
+    adjusted.games = (17 - games) * 0.0058,
+    adjusted.solo = solo.sacks * 0.9,
+    adjusted.unblocked = unblocked.sacks * -0.14,
+    adjusted.rush.percent = 0.81 - rush.percent,
+    combined.impact = sum(adjusted.games + (solo.sacks * 0.9) + (unblocked.sacks * -0.14) + adjusted.rush.percent))
+```
+
+The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutey dominant during the 2021 season:
+
+<img src="docs/images/adjusteddefense.png" width="100%" />
 
 ### Who This Book Is For
 
