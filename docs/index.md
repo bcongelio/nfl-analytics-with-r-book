@@ -62,9 +62,25 @@ Given that Tomlin's quote is from 2015, perhaps the Steelers pivoted since and a
 
 There is large gap between the least analytically inclined teams (Washington, Tenessee, Cincinnati, New York Giants, and Pittsburgh) and those voted as the most analytically inclined (Baltimore, Cleveland, Philadelphia, and Houston). In the ESPN poll, the Browns were voted as the analytics department producing the highest level of work. One of those polled spoke to the fact that much of this outstanding work is a result of General Manager Andrew Berry being a "true believer," explaining that he is one of the "rare guys you'll come across in life where you think to yoursef, 'Man, this guy think at a different level. Just pure genius.' He's one of them."
 
-In his article for the *Washington Post*, Sam Fortier argues that many teams became inspired to more intimately introduce analytics into gam eplanning and on-field decision after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
+In his article for the *Washington Post*, Sam Fortier argues that many teams became inspired to more intimately introduce analytics into game planning and on-field decisions after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
 
 <img src="docs/images/4th-down-attempts.png" width="100%" />
+
+There has been a 96.3% increase in the number of 4th down attempts from just 2017 to 2021. In fact, the numbers may actually be higher as I was quite conservative in building the above plot by only considering that 4th down attempts that took place when the offenseive team had between a 5-to-95% winning probability and those prior to the two-minute warning of either half. Even with those conservative limitations, the increase is staggering. The numbers, however, support this aggression. During week one of both the 2020 and 2021 season, *not* going for it on 4th down "cost teams a cumulative 170 percentage points of win probability" [@bushnell2021].
+
+Ben Baldwin, using the `nfl4th` package that is part of the `nflverse`, tracked the shift in NFL coaching mentality regarding 4th down decisions by comparing 2014's "go for it percentage" against the same for 2020. The results are clear:
+
+<img src="docs/images/baldwin-graph-goforit.png" width="100%" />
+
+And, considering both Mike Tomlin's quote from above and other NFL analytics staffers voting the Steelers as one of the least analytically driven teams in the league, it should not be surprising that Baldwin, again using the `nfl4th` package, found that Pittsburgh lost the most win probability by either kicking or punting in "go situations" during the 2020 NFL season:
+
+<img src="docs/images/tomlin-go-for-it.png" width="100%" />
+
+The NFL's turn towards more aggressive 4th-down decisions is just one of the many analytics-driven changes occuring in the league. Some of these changes are apparent on televisions screens on Sunday afternoons in the Fall, while others are occuring behing the scenes (analytics departments working on scouting and draft preparation, for example). Indeed, the use of analytics in the NFL is not as tightly engrained as we see in other prominent leagues. And we must remember that there are certainly continued hold outs among some NFL coaches (like Mike Tomlin).
+
+Despite that, the "thirst for knowledge in football is as excessive as any other sport and the desire to get the most wins per dollar is just as high." As the pipeline of data continues to grow, both internally in the league and data that becomes publically accessible, "smart teams will continue to leave no rock unturned as they push the limits on how far data can take them." Joe Banner explained that while the NFL has long been a league of coaches saying "well, that is the way we've always done it," the league is ripe for a major shift [@bechtold2021].
+
+Banner's belief that those teams searching for every competitive advantage will "leave no rock unturned" is the driving force behind this book. For all intents and purposes, the age of analytics in the NFL is stil in its infancy. It seems that every new NFL season results in an amateur analyst bringing a groundbreaking model and/or approach to the table. **NEED TO FLESH THIS OUT JUST A BIT MORE...**
 
 ### Who This Book Is For
 
@@ -114,7 +130,7 @@ Finally, my most recent academic, peer-reviewed publications include:
 
 ## Technical Details {.unnumbered}
 
-This book was written using RStudio's[Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. While writing this book, the following R version was used:
+This book was written using RStudio's [Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. While writing this book, the following R version was used:
 
 
 ```
