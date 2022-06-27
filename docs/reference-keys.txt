@@ -1,4 +1,7 @@
 tab:packages-used
+who-this-book-is-for
+why-did-i-write-this-book
+overview-of-chapters
 an-introduction-to-nfl-analytics-and-the-r-programming-language
 nflreadr-an-introduction-to-the-data
 getting-weekly-player-stats-via-load_player_stats

@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-24"
+date: "2022-06-26"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -18,9 +18,11 @@ url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 
 # Preface {.unnumbered}
 
-<center>**Welcome to the online home of *An Introduction to NFL Analytics with R*.**</center>
+<center>
 
-<br>
+**Welcome to the online home of *An Introduction to NFL Analytics with R*.**
+
+</center>
 
 <img src="docs/images/big-ben-intro.jpg" width="100%" />
 
@@ -32,7 +34,7 @@ Please feel free to contribute to the book by filing an issue or making a pull r
 
 ## Introduction {.unnumbered}
 
-On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).
+On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data and allow the end-user to access it at speeds quicker than similar predecessors (hence the name).
 
 <img src="docs/images/ben-baldwin-intro-tweet.jpg" width="100%" />
 
@@ -46,13 +48,35 @@ The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat
 
 As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the ceation to themselves and relased `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages were developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
 
-Unfortunately, there is a downside to this type of rapid development. Being able to understand which package does what and, moreover, which function within each package you should be using, is difficult for a newcomer to decipher.
-
-## About The Book {.unnumbered}
+The creation of the `nflverse` allowed for anyboy interested in NFL analytics to easily access data, manipulate it to their liking, and release their visiaulizations and/or metrics to the wider public thanks to a large and active "analytics community" on Twitter and beyond. In fact, it is now a regular occurence for somebody to advance their R programming ability because of the `nflverse` and then go win to win the Big Data Bowl. As of the 2022 version of the Big Data Bowl, over "30 participants have been hired to work in data and analytics roles in sports, including 22 that were hired in football [@bigdatabowl-ws]. Most recently, the [Chargers hired 2020 participate Alex Stern](https://www.boltsfromtheblue.com/2021/7/9/22570490/chargers-news-nfl-big-data-bowl) and the [Chiefs hired Marc Richards](https://twitter.com/sethwalder/status/1532721476209627136), a member of the winning 2021 team, as a Football Research Analyst.
 
 Kevin Clark, in a 2018 article for [*The Ringer*](https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution), explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is "happening in front of you all the time." The use of analytics in the NFL did, however, predate Clark's article. In 2014, Eagles head coach Doug Pederson explained that all decisons made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. An argument can be made, therefore, that Ryan Paganetti was the first analytics-inclined hire when he was brought on board in Philadelphia to build the team's analytics department. By 2018, Pederson believed in and trusted Paganetti's approach to analytics so much that a direct line of communication was created between the two during games, with Paganetti providing the head coach with math-based recommendations for any scenario Pederson requested [@awbrey2020].
 
-In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. **MORE TO COME HERE**.
+In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically "altered baseball's DNA [@heifetz2019]. Moreover, as explained in Seth Partnow's outstanding [*The Midrange Theory: Basketball's Evolution in the Age of Analytics*](https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1656245879&sr=8-4), the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket or two shot the 3-pointer, as the additional point is worth the slightly lower probability than a 2-point midrange shot) as well as the traditional, "old-school" center position.
+
+Compared to both the NBA and MLB, the NFL is playing catchup in analytics driving changes equivalent to the death of the midrange shot or the plethroa of additional tactics and changes to baseball because of sabermetrics. Joe Banner, who served as the President of the Eagles from 2001-2012 and then the Chief Executive Officers of the Browns from 2012-2013, explained that some of the hesitation to incorporate analytics into NFL game planning was a result of the game being "very much driven by conventional wisdom to an extreme degree" [@fortier2020]. Perhaps nobody encapsulates this better than Pittsburgh Steelers Head Coach Mike Tomlin. When asked about his position on analytics during the 2015 season, Tomlin explained:
+
+> I think that's why you play the game. You can take analytics to baseball and things like that but football is always going to be football. I got a lot of respect for analytics and numbers, but I'm not going to make judgements based on those numbers. The game is the game. It's an emotional one played by emotional and driven men. That's an element of the game you can't measure. Often times decisions such as that weight heavily into the equation [@kozora2015].
+
+Given that Tomlin's quote is from 2015, perhaps the Steelers pivoted since and are now more analytically inclined. That does not seem to be the case. In a poll of NFL analytics staffers conducted by ESPN, [the Steelers were voted as one of the least analytically advanced teams in the league.](https://www.espn.com/nfl/story/_/id/29939438/2020-nfl-analytics-survey-which-teams-most-least-analytically-inclined#least)
+
+There is large gap between the least analytically inclined teams (Washington, Tenessee, Cincinnati, New York Giants, and Pittsburgh) and those voted as the most analytically inclined (Baltimore, Cleveland, Philadelphia, and Houston). In the ESPN poll, the Browns were voted as the analytics department producing the highest level of work. One of those polled spoke to the fact that much of this outstanding work is a result of General Manager Andrew Berry being a "true believer," explaining that he is one of the "rare guys you'll come across in life where you think to yoursef, 'Man, this guy think at a different level. Just pure genius.' He's one of them."
+
+In his article for the *Washington Post*, Sam Fortier argues that many teams became inspired to more intimately introduce analytics into gam eplanning and on-field decision after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
+
+<img src="docs/images/4th-down-attempts.png" width="100%" />
+
+### Who This Book Is For
+
+Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task. I am sure there are people reading this that are seasoned R users and are looking to use that knowledge with NFL data. On the other hand, I am sure there are readers that do not even have base R or RStudio downloaded to their computers. Because of this divide, I attempted to structure this book in such a way so that those with prior knowledge of R can skip ahead to can skip chapter 2. On the other hands, those new to the world of R coding should start with chapter 2 to gain an understanding of the R programming language (specifically the `tidyverse`).
+
+Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.
+
+### Why Did I Write This Book?
+
+fffff
+
+## Overview of Chapters
 
 -   **Chapter 1** provides an overview of the `nflverse` with specific attention paid to the difference between using `nflfastR` versus `nflreadr`. Serving as the first dive into analytics, the chapter showcases how to use `nflreadr` to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once. To conclude, other sources of NFL data will be highlighted such as [PFF](https://premium.pff.com/nfl/teams/2021/REGPO) and [SIS](https://www.sportsinfosolutions.com/solution/football/). (*Note: As permisson is granted, example data from both PFF and SIS will be incorporated into this book as both come with unique issues to overcome during the data cleaning/prep process).*
 

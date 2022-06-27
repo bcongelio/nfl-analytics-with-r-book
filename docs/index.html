@@ -80,9 +80,8 @@
 <h1>Preface<a class="anchor" aria-label="anchor" href="#preface"><i class="fas fa-link"></i></a>
 </h1>
 <center>
-<strong>Welcome to the online home of <em>An Introduction to NFL Analytics with R</em>.</strong>
+<p><strong>Welcome to the online home of <em>An Introduction to NFL Analytics with R</em>.</strong></p>
 </center>
-<p><br></p>
 <div class="inline-figure"><img src="docs/images/big-ben-intro.jpg" width="100%"></div>
 <p>The online version of this book is published with the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.</a></p>
 <p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository:</p>
@@ -92,20 +91,42 @@
 <div id="introduction" class="section level2 unnumbered">
 <h2>Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
 </h2>
-<p>On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of <code>nflfastR</code>, an R package that was designed to scrape NFL play-by-play data at unprecedented speeds (hence the name).</p>
+<p>On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of <code>nflfastR</code>, an R package that was designed to scrape NFL play-by-play data and allow the end-user to access it at speeds quicker than similar predecessors (hence the name).</p>
 <div class="inline-figure"><img src="docs/images/ben-baldwin-intro-tweet.jpg" width="100%"></div>
 <p>Thanks to the work of multiple people (<a href="https://twitter.com/mrcaseb">@mrcaseB</a>, <a href="https://twitter.com/benbbaldwin">@benbbaldwin</a>, <a href="https://twitter.com/_TanHo">@TanHo</a>, <a href="https://twitter.com/LeeSharpeNFL">@LeeSharpeNFL</a>, and <a href="https://twitter.com/thomas_mock">@thomas_mock</a> … to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.</p>
 <p>That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the <code>nflverse</code>, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.</p>
 <p>The <code>nflverse</code> was initially birthed from <a href="https://twitter.com/Stat_Ron">Ron Yurko’s</a> <code>nflscrapR</code> project. At the time of development of <code>nflscrapR</code>, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, <code>nflscrapR</code> was more of a side project and was ended with the creation of <code>nflfastR</code> by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the <code>nflscrapR</code> era and the beginning of the <code>nflfastR</code> era with a tweet on September 14, 2020:</p>
 <div class="inline-figure"><img src="docs/images/farewell-nflscrapr.jpg" width="100%"></div>
 <p>As a reply to his first tweet about the <code>nflfastR</code> project, Ben explained that he created the original function to scrape NFL data for the creation of his <a href="https://rbsdm.com/stats/stats/">NFL analytics website</a>. Thankfully, he and Seb did not keep the ceation to themselves and relased <code>nflfastR</code> to the public. Because of the “open source” nature of R and R packages, a laundry list of companion packages were developed alongside <code>nflfastR</code>. The original <code>nflfastR</code> package is now part of the larger <code>nflverse</code> of packages that drive the NFL analytics community on Twitter and beyond.</p>
-<p>Unfortunately, there is a downside to this type of rapid development. Being able to understand which package does what and, moreover, which function within each package you should be using, is difficult for a newcomer to decipher.</p>
-</div>
-<div id="about-the-book" class="section level2 unnumbered">
-<h2>About The Book<a class="anchor" aria-label="anchor" href="#about-the-book"><i class="fas fa-link"></i></a>
-</h2>
+<p>The creation of the <code>nflverse</code> allowed for anyboy interested in NFL analytics to easily access data, manipulate it to their liking, and release their visiaulizations and/or metrics to the wider public thanks to a large and active “analytics community” on Twitter and beyond. In fact, it is now a regular occurence for somebody to advance their R programming ability because of the <code>nflverse</code> and then go win to win the Big Data Bowl. As of the 2022 version of the Big Data Bowl, over "30 participants have been hired to work in data and analytics roles in sports, including 22 that were hired in football <span class="citation">(<a href="wrangling-nfl-data-in-the-tidyverse.html#ref-bigdatabowl-ws" role="doc-biblioref"><span>“Big Data Bowl: The Annual Analytics Contest Explores Statistical Innovations in Football,”</span> n.d.</a>)</span>. Most recently, the <a href="https://www.boltsfromtheblue.com/2021/7/9/22570490/chargers-news-nfl-big-data-bowl">Chargers hired 2020 participate Alex Stern</a> and the <a href="https://twitter.com/sethwalder/status/1532721476209627136">Chiefs hired Marc Richards</a>, a member of the winning 2021 team, as a Football Research Analyst.</p>
 <p>Kevin Clark, in a 2018 article for <a href="https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution"><em>The Ringer</em></a>, explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is “happening in front of you all the time.” The use of analytics in the NFL did, however, predate Clark’s article. In 2014, Eagles head coach Doug Pederson explained that all decisons made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. An argument can be made, therefore, that Ryan Paganetti was the first analytics-inclined hire when he was brought on board in Philadelphia to build the team’s analytics department. By 2018, Pederson believed in and trusted Paganetti’s approach to analytics so much that a direct line of communication was created between the two during games, with Paganetti providing the head coach with math-based recommendations for any scenario Pederson requested <span class="citation">(<a href="wrangling-nfl-data-in-the-tidyverse.html#ref-awbrey2020" role="doc-biblioref">Awbrey 2020</a>)</span>.</p>
-<p>In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. <strong>MORE TO COME HERE</strong>.</p>
+<p>In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically “altered baseball’s DNA <span class="citation">(<a href="wrangling-nfl-data-in-the-tidyverse.html#ref-heifetz2019" role="doc-biblioref">Heifetz 2019</a>)</span>. Moreover, as explained in Seth Partnow’s outstanding <a href="https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=1656245879&amp;sr=8-4"><em>The Midrange Theory: Basketball’s Evolution in the Age of Analytics</em></a>, the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket or two shot the 3-pointer, as the additional point is worth the slightly lower probability than a 2-point midrange shot) as well as the traditional,”old-school" center position.</p>
+<p>Compared to both the NBA and MLB, the NFL is playing catchup in analytics driving changes equivalent to the death of the midrange shot or the plethroa of additional tactics and changes to baseball because of sabermetrics. Joe Banner, who served as the President of the Eagles from 2001-2012 and then the Chief Executive Officers of the Browns from 2012-2013, explained that some of the hesitation to incorporate analytics into NFL game planning was a result of the game being “very much driven by conventional wisdom to an extreme degree” <span class="citation">(<a href="wrangling-nfl-data-in-the-tidyverse.html#ref-fortier2020" role="doc-biblioref">Fortier 2020</a>)</span>. Perhaps nobody encapsulates this better than Pittsburgh Steelers Head Coach Mike Tomlin. When asked about his position on analytics during the 2015 season, Tomlin explained:</p>
+<blockquote>
+<p>I think that’s why you play the game. You can take analytics to baseball and things like that but football is always going to be football. I got a lot of respect for analytics and numbers, but I’m not going to make judgements based on those numbers. The game is the game. It’s an emotional one played by emotional and driven men. That’s an element of the game you can’t measure. Often times decisions such as that weight heavily into the equation <span class="citation">(<a href="wrangling-nfl-data-in-the-tidyverse.html#ref-kozora2015" role="doc-biblioref">Kozora 2015</a>)</span>.</p>
+</blockquote>
+<p>Given that Tomlin’s quote is from 2015, perhaps the Steelers pivoted since and are now more analytically inclined. That does not seem to be the case. In a poll of NFL analytics staffers conducted by ESPN, <a href="https://www.espn.com/nfl/story/_/id/29939438/2020-nfl-analytics-survey-which-teams-most-least-analytically-inclined#least">the Steelers were voted as one of the least analytically advanced teams in the league.</a></p>
+<p>There is large gap between the least analytically inclined teams (Washington, Tenessee, Cincinnati, New York Giants, and Pittsburgh) and those voted as the most analytically inclined (Baltimore, Cleveland, Philadelphia, and Houston). In the ESPN poll, the Browns were voted as the analytics department producing the highest level of work. One of those polled spoke to the fact that much of this outstanding work is a result of General Manager Andrew Berry being a “true believer,” explaining that he is one of the “rare guys you’ll come across in life where you think to yoursef, ‘Man, this guy think at a different level. Just pure genius.’ He’s one of them.”</p>
+<p>In his article for the <em>Washington Post</em>, Sam Fortier argues that many teams became inspired to more intimately introduce analytics into gam eplanning and on-field decision after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:</p>
+<div class="inline-figure"><img src="docs/images/4th-down-attempts.png" width="100%"></div>
+<div id="who-this-book-is-for" class="section level3" number="0.0.1">
+<h3>
+<span class="header-section-number">0.0.1</span> Who This Book Is For<a class="anchor" aria-label="anchor" href="#who-this-book-is-for"><i class="fas fa-link"></i></a>
+</h3>
+<p>Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task. I am sure there are people reading this that are seasoned R users and are looking to use that knowledge with NFL data. On the other hand, I am sure there are readers that do not even have base R or RStudio downloaded to their computers. Because of this divide, I attempted to structure this book in such a way so that those with prior knowledge of R can skip ahead to can skip chapter 2. On the other hands, those new to the world of R coding should start with chapter 2 to gain an understanding of the R programming language (specifically the <code>tidyverse</code>).</p>
+<p>Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.</p>
+</div>
+<div id="why-did-i-write-this-book" class="section level3" number="0.0.2">
+<h3>
+<span class="header-section-number">0.0.2</span> Why Did I Write This Book?<a class="anchor" aria-label="anchor" href="#why-did-i-write-this-book"><i class="fas fa-link"></i></a>
+</h3>
+<p>fffff</p>
+</div>
+</div>
+<div id="overview-of-chapters" class="section level2" number="0.1">
+<h2>
+<span class="header-section-number">0.1</span> Overview of Chapters<a class="anchor" aria-label="anchor" href="#overview-of-chapters"><i class="fas fa-link"></i></a>
+</h2>
 <ul>
 <li><p><strong>Chapter 1</strong> provides an overview of the <code>nflverse</code> with specific attention paid to the difference between using <code>nflfastR</code> versus <code>nflreadr</code>. Serving as the first dive into analytics, the chapter showcases how to use <code>nflreadr</code> to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once. To conclude, other sources of NFL data will be highlighted such as <a href="https://premium.pff.com/nfl/teams/2021/REGPO">PFF</a> and <a href="https://www.sportsinfosolutions.com/solution/football/">SIS</a>. (<em>Note: As permisson is granted, example data from both PFF and SIS will be incorporated into this book as both come with unique issues to overcome during the data cleaning/prep process).</em></p></li>
 <li><p><strong>Chapter 2</strong> covers the process of downloading both R and RStudio, as well as the necessary packages to do NFL analytics. As one of the most important chapters in the book (especially for those new to the R programming language), readers take a deep dive into wrangling NFL data with the <code>tidyverse</code> package. To begin, readers will learn about the <code>dplyr</code> pipe (<code>%&gt;%</code>) and use, in exercises, the six most important verbs in the <code>dplyr</code> language: <code>filer()</code>, <code>select()</code>, <code>arrange()</code>, <code>summarize()</code>, <code>mutate()</code>, and <code>group_by()</code>. At the conclusion of the chapter, multiple exercises are provided to allow readers to practice using the <code>dplyr</code> verbs, relational operators within the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function and creating “new stats” by using the <code>summarize()</code> function. Moreover, readers will determine the relationship between the <code>dplyr</code> language and important variables within the <code>nflverse</code> data such as <code>player_name</code> and <code>player_id</code>, which is important for correct manipulation and cleaning of data.</p></li>
@@ -240,8 +261,13 @@ CRAN (R 4.1.1)
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#preface">Preface</a></li>
-<li><a class="nav-link" href="#introduction">Introduction</a></li>
-<li><a class="nav-link" href="#about-the-book">About The Book</a></li>
+<li>
+<a class="nav-link" href="#introduction">Introduction</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#who-this-book-is-for"><span class="header-section-number">0.0.1</span> Who This Book Is For</a></li>
+<li><a class="nav-link" href="#why-did-i-write-this-book"><span class="header-section-number">0.0.2</span> Why Did I Write This Book?</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#overview-of-chapters"><span class="header-section-number">0.1</span> Overview of Chapters</a></li>
 <li><a class="nav-link" href="#about-the-author">About The Author</a></li>
 <li><a class="nav-link" href="#technical-details">Technical Details</a></li>
 </ul>
@@ -260,7 +286,7 @@ CRAN (R 4.1.1)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-24.</p>
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-06-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

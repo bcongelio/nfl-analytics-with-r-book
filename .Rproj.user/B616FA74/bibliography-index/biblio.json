@@ -74,6 +74,108 @@
             "type": ""
         },
         {
+            "URL": "https://www.theringer.com/nfl-preview/2019/8/15/20806241/nfl-analytics-pro-football-focus",
+            "author": [
+                {
+                    "family": "Heifetz",
+                    "given": "Danney"
+                }
+            ],
+            "id": "heifetz2019",
+            "issued": {
+                "date-parts": [
+                    [
+                        2019
+                    ]
+                ]
+            },
+            "title": "We salute you, founding father of the NFL’s analytics movement",
+            "type": ""
+        },
+        {
+            "URL": "https://operations.nfl.com/gameday/analytics/big-data-bowl/",
+            "id": "bigdatabowl-ws",
+            "title": "Big data bowl: The annual analytics contest explores statistical innovations in football",
+            "title-short": "Big data bowl",
+            "type": ""
+        },
+        {
+            "URL": "https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/",
+            "author": [
+                {
+                    "family": "Fortier",
+                    "given": "Sam"
+                }
+            ],
+            "id": "fortier2020",
+            "issued": {
+                "date-parts": [
+                    [
+                        2020
+                    ]
+                ]
+            },
+            "title": "The NFL’s analytics movement has finally reached the sport’s mainstream",
+            "type": ""
+        },
+        {
+            "URL": "http://steelersdepot.com/2015/09/tomlin-prefers-feel-over-analytics/",
+            "author": [
+                {
+                    "family": "Kozora",
+                    "given": "Alex"
+                }
+            ],
+            "id": "kozora2015",
+            "issued": {
+                "date-parts": [
+                    [
+                        2015
+                    ]
+                ]
+            },
+            "title": "Tomlin prefers \"feel over analytics\"",
+            "type": ""
+        },
+        {
+            "URL": "https://sports.yahoo.com/nfl-teams-are-taking-4th-down-risks-more-than-ever-but-still-not-often-enough-163650973.html",
+            "author": [
+                {
+                    "family": "Bushnell",
+                    "given": "Henry"
+                }
+            ],
+            "id": "bushnell2021",
+            "issued": {
+                "date-parts": [
+                    [
+                        2021
+                    ]
+                ]
+            },
+            "title": "NFL teams are taking 4th-down risks more than ever - but still not often enough",
+            "type": ""
+        },
+        {
+            "URL": "https://theanalyst.com/na/2021/04/evolution-of-the-analytics-movement-in-the-nfl/",
+            "author": [
+                {
+                    "family": "Bechtold",
+                    "given": "Taylor"
+                }
+            ],
+            "id": "bechtold2021",
+            "issued": {
+                "date-parts": [
+                    [
+                        2021
+                    ]
+                ]
+            },
+            "title": "How the analytics movement has changed the NFL and where it has fallen short",
+            "type": ""
+        },
+        {
             "URL": "https://www.R-project.org/",
             "author": [
                 {
