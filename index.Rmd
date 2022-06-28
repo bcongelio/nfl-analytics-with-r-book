@@ -6,10 +6,10 @@ site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: [references.bib]
 biblio-style: apalike
-description: "This book provides in-depth instruction on how to use R and the nflverse family of packages to conduct advanced NFL analytics."
 link-citations: yes
+description: "This book provides in-depth instruction on how to use R and the nflverse family of packages to conduct advanced NFL analytics."
 github-repo: "bcongelio/nfl-analytics-with-r-book"
 url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
@@ -77,7 +77,7 @@ There is large gap between the least analytically inclined teams (Washington, Te
 
 [In his article for the *Washington Post*](https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/), Sam Fortier argues that many teams became inspired to more intimately introduce analytics into game planning and on-field decisions after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
 
-```{r increase-in-4th-down-aggression, echo = FALSE}
+```{r increase-in-4th-down-aggression, echo = FALSE, fig.cap = "4th Down Attempts: 2000 - 2021"}
 knitr::include_graphics(rep("docs/images/4th-down-attempts.png"))
 
 ```
@@ -86,14 +86,14 @@ There has been a 96.3% increase in the number of 4th down attempts from just 201
 
 Ben Baldwin, using the `nfl4th` package that is part of the `nflverse`, tracked the shift in NFL coaching mentality regarding 4th down decisions by comparing 2014's "go for it percentage" against the same for 2020. When compared to the 2014 season, NFL coaches are now much more in agreement with analytics on when to "go for it" on 4th down in relation to the expected gain in win probability.
 
-```{r ben-baldwin-4th-down-graph, echo = FALSE}
+```{r ben-baldwin-4th-down-graph, echo = FALSE, fig.cap = "Credit: Ben Baldwin"}
 knitr::include_graphics(rep("docs/images/baldwin-graph-goforit.png"))
 
 ```
 
 It should not be surprising then, considering Mike Tomlin's quote from above and other NFL analytics staffers voting the Steelers as one of the least analytically driven temas in the league, that Pittsburgh lost the most win probability by either kicking or punting in "go for it" situations during the 2020 NFL season. On the other end, the Ravens and Browns - two teams voted as the most analytically inclined - are the two best organizations at knowing when to "go for it" on 4th down based on win probablity added. There seems to be a defined relationship between teams buying into analytics and those who do not:
 
-```{r tomlin-go-for-it, echo = FALSE}
+```{r tomlin-go-for-it, echo = FALSE, fig.cap = "Credit: Ben Baldwin"}
 knitr::include_graphics(rep("docs/images/tomlin-go-for-it.png"))
 
 ```
@@ -157,7 +157,7 @@ calculated.impact <- pass.data %>%
   summarize(
     adjusted.games = (17 - games) * 0.0058,
     adjusted.solo = solo.sacks * 0.9,
-    adjusted.unblocked = unblocked.sacks * -0.14,
+    adjusted.unblocked = unblocked.sacks / -0.14,
     adjusted.rush.percent = 0.81 - rush.percent,
     combined.impact = sum(adjusted.games + (solo.sacks * 0.9) + (unblocked.sacks * -0.14) + adjusted.rush.percent))
 
@@ -165,20 +165,26 @@ calculated.impact <- pass.data %>%
 
 The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutey dominant during the 2021 season:
 
-```{r adjusted-defensive-impact, echo = FALSE}
+```{r adjusted-defensive-impact, echo = FALSE, fig.cap = "Adjusted Defensive Impact"}
 knitr::include_graphics(rep("docs/images/adjusteddefense.png"))
 
 ```
 
+All of these examples - from Ben Baldwin's 4th-down model, to Football Outsiders' DVOA, to my attempt to further quantify defensive player impact - are just the leading edge of the burgeoning analytics movement in the NFL. Moreover, the beauty of analytics is that you do not have to be a mathamatician or statistics buff in order to enter the fray. All it takes is a genuine curiosity to explore what Bob Carroll, Pete Palmer, and John Thorn coined as the "[Hidden Game of Football](https://amzn.to/3y1GZTO)" and the desire to learn, if you have not already, the R programming language.
+
 ### Who This Book Is For
 
-Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task. I am sure there are people reading this that are seasoned R users and are looking to use that knowledge with NFL data. On the other hand, I am sure there are readers that do not even have base R or RStudio downloaded to their computers. Because of this divide, I attempted to structure this book in such a way so that those with prior knowledge of R can skip ahead to can skip chapter 2. On the other hands, those new to the world of R coding should start with chapter 2 to gain an understanding of the R programming language (specifically the `tidyverse`).
+Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task, as there are likely two types of people reading this: those with familiarity in R and those without. If you are part of the former group, you can likely skip chapter 2 as it is a primer on installing R and learing the language of the `tidyverse`. On the other hand, if you are part of the latter group, you should skip ahead to chapter 2 before even looking at chapter 1, which serves as an introduction to the `nflverse` with examples. That said, this book can serve multiple audiences:
+
+1.  Those interested in conducting NFL analytics regardless of their current knowledge of the R programming language.
+
+2.  Professor who instruct data science courses can provide lessons through the lens of sport or, perhaps better, create their own Sport Analytics courses designed around the book.
+
+3.  Students can use the book to integrate NFL analytics into their assignments.
+
+4.  Journalists and bloggers alike can use the book to underpin their arguments and to provide hard data to backup their claims.
 
 Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.
-
-### Why Did I Write This Book?
-
-fffff
 
 ## Overview of Chapters
 
@@ -214,6 +220,20 @@ Finally, my most recent academic, peer-reviewed publications include:
 
 4.  Congelio, B. "Examining Megaevent's Impact on Foot Traffic to Local Businesses Using Mobility and Demographic Aggregation Data." [Currently under peer review and funded by a \$15,000 grant.]{.ul}
 
+### Why A Book Instead of Working in Analytics?
+
+I am sometimes asked why I spend time in the classroom teaching this material rather than taking my domain knowledge to the "industry side" and working in the NFL or an otherwise NFL-connected outlet.
+
+The honest and true answer is this: I love teaching. My favorite experience in the classroom yet is always in my Sport Analytics course. The frustration and sense of helplessness is palable in the first weeks of the semester as students attempt to wrap their head around, what a former student called, "this [censored] foreign language." I insist that they keep pushing through the exercises and assignments. Often, there is line out my door and extendig down the hallway during office hours comprised of just students from the Sport Analytics class.
+
+And then something amazing happens.
+
+Typically about halfway through the semester, I start seeing the lightbulbs go off. Instead of cursing in anger at the "foreign language," students begin randomly cursing in excitement as the flow of the `tidyverse` language "clicks." Once that happens, it is off to the races because, once they understand speaking in `tidyverse`, learning more difficult packages (like `tidymodels`) seems doable.
+
+And that is why I teach. That moment where I realize my lecturing, assisting, explaining, and gentle nudging are all finally paying dividends - not for me, though. For the students.
+
+This book serves as an extension of that classroom experience. As a reader of this book, you are now a "student" and I hope you do not hesitate to reach out to me if you ever have any questions or, more importantly, *when (not if)* you have that "lightbulb moment" and everything begins to click for you.
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
@@ -223,13 +243,7 @@ knitr::write_bib(c(
 
 ## Technical Details {.unnumbered}
 
-This book was written using RStudio's [Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. While writing this book, the following R version was used:
-
-```{r r-version, echo = FALSE}
-cat(system("R --version", intern = TRUE)[1])
-```
-
-As well, the following packages were used in this book:
+This book was written using RStudio's [Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. As well, the following packages were used in this book:
 
 ```{r packages-used, echo = FALSE}
 pkgs <- c(

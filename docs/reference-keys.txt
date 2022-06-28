@@ -1,7 +1,11 @@
+fig:increase-in-4th-down-aggression
+fig:ben-baldwin-4th-down-graph
+fig:tomlin-go-for-it
+fig:adjusted-defensive-impact
 tab:packages-used
 who-this-book-is-for
-why-did-i-write-this-book
 overview-of-chapters
+why-a-book-instead-of-working-in-analytics
 an-introduction-to-nfl-analytics-and-the-r-programming-language
 nflreadr-an-introduction-to-the-data
 getting-weekly-player-stats-via-load_player_stats

@@ -1,15 +1,15 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-27"
+date: "2022-06-28"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: [references.bib]
 biblio-style: apalike
-description: "This book provides in-depth instruction on how to use R and the nflverse family of packages to conduct advanced NFL analytics."
 link-citations: yes
+description: "This book provides in-depth instruction on how to use R and the nflverse family of packages to conduct advanced NFL analytics."
 github-repo: "bcongelio/nfl-analytics-with-r-book"
 url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 ---
@@ -64,17 +64,26 @@ There is large gap between the least analytically inclined teams (Washington, Te
 
 [In his article for the *Washington Post*](https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/), Sam Fortier argues that many teams became inspired to more intimately introduce analytics into game planning and on-field decisions after the 2017 season. On their run to becoming Super Bowl Champions, the Philadelphia Eagles were aggressive on 4th down, going for it 26 times during the season and converting on 17 of those for a conversion percentage of 65.4%. A quick examination and visualization of data highlights the absolutely staggering increase in 4th aggressiveness among NFL head coaches from 2017-2021:
 
-<img src="docs/images/4th-down-attempts.png" width="100%" />
+<div class="figure">
+<img src="docs/images/4th-down-attempts.png" alt="4th Down Attempts: 2000 - 2021" width="100%" />
+<p class="caption">(\#fig:increase-in-4th-down-aggression)4th Down Attempts: 2000 - 2021</p>
+</div>
 
 There has been a 96.3% increase in the number of 4th down attempts from just 2017 to 2021. In fact, the numbers may actually be higher as I was quite conservative in building the above plot by only considering that 4th down attempts that took place when the offenseive team had between a 5-to-95% winning probability and those prior to the two-minute warning of either half. Even with those conservative limitations, the increase is staggering. The numbers, however, support this aggression. During week one of both the 2020 and 2021 season, *not* going for it on 4th down "cost teams a cumulative 170 percentage points of win probability" [@bushnell2021].
 
 Ben Baldwin, using the `nfl4th` package that is part of the `nflverse`, tracked the shift in NFL coaching mentality regarding 4th down decisions by comparing 2014's "go for it percentage" against the same for 2020. When compared to the 2014 season, NFL coaches are now much more in agreement with analytics on when to "go for it" on 4th down in relation to the expected gain in win probability.
 
-<img src="docs/images/baldwin-graph-goforit.png" width="100%" />
+<div class="figure">
+<img src="docs/images/baldwin-graph-goforit.png" alt="Credit: Ben Baldwin" width="100%" />
+<p class="caption">(\#fig:ben-baldwin-4th-down-graph)Credit: Ben Baldwin</p>
+</div>
 
 It should not be surprising then, considering Mike Tomlin's quote from above and other NFL analytics staffers voting the Steelers as one of the least analytically driven temas in the league, that Pittsburgh lost the most win probability by either kicking or punting in "go for it" situations during the 2020 NFL season. On the other end, the Ravens and Browns - two teams voted as the most analytically inclined - are the two best organizations at knowing when to "go for it" on 4th down based on win probablity added. There seems to be a defined relationship between teams buying into analytics and those who do not:
 
-<img src="docs/images/tomlin-go-for-it.png" width="100%" />
+<div class="figure">
+<img src="docs/images/tomlin-go-for-it.png" alt="Credit: Ben Baldwin" width="100%" />
+<p class="caption">(\#fig:tomlin-go-for-it)Credit: Ben Baldwin</p>
+</div>
 
 The NFL's turn towards more aggressive 4th-down decisions is just one of the many analytics-driven changes occuring in the league. Another significant example is Defense-Adjusted Value over Average (or DVOA), a formula created by Aaron Schatz, now the editor in chief of [Football Outsiders](https://www.footballoutsiders.com/info/methods#dvoa), that sought to challenge the notion that teams should, first, establish the running game in order to open up the passing game. Some of these changes are apparent on televisions screens on Sunday afternoons in the Fall, while others are occuring behing the scenes (analytics departments working on scouting and draft preparation, for example). Indeed, the use of analytics in the NFL is not as tightly engrained as we see in other prominent leagues. And we must remember that there are certainly continued hold outs among some NFL coaches (like Mike Tomlin).
 
@@ -135,24 +144,33 @@ calculated.impact <- pass.data %>%
   summarize(
     adjusted.games = (17 - games) * 0.0058,
     adjusted.solo = solo.sacks * 0.9,
-    adjusted.unblocked = unblocked.sacks * -0.14,
+    adjusted.unblocked = unblocked.sacks / -0.14,
     adjusted.rush.percent = 0.81 - rush.percent,
     combined.impact = sum(adjusted.games + (solo.sacks * 0.9) + (unblocked.sacks * -0.14) + adjusted.rush.percent))
 ```
 
 The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutey dominant during the 2021 season:
 
-<img src="docs/images/adjusteddefense.png" width="100%" />
+<div class="figure">
+<img src="docs/images/adjusteddefense.png" alt="Adjusted Defensive Impact" width="100%" />
+<p class="caption">(\#fig:adjusted-defensive-impact)Adjusted Defensive Impact</p>
+</div>
+
+All of these examples - from Ben Baldwin's 4th-down model, to Football Outsiders' DVOA, to my attempt to further quantify defensive player impact - are just the leading edge of the burgeoning analytics movement in the NFL. Moreover, the beauty of analytics is that you do not have to be a mathamatician or statistics buff in order to enter the fray. All it takes is a genuine curiosity to explore what Bob Carroll, Pete Palmer, and John Thorn coined as the "[Hidden Game of Football](https://amzn.to/3y1GZTO)" and the desire to learn, if you have not already, the R programming language.
 
 ### Who This Book Is For
 
-Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task. I am sure there are people reading this that are seasoned R users and are looking to use that knowledge with NFL data. On the other hand, I am sure there are readers that do not even have base R or RStudio downloaded to their computers. Because of this divide, I attempted to structure this book in such a way so that those with prior knowledge of R can skip ahead to can skip chapter 2. On the other hands, those new to the world of R coding should start with chapter 2 to gain an understanding of the R programming language (specifically the `tidyverse`).
+Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task, as there are likely two types of people reading this: those with familiarity in R and those without. If you are part of the former group, you can likely skip chapter 2 as it is a primer on installing R and learing the language of the `tidyverse`. On the other hand, if you are part of the latter group, you should skip ahead to chapter 2 before even looking at chapter 1, which serves as an introduction to the `nflverse` with examples. That said, this book can serve multiple audiences:
+
+1.  Those interested in conducting NFL analytics regardless of their current knowledge of the R programming language.
+
+2.  Professor who instruct data science courses can provide lessons through the lens of sport or, perhaps better, create their own Sport Analytics courses designed around the book.
+
+3.  Students can use the book to integrate NFL analytics into their assignments.
+
+4.  Journalists and bloggers alike can use the book to underpin their arguments and to provide hard data to backup their claims.
 
 Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.
-
-### Why Did I Write This Book?
-
-fffff
 
 ## Overview of Chapters
 
@@ -188,18 +206,25 @@ Finally, my most recent academic, peer-reviewed publications include:
 
 4.  Congelio, B. "Examining Megaevent's Impact on Foot Traffic to Local Businesses Using Mobility and Demographic Aggregation Data." [Currently under peer review and funded by a \$15,000 grant.]{.ul}
 
+### Why A Book Instead of Working in Analytics?
+
+I am sometimes asked why I spend time in the classroom teaching this material rather than taking my domain knowledge to the "industry side" and working in the NFL or an otherwise NFL-connected outlet.
+
+The honest and true answer is this: I love teaching. My favorite experience in the classroom yet is always in my Sport Analytics course. The frustration and sense of helplessness is palable in the first weeks of the semester as students attempt to wrap their head around, what a former student called, "this [censored] foreign language." I insist that they keep pushing through the exercises and assignments. Often, there is line out my door and extendig down the hallway during office hours comprised of just students from the Sport Analytics class.
+
+And then something amazing happens.
+
+Typically about halfway through the semester, I start seeing the lightbulbs go off. Instead of cursing in anger at the "foreign language," students begin randomly cursing in excitement as the flow of the `tidyverse` language "clicks." Once that happens, it is off to the races because, once they understand speaking in `tidyverse`, learning more difficult packages (like `tidymodels`) seems doable.
+
+And that is why I teach. That moment where I realize my lecturing, assisting, explaining, and gentle nudging are all finally paying dividends - not for me, though. For the students.
+
+This book serves as an extension of that classroom experience. As a reader of this book, you are now a "student" and I hope you do not hesitate to reach out to me if you ever have any questions or, more importantly, *when (not if)* you have that "lightbulb moment" and everything begins to click for you.
+
 
 
 ## Technical Details {.unnumbered}
 
-This book was written using RStudio's [Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. While writing this book, the following R version was used:
-
-
-```
-## NA
-```
-
-As well, the following packages were used in this book:
+This book was written using RStudio's [Visual Editor for R Markdown](https://rstudio.github.io/visual-markdown-editing/). It was published using the `bookdown` R package [@xie2015]. As well, the following packages were used in this book:
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <caption>(\#tab:packages-used)Packages Used In This Book</caption>
@@ -222,6 +247,11 @@ As well, the following packages were used in this book:
    <td style="text-align:left;"> CRAN (R 4.1.0) </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> gt </td>
+   <td style="text-align:left;"> 0.6.0.9000 </td>
+   <td style="text-align:left;"> Github (rstudio/gt\@035c64b0a03f0372750095a7d390edcea4192b91) </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> nflfastR </td>
    <td style="text-align:left;"> 4.3.0 </td>
    <td style="text-align:left;"> CRAN (R 4.1.1) </td>
@@ -237,6 +267,11 @@ As well, the following packages were used in this book:
    <td style="text-align:left;"> CRAN (R 4.1.3) </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> scales </td>
+   <td style="text-align:left;"> 1.2.0 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> tidymodels </td>
    <td style="text-align:left;"> 0.2.0 </td>
    <td style="text-align:left;"> CRAN (R 4.1.3) </td>
@@ -244,6 +279,11 @@ As well, the following packages were used in this book:
   <tr>
    <td style="text-align:left;"> tidyverse </td>
    <td style="text-align:left;"> 1.3.1 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> webshot </td>
+   <td style="text-align:left;"> 0.5.2 </td>
    <td style="text-align:left;"> CRAN (R 4.1.1) </td>
   </tr>
 </tbody>

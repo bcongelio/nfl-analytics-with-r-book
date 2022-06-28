@@ -1,0 +1,8 @@
+# Appendix {-}
+
+
+```{css, echo = FALSE}
+div#appendix > div.csl-entry {
+  margin-bottom: 10px
+}
+```
