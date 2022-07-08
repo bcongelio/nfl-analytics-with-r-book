@@ -1,4 +1,4 @@
-# An Introduction to NFL Analytics and the R Programming Language
+# An Introduction to NFL Analytics and the R Programming Language (\*rough draft)
 
 ```{r loading-library, include = FALSE}
 

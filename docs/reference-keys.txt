@@ -6,7 +6,7 @@ tab:packages-used
 who-this-book-is-for
 overview-of-chapters
 why-a-book-instead-of-working-in-analytics
-an-introduction-to-nfl-analytics-and-the-r-programming-language
+an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft
 nflreadr-an-introduction-to-the-data
 getting-weekly-player-stats-via-load_player_stats
 using-load_player_stats-to-find-leaders

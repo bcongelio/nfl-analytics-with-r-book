@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-06-28"
+date: "2022-07-08"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -20,7 +20,7 @@ url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 
 <center>
 
-**Welcome to the online home of *An Introduction to NFL Analytics with R*.**
+**Welcome to the online home of** <br>***An Introduction to NFL Analytics with R*****.**
 
 </center>
 
@@ -28,9 +28,17 @@ url: "https://bradcongelio.com/nfl-analytics-with-r-book"
 
 The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository:
+As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
 
--   [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
+-   Please feel free to contribue to the book by filling an issue or making a pull request at the book's GitHub repository: [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
+
+-   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the book's github repository (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.
+
+-   Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.
+
+-   Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example sllyabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.
+
+-   [If you find this book useful, please consider donating to support the continued maintenance and development via PayPal.](https://paypal.me/nflanalyticswithr?country.x=US&locale.x=en_US)
 
 ## Introduction {.unnumbered}
 
@@ -52,7 +60,7 @@ The creation of the `nflverse` allowed for anyboy interested in NFL analytics to
 
 Kevin Clark, in a 2018 article for [*The Ringer*](https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution), explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is "happening in front of you all the time." The use of analytics in the NFL did, however, predate Clark's article. In 2014, Eagles head coach Doug Pederson explained that all decisons made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. An argument can be made, therefore, that Ryan Paganetti was the first analytics-inclined hire when he was brought on board in Philadelphia to build the team's analytics department. By 2018, Pederson believed in and trusted Paganetti's approach to analytics so much that a direct line of communication was created between the two during games, with Paganetti providing the head coach with math-based recommendations for any scenario Pederson requested [@awbrey2020].
 
-In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically "altered baseball's DNA [@heifetz2019]. Moreover, as explained in Seth Partnow's outstanding [*The Midrange Theory: Basketball's Evolution in the Age of Analytics*](https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1656245879&sr=8-4), the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket or two shot the 3-pointer, as the additional point is worth the slightly lower probability than a 2-point midrange shot) as well as the traditional, "old-school" center position.
+In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically "altered baseball's DNA" @heifetz2019]. Moreover, as explained in Seth Partnow's outstanding [*The Midrange Theory: Basketball's Evolution in the Age of Analytics*](https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1656245879&sr=8-4), the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket (for a high-percentage shot) or to take the 3-pointer, as the possible additional point is statistically worth more despite the lower success probability as opposed a 2-point midrange shot) as well as the traditional, "old-school" center position.
 
 Compared to both the NBA and MLB, the NFL is playing catchup in analytics driving changes equivalent to the death of the midrange shot or the plethroa of additional tactics and changes to baseball because of sabermetrics. Joe Banner, who served as the President of the Eagles from 2001-2012 and then the Chief Executive Officers of the Browns from 2012-2013, explained that some of the hesitation to incorporate analytics into NFL game planning was a result of the game being "very much driven by conventional wisdom to an extreme degree" [@fortier2020]. Perhaps nobody encapsulates this better than Pittsburgh Steelers Head Coach Mike Tomlin. When asked about his position on analytics during the 2015 season, Tomlin explained:
 
@@ -162,13 +170,13 @@ All of these examples - from Ben Baldwin's 4th-down model, to Football Outsiders
 
 Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task, as there are likely two types of people reading this: those with familiarity in R and those without. If you are part of the former group, you can likely skip chapter 2 as it is a primer on installing R and learing the language of the `tidyverse`. On the other hand, if you are part of the latter group, you should skip ahead to chapter 2 before even looking at chapter 1, which serves as an introduction to the `nflverse` with examples. That said, this book can serve multiple audiences:
 
-1.  Those interested in conducting NFL analytics regardless of their current knowledge of the R programming language.
+1.  Those interested in learning how to produce NFL analytics regardless of their current knowledge of the R programming language.
 
-2.  Professor who instruct data science courses can provide lessons through the lens of sport or, perhaps better, create their own Sport Analytics courses designed around the book.
+2.  Professors who instruct data science courses can provide lessons through the lens of sport or, perhaps better, create their own Sport Analytics courses designed around the book. Moreover, future plans for this book include instruction reference guides to include PowerPoint templates, assignments/project instructions and grading rubrics, and quiz/exam content for online management systems (D2L, Canvas, Moodle, etc.).
 
-3.  Students can use the book to integrate NFL analytics into their assignments.
+3.  Students are able to use this book in multiple ways. For example, in my Sport Analytics course, students are first introduced to R and the `tidyverse` using the built-in R data sets (`mtcars`, `iris`, and `nycflights13`). While those data sets certainly serve a purpose, I have found that students grasp the concepts and language of the `tidyverse` more quickly when the class turns to using data from the `nflverse`. Because of this, students can use this book to start learning the R programming language using football terms (passing yards, first downs, air yards, completion percentage over expected) as opposed to the variables they may find much less interesting housed in the built-in data. Moreover, students already fluid in R can use this book to construct machine learning models using football data, for example, as part of assignments in data science/analytics courses.
 
-4.  Journalists and bloggers alike can use the book to underpin their arguments and to provide hard data to backup their claims.
+4.  Journalists, bloggers, and arm-chair quarterbacks alike can use the book to underpin their arguments and to provide hard data to backup their claims.
 
 Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.
 
@@ -182,7 +190,7 @@ Regardless of which chapter you start with, the ultimate goal of this book is to
 
 -   **Chapter 4** moves readers from data cleaning and manipulation to an introduction to data visualiztion using `ggplot2`. As well, chapter 4 provides further instruction on `nflverse` functions such as `clean_player_names()`, `clean_team_abbrs()`, and `clean_homeaway()`. As well, to prep for data visualization, readers will be introduced to the `teams_colors_logos` and `load_rosters` functions as well as the `nflplotR` package, which provides "functions and geoms to help visualization of NFL related analysis" [@carl2022]. Readers will produce multiple types of visualizations, including `geom_bar`, `geom_point`, `geom_density`, and more. As well, readers will learn to use `facet_wrap` and `facet_grid` to display data over multiple seasons. For visualizations that include team logos or player headshots, instruction will cover both how to do the coding manually using `teams_colors_logos` or `load_rosters` and to use the `nflplotr` package to avoid the need to use `left_join` to merge `teams_colors_logos` to your dataframe.
 
--   **Chapter 5** introduces advanced methods in R using `nflverse` data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to `tidymodels`, a "collection of packages for modeling and machine learning using `tidyverse` principles" [@silge]. As an example, readers will first be introduced to [Tej Seth's](https://twitter.com/tejfbanalytics) Rushing Yards Over Expected model ([GitHub](https://github.com/tejseth/RYOE), [ShinyApp](https://mfbanalytics.shinyapps.io/RYOE/)). The model will serve as a learning tool to help readers understand the relationship between `nflfastR` data and machine learning (in Tej's case, in `xgboost` model). Afterward, specific attention is given to binary classification, multiclass classification, and regression computer learning models. At the conclusion of the chapter, readers will be provided exercises to allow them to develop their own supervised and unsupervised machine learning models.
+-   **Chapter 5** introduces advanced methods in R using `nflverse` data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to `tidymodels`, a "collection of packages for modeling and machine learning using `tidyverse` principles" [@silge]. As an example, readers will first be introduced to [Tej Seth's](https://twitter.com/tejfbanalytics) Rushing Yards Over Expected model ([GitHub](https://github.com/tejseth/RYOE), [ShinyApp](https://mfbanalytics.shinyapps.io/RYOE/)). The model will serve as a learning tool to help readers understand the relationship between `nflfastR` data and machine learning (in Tej's case, an `xgboost` model). Afterward, specific attention is given to binary classification, multiclass classification, and regression computer learning models. At the conclusion of the chapter, readers will be provided exercises to allow them to develop their own supervised and unsupervised machine learning models.
 
 -   **Chapter 6** introduces data from sources outside of the `nflverse`, including premium statistics from Pro Football Focus and Sports Info Solutions. Readers will learned to use various functions, such as `clean_team_names`, in order to prepare the data to merge with data from the `nflverse`. As well, this chapter will introduce readers to working with player tracking data. To do so, data will be provided from the [NFL's Big Data Bowl](https://operations.nfl.com/gameday/analytics/big-data-bowl/). To highlight the work being completed using player tracking, this chapter will discuss the Big Data Bowl entries of [Matt Ploenzke](https://twitter.com/MPloenzke) ([*The Importance of Ball Carrier Downfield Acceleration and Unblocked Tackler Distance and Spacing*](https://operations.nfl.com/media/4204/bdb_ploenzke.pdf)) and the team of Kellin Rumsey & Brandon DeFlon ([*The Battle Between Blocker and Defender Is Often Decided by Leverage*](https://operations.nfl.com/media/4209/bdb_rumsey_deflon.pdf)).
 
@@ -210,7 +218,7 @@ Finally, my most recent academic, peer-reviewed publications include:
 
 I am sometimes asked why I spend time in the classroom teaching this material rather than taking my domain knowledge to the "industry side" and working in the NFL or an otherwise NFL-connected outlet.
 
-The honest and true answer is this: I love teaching. My favorite experience in the classroom yet is always in my Sport Analytics course. The frustration and sense of helplessness is palable in the first weeks of the semester as students attempt to wrap their head around, what a former student called, "this [censored] foreign language." I insist that they keep pushing through the exercises and assignments. Often, there is line out my door and extendig down the hallway during office hours comprised of just students from the Sport Analytics class.
+The honest and, likely boring, answer is this: I love teaching. My favorite experience in the classroom yet is always in my Sport Analytics course. The frustration and sense of helplessness is palable in the first weeks of the semester as students attempt to wrap their head around, what a former student called, "this [censored] foreign language." I insist that they keep pushing through the exercises and assignments. Often, there is line out my door and extendig down the hallway during office hours comprised of just students from the Sport Analytics class.
 
 And then something amazing happens.
 
