@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 1 An Introduction to NFL Analytics and the R Programming Language (*rough draft) | An Introduction to NFL Analytics with R</title>
 <meta name="author" content="Bradley J. Congelio">
-<meta name="description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current edition of the nflverse is comprised of five...">
+<meta name="description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current version of the nflverse is comprised of five...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 1 An Introduction to NFL Analytics and the R Programming Language (*rough draft) | An Introduction to NFL Analytics with R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft.html">
-<meta property="og:description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current edition of the nflverse is comprised of five...">
+<meta property="og:description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current version of the nflverse is comprised of five...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 1 An Introduction to NFL Analytics and the R Programming Language (*rough draft) | An Introduction to NFL Analytics with R">
-<meta name="twitter:description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current edition of the nflverse is comprised of five...">
+<meta name="twitter:description" content="As mentioned in the Preface of this book, the nflverse has drastically expanded since the inception of nflfastR in April of 2020. In total, the current version of the nflverse is comprised of five...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -82,7 +82,7 @@
 <h1>
 <span class="header-section-number">1</span> An Introduction to NFL Analytics and the R Programming Language (*rough draft)<a class="anchor" aria-label="anchor" href="#an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft"><i class="fas fa-link"></i></a>
 </h1>
-<p>As mentioned in the Preface of this book, the <code>nflverse</code> has drastically expanded since the inception of <code>nflfastR</code> in April of 2020. In total, the current edition of the <code>nflverse</code> is comprised of five separate R packages:</p>
+<p>As mentioned in the Preface of this book, the <code>nflverse</code> has drastically expanded since the inception of <code>nflfastR</code> in April of 2020. In total, the current version of the <code>nflverse</code> is comprised of five separate R packages:</p>
 <ol style="list-style-type: decimal">
 <li><code>nflfastR</code></li>
 <li><code>nflseedR</code></li>
@@ -91,7 +91,7 @@
 <li><code>nflplotR</code></li>
 </ol>
 <p>Installing the <code>nflverse</code> as a package in R will automatically install all five packages. However, the core focus of this book will be on <code>nflreadr</code>. It is understadable if you are confused by that, since the Preface of this book introduce the <code>nflfastR</code> package.</p>
-<p>Because of that, it is important to note that the <code>nflreadr</code> package, as explained by its author (Tan Ho), is a “minimal package for downloading data from <code>nflverse</code> repositories. It inclues caching, optional proress updates, and data dictionaries.” In other words, using <code>nflreadr</code> allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.</p>
+<p>Because of that, it is important to note that the <code>nflreadr</code> package, as explained by its author (Tan Ho), is a “minimal package for downloading data from <code>nflverse</code> repositories. It inclues caching, optional progress updates, and data dictionaries.” In other words, using <code>nflreadr</code> allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.</p>
 <p>Using <code>nflreadr::</code> while coding will provide you nearly idential options as using <code>nflfastR::</code>. Moreover, the <code>nflreadr</code> packages inclues a number of data options not included in <code>nflfastR</code> such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.</p>
 <p>While <code>nflfastR</code> did initially serve as the foundation of the “amateur NFL analytics” movement, the <code>nflreadr</code> package has superceded by serving as the “catchall” package for all the various bits and pieces of the <code>nflverse</code>. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use <code>nflreadr::</code> when calling functions housed within the <code>nflverse</code> rather than <code>nflfastR::</code>.</p>
 <div id="nflreadr-an-introduction-to-the-data" class="section level2" number="1.1">
@@ -242,7 +242,7 @@
 ##   &lt;chr&gt;                  &lt;dbl&gt;      &lt;int&gt;
 ## 1 B.Roethlisberger        3740        605</code></pre>
 <p>Again, we are matching the official statistics. And this time we are doing so with much less code and without the need to pull in roster information to merge with.</p>
-<p>But there is a reason you should not work with the data while grouping by <code>player_name</code>. An excellent example of this is Josh Allen. Let’s attempt to a “no roster, no merge” calcuation of this 2021 total passing yards and attempts and see what happens:</p>
+<p>But there is a reason you should not work with the data while grouping by <code>player_name</code>. An excellent example of this is Josh Allen. Let’s attempt to do a “no roster, no merge” calcuation of this 2021 total passing yards and attempts and see what happens:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">josh.allen.nm</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -392,7 +392,7 @@
 ## 10 M.Stafford   00-0026498 LA         95         54      0.568
 ## # ... with 20 more rows</code></pre>
 <p>As you can see in the <code>tibble()</code> output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.</p>
-<p>After creating a new dataframe called <code>aggressiveness</code> from the 2021 play-by-play we originally collected using <code>data &lt;- nflreadr::load_pbp(2021)</code>, we use <code>group_by</code> to ensure that the data is being collected <em>per individual quarterback</em> and then appending both their unique <code>passer_id</code> as well as the <code>posteam</code> which is simply their team’s abbreviation (note: the <code>posteam</code> variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4.</p>
+<p>After creating a new dataframe called <code>aggressiveness</code> from the 2021 play-by-play we originally collected using <code>data &lt;- nflreadr::load_pbp(2021)</code>, we use <code>group_by</code> to ensure that the data is being collected <em>per individual quarterback</em> and then appending both their unique <code>passer_id</code> as well as the <code>posteam</code> which is simply their team’s abbreviation (note: the <code>posteam</code> variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4).</p>
 <p>However, there are a couple items to point out and clarify with the above code. Moreover, there are certainly arguments to be made regarding how to “capture” scenarios in the data that require “aggressiveness.”</p>
 <p>After using the <code>group_by</code> function to lump data with each individual QB, we then use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function. Of course, we only want those <code>play_types</code> that are “pass” on 3rd downs. However, in the above code, we are filtering for <em>just</em> those 3rd down situations where the <code>yards to go</code> are between five and ten yards.</p>
 <p>Doing so was a personal decision on my end when creating the metric. My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to “sell out” to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything <em>over</em> ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.</p>

@@ -2,7 +2,7 @@
 
 
 
-As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current edition of the `nflverse` is comprised of five separate R packages:
+As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current version of the `nflverse` is comprised of five separate R packages:
 
 1.  `nflfastR`
 2.  `nflseedR`
@@ -12,7 +12,7 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 
 Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduce the `nflfastR` package.
 
-Because of that, it is important to note that the `nflreadr` package, as explained by its author (Tan Ho), is a "minimal package for downloading data from `nflverse` repositories. It inclues caching, optional proress updates, and data dictionaries." In other words, using `nflreadr` allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.
+Because of that, it is important to note that the `nflreadr` package, as explained by its author (Tan Ho), is a "minimal package for downloading data from `nflverse` repositories. It inclues caching, optional progress updates, and data dictionaries." In other words, using `nflreadr` allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.
 
 Using `nflreadr::` while coding will provide you nearly idential options as using `nflfastR::`. Moreover, the `nflreadr` packages inclues a number of data options not included in `nflfastR` such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.
 
@@ -198,7 +198,7 @@ tibble(ben.nomerge)
 
 Again, we are matching the official statistics. And this time we are doing so with much less code and without the need to pull in roster information to merge with.
 
-But there is a reason you should not work with the data while grouping by `player_name`. An excellent example of this is Josh Allen. Let's attempt to a "no roster, no merge" calcuation of this 2021 total passing yards and attempts and see what happens:
+But there is a reason you should not work with the data while grouping by `player_name`. An excellent example of this is Josh Allen. Let's attempt to do a "no roster, no merge" calcuation of this 2021 total passing yards and attempts and see what happens:
 
 
 ```r
@@ -396,7 +396,7 @@ tibble(aggressiveness)
 
 As you can see in the `tibble()` output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.
 
-After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* and then appending both their unique `passer_id` as well as the `posteam` which is simply their team's abbreviation (note: the `posteam` variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4.
+After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* and then appending both their unique `passer_id` as well as the `posteam` which is simply their team's abbreviation (note: the `posteam` variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4).
 
 However, there are a couple items to point out and clarify with the above code. Moreover, there are certainly arguments to be made regarding how to "capture" scenarios in the data that require "aggressiveness."
 
