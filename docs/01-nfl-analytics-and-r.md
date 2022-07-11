@@ -10,13 +10,9 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 4.  `nflreadr`
 5.  `nflplotR`
 
-Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package.
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories. The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
 
-Because of that, it is important to note that the `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories. The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
-
-As you will see in this book, using `nflreadr::` while coding provides nearly the identical functions included when using `nflfastR::`. In fact, running `nflfastR::load_pbp()` now calls, "under the hood," `nflreadr::load_pbp()` while `nflfastR::load_player_stats()` is now deprecated as well, and calls `nflreadr::load_player_stats()`.
-
-Aside from that, the `nflreadr` package includes a number of data options not included in `nflfastR` such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.
+As you will see in this chapter, using `nflreadr::` while coding provides nearly identical functions to those avaliable when using `nflfastR::`. In fact, `nflfastR::`, in many instances, now calls, "under the hood," the equivalant function in `nflreadr::`. Because of the coalescing between the two, many of the new functions being developed are avaliable only when using `nflreadr::`. For example, `nflreadr::` allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.
 
 While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded it and now serves as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
 
@@ -27,9 +23,11 @@ To below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
 <p class="caption">(\#fig:nflverse-comparison)Comparing nflfastR to nflreadr</p>
 </div>
 
+The purpose of this chapter is to explore `nflreadr` data using, what I will argue, are the two most important functions in the `nflverse`: (1.) `load_player_stats()` and (2.) `load_pbp()`. It makes the assumption that you are versed in the R programming language. If you are not, please start with Chapter 2 where you can learn about R and the `tidyverse` language using examples from the `nflverse`.
+
 ## `nflreadr`: An Introduction to the Data
 
-The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: player weekly stats and the more advanced and robust play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
+The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: weekly player stats and the more advanced and robust play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
 
 As you may imagine, there is a **very important distinction between the `load_player_stats()`** **and `load_pbp()`**. As mentioned, `load_player_stats()` will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, `load_pbp()` will provide over 350 metrics for every single play of every single game dating back to 1999.
 
@@ -207,7 +205,7 @@ Grouping by `player_id` and `player_name` (as well as filtering down to Buffalo)
 
 #### Using `load_player_stats()` Correctly
 
-To avoid these situations, you *could* load up NFL rosters via the `nflreadr::load_rosters()` function, but that would require unnecessary code in order to merge the two DFs together. Instead, we can do this:
+To avoid these situations, you *could* load up NFL rosters via the `nflreadr::load_rosters()` function, but that would require unnecessary code in order to merge the two DFs together by matching the `player_id` to the `gsis_id` number found within the roster information. Doing so would correct the above issue of Josh Allen appearing in the data under different spellings. Instead, and to write the minimal amount of code to complete the task, we can do the following:
 
 
 ```r
@@ -244,7 +242,7 @@ ay.per.attempt <- data %>%
   arrange(-ay.attempt)
 ```
 
-In the above example, we are using `group_by` to combine the desired statistics based on each unique `player_id` to, again, avoid any issues with player names within the data. After filtering to include just those statistics for the regular season, we first use the `summarize` function grab the first `player_name` associated with the `player_id`. After, we find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
+In the above example, we are using `group_by` to combine the desired statistics based on each unique `player_id` to, again, avoid any issues with player names within the data. After filtering to include just those statistics for the regular season, we first use the `summarize` function to grab the first `player_name` associated with the `player_id`. After, we find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
 
 It is important to note that the final row created with the `summarize` function is not a statistic included within `load_player_stats()`. In order to find a QB's average air yards per attempt, we must use the first two items we've created and do some simple division (the created `n.airyards` divided by `n.attempts`).
 
@@ -280,6 +278,389 @@ Russell Wilson led the NFL in 2021 with 9.89 air yards per attempt.
 
 As just mentioned above, using the `load_pbp()` function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.
 
+The `load_pbp()` function provides over 350 various metrics, as listed below:
+
+
+```r
+pbp.data <- nflreadr::load_pbp(2021)
+ls(pbp.data)
+```
+
+```
+##   [1] "aborted_play"                        
+##   [2] "air_epa"                             
+##   [3] "air_wpa"                             
+##   [4] "air_yards"                           
+##   [5] "assist_tackle"                       
+##   [6] "assist_tackle_1_player_id"           
+##   [7] "assist_tackle_1_player_name"         
+##   [8] "assist_tackle_1_team"                
+##   [9] "assist_tackle_2_player_id"           
+##  [10] "assist_tackle_2_player_name"         
+##  [11] "assist_tackle_2_team"                
+##  [12] "assist_tackle_3_player_id"           
+##  [13] "assist_tackle_3_player_name"         
+##  [14] "assist_tackle_3_team"                
+##  [15] "assist_tackle_4_player_id"           
+##  [16] "assist_tackle_4_player_name"         
+##  [17] "assist_tackle_4_team"                
+##  [18] "away_coach"                          
+##  [19] "away_score"                          
+##  [20] "away_team"                           
+##  [21] "away_timeouts_remaining"             
+##  [22] "away_wp"                             
+##  [23] "away_wp_post"                        
+##  [24] "blocked_player_id"                   
+##  [25] "blocked_player_name"                 
+##  [26] "comp_air_epa"                        
+##  [27] "comp_air_wpa"                        
+##  [28] "comp_yac_epa"                        
+##  [29] "comp_yac_wpa"                        
+##  [30] "complete_pass"                       
+##  [31] "cp"                                  
+##  [32] "cpoe"                                
+##  [33] "def_wp"                              
+##  [34] "defensive_extra_point_attempt"       
+##  [35] "defensive_extra_point_conv"          
+##  [36] "defensive_two_point_attempt"         
+##  [37] "defensive_two_point_conv"            
+##  [38] "defteam"                             
+##  [39] "defteam_score"                       
+##  [40] "defteam_score_post"                  
+##  [41] "defteam_timeouts_remaining"          
+##  [42] "desc"                                
+##  [43] "div_game"                            
+##  [44] "down"                                
+##  [45] "drive"                               
+##  [46] "drive_end_transition"                
+##  [47] "drive_end_yard_line"                 
+##  [48] "drive_ended_with_score"              
+##  [49] "drive_first_downs"                   
+##  [50] "drive_game_clock_end"                
+##  [51] "drive_game_clock_start"              
+##  [52] "drive_inside20"                      
+##  [53] "drive_play_count"                    
+##  [54] "drive_play_id_ended"                 
+##  [55] "drive_play_id_started"               
+##  [56] "drive_quarter_end"                   
+##  [57] "drive_quarter_start"                 
+##  [58] "drive_real_start_time"               
+##  [59] "drive_start_transition"              
+##  [60] "drive_start_yard_line"               
+##  [61] "drive_time_of_possession"            
+##  [62] "drive_yards_penalized"               
+##  [63] "end_clock_time"                      
+##  [64] "end_yard_line"                       
+##  [65] "ep"                                  
+##  [66] "epa"                                 
+##  [67] "extra_point_attempt"                 
+##  [68] "extra_point_prob"                    
+##  [69] "extra_point_result"                  
+##  [70] "fantasy"                             
+##  [71] "fantasy_id"                          
+##  [72] "fantasy_player_id"                   
+##  [73] "fantasy_player_name"                 
+##  [74] "fg_prob"                             
+##  [75] "field_goal_attempt"                  
+##  [76] "field_goal_result"                   
+##  [77] "first_down"                          
+##  [78] "first_down_pass"                     
+##  [79] "first_down_penalty"                  
+##  [80] "first_down_rush"                     
+##  [81] "fixed_drive"                         
+##  [82] "fixed_drive_result"                  
+##  [83] "forced_fumble_player_1_player_id"    
+##  [84] "forced_fumble_player_1_player_name"  
+##  [85] "forced_fumble_player_1_team"         
+##  [86] "forced_fumble_player_2_player_id"    
+##  [87] "forced_fumble_player_2_player_name"  
+##  [88] "forced_fumble_player_2_team"         
+##  [89] "fourth_down_converted"               
+##  [90] "fourth_down_failed"                  
+##  [91] "fumble"                              
+##  [92] "fumble_forced"                       
+##  [93] "fumble_lost"                         
+##  [94] "fumble_not_forced"                   
+##  [95] "fumble_out_of_bounds"                
+##  [96] "fumble_recovery_1_player_id"         
+##  [97] "fumble_recovery_1_player_name"       
+##  [98] "fumble_recovery_1_team"              
+##  [99] "fumble_recovery_1_yards"             
+## [100] "fumble_recovery_2_player_id"         
+## [101] "fumble_recovery_2_player_name"       
+## [102] "fumble_recovery_2_team"              
+## [103] "fumble_recovery_2_yards"             
+## [104] "fumbled_1_player_id"                 
+## [105] "fumbled_1_player_name"               
+## [106] "fumbled_1_team"                      
+## [107] "fumbled_2_player_id"                 
+## [108] "fumbled_2_player_name"               
+## [109] "fumbled_2_team"                      
+## [110] "game_date"                           
+## [111] "game_half"                           
+## [112] "game_id"                             
+## [113] "game_seconds_remaining"              
+## [114] "game_stadium"                        
+## [115] "goal_to_go"                          
+## [116] "half_sack_1_player_id"               
+## [117] "half_sack_1_player_name"             
+## [118] "half_sack_2_player_id"               
+## [119] "half_sack_2_player_name"             
+## [120] "half_seconds_remaining"              
+## [121] "home_coach"                          
+## [122] "home_opening_kickoff"                
+## [123] "home_score"                          
+## [124] "home_team"                           
+## [125] "home_timeouts_remaining"             
+## [126] "home_wp"                             
+## [127] "home_wp_post"                        
+## [128] "id"                                  
+## [129] "incomplete_pass"                     
+## [130] "interception"                        
+## [131] "interception_player_id"              
+## [132] "interception_player_name"            
+## [133] "jersey_number"                       
+## [134] "kick_distance"                       
+## [135] "kicker_player_id"                    
+## [136] "kicker_player_name"                  
+## [137] "kickoff_attempt"                     
+## [138] "kickoff_downed"                      
+## [139] "kickoff_fair_catch"                  
+## [140] "kickoff_in_endzone"                  
+## [141] "kickoff_inside_twenty"               
+## [142] "kickoff_out_of_bounds"               
+## [143] "kickoff_returner_player_id"          
+## [144] "kickoff_returner_player_name"        
+## [145] "lateral_interception_player_id"      
+## [146] "lateral_interception_player_name"    
+## [147] "lateral_kickoff_returner_player_id"  
+## [148] "lateral_kickoff_returner_player_name"
+## [149] "lateral_punt_returner_player_id"     
+## [150] "lateral_punt_returner_player_name"   
+## [151] "lateral_receiver_player_id"          
+## [152] "lateral_receiver_player_name"        
+## [153] "lateral_receiving_yards"             
+## [154] "lateral_reception"                   
+## [155] "lateral_recovery"                    
+## [156] "lateral_return"                      
+## [157] "lateral_rush"                        
+## [158] "lateral_rusher_player_id"            
+## [159] "lateral_rusher_player_name"          
+## [160] "lateral_rushing_yards"               
+## [161] "lateral_sack_player_id"              
+## [162] "lateral_sack_player_name"            
+## [163] "location"                            
+## [164] "name"                                
+## [165] "nfl_api_id"                          
+## [166] "no_huddle"                           
+## [167] "no_score_prob"                       
+## [168] "old_game_id"                         
+## [169] "opp_fg_prob"                         
+## [170] "opp_safety_prob"                     
+## [171] "opp_td_prob"                         
+## [172] "order_sequence"                      
+## [173] "out_of_bounds"                       
+## [174] "own_kickoff_recovery"                
+## [175] "own_kickoff_recovery_player_id"      
+## [176] "own_kickoff_recovery_player_name"    
+## [177] "own_kickoff_recovery_td"             
+## [178] "pass"                                
+## [179] "pass_attempt"                        
+## [180] "pass_defense_1_player_id"            
+## [181] "pass_defense_1_player_name"          
+## [182] "pass_defense_2_player_id"            
+## [183] "pass_defense_2_player_name"          
+## [184] "pass_length"                         
+## [185] "pass_location"                       
+## [186] "pass_oe"                             
+## [187] "pass_touchdown"                      
+## [188] "passer"                              
+## [189] "passer_id"                           
+## [190] "passer_jersey_number"                
+## [191] "passer_player_id"                    
+## [192] "passer_player_name"                  
+## [193] "passing_yards"                       
+## [194] "penalty"                             
+## [195] "penalty_player_id"                   
+## [196] "penalty_player_name"                 
+## [197] "penalty_team"                        
+## [198] "penalty_type"                        
+## [199] "penalty_yards"                       
+## [200] "play"                                
+## [201] "play_clock"                          
+## [202] "play_deleted"                        
+## [203] "play_id"                             
+## [204] "play_type"                           
+## [205] "play_type_nfl"                       
+## [206] "posteam"                             
+## [207] "posteam_score"                       
+## [208] "posteam_score_post"                  
+## [209] "posteam_timeouts_remaining"          
+## [210] "posteam_type"                        
+## [211] "punt_attempt"                        
+## [212] "punt_blocked"                        
+## [213] "punt_downed"                         
+## [214] "punt_fair_catch"                     
+## [215] "punt_in_endzone"                     
+## [216] "punt_inside_twenty"                  
+## [217] "punt_out_of_bounds"                  
+## [218] "punt_returner_player_id"             
+## [219] "punt_returner_player_name"           
+## [220] "punter_player_id"                    
+## [221] "punter_player_name"                  
+## [222] "qb_dropback"                         
+## [223] "qb_epa"                              
+## [224] "qb_hit"                              
+## [225] "qb_hit_1_player_id"                  
+## [226] "qb_hit_1_player_name"                
+## [227] "qb_hit_2_player_id"                  
+## [228] "qb_hit_2_player_name"                
+## [229] "qb_kneel"                            
+## [230] "qb_scramble"                         
+## [231] "qb_spike"                            
+## [232] "qtr"                                 
+## [233] "quarter_end"                         
+## [234] "quarter_seconds_remaining"           
+## [235] "receiver"                            
+## [236] "receiver_id"                         
+## [237] "receiver_jersey_number"              
+## [238] "receiver_player_id"                  
+## [239] "receiver_player_name"                
+## [240] "receiving_yards"                     
+## [241] "replay_or_challenge"                 
+## [242] "replay_or_challenge_result"          
+## [243] "result"                              
+## [244] "return_team"                         
+## [245] "return_touchdown"                    
+## [246] "return_yards"                        
+## [247] "roof"                                
+## [248] "run_gap"                             
+## [249] "run_location"                        
+## [250] "rush"                                
+## [251] "rush_attempt"                        
+## [252] "rush_touchdown"                      
+## [253] "rusher"                              
+## [254] "rusher_id"                           
+## [255] "rusher_jersey_number"                
+## [256] "rusher_player_id"                    
+## [257] "rusher_player_name"                  
+## [258] "rushing_yards"                       
+## [259] "sack"                                
+## [260] "sack_player_id"                      
+## [261] "sack_player_name"                    
+## [262] "safety"                              
+## [263] "safety_player_id"                    
+## [264] "safety_player_name"                  
+## [265] "safety_prob"                         
+## [266] "score_differential"                  
+## [267] "score_differential_post"             
+## [268] "season"                              
+## [269] "season_type"                         
+## [270] "series"                              
+## [271] "series_result"                       
+## [272] "series_success"                      
+## [273] "shotgun"                             
+## [274] "side_of_field"                       
+## [275] "solo_tackle"                         
+## [276] "solo_tackle_1_player_id"             
+## [277] "solo_tackle_1_player_name"           
+## [278] "solo_tackle_1_team"                  
+## [279] "solo_tackle_2_player_id"             
+## [280] "solo_tackle_2_player_name"           
+## [281] "solo_tackle_2_team"                  
+## [282] "sp"                                  
+## [283] "special"                             
+## [284] "special_teams_play"                  
+## [285] "spread_line"                         
+## [286] "st_play_type"                        
+## [287] "stadium"                             
+## [288] "stadium_id"                          
+## [289] "start_time"                          
+## [290] "success"                             
+## [291] "surface"                             
+## [292] "tackle_for_loss_1_player_id"         
+## [293] "tackle_for_loss_1_player_name"       
+## [294] "tackle_for_loss_2_player_id"         
+## [295] "tackle_for_loss_2_player_name"       
+## [296] "tackle_with_assist"                  
+## [297] "tackle_with_assist_1_player_id"      
+## [298] "tackle_with_assist_1_player_name"    
+## [299] "tackle_with_assist_1_team"           
+## [300] "tackle_with_assist_2_player_id"      
+## [301] "tackle_with_assist_2_player_name"    
+## [302] "tackle_with_assist_2_team"           
+## [303] "tackled_for_loss"                    
+## [304] "td_player_id"                        
+## [305] "td_player_name"                      
+## [306] "td_prob"                             
+## [307] "td_team"                             
+## [308] "temp"                                
+## [309] "third_down_converted"                
+## [310] "third_down_failed"                   
+## [311] "time"                                
+## [312] "time_of_day"                         
+## [313] "timeout"                             
+## [314] "timeout_team"                        
+## [315] "total"                               
+## [316] "total_away_comp_air_epa"             
+## [317] "total_away_comp_air_wpa"             
+## [318] "total_away_comp_yac_epa"             
+## [319] "total_away_comp_yac_wpa"             
+## [320] "total_away_epa"                      
+## [321] "total_away_pass_epa"                 
+## [322] "total_away_pass_wpa"                 
+## [323] "total_away_raw_air_epa"              
+## [324] "total_away_raw_air_wpa"              
+## [325] "total_away_raw_yac_epa"              
+## [326] "total_away_raw_yac_wpa"              
+## [327] "total_away_rush_epa"                 
+## [328] "total_away_rush_wpa"                 
+## [329] "total_away_score"                    
+## [330] "total_home_comp_air_epa"             
+## [331] "total_home_comp_air_wpa"             
+## [332] "total_home_comp_yac_epa"             
+## [333] "total_home_comp_yac_wpa"             
+## [334] "total_home_epa"                      
+## [335] "total_home_pass_epa"                 
+## [336] "total_home_pass_wpa"                 
+## [337] "total_home_raw_air_epa"              
+## [338] "total_home_raw_air_wpa"              
+## [339] "total_home_raw_yac_epa"              
+## [340] "total_home_raw_yac_wpa"              
+## [341] "total_home_rush_epa"                 
+## [342] "total_home_rush_wpa"                 
+## [343] "total_home_score"                    
+## [344] "total_line"                          
+## [345] "touchback"                           
+## [346] "touchdown"                           
+## [347] "two_point_attempt"                   
+## [348] "two_point_conv_result"               
+## [349] "two_point_conversion_prob"           
+## [350] "vegas_home_wp"                       
+## [351] "vegas_home_wpa"                      
+## [352] "vegas_wp"                            
+## [353] "vegas_wpa"                           
+## [354] "weather"                             
+## [355] "week"                                
+## [356] "wind"                                
+## [357] "wp"                                  
+## [358] "wpa"                                 
+## [359] "xpass"                               
+## [360] "xyac_epa"                            
+## [361] "xyac_fd"                             
+## [362] "xyac_mean_yardage"                   
+## [363] "xyac_median_yardage"                 
+## [364] "xyac_success"                        
+## [365] "yac_epa"                             
+## [366] "yac_wpa"                             
+## [367] "yardline_100"                        
+## [368] "yards_after_catch"                   
+## [369] "yards_gained"                        
+## [370] "ydsnet"                              
+## [371] "ydstogo"                             
+## [372] "yrdln"
+```
+
 To highlight this, let's look at an example of how context can be added to a player's statistics using `load_pbp()`.
 
 ### An Example: QB Aggresiveness on 3rd Down
@@ -301,7 +682,7 @@ aggressiveness <- data %>%
             aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
             percentage = aggressive / total) %>%
   filter(total >= 50) %>%
-  arrange(desc(percentage))
+  arrange(-percentage)
 
 tibble(aggressiveness)
 ```
@@ -327,11 +708,9 @@ As you can see in the `tibble()` output of the results, Dak Prescott was the mos
 
 After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* via `passer_id.`
 
-However, there are a couple items to point out and clarify with the above code. Moreover, there are certainly arguments to be made regarding how to "capture" scenarios in the data that require "aggressiveness."
-
 After using the `group_by` function to lump data with each individual QB, we then use `filter()` function. Of course, we only want those `play_types` that are "pass" on 3rd downs. However, in the above code, we are filtering for *just* those 3rd down situations where the `yards to go` are between five and ten yards.
 
-Doing so was a personal decision on my end when creating the metric. My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to "sell out" to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything *over* ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.
+Doing so was a personal decision on my end when creating the metric, as there are certainly arguments to be made regarding how to "capture" scenarios in the data that require "aggressiveness." My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to "sell out" to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything *over* ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.
 
 For the sake of curiosity, we can edit the above code to include all passing attempts on 3rd down with under 10 yards to go for the first down:
 
@@ -372,7 +751,7 @@ The results are quite different from the first running of this metric, as Dak Pr
 
 In this case, I stand by my argument that including just those pass attempts on 3rd down with between 5 and 10 yards to go is a more accurate assessment of aggressiveness as, for example, 3rd down with 8 yards to go is an obvious passing situation in [most]{.ul} cases.
 
-That begs the question, though: in which cases is 3rd down with 8 yards to go [not]{.ul} an obvious passing situation?
+That begs the question, though: in which cases is 3rd down with 8 yards to go [not]{.ul} an obvious passing situation? An example of this falls under the guise of "garbage time."
 
 #### QB Aggressiveness: Filtering for "Garbage Time?"
 
@@ -484,5 +863,41 @@ tibble(ay.five.years)
 ## #   yrdln <chr>, ydstogo <dbl>, ydsnet <dbl>, desc <chr>, play_type <chr>,
 ## #   yards_gained <dbl>, shotgun <dbl>, no_huddle <dbl>, qb_dropback <dbl>, ...
 ```
+
+Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021's air yards per attempt leaders using `load_player_stats()`. In this case, howeve, we are including an additional filter to gather those passing attempts that results *only* in complete passes:
+
+
+```r
+average.airyards <- ay.five.years %>%
+  group_by(passer_id) %>%
+  filter(season_type == "REG" & complete_pass == 1) %>%
+  summarize(player = first(passer_player_name),
+            completions = sum(complete_pass),
+            air.yards = sum(air_yards),
+            average = air.yards / completions) %>%
+  filter(completions >= 1000) %>%
+  arrange(-average)
+
+tibble(average.airyards)
+```
+
+```
+## # A tibble: 22 x 5
+##    passer_id  player      completions air.yards average
+##    <chr>      <chr>             <dbl>     <dbl>   <dbl>
+##  1 00-0031503 J.Winston          1008      8174    8.11
+##  2 00-0033537 D.Watson           1186      8461    7.13
+##  3 00-0029263 R.Wilson           1603     10939    6.82
+##  4 00-0026143 M.Ryan             1954     13051    6.68
+##  5 00-0034855 B.Mayfield         1185      7858    6.63
+##  6 00-0034857 J.Allen            1245      8221    6.60
+##  7 00-0033077 D.Prescott         1613     10449    6.48
+##  8 00-0026498 M.Stafford         1668     10804    6.48
+##  9 00-0029701 R.Tannehill        1049      6680    6.37
+## 10 00-0032950 C.Wentz            1505      9491    6.31
+## # ... with 12 more rows
+```
+
+Of those QBs with atleast 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
 ## Other Sources of Data for NFL Analytics
