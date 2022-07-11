@@ -79,8 +79,6 @@ Next, we group the data together by alike `player_id` (as every individual playe
 
 After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
 
-Unfortunately, we are still not done. In order to get Roethlisberger's name attached to it, if you needed it, we needed to complete a `left_join` between our `ben.weekly` and `rosters` dataframes. To do so, we are matching up the `player_id` to the `gsis_id` within the roster information. After that information is combined, we are able to pull out just Roethlisberger's information and select the columns we want.
-
 **However, filtering by `player_name` can lead to signifcant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
 
 ```{r josh-allen-no-merge-weekly, echo = TRUE}

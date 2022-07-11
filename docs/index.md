@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-07-10"
+date: "2022-07-11"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -182,7 +182,7 @@ Because of this, and regardless of which chapter you begin with, I believe that 
 
 ## Overview of Chapters
 
--   **Chapter 1** provides an overview of the `nflverse` with specific attention paid to the difference between using `nflfastR` versus `nflreadr`. Serving as the first dive into analytics, the chapter showcases how to use `nflreadr` to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once. To conclude, other sources of NFL data will be highlighted such as [PFF](https://premium.pff.com/nfl/teams/2021/REGPO) and [SIS](https://www.sportsinfosolutions.com/solution/football/). (*Note: As permisson is granted, example data from both PFF and SIS will be incorporated into this book as both come with unique issues to overcome during the data cleaning/prep process).*
+-   **Chapter 1** provides an overview of the `nflverse` with specific attention paid to the difference between using `nflfastR` versus `nflreadr`. Serving as the first dive into analytics, the chapter showcases how to use `nflreadr` to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once.
 
 -   **Chapter 2** covers the process of downloading both R and RStudio, as well as the necessary packages to do NFL analytics. As one of the most important chapters in the book (especially for those new to the R programming language), readers take a deep dive into wrangling NFL data with the `tidyverse` package. To begin, readers will learn about the `dplyr` pipe (`%>%`) and use, in exercises, the six most important verbs in the `dplyr` language: `filer()`, `select()`, `arrange()`, `summarize()`, `mutate()`, and `group_by()`. At the conclusion of the chapter, multiple exercises are provided to allow readers to practice using the `dplyr` verbs, relational operators within the `filter()` function and creating "new stats" by using the `summarize()` function. Moreover, readers will determine the relationship between the `dplyr` language and important variables within the `nflverse` data such as `player_name` and `player_id`, which is important for correct manipulation and cleaning of data.
 
@@ -196,9 +196,9 @@ Because of this, and regardless of which chapter you begin with, I believe that 
 
 ## About The Author {.unnumbered}
 
-I (Bradley Congelio) am currently an Assistant Professor in the College of Business at [Kutztown University of Pennsylvania](https://www.kutztown.edu/). My main area of instruction is in Data Analytics, as well as teaching my very popular Sport Analytics (SPT 313) course.
+I (Bradley Congelio) am currently an Assistant Professor in the College of Business at [Kutztown University of Pennsylvania](https://www.kutztown.edu/). Aside from my core area of instruction, I also instruct the very popular Sport Analytics (SPT 313) course.
 
-I earned my Ph.D. from the University of Western Ontario and also received a specialized certificate in R for Data Analytics from the University of California, San Diego in 2021. I am a proud undergraduate alumni of [West Liberty University](https://westliberty.edu/) and am a strong advocate of a broad-based liberal arts education.
+I earned my Ph.D. from the University of Western Ontario and received a specialized certificate in R for Data Analytics from the University of California, San Diego in 2021. I am a proud undergraduate alumni of [West Liberty University](https://westliberty.edu/) and am a strong advocate of a broad-based liberal arts education.
 
 My research focuses on using big data, the R programming language, and analytics to explore the impact of professional stadiums on neighboring communities. I use the proprietary Zillow ZTRAX database as well as U.S. Census and other forms of data to create robust, applied, and useful insight into how best to protect those living in areas where stadiums are proposed for construction.
 

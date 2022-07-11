@@ -132,8 +132,6 @@ Next, we group the data together by alike `player_id` (as every individual playe
 
 After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
 
-Unfortunately, we are still not done. In order to get Roethlisberger's name attached to it, if you needed it, we needed to complete a `left_join` between our `ben.weekly` and `rosters` dataframes. To do so, we are matching up the `player_id` to the `gsis_id` within the roster information. After that information is combined, we are able to pull out just Roethlisberger's information and select the columns we want.
-
 **However, filtering by `player_name` can lead to signifcant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
 
 
@@ -661,7 +659,13 @@ ls(pbp.data)
 ## [372] "yrdln"
 ```
 
-To highlight this, let's look at an example of how context can be added to a player's statistics using `load_pbp()`.
+A bit overwhelming, right?
+
+Luckily, the `nflfastR` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflfastR Field Descriptions](https://www.nflfastr.com/articles/field_descriptions.html).
+
+As seen above, we can use the `load_player_stats()` function to determine a QB's average yards per attempt over the course of a season. But, what if we wanted to add conext to that? For example, how do we explore a QB's air yards in game-specific situations?
+
+To showcase using `load_pbp()` to add context to your analysis, let's explore QB performance via air yards on 3rd down.
 
 ### An Example: QB Aggresiveness on 3rd Down
 
@@ -900,4 +904,4 @@ tibble(average.airyards)
 
 Of those QBs with atleast 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
-## Other Sources of Data for NFL Analytics
+## Conclusion
