@@ -47,7 +47,7 @@ As this book is published online, it allows me to continue real-time development
 
 ## Introduction {.unnumbered}
 
-On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package that was designed to scrape NFL play-by-play data and allow the end-user to access it at speeds quicker than similar predecessors (hence the name).
+On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).
 
 ```{r ben-baldwin-intro-tweet, echo = FALSE}
 knitr::include_graphics(rep("docs/images/ben-baldwin-intro-tweet.jpg"))
@@ -58,14 +58,14 @@ Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb),
 
 That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the `nflverse`, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.
 
-The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of development of `nflscrapR`, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
+The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of the package's development, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
 
 ```{r farwell-nflscrapr-tweet, echo = FALSE}
 knitr::include_graphics(rep("docs/images/farewell-nflscrapr.jpg"))
 
 ```
 
-As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the creation to themselves and relased `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages were developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
+As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the creation to themselves and relased `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages quickly developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
 
 The creation of the `nflverse` allowed for anybody interested in NFL analytics to easily access data, manipulate it to their liking, and release their visiaulizations and/or metrics to the wider public. In fact, it is now a regular occurence for somebody to advance their R programming ability because of the `nflverse` and then go on to win the Big Data Bowl. As of the 2022 version of the Big Data Bowl, over "30 participants have been hired to work in data and analytics roles in sports, including 22 that were hired in football" [@bigdatabowl-ws]. Most recently, the [Chargers hired 2020 participate Alex Stern](https://www.boltsfromtheblue.com/2021/7/9/22570490/chargers-news-nfl-big-data-bowl) and the [Chiefs hired Marc Richards](https://twitter.com/sethwalder/status/1532721476209627136), a member of the winning 2021 team, as a Football Research Analyst.
 
@@ -114,7 +114,7 @@ However, as Heifetz opins, both the NBA and MLB can serve as a roadmap to where 
 
 It seems that every new NFL season results in an amateur analyst bringing a groundbreaking model and/or approach to the table. Unlike, for example, MLB where there is little left to discover in terms of sabermetrics and new approaches to understanding the game and its associated strategy, the NFL is - for lack of a better phrase - an open playing field. With more and more data becoming avaliable to the public, it is now easier than ever investigate your own ideas and suspicions and to create your own models to confirm your intuition.
 
-For example, I am originally from the greater Pittsburgh area and am a big Steelers fan (which certainly explains some of the Steelers-centric examples I use in the writing of this book). I was adamant in my belief that Pittsburgh's TJ Watt should win the 2021 Defensive Player of the Year, despite many others calling for Los Angeles' Aaron Donald to claim the title. In effort to prove my point, I sought out to design what I coined ***Adjusted Defensive Impact***. To begin, I wanted to explore the idea that not all defensive sacks are created equal, as a player's true impact is not always perfectly represented by top-level statistics.
+For example, I am originally from the greater Pittsburgh area and am a big Steelers fan (which certainly explains some of the Steelers-centric examples I use in the writing of this book). I was adamant in my belief that Pittsburgh's TJ Watt should win the 2021 Defensive Player of the Year award, despite many others calling for Los Angeles' Aaron Donald to claim the title. In effort to prove my point, I sought out to design what I coined ***Adjusted Defensive Impact***. To begin, I wanted to explore the idea that not all defensive sacks are created equal, as a player's true impact is not always perfectly represented by top-level statistics.
 
 To account for that, I opted to adjust and add statistical weight to sack statistics. This was done over multiple areas. For instance, not all players competed in all 17 regular-season games in 2021. To adjust for this, I took the total of game played in the data (2,936) and divided by 17 (a full season) to achieve a weighted adjustment of 0.0058. TJ Watt played in just 15 games in 2021. His adjusted equation, therefore, is (17-'games') \* 0.0058. The result? He gets a bit more credit for this adjustment than, say, Myles Garrett who played all 17 regular-season games.
 
@@ -190,7 +190,9 @@ Writing a book that is wholly dependent on the R programming language to achieve
 
 4.  Journalists, bloggers, and arm-chair quarterbacks alike can use the book to underpin their arguments and to provide hard data to backup their claims.
 
-Regardless of which chapter you start with, the ultimate goal of this book is to provide a gentle introduction to doing NFL analytics with R.
+It is also important to note that it is not expected for you to be an expert in statistics, coding, or data modeling in order to find this book useful. In fact, I self-taught myself the R programming language after discovering its potential usefulness in my personal academic research. I only "became more serious" about advancing my understanding of the language's nuances, and more advanced methods, after discovering the `nflscrapR` package and using it as my learning tool for the deep dive into R. My decision to pursue an academic certificate in the language was driven by the creation of my Sport Analytics course, as the certificate provided the "academic training" proof that was necessary to move the course through the University's curriculum committee. Nonetheless, beause of this self-taught journey - and despite being an academic myself - I find that I largley avoid the use of "complicated jargon" that is so evident in most formal writing.
+
+Because of this, and regardless of which chapter you begin with, I believe that this book achieves its main goal: to provide a gentle introdution to doing NFL analytics with R.
 
 ## Overview of Chapters
 

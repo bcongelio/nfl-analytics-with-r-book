@@ -1,6 +1,8 @@
 h1:an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft An Introduction to NFL Analytics and the R Programming Language (*rough draft)
+fig:nflverse-comparison Comparing nflfastR to nflreadr
 h2:nflreadr-an-introduction-to-the-data : An Introduction to the Data
 h3:getting-weekly-player-stats-via-load_player_stats Getting Weekly Player Stats via 
+h4:using-load_player_stats-correctly Using  Correctly
 h3:using-load_player_stats-to-find-leaders Using  To Find Leaders
 h4:an-example-2021-qb-air-yards-per-attempt-leaders An Example: 2021 QB Air Yards per Attempt Leaders
 h2:using-load_pbp-to-add-context-to-statistics Using  to Add Context to Statistics

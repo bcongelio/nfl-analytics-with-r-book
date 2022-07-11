@@ -10,13 +10,22 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 4.  `nflreadr`
 5.  `nflplotR`
 
-Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduce the `nflfastR` package.
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package.
 
-Because of that, it is important to note that the `nflreadr` package, as explained by its author (Tan Ho), is a "minimal package for downloading data from `nflverse` repositories. It inclues caching, optional progress updates, and data dictionaries." In other words, using `nflreadr` allows for quick and easy access to all the data needed for you to work through this book and learn how to do NFL analytics in R.
+Because of that, it is important to note that the `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories. The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
 
-Using `nflreadr::` while coding will provide you nearly idential options as using `nflfastR::`. Moreover, the `nflreadr` packages inclues a number of data options not included in `nflfastR` such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.
+As you will see in this book, using `nflreadr::` while coding provides nearly the identical functions included when using `nflfastR::`. In fact, running `nflfastR::load_pbp()` now calls, "under the hood," `nflreadr::load_pbp()` while `nflfastR::load_player_stats()` is now deprecated as well, and calls `nflreadr::load_player_stats()`.
 
-While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded by serving as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
+Aside from that, the `nflreadr` package includes a number of data options not included in `nflfastR` such as combine, draft picks, contract, trades, injury information, and access to statistics on Pro Football Reference.
+
+While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded it and now serves as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
+
+To below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
+
+<div class="figure">
+<img src="docs/images/updated-diagram.png" alt="Comparing nflfastR to nflreadr" width="100%" />
+<p class="caption">(\#fig:nflverse-comparison)Comparing nflfastR to nflreadr</p>
+</div>
 
 ## `nflreadr`: An Introduction to the Data
 
@@ -29,113 +38,59 @@ The `load_player_stats()` function includes the following offensive information:
 
 ```r
 offensive.stats <- nflreadr::load_player_stats(2021)
-dplyr::glimpse(offensive.stats)
+ls(offensive.stats)
 ```
 
 ```
-## Rows: 5,698
-## Columns: 48
-## $ player_id                   <chr> "00-0019596", "00-0019596", "00-0019596", ~
-## $ player_name                 <chr> "T.Brady", "T.Brady", "T.Brady", "T.Brady"~
-## $ recent_team                 <chr> "TB", "TB", "TB", "TB", "TB", "TB", "TB", ~
-## $ season                      <int> 2021, 2021, 2021, 2021, 2021, 2021, 2021, ~
-## $ week                        <int> 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14~
-## $ season_type                 <chr> "REG", "REG", "REG", "REG", "REG", "REG", ~
-## $ completions                 <int> 32, 24, 41, 22, 30, 34, 20, 28, 23, 30, 25~
-## $ attempts                    <int> 50, 36, 55, 43, 41, 42, 36, 40, 34, 46, 34~
-## $ passing_yards               <dbl> 379, 276, 432, 269, 411, 297, 211, 375, 22~
-## $ passing_tds                 <int> 4, 5, 1, 0, 5, 2, 4, 4, 2, 2, 1, 4, 2, 0, ~
-## $ interceptions               <dbl> 2, 0, 0, 0, 0, 1, 0, 2, 2, 1, 1, 1, 0, 1, ~
-## $ sacks                       <dbl> 0, 3, 3, 1, 2, 0, 0, 3, 0, 0, 2, 0, 2, 4, ~
-## $ sack_yards                  <dbl> 0, 17, 21, 8, 15, 0, 0, 25, 0, 0, 9, 0, 12~
-## $ sack_fumbles                <int> 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ~
-## $ sack_fumbles_lost           <int> 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, ~
-## $ passing_air_yards           <dbl> 446, 347, 382, 459, 421, 283, 281, 340, 20~
-## $ passing_yards_after_catch   <dbl> 176, 88, 238, 109, 225, 191, 75, 205, 113,~
-## $ passing_first_downs         <dbl> 22, 14, 24, 12, 24, 17, 12, 13, 8, 16, 11,~
-## $ passing_epa                 <dbl> 14.0069873, 1.8543642, 13.1633025, 2.24520~
-## $ passing_2pt_conversions     <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ dakota                      <dbl> 0.168449136, 0.118403623, 0.137870759, 0.0~
-## $ carries                     <int> 0, 1, 3, 4, 1, 4, 0, 1, 1, 1, 2, 1, 7, 1, ~
-## $ rushing_yards               <dbl> 0, 6, 14, 3, 13, 1, 0, 2, 2, 10, 2, -1, 16~
-## $ rushing_tds                 <int> 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, ~
-## $ rushing_fumbles             <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ~
-## $ rushing_fumbles_lost        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ~
-## $ rushing_first_downs         <dbl> 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 4, 0, ~
-## $ rushing_epa                 <dbl> NA, 1.2840404, 0.5629274, 1.6620587, 0.865~
-## $ rushing_2pt_conversions     <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receptions                  <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ targets                     <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_yards             <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_tds               <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_fumbles           <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_fumbles_lost      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_air_yards         <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_yards_after_catch <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_first_downs       <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ receiving_epa               <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ receiving_2pt_conversions   <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ special_teams_tds           <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ fantasy_points              <dbl> 27.16, 29.64, 28.68, 11.06, 37.74, 17.98, ~
-## $ fantasy_points_ppr          <dbl> 27.16, 29.64, 28.68, 11.06, 37.74, 17.98, ~
-## $ pacr                        <dbl> 0.8497758, 0.7953890, 1.1308901, 0.5860566~
-## $ racr                        <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ target_share                <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ air_yards_share             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ wopr                        <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+##  [1] "air_yards_share"             "attempts"                   
+##  [3] "carries"                     "completions"                
+##  [5] "dakota"                      "fantasy_points"             
+##  [7] "fantasy_points_ppr"          "interceptions"              
+##  [9] "pacr"                        "passing_2pt_conversions"    
+## [11] "passing_air_yards"           "passing_epa"                
+## [13] "passing_first_downs"         "passing_tds"                
+## [15] "passing_yards"               "passing_yards_after_catch"  
+## [17] "player_id"                   "player_name"                
+## [19] "racr"                        "receiving_2pt_conversions"  
+## [21] "receiving_air_yards"         "receiving_epa"              
+## [23] "receiving_first_downs"       "receiving_fumbles"          
+## [25] "receiving_fumbles_lost"      "receiving_tds"              
+## [27] "receiving_yards"             "receiving_yards_after_catch"
+## [29] "recent_team"                 "receptions"                 
+## [31] "rushing_2pt_conversions"     "rushing_epa"                
+## [33] "rushing_first_downs"         "rushing_fumbles"            
+## [35] "rushing_fumbles_lost"        "rushing_tds"                
+## [37] "rushing_yards"               "sack_fumbles"               
+## [39] "sack_fumbles_lost"           "sack_yards"                 
+## [41] "sacks"                       "season"                     
+## [43] "season_type"                 "special_teams_tds"          
+## [45] "target_share"                "targets"                    
+## [47] "week"                        "wopr"
 ```
 
-As well, it contains the following kicking information:
+As well, switching the `stat_type` to "kicking" provides the following information:
 
 
 ```r
 kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
-dplyr::glimpse(kicking.stats)
+ls(kicking.stats)
 ```
 
 ```
-## Rows: 561
-## Columns: 40
-## $ season              <int> 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 20~
-## $ week                <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,~
-## $ season_type         <chr> "REG", "REG", "REG", "REG", "REG", "REG", "REG", "~
-## $ team                <chr> "ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "~
-## $ player_name         <chr> "M.Prater", "Y.Koo", "J.Tucker", "T.Bass", "R.Sant~
-## $ player_id           <chr> "00-0023853", "00-0033702", "00-0029597", "00-0036~
-## $ fg_made             <int> 1, 2, 2, 3, 2, 0, 2, 0, 3, 2, 1, 1, 3, 1, 0, 2, 2,~
-## $ fg_missed           <int> 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 1, 0, 0,~
-## $ fg_blocked          <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_long             <dbl> 34, 27, 47, 42, 29, 0, 53, 0, 48, 36, 49, 39, 40, ~
-## $ fg_att              <dbl> 2, 2, 2, 3, 2, 0, 2, 0, 5, 2, 2, 1, 3, 1, 1, 2, 2,~
-## $ fg_pct              <dbl> 0.5, 1.0, 1.0, 1.0, 1.0, NaN, 1.0, NaN, 0.6, 1.0, ~
-## $ pat_made            <int> 5, 0, 3, 1, 1, 2, 3, 3, 2, 3, 2, 0, 4, 1, 3, 3, 4,~
-## $ pat_missed          <int> 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ pat_blocked         <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ pat_att             <dbl> 5, 0, 3, 1, 2, 2, 3, 3, 3, 3, 2, 0, 4, 1, 3, 3, 4,~
-## $ pat_pct             <dbl> 1.000, NaN, 1.000, 1.000, 0.500, 1.000, 1.000, 1.0~
-## $ fg_made_distance    <dbl> 34, 48, 87, 104, 51, 0, 86, 0, 104, 59, 49, 39, 91~
-## $ fg_missed_distance  <dbl> 43, 0, 0, 0, 0, 0, 0, 0, 91, 0, 51, 0, 0, 0, 55, 0~
-## $ fg_blocked_distance <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ gwfg_att            <dbl> 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ gwfg_distance       <dbl> 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0~
-## $ gwfg_made           <dbl> 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ gwfg_missed         <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ gwfg_blocked        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_made_0_19        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_made_20_29       <dbl> 0, 2, 0, 1, 2, 0, 0, 0, 1, 1, 0, 0, 2, 1, 0, 1, 1,~
-## $ fg_made_30_39       <dbl> 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0,~
-## $ fg_made_40_49       <dbl> 0, 0, 2, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0,~
-## $ fg_made_50_59       <dbl> 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,~
-## $ fg_made_60_         <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_missed_0_19      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_missed_20_29     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_missed_30_39     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_missed_40_49     <dbl> 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_missed_50_59     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0,~
-## $ fg_missed_60_       <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ fg_made_list        <chr> "34", "21;27", "40;47", "37;25;42", "22;29", "", "~
-## $ fg_missed_list      <chr> "43", "", "", "", "", "", "", "", "31;60", "", "51~
-## $ fg_blocked_list     <chr> "", "", "", "", "", "", "", "", "", "", "", "", ""~
+##  [1] "fg_att"              "fg_blocked"          "fg_blocked_distance"
+##  [4] "fg_blocked_list"     "fg_long"             "fg_made"            
+##  [7] "fg_made_0_19"        "fg_made_20_29"       "fg_made_30_39"      
+## [10] "fg_made_40_49"       "fg_made_50_59"       "fg_made_60_"        
+## [13] "fg_made_distance"    "fg_made_list"        "fg_missed"          
+## [16] "fg_missed_0_19"      "fg_missed_20_29"     "fg_missed_30_39"    
+## [19] "fg_missed_40_49"     "fg_missed_50_59"     "fg_missed_60_"      
+## [22] "fg_missed_distance"  "fg_missed_list"      "fg_pct"             
+## [25] "gwfg_att"            "gwfg_blocked"        "gwfg_distance"      
+## [28] "gwfg_made"           "gwfg_missed"         "pat_att"            
+## [31] "pat_blocked"         "pat_made"            "pat_missed"         
+## [34] "pat_pct"             "player_id"           "player_name"        
+## [37] "season"              "season_type"         "team"               
+## [40] "week"
 ```
 
 While the data returned is not as robust as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
@@ -144,71 +99,54 @@ As an example, let's say you need to get Ben Roethlisberger's total passing yard
 
 ### Getting Weekly Player Stats via `load_player_stats()`
 
+If you are familar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 season:
+
 
 ```r
 weekly.data <- nflreadr::load_player_stats(2021)
-rosters <- nflreadr::load_rosters(2021)
 
 ben.weekly <- weekly.data %>%
-  group_by(player_id) %>%
-  filter(season_type == "REG") %>%
+  group_by(player_id, player_name) %>%
+  filter(season_type == "REG" & player_name == "B.Roethlisberger") %>%
   summarize(total.yards = sum(passing_yards),
-            n.attempts = sum(attempts)) %>%
-  left_join(rosters, by = c("player_id" = "gsis_id")) %>%
-  filter(full_name == "Ben Roethlisberger") %>%
-  select(player_id, full_name, total.yards, n.attempts)
+            n.attempts = sum(attempts))
+```
 
+```
+## `summarise()` has grouped output by 'player_id'. You can override using the
+## `.groups` argument.
+```
+
+```r
 tibble(ben.weekly)
 ```
 
 ```
 ## # A tibble: 1 x 4
-##   player_id  full_name          total.yards n.attempts
-##   <chr>      <chr>                    <dbl>      <int>
-## 1 00-0022924 Ben Roethlisberger        3740        605
+##   player_id  player_name      total.yards n.attempts
+##   <chr>      <chr>                  <dbl>      <int>
+## 1 00-0022924 B.Roethlisberger        3740        605
 ```
 
-As you can see in the `ben.weekly` output, we have matched his official 2021 regular stats perfectly with 3,740 passing yards on 605 attempts. The code we just created is doing several things. First, we are using `nflreadr::load_player_stats(2021)` to place the data into our R environment in a DF titled `weekly.data`. Directly after, we are using another function called `load_rosters()` which populates a DF with the information for every player in the NFL during the 2021 season (more on why this is needed in a moment).
+As you can see in the `ben.weekly` output, we have matched his official 2021 regular stats perfectly with 3,740 passing yards on 605 attempts. The code we just created is doing several things. First, we are using `nflreadr::load_player_stats(2021)` to place the data into our R environment in a DF titled `weekly.data`.
 
-Next, we group the data together by alike `player_id` (as every individual player has a unique ID number). After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
+Next, we group the data together by alike `player_id` (as every individual player has a unique ID number) as well as the player's actual name. At the filtering level, we are looking for just the regular season (`REG`) within `season_type` and also removing all quarterbacks except for Ben Roethlisberger. It is important to note that player names are just first initial and last name, without a space after the period.
+
+After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
 
 Unfortunately, we are still not done. In order to get Roethlisberger's name attached to it, if you needed it, we needed to complete a `left_join` between our `ben.weekly` and `rosters` dataframes. To do so, we are matching up the `player_id` to the `gsis_id` within the roster information. After that information is combined, we are able to pull out just Roethlisberger's information and select the columns we want.
 
-That lengthy explanation brings about a good question: **why could we not simply do `filter(player_name == "B.Roethlisberger" & season_type == "REG"` rather than loading rosters and merging the two DFs?**
-
-Truth be told, that *would* be possible for Ben Roethliserger. As an example:
+**However, filtering by `player_name` can lead to signifcant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
 
 
 ```r
-ben.nomerge <- weekly.data %>%
-  group_by(player_name) %>%
-  filter(player_name == "B.Roethlisberger" & season_type == "REG") %>%
-  summarize(total.yards = sum(passing_yards),
-            n.attempts = sum(attempts))
-
-tibble(ben.nomerge)
-```
-
-```
-## # A tibble: 1 x 3
-##   player_name      total.yards n.attempts
-##   <chr>                  <dbl>      <int>
-## 1 B.Roethlisberger        3740        605
-```
-
-Again, we are matching the official statistics. And this time we are doing so with much less code and without the need to pull in roster information to merge with.
-
-But there is a reason you should not work with the data while grouping by `player_name`. An excellent example of this is Josh Allen. Let's attempt to do a "no roster, no merge" calcuation of this 2021 total passing yards and attempts and see what happens:
-
-
-```r
-josh.allen.nm <- weekly.data %>%
+josh.allen <- weekly.data %>%
   group_by(player_name) %>%
   filter(player_name == "J.Allen" & season_type == "REG") %>%
   summarize(total.yards = sum(passing_yards),
             n.attempts = sum(attempts))
 
-tibble(josh.allen.nm)
+tibble(josh.allen)
 ```
 
 ```
@@ -222,11 +160,11 @@ The output tells us Allen threw for 4,049 yards on 603 attempts during the 2021 
 
 The answer comes from Aaron Schatz, the creator of [Football Outsiders](https://www.footballoutsiders.com/), who explained in a [Tweet](https://twitter.com/fo_aschatz/status/1442191416826888192?s=21) that the official Buffalo Bills' scorer, during week 3 of the NFL season, decided to refer to Allen as "Jos.Allen" as a result of the Washington Commanders having a player named "Jonathan Allen."
 
-To double check this, we can run the same code as above, but group by two variables (`player_id` and `player_name`) to see what happens:
+To double check this, we can run the same code as above, but remove the `player_name` filter and switch to searching for just those players on the Buffalo Bills by using `recent_team`.
 
 
 ```r
-two.joshies <- weekly.data %>%
+two.josh.allens <- weekly.data %>%
   group_by(player_id, player_name) %>%
   filter(season_type == "REG" & recent_team == "BUF") %>%
   summarize(total.yards = sum(passing_yards),
@@ -239,7 +177,7 @@ two.joshies <- weekly.data %>%
 ```
 
 ```r
-tibble(two.joshies)
+tibble(two.josh.allens)
 ```
 
 ```
@@ -265,30 +203,24 @@ tibble(two.joshies)
 ## 17 00-0036251 Z.Moss                 0          0
 ```
 
-Grouping by `player_id` and `player_name` (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same `player_id`. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page. To verify, we can include the necessary coding to merge Josh's `player_id` with the identical `gsis_id` from our roster information:
+Grouping by `player_id` and `player_name` (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same `player_id`. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page.
+
+#### Using `load_player_stats()` Correctly
+
+To avoid these situations, you *could* load up NFL rosters via the `nflreadr::load_rosters()` function, but that would require unnecessary code in order to merge the two DFs together. Instead, we can do this:
 
 
 ```r
-josh.weekly <- weekly.data %>%
-  group_by(player_id) %>%
+josh.allen <- weekly.data %>%
   filter(season_type == "REG") %>%
-  summarize(total.yards = sum(passing_yards),
+  group_by(player_id) %>%
+  summarize(player_name = first(player_name),
+            total.yards = sum(passing_yards),
             n.attempts = sum(attempts)) %>%
-  left_join(rosters, by = c("player_id" = "gsis_id")) %>%
-  filter(full_name == "Josh Allen") %>%
-  select(player_id, full_name, total.yards, n.attempts)
-
-tibble(josh.weekly)
+  filter(player_name == "J.Allen")
 ```
 
-```
-## # A tibble: 1 x 4
-##   player_id  full_name  total.yards n.attempts
-##   <chr>      <chr>            <dbl>      <int>
-## 1 00-0034857 Josh Allen        4407        646
-```
-
-With the addition of merged roster information, we are able to work around the issue of Josh Allen being in the data twice under slightly varied names.
+The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather than within the `summarize` prior to calcuating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
 
 ### Using `load_player_stats()` To Find Leaders
 
@@ -301,16 +233,18 @@ While using `load_player_stats()` does not provide the ability to add context to
 data <- nflreadr::load_player_stats(2021)
 
 ay.per.attempt <- data %>%
-  group_by(player_name) %>%
+  group_by(player_id) %>%
   filter(season_type == "REG") %>%
-  summarize(n.attempts = sum(attempts),
+  summarize(player_name = first(player_name),
+            n.attempts = sum(attempts),
             n.airyards = sum(passing_air_yards),
             ay.attempt = n.airyards / n.attempts) %>%
   filter(n.attempts >= 400) %>%
-  arrange(desc(ay.attempt))
+  select(player_name, ay.attempt) %>%
+  arrange(-ay.attempt)
 ```
 
-In the above example, we are using `group_by` to combine the desired statistics for each individual quarterback. After filtering to include just those statistics for the regular season, we use the `summarize` function to find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
+In the above example, we are using `group_by` to combine the desired statistics based on each unique `player_id` to, again, avoid any issues with player names within the data. After filtering to include just those statistics for the regular season, we first use the `summarize` function grab the first `player_name` associated with the `player_id`. After, we find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
 
 It is important to note that the final row created with the `summarize` function is not a statistic included within `load_player_stats()`. In order to find a QB's average air yards per attempt, we must use the first two items we've created and do some simple division (the created `n.airyards` divided by `n.attempts`).
 
@@ -324,23 +258,23 @@ tibble(ay.per.attempt)
 ```
 
 ```
-## # A tibble: 24 x 4
-##    player_name   n.attempts n.airyards ay.attempt
-##    <chr>              <int>      <dbl>      <dbl>
-##  1 R.Wilson             400       3955       9.89
-##  2 J.Hurts              432       3882       8.99
-##  3 B.Mayfield           418       3651       8.73
-##  4 M.Stafford           601       5094       8.48
-##  5 K.Cousins            561       4575       8.16
-##  6 J.Burrow             520       4225       8.12
-##  7 D.Carr               626       5084       8.12
-##  8 J.Allen              603       4889       8.11
-##  9 T.Brady              719       5821       8.10
-## 10 T.Bridgewater        426       3424       8.04
-## # ... with 14 more rows
+## # A tibble: 25 x 2
+##    player_name   ay.attempt
+##    <chr>              <dbl>
+##  1 R.Wilson            9.89
+##  2 J.Hurts             8.99
+##  3 B.Mayfield          8.73
+##  4 M.Stafford          8.48
+##  5 J.Allen             8.20
+##  6 K.Cousins           8.16
+##  7 J.Burrow            8.12
+##  8 D.Carr              8.12
+##  9 T.Brady             8.10
+## 10 T.Bridgewater       8.04
+## # ... with 15 more rows
 ```
 
-Russell Wilson, who *just* made the cutoff with 400 passing attempts, led the NFL in 2021 with 9.89 air yards per attempt.
+Russell Wilson led the NFL in 2021 with 9.89 air yards per attempt.
 
 ## Using `load_pbp()` to Add Context to Statistics
 
@@ -350,7 +284,7 @@ To highlight this, let's look at an example of how context can be added to a pla
 
 ### An Example: QB Aggresiveness on 3rd Down
 
-Prior to the writing of this book, I created a metric using `load_pbp()` data I coined **QB 3rd Down Aggressiveness**. The metric is designed to determine *which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line.*
+Sticking with the air yards example from above, let's examine a metric I created using `load_pbp()` that I coined **QB 3rd Down Aggressiveness**. The metric is designed to determine which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line. It is an interesting metric to explore as, just like many metrics in the NFL, not all air yards are created equal. For example, eight air yards on 1st and 10 are less valuable than the same eight air yards on 3rd and 5.
 
 First, let's highlight the code used to create the results for this metric and then break it down line-by-line.
 
@@ -359,44 +293,39 @@ First, let's highlight the code used to create the results for this metric and t
 data <- nflreadr::load_pbp(2021)
 
 aggressiveness <- data %>%
-  group_by(passer, passer_id, posteam) %>%
+  group_by(passer_id) %>%
   filter(down == 3, play_type == "pass", ydstogo >= 5, ydstogo <= 10) %>%
-  summarize(total = n(),
+  summarize(player_name = first(passer),
+            team = first(posteam),
+            total = n(),
             aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
             percentage = aggressive / total) %>%
   filter(total >= 50) %>%
   arrange(desc(percentage))
-```
 
-```
-## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
-## using the `.groups` argument.
-```
-
-```r
 tibble(aggressiveness)
 ```
 
 ```
 ## # A tibble: 30 x 6
-##    passer       passer_id  posteam total aggressive percentage
-##    <chr>        <chr>      <chr>   <int>      <int>      <dbl>
-##  1 D.Prescott   00-0033077 DAL        84         53      0.631
-##  2 K.Murray     00-0035228 ARI        60         37      0.617
-##  3 J.Hurts      00-0036389 PHI        65         40      0.615
-##  4 P.Mahomes    00-0033873 KC         93         56      0.602
-##  5 B.Mayfield   00-0034855 CLE        59         35      0.593
-##  6 T.Lawrence   00-0036971 JAX        78         46      0.590
-##  7 J.Herbert    00-0036355 LAC        87         51      0.586
-##  8 D.Jones      00-0035710 NYG        60         35      0.583
-##  9 T.Tagovailoa 00-0036212 MIA        60         35      0.583
-## 10 M.Stafford   00-0026498 LA         95         54      0.568
+##    passer_id  player_name  team  total aggressive percentage
+##    <chr>      <chr>        <chr> <int>      <int>      <dbl>
+##  1 00-0033077 D.Prescott   DAL      84         53      0.631
+##  2 00-0035228 K.Murray     ARI      60         37      0.617
+##  3 00-0036389 J.Hurts      PHI      65         40      0.615
+##  4 00-0033873 P.Mahomes    KC       93         56      0.602
+##  5 00-0034855 B.Mayfield   CLE      59         35      0.593
+##  6 00-0036971 T.Lawrence   JAX      78         46      0.590
+##  7 00-0036355 J.Herbert    LAC      87         51      0.586
+##  8 00-0035710 D.Jones      NYG      60         35      0.583
+##  9 00-0036212 T.Tagovailoa MIA      60         35      0.583
+## 10 00-0026498 M.Stafford   LA       95         54      0.568
 ## # ... with 20 more rows
 ```
 
 As you can see in the `tibble()` output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.
 
-After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* and then appending both their unique `passer_id` as well as the `posteam` which is simply their team's abbreviation (note: the `posteam` variable is not a vital part of the data collection/manipulation process, but does play an important role when taking this output into the data visualization process, which is covered in Chapter 4).
+After creating a new dataframe called `aggressiveness` from the 2021 play-by-play we originally collected using `data <- nflreadr::load_pbp(2021)`, we use `group_by` to ensure that the data is being collected *per individual quarterback* via `passer_id.`
 
 However, there are a couple items to point out and clarify with the above code. Moreover, there are certainly arguments to be made regarding how to "capture" scenarios in the data that require "aggressiveness."
 
@@ -409,38 +338,33 @@ For the sake of curiosity, we can edit the above code to include all passing att
 
 ```r
 aggressiveness.under.10 <- data %>%
-  group_by(passer, passer_id, posteam) %>%
+  group_by(passer_id) %>%
   filter(down == 3, play_type == "pass", ydstogo <= 10) %>%
-  summarize(total = n(),
+  summarize(player_name = first(passer),
+            team = first(posteam),
+            total = n(),
             aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
             percentage = aggressive / total) %>%
   filter(total >= 50) %>%
   arrange(desc(percentage))
-```
 
-```
-## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
-## using the `.groups` argument.
-```
-
-```r
 tibble(aggressiveness.under.10)
 ```
 
 ```
 ## # A tibble: 33 x 6
-##    passer       passer_id  posteam total aggressive percentage
-##    <chr>        <chr>      <chr>   <int>      <int>      <dbl>
-##  1 K.Murray     00-0035228 ARI        98         67      0.684
-##  2 J.Hurts      00-0036389 PHI       107         73      0.682
-##  3 T.Lawrence   00-0036971 JAX       131         88      0.672
-##  4 D.Prescott   00-0033077 DAL       136         89      0.654
-##  5 J.Allen      00-0034857 BUF       138         88      0.638
-##  6 J.Herbert    00-0036355 LAC       148         94      0.635
-##  7 T.Tagovailoa 00-0036212 MIA        93         59      0.634
-##  8 M.Stafford   00-0026498 LA        172        109      0.634
-##  9 A.Rodgers    00-0023459 GB        128         80      0.625
-## 10 D.Jones      00-0035710 NYG        85         53      0.624
+##    passer_id  player_name  team  total aggressive percentage
+##    <chr>      <chr>        <chr> <int>      <int>      <dbl>
+##  1 00-0035228 K.Murray     ARI      98         67      0.684
+##  2 00-0036389 J.Hurts      PHI     107         73      0.682
+##  3 00-0036971 T.Lawrence   JAX     131         88      0.672
+##  4 00-0033077 D.Prescott   DAL     136         89      0.654
+##  5 00-0034857 J.Allen      BUF     138         88      0.638
+##  6 00-0036355 J.Herbert    LAC     148         94      0.635
+##  7 00-0036212 T.Tagovailoa MIA      93         59      0.634
+##  8 00-0026498 M.Stafford   LA      172        109      0.634
+##  9 00-0023459 A.Rodgers    GB      128         80      0.625
+## 10 00-0035710 D.Jones      NYG      85         53      0.624
 ## # ... with 23 more rows
 ```
 
@@ -463,39 +387,34 @@ Let's add the "garbage time" filter to the code we've already prepared:
 
 ```r
 aggressiveness.garbage <- data %>%
-  group_by(passer, passer_id, posteam) %>%
+  group_by(passer_id) %>%
   filter(down == 3, play_type == "pass", ydstogo >= 5, ydstogo <= 10,
          wp > .05, wp < .95, half_seconds_remaining > 120) %>%
-  summarize(total = n(),
+  summarize(player_name = first(passer),
+            team = first(posteam),
+            total = n(),
             aggressive = sum(air_yards >= ydstogo, na.rm = TRUE),
             percentage = aggressive / total) %>%
   filter(total >= 50) %>%
   arrange(desc(percentage))
-```
 
-```
-## `summarise()` has grouped output by 'passer', 'passer_id'. You can override
-## using the `.groups` argument.
-```
-
-```r
 tibble(aggressiveness.garbage)
 ```
 
 ```
 ## # A tibble: 26 x 6
-##    passer     passer_id  posteam total aggressive percentage
-##    <chr>      <chr>      <chr>   <int>      <int>      <dbl>
-##  1 D.Prescott 00-0033077 DAL        61         40      0.656
-##  2 T.Lawrence 00-0036971 JAX        51         33      0.647
-##  3 K.Murray   00-0035228 ARI        51         31      0.608
-##  4 M.Stafford 00-0026498 LA         79         48      0.608
-##  5 P.Mahomes  00-0033873 KC         68         41      0.603
-##  6 D.Jones    00-0035710 NYG        50         30      0.6  
-##  7 J.Herbert  00-0036355 LAC        67         38      0.567
-##  8 M.Jones    00-0036972 NE         57         31      0.544
-##  9 J.Allen    00-0034857 BUF        59         32      0.542
-## 10 R.Wilson   00-0029263 SEA        56         30      0.536
+##    passer_id  player_name team  total aggressive percentage
+##    <chr>      <chr>       <chr> <int>      <int>      <dbl>
+##  1 00-0033077 D.Prescott  DAL      61         40      0.656
+##  2 00-0036971 T.Lawrence  JAX      51         33      0.647
+##  3 00-0035228 K.Murray    ARI      51         31      0.608
+##  4 00-0026498 M.Stafford  LA       79         48      0.608
+##  5 00-0033873 P.Mahomes   KC       68         41      0.603
+##  6 00-0035710 D.Jones     NYG      50         30      0.6  
+##  7 00-0036355 J.Herbert   LAC      67         38      0.567
+##  8 00-0036972 M.Jones     NE       57         31      0.544
+##  9 00-0034857 J.Allen     BUF      59         32      0.542
+## 10 00-0029263 R.Wilson    SEA      56         30      0.536
 ## # ... with 16 more rows
 ```
 
