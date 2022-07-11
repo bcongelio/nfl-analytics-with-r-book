@@ -15,24 +15,24 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 4.  `nflreadr`
 5.  `nflplotR`
 
-Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories. The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories." The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
 
 As you will see in this chapter, using `nflreadr::` while coding provides nearly identical functions to those avaliable when using `nflfastR::`. In fact, `nflfastR::`, in many instances, now calls, "under the hood," the equivalant function in `nflreadr::`. Because of the coalescing between the two, many of the new functions being developed are avaliable only when using `nflreadr::`. For example, `nflreadr::` allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.
 
 While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded it and now serves as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
 
-To below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
+The below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
 
 ```{r nflverse-comparison, echo = FALSE, out.width = "100%", fig.cap = "Comparing nflfastR to nflreadr"}
 knitr::include_graphics(rep("docs/images/updated-diagram.png"))
 
 ```
 
-The purpose of this chapter is to explore `nflreadr` data using, what I will argue, are the two most important functions in the `nflverse`: (1.) `load_player_stats()` and (2.) `load_pbp()`. It makes the assumption that you are versed in the R programming language. If you are not, please start with Chapter 2 where you can learn about R and the `tidyverse` language using examples from the `nflverse`.
+The purpose of this chapter is to explore `nflreadr` data in an introductory fashion using, what I believe, are the two most important functions in the `nflverse`: (1.) `load_player_stats()` and (2.) `load_pbp()`. It makes the assumption that you are versed in the R programming language. If you are not, please start with Chapter 2 where you can learn about R and the `tidyverse` language using examples from the `nflverse`.
 
 ## `nflreadr`: An Introduction to the Data
 
-The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: weekly player stats and the more advanced and robust play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
+The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: weekly player stats and the more detailed play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
 
 As you may imagine, there is a **very important distinction between the `load_player_stats()`** **and `load_pbp()`**. As mentioned, `load_player_stats()` will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, `load_pbp()` will provide over 350 metrics for every single play of every single game dating back to 1999.
 
@@ -52,13 +52,13 @@ kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
 ls(kicking.stats)
 ```
 
-While the data returned is not as robust as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
+While the data returned is not as rich as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
 
 As an example, let's say you need to get Ben Roethlisberger's total passing yard and attempts from the 2021 season. You could do so via `load_pbp()` but, if you do not need further context, using `load_player_stats()` is much more efficient.
 
 ### Getting Weekly Player Stats via `load_player_stats()`
 
-If you are familar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 season:
+If you are familar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 regular season:
 
 ```{r ben-load-stats, echo = TRUE}
 
@@ -127,7 +127,7 @@ josh.allen <- weekly.data %>%
 
 ```
 
-The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather than within the `summarize` prior to calcuating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
+The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the `summarize` prior to calcuating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
 
 ### Using `load_player_stats()` To Find Leaders
 
@@ -155,7 +155,7 @@ In the above example, we are using `group_by` to combine the desired statistics 
 
 It is important to note that the final row created with the `summarize` function is not a statistic included within `load_player_stats()`. In order to find a QB's average air yards per attempt, we must use the first two items we've created and do some simple division (the created `n.airyards` divided by `n.attempts`).
 
-Finally, to "clear the noise" of those QBs with minimal attempts through the season, we included a filter to include those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.
+Finally, to "clear the noise" of those QBs with minimal attempts through the season, we included a filter to include only those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.
 
 The end results look like this:
 
@@ -332,4 +332,4 @@ tibble(average.airyards)
 
 Of those QBs with atleast 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
-## Conclusion
+## Exercises 

@@ -18,7 +18,7 @@ an-example-qb-aggresiveness-on-3rd-down
 qb-aggressiveness-filtering-for-garbage-time
 the-inclusion-of-contextual-statistics
 retrieving-working-with-data-for-multiple-seasons
-conclusion
+exercises
 wrangling-nfl-data-in-the-tidyverse
 downloading-r-and-rstudio
 installing-necessary-packages
