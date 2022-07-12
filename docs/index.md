@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to NFL Analytics with R"
 author: "Bradley J. Congelio"
-date: "2022-07-11"
+date: "2022-07-12"
 site: bookdown::bookdown_site
 knit: bookdown::render_book
 output: bookdown::bs4_book
@@ -48,7 +48,9 @@ Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb),
 
 That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the `nflverse`, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.
 
-The `nflverse` was initially birthed from [Ron Yurko's](https://twitter.com/Stat_Ron) `nflscrapR` project. At the time of the package's development, Ron was a Ph.D. student in the Statistics and Data Science program at Carnegie Mellon University. While I am not savvy to the entire backstory, `nflscrapR` was more of a side project and ended with the creation of `nflfastR` by Ben Baldwin and Sebastian Carl. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:
+The `nflverse` as we know it today was initially birthed from the `nflscrapR` project, which was started by Carnegie Mellon University students [Maksim Horowitz](https://twitter.com/bklynmaks?lang=en) and [Sam Ventura](https://twitter.com/stat_sam). After Horowitz graduated - and got hired by the Atlanta Hawks - the `nflscrapR` package was taken over by fellow CMU student Ron Yorko (who would go on to recieve his Ph.D. from the Statistics and Data Science program). The trio's work on `nflscrapR` ultimately led to a peer-reviewed paper titled "[nflWAR: A Reproducible Method for Offensive Player Evaluation in Football.](https://arxiv.org/pdf/1802.00998.pdf)" Ultimately, the `nflscrapR` project came to an end when the specific .json feed used to gather NFL data changed. At this point, Ben Baldwin and Sebastian Carl had already built upon the `nflscrapR` project's foundations to create `nflfastR`. Ron officially marked the end of the `nflscrapR` era and the beginning of the `nflfastR` era with a tweet on September 14, 2020:[^index-1]
+
+[^index-1]: Thanks to Ben Baldwin for chatting with me on Discord and providing this brief understanding of the backstory.
 
 <img src="docs/images/farewell-nflscrapr.jpg" width="100%" />
 
