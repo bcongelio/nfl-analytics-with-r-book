@@ -6,20 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Appendix | An Introduction to NFL Analytics with R</title>
 <meta name="author" content="Bradley J. Congelio">
-<meta name="description" content="div#appendix &gt; div.csl-entry {  margin-bottom: 10px }">
+<meta name="description" content="The NFL Analytics Dictionary  Air Yards Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Appendix | An Introduction to NFL Analytics with R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/appendix.html">
-<meta property="og:description" content="div#appendix &gt; div.csl-entry {  margin-bottom: 10px }">
+<meta property="og:description" content="The NFL Analytics Dictionary  Air Yards Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Appendix | An Introduction to NFL Analytics with R">
-<meta name="twitter:description" content="div#appendix &gt; div.csl-entry {  margin-bottom: 10px }">
+<meta name="twitter:description" content="The NFL Analytics Dictionary  Air Yards Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0ZLEFZL898');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -81,18 +87,104 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="appendix" class="section level1 unnumbered">
 <h1>Appendix<a class="anchor" aria-label="anchor" href="#appendix"><i class="fas fa-link"></i></a>
 </h1>
-<style type="text/css">
-div#appendix > div.csl-entry {
-  margin-bottom: 10px
-}
-</style>
+<div id="the-nfl-analytics-dictionary" class="section level2 unnumbered">
+<h2>The NFL Analytics Dictionary<a class="anchor" aria-label="anchor" href="#the-nfl-analytics-dictionary"><i class="fas fa-link"></i></a>
+</h2>
+<div id="air-yards" class="section level3 unnumbered">
+<h3>Air Yards<a class="anchor" aria-label="anchor" href="#air-yards"><i class="fas fa-link"></i></a>
+</h3>
+<p>Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not catch, the football. It does not take into consideration the amount of yardage gained after the catch by the wide receiver (which would be <em>yards after catch</em>).</p>
+<p>For an example, please see the below illustration. In it, the line of scrimmag is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.</p>
+<p>However, because air yards is a better metric to explore a QB’s <em>true</em> impact on a play, he is credited with 30 air yards while the wide receiver is credited with 20 yards after catch.</p>
+<p>In the end, quarterbacks with higher air yards per attempt are generally assumed to be throwing the ball deeper downfield than QBs with lower air yards per attempt.</p>
+<center>
+<div class="inline-figure"><img src="docs/images/nfl101/images/airyards_101.png" width="473"></div>
+</center>
+<p>There are multiple ways to collect data pertaining to air yards. However, the most straightforward way is to use <code>load_player_stats</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">air.yards</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>
+    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
+    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,
+    avg.ay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">air.yards</span>, <span class="va">avg.ay</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">air.yards</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">air.yards</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 42 x 3
+##    name       air.yards avg.ay
+##    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
+##  1 T.Brady         5821   342.
+##  2 J.Allen         5295   311.
+##  3 M.Stafford      5094   300.
+##  4 D.Carr          5084   299.
+##  5 J.Herbert       5069   298.
+##  6 P.Mahomes       4825   284.
+##  7 T.Lawrence      4732   278.
+##  8 D.Prescott      4612   288.
+##  9 K.Cousins       4575   286.
+## 10 J.Burrow        4225   264.
+## # ... with 32 more rows</code></pre>
+<p>In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.</p>
+</div>
+<div id="average-depth-of-target" class="section level3 unnumbered">
+<h3>Average Depth of Target<a class="anchor" aria-label="anchor" href="#average-depth-of-target"><i class="fas fa-link"></i></a>
+</h3>
+<p>As mentioned above, a QB’s air yards per attempt can highlight whether or not he is attempting to push the ball deeper down field than his counterparts. The official name of this is <strong>Average Depth of Target</strong> (or ADOT). We can easily generate this statistic using the <code>load_player_stats</code> function within <code>nflreader</code>:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">adot</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>
+    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
+    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,
+    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,
+    adot <span class="op">=</span> <span class="va">air.yards</span> <span class="op">/</span> <span class="va">attempts</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">adot</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">adot</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 42 x 5
+##    player_id  name       attempts air.yards  adot
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1 00-0035704 D.Lock          111      1117 10.1 
+##  2 00-0029263 R.Wilson        400      3955  9.89
+##  3 00-0036945 J.Fields        270      2636  9.76
+##  4 00-0034796 L.Jackson       382      3531  9.24
+##  5 00-0036389 J.Hurts         432      3882  8.99
+##  6 00-0034855 B.Mayfield      418      3651  8.73
+##  7 00-0026498 M.Stafford      601      5094  8.48
+##  8 00-0031503 J.Winston       161      1340  8.32
+##  9 00-0034857 J.Allen         646      5295  8.20
+## 10 00-0029604 K.Cousins       561      4575  8.16
+## # ... with 32 more rows</code></pre>
+<p>As seen in the results, if we ignore Drew Lock’s 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furtherst downfield among QBs with atleast 100 attempts.</p>
+
+</div>
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="wrangling-nfl-data-in-the-tidyverse.html"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></div>
 <div class="next"><a href="references.html">References</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#appendix">Appendix</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#appendix">Appendix</a></li>
+<li>
+<a class="nav-link" href="#the-nfl-analytics-dictionary">The NFL Analytics Dictionary</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#air-yards">Air Yards</a></li>
+<li><a class="nav-link" href="#average-depth-of-target">Average Depth of Target</a></li>
+</ul>
+</li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -108,7 +200,7 @@ div#appendix > div.csl-entry {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-07-12.</p>
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-07-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
