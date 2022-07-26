@@ -96,9 +96,9 @@
 <li><code>nflreadr</code></li>
 <li><code>nflplotR</code></li>
 </ol>
-<p>Installing the <code>nflverse</code> as a package in R will automatically install all five packages. However, the core focus of this book will be on <code>nflreadr</code>. It is understadable if you are confused by that, since the Preface of this book introduced the <code>nflfastR</code> package. The <code>nflreadr</code> package, as explained by its author (<a href="https://tanho.ca/">Tan Ho</a>), is a “minimal package for downloading data from <code>nflverse</code> repositories.” The data that <em>is</em> the <code>nflverse</code> is stored acoss five different GitHub repositories. Using <code>nflreadr</code> allows for easy access to any of these data sources. For lack of a better term, <code>nflreadr</code> acts as a shortcut of sorts while also operating with less dependencies.</p>
-<p>As you will see in this chapter, using <code>nflreadr::</code> while coding provides nearly identical functions to those avaliable when using <code>nflfastR::</code>. In fact, <code>nflfastR::</code>, in many instances, now calls, “under the hood,” the equivalant function in <code>nflreadr::</code>. Because of the coalescing between the two, many of the new functions being developed are avaliable only when using <code>nflreadr::</code>. For example, <code>nflreadr::</code> allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.</p>
-<p>While <code>nflfastR</code> did initially serve as the foundation of the “amateur NFL analytics” movement, the <code>nflreadr</code> package has superceded it and now serves as the “catchall” package for all the various bits and pieces of the <code>nflverse</code>. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use <code>nflreadr::</code> when calling functions housed within the <code>nflverse</code> rather than <code>nflfastR::</code>.</p>
+<p>Installing the <code>nflverse</code> as a package in R will automatically install all five packages. However, the core focus of this book will be on <code>nflreadr</code>. It is understandable if you are confused by that, since the Preface of this book introduced the <code>nflfastR</code> package. The <code>nflreadr</code> package, as explained by its author (<a href="https://tanho.ca/">Tan Ho</a>), is a “minimal package for downloading data from <code>nflverse</code> repositories.” The data that <em>is</em> the <code>nflverse</code> is stored across five different GitHub repositories. Using <code>nflreadr</code> allows for easy access to any of these data sources. For lack of a better term, <code>nflreadr</code> acts as a shortcut of sorts while also operating with less dependencies.</p>
+<p>As you will see in this chapter, using <code>nflreadr::</code> while coding provides nearly identical functions to those available when using <code>nflfastR::</code>. In fact, <code>nflfastR::</code>, in many instances, now calls, “under the hood,” the equivalent function in <code>nflreadr::</code>. Because of the coalescing between the two, many of the new functions being developed are available only when using <code>nflreadr::</code>. For example, <code>nflreadr::</code> allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.</p>
+<p>While <code>nflfastR</code> did initially serve as the foundation of the “amateur NFL analytics” movement, the <code>nflreadr</code> package has superseded it and now serves as the “catchall” package for all the various bits and pieces of the <code>nflverse</code>. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use <code>nflreadr::</code> when calling functions housed within the <code>nflverse</code> rather than <code>nflfastR::</code>.</p>
 <p>The below diagram visualizes the relationship between <code>nflfastR</code> and <code>nflreadr</code>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:nflverse-comparison"></span>
@@ -159,13 +159,13 @@ Figure 1.1: Comparing nflfastR to nflreadr
 ## [34] "pat_pct"             "player_id"           "player_name"        
 ## [37] "season"              "season_type"         "team"               
 ## [40] "week"</code></pre>
-<p>While the data returned is not as rich as the play-by-play data we will covering next, the <code>load_player_stats()</code> function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL’s website or on <a href="https://www.pro-football-reference.com/">Pro Football Reference</a>.</p>
+<p>While the data returned is not as rich as the play-by-play data we will covering next, the <code>load_player_stats()</code> function is extremely helpful when you need to quickly (and correctly!) recreate the official stats listed on either the NFL’s website or on <a href="https://www.pro-football-reference.com/">Pro Football Reference</a>.</p>
 <p>As an example, let’s say you need to get Ben Roethlisberger’s total passing yard and attempts from the 2021 season. You could do so via <code>load_pbp()</code> but, if you do not need further context, using <code>load_player_stats()</code> is much more efficient.</p>
 <div id="getting-weekly-player-stats-via-load_player_stats" class="section level3" number="1.1.1">
 <h3>
 <span class="header-section-number">1.1.1</span> Getting Weekly Player Stats via <code>load_player_stats()</code><a class="anchor" aria-label="anchor" href="#getting-weekly-player-stats-via-load_player_stats"><i class="fas fa-link"></i></a>
 </h3>
-<p>If you are familar with R, it might seem logical to do the following to get Roethlisberger’s total passing yards and number of attempts from the 2021 regular season:</p>
+<p>If you are familiar with R, it might seem logical to do the following to get Roethlisberger’s total passing yards and number of attempts from the 2021 regular season:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">weekly.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 
@@ -185,7 +185,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 <p>As you can see in the <code>ben.weekly</code> output, we have matched his official 2021 regular stats perfectly with 3,740 passing yards on 605 attempts. The code we just created is doing several things. First, we are using <code>nflreadr::load_player_stats(2021)</code> to place the data into our R environment in a DF titled <code>weekly.data</code>.</p>
 <p>Next, we group the data together by alike <code>player_id</code> (as every individual player has a unique ID number) as well as the player’s actual name. At the filtering level, we are looking for just the regular season (<code>REG</code>) within <code>season_type</code> and also removing all quarterbacks except for Ben Roethlisberger. It is important to note that player names are just first initial and last name, without a space after the period.</p>
 <p>After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.</p>
-<p><strong>However, filtering by <code>player_name</code> can lead to signifcant issues with your results.</strong> An excellent example of this is Josh Allen. Let’s recreate the code above that successfully provided Roethlisberger’s stats, but replace Ben with Josh Allen:</p>
+<p><strong>However, filtering by <code>player_name</code> can lead to significant issues with your results.</strong> An excellent example of this is Josh Allen. Let’s recreate the code above that successfully provided Roethlisberger’s stats, but replace Ben with Josh Allen:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">josh.allen</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -245,7 +245,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
             total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,
             n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span><span class="op">)</span></code></pre></div>
-<p>The most efficient way to gather correct player statistics is to do the <code>group_by</code> with ONLY the <code>player_id</code> as, despite the variation in name, the <code>player_id</code> remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the <code>summarize</code> prior to calcuating the sum of <code>passing_yards</code> and <code>attempts</code>. After, if you desire to see only Josh Allen’s number, you can filter out to just his name.</p>
+<p>The most efficient way to gather correct player statistics is to do the <code>group_by</code> with ONLY the <code>player_id</code> as, despite the variation in name, the <code>player_id</code> remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the <code>summarize</code> prior to calculating the sum of <code>passing_yards</code> and <code>attempts</code>. After, if you desire to see only Josh Allen’s number, you can filter out to just his name.</p>
 </div>
 </div>
 <div id="using-load_player_stats-to-find-leaders" class="section level3" number="1.1.2">
@@ -677,11 +677,11 @@ Figure 1.1: Comparing nflfastR to nflreadr
 ## [372] "yrdln"</code></pre>
 <p>A bit overwhelming, right?</p>
 <p>Luckily, the <code>nflfastR</code> website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: <a href="https://www.nflfastr.com/articles/field_descriptions.html">nflfastR Field Descriptions</a>.</p>
-<p>As seen above, we can use the <code>load_player_stats()</code> function to determine a QB’s average yards per attempt over the course of a season. But, what if we wanted to add conext to that? For example, how do we explore a QB’s air yards in game-specific situations?</p>
+<p>As seen above, we can use the <code>load_player_stats()</code> function to determine a QB’s average yards per attempt over the course of a season. But, what if we wanted to add context to that? For example, how do we explore a QB’s air yards in game-specific situations?</p>
 <p>To showcase using <code>load_pbp()</code> to add context to your analysis, let’s explore QB performance via air yards on 3rd down.</p>
-<div id="an-example-qb-aggresiveness-on-3rd-down" class="section level3" number="1.2.1">
+<div id="an-example-qb-aggressiveness-on-3rd-down" class="section level3" number="1.2.1">
 <h3>
-<span class="header-section-number">1.2.1</span> An Example: QB Aggresiveness on 3rd Down<a class="anchor" aria-label="anchor" href="#an-example-qb-aggresiveness-on-3rd-down"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.1</span> An Example: QB Aggressiveness on 3rd Down<a class="anchor" aria-label="anchor" href="#an-example-qb-aggressiveness-on-3rd-down"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sticking with the air yards example from above, let’s examine a metric I created using <code>load_pbp()</code> that I coined <strong>QB 3rd Down Aggressiveness</strong>. The metric is designed to determine which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line. It is an interesting metric to explore as, just like many metrics in the NFL, not all air yards are created equal. For example, eight air yards on 1st and 10 are less valuable than the same eight air yards on 3rd and 5.</p>
 <p>First, let’s highlight the code used to create the results for this metric and then break it down line-by-line.</p>
@@ -785,10 +785,10 @@ Figure 1.1: Comparing nflfastR to nflreadr
 ##  9 00-0034857 J.Allen     BUF      59         32      0.542
 ## 10 00-0029263 R.Wilson    SEA      56         30      0.536
 ## # ... with 16 more rows</code></pre>
-<p>We are now using the same code, but have included three new items to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occured when the offense’s <code>win probability</code> was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.</p>
+<p>We are now using the same code, but have included three new items to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense’s <code>win probability</code> was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.</p>
 <p>The decision on range of the <code>win probability</code> numbers is, again, a personal preference. When <code>nflfastR</code> was first released, analyst often used a 20-80% range for <code>win probability</code>. However, Sebastian Carl - one of the creators of the <code>nflverse</code> explained in the package’s Discord:</p>
 <blockquote>
-<p>Sebastian Carl: “I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach &gt;85% probs early in the game because it incorporates market lines. I never understood the 20% &lt;= wp &lt;= 80%”garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% &lt;= wp &lt;= 95%).</p>
+<p>Sebastian Carl: “I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach &gt;85% probs early in the game because it incorporates market lines. I never understood the 20% &lt;= wp &lt;= 80%”garbage time” filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% &lt;= wp &lt;= 95%).</p>
 </blockquote>
 <p>Ben Baldwin followed up on Carl’s thoughts:</p>
 <blockquote>
@@ -796,7 +796,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 </blockquote>
 <p>Based on that advice, I typically stick to the 5-95% range when filtering for <code>win probability</code> using play-by-play data. And, in this case, it did have an impact.</p>
 <p>As mentioned, prior to filtering for garbage time, Allen was the 15th most aggressive QB in the league at nearly 52%. However, once filtering for garbage time, Allen rose to 9th most aggressive QB, with a slight increase of percentage to 54%.</p>
-<p>What is interesting about the above example, though, is Dak Prescott and the Cowboys. Dallas maintained the second largest point differntial in the league (530 points for and 358 points against, for a 172 point difference). Without the garbage time filter, Prescott was tops in the NFL with an aggressiveness rating of 63%.</p>
+<p>What is interesting about the above example, though, is Dak Prescott and the Cowboys. Dallas maintained the second largest point differential in the league (530 points for and 358 points against, for a 172 point difference). Without the garbage time filter, Prescott was tops in the NFL with an aggressiveness rating of 63%.</p>
 <p>Once adjusted for garbage time? Prescott remained atop the NFL with an aggressiveness rating of 65.5%.</p>
 <p>Allen’s increase in the standings, and Prescott remaining best in the league, in this specific metric, is a possible indicator that the inclusion of the “garbage time” filters provides a slightly more accurate result.</p>
 </div>
@@ -813,7 +813,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 <span class="header-section-number">1.3</span> Retrieving &amp; Working With Data for Multiple Seasons<a class="anchor" aria-label="anchor" href="#retrieving-working-with-data-for-multiple-seasons"><i class="fas fa-link"></i></a>
 </h2>
 <p>In the case of both <code>load_pbp()</code> and <code>load_player_stats()</code>, it is possible to load data over multiple seasons.</p>
-<p>In our above example calculating average air yard per attempt, it is important to note that Russell Wilson’s league-eading average of 9.89 air yards per attempt is calculated using <em>all</em> passing attempts, meaning pass attempts that were both complete and incomplete.</p>
+<p>In our above example calculating average air yard per attempt, it is important to note that Russell Wilson’s league-leading average of 9.89 air yards per attempt is calculated using <em>all</em> passing attempts, meaning pass attempts that were both complete and incomplete.</p>
 <p>In our first example of working with data across multiple seasons, let’s examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ay.five.years</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2017</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span></code></pre></div>
@@ -840,7 +840,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 ## #   drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;, down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;,
 ## #   yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;, ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;,
 ## #   yards_gained &lt;dbl&gt;, shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, ...</code></pre>
-<p>Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021’s air yards per attempt leaders using <code>load_player_stats()</code>. In this case, howeve, we are including an additional filter to gather those passing attempts that results <em>only</em> in complete passes:</p>
+<p>Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021’s air yards per attempt leaders using <code>load_player_stats()</code>. In this case, however, we are including an additional filter to gather those passing attempts that results <em>only</em> in complete passes:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">average.airyards</span> <span class="op">&lt;-</span> <span class="va">ay.five.years</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -867,7 +867,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 ##  9 00-0029701 R.Tannehill        1049      6680    6.37
 ## 10 00-0032950 C.Wentz            1505      9491    6.31
 ## # ... with 12 more rows</code></pre>
-<p>Of those QBs with atleast 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.</p>
+<p>Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.</p>
 </div>
 <div id="exercises" class="section level2" number="1.4">
 <h2>
@@ -891,7 +891,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 </li>
 <li>
 <a class="nav-link" href="#using-load_pbp-to-add-context-to-statistics"><span class="header-section-number">1.2</span> Using load_pbp() to Add Context to Statistics</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#an-example-qb-aggresiveness-on-3rd-down"><span class="header-section-number">1.2.1</span> An Example: QB Aggresiveness on 3rd Down</a></li>
+<li><a class="nav-link" href="#an-example-qb-aggressiveness-on-3rd-down"><span class="header-section-number">1.2.1</span> An Example: QB Aggressiveness on 3rd Down</a></li>
 <li><a class="nav-link" href="#the-inclusion-of-contextual-statistics"><span class="header-section-number">1.2.2</span> The Inclusion of Contextual Statistics</a></li>
 </ul>
 </li>
@@ -913,7 +913,7 @@ Figure 1.1: Comparing nflfastR to nflreadr
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-07-15.</p>
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-07-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

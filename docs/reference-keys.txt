@@ -14,7 +14,7 @@ using-load_player_stats-correctly
 using-load_player_stats-to-find-leaders
 an-example-2021-qb-air-yards-per-attempt-leaders
 using-load_pbp-to-add-context-to-statistics
-an-example-qb-aggresiveness-on-3rd-down
+an-example-qb-aggressiveness-on-3rd-down
 qb-aggressiveness-filtering-for-garbage-time
 the-inclusion-of-contextual-statistics
 retrieving-working-with-data-for-multiple-seasons
