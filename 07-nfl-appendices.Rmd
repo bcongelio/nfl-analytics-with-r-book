@@ -8,6 +8,8 @@ library(nflreadr)
 
 ## The NFL Analytics Dictionary {.unnumbered}
 
+This is a work in progress. Reviewers given access to the earliest version of this book suggest a "Football 101" section to bring people up to speed on analytics and definitions *of* those analytics. This is going to serve as that reference point, and also include a "quick reference guide" on how to find/calculate the metrics within the `nflverse`. Before are just a couple examples of how I see this section being displayed.
+
 ### Air Yards {.unnumbered}
 
 Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not catch, the football. It does not take into consideration the amount of yardage gained after the catch by the wide receiver (which would be *yards after catch*).
