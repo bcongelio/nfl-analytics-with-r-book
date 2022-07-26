@@ -15,11 +15,11 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 4.  `nflreadr`
 5.  `nflplotR`
 
-Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understadable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories." The data that *is* the `nflverse` is stored acoss five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understandable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories." The data that *is* the `nflverse` is stored across five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
 
-As you will see in this chapter, using `nflreadr::` while coding provides nearly identical functions to those avaliable when using `nflfastR::`. In fact, `nflfastR::`, in many instances, now calls, "under the hood," the equivalant function in `nflreadr::`. Because of the coalescing between the two, many of the new functions being developed are avaliable only when using `nflreadr::`. For example, `nflreadr::` allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.
+As you will see in this chapter, using `nflreadr::` while coding provides nearly identical functions to those available when using `nflfastR::`. In fact, `nflfastR::`, in many instances, now calls, "under the hood," the equivalent function in `nflreadr::`. Because of the coalescing between the two, many of the new functions being developed are available only when using `nflreadr::`. For example, `nflreadr::` allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.
 
-While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superceded it and now serves as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
+While `nflfastR` did initially serve as the foundation of the "amateur NFL analytics" movement, the `nflreadr` package has superseded it and now serves as the "catchall" package for all the various bits and pieces of the `nflverse`. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use `nflreadr::` when calling functions housed within the `nflverse` rather than `nflfastR::`.
 
 The below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
 
@@ -52,13 +52,13 @@ kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
 ls(kicking.stats)
 ```
 
-While the data returned is not as rich as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpul when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
+While the data returned is not as rich as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpful when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
 
 As an example, let's say you need to get Ben Roethlisberger's total passing yard and attempts from the 2021 season. You could do so via `load_pbp()` but, if you do not need further context, using `load_player_stats()` is much more efficient.
 
 ### Getting Weekly Player Stats via `load_player_stats()`
 
-If you are familar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 regular season:
+If you are familiar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 regular season:
 
 ```{r ben-load-stats, echo = TRUE}
 
@@ -79,7 +79,7 @@ Next, we group the data together by alike `player_id` (as every individual playe
 
 After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
 
-**However, filtering by `player_name` can lead to signifcant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
+**However, filtering by `player_name` can lead to significant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
 
 ```{r josh-allen-no-merge-weekly, echo = TRUE}
 
@@ -127,7 +127,7 @@ josh.allen <- weekly.data %>%
 
 ```
 
-The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the `summarize` prior to calcuating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
+The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the `summarize` prior to calculating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
 
 ### Using `load_player_stats()` To Find Leaders
 
@@ -182,11 +182,11 @@ A bit overwhelming, right?
 
 Luckily, the `nflfastR` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflfastR Field Descriptions](https://www.nflfastr.com/articles/field_descriptions.html).
 
-As seen above, we can use the `load_player_stats()` function to determine a QB's average yards per attempt over the course of a season. But, what if we wanted to add conext to that? For example, how do we explore a QB's air yards in game-specific situations?
+As seen above, we can use the `load_player_stats()` function to determine a QB's average yards per attempt over the course of a season. But, what if we wanted to add context to that? For example, how do we explore a QB's air yards in game-specific situations?
 
 To showcase using `load_pbp()` to add context to your analysis, let's explore QB performance via air yards on 3rd down.
 
-### An Example: QB Aggresiveness on 3rd Down
+### An Example: QB Aggressiveness on 3rd Down
 
 Sticking with the air yards example from above, let's examine a metric I created using `load_pbp()` that I coined **QB 3rd Down Aggressiveness**. The metric is designed to determine which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line. It is an interesting metric to explore as, just like many metrics in the NFL, not all air yards are created equal. For example, eight air yards on 1st and 10 are less valuable than the same eight air yards on 3rd and 5.
 
@@ -236,11 +236,11 @@ aggressiveness.under.10 <- data %>%
 tibble(aggressiveness.under.10)
 ```
 
-The results are quite different from the first running of this metric, as Dak Prescott is now the 4th most aggressive QB, while Kyler Murray moves to the top by approaching a nearly 70% aggressiveness rate on 3rd down. This small change highlights an important element about analytics: much of the work is the result of the coder (ie., [you]{.ul}) being able to justify your decision-making process when developing the filters for each metric you create.
+The results are quite different from the first running of this metric, as Dak Prescott is now the 4th most aggressive QB, while Kyler Murray moves to the top by approaching a nearly 70% aggressiveness rate on 3rd down. This small change highlights an important element about analytics: much of the work is the result of the coder (ie., [you]{.underline}) being able to justify your decision-making process when developing the filters for each metric you create.
 
-In this case, I stand by my argument that including just those pass attempts on 3rd down with between 5 and 10 yards to go is a more accurate assessment of aggressiveness as, for example, 3rd down with 8 yards to go is an obvious passing situation in [most]{.ul} cases.
+In this case, I stand by my argument that including just those pass attempts on 3rd down with between 5 and 10 yards to go is a more accurate assessment of aggressiveness as, for example, 3rd down with 8 yards to go is an obvious passing situation in [most]{.underline} cases.
 
-That begs the question, though: in which cases is 3rd down with 8 yards to go [not]{.ul} an obvious passing situation? An example of this falls under the guise of "garbage time."
+That begs the question, though: in which cases is 3rd down with 8 yards to go [not]{.underline} an obvious passing situation? An example of this falls under the guise of "garbage time."
 
 #### QB Aggressiveness: Filtering for "Garbage Time?"
 
@@ -269,11 +269,11 @@ aggressiveness.garbage <- data %>%
 tibble(aggressiveness.garbage)
 ```
 
-We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occured when the offense's `win probability` was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.
+We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense's `win probability` was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.
 
 The decision on range of the `win probability` numbers is, again, a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for `win probability`. However, Sebastian Carl - one of the creators of the `nflverse` explained in the package's Discord:
 
-> Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80% "garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
+> Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80%"garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
 
 Ben Baldwin followed up on Carl's thoughts:
 
@@ -283,7 +283,7 @@ Based on that advice, I typically stick to the 5-95% range when filtering for `w
 
 As mentioned, prior to filtering for garbage time, Allen was the 15th most aggressive QB in the league at nearly 52%. However, once filtering for garbage time, Allen rose to 9th most aggressive QB, with a slight increase of percentage to 54%.
 
-What is interesting about the above example, though, is Dak Prescott and the Cowboys. Dallas maintained the second largest point differntial in the league (530 points for and 358 points against, for a 172 point difference). Without the garbage time filter, Prescott was tops in the NFL with an aggressiveness rating of 63%.
+What is interesting about the above example, though, is Dak Prescott and the Cowboys. Dallas maintained the second largest point differential in the league (530 points for and 358 points against, for a 172 point difference). Without the garbage time filter, Prescott was tops in the NFL with an aggressiveness rating of 63%.
 
 Once adjusted for garbage time? Prescott remained atop the NFL with an aggressiveness rating of 65.5%.
 
@@ -297,7 +297,7 @@ As seen in the above example regarding QB aggressiveness on 3rd down, the using 
 
 In the case of both `load_pbp()` and `load_player_stats()`, it is possible to load data over multiple seasons.
 
-In our above example calculating average air yard per attempt, it is important to note that Russell Wilson's league-eading average of 9.89 air yards per attempt is calculated using *all* passing attempts, meaning pass attempts that were both complete and incomplete.
+In our above example calculating average air yard per attempt, it is important to note that Russell Wilson's league-leading average of 9.89 air yards per attempt is calculated using *all* passing attempts, meaning pass attempts that were both complete and incomplete.
 
 In our first example of working with data across multiple seasons, let's examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:
 
@@ -313,7 +313,7 @@ To retrieve multiple seasons of data, a colon `:` is placed between the years th
 tibble(ay.five.years)
 ```
 
-Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021's air yards per attempt leaders using `load_player_stats()`. In this case, howeve, we are including an additional filter to gather those passing attempts that results *only* in complete passes:
+Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021's air yards per attempt leaders using `load_player_stats()`. In this case, however, we are including an additional filter to gather those passing attempts that results *only* in complete passes:
 
 ```{r avg-ay-5-results, echo = TRUE}
 
@@ -330,6 +330,6 @@ average.airyards <- ay.five.years %>%
 tibble(average.airyards)
 ```
 
-Of those QBs with atleast 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
+Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
 ## Exercises

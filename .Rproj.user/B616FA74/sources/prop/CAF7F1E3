@@ -1,11 +1,13 @@
 {
     "source_window_id": "",
     "Source": "Source",
-    "cursorPosition": "157,122",
+    "cursorPosition": "332,21",
     "scrollLine": "0",
     "rmdVisualMode": "true",
     "rmdVisualWrapConfigured": "true",
     "docOutlineVisible": "1",
-    "rmdVisualModeLocation": "82:0",
-    "docOutlineSize": "178"
+    "rmdVisualModeLocation": "22149:7204",
+    "docOutlineSize": "178",
+    "rmdVisualCollapsedChunks": "",
+    "ignored_words": "NFL's,Roethlisberger's,Roethlisberger,Schatz,Jos,DFs,Allen's,QB's,QBs,nflfastR,Dak,dataframe,Kyler,ie,wp,vegas,probs,Jameis\n"
 }
