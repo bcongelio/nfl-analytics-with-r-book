@@ -1,0 +1,25 @@
+# Data Visulization with NFL Analytics
+
+```{r loading-library, include = FALSE}
+
+library(tidyverse)
+library(nflreadr)
+
+```
+
+An intro regarding the importance of data viz is going to go here.
+
+Jim Stikeleather, writing for the *Harvard Business Review*, outlined three key elements that make a successful data visualization (albeit, leaving *us* to decide the definition of what a "successful" data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: **it understands the audience, it sets up a clear framework, and it tells a story** [@stikeleather2013].
+
+To illustrate the importane of these three elements, let's take a look at example visualizations using NFL data to furhter contextulize each one.
+
+## Setting Up for Data Viz
+
+While most of your journey through NFL analytics in this book required you to use the `tidyverse` and a handful of other packages, the process of creating compelling and meaningful data visulizations will require you to utilize multitudes of other packages. Of course, the most important is `ggplot2` which is already installed via the `tidyverse`. However, in order to recreate the visulizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:
+
+```{r packages-necessary-for-chapter}
+
+viz.packages <- c("scales", "factoextra", "ggthemes")
+
+install.packages(viz.packages)
+```

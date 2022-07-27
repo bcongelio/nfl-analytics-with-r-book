@@ -194,6 +194,25 @@
             "title": "Super bowl LII: How the 2017 philadelphia eagles were built",
             "title-short": "Super bowl LII",
             "type": ""
+        },
+        {
+            "URL": "https://hbr.org/2013/04/the-three-elements-of-successf",
+            "author": [
+                {
+                    "family": "Stikeleather",
+                    "given": "Jim"
+                }
+            ],
+            "id": "stikeleather2013",
+            "issued": {
+                "date-parts": [
+                    [
+                        2013
+                    ]
+                ]
+            },
+            "title": "The three elements of successful data visualizations",
+            "type": ""
         }
     ],
     "project_biblios": [
