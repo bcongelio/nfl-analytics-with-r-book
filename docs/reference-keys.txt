@@ -23,5 +23,12 @@ wrangling-nfl-data-in-the-tidyverse
 downloading-r-and-rstudio
 installing-necessary-packages
 the-tidyverse-language
+working-with-all-the-functions-in-the-nflverse
+downloading-r-and-rstudio-1
+installing-necessary-packages-1
+the-tidyverse-language-1
+data-visulization-with-nfl-analytics
+data-viz-must-understand-the-audience
+setting-up-for-data-viz
 data-visualization-in-r-and-visualization-guides
 sport-analytics-guidesbooks

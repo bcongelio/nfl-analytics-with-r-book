@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Data Visulization with NFL Analytics | An Introduction to NFL Analytics with R</title>
+<meta name="author" content="Bradley J. Congelio">
+<meta name="description" content="An intro regarding the importance of data viz is going to go here. Jim Stikeleather, writing for the Harvard Business Review, outlined three key elements that make a successful data visualization...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Data Visulization with NFL Analytics | An Introduction to NFL Analytics with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/data-visulization-with-nfl-analytics.html">
+<meta property="og:description" content="An intro regarding the importance of data viz is going to go here. Jim Stikeleather, writing for the Harvard Business Review, outlined three key elements that make a successful data visualization...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Data Visulization with NFL Analytics | An Introduction to NFL Analytics with R">
+<meta name="twitter:description" content="An intro regarding the importance of data viz is going to go here. Jim Stikeleather, writing for the Harvard Business Review, outlined three key elements that make a successful data visualization...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0ZLEFZL898');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">An Introduction to NFL Analytics with R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft.html"><span class="header-section-number">1</span> An Introduction to NFL Analytics and the R Programming Language (*rough draft)</a></li>
+<li><a class="" href="wrangling-nfl-data-in-the-tidyverse.html"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></li>
+<li><a class="" href="working-with-all-the-functions-in-the-nflverse.html"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></li>
+<li><a class="active" href="data-visulization-with-nfl-analytics.html"><span class="header-section-number">4</span> Data Visulization with NFL Analytics</a></li>
+<li><a class="" href="appendix.html">Appendix</a></li>
+<li><a class="" href="references.html">References</a></li>
+<li><a class="" href="further-reading-suggestions.html">Further Reading Suggestions</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="data-visulization-with-nfl-analytics" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Data Visulization with NFL Analytics<a class="anchor" aria-label="anchor" href="#data-visulization-with-nfl-analytics"><i class="fas fa-link"></i></a>
+</h1>
+<p>An intro regarding the importance of data viz is going to go here.</p>
+<p>Jim Stikeleather, writing for the <em>Harvard Business Review</em>, outlined three key elements that make a successful data visualization (albeit, leaving <em>us</em> to decide the definition of what a “successful” data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: <strong>it understands the audience, it sets up a clear framework, and it tells a story</strong> <span class="citation">(<a href="further-reading-suggestions.html#ref-stikeleather2013" role="doc-biblioref">Stikeleather 2013</a>)</span>.</p>
+<p>To illustrate the importane of these three elements, let’s take a look at example visualizations using NFL data to furhter contextulize each one.</p>
+<div id="data-viz-must-understand-the-audience" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Data Viz Must Understand the Audience<a class="anchor" aria-label="anchor" href="#data-viz-must-understand-the-audience"><i class="fas fa-link"></i></a>
+</h2>
+<p>As explained by Stikeleather, the core purpose of a data visualization is to take “great quantities of information” and then convey that information in such a way that it is “easily ssimilated by the consumers of the information.” In other words, the process of data visualization should allow for a great quantity of data to be distilled into an easily consumable (and understandable!) format.</p>
+<p>Speaking specifically to NFL analytics, when doing visualizations we must be concious about whether or not the intended audience will understand the terminology and concepts we use in the plot. For example, most all NFL fans understand the “non-advanced” statistics in the sport. But, when plots start using metrics such as EPA or completion percentage over expected, for example, the audience looking at the plot may very well have little understanding of what is being conveyed.</p>
+<p>Because of this, any data viz I create never shys away from including “directables” within the plot. These “directables” may be arrows that indicate which trend on the plot are “good” or they can be text within a scatterplot that explains what each quadrant means. Or, for example, I sometimes include a textual explanation of the “equation” used to develop a metric as seen below:</p>
+<div class="inline-figure"><img src="docs/images/finished-aggressiveness.png" width="100%"></div>
+<p>The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since “aggressiveness” is not a typical, day-to-day metric discussed by NFL fans, I included a “directable” within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how “aggressiveness” was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow’s 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggessive QBs in the line based on the same metric.</p>
+<p>As another example, below is what I deemed my “Uncle Rico Metric” (because who does not like a good Napolean Dynamite reference?):</p>
+<div class="inline-figure"><img src="docs/images/unclerico.png" width="100%"></div>
+</div>
+<div id="setting-up-for-data-viz" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Setting Up for Data Viz<a class="anchor" aria-label="anchor" href="#setting-up-for-data-viz"><i class="fas fa-link"></i></a>
+</h2>
+<p>While most of your journey through NFL analytics in this book required you to use the <code>tidyverse</code> and a handful of other packages, the process of creating compelling and meaningful data visulizations will require you to utilize multitudes of other packages. Of course, the most important is <code>ggplot2</code> which is already installed via the <code>tidyverse</code>. However, in order to recreate the visulizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="working-with-all-the-functions-in-the-nflverse.html"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></div>
+<div class="next"><a href="appendix.html">Appendix</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-visulization-with-nfl-analytics"><span class="header-section-number">4</span> Data Visulization with NFL Analytics</a></li>
+<li><a class="nav-link" href="#data-viz-must-understand-the-audience"><span class="header-section-number">4.1</span> Data Viz Must Understand the Audience</a></li>
+<li><a class="nav-link" href="#setting-up-for-data-viz"><span class="header-section-number">4.2</span> Setting Up for Data Viz</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>An Introduction to NFL Analytics with R</strong>" was written by Bradley J. Congelio. It was last built on 2022-07-28.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R</title>
+<title>Chapter 3 Working with All The Functions in the nflverse | An Introduction to NFL Analytics with R</title>
 <meta name="author" content="Bradley J. Congelio">
-<meta name="description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta name="description" content="3.1 Downloading R and RStudio   3.2 Installing Necessary Packages   3.3 The tidyverse Language">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
-<meta property="og:title" content="Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R">
+<meta property="og:title" content="Chapter 3 Working with All The Functions in the nflverse | An Introduction to NFL Analytics with R">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/wrangling-nfl-data-in-the-tidyverse.html">
-<meta property="og:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta property="og:url" content="https://bradcongelio.com/nfl-analytics-with-r-book/working-with-all-the-functions-in-the-nflverse.html">
+<meta property="og:description" content="3.1 Downloading R and RStudio   3.2 Installing Necessary Packages   3.3 The tidyverse Language">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 Wrangling NFL Data in the tidyverse | An Introduction to NFL Analytics with R">
-<meta name="twitter:description" content="2.1 Downloading R and RStudio   2.2 Installing Necessary Packages   2.3 The tidyverse Language">
+<meta name="twitter:title" content="Chapter 3 Working with All The Functions in the nflverse | An Introduction to NFL Analytics with R">
+<meta name="twitter:description" content="3.1 Downloading R and RStudio   3.2 Installing Necessary Packages   3.3 The tidyverse Language">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -74,8 +74,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
 <li><a class="" href="an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft.html"><span class="header-section-number">1</span> An Introduction to NFL Analytics and the R Programming Language (*rough draft)</a></li>
-<li><a class="active" href="wrangling-nfl-data-in-the-tidyverse.html"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></li>
-<li><a class="" href="working-with-all-the-functions-in-the-nflverse.html"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></li>
+<li><a class="" href="wrangling-nfl-data-in-the-tidyverse.html"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></li>
+<li><a class="active" href="working-with-all-the-functions-in-the-nflverse.html"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></li>
 <li><a class="" href="data-visulization-with-nfl-analytics.html"><span class="header-section-number">4</span> Data Visulization with NFL Analytics</a></li>
 <li><a class="" href="appendix.html">Appendix</a></li>
 <li><a class="" href="references.html">References</a></li>
@@ -87,37 +87,37 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="wrangling-nfl-data-in-the-tidyverse" class="section level1" number="2">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="working-with-all-the-functions-in-the-nflverse" class="section level1" number="3">
 <h1>
-<span class="header-section-number">2</span> Wrangling NFL Data in the <code>tidyverse</code><a class="anchor" aria-label="anchor" href="#wrangling-nfl-data-in-the-tidyverse"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3</span> Working with All The Functions in the <code>nflverse</code><a class="anchor" aria-label="anchor" href="#working-with-all-the-functions-in-the-nflverse"><i class="fas fa-link"></i></a>
 </h1>
-<div id="downloading-r-and-rstudio" class="section level2" number="2.1">
+<div id="downloading-r-and-rstudio-1" class="section level2" number="3.1">
 <h2>
-<span class="header-section-number">2.1</span> Downloading R and RStudio<a class="anchor" aria-label="anchor" href="#downloading-r-and-rstudio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1</span> Downloading R and RStudio<a class="anchor" aria-label="anchor" href="#downloading-r-and-rstudio-1"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="installing-necessary-packages" class="section level2" number="2.2">
+<div id="installing-necessary-packages-1" class="section level2" number="3.2">
 <h2>
-<span class="header-section-number">2.2</span> Installing Necessary Packages<a class="anchor" aria-label="anchor" href="#installing-necessary-packages"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2</span> Installing Necessary Packages<a class="anchor" aria-label="anchor" href="#installing-necessary-packages-1"><i class="fas fa-link"></i></a>
 </h2>
 </div>
-<div id="the-tidyverse-language" class="section level2" number="2.3">
+<div id="the-tidyverse-language-1" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">2.3</span> The <code>tidyverse</code> Language<a class="anchor" aria-label="anchor" href="#the-tidyverse-language"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3</span> The <code>tidyverse</code> Language<a class="anchor" aria-label="anchor" href="#the-tidyverse-language-1"><i class="fas fa-link"></i></a>
 </h2>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="an-introduction-to-nfl-analytics-and-the-r-programming-language-rough-draft.html"><span class="header-section-number">1</span> An Introduction to NFL Analytics and the R Programming Language (*rough draft)</a></div>
-<div class="next"><a href="working-with-all-the-functions-in-the-nflverse.html"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></div>
+<div class="prev"><a href="wrangling-nfl-data-in-the-tidyverse.html"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></div>
+<div class="next"><a href="data-visulization-with-nfl-analytics.html"><span class="header-section-number">4</span> Data Visulization with NFL Analytics</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#wrangling-nfl-data-in-the-tidyverse"><span class="header-section-number">2</span> Wrangling NFL Data in the tidyverse</a></li>
-<li><a class="nav-link" href="#downloading-r-and-rstudio"><span class="header-section-number">2.1</span> Downloading R and RStudio</a></li>
-<li><a class="nav-link" href="#installing-necessary-packages"><span class="header-section-number">2.2</span> Installing Necessary Packages</a></li>
-<li><a class="nav-link" href="#the-tidyverse-language"><span class="header-section-number">2.3</span> The tidyverse Language</a></li>
+<li><a class="nav-link" href="#working-with-all-the-functions-in-the-nflverse"><span class="header-section-number">3</span> Working with All The Functions in the nflverse</a></li>
+<li><a class="nav-link" href="#downloading-r-and-rstudio-1"><span class="header-section-number">3.1</span> Downloading R and RStudio</a></li>
+<li><a class="nav-link" href="#installing-necessary-packages-1"><span class="header-section-number">3.2</span> Installing Necessary Packages</a></li>
+<li><a class="nav-link" href="#the-tidyverse-language-1"><span class="header-section-number">3.3</span> The tidyverse Language</a></li>
 </ul>
 
       <div class="book-extra">

@@ -1,19 +1,8 @@
 # Data Visulization with NFL Analytics
 
-```{r loading-library, include = FALSE}
-
-library(tidyverse)
-library(nflreadr)
-
-```
-
-```{r setup-dataviz, include = FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-
-source("R/book-functions.R")
 
 
-```
+
 
 An intro regarding the importance of data viz is going to go here.
 
@@ -29,18 +18,13 @@ Speaking specifically to NFL analytics, when doing visualizations we must be con
 
 Because of this, any data viz I create never shys away from including "directables" within the plot. These "directables" may be arrows that indicate which trend on the plot are "good" or they can be text within a scatterplot that explains what each quadrant means. Or, for example, I sometimes include a textual explanation of the "equation" used to develop a metric as seen below:
 
-```{r aggressiveness-equation-plot, echo = FALSE}
-knitr::include_graphics(rep("docs/images/finished-aggressiveness.png"))
-
-```
+<img src="docs/images/finished-aggressiveness.png" width="100%" />
 
 The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since "aggressiveness" is not a typical, day-to-day metric discussed by NFL fans, I included a "directable" within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how "aggressiveness" was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow's 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggessive QBs in the line based on the same metric.
 
 As another example, below is what I deemed my "Uncle Rico Metric" (because who does not like a good Napolean Dynamite reference?):
 
-```{r uncle-rico-plot, echo = FALSE}
-knitr::include_graphics(rep("docs/images/unclerico.png"))
-```
+<img src="docs/images/unclerico.png" width="100%" />
 
 ## Setting Up for Data Viz
 
