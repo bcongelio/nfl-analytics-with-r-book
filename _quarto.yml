@@ -1,0 +1,33 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "An Introduction to NFL Analytics Using R"
+  author: "Bradley J. Congelio"
+  cover-image: images/big-ben-intro.jpg
+  site-url: https://bradcongelio.com/nfl-analytics-with-r-book
+  repo-url: https://github.com/bcongelio/nfl-analytics-with-r-book
+  repo-branch: main
+  sharing: [twitter, facebook, linkedin]
+  chapters:
+    - index.qmd
+    - 01-nfl-analytics-and-r.qmd
+    - 02-nfl-analytics-tidyverse.qmd
+    - 03-nfl-analytics-functions.qmd
+    - 04-nfl-analytics-visualization.qmd
+    - references.qmd
+  appendices: 
+    - a1-nfl-analytics-dictionary.qmd
+    - a2-nfl-further-reading.qmd
+  google-analytics: "G-0ZLEFZL898"
+  search: true
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    cover-image: images/big-ben-intro.jpg
+    code-link: true
+  

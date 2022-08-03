@@ -1,0 +1,74 @@
+# NFL Analytics Reference Guide {#sec-appendix-starting}
+
+```{r loading-library, include = FALSE}
+
+library(tidyverse)
+library(nflreadr)
+```
+
+This is a work in progress. Reviewers given access to the earliest version of this book suggest a "Football 101" section to bring people up to speed on analytics and definitions *of* those analytics. This is going to serve as that reference point, and also include a "quick reference guide" on how to find/calculate the metrics within the `nflverse`. Before are just a couple examples of how I see this section being displayed.
+
+## Air Yards
+
+Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not catch, the football. It does not take into consideration the amount of yardage gained after the catch by the wide receiver (which would be *yards after catch*).
+
+For an example, please see the below illustration. In it, the line of scrimmag is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.
+
+However, because air yards is a better metric to explore a QB's *true* impact on a play, he is credited with 30 air yards while the wide receiver is credited with 20 yards after catch.
+
+In the end, quarterbacks with higher air yards per attempt are generally assumed to be throwing the ball deeper downfield than QBs with lower air yards per attempt.
+
+<center>
+
+```{r air-yards-101, echo = FALSE}
+knitr::include_graphics(rep("images/airyards_101.png"))
+```
+
+</center>
+
+There are multiple ways to collect data pertaining to air yards. However, the most straightforward way is to use `load_player_stats`:
+
+```{r collecting-air-yards, echo = TRUE}
+
+data <- nflreadr::load_player_stats(2021)
+
+air.yards <- data %>%
+  filter(season_type == "REG") %>%
+  group_by(player_id) %>%
+  summarize(
+    attempts = sum(attempts),
+    name = first(player_name),
+    air.yards = sum(passing_air_yards),
+    avg.ay = mean(passing_air_yards)) %>%
+  filter(attempts >= 100) %>%
+  select(name, air.yards, avg.ay) %>%
+  arrange(-air.yards)
+
+tibble(air.yards)
+```
+
+In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.
+
+## Average Depth of Target
+
+As mentioned above, a QB's air yards per attempt can highlight whether or not he is attempting to push the ball deeper down field than his counterparts. The official name of this is **Average Depth of Target** (or ADOT). We can easily generate this statistic using the `load_player_stats` function within `nflreader`:
+
+```{r adot-example, echo = TRUE}
+
+data <- nflreadr::load_player_stats(2021)
+
+adot <- data %>%
+  filter(season_type == "REG") %>%
+  group_by(player_id) %>%
+  summarize(
+    name = first(player_name),
+    attempts = sum(attempts),
+    air.yards = sum(passing_air_yards),
+    adot = air.yards / attempts) %>%
+  filter(attempts >= 100) %>%
+  arrange(-adot)
+
+tibble(adot)
+```
+
+As seen in the results, if we ignore Drew Lock's 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furtherst downfield among QBs with atleast 100 attempts.
