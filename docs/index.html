@@ -281,12 +281,12 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 
 </header><p><img src="images/big-ben-intro.jpg" title="An Introduction to NFL Analytics Using R" class="quarto-cover-image img-fluid"></p>
 <center>
-Welcome to the online home of <br><strong><em>Introduction to NFL Analytics with R</em>.</strong>
+Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with R</em>.</strong>
 </center>
-<p><br></p>
-<p>As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following: testing</p>
+<p><br>
+As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
 <ul>
-<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>An Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
+<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
 <li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.</p></li>
 <li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
 <li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
@@ -367,50 +367,50 @@ Welcome to the online home of <br><strong><em>Introduction to NFL Analytics with
 <p>To account for that, I opted to adjust and add statistical weight to sack statistics. This was done over multiple areas. For instance, not all players competed in all 17 regular-season games in 2021. To adjust for this, I took the total of game played in the data (2,936) and divided by 17 (a full season) to achieve a weighted adjustment of 0.0058. TJ Watt played in just 15 games in 2021. His adjusted equation, therefore, is (17-‘games’) * 0.0058. The result? He gets a bit more credit for this adjustment than, say, Myles Garrett who played all 17 regular-season games.</p>
 <p>Going further with the model, I created a weighted adjustment for solo sacks (0.90), a negative weighted adjustment (-0.14) for any sack charted as “unblocked,” and a weighted adjustment to account for how many times a player actually rushed the QB compared to how many defensive snaps they played. Using data from the SIS Data Hub, the full code is below:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## selecting just information I want and then renaming</span></span>
-<span><span class="va">pass.data</span> <span class="op">&lt;-</span> <span class="va">pass_rush_data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Player</span>, <span class="va">Team</span>, <span class="va">Games</span>, <span class="va">`Pass Snaps`</span>, <span class="va">`Pass Rushes`</span>,</span>
-<span>         <span class="va">`Solo Sacks`</span>, <span class="va">`Ast. Sacks`</span>, <span class="va">`Comb. Sacks`</span>, </span>
-<span>         <span class="va">`Unblocked Sacks`</span>, <span class="va">Hurries</span>, <span class="va">Hits</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rename</span><span class="op">(</span>total.snaps <span class="op">=</span> <span class="va">`Pass Snaps`</span>,</span>
-<span>         total.rushes <span class="op">=</span> <span class="va">`Pass Rushes`</span>,</span>
-<span>         solo.sacks <span class="op">=</span> <span class="va">`Solo Sacks`</span>,</span>
-<span>         asst.sacks <span class="op">=</span> <span class="va">`Ast. Sacks`</span>,</span>
-<span>         comb.sacks <span class="op">=</span> <span class="va">`Comb. Sacks`</span>,</span>
-<span>         unblocked.sacks <span class="op">=</span> <span class="va">`Unblocked Sacks`</span>,</span>
-<span>         player <span class="op">=</span> <span class="va">Player</span>,</span>
-<span>         team <span class="op">=</span> <span class="va">Team</span>,</span>
-<span>         games <span class="op">=</span> <span class="va">Games</span>,</span>
-<span>         hurries <span class="op">=</span> <span class="va">Hurries</span>,</span>
-<span>         hits <span class="op">=</span> <span class="va">Hits</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## creating a new column to get percentages of snaps where player rushed</span></span>
-<span><span class="va">pass.data</span><span class="op">$</span><span class="va">rush.percent</span> <span class="op">&lt;-</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.rushes</span> <span class="op">/</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.snaps</span></span>
-<span></span>
-<span><span class="co">## getting weights to add to the equation</span></span>
-<span><span class="co">## for example, a solo sack is "more impressive" than an assisted sack. </span></span>
-<span><span class="co">## to account for this, we will take the sum of combined sacks (995) and divide </span></span>
-<span><span class="co">## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will</span></span>
-<span><span class="co">## be placed on solo sacks.</span></span>
-<span></span>
-<span><span class="co">## as well, a negative weight will be applied to unblocked sacks. Using the total</span></span>
-<span><span class="co">## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a</span></span>
-<span><span class="co">## NEGATIVE weight of 0.14 to be applied to unblocked sacks</span></span>
-<span></span>
-<span><span class="co">## further, a weight must be applied to those players who played less than a complete season.</span></span>
-<span><span class="co">## the weight here works out to be 0.0058.</span></span>
-<span></span>
-<span><span class="co">## summarizing information</span></span>
-<span><span class="va">calculated.impact</span> <span class="op">&lt;-</span> <span class="va">pass.data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span></span>
-<span>    adjusted.games <span class="op">=</span> <span class="op">(</span><span class="fl">17</span> <span class="op">-</span> <span class="va">games</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.0058</span>,</span>
-<span>    adjusted.solo <span class="op">=</span> <span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span>,</span>
-<span>    adjusted.unblocked <span class="op">=</span> <span class="va">unblocked.sacks</span> <span class="op">/</span> <span class="op">-</span><span class="fl">0.14</span>,</span>
-<span>    adjusted.rush.percent <span class="op">=</span> <span class="fl">0.81</span> <span class="op">-</span> <span class="va">rush.percent</span>,</span>
-<span>    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+
+<span class="co">## selecting just information I want and then renaming</span>
+<span class="va">pass.data</span> <span class="op">&lt;-</span> <span class="va">pass_rush_data</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">Player</span>, <span class="va">Team</span>, <span class="va">Games</span>, <span class="va">`Pass Snaps`</span>, <span class="va">`Pass Rushes`</span>,
+         <span class="va">`Solo Sacks`</span>, <span class="va">`Ast. Sacks`</span>, <span class="va">`Comb. Sacks`</span>, 
+         <span class="va">`Unblocked Sacks`</span>, <span class="va">Hurries</span>, <span class="va">Hits</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>total.snaps <span class="op">=</span> <span class="va">`Pass Snaps`</span>,
+         total.rushes <span class="op">=</span> <span class="va">`Pass Rushes`</span>,
+         solo.sacks <span class="op">=</span> <span class="va">`Solo Sacks`</span>,
+         asst.sacks <span class="op">=</span> <span class="va">`Ast. Sacks`</span>,
+         comb.sacks <span class="op">=</span> <span class="va">`Comb. Sacks`</span>,
+         unblocked.sacks <span class="op">=</span> <span class="va">`Unblocked Sacks`</span>,
+         player <span class="op">=</span> <span class="va">Player</span>,
+         team <span class="op">=</span> <span class="va">Team</span>,
+         games <span class="op">=</span> <span class="va">Games</span>,
+         hurries <span class="op">=</span> <span class="va">Hurries</span>,
+         hits <span class="op">=</span> <span class="va">Hits</span><span class="op">)</span>
+
+<span class="co">## creating a new column to get percentages of snaps where player rushed</span>
+<span class="va">pass.data</span><span class="op">$</span><span class="va">rush.percent</span> <span class="op">&lt;-</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.rushes</span> <span class="op">/</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.snaps</span>
+
+<span class="co">## getting weights to add to the equation</span>
+<span class="co">## for example, a solo sack is "more impressive" than an assisted sack. </span>
+<span class="co">## to account for this, we will take the sum of combined sacks (995) and divide </span>
+<span class="co">## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will</span>
+<span class="co">## be placed on solo sacks.</span>
+
+<span class="co">## as well, a negative weight will be applied to unblocked sacks. Using the total</span>
+<span class="co">## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a</span>
+<span class="co">## NEGATIVE weight of 0.14 to be applied to unblocked sacks</span>
+
+<span class="co">## further, a weight must be applied to those players who played less than a complete season.</span>
+<span class="co">## the weight here works out to be 0.0058.</span>
+
+<span class="co">## summarizing information</span>
+<span class="va">calculated.impact</span> <span class="op">&lt;-</span> <span class="va">pass.data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>
+    adjusted.games <span class="op">=</span> <span class="op">(</span><span class="fl">17</span> <span class="op">-</span> <span class="va">games</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.0058</span>,
+    adjusted.solo <span class="op">=</span> <span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span>,
+    adjusted.unblocked <span class="op">=</span> <span class="va">unblocked.sacks</span> <span class="op">/</span> <span class="op">-</span><span class="fl">0.14</span>,
+    adjusted.rush.percent <span class="op">=</span> <span class="fl">0.81</span> <span class="op">-</span> <span class="va">rush.percent</span>,
+    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutely dominant during the 2021 season:</p>
 <div class="cell">
@@ -478,53 +478,53 @@ Welcome to the online home of <br><strong><em>Introduction to NFL Analytics with
 <tbody>
 <tr>
 <td style="text-align:left;"> dplyr </td>
-   <td style="text-align:left;"> 1.0.9 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 1.0.8 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.2) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> ggplot2 </td>
-   <td style="text-align:left;"> 3.3.6 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 3.3.5 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.0) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> gt </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0.6.0.9000 </td>
+   <td style="text-align:left;"> Github (rstudio/gt\@035c64b0a03f0372750095a7d390edcea4192b91) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflfastR </td>
    <td style="text-align:left;"> 4.3.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflreadr </td>
-   <td style="text-align:left;"> 1.2.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 1.2.0.07 </td>
+   <td style="text-align:left;"> https://nflverse.r-universe.dev (R 4.1.3) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflverse </td>
-   <td style="text-align:left;"> 1.0.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 1.0.1 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> scales </td>
    <td style="text-align:left;"> 1.2.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> tidymodels </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0.2.0 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> tidyverse </td>
-   <td style="text-align:left;"> 1.3.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 1.3.1 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> webshot </td>
-   <td style="text-align:left;"> 0.5.3 </td>
-   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
+   <td style="text-align:left;"> 0.5.2 </td>
+   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
   </tr>
 </tbody>
 </table>

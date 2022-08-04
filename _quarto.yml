@@ -10,6 +10,7 @@ book:
   repo-url: https://github.com/bcongelio/nfl-analytics-with-r-book
   repo-branch: origin
   sharing: [twitter, facebook, linkedin]
+  
   chapters:
     - index.qmd
     - 01-nfl-analytics-and-r.qmd
@@ -20,9 +21,12 @@ book:
   appendices: 
     - a1-nfl-analytics-dictionary.qmd
     - a2-nfl-further-reading.qmd
+    
   google-analytics: "G-0ZLEFZL898"
+  
   search: true
   page-footer: 
+  
     left: |
       NFL Analytics with R was written by Bradley J. Congelio.
     right: |
@@ -35,4 +39,3 @@ format:
     theme: cosmo
     cover-image: images/big-ben-intro.jpg
     code-link: true
-  

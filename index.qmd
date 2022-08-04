@@ -15,13 +15,13 @@ tweet_cached <- memoise(tweet_embed, cache = cache_filesystem('.tweets'))
 tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets'))
 ```
 
-<center>Welcome to the online home of <br>***Introduction to NFL Analytics with R*****.**</center>
+<center>Welcome to the online home of \
+***Introduction to NFL Analytics with R*****.**</center>
 
-<br>
+\
+As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
 
-As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following: testing
-
--   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
+-   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
 
 -   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the book's github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.
 
