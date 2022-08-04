@@ -169,27 +169,27 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -251,29 +251,29 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <center>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="images/airyards_101.png" class="img-fluid" width="473"></p>
+<p><img src="images/airyards_101.png" class="img-fluid"></p>
 </div>
 </div>
 </center>
 <p>There are multiple ways to collect data pertaining to air yards. However, the most straightforward way is to use <code>load_player_stats</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
-
-<span class="va">air.yards</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarize</span><span class="op">(</span>
-    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,
-    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
-    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,
-    avg.ay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">air.yards</span>, <span class="va">avg.ay</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">air.yards</span><span class="op">)</span>
-
-<span class="fu">tibble</span><span class="op">(</span><span class="va">air.yards</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">air.yards</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,</span>
+<span>    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,</span>
+<span>    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,</span>
+<span>    avg.ay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">air.yards</span>, <span class="va">avg.ay</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">air.yards</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">tibble</span><span class="op">(</span><span class="va">air.yards</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 42 x 3
+<pre><code># A tibble: 42 × 3
    name       air.yards avg.ay
    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
  1 T.Brady         5821   342.
@@ -286,7 +286,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
  8 D.Prescott      4612   288.
  9 K.Cousins       4575   286.
 10 J.Burrow        4225   264.
-# ... with 32 more rows</code></pre>
+# … with 32 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.</p>
@@ -294,22 +295,22 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span class="header-section-number">A.2</span> Average Depth of Target</h2>
 <p>As mentioned above, a QB’s air yards per attempt can highlight whether or not he is attempting to push the ball deeper down field than his counterparts. The official name of this is <strong>Average Depth of Target</strong> (or ADOT). We can easily generate this statistic using the <code>load_player_stats</code> function within <code>nflreader</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
-
-<span class="va">adot</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarize</span><span class="op">(</span>
-    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
-    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,
-    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,
-    adot <span class="op">=</span> <span class="va">air.yards</span> <span class="op">/</span> <span class="va">attempts</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">adot</span><span class="op">)</span>
-
-<span class="fu">tibble</span><span class="op">(</span><span class="va">adot</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adot</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,</span>
+<span>    attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,</span>
+<span>    air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,</span>
+<span>    adot <span class="op">=</span> <span class="va">air.yards</span> <span class="op">/</span> <span class="va">attempts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">adot</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">tibble</span><span class="op">(</span><span class="va">adot</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 42 x 5
+<pre><code># A tibble: 42 × 5
    player_id  name       attempts air.yards  adot
    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;
  1 00-0035704 D.Lock          111      1117 10.1 
@@ -322,7 +323,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
  8 00-0031503 J.Winston       161      1340  8.32
  9 00-0034857 J.Allen         646      5295  8.20
 10 00-0029604 K.Cousins       561      4575  8.16
-# ... with 32 more rows</code></pre>
+# … with 32 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>As seen in the results, if we ignore Drew Lock’s 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furtherst downfield among QBs with atleast 100 attempts.</p>

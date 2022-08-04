@@ -188,27 +188,27 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -243,20 +243,20 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"> <span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
-<li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who This Book Is For</a></li>
-  </ul>
-</li>
-  <li><a href="#overview-of-chapters" id="toc-overview-of-chapters" class="nav-link" data-scroll-target="#overview-of-chapters">Overview of Chapters</a></li>
+<li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for"> <span class="header-section-number">1.0.1</span> Who This Book Is For</a></li>
+  <li><a href="#overview-of-chapters" id="toc-overview-of-chapters" class="nav-link" data-scroll-target="#overview-of-chapters"> <span class="header-section-number">1.1</span> Overview of Chapters</a></li>
   <li>
 <a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About The Author</a>
   <ul class="collapse">
-<li><a href="#why-a-book-instead-of-working-in-analytics" id="toc-why-a-book-instead-of-working-in-analytics" class="nav-link" data-scroll-target="#why-a-book-instead-of-working-in-analytics">Why A Book Instead of Working in Analytics?</a></li>
+<li><a href="#why-a-book-instead-of-working-in-analytics" id="toc-why-a-book-instead-of-working-in-analytics" class="nav-link" data-scroll-target="#why-a-book-instead-of-working-in-analytics"> <span class="header-section-number">1.1.1</span> Why A Book Instead of Working in Analytics?</a></li>
   </ul>
 </li>
   <li><a href="#technical-details" id="toc-technical-details" class="nav-link" data-scroll-target="#technical-details">Technical Details</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license"> <span class="header-section-number">1.2</span> License</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -279,12 +279,20 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header>
-<section id="introduction" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="introduction">Introduction</h2><p><img src="images/big-ben-intro.jpg" title="An Introduction to NFL Analytics Using R" class="quarto-cover-image img-fluid"></p>
+</header><p><img src="images/big-ben-intro.jpg" title="An Introduction to NFL Analytics Using R" class="quarto-cover-image img-fluid"></p>
 <center>
-Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics with R</em>.</strong>
+Welcome to the online home of <br><strong><em>Introduction to NFL Analytics with R</em>.</strong>
 </center>
 <p><br></p>
+<p>As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following: testing</p>
+<ul>
+<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>An Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
+<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.</p></li>
+<li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
+<li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
+</ul>
+<section id="introduction" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Introduction</h1>
 <p>On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of <code>nflfastR</code>, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).</p>
 <center>
 <div class="cell">
@@ -359,50 +367,50 @@ Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics w
 <p>To account for that, I opted to adjust and add statistical weight to sack statistics. This was done over multiple areas. For instance, not all players competed in all 17 regular-season games in 2021. To adjust for this, I took the total of game played in the data (2,936) and divided by 17 (a full season) to achieve a weighted adjustment of 0.0058. TJ Watt played in just 15 games in 2021. His adjusted equation, therefore, is (17-‘games’) * 0.0058. The result? He gets a bit more credit for this adjustment than, say, Myles Garrett who played all 17 regular-season games.</p>
 <p>Going further with the model, I created a weighted adjustment for solo sacks (0.90), a negative weighted adjustment (-0.14) for any sack charted as “unblocked,” and a weighted adjustment to account for how many times a player actually rushed the QB compared to how many defensive snaps they played. Using data from the SIS Data Hub, the full code is below:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="co">## selecting just information I want and then renaming</span>
-<span class="va">pass.data</span> <span class="op">&lt;-</span> <span class="va">pass_rush_data</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">Player</span>, <span class="va">Team</span>, <span class="va">Games</span>, <span class="va">`Pass Snaps`</span>, <span class="va">`Pass Rushes`</span>,
-         <span class="va">`Solo Sacks`</span>, <span class="va">`Ast. Sacks`</span>, <span class="va">`Comb. Sacks`</span>, 
-         <span class="va">`Unblocked Sacks`</span>, <span class="va">Hurries</span>, <span class="va">Hits</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">rename</span><span class="op">(</span>total.snaps <span class="op">=</span> <span class="va">`Pass Snaps`</span>,
-         total.rushes <span class="op">=</span> <span class="va">`Pass Rushes`</span>,
-         solo.sacks <span class="op">=</span> <span class="va">`Solo Sacks`</span>,
-         asst.sacks <span class="op">=</span> <span class="va">`Ast. Sacks`</span>,
-         comb.sacks <span class="op">=</span> <span class="va">`Comb. Sacks`</span>,
-         unblocked.sacks <span class="op">=</span> <span class="va">`Unblocked Sacks`</span>,
-         player <span class="op">=</span> <span class="va">Player</span>,
-         team <span class="op">=</span> <span class="va">Team</span>,
-         games <span class="op">=</span> <span class="va">Games</span>,
-         hurries <span class="op">=</span> <span class="va">Hurries</span>,
-         hits <span class="op">=</span> <span class="va">Hits</span><span class="op">)</span>
-
-<span class="co">## creating a new column to get percentages of snaps where player rushed</span>
-<span class="va">pass.data</span><span class="op">$</span><span class="va">rush.percent</span> <span class="op">&lt;-</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.rushes</span> <span class="op">/</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.snaps</span>
-
-<span class="co">## getting weights to add to the equation</span>
-<span class="co">## for example, a solo sack is "more impressive" than an assisted sack. </span>
-<span class="co">## to account for this, we will take the sum of combined sacks (995) and divide </span>
-<span class="co">## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will</span>
-<span class="co">## be placed on solo sacks.</span>
-
-<span class="co">## as well, a negative weight will be applied to unblocked sacks. Using the total</span>
-<span class="co">## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a</span>
-<span class="co">## NEGATIVE weight of 0.14 to be applied to unblocked sacks</span>
-
-<span class="co">## further, a weight must be applied to those players who played less than a complete season.</span>
-<span class="co">## the weight here works out to be 0.0058.</span>
-
-<span class="co">## summarizing information</span>
-<span class="va">calculated.impact</span> <span class="op">&lt;-</span> <span class="va">pass.data</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarize</span><span class="op">(</span>
-    adjusted.games <span class="op">=</span> <span class="op">(</span><span class="fl">17</span> <span class="op">-</span> <span class="va">games</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.0058</span>,
-    adjusted.solo <span class="op">=</span> <span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span>,
-    adjusted.unblocked <span class="op">=</span> <span class="va">unblocked.sacks</span> <span class="op">/</span> <span class="op">-</span><span class="fl">0.14</span>,
-    adjusted.rush.percent <span class="op">=</span> <span class="fl">0.81</span> <span class="op">-</span> <span class="va">rush.percent</span>,
-    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## selecting just information I want and then renaming</span></span>
+<span><span class="va">pass.data</span> <span class="op">&lt;-</span> <span class="va">pass_rush_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Player</span>, <span class="va">Team</span>, <span class="va">Games</span>, <span class="va">`Pass Snaps`</span>, <span class="va">`Pass Rushes`</span>,</span>
+<span>         <span class="va">`Solo Sacks`</span>, <span class="va">`Ast. Sacks`</span>, <span class="va">`Comb. Sacks`</span>, </span>
+<span>         <span class="va">`Unblocked Sacks`</span>, <span class="va">Hurries</span>, <span class="va">Hits</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">rename</span><span class="op">(</span>total.snaps <span class="op">=</span> <span class="va">`Pass Snaps`</span>,</span>
+<span>         total.rushes <span class="op">=</span> <span class="va">`Pass Rushes`</span>,</span>
+<span>         solo.sacks <span class="op">=</span> <span class="va">`Solo Sacks`</span>,</span>
+<span>         asst.sacks <span class="op">=</span> <span class="va">`Ast. Sacks`</span>,</span>
+<span>         comb.sacks <span class="op">=</span> <span class="va">`Comb. Sacks`</span>,</span>
+<span>         unblocked.sacks <span class="op">=</span> <span class="va">`Unblocked Sacks`</span>,</span>
+<span>         player <span class="op">=</span> <span class="va">Player</span>,</span>
+<span>         team <span class="op">=</span> <span class="va">Team</span>,</span>
+<span>         games <span class="op">=</span> <span class="va">Games</span>,</span>
+<span>         hurries <span class="op">=</span> <span class="va">Hurries</span>,</span>
+<span>         hits <span class="op">=</span> <span class="va">Hits</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## creating a new column to get percentages of snaps where player rushed</span></span>
+<span><span class="va">pass.data</span><span class="op">$</span><span class="va">rush.percent</span> <span class="op">&lt;-</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.rushes</span> <span class="op">/</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.snaps</span></span>
+<span></span>
+<span><span class="co">## getting weights to add to the equation</span></span>
+<span><span class="co">## for example, a solo sack is "more impressive" than an assisted sack. </span></span>
+<span><span class="co">## to account for this, we will take the sum of combined sacks (995) and divide </span></span>
+<span><span class="co">## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will</span></span>
+<span><span class="co">## be placed on solo sacks.</span></span>
+<span></span>
+<span><span class="co">## as well, a negative weight will be applied to unblocked sacks. Using the total</span></span>
+<span><span class="co">## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a</span></span>
+<span><span class="co">## NEGATIVE weight of 0.14 to be applied to unblocked sacks</span></span>
+<span></span>
+<span><span class="co">## further, a weight must be applied to those players who played less than a complete season.</span></span>
+<span><span class="co">## the weight here works out to be 0.0058.</span></span>
+<span></span>
+<span><span class="co">## summarizing information</span></span>
+<span><span class="va">calculated.impact</span> <span class="op">&lt;-</span> <span class="va">pass.data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    adjusted.games <span class="op">=</span> <span class="op">(</span><span class="fl">17</span> <span class="op">-</span> <span class="va">games</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.0058</span>,</span>
+<span>    adjusted.solo <span class="op">=</span> <span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span>,</span>
+<span>    adjusted.unblocked <span class="op">=</span> <span class="va">unblocked.sacks</span> <span class="op">/</span> <span class="op">-</span><span class="fl">0.14</span>,</span>
+<span>    adjusted.rush.percent <span class="op">=</span> <span class="fl">0.81</span> <span class="op">-</span> <span class="va">rush.percent</span>,</span>
+<span>    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutely dominant during the 2021 season:</p>
 <div class="cell">
@@ -415,7 +423,8 @@ Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics w
 </div>
 </div>
 <p>All of these examples - from Ben Baldwin’s 4th-down model, to Football Outsiders’ DVOA, to my attempt to further quantify defensive player impact - are just the leading edge of the burgeoning analytics movement in the NFL. Moreover, the beauty of analytics is that you do not have to be a mathematician or statistics buff in order to enter the fray. All it takes is a genuine curiosity to explore what Bob Carroll, Pete Palmer, and John Thorn coined as the “<a href="https://amzn.to/3y1GZTO">Hidden Game of Football</a>” and the desire to learn, if you have not already, the R programming language.</p>
-<section id="who-this-book-is-for" class="level3"><h3 class="anchored" data-anchor-id="who-this-book-is-for">Who This Book Is For</h3>
+<section id="who-this-book-is-for" class="level3" data-number="1.0.1"><h3 data-number="1.0.1" class="anchored" data-anchor-id="who-this-book-is-for">
+<span class="header-section-number">1.0.1</span> Who This Book Is For</h3>
 <p>Writing a book that is wholly dependent on the R programming language to achieve the end goals is not an easy task, as there are likely two types of people reading this: those with familiarity in R and those without. If you are part of the former group, you can likely skip chapter 2 as it is a primer on installing R and learning the language of the <code>tidyverse</code>. On the other hand, if you are part of the latter group, you should skip ahead to chapter 2 before even looking at chapter 1, which serves as an introduction to the <code>nflverse</code> with examples. That said, this book can serve multiple audiences:</p>
 <ol type="1">
 <li><p>Those interested in learning how to produce NFL analytics regardless of their current knowledge of the R programming language.</p></li>
@@ -425,7 +434,8 @@ Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics w
 </ol>
 <p>It is also important to note that it is not expected for you to be an expert in statistics, coding, or data modeling in order to find this book useful. In fact, I self-taught myself the R programming language after discovering its potential usefulness in my personal academic research. I only “became more serious” about advancing my understanding of the language’s nuances, and more advanced methods, after discovering the <code>nflscrapR</code> package and using it as my learning tool for the deep dive into R. My decision to pursue an academic certificate in the language was driven by the creation of my Sport Analytics course, as the certificate provided the “academic training” proof that was necessary to move the course through the University’s curriculum committee. Nonetheless, because of this self-taught journey - and despite being an academic myself - I find that I largely avoid the use of “complicated jargon” that is so evident in most formal writing.</p>
 <p>Because of this, and regardless of which chapter you begin with, I believe that this book achieves its main goal: to provide a gentle introduction to doing NFL analytics with R.</p>
-</section></section><section id="overview-of-chapters" class="level2"><h2 class="anchored" data-anchor-id="overview-of-chapters">Overview of Chapters</h2>
+</section><section id="overview-of-chapters" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="overview-of-chapters">
+<span class="header-section-number">1.1</span> Overview of Chapters</h2>
 <ul>
 <li><p><strong>Chapter 1</strong> provides an overview of the <code>nflverse</code> with specific attention paid to the difference between using <code>nflfastR</code> versus <code>nflreadr</code>. Serving as the first dive into analytics, the chapter showcases how to use <code>nflreadr</code> to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once.</p></li>
 <li><p><strong>Chapter 2</strong> covers the process of downloading both R and RStudio, as well as the necessary packages to do NFL analytics. As one of the most important chapters in the book (especially for those new to the R programming language), readers take a deep dive into wrangling NFL data with the <code>tidyverse</code> package. To begin, readers will learn about the <code>dplyr</code> pipe (<code>%&gt;%</code>) and use, in exercises, the six most important verbs in the <code>dplyr</code> language: <code>filer()</code>, <code>select()</code>, <code>arrange()</code>, <code>summarize()</code>, <code>mutate()</code>, and <code>group_by()</code>. At the conclusion of the chapter, multiple exercises are provided to allow readers to practice using the <code>dplyr</code> verbs, relational operators within the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function and creating “new stats” by using the <code>summarize()</code> function. Moreover, readers will determine the relationship between the <code>dplyr</code> language and important variables within the <code>nflverse</code> data such as <code>player_name</code> and <code>player_id</code>, which is important for correct manipulation and cleaning of data.</p></li>
@@ -445,7 +455,8 @@ Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics w
 <li><p>Congelio, B. “Predicting the Impact of a New Stadium on Surrounding Neighborhoods Through the Use of a <em>k</em>-means Unsupervised Clustering Algorithm.” <u>Currently under peer review.</u></p></li>
 <li><p>Congelio, B. “Examining Megaevent’s Impact on Foot Traffic to Local Businesses Using Mobility and Demographic Aggregation Data.” <u>Currently under peer review and funded by a $15,000 grant.</u></p></li>
 </ol>
-<section id="why-a-book-instead-of-working-in-analytics" class="level3"><h3 class="anchored" data-anchor-id="why-a-book-instead-of-working-in-analytics">Why A Book Instead of Working in Analytics?</h3>
+<section id="why-a-book-instead-of-working-in-analytics" class="level3" data-number="1.1.1"><h3 data-number="1.1.1" class="anchored" data-anchor-id="why-a-book-instead-of-working-in-analytics">
+<span class="header-section-number">1.1.1</span> Why A Book Instead of Working in Analytics?</h3>
 <p>I am sometimes asked why I spend time in the classroom teaching this material rather than taking my domain knowledge to the “industry side” and working in the NFL or an otherwise NFL-connected outlet.</p>
 <p>The honest and, likely boring, answer is this: I love teaching. My favorite experience in the classroom yet is always in my Sport Analytics course. The frustration and sense of helplessness is palpable in the first weeks of the semester as students attempt to wrap their head around, what a former student called, “this [censored] foreign language.” I insist that they keep pushing through the exercises and assignments. Often, there is line out my door and extending down the hallway during office hours comprised of just students from the Sport Analytics class.</p>
 <p>And then something amazing happens.</p>
@@ -467,68 +478,62 @@ Welcome to the online home of <br><strong><em>An Introduction to NFL Analytics w
 <tbody>
 <tr>
 <td style="text-align:left;"> dplyr </td>
-   <td style="text-align:left;"> 1.0.8 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.2) </td>
+   <td style="text-align:left;"> 1.0.9 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> ggplot2 </td>
-   <td style="text-align:left;"> 3.3.5 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.0) </td>
+   <td style="text-align:left;"> 3.3.6 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> gt </td>
-   <td style="text-align:left;"> 0.6.0.9000 </td>
-   <td style="text-align:left;"> Github (rstudio/gt\@035c64b0a03f0372750095a7d390edcea4192b91) </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflfastR </td>
    <td style="text-align:left;"> 4.3.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflreadr </td>
-   <td style="text-align:left;"> 1.2.0.07 </td>
-   <td style="text-align:left;"> https://nflverse.r-universe.dev (R 4.1.3) </td>
+   <td style="text-align:left;"> 1.2.0 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> nflverse </td>
-   <td style="text-align:left;"> 1.0.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+   <td style="text-align:left;"> 1.0.2 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> scales </td>
    <td style="text-align:left;"> 1.2.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> tidymodels </td>
-   <td style="text-align:left;"> 0.2.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
   </tr>
 <tr>
 <td style="text-align:left;"> tidyverse </td>
-   <td style="text-align:left;"> 1.3.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+   <td style="text-align:left;"> 1.3.2 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 <tr>
 <td style="text-align:left;"> webshot </td>
-   <td style="text-align:left;"> 0.5.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
+   <td style="text-align:left;"> 0.5.3 </td>
+   <td style="text-align:left;"> CRAN (R 4.2.1) </td>
   </tr>
 </tbody>
 </table>
 </div>
 </div>
 <p>Finally, please note that this book uses the <code>dplyr</code> pipe operator (<code>%&gt;%</code>) as opposed to the new, built-in pipe operator released with version 4.1 of R (<code>|&gt;</code>). It is likely that you can work through the exercises and examples in this book by using either operator. I maintain my use of the <code>dplyr</code> pipe operator for no other reason than personal preference.</p>
-</section><section id="license" class="level2"><h2 class="anchored" data-anchor-id="license">License</h2>
+</section><section id="license" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="license">
+<span class="header-section-number">1.2</span> License</h2>
 <p>The online version of this book is published with the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.</a></p>
-<p>As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
-<ul>
-<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>An Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
-<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.</p></li>
-<li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
-<li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
-</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -563,7 +568,7 @@ Rosenthal, Gregg. 2018. <span>“Super Bowl LII: How the 2017 Philadelphia Eagle
 Silge, Julia. n.d. <span>“Tidymodels.”</span> <a href="https://tidymodels.org">https://tidymodels.org</a>.
 </div>
 </div>
-</section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+</section></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1" role="doc-endnote"><p>Thanks to Ben Baldwin for chatting with me on Discord and providing this brief understanding of the backstory.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Thanks, again, to Ben Baldwin for providing his personal knowledge about the “early days” of the Eagles’ analytics department.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -667,7 +672,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./01-nfl-analytics-and-r.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

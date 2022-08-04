@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.0.37">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics Using R - 4&nbsp; Data Visulization with NFL Analytics</title>
+<title>An Introduction to NFL Analytics Using R - 5&nbsp; Data Visulization with NFL Analytics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
       <h1 class="quarto-secondary-nav-title">
-<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span>
 </h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
@@ -127,27 +127,27 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -181,14 +181,14 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#data-viz-must-understand-the-audience" id="toc-data-viz-must-understand-the-audience" class="nav-link active" data-scroll-target="#data-viz-must-understand-the-audience"> <span class="header-section-number">4.1</span> Data Viz Must Understand the Audience</a></li>
-  <li><a href="#setting-up-for-data-viz" id="toc-setting-up-for-data-viz" class="nav-link" data-scroll-target="#setting-up-for-data-viz"> <span class="header-section-number">4.2</span> Setting Up for Data Viz</a></li>
+<li><a href="#data-viz-must-understand-the-audience" id="toc-data-viz-must-understand-the-audience" class="nav-link active" data-scroll-target="#data-viz-must-understand-the-audience"> <span class="header-section-number">5.1</span> Data Viz Must Understand the Audience</a></li>
+  <li><a href="#setting-up-for-data-viz" id="toc-setting-up-for-data-viz" class="nav-link" data-scroll-target="#setting-up-for-data-viz"> <span class="header-section-number">5.2</span> Setting Up for Data Viz</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title d-none d-lg-block">
-<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span>
 </h1>
 </div>
 
@@ -204,8 +204,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </header><p>An intro regarding the importance of data viz is going to go here.</p>
 <p>Jim Stikeleather, writing for the <em>Harvard Business Review</em>, outlined three key elements that make a successful data visualization (albeit, leaving <em>us</em> to decide the definition of what a “successful” data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: <strong>it understands the audience, it sets up a clear framework, and it tells a story</strong> <span class="citation" data-cites="stikeleather2013">(<a href="references.html#ref-stikeleather2013" role="doc-biblioref">Stikeleather 2013</a>)</span>.</p>
 <p>To illustrate the importane of these three elements, let’s take a look at example visualizations using NFL data to furhter contextulize each one.</p>
-<section id="data-viz-must-understand-the-audience" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="data-viz-must-understand-the-audience">
-<span class="header-section-number">4.1</span> Data Viz Must Understand the Audience</h2>
+<section id="data-viz-must-understand-the-audience" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="data-viz-must-understand-the-audience">
+<span class="header-section-number">5.1</span> Data Viz Must Understand the Audience</h2>
 <p>As explained by Stikeleather, the core purpose of a data visualization is to take “great quantities of information” and then convey that information in such a way that it is “easily ssimilated by the consumers of the information.” In other words, the process of data visualization should allow for a great quantity of data to be distilled into an easily consumable (and understandable!) format.</p>
 <p>Speaking specifically to NFL analytics, when doing visualizations we must be concious about whether or not the intended audience will understand the terminology and concepts we use in the plot. For example, most all NFL fans understand the “non-advanced” statistics in the sport. But, when plots start using metrics such as EPA or completion percentage over expected, for example, the audience looking at the plot may very well have little understanding of what is being conveyed.</p>
 <p>Because of this, any data viz I create never shys away from including “directables” within the plot. These “directables” may be arrows that indicate which trend on the plot are “good” or they can be text within a scatterplot that explains what each quadrant means. Or, for example, I sometimes include a textual explanation of the “equation” used to develop a metric as seen below:</p>
@@ -221,8 +221,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <p><img src="images/unclerico.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
-</section><section id="setting-up-for-data-viz" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="setting-up-for-data-viz">
-<span class="header-section-number">4.2</span> Setting Up for Data Viz</h2>
+</section><section id="setting-up-for-data-viz" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="setting-up-for-data-viz">
+<span class="header-section-number">5.2</span> Setting Up for Data Viz</h2>
 <p>While most of your journey through NFL analytics in this book required you to use the <code>tidyverse</code> and a handful of other packages, the process of creating compelling and meaningful data visulizations will require you to utilize multitudes of other packages. Of course, the most important is <code>ggplot2</code> which is already installed via the <code>tidyverse</code>. However, in order to recreate the visulizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:</p>
 
 
@@ -329,7 +329,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./03-nfl-analytics-functions.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

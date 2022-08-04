@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An Introduction to NFL Analytics Using R - 2&nbsp; Wrangling NFL Data in the tidyverse</title>
+<title>An Introduction to NFL Analytics Using R - 3&nbsp; Wrangling NFL Data in the tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -123,27 +123,27 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visulization with NFL Analytics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -180,9 +180,9 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"> <span class="header-section-number">2.1</span> Downloading R and RStudio</a></li>
-  <li><a href="#installing-necessary-packages" id="toc-installing-necessary-packages" class="nav-link" data-scroll-target="#installing-necessary-packages"> <span class="header-section-number">2.2</span> Installing Necessary Packages</a></li>
-  <li><a href="#the-tidyverse-language" id="toc-the-tidyverse-language" class="nav-link" data-scroll-target="#the-tidyverse-language"> <span class="header-section-number">2.3</span> The <code>tidyverse</code> Language</a></li>
+  <li><a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"> <span class="header-section-number">3.1</span> Downloading R and RStudio</a></li>
+  <li><a href="#installing-necessary-packages" id="toc-installing-necessary-packages" class="nav-link" data-scroll-target="#installing-necessary-packages"> <span class="header-section-number">3.2</span> Installing Necessary Packages</a></li>
+  <li><a href="#the-tidyverse-language" id="toc-the-tidyverse-language" class="nav-link" data-scroll-target="#the-tidyverse-language"> <span class="header-section-number">3.3</span> The <code>tidyverse</code> Language</a></li>
   </ul>
 </nav>
     </div>
@@ -191,7 +191,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
 </div>
 
 
@@ -205,14 +205,14 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 
 </header>
 
-<section id="downloading-r-and-rstudio" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="downloading-r-and-rstudio"><span class="header-section-number">2.1</span> Downloading R and RStudio</h2>
+<section id="downloading-r-and-rstudio" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="downloading-r-and-rstudio"><span class="header-section-number">3.1</span> Downloading R and RStudio</h2>
 </section>
-<section id="installing-necessary-packages" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="installing-necessary-packages"><span class="header-section-number">2.2</span> Installing Necessary Packages</h2>
+<section id="installing-necessary-packages" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="installing-necessary-packages"><span class="header-section-number">3.2</span> Installing Necessary Packages</h2>
 </section>
-<section id="the-tidyverse-language" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="the-tidyverse-language"><span class="header-section-number">2.3</span> The <code>tidyverse</code> Language</h2>
+<section id="the-tidyverse-language" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-tidyverse-language"><span class="header-section-number">3.3</span> The <code>tidyverse</code> Language</h2>
 
 
 </section>
@@ -318,12 +318,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./01-nfl-analytics-and-r.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-nfl-analytics-functions.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working With The <code>nflverse</code> Functions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
