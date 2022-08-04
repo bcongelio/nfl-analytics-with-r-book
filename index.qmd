@@ -13,14 +13,23 @@ library(memoise)
 
 tweet_cached <- memoise(tweet_embed, cache = cache_filesystem('.tweets'))
 tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets'))
-
 ```
 
-## Introduction {.unnumbered}
-
-<center>Welcome to the online home of <br>***An Introduction to NFL Analytics with R*****.**</center>
+<center>Welcome to the online home of <br>***Introduction to NFL Analytics with R*****.**</center>
 
 <br>
+
+As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following: testing
+
+-   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
+
+-   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the book's github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.
+
+-   Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.
+
+-   Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.
+
+# Introduction
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).
 
@@ -261,13 +270,3 @@ Finally, please note that this book uses the `dplyr` pipe operator (`%>%`) as op
 ## License
 
 The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-
-As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
-
--   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*An Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
-
--   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the book's github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.
-
--   Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.
-
--   Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.
