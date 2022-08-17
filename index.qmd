@@ -15,11 +15,13 @@ tweet_cached <- memoise(tweet_embed, cache = cache_filesystem('.tweets'))
 tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets'))
 ```
 
-<center>Welcome to the online home of \
+<center>Welcome to the online home of\
 ***Introduction to NFL Analytics with R*****.**</center>
 
 \
 As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
+
+-   *Introduction to NFL Analytics with R* is currently under contract with CRC Press. A hard copy of the book will be avaliable for pre-order on Amazon and other locations in early 2023.
 
 -   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
 
