@@ -485,7 +485,8 @@ Important
  8 D.Carr              8.12
  9 T.Brady             8.10
 10 T.Bridgewater       8.04
-# ... with 15 more rows</code></pre>
+# ... with 15 more rows
+# i Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>Russell Wilson led the NFL in 2021 with 9.89 air yards per attempt.</p>
@@ -908,7 +909,8 @@ Important
  8 00-0035710 D.Jones      NYG      60         35      0.583
  9 00-0036212 T.Tagovailoa MIA      60         35      0.583
 10 00-0026498 M.Stafford   LA       95         54      0.568
-# ... with 20 more rows</code></pre>
+# ... with 20 more rows
+# i Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>As you can see in the <code>tibble()</code> output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.</p>
@@ -943,7 +945,8 @@ Important
  8 00-0026498 M.Stafford   LA      172        109      0.634
  9 00-0023459 A.Rodgers    GB      128         80      0.625
 10 00-0035710 D.Jones      NYG      85         53      0.624
-# ... with 23 more rows</code></pre>
+# ... with 23 more rows
+# i Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>The results are quite different from the first running of this metric, as Dak Prescott is now the 4th most aggressive QB, while Kyler Murray moves to the top by approaching a nearly 70% aggressiveness rate on 3rd down. This small change highlights an important element about analytics: much of the work is the result of the coder (ie., <u>you</u>) being able to justify your decision-making process when developing the filters for each metric you create.</p>
@@ -983,7 +986,8 @@ Important
  8 00-0036972 M.Jones     NE       57         31      0.544
  9 00-0034857 J.Allen     BUF      59         32      0.542
 10 00-0029263 R.Wilson    SEA      56         30      0.536
-# ... with 16 more rows</code></pre>
+# ... with 16 more rows
+# i Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>We are now using the same code, but have included three new items to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense’s <code>win probability</code> was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.</p>
@@ -1016,25 +1020,26 @@ Important
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.five.years</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 243,131 x 372
-   play_id game_id     old_game_id home_team away_team season_type  week posteam
-     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;  
- 1       1 2017_01_AR~ 2017091004  DET       ARI       REG             1 &lt;NA&gt;   
- 2      37 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 3      73 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 4      97 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 5     118 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 6     153 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 7     174 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 8     207 2017_01_AR~ 2017091004  DET       ARI       REG             1 ARI    
- 9     233 2017_01_AR~ 2017091004  DET       ARI       REG             1 DET    
-10     254 2017_01_AR~ 2017091004  DET       ARI       REG             1 DET    
-# ... with 243,121 more rows, and 364 more variables: posteam_type &lt;chr&gt;,
-#   defteam &lt;chr&gt;, side_of_field &lt;chr&gt;, yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;,
-#   quarter_seconds_remaining &lt;dbl&gt;, half_seconds_remaining &lt;dbl&gt;,
-#   game_seconds_remaining &lt;dbl&gt;, game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;,
-#   drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;, down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;,
-#   yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;, ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;,
-#   yards_gained &lt;dbl&gt;, shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, ...</code></pre>
+   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1       1 2017_0~ 201709~ DET     ARI     REG         1 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   
+ 2      37 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 3      73 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 4      97 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 5     118 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 6     153 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 7     174 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 8     207 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 9     233 2017_0~ 201709~ DET     ARI     REG         1 DET     home    ARI    
+10     254 2017_0~ 201709~ DET     ARI     REG         1 DET     home    ARI    
+# ... with 243,121 more rows, 362 more variables: side_of_field &lt;chr&gt;,
+#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
+#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
+#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
+#   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
+#   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
+#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...
+# i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
 </div>
 </div>
 <p>Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021’s air yards per attempt leaders using <code>load_player_stats()</code>. In this case, however, we are including an additional filter to gather those passing attempts that results <em>only</em> in complete passes:</p>
@@ -1064,7 +1069,8 @@ Important
  8 00-0026498 M.Stafford         1668     10804    6.48
  9 00-0029701 R.Tannehill        1049      6680    6.37
 10 00-0032950 C.Wentz            1505      9491    6.31
-# ... with 12 more rows</code></pre>
+# ... with 12 more rows
+# i Use `print(n = ...)` to see more rows</code></pre>
 </div>
 </div>
 <p>Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.</p>
