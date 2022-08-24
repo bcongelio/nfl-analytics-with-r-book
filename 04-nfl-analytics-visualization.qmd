@@ -45,3 +45,5 @@ knitr::include_graphics(rep("images/unclerico.png"))
 ## Setting Up for Data Viz
 
 While most of your journey through NFL analytics in this book required you to use the `tidyverse` and a handful of other packages, the process of creating compelling and meaningful data visulizations will require you to utilize multitudes of other packages. Of course, the most important is `ggplot2` which is already installed via the `tidyverse`. However, in order to recreate the visulizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:
+
+## Selecting The Correct Type of Plot

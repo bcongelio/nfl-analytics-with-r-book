@@ -15,10 +15,14 @@ tweet_cached <- memoise(tweet_embed, cache = cache_filesystem('.tweets'))
 tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets'))
 ```
 
+::: callout-note
+**Please note:** this book is currently under contract with CRC Press and is in the writing process. *Chapters that are completed are to be considered a rough draft*. Other chapters, while listed in the table of contents to the left, have yet to be worked on. The finished manuscript is schedule for submission to CRC Press by December 31, 2022. The complete, open-source version will be "official" and live at that point, with the hard copy of the book coming in early 2023.
+:::
+
 <center>Welcome to the online home of\
-***Introduction to NFL Analytics with R*****.**</center>\
-\
-***Please note:** this book is currently in the writing process. Chapters that are completed are to be considered a rough draft. Other chapters, while listed in the table of content to the left, have yet to be worked on. As noted below, this title is currently under contract with CRC Press with a submission deadline of December 31, 2022. The full online version will be "official" and live at that point, with the hard copy of the book coming in early 2023.*
+***Introduction to NFL Analytics with R*****.**</center>
+
+![](images/big-ben-intro.jpg){fig-align="center"}
 
 As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
 

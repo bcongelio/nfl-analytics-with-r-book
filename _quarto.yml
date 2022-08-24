@@ -5,7 +5,6 @@ project:
 book:
   title: "An Introduction to NFL Analytics Using R"
   author: "Bradley J. Congelio"
-  cover-image: images/big-ben-intro.jpg
   site-url: https://bradcongelio.com/nfl-analytics-with-r-book
   repo-url: https://github.com/bcongelio/nfl-analytics-with-r-book
   repo-branch: origin
@@ -37,5 +36,4 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-    cover-image: images/big-ben-intro.jpg
     code-link: true
