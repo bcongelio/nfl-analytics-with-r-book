@@ -1,4 +1,4 @@
-# Data Visulization with NFL Analytics
+# Data Visualization with NFL Analytics
 
 ```{r loading-library, include = FALSE}
 
