@@ -300,39 +300,41 @@ Important
 <p>As you may imagine, there is a <strong>very important distinction between the <code>load_player_stats()</code></strong> <strong>and <code>load_pbp()</code></strong>. As mentioned, <code>load_player_stats()</code> will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, <code>load_pbp()</code> will provide over 350 metrics for every single play of every single game dating back to 1999.</p>
 <p>The <code>load_player_stats()</code> function includes the following offensive information:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">offensive.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">offensive.stats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">offensive.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">offensive.stats</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "air_yards_share"             "attempts"                   
  [3] "carries"                     "completions"                
  [5] "dakota"                      "fantasy_points"             
- [7] "fantasy_points_ppr"          "interceptions"              
- [9] "pacr"                        "passing_2pt_conversions"    
-[11] "passing_air_yards"           "passing_epa"                
-[13] "passing_first_downs"         "passing_tds"                
-[15] "passing_yards"               "passing_yards_after_catch"  
-[17] "player_id"                   "player_name"                
-[19] "racr"                        "receiving_2pt_conversions"  
-[21] "receiving_air_yards"         "receiving_epa"              
-[23] "receiving_first_downs"       "receiving_fumbles"          
-[25] "receiving_fumbles_lost"      "receiving_tds"              
-[27] "receiving_yards"             "receiving_yards_after_catch"
-[29] "recent_team"                 "receptions"                 
-[31] "rushing_2pt_conversions"     "rushing_epa"                
-[33] "rushing_first_downs"         "rushing_fumbles"            
-[35] "rushing_fumbles_lost"        "rushing_tds"                
-[37] "rushing_yards"               "sack_fumbles"               
-[39] "sack_fumbles_lost"           "sack_yards"                 
-[41] "sacks"                       "season"                     
-[43] "season_type"                 "special_teams_tds"          
-[45] "target_share"                "targets"                    
-[47] "week"                        "wopr"                       </code></pre>
+ [7] "fantasy_points_ppr"          "headshot_url"               
+ [9] "interceptions"               "pacr"                       
+[11] "passing_2pt_conversions"     "passing_air_yards"          
+[13] "passing_epa"                 "passing_first_downs"        
+[15] "passing_tds"                 "passing_yards"              
+[17] "passing_yards_after_catch"   "player_display_name"        
+[19] "player_id"                   "player_name"                
+[21] "position"                    "position_group"             
+[23] "racr"                        "receiving_2pt_conversions"  
+[25] "receiving_air_yards"         "receiving_epa"              
+[27] "receiving_first_downs"       "receiving_fumbles"          
+[29] "receiving_fumbles_lost"      "receiving_tds"              
+[31] "receiving_yards"             "receiving_yards_after_catch"
+[33] "recent_team"                 "receptions"                 
+[35] "rushing_2pt_conversions"     "rushing_epa"                
+[37] "rushing_first_downs"         "rushing_fumbles"            
+[39] "rushing_fumbles_lost"        "rushing_tds"                
+[41] "rushing_yards"               "sack_fumbles"               
+[43] "sack_fumbles_lost"           "sack_yards"                 
+[45] "sacks"                       "season"                     
+[47] "season_type"                 "special_teams_tds"          
+[49] "target_share"                "targets"                    
+[51] "week"                        "wopr"                       </code></pre>
 </div>
 </div>
 <p>As well, switching the <code>stat_type</code> to “kicking” provides the following information:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kicking.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span>, stat_type <span class="op">=</span> <span class="st">"kicking"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">kicking.stats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">kicking.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span>, stat_type <span class="op">=</span> <span class="st">"kicking"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">kicking.stats</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "fg_att"              "fg_blocked"          "fg_blocked_distance"
  [4] "fg_blocked_list"     "fg_long"             "fg_made"            
@@ -357,20 +359,20 @@ Important
 </h3>
 <p>If you are familiar with R, it might seem logical to do the following to get Roethlisberger’s total passing yards and number of attempts from the 2021 regular season:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">weekly.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ben.weekly</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span>, <span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">player_name</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,</span>
-<span>            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">weekly.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">ben.weekly</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span>, <span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">player_name</span> <span class="op">==</span> <span class="st">"B.Roethlisberger"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,
+            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'player_id'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">tibble</span><span class="op">(</span><span class="va">ben.weekly</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ben.weekly</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 4
+<pre><code># A tibble: 1 x 4
   player_id  player_name      total.yards n.attempts
   &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;      &lt;int&gt;
 1 00-0022924 B.Roethlisberger        3740        605</code></pre>
@@ -381,36 +383,36 @@ Important
 <p>After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.</p>
 <p><strong>However, filtering by <code>player_name</code> can lead to significant issues with your results.</strong> An excellent example of this is Josh Allen. Let’s recreate the code above that successfully provided Roethlisberger’s stats, but replace Ben with Josh Allen:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">josh.allen</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,</span>
-<span>            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">josh.allen</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">josh.allen</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,
+            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">josh.allen</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
+<pre><code># A tibble: 1 x 3
   player_name total.yards n.attempts
   &lt;chr&gt;             &lt;dbl&gt;      &lt;int&gt;
-1 J.Allen            4049        603</code></pre>
+1 J.Allen            4407        646</code></pre>
 </div>
 </div>
 <p>The output tells us Allen threw for 4,049 yards on 603 attempts during the 2021 regular season. A check of his <a href="https://www.pro-football-reference.com/players/A/AlleJo02.htm">Pro Football Reference page</a> tells us those numbers are incorrect. In fact, he had 4,407 passing yards on 646 attempts. How did we end up 358 passing yards and 43 attempts short?</p>
 <p>The answer comes from Aaron Schatz, the creator of <a href="https://www.footballoutsiders.com/">Football Outsiders</a>, who explained in a <a href="https://twitter.com/fo_aschatz/status/1442191416826888192?s=21">Tweet</a> that the official Buffalo Bills’ scorer, during week 3 of the NFL season, decided to refer to Allen as “Jos.Allen” as a result of the Washington Commanders having a player named “Jonathan Allen.”</p>
 <p>To double check this, we can run the same code as above, but remove the <code>player_name</code> filter and switch to searching for just those players on the Buffalo Bills by using <code>recent_team</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">two.josh.allens</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span>, <span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">recent_team</span> <span class="op">==</span> <span class="st">"BUF"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,</span>
-<span>            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">two.josh.allens</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span>, <span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">recent_team</span> <span class="op">==</span> <span class="st">"BUF"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,
+            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'player_id'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">tibble</span><span class="op">(</span><span class="va">two.josh.allens</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">two.josh.allens</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 17 × 4
+<pre><code># A tibble: 16 x 4
    player_id  player_name  total.yards n.attempts
    &lt;chr&gt;      &lt;chr&gt;              &lt;dbl&gt;      &lt;int&gt;
  1 00-0027685 E.Sanders              0          0
@@ -422,14 +424,13 @@ Important
  7 00-0033550 D.Webb                 0          0
  8 00-0033869 M.Trubisky            43          8
  9 00-0033904 D.Dawkins              0          0
-10 00-0034857 J.Allen             4049        603
-11 00-0034857 Jos.Allen            358         43
-12 00-0035250 D.Singletary           0          0
-13 00-0035308 T.Sweeney              0          0
-14 00-0035689 D.Knox                 0          0
-15 00-0036187 R.Gilliam              0          0
-16 00-0036196 G.Davis                0          0
-17 00-0036251 Z.Moss                 0          0</code></pre>
+10 00-0034857 J.Allen             4407        646
+11 00-0035250 D.Singletary           0          0
+12 00-0035308 T.Sweeney              0          0
+13 00-0035689 D.Knox                 0          0
+14 00-0036187 R.Gilliam              0          0
+15 00-0036196 G.Davis                0          0
+16 00-0036251 Z.Moss                 0          0</code></pre>
 </div>
 </div>
 <p>Grouping by <code>player_id</code> and <code>player_name</code> (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same <code>player_id</code>. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page.</p>
@@ -437,13 +438,13 @@ Important
 <span class="header-section-number">2.1.1.1</span> Using <code>load_player_stats()</code> Correctly</h4>
 <p>To avoid these situations, you <em>could</em> load up NFL rosters via the <code><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">nflreadr::load_rosters()</a></code> function, but that would require unnecessary code in order to merge the two DFs together by matching the <code>player_id</code> to the <code>gsis_id</code> number found within the roster information. Doing so would correct the above issue of Josh Allen appearing in the data under different spellings. Instead, and to write the minimal amount of code to complete the task, we can do the following:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">josh.allen</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,</span>
-<span>            total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,</span>
-<span>            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">josh.allen</span> <span class="op">&lt;-</span> <span class="va">weekly.data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
+            total.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span>,
+            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Allen"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The most efficient way to gather correct player statistics is to do the <code>group_by</code> with ONLY the <code>player_id</code> as, despite the variation in name, the <code>player_id</code> remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the <code>summarize</code> prior to calculating the sum of <code>passing_yards</code> and <code>attempts</code>. After, if you desire to see only Josh Allen’s number, you can filter out to just his name.</p>
 </section></section><section id="using-load_player_stats-to-find-leaders" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="using-load_player_stats-to-find-leaders">
@@ -452,27 +453,27 @@ Important
 <section id="an-example-2021-qb-air-yards-per-attempt-leaders" class="level4" data-number="2.1.2.1"><h4 data-number="2.1.2.1" class="anchored" data-anchor-id="an-example-2021-qb-air-yards-per-attempt-leaders">
 <span class="header-section-number">2.1.2.1</span> An Example: 2021 QB Air Yards per Attempt Leaders</h4>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ay.per.attempt</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,</span>
-<span>            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,</span>
-<span>            n.airyards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,</span>
-<span>            ay.attempt <span class="op">=</span> <span class="va">n.airyards</span> <span class="op">/</span> <span class="va">n.attempts</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n.attempts</span> <span class="op">&gt;=</span> <span class="fl">400</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_name</span>, <span class="va">ay.attempt</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">ay.attempt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">ay.per.attempt</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,
+            n.attempts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">attempts</span><span class="op">)</span>,
+            n.airyards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_air_yards</span><span class="op">)</span>,
+            ay.attempt <span class="op">=</span> <span class="va">n.airyards</span> <span class="op">/</span> <span class="va">n.attempts</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n.attempts</span> <span class="op">&gt;=</span> <span class="fl">400</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">player_name</span>, <span class="va">ay.attempt</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">ay.attempt</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the above example, we are using <code>group_by</code> to combine the desired statistics based on each unique <code>player_id</code> to, again, avoid any issues with player names within the data. After filtering to include just those statistics for the regular season, we first use the <code>summarize</code> function to grab the first <code>player_name</code> associated with the <code>player_id</code>. After, we find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled <code>n.attempts</code> and the regular season total of each QB’s air yards, again outputted into a new row titled <code>n.airyards</code>.</p>
 <p>It is important to note that the final row created with the <code>summarize</code> function is not a statistic included within <code>load_player_stats()</code>. In order to find a QB’s average air yards per attempt, we must use the first two items we’ve created and do some simple division (the created <code>n.airyards</code> divided by <code>n.attempts</code>).</p>
 <p>Finally, to “clear the noise” of those QBs with minimal attempts through the season, we included a filter to include only those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.</p>
 <p>The end results look like this:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.per.attempt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.per.attempt</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 25 × 2
+<pre><code># A tibble: 25 x 2
    player_name   ay.attempt
    &lt;chr&gt;              &lt;dbl&gt;
  1 R.Wilson            9.89
@@ -485,8 +486,7 @@ Important
  8 D.Carr              8.12
  9 T.Brady             8.10
 10 T.Bridgewater       8.04
-# … with 15 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# ... with 15 more rows</code></pre>
 </div>
 </div>
 <p>Russell Wilson led the NFL in 2021 with 9.89 air yards per attempt.</p>
@@ -495,8 +495,8 @@ Important
 <p>As just mentioned above, using the <code>load_pbp()</code> function is preferable when you are looking to add context to a player’s statistics, as the <code>load_player_stats()</code> function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.</p>
 <p>The <code>load_pbp()</code> function provides over 350 various metrics, as listed below:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">pbp.data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">pbp.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">pbp.data</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "aborted_play"                        
   [2] "air_epa"                             
@@ -881,22 +881,22 @@ Important
 <p>Sticking with the air yards example from above, let’s examine a metric I created using <code>load_pbp()</code> that I coined <strong>QB 3rd Down Aggressiveness</strong>. The metric is designed to determine which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line. It is an interesting metric to explore as, just like many metrics in the NFL, not all air yards are created equal. For example, eight air yards on 1st and 10 are less valuable than the same eight air yards on 3rd and 5.</p>
 <p>First, let’s highlight the code used to create the results for this metric and then break it down line-by-line.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">aggressiveness</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&gt;=</span> <span class="fl">5</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,</span>
-<span>            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,</span>
-<span>            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
+
+<span class="va">aggressiveness</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&gt;=</span> <span class="fl">5</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,
+            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,
+            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
+            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 30 × 6
+<pre><code># A tibble: 30 x 6
    passer_id  player_name  team  total aggressive percentage
    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;
  1 00-0033077 D.Prescott   DAL      84         53      0.631
@@ -909,8 +909,7 @@ Important
  8 00-0035710 D.Jones      NYG      60         35      0.583
  9 00-0036212 T.Tagovailoa MIA      60         35      0.583
 10 00-0026498 M.Stafford   LA       95         54      0.568
-# … with 20 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# ... with 20 more rows</code></pre>
 </div>
 </div>
 <p>As you can see in the <code>tibble()</code> output of the results, Dak Prescott was the most aggressive quarterback in 3rd down passing situations in the 2021 season, passing to, our beyond, the line of gain just over 63% of the time.</p>
@@ -919,20 +918,20 @@ Important
 <p>Doing so was a personal decision on my end when creating the metric, as there are certainly arguments to be made regarding how to “capture” scenarios in the data that require “aggressiveness.” My logic? If there were less than five yards to go on 3rd down, the opposing defense would not be able to “sell out” to the pass as it would not be out of the question for an offense to attempt to gain the first down on the ground. Conversely, anything <em>over</em> ten yards likely results in the defense selling out to the pass, thus leaving an imprint on the aggressiveness output of the quarterbacks.</p>
 <p>For the sake of curiosity, we can edit the above code to include all passing attempts on 3rd down with under 10 yards to go for the first down:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">aggressiveness.under.10</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,</span>
-<span>            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,</span>
-<span>            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.under.10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">aggressiveness.under.10</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,
+            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,
+            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
+            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.under.10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 33 × 6
+<pre><code># A tibble: 33 x 6
    passer_id  player_name  team  total aggressive percentage
    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;
  1 00-0035228 K.Murray     ARI      98         67      0.684
@@ -945,8 +944,7 @@ Important
  8 00-0026498 M.Stafford   LA      172        109      0.634
  9 00-0023459 A.Rodgers    GB      128         80      0.625
 10 00-0035710 D.Jones      NYG      85         53      0.624
-# … with 23 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# ... with 23 more rows</code></pre>
 </div>
 </div>
 <p>The results are quite different from the first running of this metric, as Dak Prescott is now the 4th most aggressive QB, while Kyler Murray moves to the top by approaching a nearly 70% aggressiveness rate on 3rd down. This small change highlights an important element about analytics: much of the work is the result of the coder (ie., <u>you</u>) being able to justify your decision-making process when developing the filters for each metric you create.</p>
@@ -959,21 +957,21 @@ Important
 <p>To account for this, we can add information into the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to attempt to remove what are referenced to in the analytics community as “garbage time stats.”</p>
 <p>Let’s add the “garbage time” filter to the code we’ve already prepared:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">aggressiveness.garbage</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&gt;=</span> <span class="fl">5</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span>,</span>
-<span>         <span class="va">wp</span> <span class="op">&gt;</span> <span class="fl">.05</span>, <span class="va">wp</span> <span class="op">&lt;</span> <span class="fl">.95</span>, <span class="va">half_seconds_remaining</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,</span>
-<span>            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,</span>
-<span>            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.garbage</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">aggressiveness.garbage</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">3</span>, <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span>, <span class="va">ydstogo</span> <span class="op">&gt;=</span> <span class="fl">5</span>, <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span>,
+         <span class="va">wp</span> <span class="op">&gt;</span> <span class="fl">.05</span>, <span class="va">wp</span> <span class="op">&lt;</span> <span class="fl">.95</span>, <span class="va">half_seconds_remaining</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>,
+            team <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,
+            total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
+            aggressive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            percentage <span class="op">=</span> <span class="va">aggressive</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">aggressiveness.garbage</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26 × 6
+<pre><code># A tibble: 26 x 6
    passer_id  player_name team  total aggressive percentage
    &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;
  1 00-0033077 D.Prescott  DAL      61         40      0.656
@@ -986,8 +984,7 @@ Important
  8 00-0036972 M.Jones     NE       57         31      0.544
  9 00-0034857 J.Allen     BUF      59         32      0.542
 10 00-0029263 R.Wilson    SEA      56         30      0.536
-# … with 16 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# ... with 16 more rows</code></pre>
 </div>
 </div>
 <p>We are now using the same code, but have included three new items to the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense’s <code>win probability</code> was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.</p>
@@ -1013,50 +1010,49 @@ Important
 <p>In our above example calculating average air yard per attempt, it is important to note that Russell Wilson’s league-leading average of 9.89 air yards per attempt is calculated using <em>all</em> passing attempts, meaning pass attempts that were both complete and incomplete.</p>
 <p>In our first example of working with data across multiple seasons, let’s examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ay.five.years</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2017</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">ay.five.years</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2017</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To retrieve multiple seasons of data, a colon <code>:</code> is placed between the years that you want. When you run the code, <code>nflreadr</code> will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season):</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.five.years</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span><span class="va">ay.five.years</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 243,131 × 372
-   play_id game_id old_g…¹ home_…² away_…³ seaso…⁴  week posteam poste…⁵ defteam
+<pre><code># A tibble: 243,131 x 372
+   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
- 1       1 2017_0… 201709… DET     ARI     REG         1 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   
- 2      37 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 3      73 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 4      97 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 5     118 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 6     153 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 7     174 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 8     207 2017_0… 201709… DET     ARI     REG         1 ARI     away    DET    
- 9     233 2017_0… 201709… DET     ARI     REG         1 DET     home    ARI    
-10     254 2017_0… 201709… DET     ARI     REG         1 DET     home    ARI    
-# … with 243,121 more rows, 362 more variables: side_of_field &lt;chr&gt;,
+ 1       1 2017_0~ 201709~ DET     ARI     REG         1 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   
+ 2      37 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 3      73 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 4      97 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 5     118 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 6     153 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 7     174 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 8     207 2017_0~ 201709~ DET     ARI     REG         1 ARI     away    DET    
+ 9     233 2017_0~ 201709~ DET     ARI     REG         1 DET     home    ARI    
+10     254 2017_0~ 201709~ DET     ARI     REG         1 DET     home    ARI    
+# ... with 243,121 more rows, 362 more variables: side_of_field &lt;chr&gt;,
 #   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
 #   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
 #   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
 #   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
 #   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
-#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, …
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...</code></pre>
 </div>
 </div>
 <p>Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021’s air yards per attempt leaders using <code>load_player_stats()</code>. In this case, however, we are including an additional filter to gather those passing attempts that results <em>only</em> in complete passes:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">average.airyards</span> <span class="op">&lt;-</span> <span class="va">ay.five.years</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>player <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer_player_name</span><span class="op">)</span>,</span>
-<span>            completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span><span class="op">)</span>,</span>
-<span>            air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span><span class="op">)</span>,</span>
-<span>            average <span class="op">=</span> <span class="va">air.yards</span> <span class="op">/</span> <span class="va">completions</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">completions</span> <span class="op">&gt;=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">average</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">average.airyards</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">average.airyards</span> <span class="op">&lt;-</span> <span class="va">ay.five.years</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>player <span class="op">=</span> <span class="fu">first</span><span class="op">(</span><span class="va">passer_player_name</span><span class="op">)</span>,
+            completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span><span class="op">)</span>,
+            air.yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span><span class="op">)</span>,
+            average <span class="op">=</span> <span class="va">air.yards</span> <span class="op">/</span> <span class="va">completions</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">completions</span> <span class="op">&gt;=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">average</span><span class="op">)</span>
+
+<span class="fu">tibble</span><span class="op">(</span><span class="va">average.airyards</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 22 × 5
+<pre><code># A tibble: 22 x 5
    passer_id  player      completions air.yards average
    &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
  1 00-0031503 J.Winston          1008      8174    8.11
@@ -1069,8 +1065,7 @@ Important
  8 00-0026498 M.Stafford         1668     10804    6.48
  9 00-0029701 R.Tannehill        1049      6680    6.37
 10 00-0032950 C.Wentz            1505      9491    6.31
-# … with 12 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# ... with 12 more rows</code></pre>
 </div>
 </div>
 <p>Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.</p>
