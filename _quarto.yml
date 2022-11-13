@@ -3,13 +3,14 @@ project:
   output-dir: docs
 
 book:
-  title: "An Introduction to NFL Analytics Using R"
+  title: "An Introduction to NFL Analytics with R"
   author: "Bradley J. Congelio"
   site-url: https://bradcongelio.com/nfl-analytics-with-r-book
   repo-url: https://github.com/bcongelio/nfl-analytics-with-r-book
   repo-branch: origin
   sharing: [twitter, facebook, linkedin]
-  
+  publisher: "CRC Press"
+  publisher-place: "Boca Raton, FL."
   chapters:
     - index.qmd
     - 01-nfl-analytics-and-r.qmd
@@ -20,20 +21,21 @@ book:
   appendices: 
     - a1-nfl-analytics-dictionary.qmd
     - a2-nfl-further-reading.qmd
-    
   google-analytics: "G-0ZLEFZL898"
-  
   search: true
   page-footer: 
-  
     left: |
       NFL Analytics with R was written by Bradley J. Congelio.
     right: |
       This book was built with <a href = "https://quarto.org/">Quarto</a>
-
-bibliography: references.bib
+bibliography: citations.bib
 
 format:
   html:
     theme: cosmo
     code-link: true
+  pdf:
+    documentclass: krantz
+    keep-tex: true
+    latex-auto-mk: false
+
