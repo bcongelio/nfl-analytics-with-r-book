@@ -5,3 +5,11 @@
 library(tidyverse)
 library(readr)
 ```
+
+To start, lets pull in example data that is prepped specifially for this chapter.
+
+```{r reading-example-data, include = TRUE}
+
+pbp <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/pbp.csv")
+
+```
