@@ -3,7 +3,6 @@
 ```{r loading-library, include = FALSE}
 
 library(tidyverse)
-library(readr)
 ```
 
 ## Introduction
@@ -29,14 +28,12 @@ For example, one may be interested in seeing the progression of completion throu
 
 To start exploring some of these questions and assumptions, lets pull the prepared data from this book's GitHub using the following code:
 
-```{r reading-example-data, include = TRUE}
+```{r reading-example-data, include = TRUE, output = FALSE}
 
-pbp <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/pbp.csv")
+pbp <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/complete_passes.csv")
 
 ```
 
 ::: callout-note
 The `readr` package is part of the `tidyverse`. Please make sure to run `library(tidyverse` to load both.
-
-Alternatively, you can use other packages, such as `vroom`, to read the data into your RStudio environment.
 :::
