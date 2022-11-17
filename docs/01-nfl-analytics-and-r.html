@@ -226,7 +226,12 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"> <span class="header-section-number">2.1</span> Introduction</a></li>
-  <li><a href="#nfl-completion-leaders" id="toc-nfl-completion-leaders" class="nav-link" data-scroll-target="#nfl-completion-leaders"> <span class="header-section-number">2.2</span> 2021 NFL Completion Leaders</a></li>
+  <li>
+<a href="#nfl-completion-leaders" id="toc-nfl-completion-leaders" class="nav-link" data-scroll-target="#nfl-completion-leaders"> <span class="header-section-number">2.2</span> 2021 NFL Completion Leaders</a>
+  <ul class="collapse">
+<li><a href="#week-by-week-completed-passes" id="toc-week-by-week-completed-passes" class="nav-link" data-scroll-target="#week-by-week-completed-passes"> <span class="header-section-number">2.2.1</span> Week-by-Week Completed Passes</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -271,7 +276,7 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <p>For example, one may be interested in seeing the progression of completion throughout the season to witness how the “race to the top” changed from week to week. And, of course, all completions are not created equal. Was Tom Brady doing a “nickel and dime” routine down the field, thus picking up easier completions than, for example, a QB slinging it 15+ yards at a higher rate than Brady? Or what about a quarterback’s time to throw? It seems logical to conclude that an under performing offensive line, providing limited time for a QB to make reads and get rid of the ball, would impact multiple parts of a QB’s passing game.</p>
 <p>To start exploring some of these questions and assumptions, lets pull the prepared data from this book’s GitHub using the following code:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/complete_passes.csv"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">completed_passes</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completed_passes.csv"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -283,12 +288,40 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>readr</code> package is part of the <code>tidyverse</code>. Please make sure to run <code>library(tidyverse</code> to load both.</p>
+<p>The <code>readr</code> package is part of the <code>tidyverse</code>. Please make sure to run <code><a href="https://tidyverse.tidyverse.org">library(tidyverse)</a></code> to load both.</p>
+</div>
+</div>
+<p>The data is a snippet of NFL play-by-play from the <code>nflreadr</code> package with 18 variables included:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">completed_passes</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "player_id"           "player_display_name" "recent_team"        
+[4] "week"                "season_type"         "completions"        
+[7] "passing_air_yards"  </code></pre>
+</div>
+</div>
+<section id="week-by-week-completed-passes" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="week-by-week-completed-passes">
+<span class="header-section-number">2.2.1</span> Week-by-Week Completed Passes</h3>
+<p>Was Tom Brady near the top of the completion leader board throughout the 2021 NFL season? Or did he perhaps jump at the leader board with an above-average number of completions in the final weeks of the season?</p>
+<p>To answer this question, we can create a week-by-week graph after doing several basic manipulations to the data. First, the code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">week_by_week</span> <span class="op">&lt;-</span> <span class="va">completed_passes</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>all_completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">completions</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">all_completions</span> <span class="op">&gt;=</span> <span class="fl">372</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total_completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">completions</span><span class="op">)</span>,
+            week <span class="op">=</span> <span class="va">week</span>,
+            name <span class="op">=</span> <span class="va">player_display_name</span>,
+            posteam <span class="op">=</span> <span class="va">recent_team</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'player_id'. You can override using the
+`.groups` argument.</code></pre>
 </div>
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

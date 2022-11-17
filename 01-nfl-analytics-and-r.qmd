@@ -30,10 +30,36 @@ To start exploring some of these questions and assumptions, lets pull the prepar
 
 ```{r reading-example-data, include = TRUE, output = FALSE}
 
-pbp <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/complete_passes.csv")
+completed_passes <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completed_passes.csv")
 
 ```
 
 ::: callout-note
-The `readr` package is part of the `tidyverse`. Please make sure to run `library(tidyverse` to load both.
+The `readr` package is part of the `tidyverse`. Please make sure to run `library(tidyverse)` to load both.
 :::
+
+The data is a snippet of NFL play-by-play from the `nflreadr` package with 18 variables included:
+
+```{r completed-passes-data, include = TRUE}
+
+colnames(completed_passes)
+```
+
+###  Week-by-Week Completed Passes
+
+Was Tom Brady near the top of the completion leader board throughout the 2021 NFL season? Or did he perhaps jump at the leader board with an above-average number of completions in the final weeks of the season?
+
+To answer this question, we can create a week-by-week graph after doing several basic manipulations to the data. First, the code:
+
+```{r week-by-week-passing, include = TRUE}
+
+week_by_week <- completed_passes %>%
+  filter(season_type == "REG") %>%
+  group_by(player_id) %>%
+  mutate(all_completions = sum(completions, na.rm = TRUE)) %>%
+  filter(all_completions >= 372) %>%
+  summarize(total_completions = cumsum(completions),
+            week = week,
+            name = player_display_name,
+            posteam = recent_team)
+```
