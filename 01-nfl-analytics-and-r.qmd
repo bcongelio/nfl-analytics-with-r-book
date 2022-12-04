@@ -156,19 +156,17 @@ As mentioned, there are several influences that can dictate the total number of 
 
 ### Total Completions vs. Air Yards
 
-To start,
+To start, lets load in the data:
+
+```{r completions_airyards_data, include = TRUE, output = FALSE}
+
+completed_passes <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completions_airyards.csv")
+
+```
 
 ```{r completed-passes-vs-air-yards, echo = TRUE}
 
-###testing <- nflreadr::load_pbp(2021) run and upload
-
-###testing <- testing %>%
-  filter(season_type == "REG") %>%
-  select(play_id, game_id, posteam, passer, passer_player_id, passer_player_name,
-         play_type, pass, down, ydstogo, air_yards, sack, interception,
-         complete_pass, incomplete_pass)###run and upload
-
-completions_airyards <- testing %>%
+completions_airyards <- completions_airyards %>%
   group_by(passer_player_id) %>%
   filter(complete_pass == 1, !is.na(down)) %>%
   summarize(name = passer_player_name,
@@ -216,8 +214,11 @@ ggplot(data = completions_airyards, aes(x = completions, y = mean_airyards)) +
 
 By adding a regression line to the plot using the `geom_smooth` function with the `method` set to "lm", we can see that there is a slight correlation between those quarterbacks with higher number of total completions and a lower average air yards. However, it is also reasonable to assume that both Justin Fields and Andy Dalton, as outliers, are skewing the results of the regression. Perhaps removing them from the data frame will provide a more realistic view of the relationship between total completions and average air yards.
 
-```{r correlation-removing-adalton-jfields}
+```{r correlation-removing-adalton-jfields, echo = TRUE, eval = TRUE}
 
+completions_airyards <- completions_airyards %>%
+  filter(name != "J.Fields" & name != "A.Dalton")
+  
 ggplot(data = completions_airyards, aes(x = completions, y = mean_airyards)) +
   geom_point(color = completions_airyards$team_color, size = 3.5) +
   geom_smooth(method = "lm", se = FALSE, size = 1.5) +
