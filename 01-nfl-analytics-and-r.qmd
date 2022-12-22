@@ -4,14 +4,13 @@
 
 library(tidyverse)
 library(nflverse)
-library(extrafont)
 ```
 
 ## Introduction
 
-It probably seems odd to jump right into coding and visualization in Chapter 1, while placing information about learning the basics of the `tidyverse` in Chapter 2. But there is good reason I adopted this pedagogical approach in this book. As explained by Hadley Wickham and Garrett Grolemund in their outstanding book [*R for Data Science*](https://r4ds.had.co.nz/index.html)*,* the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement and integration into a topic increases the likelihood of following up and learning the boring material.
+It might seem odd to begin an introductory book with coding and visualization in Chapter 1, while placing information about learning the basics of the `tidyverse` in a later chapter. But there is good reason why I adopted this pedagogical approach in this book. As explained by Hadley Wickham and Garrett Grolemund in their outstanding book [*R for Data Science*](https://r4ds.had.co.nz/index.html)*,* the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement about and integration into a topic increases the likelihood of following up and learning the "boring" material.
 
-Because of this, I follow the approach of Wickham and Grolemund and provide you data that is already imported and, for the most part, tidied and ready to go.
+Because of this, I follow the approach of Wickham and Grolemund and provide data that is already, for the most part, "tidied" and ready to be used. We will however, in later chapters, pull raw data directly from it source (such as `nflreadr`, Pro Football Reference, and Sports Info Solutions) that requires manipulation and cleaning before any significant analysis can begin.
 
 ::: callout-important
 I am assuming, while you may not have a full grasp of the `tidyverse` yet, **that you do currently have base R and RStudio installed**. If you do not, more detailed instructions are provided in Chapter 2. If you would rather jump right into this material, you can download base R and RStudio at the following links. Once both are installed, you can return to this point in the chapter to follow along.
@@ -20,228 +19,148 @@ To download/install base R: [cran.rstudio.com](https://cran.rstudio.com/)\
 To download/install RStudio: [RStudio Desktop](https://posit.co/download/rstudio-desktop/) (scroll to bottom of page for Mac options)
 :::
 
-In this chapter, we will use data I prepared from the 2021 NFL season. **add more about what the chapter does here**.
+Moreover, as briefly outlined in the Preface, we move through the process of learning NFL analytics via a close relationship with investigative inquiry. In this instance, we will define the process of investigative inquiry as one that seeks both knowledge and information about a problem/question through data-based research. To that end, we will routinely use the process throughout this book to uncover insights, patterns, and trends relating to both players and teams that serve to help us answer the problem/question we are examining.
 
-## 2021 NFL Completion Leaders
+While it can - and should - be entertaining to develop visualization and models around arbitrarily picked statistics and metrics, it is important to remember that the end goal of the process is to glean useful insights that, ultimately, can be shared with the public. Much like the work done by a data analyst for a Fortune 500 company, the work you produce as a result of this book should do two things: (1.) provide deeper insight and knowledge about NFL teams and players and (2.) effectively communicate a story.
 
-At the conclusion of the 2021 NFL season, Tom Brady - of the Tampa Bay Buccaneers - led the league in completed pass attempts with 485, well above Justin Herbert's tally of 443 completions for second place. However, as is the case with many NFL statistics, there is much context that can be added to even an otherwise "simple statistic" such as pass completions.
+This is why the process of investigative inquiry is ingrained, as much as possible, into every example provided in this book. In doing so, the standard outline for completing an investigate inquiry is modified to fit the needs of this book - specifically, the addition of communicating your findings to the public at the end.
 
-For example, one may be interested in seeing the progression of completion throughout the season to witness how the "race to the top" changed from week to week. And, of course, all completions are not created equal. Was Tom Brady doing a "nickel and dime" routine down the field, thus picking up easier completions than, for example, a QB slinging it 15+ yards at a higher rate than Brady? Or what about a quarterback's time to throw? It seems logical to conclude that an under performing offensive line, providing limited time for a QB to make reads and get rid of the ball, would impact multiple parts of a QB's passing game.
+## The Investigate Inquiry Outline
 
-To start exploring some of these questions and assumptions, lets pull the prepared data from this book's GitHub using the following code:
+1.  **Identify the problem or question**. The first step in any investigative inquiry is to clearly define the problem or question that you are trying to answer. Many times, fans have questions about their individuals favorite team and/or players. For example, the 2022 Los Angeles Rams - the defending Super Bowl Champions - were eliminated from playoff contention with three weeks remaining in the season. With the early exit, the Rams tied the 1999 Denver Broncos for the earliest elimination from playoff contention for any prior Super Bowl Champion. The Rams' early elimination can be explained by the high number of injuries during the season, including Matthew Stafford, Cooper Kupp, and Aaron Donald. Perhaps the biggest factor, though, was the inability to keep a healthy offensive line. In this specific example, in terms of *identifying the problem or question*, a potential problem or question to explore is: how many unique combinations of offensive linemen did the 2022 LA Rams use and where does it rank in NFL history? Have other teams in recent history faced the same amount of offensive line turnover yet still make the playoffs? As you can see, there are a number of different avenues in which the *problem or question* surrounding the Rams' offensive line injury issues can be explored.
 
-```{r reading-example-data, include = TRUE, output = FALSE}
+2.  **Gather data**. With a question or problem determined, we now turn to the process of finding and gathering the necessary data to find answers. Unfortunately, data is not always going to be available to answer your investigate inquiry. For example, NFL's tracking data is only released in partial form during the annual Big Data Bowl (explored later in Chapter ##). In the event that your question or problem requires data that is not available, you must loop back to Step 1 and reconfigure your question to match available data. In the case of the 2022 LA Rams' offensive line, access to data that can answer the question is available through two cores avenues: the `load_participation` and `load_snap_counts` functions within the `nflverse` family of packages.
 
-completed_passes <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completed_passes.csv")
+3.  **Clean and prepare the data**. It is not often that the data you obtain to answer your question will be perfectly prepared to immediate analysis. As will be explored below, the data collected to explore the Rams' offensive line combinations required both (1.) a critical thought process on how to best solve oddities in the data while still producing correct and reliable information (2.) the cleaning and preparation to make the changes as a result of that critical thinking process. As you progress through the many examples and exercises in this book, you will often be presented with prepared datasets that require you to determine the best approach to data manipulation through this critical thinking and cleaning/preparation process.
 
-```
+4.  **Analyze the data**. After problem solving to ensure the data is as reliable and consistent as possible, we can turn to analyzing the data. In this case, since we are concerned with unique combinations of offensive linemen, we can quickly get results by using the `n_distinct` function within `dplyr`.
 
-::: callout-note
-The `readr` package is part of the `tidyverse`. Please make sure to run `library(tidyverse)` to load both.
-:::
+5.  **Visualize the data**. There are generally two options for visualizing data: plotting with `ggplot` or creating a table with `gt` and the outstanding companion package `gtExtras`. To that end, considering the following can help determine whether to present your findings in char or table format.
 
-The data is a snippet of NFL play-by-play from the `nflreadr` package with 18 variables included:
+    -   **The type of data you are working with**. If you have a large amount of numerical data that needs to be compared or analyzed, a table may be the most effective way to present this information. On the other hand, if you want to highlight trends or patterns in your data, a chart can help illustrate the information in a more clear manner.
 
-```{r completed-passes-data, include = TRUE}
+    -   **The purpose of your visualization**. You must consider what you ultimately want to communicate with your visualization. If you want to provide a detailed breakdown of your data, a table is usually more appropriate. However, if you want to show the overall trend or pattern in your data, a chart is going to be more effective.
 
-colnames(completed_passes)
-```
+    -   **The audience for your visualization**. As you determine whether to use a chart or a table, think about who will be viewing your visualization and what level of detail they need. If your audience is familiar with the data and needs to see precise value, a table may be a better choice. If your audience is not as familiar with the data and you want to highlight the main trends or patterns, a chart my be more effective.
 
-### Week-by-Week Completed Passes
+    Below, we will explore visualizing our offensive linemen combinations in both chart and table format using multiple different variables for sake of comparison.
 
-Was Tom Brady near the top of the completion leader board throughout the 2021 NFL season? Or did he perhaps jump atop the leader board with an above-average number of completions in the final weeks of the season?
+6.  **Interpret and communicate the results**. Lastly, it is time to communicate your results to the public. Whether this be through Twitter, a team blog, or a message board, there are numerous items to consider when preparing to build your story/narrative for sharing. This will be covered further in Chapter \## (Visualization) as well.
 
-To answer this question, we can create a week-by-week graph after doing several basic manipulations to the data. First, the code:
+With a clear direction via the investigative inquiry process, we can turn to taking a deeper dive into the LA Rams' 2022 offensive linemen issue.
 
-```{r week-by-week-passing, include = TRUE}
+## Investigating the Rams' 2022 Offensive Line
 
-week_by_week <- completed_passes %>%
-  filter(season_type == "REG") %>%
-  group_by(player_id) %>%
-  mutate(all_completions = sum(completions, na.rm = TRUE)) %>%
-  filter(all_completions >= 372) %>%
-  summarize(total_completions = cumsum(completions),
-            week = week,
-            name = player_display_name,
-            posteam = recent_team)
-```
+The "Super Bowl hangover" is real.
 
-There are several things going on in the above example.
+At least for the loser of the big game.
 
-First, we are using the `filter` function from `dplyr` to calculate completed passes from just the regular season. In order to calculate for each individual quarterback, we are using the `group_by` function to lump all distinct `player_id` together. Afterwards, we are creating a new column within the data frame using the `mutate` function and titling it `all_completions` which is the sum of all complete passes for each quarterback. This is done in order to efficiently use the `filter` function to limit the results to just the top ten quarterbacks by total completions. Lastly, we use the `summarize` function to distill the data down to four columns. Of importance is the `total_completions` column we create using the `cumsum` function (ie., cumulative total), which adds each QB's completions week-by-week for a running total. After, we grab the `week`, `name`, and `posteam` columns for the purposes of data visualization.
+Since the AFL and NFL merged in 1970, a total of 15 of the 51 losers of the Super Bowl went on to miss the playoffs in the following season, while 13 failed to even achieve a winning record. Teams coming off a Super Bowl victory have generally fared better, with the winners putting together a .500 record or better 45 out of 51 times.
 
-You can see the first ten rows of the data by simply typing the name of the data frame and running it:
+Of those six teams to not achieve a .500 record after winning the Super Bowl, only a few have been as downright terrible as the 2022 Los Angeles Rams.
 
-```{r viewing-week-by-week-results, echo = TRUE}
+As explained by Mike Ehrmann, the Rams' poor Super Bowl defense is "what happens when a laundry list of things go wildly wrong at the same time" [@kirschner2022]. As outlined above in our investigative inquiry outline, one of the core items on the Rams' laundry list of bad luck was the absurd amount of offensive linemen ending up on the injured list. This, combined with losing Andrew Whitworth to retirement after the Super Bowl, led to quarterback Matthew Stafford being sacked on 8.6-percent of his dropback attempts (a rate that nearly doubled from the previous season).
 
-week_by_week
-```
+Given that context, just *how* historically bad was the Rams' 2022 offensive line turnover? We can being diving into the data to find our results and build our story.
 
-With the data manipulation complete, let's take the information and visualize it by cumulative completions by week for each quarterback. But, first, to allow for differentiation, lets bring in team colors into the data frame using the `team_colors_logos` function within the `nflfastR` package:
+### Unique Offensive Line Combinations: How to Collect The Data?
 
-```{r bringing-in-colors, include = TRUE}
+To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, I turned to two possible options: the `load_participation` and `load_snap_counts` functions within the `nflreadr` package. The `load_participation` function will return, if `include_pbp = TRUE` a list of every player ID number that was on the field for each play, whereas `load_snap_counts` returns - on a per game basis - the percentage of snaps each player was on the field for.
 
-week_by_week <- week_by_week %>%
-  left_join(nflfastR::teams_colors_logos, by = c("posteam" = "team_abbr"))
-```
+In the end, using `load_snap_counts` created the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation` function resulted in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code will select the first offensive play for each team, in each game, up to week 15 of the 2022 season.
 
-By matching up the `team_abbr` listed within `teams_colors_logos` to the `posteam` in our dataframe, we are able to match each quarterback to their respective team colors, logos, and more. With that completed, we can turn to completing the data visualization:
+```{r using-participation-function, eval = TRUE, echo = TRUE, output = FALSE}
 
-```{r cumulative-completions-graph, include = TRUE}
+participation <- nflreadr::load_participation(2022, include_pbp = TRUE)
+rosters <- nflreadr::load_rosters(2022) %>%
+  select(full_name, gsis_id, depth_chart_position)
 
-ggplot(data = week_by_week, aes(x = week, y = total_completions, group = player_id)) +
-  geom_line(color = week_by_week$team_color, size = 1.5) +
-  geom_point(color = week_by_week$team_color2, size = 1) +
-  scale_x_continuous(breaks = seq(1,18,1),
-                     expand = c(0,0)) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
-  theme(aspect.ratio = 9 / 16) +
-  theme_bw() +
-  theme(
-    panel.background = element_rect(fill = "#FFFFFF"),
-    plot.background = element_rect(fill = "#FFFFFF"),
-    panel.border = element_rect(color = "#FFFFFF"),
-    panel.grid.major = element_line(color = "#F3F3F3", size = .75),
-    axis.text.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.text.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.ticks = element_blank()) +
-  ylab("Total Completions") +
-  xlab("Week") +
-  labs(title = "Cumulative Completions per Week",
-       subtitle = "2021 Season")
-```
+oline_participation <- participation %>%
+  filter(play_type %in% c("pass", "run")) %>%
+  group_by(nflverse_game_id, possession_team, fixed_drive) %>%
+  filter(fixed_drive == 1 | fixed_drive == 2) %>%
+  filter(row_number() == 1) %>%
+  select(nflverse_game_id, play_id, possession_team, 
+         offense_personnel, offense_players) %>%
+  dplyr::mutate(gsis_id = stringr::str_split(offense_players, ";")) %>%
+  tidyr::unnest(c(gsis_id)) %>%
+  left_join(rosters, by = c("gsis_id" = "gsis_id"))
 
-![2021 Cumulative Completions](_book/images/cumulative-completions.png){fig-align="center"}
-
-It is clear that Tom Brady and Patrick Mahomes started pulling ahead of other NFL QBs starting in approximately week seven. The two alternated as the NFL completion leader from week nine until week 12 which, at that point, Brady maintained a steady trajectory while Mahomes fell into a tightly packed race for second place for the remainder of the season.
-
-While the graph, as is, provides insights to our inquiry it is certainly a bit on the busy side. What if we wanted to highlight *just* Brady and Mahomes? We can use the same plot we just created, but use the `alpha` function to control the opacity of the lines.
-
-```{r controling-alpha-for-geom-lines, include = TRUE}
-
-ggplot(data = week_by_week, aes(x = week, y = total_completions, group = player_id,
-                                alpha = player_id %in% c("00-0033873", "00-0019596"))) +
-  geom_line(color = week_by_week$team_color, size = 1.5) +
-  scale_alpha_manual(values = c(0.05, 1), guide = "none") +
-  geom_point(color = week_by_week$team_color2, size = 1) +
-  scale_x_continuous(breaks = seq(1,18,1),
-                     expand = c(0,0)) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
-  theme(aspect.ratio = 9 / 16) +
-  theme_bw() +
-  theme(
-    panel.background = element_rect(fill = "#FFFFFF"),
-    plot.background = element_rect(fill = "#FFFFFF"),
-    panel.border = element_rect(color = "#FFFFFF"),
-    panel.grid.major = element_line(color = "#F3F3F3", size = .75),
-    axis.text.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.text.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.ticks = element_blank()) +
-  ylab("Total Completions") +
-  xlab("Week") +
-  labs(title = "Cumulative Completions per Week | T.Brady & P.Mahomes Highlighted",
-       subtitle = "2021 Season")
+oline_participation <- oline_participation %>%
+  filter(depth_chart_position %in% c("T", "G", "C")) %>%
+  group_by(nflverse_game_id, possession_team) %>%
+  mutate(starting_line = toString(full_name)) %>%
+  select(nflverse_game_id, possession_team, 
+         offense_personnel, starting_line) %>%
+  distinct()
 
 ```
 
-![](_book/images/completed-passes-brady-mahomes.png){fig-align="center"}
+While the output using the `load_participation` function is correct, a quick examination of the `offense_personnel` column causes concern about the viability of this approach to calculate the total number of unique offensive line combinations. A grouping and summing of the `offense_personnel` column highlights the issue.
 
-By adding `alpha` to the aesthetics call within `ggplot`, we are able to decrease the opacity for QB line on the chart that is not Tom Brady or Patrick Mahomes. This approach allows for a more direct view of the battle between the two, especially through weeks 9 and 12.
+```{r offense-personnel-isue, eval = TRUE, echo = TRUE, output = TRUE}
 
-As mentioned, there are several influences that can dictate the total number of completions that a quarterback makes. To highlight this, we can add an additional variable to compare against total completions - in this case, air yards.
-
-### Total Completions vs. Air Yards
-
-To start, lets load in the data:
-
-```{r completions_airyards_data, include = TRUE, output = FALSE}
-
-completed_passes <- readr::read_csv("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completions_airyards.csv")
-
+oline_participation %>%
+  group_by(offense_personnel) %>%
+  summarize(total = n())
 ```
 
-```{r completed-passes-vs-air-yards, echo = TRUE}
+Of concern are rows 10 through 14. In 15 different cases, a team ran its first play of the game with six offensive linemen. And, in one case, the resulting data indicates that the Dallas Cowboys ran their first play in week 5 against the LA Rams with seven offensive linemen, one punter, one long snapper, and a kicker.
 
-completions_airyards <- completions_airyards %>%
-  group_by(passer_player_id) %>%
-  filter(complete_pass == 1, !is.na(down)) %>%
-  summarize(name = passer_player_name,
-            posteam = last(posteam),
-            completions = sum(complete_pass == 1, na.rm = TRUE),
-            total_airyards = sum(air_yards, na.rm = TRUE),
-            mean_airyards = total_airyards / completions) %>%
-  distinct(passer_player_id, .keep_all = TRUE) %>%
-  filter(completions >= 149) %>%
-  left_join(teams_colors_logos, by = c("posteam" = "team_abbr"))
+In the first case, the data is correct that the teams ran their first offensive play with six offensive linemen. For example, in its week 3 game against the Steelers, the data indicates the Cleveland Browns as having started Jack Conklin (tackle), Jedrick Wills Jr. (tackle), Joel Bitonio (guard), Michael Dunn (guard), Wyatt Teller (guard), and Ethan Pocic (center). A view of the NFL's All-22 film confirms that, indeed, all six offensive linemen were on the field for the Browns' first snap of the game.
+
+![Steelers vs. Browns: 6 Offensive Linemen](images/all-22-screenshot.jpg)
+
+In the second case, Dallas' offense personnel on its "first play" from scrimmage is the result of the Cowboys returning a fumble for a touchdown on the Rams' first offensive possession with a botched snap on the ensuing extra point attempt. Because of that, the extra point attempt is no longer scored as an `extra_point` in the `play_type` variable within the play-by-play data, but a rushing attempt. As a result of this oddity, the data is correct in listing Dallas' first offensive play as coming out of an extra point personnel grouping.
+
+Both of these examples are problematic as a team's "starting offensive line" is considered to be just five players: the left tackle, the left guard, the center, the right guard, and the right tackle. In order to correctly determine the number of combinations used, we need to first determine the five most-commonly used offensive linemen for each team. Because of the off-the-wall situations that can occur in football, building offensive line combinations through personnel groupings in the play-by--play data is tricky, at best.
+
+Because of this, we can turn to the `load_snap_counts` function with the `nflreadr` package to determine the number of unique offensive line combinations. The process to do so occurs over several steps and involves decision-making on our end on how best to accurately represent the five core offensive linemen for each team.
+
+```{r oline-combos-snap-counts, eval = TRUE, echo = TRUE, output = FALSE}
+
+oline_snap_counts <- nflreadr::load_snap_counts(seasons = 2022)
+
+oline_snap_counts <- oline_snap_counts %>%
+  select(game_id, week, player, position, team, offense_pct) %>%
+  filter(position %in% c("T", "G", "C")) %>%
+  group_by(game_id, team) %>%
+  arrange(-offense_pct) %>%
+  slice(1:5) %>%
+  ungroup()
 ```
 
-stuff here then graph
+First, we obtain snap count data from the 2022 season and write it into a dateframe titled `oline_snap_counts`. After, we select just the necessary columns and then filter out the `position` information to include only tackles, guards, and centers. After grouping each individual offensive line by `game_id` and its respective `team`, we arrange each player's snap count in descending order using `offense_pct`.
 
-```{r completed-passes-vs-air-yards-graph, echo = TRUE, eval = FALSE}
+And this is where a decision needs to be made on how to best construct the five starting offensive linemen for each team. By including `slice(1:5)`, we are essentially selecting *just* the five offensive linemen with the most snap counts in that singular game.
 
-ggplot(data = completions_airyards, aes(x = completions, y = mean_airyards)) +
-  geom_point(color = completions_airyards$team_color, size = 3.5) +
-  geom_smooth(method = "lm", se = FALSE, size = 1.5) +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
-  theme(aspect.ratio = 9/16) +
-  theme_bw() +
-  theme(
-    panel.background = element_rect(fill = "#FFFFFF"),
-    plot.background = element_rect(fill = "#FFFFFF"),
-    panel.border = element_rect(color = "#FFFFFF"),
-    panel.grid.major = element_line(color = "#F3F3F3", size = .75),
-    axis.text.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.text.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.ticks = element_blank()) +
-  geom_text_repel(aes(label = name), family = "Roboto Condensed") +
-  geom_hline(yintercept = mean(completions_airyards$mean_airyards), size = .8,
-             color = "black", linetype = "dashed") +
-  geom_vline(xintercept = mean(completions_airyards$completions), size = .8,
-             color = "black", linetype = "dashed") +
-  ylab("Mean Air Yards") +
-  xlab("Total Completions") +
-  labs(title = "Total Completions vs. Air Yards: 2021 Season")
+Are these five plays necessarily the same five that started the game as the two tackles, two guards, and one center? Perhaps not. But, hypothetically, a team's starting center could have been injured a series or two in the game and the second-string center played the bulk of the snaps in that game.
+
+Because of such situations, we can make the argument that the five offensive line players with the highest percentage of snap counts for each unique `game_id` are to be considered the combination of players used in that game.
+
+Next, let's make the decision to arrange each team's offensive line, by game, in alphabetical order. Since we do not have a reliable way to include *specific* offensive line positions (that is, we have tackle instead of left tackle or right tackle), we can build our combination numbers strictly based on the five downed linemen, regardless of specific position on the line of scrimmage.
+
+After, we use the `toString` function to place all five names into a single column (`starting_line`) and then filter out the data to include just one `game_id` for the linemen.
+
+```{r oline-combos-snap-alphabetical-to-end, eval = TRUE, echo = TRUE, output = FALSE}
+
+oline_snap_counts <- oline_snap_counts %>%
+  group_by(game_id, team) %>%
+  arrange(player, .by_group = TRUE)
+
+oline_final_data <- oline_snap_counts %>%
+  group_by(game_id, week, team) %>%
+  mutate(starting_line = toString(player)) %>%
+  select(game_id, week, team, starting_line) %>%
+  distinct(game_id, .keep_all = TRUE)
 ```
 
-![](_book/images/completed-passes-air-yards.png){fig-align="center"}
+The end result includes the `game_id`, the `week`, the `team` abbreviation, and the `starting_line` column that includes the names of the five offensive line players with the highest snap count percentage for that specific game.
 
-By adding a regression line to the plot using the `geom_smooth` function with the `method` set to "lm", we can see that there is a slight correlation between those quarterbacks with higher number of total completions and a lower average air yards. However, it is also reasonable to assume that both Justin Fields and Andy Dalton, as outliers, are skewing the results of the regression. Perhaps removing them from the data frame will provide a more realistic view of the relationship between total completions and average air yards.
+```{r oline-combos-finished-out, eval = TRUE, echo = FALSE, output = TRUE}
 
-```{r correlation-removing-adalton-jfields, echo = TRUE, eval = TRUE}
-
-completions_airyards <- completions_airyards %>%
-  filter(name != "J.Fields" & name != "A.Dalton")
-  
-ggplot(data = completions_airyards, aes(x = completions, y = mean_airyards)) +
-  geom_point(color = completions_airyards$team_color, size = 3.5) +
-  geom_smooth(method = "lm", se = FALSE, size = 1.5) +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
-  theme(aspect.ratio = 9/16) +
-  theme_bw() +
-  theme(
-    panel.background = element_rect(fill = "#FFFFFF"),
-    plot.background = element_rect(fill = "#FFFFFF"),
-    panel.border = element_rect(color = "#FFFFFF"),
-    panel.grid.major = element_line(color = "#F3F3F3", size = .75),
-    axis.text.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.text.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.y = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.title.x = element_text(size = 11, color = "#535353", family = "Roboto Condensed"),
-    axis.ticks = element_blank()) +
-  geom_text_repel(aes(label = name), family = "Roboto Condensed") +
-  geom_hline(yintercept = mean(completions_airyards$mean_airyards), size = .8,
-             color = "black", linetype = "dashed") +
-  geom_vline(xintercept = mean(completions_airyards$completions), size = .8,
-             color = "black", linetype = "dashed") +
-  ylab("Mean Air Yards") +
-  xlab("Total Completions") +
-  labs(title = "Total Completions vs. Air Yards: 2021 Season")
+head(oline_final_data)
 ```
+
+\
+

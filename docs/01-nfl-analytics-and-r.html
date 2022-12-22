@@ -230,6 +230,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <a href="#nfl-completion-leaders" id="toc-nfl-completion-leaders" class="nav-link" data-scroll-target="#nfl-completion-leaders"> <span class="header-section-number">2.2</span> 2021 NFL Completion Leaders</a>
   <ul class="collapse">
 <li><a href="#week-by-week-completed-passes" id="toc-week-by-week-completed-passes" class="nav-link" data-scroll-target="#week-by-week-completed-passes"> <span class="header-section-number">2.2.1</span> Week-by-Week Completed Passes</a></li>
+  <li><a href="#total-completions-vs.-air-yards" id="toc-total-completions-vs.-air-yards" class="nav-link" data-scroll-target="#total-completions-vs.-air-yards"> <span class="header-section-number">2.2.2</span> Total Completions vs.&nbsp;Air Yards</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -302,7 +303,7 @@ Note
 </div>
 <section id="week-by-week-completed-passes" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="week-by-week-completed-passes">
 <span class="header-section-number">2.2.1</span> Week-by-Week Completed Passes</h3>
-<p>Was Tom Brady near the top of the completion leader board throughout the 2021 NFL season? Or did he perhaps jump at the leader board with an above-average number of completions in the final weeks of the season?</p>
+<p>Was Tom Brady near the top of the completion leader board throughout the 2021 NFL season? Or did he perhaps jump atop the leader board with an above-average number of completions in the final weeks of the season?</p>
 <p>To answer this question, we can create a week-by-week graph after doing several basic manipulations to the data. First, the code:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">week_by_week</span> <span class="op">&lt;-</span> <span class="va">completed_passes</span> <span class="op">%&gt;%</span>
@@ -320,16 +321,36 @@ Note
 </div>
 </div>
 <p>There are several things going on in the above example.</p>
-<p>First, we are using the <code>filter</code> function from <code>dplyr</code> to calculate completed passes from just the regular season. In order to calculate for each individual quarterback, we are using the <code>group_by</code> function to lump all distinct <code>player_id</code> together. Afterwards, we are creating a new column within the data with <code>mutate</code> titled <code>all_completions</code> which is the sum of all complete passes for each quarterback. This is done in order to efficiently use the <code>filter</code> function to limit the results to just the top ten quarterbacks by total completions. Lastly, we use the <code>summarize</code> function to distill the data down to four columns. Of importance is the <code>total_completions</code> column we create using the <code>cumsum</code> function, which adds each QB’s completions week-by-week for a running total. After, we grab the <code>week</code>, <code>name</code>, and <code>posteam</code> columns for the purposes of data visualization.</p>
-<p>You can see the first ten rows of the data by simply typing the name of the dataframe and running it: <code>week_by_week</code>.</p>
-<p>With the data manipulation complete, let’s take the information and visualize it by cumulative completions by week for each quarterback. But, first, to allow for differentiation, lets bring in team colors into the dataframe using the <code>team_colors_logos</code> function within the <code>nflfastR</code> package:</p>
+<p>First, we are using the <code>filter</code> function from <code>dplyr</code> to calculate completed passes from just the regular season. In order to calculate for each individual quarterback, we are using the <code>group_by</code> function to lump all distinct <code>player_id</code> together. Afterwards, we are creating a new column within the data frame using the <code>mutate</code> function and titling it <code>all_completions</code> which is the sum of all complete passes for each quarterback. This is done in order to efficiently use the <code>filter</code> function to limit the results to just the top ten quarterbacks by total completions. Lastly, we use the <code>summarize</code> function to distill the data down to four columns. Of importance is the <code>total_completions</code> column we create using the <code>cumsum</code> function (ie., cumulative total), which adds each QB’s completions week-by-week for a running total. After, we grab the <code>week</code>, <code>name</code>, and <code>posteam</code> columns for the purposes of data visualization.</p>
+<p>You can see the first ten rows of the data by simply typing the name of the data frame and running it:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">week_by_week</span> <span class="op">&lt;-</span> <span class="va">week_by_week</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">week_by_week</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 167 x 5
+# Groups:   player_id [10]
+   player_id  total_completions  week name      posteam
+   &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;  
+ 1 00-0019596                32     1 Tom Brady TB     
+ 2 00-0019596                56     2 Tom Brady TB     
+ 3 00-0019596                97     3 Tom Brady TB     
+ 4 00-0019596               119     4 Tom Brady TB     
+ 5 00-0019596               149     5 Tom Brady TB     
+ 6 00-0019596               183     6 Tom Brady TB     
+ 7 00-0019596               203     7 Tom Brady TB     
+ 8 00-0019596               231     8 Tom Brady TB     
+ 9 00-0019596               254    10 Tom Brady TB     
+10 00-0019596               284    11 Tom Brady TB     
+# ... with 157 more rows</code></pre>
+</div>
+</div>
+<p>With the data manipulation complete, let’s take the information and visualize it by cumulative completions by week for each quarterback. But, first, to allow for differentiation, lets bring in team colors into the data frame using the <code>team_colors_logos</code> function within the <code>nflfastR</code> package:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">week_by_week</span> <span class="op">&lt;-</span> <span class="va">week_by_week</span> <span class="op">%&gt;%</span>
   <span class="fu">left_join</span><span class="op">(</span><span class="fu">nflfastR</span><span class="fu">::</span><span class="va"><a href="https://www.nflfastr.com/reference/teams_colors_logos.html">teams_colors_logos</a></span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"posteam"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>By matching up the <code>team_abbr</code> listed within <code>teams_colors_logos</code> to the <code>posteam</code> in our dataframe, we are able to match each quarterback to their respective team colors, logos, and more. With that completed, we can turn to completing the data visualization:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">week_by_week</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">total_completions</span>, group <span class="op">=</span> <span class="va">player_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">week_by_week</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">total_completions</span>, group <span class="op">=</span> <span class="va">player_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>color <span class="op">=</span> <span class="va">week_by_week</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">week_by_week</span><span class="op">$</span><span class="va">team_color2</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">18</span>,<span class="fl">1</span><span class="op">)</span>,
@@ -359,6 +380,135 @@ Note
 <figure class="figure"><p><img src="_book/images/cumulative-completions.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">2021 Cumulative Completions</figcaption><p></p>
 </figure>
+</div>
+<p>It is clear that Tom Brady and Patrick Mahomes started pulling ahead of other NFL QBs starting in approximately week seven. The two alternated as the NFL completion leader from week nine until week 12 which, at that point, Brady maintained a steady trajectory while Mahomes fell into a tightly packed race for second place for the remainder of the season.</p>
+<p>While the graph, as is, provides insights to our inquiry it is certainly a bit on the busy side. What if we wanted to highlight <em>just</em> Brady and Mahomes? We can use the same plot we just created, but use the <code>alpha</code> function to control the opacity of the lines.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">week_by_week</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">total_completions</span>, group <span class="op">=</span> <span class="va">player_id</span>,
+                                alpha <span class="op">=</span> <span class="va">player_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"00-0033873"</span>, <span class="st">"00-0019596"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_line</span><span class="op">(</span>color <span class="op">=</span> <span class="va">week_by_week</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_alpha_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">1</span><span class="op">)</span>, guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">week_by_week</span><span class="op">$</span><span class="va">team_color2</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">18</span>,<span class="fl">1</span><span class="op">)</span>,
+                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">9</span> <span class="op">/</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>
+    panel.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    plot.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.border <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#F3F3F3"</span>, size <span class="op">=</span> <span class="fl">.75</span><span class="op">)</span>,
+    axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total Completions"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Week"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cumulative Completions per Week | T.Brady &amp; P.Mahomes Highlighted"</span>,
+       subtitle <span class="op">=</span> <span class="st">"2021 Season"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-nfl-analytics-and-r_files/figure-html/controling-alpha-for-geom-lines-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="_book/images/completed-passes-brady-mahomes.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>By adding <code>alpha</code> to the aesthetics call within <code>ggplot</code>, we are able to decrease the opacity for QB line on the chart that is not Tom Brady or Patrick Mahomes. This approach allows for a more direct view of the battle between the two, especially through weeks 9 and 12.</p>
+<p>As mentioned, there are several influences that can dictate the total number of completions that a quarterback makes. To highlight this, we can add an additional variable to compare against total completions - in this case, air yards.</p>
+</section><section id="total-completions-vs.-air-yards" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="total-completions-vs.-air-yards">
+<span class="header-section-number">2.2.2</span> Total Completions vs.&nbsp;Air Yards</h3>
+<p>To start, lets load in the data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">completed_airyards</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/completions_airyards.csv"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">completed_airyards</span> <span class="op">&lt;-</span> <span class="va">completed_airyards</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_player_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>name <span class="op">=</span> <span class="va">passer_player_name</span>,
+            posteam <span class="op">=</span> <span class="fu">last</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span>,
+            completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            total_airyards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            mean_airyards <span class="op">=</span> <span class="va">total_airyards</span> <span class="op">/</span> <span class="va">completions</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">distinct</span><span class="op">(</span><span class="va">passer_player_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">completions</span> <span class="op">&gt;=</span> <span class="fl">149</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams_colors_logos</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"posteam"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'passer_player_id'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+</div>
+<p>stuff here then graph</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">completed_airyards</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">completions</span>, y <span class="op">=</span> <span class="va">mean_airyards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">completions_airyards</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">9</span><span class="op">/</span><span class="fl">16</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>
+    panel.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    plot.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.border <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#F3F3F3"</span>, size <span class="op">=</span> <span class="fl">.75</span><span class="op">)</span>,
+    axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">completions_airyards</span><span class="op">$</span><span class="va">mean_airyards</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">.8</span>,
+             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">completions_airyards</span><span class="op">$</span><span class="va">completions</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">.8</span>,
+             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Mean Air Yards"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Total Completions"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Total Completions vs. Air Yards: 2021 Season"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="_book/images/completed-passes-air-yards.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>By adding a regression line to the plot using the <code>geom_smooth</code> function with the <code>method</code> set to “lm”, we can see that there is a slight correlation between those quarterbacks with higher number of total completions and a lower average air yards. However, it is also reasonable to assume that both Justin Fields and Andy Dalton, as outliers, are skewing the results of the regression. Perhaps removing them from the data frame will provide a more realistic view of the relationship between total completions and average air yards.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">completed_airyards</span> <span class="op">&lt;-</span> <span class="va">completed_airyards</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">!=</span> <span class="st">"J.Fields"</span> <span class="op">&amp;</span> <span class="va">name</span> <span class="op">!=</span> <span class="st">"A.Dalton"</span><span class="op">)</span>
+  
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">completed_airyards</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">completions</span>, y <span class="op">=</span> <span class="va">mean_airyards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">completed_airyards</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">9</span><span class="op">/</span><span class="fl">16</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>
+    panel.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    plot.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.border <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#FFFFFF"</span><span class="op">)</span>,
+    panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#F3F3F3"</span>, size <span class="op">=</span> <span class="fl">.75</span><span class="op">)</span>,
+    axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, color <span class="op">=</span> <span class="st">"#535353"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span>,
+    axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">name</span><span class="op">)</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">completed_airyards</span><span class="op">$</span><span class="va">mean_airyards</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">.8</span>,
+             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">completed_airyards</span><span class="op">$</span><span class="va">completions</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">.8</span>,
+             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Mean Air Yards"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Total Completions"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Total Completions vs. Air Yards: 2021 Season"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="01-nfl-analytics-and-r_files/figure-html/correlation-removing-adalton-jfields-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 
