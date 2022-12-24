@@ -1,9 +1,13 @@
 # An Introduction to NFL Analytics and the R Programming Language
 
-```{r loading-library, include = FALSE}
+```{r setup-ch1, include = FALSE}
+
+source("R/book-functions.R")
 
 library(tidyverse)
 library(nflverse)
+library(extrafont)
+loadfonts(device="win")
 ```
 
 ## Introduction
@@ -69,7 +73,7 @@ To begin obtaining and preparing the data to determine the number of unique offe
 
 In the end, using `load_snap_counts` created the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation` function resulted in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code will select the first offensive play for each team, in each game, up to week 15 of the 2022 season.
 
-```{r using-participation-function, eval = TRUE, echo = TRUE, output = FALSE}
+```{r using-participation-function, output = FALSE}
 
 participation <- nflreadr::load_participation(2022, include_pbp = TRUE)
 rosters <- nflreadr::load_rosters(2022) %>%
@@ -98,7 +102,7 @@ oline_participation <- oline_participation %>%
 
 While the output using the `load_participation` function is correct, a quick examination of the `offense_personnel` column causes concern about the viability of this approach to calculate the total number of unique offensive line combinations. A grouping and summing of the `offense_personnel` column highlights the issue.
 
-```{r offense-personnel-isue, eval = TRUE, echo = TRUE, output = TRUE}
+```{r offense-personnel-isue, output = TRUE}
 
 oline_participation %>%
   group_by(offense_personnel) %>%
@@ -117,7 +121,7 @@ Both of these examples are problematic as a team's "starting offensive line" is 
 
 Because of this, we can turn to the `load_snap_counts` function with the `nflreadr` package to determine the number of unique offensive line combinations. The process to do so occurs over several steps and involves decision-making on our end on how best to accurately represent the five core offensive linemen for each team.
 
-```{r oline-combos-snap-counts, eval = TRUE, echo = TRUE, output = FALSE}
+```{r oline-combos-snap-counts, output = FALSE}
 
 oline_snap_counts <- nflreadr::load_snap_counts(seasons = 2022)
 
@@ -134,7 +138,7 @@ First, we obtain snap count data from the 2022 season and write it into a datefr
 
 And this is where a decision needs to be made on how to best construct the five starting offensive linemen for each team. By including `slice(1:5)`, we are essentially selecting *just* the five offensive linemen with the most snap counts in that singular game.
 
-Are these five plays necessarily the same five that started the game as the two tackles, two guards, and one center? Perhaps not. But, hypothetically, a team's starting center could have been injured a series or two in the game and the second-string center played the bulk of the snaps in that game.
+Are these five plays necessarily the same five that started the game as the two tackles, two guards, and one center? Perhaps not. But, hypothetically, a team's starting center could have been injured a series or two into the game and the second-string center played the bulk of the snaps in that game.
 
 Because of such situations, we can make the argument that the five offensive line players with the highest percentage of snap counts for each unique `game_id` are to be considered the combination of players used in that game.
 
@@ -142,7 +146,7 @@ Next, let's make the decision to arrange each team's offensive line, by game, in
 
 After, we use the `toString` function to place all five names into a single column (`starting_line`) and then filter out the data to include just one `game_id` for the linemen.
 
-```{r oline-combos-snap-alphabetical-to-end, eval = TRUE, echo = TRUE, output = FALSE}
+```{r oline-combos-snap-alphabetical-to-end, output = FALSE}
 
 oline_snap_counts <- oline_snap_counts %>%
   group_by(game_id, team) %>%
@@ -157,10 +161,152 @@ oline_final_data <- oline_snap_counts %>%
 
 The end result includes the `game_id`, the `week`, the `team` abbreviation, and the `starting_line` column that includes the names of the five offensive line players with the highest snap count percentage for that specific game.
 
-```{r oline-combos-finished-out, eval = TRUE, echo = FALSE, output = TRUE}
+```{r oline-combos-finished-out, echo = TRUE, output = TRUE}
 
 head(oline_final_data)
 ```
 
-\
+With the data cleaned and prepared, we are now able to take our first look at the results. In the code below, we are grouping by all 32 NFL team and then summarizing the total number of unique offensive line combinations used through the first 15 weeks of the 2022 season.
 
+```{r oline-combos-results, output = TRUE}
+
+total_combos <- oline_final_data %>%
+  group_by(team) %>%
+  summarize(combos = n_distinct(starting_line)) %>%
+  arrange(-combos)
+```
+
+Despite much of the media focus being on the Rams' poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals have just as many unique offensive line combinations nearing the end of the 2022 season. It makes sense, then, that both teams headed into week 16 of the season with identical 4-10 (.286) records.
+
+With the data cleaned and prepared, let's use it to create a `ggplot` graph and, to do so, compare the relationship between a team's number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing `total_combos` dataframe.
+
+To bring in the individual winning percentages, we will use the `get_nfl_standings` function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join`. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs` function in the `nflreadr` package.
+
+```{r add-records-to-combos, output = FALSE}
+
+records <- espnscrapeR::get_nfl_standings(season = 2022) %>%
+  select(team_abb, win_pct)
+
+records$team_abb <- nflreadr::clean_team_abbrs(records$team_abb)
+
+total_combos <- total_combos %>%
+  left_join(records, by = c("team" = "team_abb"))
+```
+
+After collecting team records and merging them into the offensive line combination data, we can use `ggplot` to visualize the data. Individual team logos are used in place of the typical `geom_point` by using the `nflplotR` package.
+
+```{r rendering-ggplot-theme, echo = FALSE, output = FALSE}
+
+nfl_analytics_theme <- function(..., base_size = 12) {
+  
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major =  element_line(color = "#d0d0d0"),
+    panel.background = element_rect(fill = "#f7f7f7", color = NA),
+    plot.background = element_rect(fill = "#f7f7f7", color = NA),
+    panel.border = element_blank(),
+    strip.background = element_blank(),
+    plot.margin = margin(0, 1, 0.5, unit = "cm"),
+    axis.ticks = element_blank(),
+    text = element_text(family = "Roboto Condensed", size = base_size),
+    axis.text = element_text(face = "bold", color = "black", size = base_size),
+    axis.title = element_text(face = "bold", size = rel(1.1)),
+    axis.title.x = element_text(margin = margin(0.5, 0, 0, 0, unit = "cm"), size = 11),
+    axis.title.y = element_text(margin = margin(0, 0.2, 0, 0, unit = "cm"), size = 11, angle =90),
+    plot.title = element_text(face = "bold", size = rel(1.67), hjust = .1, vjust = -2),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(size = 16, margin = margin(0.2, 0, 1, 0, unit = "cm"), hjust = .01, vjust = -1),
+    plot.caption = element_text(size = 10, margin = margin(0, 0, 0, 0, unit = "cm"), hjust = 0),
+    strip.text = element_text(size = rel(1.33), face = "bold"),
+    aspect.ratio = 9/16,
+    ...
+  )
+}
+
+```
+
+::: callout-important
+Please note in the below `ggplot` coding that we are using a custom theme, `nfl_analytics_theme()`. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`.
+
+If you do not have the "Roboto Condensed" font installed, `ggplot` will give an error message but ultimately replace it with another font on your system. If you wish to install "Roboto Condensed," you can do so with the `showtext` package.
+:::
+
+```{r theme-code, eval = FALSE}
+
+nfl_analytics_theme <- function(..., base_size = 12) {
+  
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major =  element_line(color = "#d0d0d0"),
+    panel.background = element_rect(fill = "#f7f7f7", color = NA),
+    plot.background = element_rect(fill = "#f7f7f7", color = NA),
+    panel.border = element_blank(),
+    strip.background = element_blank(),
+    plot.margin = margin(0, 1, 0.5, unit = "cm"),
+    axis.ticks = element_blank(),
+    text = element_text(family = "Roboto Condensed", size = base_size),
+    axis.text = element_text(face = "bold", color = "black", size = base_size),
+    axis.title = element_text(face = "bold", size = rel(1.1)),
+    axis.title.x = element_text(margin = margin(0.5, 0, 0, 0, unit = "cm"), size = 11),
+    axis.title.y = element_text(margin = margin(0, 0.2, 0, 0, unit = "cm"), size = 11, angle =90),
+    plot.title = element_text(face = "bold", size = rel(1.67), hjust = .1, vjust = -2),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(size = 16, margin = margin(0.2, 0, 1, 0, unit = "cm"), hjust = .01, vjust = -1),
+    plot.caption = element_text(size = 10, margin = margin(0, 0, 0, 0, unit = "cm"), hjust = 0),
+    strip.text = element_text(size = rel(1.33), face = "bold"),
+    aspect.ratio = 9/16,
+    ...
+  )}
+
+```
+
+```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 300}
+
+ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
+  geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065, alpha = 0.7) +
+  scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
+                     labels = scales::label_number(accuracy = 0.001)) +
+  nfl_analytics_theme() +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Win Percentage") +
+  labs(title = "# of Unique Offensive Line Combinations vs. Win Percentage",
+       subtitle = "Through Week #15")
+```
+
+As can be seen in the resulting graph - despite a slight correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
+
+To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly "gel."\
+
+Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from `nflverse` data and retrieve the information from the [SIS Data Hub](https://pro.sisdatahub.com/). After downloading the spreadsheet, we can read it into the RStudio environment using `vroom` and then merge the information into our existing `total_combos` by matching on the individual team abbreviations.
+
+```{r pressure-rate, output = FALSE}
+
+pressure_rate <- vroom::vroom("./example_data/csv/ch1_pressurerate.csv")
+
+total_combos <- total_combos %>%
+  left_join(pressure_rate, by = c("team" = "team_abbr"))
+```
+
+```{r show-pressure-rate, echo = FALSE}
+
+head(pressure_rate)
+```
+
+With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior `ggplot` code to examine any potential relationship.
+
+```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 300}
+
+ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
+  geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065, alpha = 0.7) +
+  scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
+                     labels = scales::percent_format(scale = 1, accuracy = 0.1)) +
+  nfl_analytics_theme() +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Pressure Rate (per Dropback)") +
+  labs(title = "# of Unique Offensive Line Combinations vs. Pressure Rate",
+       subtitle = "Through Week #15")
+```
