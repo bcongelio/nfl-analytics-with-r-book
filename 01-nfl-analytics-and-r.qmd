@@ -310,3 +310,54 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   labs(title = "# of Unique Offensive Line Combinations vs. Pressure Rate",
        subtitle = "Through Week #15")
 ```
+
+fffffffffffffffffffffffffffff
+
+```{r placeholding-next-example, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022)
+
+explosive <- pbp %>%
+  filter(!is.na(posteam) & !is.na(yards_gained) & fixed_drive_result == "Touchdown") %>%
+  filter(play_type != "kickoff" & play_type != "extra_point" & !is.na(down)) %>%
+  select(posteam, game_id, drive, yards_gained)
+  
+explosive_per_td <- explosive %>%
+  group_by(posteam, game_id, drive) %>%
+  summarize(max_yards = max(yards_gained)) %>%
+  mutate(explosive_play = if_else(max_yards >= 20, 1, 0))
+
+explosive_final <- explosive_per_td %>%
+  group_by(posteam) %>%
+  summarize(
+    tds_no_explosive = sum(explosive_play == 0),
+    tds_explosive = sum(explosive_play == 1)
+  )
+
+total_drives_calc <- pbp %>%
+  group_by(posteam, week) %>%
+  filter(!is.na(posteam) & fixed_drive_result == "Touchdown") %>%
+  summarize(total_drives = n_distinct(fixed_drive))
+
+total_drives_calc <- total_drives_calc %>%
+  group_by(posteam) %>%
+  summarize(total_drives = sum(total_drives))
+
+explosive_final <- explosive_final %>%
+  left_join(total_drives_calc, by = c("posteam" = "posteam")) %>%
+  mutate(percent_no_exp = tds_no_explosive / total_drives,
+         percent_w_exp = tds_explosive / total_drives) %>%
+  select(posteam, percent_no_exp, percent_w_exp)
+
+ggplot(testing, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
+  ggplot2::geom_col(aes(color = posteam, fill = posteam), width = 0.5) +
+  nflplotR::scale_color_nfl(type = "secondary") +
+  nflplotR::scale_fill_nfl(alpha = 0.4) +
+  nfl_analytics_theme() +
+  theme(axis.text.y = element_nfl_logo(size = .65)) +
+  scale_x_continuous(expand = c(0,0),
+                     breaks = scales::pretty_breaks(),
+                     label = scales::percent_format()) +
+  xlab("Percent of TD Drives with an Explosive Play (20+ Yards)") +
+  ylab("")
+```

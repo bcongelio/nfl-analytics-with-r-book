@@ -7,7 +7,6 @@ nfl_analytics_theme <- function(..., base_size = 12) {
     plot.background = element_rect(fill = "#f7f7f7", color = NA),
     panel.border = element_blank(),
     strip.background = element_blank(),
-    plot.margin = margin(0, 1, 0.5, unit = "cm"),
     axis.ticks = element_blank(),
     text = element_text(family = "Roboto Condensed", size = base_size),
     axis.text = element_text(face = "bold", color = "black", size = base_size),

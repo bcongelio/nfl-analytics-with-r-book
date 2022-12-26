@@ -328,4 +328,4 @@ tibble(average.airyards)
 
 Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
-## Working with the `nflverse` Roster Information
+## Working with the Various `nflverse` Functions

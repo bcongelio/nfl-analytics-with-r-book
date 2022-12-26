@@ -1,0 +1,269 @@
+# Advanced Methods: Modeling and Big Data Bowl
+
+```{r setup-ch5, include = FALSE}
+
+source("R/book-functions.R")
+
+library(tidyverse)
+library(nflverse)
+library(arrow)
+```
+
+lots of place holding for Big Data Bowl material below
+
+Thomas Bliss, a Data Scientist with the NFL, [provided an incredibly helpful list of potential topics](https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/discussion/365497) that can be explored using 2023 Big Data Bowl information:
+
+1.  analyze blocker positioning after the QB leaves the pocket and/or is pressured
+2.  analyze blocker ability to hold a defender in place without moving towards the QB
+3.  link the rate of false starts to an offensive line's time off the snap
+4.  link between QB release time, receiver separation, and offensive line performance
+
+```{r bdb-reading-writing-data, eval = FALSE}
+
+### reading all weeks and writing to a parquet file
+all_bdb_weeks <- function(dir = file.path('core-data')) {
+  paths <- fs::dir_ls(dir, regexp = 'week\\d+')
+  all_weeks <-
+    paths %>%
+    purrr::map_df(vroom::vroom) %>%
+    janitor::clean_names() %>%
+    arrow::write_parquet(file.path('core-data', 'data.parquet'))
+}
+
+all_bdb_weeks()
+
+### reading in all play information provided and writing to a parquet file
+read_bdb_plays <- memoise::memoise({function() {
+  plays <- file.path('core-data', 'plays.csv') %>%
+    readr::read_csv() %>%
+    janitor::clean_names() %>%
+    arrow::write_parquet(file.path('core-data', 'plays.parquet'))
+}})
+
+read_bdb_plays()
+
+### reading in individual game information and writing to a parquet file
+read_game_info <- memoise::memoise({function() {
+  file.path('core-data', 'games.csv') %>%
+    readr::read_csv() %>%
+    janitor::clean_names() %>%
+    dplyr::mutate(dplyr::across(game_date = lubridate::mdy)) %>%
+    arrow::write_parquet(file.path('core-data', 'games.parquet'))
+}})
+
+### creating an individual .cvs file for each game in bdb
+all.weeks <- read_parquet("./core-data/large-lfs-files/all-weeks-parquet")
+
+all.weeks %>%
+  group_by(game_id) %>%
+  group_walk(~ write_csv(.x, paste0('tracking_gameId_', .y$game_id, ".csv")))
+
+### writing in team colors, logos
+team.colors <- nflfastR::teams_colors_logos %>%
+  select(team_abbr, team_color, team_color2, team_logo_espn)
+```
+
+fffff
+
+```{r roating-dots-function, eval = FALSE}
+
+rotate_the_dots <- function(df) {
+  
+  if(!"play_direction" %in% names(df)) {
+    message("Cannot find play directions. Inferring from offense and defense locations at snap.")
+    
+    df <- df %>%
+      filter(event == "ball_snap", team != "football") %>%
+      group_by(game_id, play_id, defensive_team) %>%
+      summarize(mean_x = mean(x, na.rm = T)) %>%
+      pivot_wider(names_from = defensive_team, values_from = mean_x, names_prefix = "x_") %>%
+      ungroup() %>%
+      mutate(
+        play_direction = 
+          ifelse(
+            x_1 > x_0,
+            "right",
+            "left") %>%
+          select(game_id, play_id, play_direction) %>%
+          inner_join(df, by = c("game_id", "play_id")))
+        
+  }
+  
+  df <- df %>%
+    mutate(
+      to_left = ifelse(play_direction == "left", 1, 0),
+      x = ifelse(to_left == 1, 120 - x, x),
+      y = ifelse(to_left == 1, 160 / 3 - y, y),
+      los_x = 100 - absolute_yardline_number,
+      dist_from_los = x - los_x)
+  
+  if ("o" %in% names(df)) {
+    df <- df %>%
+      mutate(
+        o = ifelse(to_left == 1, o + 180, o),
+        o = ifelse(o > 360, 0 - 360, o),
+        o_rad = pi * (o / 180),
+        o_x = ifelse(is.na(o), NA_real_, sin(o_rad)),
+        o_y = ifelse(is.na(o), NA_real_, cos(o_rad)))
+  }
+  
+  if ("dir" %in% names(df)) {
+    df <- df %>%
+      mutate(
+        dir = ifelse(to_left == 1, dir + 180, dir),
+        dir = ifelse(dir > 360, dir - 360, dir),
+        dir_rad = pi * (dir / 180),
+        dir_x = ifelse(is.na(dir), NA_real_, sin(dir_rad)),
+        dir_y = ifelse(is.na(dir), NA_real_, cos(dir_rad)),
+        s_x = dir_x * s,
+        s_y = dir_y * s,
+        a_x = dir_x * a,
+        a_y = dir_y * a)
+  }
+  
+  return(df)
+}
+
+```
+
+ffff
+
+```{r finding-orientation-difference, eval = FALSE}
+
+find_o_diff <- function(df, prefix = "qb") {
+  
+  name_x <- sym(paste0(prefix, "_x"))
+  name_y <- sym(paste0(prefix, "_y"))
+  
+  new_column <- paste0("o_to_", prefix)
+  
+  df <- df %>%
+    mutate(
+      dis_x = {{name_x}} - x,
+      dis_y = {{name_y}} - y,
+      
+      tmp = atan2(dis_y, dis_x) * (180 / pi),
+      tmp = (360 - tmp) + 90,
+      tmp = case_when(tmp < 0 ~ tmp + 360,
+                      tmp > 360 ~ tmp - 360,
+                      TRUE ~ tmp),
+      
+      diff = abs(o - tmp),
+      
+      diff = abs(o - tmp),
+      
+      !!new_column := pmin(360 - diff, diff)) %>%
+        select(-diff, -tmp)
+      
+    return(df)
+}
+
+```
+
+```{r building-convex-hulls, eval = FALSE}
+
+########
+## READING IN PITTSBURGH VS. BUFFALO - WEEK 1
+########
+
+pitt.buff <- arrow::read_parquet("core-data/large-lfs-files/all-weeks-parquet") %>%
+  filter(game_id == "2021091201")
+
+########
+## READING IN PLAYS FROM PITTSBURGH VS. BUFFALO - WEEK 1
+########
+
+pitt.buff.plays <- readr::read_csv("core-data/plays.csv") %>%
+  janitor::clean_names() %>%
+  filter(game_id == "2021091201")
+
+########
+## READING IN GAME INFO FROM PITTSBURGH VS. BUFFALO - WEEK 1
+########
+
+pitt.buff.info <- readr::read_csv("core-data/games.csv") %>%
+  janitor::clean_names() %>%
+  filter(game_id == "2021091201")
+
+########
+## COMBING CORE GAME FILE WITH PLAYS, AND THEN BY INFO (TO AVOID MULTIPLE GAME_IDs IN DF)
+########
+
+complete.data <- inner_join(pitt.buff, pitt.buff.plays, by = c("game_id" = "game_id", "play_id" = "play_id"))
+
+complete.data <- complete.data %>%
+  inner_join(pitt.buff.info, by = c("game_id" = "game_id"))
+
+### ROTATING THE DOTS
+complete.data <- rotate_the_dots(complete.data)
+
+########
+## MUTATING TO CHARACTER VARIABLE DEFINING WHETHER TEAM IN FRAMES IS ON OFFENSE OR DEFENSE
+########
+
+complete.data <- complete.data %>%
+  mutate(off_or_def = case_when(
+    team == possession_team ~ "offense",
+    team != possession_team ~ "defense",
+    TRUE ~ "football"))
+
+            ########
+            ## CORE CLEANING AND PREP IS COMPLETE
+            ########
+
+########
+## ADDING IN INFORMATION FROM PLAYERS.CSV TO BUILD CHULLs FOR JUST O-LINE
+########
+
+player.info <- readr::read_csv("core-data/players.csv") %>%
+  janitor::clean_names() %>%
+  select(nfl_id, official_position, display_name)
+
+complete.data <- complete.data %>%
+  inner_join(player.info, by = c("nfl_id" = "nfl_id"))
+
+########
+## LET'S PICK OUT A FUN PLAY TO WORK WITH
+########
+
+one.play <- complete.data %>%  ### BEN PASS TO EBRON FOR 19 YARDS
+  filter(play_id == 2209)
+
+########
+## NOW LET'S BUILD A CONVEX HULL FOR JUST THE OFFENSIVE LINE
+########
+
+ol_chull_order <- one.play %>%
+  filter(off_or_def == "offense") %>%
+  filter(official_position %in% c("T", "C", "G")) %>%  #### IMPORTANT TO KNOW PERSONNEL PACKAGE HERE: 0 RB, 0 TE, 5 WR
+  select(frame_id, x, y) %>%
+  chull
+
+ol_chull_order <- c(ol_chull_order, ol_chull_order[1])
+
+ol_chull_coords <- one.play %>%
+  filter(off_or_def == "offense") %>%
+  select(frame_id, x, y) %>%
+  slice(ol_chull_order)
+
+ol_chull_poly <- sp::Polygon(ol_chull_coords, hole = F)
+ol_chull_area <- ol_chull_poly@area
+
+########
+## NOW LET'S PLOT IT
+########
+
+one.play %>%
+  the_dots(
+    animated = TRUE,
+    orientation = FALSE,
+    convex = TRUE,
+    segment_length = 6,
+    segment_size = 3,
+    dot_size = 4,
+    animated_h = 4,
+    animated_w = 8,
+    animated_res = 150
+  )
+
+```
