@@ -1,7 +1,87 @@
 # Wrangling NFL Data in the `tidyverse`
 
+```{r setup-ch2, include = FALSE}
+
+source("R/book-functions.R")
+
+library(tidyverse)
+library(nflverse)
+```
+
 ## Downloading R and RStudio
 
 ## Installing Necessary Packages
 
-## The `tidyverse` Language
+## The `tidyverse` and Its Verbs
+
+The `tidyverse` is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at RStudio, and a varied team of contributors. The goal of the `tidyverse` is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.
+
+The core principle of the `tidyverse` is "tidy data," which is the development team's belief in creating a standard way of organizing data sets so that they can be easily manipulated, visualized, and analyzed. To that end, a "tidy" data set is one that is comprised of observations (rows) and variables (columns) with each variable being a distinct piece of information and each observation being a unit of analysis.
+
+Installing and loading the `tidyverse` results eight of the core packages automatically being loaded and ready to use:
+
+1.  **dplyr:** "dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges."
+2.  **tidyr:** "tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable."
+3.  **readr:** "readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes."
+4.  **purrr:** "purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive."
+5.  **tibble**: "tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code."
+6.  **stringr:** "stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations."
+7.  **forcats:** "forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values."
+8.  **ggplot2:** "ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details" [@tidyverse].
+
+Aside from the core eight packages, the `tidyverse` will also install a multiple of other packages such as `rvest` (for web scraping), `readxl` (for reading Excel sheets in the RStudio environment), `lubridate` (a very powerful tool for working with times and dates), and `magrittr` (the package that provides the pipe `%>%`). As well, prior versions of the `tidyverse` utilized the `modelr`. Modeling is now handled in the `tidyverse` by the `tidymodels` package.
+
+## Working With NFL Data and the `dplyr` Verbs
+
+Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, `dplyr` is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to user and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four `dplyr` verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.
+
+1.  `filter`: the `filter` verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
+2.  `group_by`: the `group_by()` verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.
+3.  `select`: the `select()` verb allows you to choose which columns to include in a data set. You can use `select()` to keep, or exclude, only certain columns. You can also use `select()` to rearrange the columns in a data set, specifying the columns in the order that you want them to appear. As well, you can also use `select()` to select columns based on other criteria. For example, you can use the `starts_with()` function to select all columns that start with a certain string, or the `ends_with()` function to select all columns that end with a certain string.
+4.  `summarize`: the `summarize()` verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
+
+### NFL Data and the `filter()` verb
+
+ffffff
+
+<center>
+
+| Logical Operator |          Meaning          |
+|:----------------:|:-------------------------:|
+|       `==`       |         equal to          |
+|       `!=`       |       not equal to        |
+|       `<`        |         less than         |
+|       `<=`       |   less than or equal to   |
+|       `>`        |       greater than        |
+|       `>=`       | greater than or equal to  |
+|       `!`        |            not            |
+|       `&`        |            and            |
+|       `|`        |            or             |
+|      `%in%`      |         includes          |
+|     `is.na`      | checks for missing values |
+
+</center>
+
+### NFL Data and the `group_by()` verb
+
+### NFL Data and the `summarize()` verb
+
+### NFL Data and the `select()` verb
+
+### NFL Data and the `mutate()` verb
+
+## Core Skills for Tidy Data
+
+### Importing Data
+
+### Dealing with Missing Data
+
+### Changing Variable Types
+
+### Creating New Variables
+
+### Summarizing Your Data
+
+### Writing Tidy Functions
+
+### Merging Multiple Sets of Data

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.269">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>An Introduction to NFL Analytics with R - 3&nbsp; Wrangling NFL Data in the tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -40,8 +55,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -59,58 +73,48 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script>
-
-<script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </script>
-
-
 </head>
-
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
+</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
     <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
     <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
             <i class="bi bi-bi-twitter pe-1"></i>
           Twitter
           </a>
         </li>
         <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
             <i class="bi bi-bi-facebook pe-1"></i>
           Facebook
           </a>
         </li>
         <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
             <i class="bi bi-bi-linkedin pe-1"></i>
           LinkedIn
           </a>
@@ -126,7 +130,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
@@ -168,8 +172,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
   </div>
@@ -180,28 +184,45 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"><span class="toc-section-number">3.1</span>  Downloading R and RStudio</a></li>
+<li><a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"><span class="toc-section-number">3.1</span>  Downloading R and RStudio</a></li>
   <li><a href="#installing-necessary-packages" id="toc-installing-necessary-packages" class="nav-link" data-scroll-target="#installing-necessary-packages"><span class="toc-section-number">3.2</span>  Installing Necessary Packages</a></li>
-  <li><a href="#the-tidyverse-language" id="toc-the-tidyverse-language" class="nav-link" data-scroll-target="#the-tidyverse-language"><span class="toc-section-number">3.3</span>  The <code>tidyverse</code> Language</a></li>
+  <li><a href="#the-tidyverse-and-its-verbs" id="toc-the-tidyverse-and-its-verbs" class="nav-link" data-scroll-target="#the-tidyverse-and-its-verbs"><span class="toc-section-number">3.3</span>  The <code>tidyverse</code> and Its Verbs</a></li>
+  <li>
+<a href="#working-with-nfl-data-and-the-dplyr-verbs" id="toc-working-with-nfl-data-and-the-dplyr-verbs" class="nav-link" data-scroll-target="#working-with-nfl-data-and-the-dplyr-verbs"><span class="toc-section-number">3.4</span>  Working With NFL Data and the <code>dplyr</code> Verbs</a>
+  <ul class="collapse">
+<li><a href="#nfl-data-and-the-filter-verb" id="toc-nfl-data-and-the-filter-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-filter-verb"><span class="toc-section-number">3.4.1</span>  NFL Data and the <code>filter()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-group_by-verb" id="toc-nfl-data-and-the-group_by-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-group_by-verb"><span class="toc-section-number">3.4.2</span>  NFL Data and the <code>group_by()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-summarize-verb" id="toc-nfl-data-and-the-summarize-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-summarize-verb"><span class="toc-section-number">3.4.3</span>  NFL Data and the <code>summarize()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-select-verb" id="toc-nfl-data-and-the-select-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-select-verb"><span class="toc-section-number">3.4.4</span>  NFL Data and the <code>select()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="toc-section-number">3.4.5</span>  NFL Data and the <code>mutate()</code> verb</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#core-skills-for-tidy-data" id="toc-core-skills-for-tidy-data" class="nav-link" data-scroll-target="#core-skills-for-tidy-data"><span class="toc-section-number">3.5</span>  Core Skills for Tidy Data</a>
+  <ul class="collapse">
+<li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><span class="toc-section-number">3.5.1</span>  Importing Data</a></li>
+  <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="toc-section-number">3.5.2</span>  Dealing with Missing Data</a></li>
+  <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="toc-section-number">3.5.3</span>  Changing Variable Types</a></li>
+  <li><a href="#creating-new-variables" id="toc-creating-new-variables" class="nav-link" data-scroll-target="#creating-new-variables"><span class="toc-section-number">3.5.4</span>  Creating New Variables</a></li>
+  <li><a href="#summarizing-your-data" id="toc-summarizing-your-data" class="nav-link" data-scroll-target="#summarizing-your-data"><span class="toc-section-number">3.5.5</span>  Summarizing Your Data</a></li>
+  <li><a href="#writing-tidy-functions" id="toc-writing-tidy-functions" class="nav-link" data-scroll-target="#writing-tidy-functions"><span class="toc-section-number">3.5.6</span>  Writing Tidy Functions</a></li>
+  <li><a href="#merging-multiple-sets-of-data" id="toc-merging-multiple-sets-of-data" class="nav-link" data-scroll-target="#merging-multiple-sets-of-data"><span class="toc-section-number">3.5.7</span>  Merging Multiple Sets of Data</a></li>
+  </ul>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
+</h1>
 </div>
 
 
@@ -214,22 +235,136 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header>
+</header><section id="downloading-r-and-rstudio" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="downloading-r-and-rstudio">
+<span class="header-section-number">3.1</span> Downloading R and RStudio</h2>
+</section><section id="installing-necessary-packages" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="installing-necessary-packages">
+<span class="header-section-number">3.2</span> Installing Necessary Packages</h2>
+</section><section id="the-tidyverse-and-its-verbs" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="the-tidyverse-and-its-verbs">
+<span class="header-section-number">3.3</span> The <code>tidyverse</code> and Its Verbs</h2>
+<p>The <code>tidyverse</code> is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at RStudio, and a varied team of contributors. The goal of the <code>tidyverse</code> is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.</p>
+<p>The core principle of the <code>tidyverse</code> is “tidy data,” which is the development team’s belief in creating a standard way of organizing data sets so that they can be easily manipulated, visualized, and analyzed. To that end, a “tidy” data set is one that is comprised of observations (rows) and variables (columns) with each variable being a distinct piece of information and each observation being a unit of analysis.</p>
+<p>Installing and loading the <code>tidyverse</code> results eight of the core packages automatically being loaded and ready to use:</p>
+<ol type="1">
+<li>
+<strong>dplyr:</strong> “dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.”</li>
+<li>
+<strong>tidyr:</strong> “tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable.”</li>
+<li>
+<strong>readr:</strong> “readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.”</li>
+<li>
+<strong>purrr:</strong> “purrr enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive.”</li>
+<li>
+<strong>tibble</strong>: “tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code.”</li>
+<li>
+<strong>stringr:</strong> “stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations.”</li>
+<li>
+<strong>forcats:</strong> “forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values.”</li>
+<li>
+<strong>ggplot2:</strong> “ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details” <span class="citation" data-cites="tidyverse">(<a href="references.html#ref-tidyverse" role="doc-biblioref">Wickham 2022</a>)</span>.</li>
+</ol>
+<p>Aside from the core eight packages, the <code>tidyverse</code> will also install a multiple of other packages such as <code>rvest</code> (for web scraping), <code>readxl</code> (for reading Excel sheets in the RStudio environment), <code>lubridate</code> (a very powerful tool for working with times and dates), and <code>magrittr</code> (the package that provides the pipe <code>%&gt;%</code>). As well, prior versions of the <code>tidyverse</code> utilized the <code>modelr</code>. Modeling is now handled in the <code>tidyverse</code> by the <code>tidymodels</code> package.</p>
+</section><section id="working-with-nfl-data-and-the-dplyr-verbs" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="working-with-nfl-data-and-the-dplyr-verbs">
+<span class="header-section-number">3.4</span> Working With NFL Data and the <code>dplyr</code> Verbs</h2>
+<p>Of the packages nestled within the <code>tidyverse</code>, <code>dplyr</code> is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, <code>dplyr</code> is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to user and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four <code>dplyr</code> verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.</p>
+<ol type="1">
+<li>
+<code>filter</code>: the <code>filter</code> verb allows you to subset data based on certain criteria. For example, you can use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the <code>filter</code> verb can be used in conjunction with logical operators such as <code>&amp;</code> and <code>|</code> to create more complex criteria.</li>
+<li>
+<code>group_by</code>: the <code>group_by()</code> verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.</li>
+<li>
+<code>select</code>: the <code>select()</code> verb allows you to choose which columns to include in a data set. You can use <code>select()</code> to keep, or exclude, only certain columns. You can also use <code>select()</code> to rearrange the columns in a data set, specifying the columns in the order that you want them to appear. As well, you can also use <code>select()</code> to select columns based on other criteria. For example, you can use the <code>starts_with()</code> function to select all columns that start with a certain string, or the <code>ends_with()</code> function to select all columns that end with a certain string.</li>
+<li>
+<code>summarize</code>: the <code>summarize()</code> verb allows you to reduce a data set to a single summary value. The <code>summarize()</code> verb is often used in conjunction with the <code>group_by</code> function, allowing you to group the data by one or more variables. The <code>summarize()</code> verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.</li>
+</ol>
+<section id="nfl-data-and-the-filter-verb" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="nfl-data-and-the-filter-verb">
+<span class="header-section-number">3.4.1</span> NFL Data and the <code>filter()</code> verb</h3>
+<p>ffffff</p>
+<center>
+<table class="table">
+<thead><tr class="header">
+<th style="text-align: center;">Logical Operator</th>
+<th style="text-align: center;">Meaning</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>==</code></td>
+<td style="text-align: center;">equal to</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>!=</code></td>
+<td style="text-align: center;">not equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>&lt;</code></td>
+<td style="text-align: center;">less than</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;=</code></td>
+<td style="text-align: center;">less than or equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: center;">greater than</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&gt;=</code></td>
+<td style="text-align: center;">greater than or equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>!</code></td>
+<td style="text-align: center;">not</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&amp;</code></td>
+<td style="text-align: center;">and</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>|</code></td>
+<td style="text-align: center;">or</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>%in%</code></td>
+<td style="text-align: center;">includes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>is.na</code></td>
+<td style="text-align: center;">checks for missing values</td>
+</tr>
+</tbody>
+</table>
+</center>
+</section><section id="nfl-data-and-the-group_by-verb" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="nfl-data-and-the-group_by-verb">
+<span class="header-section-number">3.4.2</span> NFL Data and the <code>group_by()</code> verb</h3>
+</section><section id="nfl-data-and-the-summarize-verb" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="nfl-data-and-the-summarize-verb">
+<span class="header-section-number">3.4.3</span> NFL Data and the <code>summarize()</code> verb</h3>
+</section><section id="nfl-data-and-the-select-verb" class="level3" data-number="3.4.4"><h3 data-number="3.4.4" class="anchored" data-anchor-id="nfl-data-and-the-select-verb">
+<span class="header-section-number">3.4.4</span> NFL Data and the <code>select()</code> verb</h3>
+</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="3.4.5"><h3 data-number="3.4.5" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
+<span class="header-section-number">3.4.5</span> NFL Data and the <code>mutate()</code> verb</h3>
+</section></section><section id="core-skills-for-tidy-data" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="core-skills-for-tidy-data">
+<span class="header-section-number">3.5</span> Core Skills for Tidy Data</h2>
+<section id="importing-data" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="importing-data">
+<span class="header-section-number">3.5.1</span> Importing Data</h3>
+</section><section id="dealing-with-missing-data" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="dealing-with-missing-data">
+<span class="header-section-number">3.5.2</span> Dealing with Missing Data</h3>
+</section><section id="changing-variable-types" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="changing-variable-types">
+<span class="header-section-number">3.5.3</span> Changing Variable Types</h3>
+</section><section id="creating-new-variables" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="creating-new-variables">
+<span class="header-section-number">3.5.4</span> Creating New Variables</h3>
+</section><section id="summarizing-your-data" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="summarizing-your-data">
+<span class="header-section-number">3.5.5</span> Summarizing Your Data</h3>
+</section><section id="writing-tidy-functions" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="writing-tidy-functions">
+<span class="header-section-number">3.5.6</span> Writing Tidy Functions</h3>
+</section><section id="merging-multiple-sets-of-data" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="merging-multiple-sets-of-data">
+<span class="header-section-number">3.5.7</span> Merging Multiple Sets of Data</h3>
 
-<section id="downloading-r-and-rstudio" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="downloading-r-and-rstudio"><span class="header-section-number">3.1</span> Downloading R and RStudio</h2>
-</section>
-<section id="installing-necessary-packages" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="installing-necessary-packages"><span class="header-section-number">3.2</span> Installing Necessary Packages</h2>
-</section>
-<section id="the-tidyverse-language" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="the-tidyverse-language"><span class="header-section-number">3.3</span> The <code>tidyverse</code> Language</h2>
 
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-tidyverse" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley. 2022. <span>“Tidyverse Packages.”</span> <a href="https://www.tidyverse.org/packages/">https://www.tidyverse.org/packages/</a>.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -361,9 +496,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./01-nfl-analytics-and-r.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
       </a>          
@@ -375,13 +508,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
     <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
-
 
 
 </body></html>

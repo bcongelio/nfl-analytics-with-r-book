@@ -313,7 +313,7 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
 
 fffffffffffffffffffffffffffff
 
-```{r placeholding-next-example, echo = TRUE, output = FALSE}
+```{r placeholding-next-example, eval = FALSE, echo = TRUE, output = FALSE}
 
 pbp <- nflreadr::load_pbp(2022)
 
@@ -349,7 +349,7 @@ explosive_final <- explosive_final %>%
          percent_w_exp = tds_explosive / total_drives) %>%
   select(posteam, percent_no_exp, percent_w_exp)
 
-ggplot(testing, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
+ggplot(explosive_final, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
   ggplot2::geom_col(aes(color = posteam, fill = posteam), width = 0.5) +
   nflplotR::scale_color_nfl(type = "secondary") +
   nflplotR::scale_fill_nfl(alpha = 0.4) +
