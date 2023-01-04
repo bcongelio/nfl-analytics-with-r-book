@@ -6,6 +6,8 @@ source("R/book-functions.R")
 
 library(tidyverse)
 library(nflverse)
+
+pbp <- nflreadr::load_pbp(2022)
 ```
 
 ## Downloading R and RStudio
@@ -37,8 +39,8 @@ Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most impo
 
 1.  `filter`: the `filter` verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
 2.  `group_by`: the `group_by()` verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.
-3.  `select`: the `select()` verb allows you to choose which columns to include in a data set. You can use `select()` to keep, or exclude, only certain columns. You can also use `select()` to rearrange the columns in a data set, specifying the columns in the order that you want them to appear. As well, you can also use `select()` to select columns based on other criteria. For example, you can use the `starts_with()` function to select all columns that start with a certain string, or the `ends_with()` function to select all columns that end with a certain string.
-4.  `summarize`: the `summarize()` verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
+3.  `summarize`: the `summarize()` verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
+4.  `` `mutate` ``: the `mutate` verbs allows you to create new variables within your data while also preserving existing ones.
 
 ### NFL Data and the `filter()` verb
 
@@ -64,11 +66,143 @@ ffffff
 
 ### NFL Data and the `group_by()` verb
 
+As mentioned above, the `group_by` verb allows you to group data by one or more specific variables in order to conducted, among other actions, summary statistics. To showcase how `group_by` is used within the `nflverse` data, let's first gather the 2022 regular season statistics and then use the `summarize` verb to get the average success rate on rushing plays.
+
+As well, we immediately make use of the `filter` function to do sort the data : (1.) we first instruct to filter the data to include just those instances where the `play_type` equals `run`, (2.) we then say it must also be `play == 1`, meaning there was no penalty or other interruption that "cancelled out" the play, and (3.) we lastly pass the argument that the `down` cannot be missing by using `!is.na` as a missing down is indicative of a two-point conversion attempt.
+
+```{r loading-data, eval = TRUE, echo = FALSE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022)
+```
+
+```{r success-rate-without-group, output = TRUE}
+
+rushing_success_ungrouped <- pbp %>%
+  filter(play_type == "run" & play == 1 & !is.na(down)) %>%
+  summarize(success_rate = mean(success))
+
+rushing_success_ungrouped
+```
+
+Without including the `group_by` verb within the above code, the output is the average success rate for rushing plays for all 32 NFL teams, wherein success rate is the percentage of rushing plays that resulted in an EPA above zero. In this case, approximately 43% of NFL rushes had a positive success rate.
+
+That said, we are interested in examining the success rate by team, not league-wide average. To do so, we add the `posteam` variable into the `group_by` verb.
+
+```{r success-rate-with-grouping, output = TRUE}
+
+rushing_success_grouped <- pbp %>%
+  filter(play_type == "run" & play == 1 & !is.na(down)) %>%
+  group_by(posteam) %>%
+  summarize(success_rate = mean(success)) %>%
+  arrange(-success_rate)
+
+rushing_success_grouped %>%
+  slice(1:10)
+```
+
+In the above example, we have added the offensive team into the `group_by` verb, while also arranging the data in descending order by `success_rate`, and then used `slice` to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 53%. By removing the `slice` function in the above example, we can see that the Indianapolis Colts maintained the worst rushing success rate in the league at 37%.
+
+While determining the rushing success rate of teams is interesting, we can also determine the same metric for individual running backs as well. To do so, we simply replace the variable in the `group_by` verb. In the below example, we replace the `posteam` variable with the `rusher` variable to see which running backs have the highest success rate.
+
+```{r running-back-success, output = TRUE}
+
+running_back_success <- pbp %>%
+  filter(play_type == "run" & play == 1 & !is.na(down)) %>%
+  group_by(rusher) %>%
+  summarize(success_rate = mean(success)) %>%
+  arrange(-success_rate)
+
+running_back_success %>%
+  slice(1:10)
+```
+
+The output, unfortunately, is not all that helpful. Because we did not use the `filter` verb to stipulate a minimum number of rushing attempts, the output is saying that - for example, Aaron Rodgers, a quarterback, has among the most successful rushers in the league with a 100% rushing success rate. To correct this, we must add a second metric to our `summarize` verb (we will call it `n_rushes`) and then use the `filter` verb afterwards to include a minimum number of rushes required to be included in the final output.
+
+As well, we will provide an additional argument in the first `filter` verb that stops the output from including any rushing attempt that does not include the running back's name. The `n_rushes()` in the `summarize` verb allows use to now include the number of attempts, per individual rusher, that fall within the first `filter` parameter. Afterwards, we include a second `filter` argument to include just those rushers with at least 200 attempts.
+
+```{r running-back-success-min, eval = TRUE, echo = TRUE, output = TRUE}
+
+running_back_success_min <- pbp %>%
+  filter(play_type == "run" & play == 1 & !is.na(down) & !is.na(rusher)) %>%
+  group_by(rusher) %>%
+  summarize(success_rate = mean(success), n_rushes = n()) %>%
+  filter(n_rushes >= 200) %>%
+  arrange(-success_rate)
+
+running_back_success_min %>%
+  slice(1:10)
+```
+
+Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 50% of his attempts gaining positive EPA.
+
 ### NFL Data and the `summarize()` verb
 
-### NFL Data and the `select()` verb
+As we've seen, the `summarize` function can be used to find summary statistics based whichever option we pass to it via the `group_by` verb. However, it can also be used to create new metrics built off data included in the `nflverse` play-by-play data.
+
+For example, let's examine which teams were the most aggressive on 3rd and short passing attempts during the 2022 season. Of course, determining our definition of both what "short" is on 3rd down and "aggressive" is quite subjective. For the purposes of this example, however, let's assume that 3rd and short is considered 3rd down with five or less yards to go and that "aggressive" is a quarterback's air yards being to, at minimum, the first-down marker.
+
+Must like our above examples working with rushing success rate, we begin constructing the metric with the `filter` argument. In this case, we are filtering for just pass plays, we want the down to equal 3, the yards to go to be equal to or less than 5, we want it to be an official play, and we do not want it to be missing the down information. After the initial `filter` process, we include the `posteam` variable within our `group_by` verb.
+
+In our `summarize` section, we are first getting the total number of times each team passed the ball on 3rd down with no more than five yards to go. After, we are creating a new `aggressiveness` column that counts the number of times a quarterback's air yards were, at minimum, the required yards for a first down. Next, we create another new column titled `percentage` that takes `aggressiveness` and divides it by `total`.
+
+```{r team-aggressiveness, eval = TRUE, echo = TRUE, output = TRUE}
+
+team_aggressiveness <- pbp %>%
+  filter(play_type == "pass" & down == 3 & ydstogo <= 5 & play == 1 & !is.na(down)) %>%
+  group_by(posteam) %>%
+  summarize(total = n(),
+            aggressiveness = sum(air_yards >= ydstogo, na.rm = TRUE),
+            percentage = aggressiveness / total) %>%
+  arrange(-percentage)
+
+team_aggressiveness %>%
+  slice(1:10)
+```
+
+The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 81% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants are the least aggressive team in the NFL, at 49%.
 
 ### NFL Data and the `mutate()` verb
+
+In the our example above working with the `summarize` verb, our output includes only the information contained in our `group_by` and then whatever information we provided in the `summarize()` (such as `total`, `aggressiveness`, and `percentage`).
+
+What if, however, you wanted to create new variables and then `summarize()` those? That is where the `mutate` verb is used.
+
+As an example, let's explore individual quarterback's average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both `passer` and `air_yards` in the `group_by` verb.
+
+```{r qb-cpoe-no-mutate, eval = TRUE, echo = TRUE, output = FALSE}
+
+airyards_cpoe <- pbp %>%
+  group_by(passer, air_yards) %>%
+  summarize(avg_cpoe = mean(cpoe, na.rm = TRUE))
+```
+
+Your output is going to include the `avg_cpoe` for each quarterback at each and every distance of `air_yards`. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with `ggplot`. To correct this issue, we must use the `mutate` verb.
+
+Rather than `summarize` the completion percentage over expected for each distance of `air_yards`, we can use the `mutate` verb to bundle together a grouping of distances. In the below example, we are using the `mutate` verb to create a new variable titled `ay_distance` using the `case_when` verb.
+
+```{r qb-cpoe-mutate, eval = TRUE, echo = TRUE, output = FALSE}
+
+airyards_cpoe_mutate <- pbp %>%
+  filter(!is.na(cpoe)) %>%
+  mutate(
+    ay_distance = case_when(
+      air_yards < 0 ~ "Negative",
+      air_yards >= 0 & air_yards < 10 ~ "Short",
+      air_yards >= 10 & air_yards < 20 ~ "Medium",
+      air_yards >= 20 ~ "Deep")) %>%
+  group_by(passer, ay_distance) %>%
+  summarize(avg_cpoe = mean(cpoe))
+```
+
+With the `air_yards` data now binned into four different groupings, we can examine quarterbacks at specific distances.
+
+```{r qb-cpoe-medium, output = TRUE}
+
+airyards_cpoe_mutate %>%
+  filter(ay_distance == "Medium") %>%
+  arrange(-avg_cpoe) %>%
+  slice(1:10)
+```
 
 ## Core Skills for Tidy Data
 
@@ -79,8 +213,6 @@ ffffff
 ### Changing Variable Types
 
 ### Creating New Variables
-
-### Summarizing Your Data
 
 ### Writing Tidy Functions
 

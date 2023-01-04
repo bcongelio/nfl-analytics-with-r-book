@@ -17,6 +17,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -200,8 +263,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li><a href="#nfl-data-and-the-filter-verb" id="toc-nfl-data-and-the-filter-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-filter-verb"><span class="toc-section-number">3.4.1</span>  NFL Data and the <code>filter()</code> verb</a></li>
   <li><a href="#nfl-data-and-the-group_by-verb" id="toc-nfl-data-and-the-group_by-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-group_by-verb"><span class="toc-section-number">3.4.2</span>  NFL Data and the <code>group_by()</code> verb</a></li>
   <li><a href="#nfl-data-and-the-summarize-verb" id="toc-nfl-data-and-the-summarize-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-summarize-verb"><span class="toc-section-number">3.4.3</span>  NFL Data and the <code>summarize()</code> verb</a></li>
-  <li><a href="#nfl-data-and-the-select-verb" id="toc-nfl-data-and-the-select-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-select-verb"><span class="toc-section-number">3.4.4</span>  NFL Data and the <code>select()</code> verb</a></li>
-  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="toc-section-number">3.4.5</span>  NFL Data and the <code>mutate()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="toc-section-number">3.4.4</span>  NFL Data and the <code>mutate()</code> verb</a></li>
   </ul>
 </li>
   <li>
@@ -211,9 +273,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="toc-section-number">3.5.2</span>  Dealing with Missing Data</a></li>
   <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="toc-section-number">3.5.3</span>  Changing Variable Types</a></li>
   <li><a href="#creating-new-variables" id="toc-creating-new-variables" class="nav-link" data-scroll-target="#creating-new-variables"><span class="toc-section-number">3.5.4</span>  Creating New Variables</a></li>
-  <li><a href="#summarizing-your-data" id="toc-summarizing-your-data" class="nav-link" data-scroll-target="#summarizing-your-data"><span class="toc-section-number">3.5.5</span>  Summarizing Your Data</a></li>
-  <li><a href="#writing-tidy-functions" id="toc-writing-tidy-functions" class="nav-link" data-scroll-target="#writing-tidy-functions"><span class="toc-section-number">3.5.6</span>  Writing Tidy Functions</a></li>
-  <li><a href="#merging-multiple-sets-of-data" id="toc-merging-multiple-sets-of-data" class="nav-link" data-scroll-target="#merging-multiple-sets-of-data"><span class="toc-section-number">3.5.7</span>  Merging Multiple Sets of Data</a></li>
+  <li><a href="#writing-tidy-functions" id="toc-writing-tidy-functions" class="nav-link" data-scroll-target="#writing-tidy-functions"><span class="toc-section-number">3.5.5</span>  Writing Tidy Functions</a></li>
+  <li><a href="#merging-multiple-sets-of-data" id="toc-merging-multiple-sets-of-data" class="nav-link" data-scroll-target="#merging-multiple-sets-of-data"><span class="toc-section-number">3.5.6</span>  Merging Multiple Sets of Data</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -272,9 +333,9 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li>
 <code>group_by</code>: the <code>group_by()</code> verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.</li>
 <li>
-<code>select</code>: the <code>select()</code> verb allows you to choose which columns to include in a data set. You can use <code>select()</code> to keep, or exclude, only certain columns. You can also use <code>select()</code> to rearrange the columns in a data set, specifying the columns in the order that you want them to appear. As well, you can also use <code>select()</code> to select columns based on other criteria. For example, you can use the <code>starts_with()</code> function to select all columns that start with a certain string, or the <code>ends_with()</code> function to select all columns that end with a certain string.</li>
-<li>
 <code>summarize</code>: the <code>summarize()</code> verb allows you to reduce a data set to a single summary value. The <code>summarize()</code> verb is often used in conjunction with the <code>group_by</code> function, allowing you to group the data by one or more variables. The <code>summarize()</code> verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.</li>
+<li>
+<code>`mutate`</code>: the <code>mutate</code> verbs allows you to create new variables within your data while also preserving existing ones.</li>
 </ol>
 <section id="nfl-data-and-the-filter-verb" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="nfl-data-and-the-filter-verb">
 <span class="header-section-number">3.4.1</span> NFL Data and the <code>filter()</code> verb</h3>
@@ -335,12 +396,189 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </center>
 </section><section id="nfl-data-and-the-group_by-verb" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="nfl-data-and-the-group_by-verb">
 <span class="header-section-number">3.4.2</span> NFL Data and the <code>group_by()</code> verb</h3>
+<p>As mentioned above, the <code>group_by</code> verb allows you to group data by one or more specific variables in order to conducted, among other actions, summary statistics. To showcase how <code>group_by</code> is used within the <code>nflverse</code> data, let’s first gather the 2022 regular season statistics and then use the <code>summarize</code> verb to get the average success rate on rushing plays.</p>
+<p>As well, we immediately make use of the <code>filter</code> function to do sort the data : (1.) we first instruct to filter the data to include just those instances where the <code>play_type</code> equals <code>run</code>, (2.) we then say it must also be <code>play == 1</code>, meaning there was no penalty or other interruption that “cancelled out” the play, and (3.) we lastly pass the argument that the <code>down</code> cannot be missing by using <code>!is.na</code> as a missing down is indicative of a two-point conversion attempt.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">rushing_success_ungrouped</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">rushing_success_ungrouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+  success_rate
+         &lt;dbl&gt;
+1        0.431</code></pre>
+</div>
+</div>
+<p>Without including the <code>group_by</code> verb within the above code, the output is the average success rate for rushing plays for all 32 NFL teams, wherein success rate is the percentage of rushing plays that resulted in an EPA above zero. In this case, approximately 43% of NFL rushes had a positive success rate.</p>
+<p>That said, we are interested in examining the success rate by team, not league-wide average. To do so, we add the <code>posteam</code> variable into the <code>group_by</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">rushing_success_grouped</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span>
+
+<span class="va">rushing_success_grouped</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 2
+   posteam success_rate
+   &lt;chr&gt;          &lt;dbl&gt;
+ 1 PHI            0.526
+ 2 BUF            0.491
+ 3 BAL            0.485
+ 4 PIT            0.478
+ 5 GB             0.475
+ 6 ATL            0.469
+ 7 KC             0.456
+ 8 LV             0.452
+ 9 CLE            0.450
+10 CIN            0.448</code></pre>
+</div>
+</div>
+<p>In the above example, we have added the offensive team into the <code>group_by</code> verb, while also arranging the data in descending order by <code>success_rate</code>, and then used <code>slice</code> to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 53%. By removing the <code>slice</code> function in the above example, we can see that the Indianapolis Colts maintained the worst rushing success rate in the league at 37%.</p>
+<p>While determining the rushing success rate of teams is interesting, we can also determine the same metric for individual running backs as well. To do so, we simply replace the variable in the <code>group_by</code> verb. In the below example, we replace the <code>posteam</code> variable with the <code>rusher</code> variable to see which running backs have the highest success rate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">running_back_success</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span>
+
+<span class="va">running_back_success</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 2
+   rusher      success_rate
+   &lt;chr&gt;              &lt;dbl&gt;
+ 1 A.Davis                1
+ 2 A.Rogers               1
+ 3 B.Aiyuk                1
+ 4 B.Allen                1
+ 5 B.Purdy                1
+ 6 B.Skowronek            1
+ 7 C.Kmet                 1
+ 8 C.Sutton               1
+ 9 C.Wilson               1
+10 D.Bellinger            1</code></pre>
+</div>
+</div>
+<p>The output, unfortunately, is not all that helpful. Because we did not use the <code>filter</code> verb to stipulate a minimum number of rushing attempts, the output is saying that - for example, Aaron Rodgers, a quarterback, has among the most successful rushers in the league with a 100% rushing success rate. To correct this, we must add a second metric to our <code>summarize</code> verb (we will call it <code>n_rushes</code>) and then use the <code>filter</code> verb afterwards to include a minimum number of rushes required to be included in the final output.</p>
+<p>As well, we will provide an additional argument in the first <code>filter</code> verb that stops the output from including any rushing attempt that does not include the running back’s name. The <code>n_rushes()</code> in the <code>summarize</code> verb allows use to now include the number of attempts, per individual rusher, that fall within the first <code>filter</code> parameter. Afterwards, we include a second <code>filter</code> argument to include just those rushers with at least 200 attempts.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">running_back_success_min</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span>, n_rushes <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n_rushes</span> <span class="op">&gt;=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span>
+
+<span class="va">running_back_success_min</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 3
+   rusher      success_rate n_rushes
+   &lt;chr&gt;              &lt;dbl&gt;    &lt;int&gt;
+ 1 M.Sanders          0.504      248
+ 2 A.Jones            0.468      201
+ 3 J.Jacobs           0.455      323
+ 4 N.Chubb            0.431      290
+ 5 E.Elliott          0.430      223
+ 6 B.Robinson         0.420      205
+ 7 Ja.Williams        0.419      246
+ 8 N.Harris           0.410      249
+ 9 T.Etienne          0.408      213
+10 R.Stevenson        0.402      204</code></pre>
+</div>
+</div>
+<p>Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 50% of his attempts gaining positive EPA.</p>
 </section><section id="nfl-data-and-the-summarize-verb" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="nfl-data-and-the-summarize-verb">
 <span class="header-section-number">3.4.3</span> NFL Data and the <code>summarize()</code> verb</h3>
-</section><section id="nfl-data-and-the-select-verb" class="level3" data-number="3.4.4"><h3 data-number="3.4.4" class="anchored" data-anchor-id="nfl-data-and-the-select-verb">
-<span class="header-section-number">3.4.4</span> NFL Data and the <code>select()</code> verb</h3>
-</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="3.4.5"><h3 data-number="3.4.5" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
-<span class="header-section-number">3.4.5</span> NFL Data and the <code>mutate()</code> verb</h3>
+<p>As we’ve seen, the <code>summarize</code> function can be used to find summary statistics based whichever option we pass to it via the <code>group_by</code> verb. However, it can also be used to create new metrics built off data included in the <code>nflverse</code> play-by-play data.</p>
+<p>For example, let’s examine which teams were the most aggressive on 3rd and short passing attempts during the 2022 season. Of course, determining our definition of both what “short” is on 3rd down and “aggressive” is quite subjective. For the purposes of this example, however, let’s assume that 3rd and short is considered 3rd down with five or less yards to go and that “aggressive” is a quarterback’s air yards being to, at minimum, the first-down marker.</p>
+<p>Must like our above examples working with rushing success rate, we begin constructing the metric with the <code>filter</code> argument. In this case, we are filtering for just pass plays, we want the down to equal 3, the yards to go to be equal to or less than 5, we want it to be an official play, and we do not want it to be missing the down information. After the initial <code>filter</code> process, we include the <code>posteam</code> variable within our <code>group_by</code> verb.</p>
+<p>In our <code>summarize</code> section, we are first getting the total number of times each team passed the ball on 3rd down with no more than five yards to go. After, we are creating a new <code>aggressiveness</code> column that counts the number of times a quarterback’s air yards were, at minimum, the required yards for a first down. Next, we create another new column titled <code>percentage</code> that takes <code>aggressiveness</code> and divides it by <code>total</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">team_aggressiveness</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span> <span class="op">&amp;</span> <span class="va">down</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">&amp;</span> <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
+            aggressiveness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            percentage <span class="op">=</span> <span class="va">aggressiveness</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span>
+
+<span class="va">team_aggressiveness</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 4
+   posteam total aggressiveness percentage
+   &lt;chr&gt;   &lt;int&gt;          &lt;int&gt;      &lt;dbl&gt;
+ 1 LV         54             44      0.815
+ 2 ARI        57             44      0.772
+ 3 PIT        77             58      0.753
+ 4 BUF        52             39      0.75 
+ 5 SF         56             42      0.75 
+ 6 TB         81             59      0.728
+ 7 SEA        51             37      0.725
+ 8 DET        54             38      0.704
+ 9 HOU        47             33      0.702
+10 LA         57             40      0.702</code></pre>
+</div>
+</div>
+<p>The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 81% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants are the least aggressive team in the NFL, at 49%.</p>
+</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="3.4.4"><h3 data-number="3.4.4" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
+<span class="header-section-number">3.4.4</span> NFL Data and the <code>mutate()</code> verb</h3>
+<p>In the our example above working with the <code>summarize</code> verb, our output includes only the information contained in our <code>group_by</code> and then whatever information we provided in the <code>summarize()</code> (such as <code>total</code>, <code>aggressiveness</code>, and <code>percentage</code>).</p>
+<p>What if, however, you wanted to create new variables and then <code>summarize()</code> those? That is where the <code>mutate</code> verb is used.</p>
+<p>As an example, let’s explore individual quarterback’s average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both <code>passer</code> and <code>air_yards</code> in the <code>group_by</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">airyards_cpoe</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">air_yards</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>avg_cpoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cpoe</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Your output is going to include the <code>avg_cpoe</code> for each quarterback at each and every distance of <code>air_yards</code>. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with <code>ggplot</code>. To correct this issue, we must use the <code>mutate</code> verb.</p>
+<p>Rather than <code>summarize</code> the completion percentage over expected for each distance of <code>air_yards</code>, we can use the <code>mutate</code> verb to bundle together a grouping of distances. In the below example, we are using the <code>mutate</code> verb to create a new variable titled <code>ay_distance</code> using the <code>case_when</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">airyards_cpoe_mutate</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cpoe</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>
+    ay_distance <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+      <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"Negative"</span>,
+      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">~</span> <span class="st">"Short"</span>,
+      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">20</span> <span class="op">~</span> <span class="st">"Medium"</span>,
+      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">20</span> <span class="op">~</span> <span class="st">"Deep"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">ay_distance</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarize</span><span class="op">(</span>avg_cpoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cpoe</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the <code>air_yards</code> data now binned into four different groupings, we can examine quarterbacks at specific distances.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">airyards_cpoe_mutate</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">ay_distance</span> <span class="op">==</span> <span class="st">"Medium"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">avg_cpoe</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 77 x 3
+# Groups:   passer [77]
+   passer     ay_distance avg_cpoe
+   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
+ 1 A.Brown    Medium       -72.2  
+ 2 A.Cooper   Medium       -43.1  
+ 3 A.Dalton   Medium         5.16 
+ 4 A.Rodgers  Medium         2.02 
+ 5 B.Allen    Medium        44.5  
+ 6 B.Hoyer    Medium       -44.0  
+ 7 B.Mayfield Medium       -17.5  
+ 8 B.Perkins  Medium         0.266
+ 9 B.Purdy    Medium         9.73 
+10 B.Rypien   Medium        18.0  
+# ... with 67 more rows</code></pre>
+</div>
+</div>
 </section></section><section id="core-skills-for-tidy-data" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="core-skills-for-tidy-data">
 <span class="header-section-number">3.5</span> Core Skills for Tidy Data</h2>
 <section id="importing-data" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="importing-data">
@@ -351,12 +589,10 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span class="header-section-number">3.5.3</span> Changing Variable Types</h3>
 </section><section id="creating-new-variables" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="creating-new-variables">
 <span class="header-section-number">3.5.4</span> Creating New Variables</h3>
-</section><section id="summarizing-your-data" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="summarizing-your-data">
-<span class="header-section-number">3.5.5</span> Summarizing Your Data</h3>
-</section><section id="writing-tidy-functions" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="writing-tidy-functions">
-<span class="header-section-number">3.5.6</span> Writing Tidy Functions</h3>
-</section><section id="merging-multiple-sets-of-data" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="merging-multiple-sets-of-data">
-<span class="header-section-number">3.5.7</span> Merging Multiple Sets of Data</h3>
+</section><section id="writing-tidy-functions" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="writing-tidy-functions">
+<span class="header-section-number">3.5.5</span> Writing Tidy Functions</h3>
+</section><section id="merging-multiple-sets-of-data" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="merging-multiple-sets-of-data">
+<span class="header-section-number">3.5.6</span> Merging Multiple Sets of Data</h3>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
