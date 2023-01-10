@@ -368,16 +368,16 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
    offense_personnel                        total
    &lt;chr&gt;                                    &lt;int&gt;
  1 1 RB, 0 TE, 4 WR                             3
- 2 1 RB, 1 TE, 3 WR                           220
- 3 1 RB, 2 TE, 2 WR                           151
- 4 1 RB, 3 TE, 1 WR                            16
+ 2 1 RB, 1 TE, 3 WR                           229
+ 3 1 RB, 2 TE, 2 WR                           165
+ 4 1 RB, 3 TE, 1 WR                            17
  5 2 QB, 1 RB, 1 TE, 2 WR                       4
  6 2 RB, 0 TE, 3 WR                             1
- 7 2 RB, 1 TE, 2 WR                            81
- 8 2 RB, 2 TE, 1 WR                            12
+ 7 2 RB, 1 TE, 2 WR                            86
+ 8 2 RB, 2 TE, 1 WR                            13
  9 3 RB, 1 TE, 1 WR                             1
 10 6 OL, 1 RB, 0 TE, 3 WR                       2
-11 6 OL, 1 RB, 1 TE, 2 WR                      11
+11 6 OL, 1 RB, 1 TE, 2 WR                      12
 12 6 OL, 1 RB, 2 TE, 1 WR                       1
 13 6 OL, 2 RB, 0 TE, 2 WR                       1
 14 7 OL, 0 RB, 0 TE, 0 WR,1 P,1 LS,1 DL,1 K     1</code></pre>
@@ -444,7 +444,7 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
   <span class="fu">summarize</span><span class="op">(</span>combos <span class="op">=</span> <span class="fu">n_distinct</span><span class="op">(</span><span class="va">starting_line</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">combos</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Despite much of the media focus being on the Rams’ poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals have just as many unique offensive line combinations nearing the end of the 2022 season. It makes sense, then, that both teams headed into week 16 of the season with identical 4-10 (.286) records.</p>
+<p>Despite much of the media focus being on the Rams’ poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals had nearly as many unique offensive line combinations at the conclusion of the 2022 regular season.</p>
 <p>With the data cleaned and prepared, let’s use it to create a <code>ggplot</code> graph and, to do so, compare the relationship between a team’s number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing <code>total_combos</code> dataframe.</p>
 <p>To bring in the individual winning percentages, we will use the <code>get_nfl_standings</code> function from <code>espnscrapeR</code> and then combine the two sets of data on team abbreviations via a <code>left_join</code>. Unfortunately, the team abbreviation returned from <code>espnscrapeR</code> does not match up with those used in the <code>nflverse</code> for both the Los Angeles Rams and the Washington Commanders (LAR vs.&nbsp;LA and WSH vs.&nbsp;WAS). As evidenced in the below code, correcting this issue is simple with the <code>clean_team_abbrs</code> function in the <code>nflreadr</code> package.</p>
 <div class="cell">
@@ -520,8 +520,8 @@ Important
 </div>
 </div>
 <p>As can be seen in the resulting graph - despite a slight correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team’s number of offensive line combinations?</p>
-<p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly “gel.”<br></p>
-<p>Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into our existing <code>total_combos</code> by matching on the individual team abbreviations.</p>
+<p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly “gel.”<br><br>
+Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into our existing <code>total_combos</code> by matching on the individual team abbreviations.</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"./example_data/csv/ch1_pressurerate.csv"</span><span class="op">)</span>
 

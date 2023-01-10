@@ -176,7 +176,7 @@ total_combos <- oline_final_data %>%
   arrange(-combos)
 ```
 
-Despite much of the media focus being on the Rams' poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals have just as many unique offensive line combinations nearing the end of the 2022 season. It makes sense, then, that both teams headed into week 16 of the season with identical 4-10 (.286) records.
+Despite much of the media focus being on the Rams' poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals had nearly as many unique offensive line combinations at the conclusion of the 2022 regular season.
 
 With the data cleaned and prepared, let's use it to create a `ggplot` graph and, to do so, compare the relationship between a team's number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing `total_combos` dataframe.
 
@@ -278,7 +278,7 @@ ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
 As can be seen in the resulting graph - despite a slight correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
 
 To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly "gel."\
-
+\
 Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from `nflverse` data and retrieve the information from the [SIS Data Hub](https://pro.sisdatahub.com/). After downloading the spreadsheet, we can read it into the RStudio environment using `vroom` and then merge the information into our existing `total_combos` by matching on the individual team abbreviations.
 
 ```{r pressure-rate, output = FALSE}

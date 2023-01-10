@@ -33,6 +33,10 @@ Installing and loading the `tidyverse` results eight of the core packages automa
 
 Aside from the core eight packages, the `tidyverse` will also install a multiple of other packages such as `rvest` (for web scraping), `readxl` (for reading Excel sheets in the RStudio environment), `lubridate` (a very powerful tool for working with times and dates), and `magrittr` (the package that provides the pipe `%>%`). As well, prior versions of the `tidyverse` utilized the `modelr`. Modeling is now handled in the `tidyverse` by the `tidymodels` package.
 
+## The Flow of the `tidyverse`
+
+The underlying design of coding in the `tidyverse`, aside from the `dplyr` verbs are both the assignment statement (`<-`)
+
 ## Working With NFL Data and the `dplyr` Verbs
 
 Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, `dplyr` is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to user and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four `dplyr` verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.
@@ -100,7 +104,7 @@ rushing_success_grouped %>%
   slice(1:10)
 ```
 
-In the above example, we have added the offensive team into the `group_by` verb, while also arranging the data in descending order by `success_rate`, and then used `slice` to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 53%. By removing the `slice` function in the above example, we can see that the Indianapolis Colts maintained the worst rushing success rate in the league at 37%.
+In the above example, we have added the offensive team into the `group_by` verb, while also arranging the data in descending order by `success_rate`, and then used `slice` to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 52.3%. By removing the `slice` function in the above example, we can see that Tampa Bay maintained the worst rushing success rate in the league at 37.3%.
 
 While determining the rushing success rate of teams is interesting, we can also determine the same metric for individual running backs as well. To do so, we simply replace the variable in the `group_by` verb. In the below example, we replace the `posteam` variable with the `rusher` variable to see which running backs have the highest success rate.
 
@@ -116,7 +120,7 @@ running_back_success %>%
   slice(1:10)
 ```
 
-The output, unfortunately, is not all that helpful. Because we did not use the `filter` verb to stipulate a minimum number of rushing attempts, the output is saying that - for example, Aaron Rodgers, a quarterback, has among the most successful rushers in the league with a 100% rushing success rate. To correct this, we must add a second metric to our `summarize` verb (we will call it `n_rushes`) and then use the `filter` verb afterwards to include a minimum number of rushes required to be included in the final output.
+The output, unfortunately, is not all that helpful. Because we did not use the `filter` verb to stipulate a minimum number of rushing attempts, the output is saying that - for example, Daniel Bellinger, a tight end, has among the most successful rushers in the league with a 100% rushing success rate. To correct this, we must add a second metric to our `summarize` verb (we will call it `n_rushes`) and then use the `filter` verb afterwards to include a minimum number of rushes required to be included in the final output.
 
 As well, we will provide an additional argument in the first `filter` verb that stops the output from including any rushing attempt that does not include the running back's name. The `n_rushes()` in the `summarize` verb allows use to now include the number of attempts, per individual rusher, that fall within the first `filter` parameter. Afterwards, we include a second `filter` argument to include just those rushers with at least 200 attempts.
 
@@ -133,7 +137,7 @@ running_back_success_min %>%
   slice(1:10)
 ```
 
-Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 50% of his attempts gaining positive EPA.
+Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 49% of his attempts gaining positive EPA.
 
 ### NFL Data and the `summarize()` verb
 
@@ -159,7 +163,7 @@ team_aggressiveness %>%
   slice(1:10)
 ```
 
-The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 81% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants are the least aggressive team in the NFL, at 49%.
+The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 83% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants were the least aggressive team during the 2022 regular season, at 49.1%.
 
 ### NFL Data and the `mutate()` verb
 
