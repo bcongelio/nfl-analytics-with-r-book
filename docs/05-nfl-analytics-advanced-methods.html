@@ -260,241 +260,241 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li>link between QB release time, receiver separation, and offensive line performance</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co">### reading all weeks and writing to a parquet file</span>
-<span class="va">all_bdb_weeks</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">dir</span>, regexp <span class="op">=</span> <span class="st">'week\\d+'</span><span class="op">)</span>
-  <span class="va">all_weeks</span> <span class="op">&lt;-</span>
-    <span class="va">paths</span> <span class="op">%&gt;%</span>
-    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span><span class="op">(</span><span class="fu">vroom</span><span class="fu">::</span><span class="va"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'data.parquet'</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu">all_bdb_weeks</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">### reading in all play information provided and writing to a parquet file</span>
-<span class="va">read_bdb_plays</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://memoise.r-lib.org/reference/memoise.html">memoise</a></span><span class="op">(</span><span class="op">{</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">plays</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'plays.csv'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'plays.parquet'</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span><span class="op">}</span><span class="op">)</span>
-
-<span class="fu">read_bdb_plays</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">### reading in individual game information and writing to a parquet file</span>
-<span class="va">read_game_info</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://memoise.r-lib.org/reference/memoise.html">memoise</a></span><span class="op">(</span><span class="op">{</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'games.csv'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>game_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="va"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'games.parquet'</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span><span class="op">}</span><span class="op">)</span>
-
-<span class="co">### creating an individual .cvs file for each game in bdb</span>
-<span class="va">all.weeks</span> <span class="op">&lt;-</span> <span class="fu">read_parquet</span><span class="op">(</span><span class="st">"./core-data/large-lfs-files/all-weeks-parquet"</span><span class="op">)</span>
-
-<span class="va">all.weeks</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_walk</span><span class="op">(</span><span class="op">~</span> <span class="fu">write_csv</span><span class="op">(</span><span class="va">.x</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'tracking_gameId_'</span>, <span class="va">.y</span><span class="op">$</span><span class="va">game_id</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">### writing in team colors, logos</span>
-<span class="va">team.colors</span> <span class="op">&lt;-</span> <span class="fu">nflfastR</span><span class="fu">::</span><span class="va"><a href="https://www.nflfastr.com/reference/teams_colors_logos.html">teams_colors_logos</a></span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_color</span>, <span class="va">team_color2</span>, <span class="va">team_logo_espn</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### reading all weeks and writing to a parquet file</span></span>
+<span><span class="va">all_bdb_weeks</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">dir</span>, regexp <span class="op">=</span> <span class="st">'week\\d+'</span><span class="op">)</span></span>
+<span>  <span class="va">all_weeks</span> <span class="op">&lt;-</span></span>
+<span>    <span class="va">paths</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df</a></span><span class="op">(</span><span class="fu">vroom</span><span class="fu">::</span><span class="va"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'data.parquet'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">all_bdb_weeks</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### reading in all play information provided and writing to a parquet file</span></span>
+<span><span class="va">read_bdb_plays</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://memoise.r-lib.org/reference/memoise.html">memoise</a></span><span class="op">(</span><span class="op">{</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">plays</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'plays.csv'</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'plays.parquet'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">read_bdb_plays</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### reading in individual game information and writing to a parquet file</span></span>
+<span><span class="va">read_game_info</span> <span class="op">&lt;-</span> <span class="fu">memoise</span><span class="fu">::</span><span class="fu"><a href="https://memoise.r-lib.org/reference/memoise.html">memoise</a></span><span class="op">(</span><span class="op">{</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'games.csv'</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>game_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="va"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/write_parquet.html">write_parquet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span>, <span class="st">'games.parquet'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### creating an individual .cvs file for each game in bdb</span></span>
+<span><span class="va">all.weeks</span> <span class="op">&lt;-</span> <span class="fu">read_parquet</span><span class="op">(</span><span class="st">"./core-data/large-lfs-files/all-weeks-parquet"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all.weeks</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_walk</span><span class="op">(</span><span class="op">~</span> <span class="fu">write_csv</span><span class="op">(</span><span class="va">.x</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'tracking_gameId_'</span>, <span class="va">.y</span><span class="op">$</span><span class="va">game_id</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### writing in team colors, logos</span></span>
+<span><span class="va">team.colors</span> <span class="op">&lt;-</span> <span class="fu">nflfastR</span><span class="fu">::</span><span class="va"><a href="https://www.nflfastr.com/reference/teams_colors_logos.html">teams_colors_logos</a></span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_color</span>, <span class="va">team_color2</span>, <span class="va">team_logo_espn</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>fffff</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">rotate_the_dots</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="st">"play_direction"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Cannot find play directions. Inferring from offense and defense locations at snap."</span><span class="op">)</span>
-    
-    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="st">"ball_snap"</span>, <span class="va">team</span> <span class="op">!=</span> <span class="st">"football"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-      <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">play_id</span>, <span class="va">defensive_team</span><span class="op">)</span> <span class="op">%&gt;%</span>
-      <span class="fu">summarize</span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-      <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">defensive_team</span>, values_from <span class="op">=</span> <span class="va">mean_x</span>, names_prefix <span class="op">=</span> <span class="st">"x_"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-      <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-      <span class="fu">mutate</span><span class="op">(</span>
-        play_direction <span class="op">=</span> 
-          <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span>
-            <span class="va">x_1</span> <span class="op">&gt;</span> <span class="va">x_0</span>,
-            <span class="st">"right"</span>,
-            <span class="st">"left"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-          <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">play_id</span>, <span class="va">play_direction</span><span class="op">)</span> <span class="op">%&gt;%</span>
-          <span class="fu">inner_join</span><span class="op">(</span><span class="va">df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span>, <span class="st">"play_id"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-        
-  <span class="op">}</span>
-  
-  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span>
-    <span class="fu">mutate</span><span class="op">(</span>
-      to_left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">play_direction</span> <span class="op">==</span> <span class="st">"left"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">120</span> <span class="op">-</span> <span class="va">x</span>, <span class="va">x</span><span class="op">)</span>,
-      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">160</span> <span class="op">/</span> <span class="fl">3</span> <span class="op">-</span> <span class="va">y</span>, <span class="va">y</span><span class="op">)</span>,
-      los_x <span class="op">=</span> <span class="fl">100</span> <span class="op">-</span> <span class="va">absolute_yardline_number</span>,
-      dist_from_los <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">los_x</span><span class="op">)</span>
-  
-  <span class="kw">if</span> <span class="op">(</span><span class="st">"o"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span>
-      <span class="fu">mutate</span><span class="op">(</span>
-        o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">o</span> <span class="op">+</span> <span class="fl">180</span>, <span class="va">o</span><span class="op">)</span>,
-        o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">o</span> <span class="op">&gt;</span> <span class="fl">360</span>, <span class="fl">0</span> <span class="op">-</span> <span class="fl">360</span>, <span class="va">o</span><span class="op">)</span>,
-        o_rad <span class="op">=</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">o</span> <span class="op">/</span> <span class="fl">180</span><span class="op">)</span>,
-        o_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">o_rad</span><span class="op">)</span><span class="op">)</span>,
-        o_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">o_rad</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-  
-  <span class="kw">if</span> <span class="op">(</span><span class="st">"dir"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span>
-      <span class="fu">mutate</span><span class="op">(</span>
-        dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">dir</span> <span class="op">+</span> <span class="fl">180</span>, <span class="va">dir</span><span class="op">)</span>,
-        dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">dir</span> <span class="op">&gt;</span> <span class="fl">360</span>, <span class="va">dir</span> <span class="op">-</span> <span class="fl">360</span>, <span class="va">dir</span><span class="op">)</span>,
-        dir_rad <span class="op">=</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">dir</span> <span class="op">/</span> <span class="fl">180</span><span class="op">)</span>,
-        dir_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">dir_rad</span><span class="op">)</span><span class="op">)</span>,
-        dir_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">dir_rad</span><span class="op">)</span><span class="op">)</span>,
-        s_x <span class="op">=</span> <span class="va">dir_x</span> <span class="op">*</span> <span class="va">s</span>,
-        s_y <span class="op">=</span> <span class="va">dir_y</span> <span class="op">*</span> <span class="va">s</span>,
-        a_x <span class="op">=</span> <span class="va">dir_x</span> <span class="op">*</span> <span class="va">a</span>,
-        a_y <span class="op">=</span> <span class="va">dir_y</span> <span class="op">*</span> <span class="va">a</span><span class="op">)</span>
-  <span class="op">}</span>
-  
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rotate_the_dots</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="st">"play_direction"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Cannot find play directions. Inferring from offense and defense locations at snap."</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="st">"ball_snap"</span>, <span class="va">team</span> <span class="op">!=</span> <span class="st">"football"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">play_id</span>, <span class="va">defensive_team</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">summarize</span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">defensive_team</span>, values_from <span class="op">=</span> <span class="va">mean_x</span>, names_prefix <span class="op">=</span> <span class="st">"x_"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span></span>
+<span>        play_direction <span class="op">=</span> </span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span></span>
+<span>            <span class="va">x_1</span> <span class="op">&gt;</span> <span class="va">x_0</span>,</span>
+<span>            <span class="st">"right"</span>,</span>
+<span>            <span class="st">"left"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>          <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">play_id</span>, <span class="va">play_direction</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>          <span class="fu">inner_join</span><span class="op">(</span><span class="va">df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span>, <span class="st">"play_id"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>        </span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span></span>
+<span>      to_left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">play_direction</span> <span class="op">==</span> <span class="st">"left"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">120</span> <span class="op">-</span> <span class="va">x</span>, <span class="va">x</span><span class="op">)</span>,</span>
+<span>      y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">160</span> <span class="op">/</span> <span class="fl">3</span> <span class="op">-</span> <span class="va">y</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>      los_x <span class="op">=</span> <span class="fl">100</span> <span class="op">-</span> <span class="va">absolute_yardline_number</span>,</span>
+<span>      dist_from_los <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">los_x</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="st">"o"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span></span>
+<span>        o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">o</span> <span class="op">+</span> <span class="fl">180</span>, <span class="va">o</span><span class="op">)</span>,</span>
+<span>        o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">o</span> <span class="op">&gt;</span> <span class="fl">360</span>, <span class="fl">0</span> <span class="op">-</span> <span class="fl">360</span>, <span class="va">o</span><span class="op">)</span>,</span>
+<span>        o_rad <span class="op">=</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">o</span> <span class="op">/</span> <span class="fl">180</span><span class="op">)</span>,</span>
+<span>        o_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">o_rad</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        o_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">o_rad</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="st">"dir"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span></span>
+<span>        dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">to_left</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">dir</span> <span class="op">+</span> <span class="fl">180</span>, <span class="va">dir</span><span class="op">)</span>,</span>
+<span>        dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">dir</span> <span class="op">&gt;</span> <span class="fl">360</span>, <span class="va">dir</span> <span class="op">-</span> <span class="fl">360</span>, <span class="va">dir</span><span class="op">)</span>,</span>
+<span>        dir_rad <span class="op">=</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">dir</span> <span class="op">/</span> <span class="fl">180</span><span class="op">)</span>,</span>
+<span>        dir_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">dir_rad</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        dir_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">dir_rad</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        s_x <span class="op">=</span> <span class="va">dir_x</span> <span class="op">*</span> <span class="va">s</span>,</span>
+<span>        s_y <span class="op">=</span> <span class="va">dir_y</span> <span class="op">*</span> <span class="va">s</span>,</span>
+<span>        a_x <span class="op">=</span> <span class="va">dir_x</span> <span class="op">*</span> <span class="va">a</span>,</span>
+<span>        a_y <span class="op">=</span> <span class="va">dir_y</span> <span class="op">*</span> <span class="va">a</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>ffff</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">find_o_diff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">"qb"</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="va">name_x</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_x"</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">name_y</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_y"</span><span class="op">)</span><span class="op">)</span>
-  
-  <span class="va">new_column</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"o_to_"</span>, <span class="va">prefix</span><span class="op">)</span>
-  
-  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span>
-    <span class="fu">mutate</span><span class="op">(</span>
-      dis_x <span class="op">=</span> <span class="op">{</span><span class="op">{</span><span class="va">name_x</span><span class="op">}</span><span class="op">}</span> <span class="op">-</span> <span class="va">x</span>,
-      dis_y <span class="op">=</span> <span class="op">{</span><span class="op">{</span><span class="va">name_y</span><span class="op">}</span><span class="op">}</span> <span class="op">-</span> <span class="va">y</span>,
-      
-      tmp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">dis_y</span>, <span class="va">dis_x</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">180</span> <span class="op">/</span> <span class="va">pi</span><span class="op">)</span>,
-      tmp <span class="op">=</span> <span class="op">(</span><span class="fl">360</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span> <span class="op">+</span> <span class="fl">90</span>,
-      tmp <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">tmp</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="va">tmp</span> <span class="op">+</span> <span class="fl">360</span>,
-                      <span class="va">tmp</span> <span class="op">&gt;</span> <span class="fl">360</span> <span class="op">~</span> <span class="va">tmp</span> <span class="op">-</span> <span class="fl">360</span>,
-                      <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">tmp</span><span class="op">)</span>,
-      
-      diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">o</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span>,
-      
-      diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">o</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span>,
-      
-      <span class="op">!</span><span class="op">!</span><span class="va">new_column</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="fl">360</span> <span class="op">-</span> <span class="va">diff</span>, <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-        <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">diff</span>, <span class="op">-</span><span class="va">tmp</span><span class="op">)</span>
-      
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="op">}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">find_o_diff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">"qb"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">name_x</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_x"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">name_y</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_y"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">new_column</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"o_to_"</span>, <span class="va">prefix</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span></span>
+<span>      dis_x <span class="op">=</span> <span class="op">{</span><span class="op">{</span><span class="va">name_x</span><span class="op">}</span><span class="op">}</span> <span class="op">-</span> <span class="va">x</span>,</span>
+<span>      dis_y <span class="op">=</span> <span class="op">{</span><span class="op">{</span><span class="va">name_y</span><span class="op">}</span><span class="op">}</span> <span class="op">-</span> <span class="va">y</span>,</span>
+<span>      </span>
+<span>      tmp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">dis_y</span>, <span class="va">dis_x</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">180</span> <span class="op">/</span> <span class="va">pi</span><span class="op">)</span>,</span>
+<span>      tmp <span class="op">=</span> <span class="op">(</span><span class="fl">360</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span> <span class="op">+</span> <span class="fl">90</span>,</span>
+<span>      tmp <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">tmp</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="va">tmp</span> <span class="op">+</span> <span class="fl">360</span>,</span>
+<span>                      <span class="va">tmp</span> <span class="op">&gt;</span> <span class="fl">360</span> <span class="op">~</span> <span class="va">tmp</span> <span class="op">-</span> <span class="fl">360</span>,</span>
+<span>                      <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">tmp</span><span class="op">)</span>,</span>
+<span>      </span>
+<span>      diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">o</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span>,</span>
+<span>      </span>
+<span>      diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">o</span> <span class="op">-</span> <span class="va">tmp</span><span class="op">)</span>,</span>
+<span>      </span>
+<span>      <span class="op">!</span><span class="op">!</span><span class="va">new_column</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="fl">360</span> <span class="op">-</span> <span class="va">diff</span>, <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>        <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">diff</span>, <span class="op">-</span><span class="va">tmp</span><span class="op">)</span></span>
+<span>      </span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co">########</span>
-<span class="co">## READING IN PITTSBURGH VS. BUFFALO - WEEK 1</span>
-<span class="co">########</span>
-
-<span class="va">pitt.buff</span> <span class="op">&lt;-</span> <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html">read_parquet</a></span><span class="op">(</span><span class="st">"core-data/large-lfs-files/all-weeks-parquet"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## READING IN PLAYS FROM PITTSBURGH VS. BUFFALO - WEEK 1</span>
-<span class="co">########</span>
-
-<span class="va">pitt.buff.plays</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/plays.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## READING IN GAME INFO FROM PITTSBURGH VS. BUFFALO - WEEK 1</span>
-<span class="co">########</span>
-
-<span class="va">pitt.buff.info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/games.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## COMBING CORE GAME FILE WITH PLAYS, AND THEN BY INFO (TO AVOID MULTIPLE GAME_IDs IN DF)</span>
-<span class="co">########</span>
-
-<span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">pitt.buff</span>, <span class="va">pitt.buff.plays</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"game_id"</span>, <span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"play_id"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span>
-  <span class="fu">inner_join</span><span class="op">(</span><span class="va">pitt.buff.info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"game_id"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">### ROTATING THE DOTS</span>
-<span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="fu">rotate_the_dots</span><span class="op">(</span><span class="va">complete.data</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## MUTATING TO CHARACTER VARIABLE DEFINING WHETHER TEAM IN FRAMES IS ON OFFENSE OR DEFENSE</span>
-<span class="co">########</span>
-
-<span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>off_or_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
-    <span class="va">team</span> <span class="op">==</span> <span class="va">possession_team</span> <span class="op">~</span> <span class="st">"offense"</span>,
-    <span class="va">team</span> <span class="op">!=</span> <span class="va">possession_team</span> <span class="op">~</span> <span class="st">"defense"</span>,
-    <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"football"</span><span class="op">)</span><span class="op">)</span>
-
-            <span class="co">########</span>
-            <span class="co">## CORE CLEANING AND PREP IS COMPLETE</span>
-            <span class="co">########</span>
-
-<span class="co">########</span>
-<span class="co">## ADDING IN INFORMATION FROM PLAYERS.CSV TO BUILD CHULLs FOR JUST O-LINE</span>
-<span class="co">########</span>
-
-<span class="va">player.info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/players.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">nfl_id</span>, <span class="va">official_position</span>, <span class="va">display_name</span><span class="op">)</span>
-
-<span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span>
-  <span class="fu">inner_join</span><span class="op">(</span><span class="va">player.info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nfl_id"</span> <span class="op">=</span> <span class="st">"nfl_id"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## LET'S PICK OUT A FUN PLAY TO WORK WITH</span>
-<span class="co">########</span>
-
-<span class="va">one.play</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span>  <span class="co">### BEN PASS TO EBRON FOR 19 YARDS</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_id</span> <span class="op">==</span> <span class="fl">2209</span><span class="op">)</span>
-
-<span class="co">########</span>
-<span class="co">## NOW LET'S BUILD A CONVEX HULL FOR JUST THE OFFENSIVE LINE</span>
-<span class="co">########</span>
-
-<span class="va">ol_chull_order</span> <span class="op">&lt;-</span> <span class="va">one.play</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">off_or_def</span> <span class="op">==</span> <span class="st">"offense"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">official_position</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"C"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#### IMPORTANT TO KNOW PERSONNEL PACKAGE HERE: 0 RB, 0 TE, 5 WR</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">frame_id</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="va">chull</span>
-
-<span class="va">ol_chull_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ol_chull_order</span>, <span class="va">ol_chull_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">ol_chull_coords</span> <span class="op">&lt;-</span> <span class="va">one.play</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">off_or_def</span> <span class="op">==</span> <span class="st">"offense"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">frame_id</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">slice</span><span class="op">(</span><span class="va">ol_chull_order</span><span class="op">)</span>
-
-<span class="va">ol_chull_poly</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html">Polygon</a></span><span class="op">(</span><span class="va">ol_chull_coords</span>, hole <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
-<span class="va">ol_chull_area</span> <span class="op">&lt;-</span> <span class="va">ol_chull_poly</span><span class="op">@</span><span class="va">area</span>
-
-<span class="co">########</span>
-<span class="co">## NOW LET'S PLOT IT</span>
-<span class="co">########</span>
-
-<span class="va">one.play</span> <span class="op">%&gt;%</span>
-  <span class="fu">the_dots</span><span class="op">(</span>
-    animated <span class="op">=</span> <span class="cn">TRUE</span>,
-    orientation <span class="op">=</span> <span class="cn">FALSE</span>,
-    convex <span class="op">=</span> <span class="cn">TRUE</span>,
-    segment_length <span class="op">=</span> <span class="fl">6</span>,
-    segment_size <span class="op">=</span> <span class="fl">3</span>,
-    dot_size <span class="op">=</span> <span class="fl">4</span>,
-    animated_h <span class="op">=</span> <span class="fl">4</span>,
-    animated_w <span class="op">=</span> <span class="fl">8</span>,
-    animated_res <span class="op">=</span> <span class="fl">150</span>
-  <span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">########</span></span>
+<span><span class="co">## READING IN PITTSBURGH VS. BUFFALO - WEEK 1</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">pitt.buff</span> <span class="op">&lt;-</span> <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html">read_parquet</a></span><span class="op">(</span><span class="st">"core-data/large-lfs-files/all-weeks-parquet"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## READING IN PLAYS FROM PITTSBURGH VS. BUFFALO - WEEK 1</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">pitt.buff.plays</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/plays.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## READING IN GAME INFO FROM PITTSBURGH VS. BUFFALO - WEEK 1</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">pitt.buff.info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/games.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">game_id</span> <span class="op">==</span> <span class="st">"2021091201"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## COMBING CORE GAME FILE WITH PLAYS, AND THEN BY INFO (TO AVOID MULTIPLE GAME_IDs IN DF)</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">pitt.buff</span>, <span class="va">pitt.buff.plays</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"game_id"</span>, <span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"play_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">inner_join</span><span class="op">(</span><span class="va">pitt.buff.info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"game_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### ROTATING THE DOTS</span></span>
+<span><span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="fu">rotate_the_dots</span><span class="op">(</span><span class="va">complete.data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## MUTATING TO CHARACTER VARIABLE DEFINING WHETHER TEAM IN FRAMES IS ON OFFENSE OR DEFENSE</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>off_or_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
+<span>    <span class="va">team</span> <span class="op">==</span> <span class="va">possession_team</span> <span class="op">~</span> <span class="st">"offense"</span>,</span>
+<span>    <span class="va">team</span> <span class="op">!=</span> <span class="va">possession_team</span> <span class="op">~</span> <span class="st">"defense"</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"football"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>            <span class="co">########</span></span>
+<span>            <span class="co">## CORE CLEANING AND PREP IS COMPLETE</span></span>
+<span>            <span class="co">########</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## ADDING IN INFORMATION FROM PLAYERS.CSV TO BUILD CHULLs FOR JUST O-LINE</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">player.info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"core-data/players.csv"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">nfl_id</span>, <span class="va">official_position</span>, <span class="va">display_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">complete.data</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">inner_join</span><span class="op">(</span><span class="va">player.info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nfl_id"</span> <span class="op">=</span> <span class="st">"nfl_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## LET'S PICK OUT A FUN PLAY TO WORK WITH</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">one.play</span> <span class="op">&lt;-</span> <span class="va">complete.data</span> <span class="op">%&gt;%</span>  <span class="co">### BEN PASS TO EBRON FOR 19 YARDS</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_id</span> <span class="op">==</span> <span class="fl">2209</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## NOW LET'S BUILD A CONVEX HULL FOR JUST THE OFFENSIVE LINE</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">ol_chull_order</span> <span class="op">&lt;-</span> <span class="va">one.play</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">off_or_def</span> <span class="op">==</span> <span class="st">"offense"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">official_position</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"C"</span>, <span class="st">"G"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#### IMPORTANT TO KNOW PERSONNEL PACKAGE HERE: 0 RB, 0 TE, 5 WR</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">frame_id</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="va">chull</span></span>
+<span></span>
+<span><span class="va">ol_chull_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ol_chull_order</span>, <span class="va">ol_chull_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ol_chull_coords</span> <span class="op">&lt;-</span> <span class="va">one.play</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">off_or_def</span> <span class="op">==</span> <span class="st">"offense"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">frame_id</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="va">ol_chull_order</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ol_chull_poly</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html">Polygon</a></span><span class="op">(</span><span class="va">ol_chull_coords</span>, hole <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="va">ol_chull_area</span> <span class="op">&lt;-</span> <span class="va">ol_chull_poly</span><span class="op">@</span><span class="va">area</span></span>
+<span></span>
+<span><span class="co">########</span></span>
+<span><span class="co">## NOW LET'S PLOT IT</span></span>
+<span><span class="co">########</span></span>
+<span></span>
+<span><span class="va">one.play</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">the_dots</span><span class="op">(</span></span>
+<span>    animated <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    convex <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    segment_length <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>    segment_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    dot_size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    animated_h <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    animated_w <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    animated_res <span class="op">=</span> <span class="fl">150</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
