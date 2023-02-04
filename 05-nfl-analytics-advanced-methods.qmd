@@ -18,7 +18,7 @@ Thomas Bliss, a Data Scientist with the NFL, [provided an incredibly helpful lis
 3.  link the rate of false starts to an offensive line's time off the snap
 4.  link between QB release time, receiver separation, and offensive line performance
 
-```{r bdb-reading-writing-data, eval = FALSE}
+```{r bdb-reading-writing-data, eval = FALSE, echo = TRUE}
 
 ### reading all weeks and writing to a parquet file
 all_bdb_weeks <- function(dir = file.path('core-data')) {
@@ -65,7 +65,7 @@ team.colors <- nflfastR::teams_colors_logos %>%
 
 fffff
 
-```{r roating-dots-function, eval = FALSE}
+```{r roating-dots-function, eval = FALSE, echo = TRUE}
 
 rotate_the_dots <- function(df) {
   
@@ -128,7 +128,7 @@ rotate_the_dots <- function(df) {
 
 ffff
 
-```{r finding-orientation-difference, eval = FALSE}
+```{r finding-orientation-difference, eval = FALSE, echo = TRUE}
 
 find_o_diff <- function(df, prefix = "qb") {
   
@@ -160,7 +160,7 @@ find_o_diff <- function(df, prefix = "qb") {
 
 ```
 
-```{r building-convex-hulls, eval = FALSE}
+```{r building-convex-hulls, eval = FALSE, echo = TRUE}
 
 ########
 ## READING IN PITTSBURGH VS. BUFFALO - WEEK 1

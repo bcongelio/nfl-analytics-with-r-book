@@ -35,7 +35,29 @@ Aside from the core eight packages, the `tidyverse` will also install a multiple
 
 ## The Flow of the `tidyverse`
 
-The underlying design of coding in the `tidyverse`, aside from the `dplyr` verbs are both the assignment statement (`<-`)
+The underlying design of coding in the `tidyverse`, aside from the `dplyr` verbs are both the assignment statement (`<-`) and the pipe (`%>%`). Please note, as mentioned in the book's Preface, that I still use the pipe (`%>%`) that is part of the `magrittr` package and not the native pipe operator (`|>`) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.
+
+As I explain to my Sports Analytics students, the language and flow of the `tidyverse` can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in's and out's of the `tidyverse` in the below section, let's first dissect an example of the `tidyverse` workflow.
+
+```{r example-tidyverse, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(posteam == "PHI" & rush == 1) %>%
+  group_by(rusher) %>%
+  summarize(success_rate = mean(success))
+  
+```
+
+There are several iterations of the `tidyverse` being used in the above example. When I first start teaching the `tidyverse` in the early weeks of my class, I explain that it is possible to "talk your way" through the process from the beginning to your end goal (especially once you have a better understanding of the `dplyr` verbs outlined in the following section). Let's break it down in a step-by-step fashion:
+
+1.  We are creating a dataframe called `pbp` from the `load_pbp` function in the `nflreadr` package. To talk through this, you can say **"`pbp` is a copy of `nflreadr::load_pbp(2022)`**. While R language purists will likely laugh at this statement, the assignment statement (`<-`) is simply stating that "*something is*." In this case, our new dataframe titled `pbp` *is* the play-by-play data from `nflreadr`.
+2.  We then move into our first pipe operator (`%>%`). Again, R language purist will likely develop a eye twitch upon reading this, but I explain to my students that the pipe operator serves as a *"... and then"* command. In terms of the "talk it out" method above, the flow would be: "`pbp` is a copy of `nflreadr::load_pbp(2022)` and then ..."
+3.  After the pipe operator (or the first "and then ..." command), we move into our first `dplyr` verb. In this case, we are using the `filter` verb to select just the Philadelphia Eagles as the offensive team and just offensive plays that are rush attempts. With another pipe operator, we are including a second "*... and then"* command.
+4.  To finish the example, we are grouping by each individual rusher on the Eagles "*and then"* summarize the average success rate for each rusher.
+
+**To put it together, "talking it out" from beginning to end results in:**
+
+"First, create a dataframe called `pbp` that is a copy of `nflreadr::load_pbp(2022)` *and then* `filter` for all instances where the `posteam` is `PHI` and `rush == 1` *and then* `group_by` each individual rusher, *and then* summarize the average success rate for each rusher into a new column titled `success_rate`."
 
 ## Working With NFL Data and the `dplyr` Verbs
 
