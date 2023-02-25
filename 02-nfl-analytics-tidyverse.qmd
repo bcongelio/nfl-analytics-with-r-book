@@ -243,11 +243,92 @@ airyards_cpoe_mutate %>%
 
 ## Core Skills for Tidy Data
 
-### Importing Data
+### Importing and Examining Data
 
 ### Dealing with Missing Data
 
 ### Changing Variable Types
+
+To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `Vroom` package.
+
+```{r sis-boom-bust, eval = TRUE, echo = TRUE, output = FALSE}
+
+sis_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv")
+```
+
+In this example, we want to prepare the data for visualization in Chapter 4. Specifically, we want to compare the the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1.
+
+To start, let's first implement what we learned in the above `Importing and Examining Data` section to clean and format the column names into a `tidy` structure, select the relevant columns for our pending visualization in Chapter 4, and then determine the data type for each column provided by SIS:
+
+```{r sis-boom-bust-examine, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- sis_data %>%
+  janitor::clean_names() %>%
+  select(player, team, att, boom_percent, bust_percent)
+
+str(sis_data)
+```
+
+After preparing the data, we can see that four columns (`player`, `team`, `boom_percent`, and `bust_percent`) are listed as a `character` data type while each quarterback's number of attempts (`att`) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.
+
+Moreover, the values in each `boom_percent` and `bust_percent` include a percentage sign at the tail-end.
+
+Because of this, we have two issues we need to correct in order to eventually bring the data over to Chapter 4 for visualization:
+
+1.  correctly changing the variable type for `boom_percent` and `bust_percent`
+2.  removing the `%` from the end of each value in `boom_percent` and `bust_percent`
+
+Much like many things while working in the R programming language, there exists more than one way to tackle the above issues. In this specific case, we will first look at a method that uses the `stringr` package before switching the columns from `character` to `numeric`. After, we will use a much easier method to do both at one time.
+
+::: callout-note
+It is important to note here that I do not necessarily endorse using the first method below to change variable types and to drop the percentage sign, as the second option is ideal.
+
+However, it is important to see how both methods work as there could be a case, somewhere down the road when you are exploring and preparing data yourself, that the first option is the *only* or *best* option.
+
+As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more tools in your toolkit for tidying data.
+:::
+
+#### Method #1: Using `stringr` and Changing Variables
+
+In the below example, we are creating an "example" database titled `sis_data_stringr` from our current iteration of SIS data and then pipe into the `mutate` verb (covered in more depth in the below `Creating New Variables` section). It is within this `mutate` verb that we can drop the percentage sign.
+
+We first indicate that we are going to `mutate` our already existing columns (both `boom_percent` and `bust_percent`). After, we use an `=` sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.
+
+We then use the `str_remove` function from the `stringr` package to locate the `%` sign in each value and remove it.
+
+Afterwards, we dive into base R (that is, not `tidyverse` structure) and use the `as.numeric` function to change both of the boom and bust columns to the correct data type (using the `$` sign to notate that we are working on just one specific column in the data.
+
+```{r stringr-example-variables, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data_stringr <- sis_data %>%
+  mutate(boom_percent = str_remove(boom_percent, "%"),
+         bust_percent = str_remove(bust_percent, "%"))
+
+sis_data_stringr$boom_percent <- as.numeric(as.character(sis_data_stringr$boom_percent))
+sis_data_stringr$bust_percent <- as.numeric(as.character(sis_data_stringr$bust_percent))
+
+str(sis_data_stringr)
+
+```
+
+Our output using `str()` now shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
+
+#### Method #2: Using the `parse_number` Function in `readr`
+
+While the above example using `stringr` and base R is suitable for our needs, we can use the `readr` package - and its `parse_number` function - to achieve the same results in a much less verbose manner.
+
+```{r readr-examples-variables, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- sis_data %>%
+  mutate(boom_percent = readr::parse_number(boom_percent),
+         bust_percent = readr::parse_number(bust_percent))
+
+str(sis_data)
+```
+
+The above example, using `readr`, is quite similar to the first version that used `stringr` in that we are using the `mutate` verb to edit our existing `boom_percent` and `bust_percent` columns. In this case, however, we are replacing our `stringer` argument with the `parse_number` function from the `readr` package. When finished, you can see in the `str()` output that not only are both boom and bust correctly listed as numeric, but the `parse_number` function automatically recognized and dropped the tailing percentage sign.
+
+While both examples get us to the same endpoint, using the `readr` package allows us to get there with less work.
 
 ### Creating New Variables
 
