@@ -270,12 +270,11 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <li>
 <a href="#core-skills-for-tidy-data" id="toc-core-skills-for-tidy-data" class="nav-link" data-scroll-target="#core-skills-for-tidy-data"><span class="toc-section-number">3.6</span>  Core Skills for Tidy Data</a>
   <ul class="collapse">
-<li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><span class="toc-section-number">3.6.1</span>  Importing Data</a></li>
+<li><a href="#importing-and-conducting-exploratory-data-analysis" id="toc-importing-and-conducting-exploratory-data-analysis" class="nav-link" data-scroll-target="#importing-and-conducting-exploratory-data-analysis"><span class="toc-section-number">3.6.1</span>  Importing and Conducting Exploratory Data Analysis</a></li>
   <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="toc-section-number">3.6.2</span>  Dealing with Missing Data</a></li>
   <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="toc-section-number">3.6.3</span>  Changing Variable Types</a></li>
-  <li><a href="#creating-new-variables" id="toc-creating-new-variables" class="nav-link" data-scroll-target="#creating-new-variables"><span class="toc-section-number">3.6.4</span>  Creating New Variables</a></li>
-  <li><a href="#writing-tidy-functions" id="toc-writing-tidy-functions" class="nav-link" data-scroll-target="#writing-tidy-functions"><span class="toc-section-number">3.6.5</span>  Writing Tidy Functions</a></li>
-  <li><a href="#merging-multiple-sets-of-data" id="toc-merging-multiple-sets-of-data" class="nav-link" data-scroll-target="#merging-multiple-sets-of-data"><span class="toc-section-number">3.6.6</span>  Merging Multiple Sets of Data</a></li>
+  <li><a href="#correct-and-create-new-variables-using-mutate" id="toc-correct-and-create-new-variables-using-mutate" class="nav-link" data-scroll-target="#correct-and-create-new-variables-using-mutate"><span class="toc-section-number">3.6.4</span>  Correct and Create New Variables Using <code>mutate</code></a></li>
+  <li><a href="#merging-multiple-sets-of-data" id="toc-merging-multiple-sets-of-data" class="nav-link" data-scroll-target="#merging-multiple-sets-of-data"><span class="toc-section-number">3.6.5</span>  Merging Multiple Sets of Data</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -609,18 +608,278 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 </section></section><section id="core-skills-for-tidy-data" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="core-skills-for-tidy-data">
 <span class="header-section-number">3.6</span> Core Skills for Tidy Data</h2>
-<section id="importing-data" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="importing-data">
-<span class="header-section-number">3.6.1</span> Importing Data</h3>
+<p>With your new understanding of the <code>tidyverse</code> flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by <a href="https://www.sportsinfosolutions.com/">Sports Info Solutions</a>. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).</p>
+<p>In this example, we are going to compare the <code>Boom%</code> and the <code>Bust%</code> for each quarterback in the data, wherein the <code>Boom%</code> correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and <code>Bust%</code> is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in <code>ggplot</code>, we will:</p>
+<ol type="1">
+<li>Import and examine the data.</li>
+<li>Deal with missing values in the data.</li>
+<li>Charge variable types to match what it needed for visualization.</li>
+<li>Using the <code>mutate</code> verb to correct and create new metrics within the data.</li>
+<li>Merging the data with a secondary dataset.</li>
+</ol>
+<section id="importing-and-conducting-exploratory-data-analysis" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="importing-and-conducting-exploratory-data-analysis">
+<span class="header-section-number">3.6.1</span> Importing and Conducting Exploratory Data Analysis</h3>
+<p>To start, let’s examine data from Sports Info Solutions by reading in the data from this book’s Git repository using the <code>Vroom</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom::vroom</a></code>, we are reading in the <code>.csv</code> file into our environment and assigning it the name <code>sis_data</code>. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:</p>
+<ol type="1">
+<li>EDA helps to identify potential issues in the dataset, such as missing or erroneous data, outliers, or inconsistent values - all of which must be addressed prior to further analysis or visualization.</li>
+<li>Conducting an EDA allows you to gain a deeper understanding of the distribution, variability, and relationships between all the variables contained in the dataset, thus allowing you to make informed decisions on appropriate statistical techniques, models, and visualizations that can best analyze and communicate the data effectively.</li>
+<li>The EDA process can help you discover patterns or trends in the data that may be of interest or relevance to your research question, or help you discover to questions to answer.</li>
+</ol>
+<p>To start the process of EDA on our newly created <code>sis_data</code> dataset, let’s examine the current status fo the dataset using the <code>as_tibble()</code> prompt:</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 107 x 14
+   Season Player      Team    Att Point~1 PE Pe~2 Point~3 PAA P~4    EPA Posit~5
+    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
+ 1   2022 Patrick Ma~ Chie~   648    180.   0.267   101.    0.149 119.   52.70% 
+ 2   2022 Justin Her~ Char~   699    138.   0.187    54.2   0.074  -8.11 46.30% 
+ 3   2022 Trevor Law~ Jagu~   584    123.   0.202    48.0   0.079  32.8  48.90% 
+ 4   2022 Jared Goff  Lions   587    121.   0.199    48.4   0.079  64.7  49.00% 
+ 5   2022 Jalen Hurts Eagl~   460    106.   0.213    48.1   0.097  10.9  45.80% 
+ 6   2022 &lt;NA&gt;        &lt;NA&gt;    439    104.   0.12     41.2   0.087   8.92 45.70% 
+ 7   2022 Kirk Cousi~ Viki~   643    104.   0.151    24.0   0.035 -12.7  45.70% 
+ 8   2022 Tua Tagova~ Dolp~   400    102.   0.243    44.9   0.107  66.2  50.40% 
+ 9   2022 Joe Burrow  Beng~   606    102.   0.158    25.7   0.04   19.4  49.50% 
+10   2022 Josh Allen  Bills   567    100.   0.167    29.4   0.049  47.9  50.30% 
+# ... with 97 more rows, 4 more variables: PAR &lt;dbl&gt;, WAR &lt;dbl&gt;, `Boom%` &lt;chr&gt;,
+#   `Bust%` &lt;chr&gt;, and abbreviated variable names 1: `Points Earned`,
+#   2: `PE Per Play`, 3: `Points Above Avg`, 4: `PAA Per Play`, 5: `Positive%`</code></pre>
+</div>
+</div>
+<p>The results immediately bring to light several issues in the data:</p>
+<ol type="1">
+<li>There are several instances of missing data (as indicated by <code>NA</code> values in the 6th row).</li>
+<li>Many of the column names are not in <code>tidy</code> format. Specifically, the <code>Boom%</code> and <code>Bust%</code> columns, because of the inclusion of the percentage sign, require the small ticks at either end of the word. The same issue is apparent in <code>Points Earned</code> as it includes a space between the word and, finally, many of the variable names are in full caps.</li>
+<li>The <code>Boom%</code> and <code>Bust%</code> columns are both listed as <code>&lt;chr&gt;</code> which indicates that they are currently character-based columns, rather than the needed numeric-based column.</li>
+<li>The above issue is caused by all the values within <code>Boom%</code> and <code>Bust%</code> containing a percentage sign at the tail end.</li>
+<li>Lastly, the <code>team</code> variable for Baker Mayfield’s has a value of “2 teams” since he played for both the Carolina Panthers and Los Angeles Rams during the 2022 season.</li>
+</ol>
+<p>To begin dealing with these issues, let’s first tackle cleaning the variable names and then selecting just those columns relevant to our forthcoming data visualization in Chapter 4:</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player</span>, <span class="va">team</span>, <span class="va">att</span>, <span class="va">boom_percent</span>, <span class="va">bust_percent</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 107 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       
+ 1 Patrick Mahomes Chiefs     648 25.10%       12.50%      
+ 2 Justin Herbert  Chargers   699 21.20%       15.90%      
+ 3 Trevor Lawrence Jaguars    584 23.70%       15.20%      
+ 4 Jared Goff      Lions      587 23.60%       13.30%      
+ 5 Jalen Hurts     Eagles     460 23.50%       16.10%      
+ 6 &lt;NA&gt;            &lt;NA&gt;       439 &lt;NA&gt;         10.10%      
+ 7 Kirk Cousins    Vikings    643 21.30%       17.40%      
+ 8 Tua Tagovailoa  Dolphins   400 28.50%       15.70%      
+ 9 Joe Burrow      Bengals    606 23.60%       14.80%      
+10 Josh Allen      Bills      567 23.20%       12.70%      
+# ... with 97 more rows</code></pre>
+</div>
+</div>
+<p>In the above code, we are using the <code>clean_names()</code> function within the <code>janitor</code> package to automatically rework the column names into a <code>tidy</code> format. After, we use the <code>select</code> verb to keep only five of the included columns of data (<code>player</code>, <code>team</code>, <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code>). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.</p>
 </section><section id="dealing-with-missing-data" class="level3" data-number="3.6.2"><h3 data-number="3.6.2" class="anchored" data-anchor-id="dealing-with-missing-data">
 <span class="header-section-number">3.6.2</span> Dealing with Missing Data</h3>
+<p>Dealing with missing data is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by <code>NA</code> values and there are several different approaches to handling the missing data in an effective manner.</p>
+<p>A dataset can present missing data for a variety of reasons, including participant non-responses (such in social science research), measurement error, or simple data processing issues. The process of handling missing data is ultimately the result of the end goal of the analysis. In some case, conducting a imputation (such as replacing all <code>NA</code> values with the mean of all existing data) is used. In other cases, a more complex method can be utilized such as the <code>mice</code> package, which can impute missing data based on several different machine learning approaches (predictive mean matching, logistic regression, Bayesian polytomous regression, proportional odds model, etc.). Ultimately, the choice of method for handling missing data depends on the attributes of the dataset, your research question, and your end goals for the data.</p>
+<p>To begin exploring missing values in our <code>sis_data</code> dataset, we can run the following code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data_missing</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">filter_all</span><span class="op">(</span><span class="fu">any_vars</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data_missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 5
+  player team    att boom_percent bust_percent
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       
+1 &lt;NA&gt;   &lt;NA&gt;    439 &lt;NA&gt;         10.10%      </code></pre>
+</div>
+</div>
+<p>By using <code>filter_all</code> across all of our variables (<code>any_vars</code>), we can filter for any missing value, indicated by including <code>is.na</code> in the <code>filter</code>. The output shows each row within the dataset that includes at least missing value. In this case, we only have one row with missing data, with values for <code>player</code>, <code>team</code>, and <code>boom_percent</code> all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.</p>
+<p>Instead, we will return to our original dataset (<code>sis_data</code>) and use the <code>na.omit</code> function to drop any row that includes missing data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code, we are simply “recreating” our existing dataset but using <code>na.omit</code> to drop rows that include <code>NA</code> values. Once complete, we can move onto the next step of the data preparation/cleaning process.</p>
 </section><section id="changing-variable-types" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="changing-variable-types">
 <span class="header-section-number">3.6.3</span> Changing Variable Types</h3>
-</section><section id="creating-new-variables" class="level3" data-number="3.6.4"><h3 data-number="3.6.4" class="anchored" data-anchor-id="creating-new-variables">
-<span class="header-section-number">3.6.4</span> Creating New Variables</h3>
-</section><section id="writing-tidy-functions" class="level3" data-number="3.6.5"><h3 data-number="3.6.5" class="anchored" data-anchor-id="writing-tidy-functions">
-<span class="header-section-number">3.6.5</span> Writing Tidy Functions</h3>
-</section><section id="merging-multiple-sets-of-data" class="level3" data-number="3.6.6"><h3 data-number="3.6.6" class="anchored" data-anchor-id="merging-multiple-sets-of-data">
-<span class="header-section-number">3.6.6</span> Merging Multiple Sets of Data</h3>
+<p>As discovered in the exploratory data analysis process, we know that four columns (<code>player</code>, <code>team</code>, <code>boom_percent</code>, and <code>bust_percent</code>) are listed as a <code>character</code> data type while each quarterback’s number of attempts (<code>att</code>) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.</p>
+<p>Moreover, the values in each <code>boom_percent</code> and <code>bust_percent</code> include a percentage sign at the tail-end.</p>
+<p>Because of this, we have two issues we need to correct in order to eventually bring the data over to Chapter 4 for visualization:</p>
+<ol type="1">
+<li>correctly changing the variable type for <code>boom_percent</code> and <code>bust_percent</code>
+</li>
+<li>removing the <code>%</code> from the end of each value in <code>boom_percent</code> and <code>bust_percent</code>
+</li>
+</ol>
+<p>Much like many things while working in the R programming language, there exists more than one way to tackle the above issues. In this specific case, we will first look at a method that uses the <code>stringr</code> package before switching the columns from <code>character</code> to <code>numeric</code> using an approach rooted in base R. After, we will use a much easier method to do both at one time.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important to note here that I do not necessarily endorse using the first method below to change variable types and to drop the percentage sign, as the second option is ideal.</p>
+<p>However, it is important to see how both methods work as there could be a case, somewhere down the road when you are exploring and preparing data yourself, that the first option is the <em>only</em> or <em>best</em> option.</p>
+<p>As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more options in your toolkit for tidying data.</p>
+</div>
+</div>
+<section id="method-1-using-stringr-and-changing-variables" class="level4" data-number="3.6.3.1"><h4 data-number="3.6.3.1" class="anchored" data-anchor-id="method-1-using-stringr-and-changing-variables">
+<span class="header-section-number">3.6.3.1</span> Method #1: Using <code>stringr</code> and Changing Variables</h4>
+<p>In the below example, we are creating an “example” database titled <code>sis_data_stringr</code> from our current iteration of SIS data and then pipe into the <code>mutate</code> verb (covered in more depth in the below <code>Creating New Variables</code> section). It is within this <code>mutate</code> verb that we can drop the percentage sign.</p>
+<p>We first indicate that we are going to <code>mutate</code> our already existing columns (both <code>boom_percent</code> and <code>bust_percent</code>). After, we use an <code>=</code> sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.</p>
+<p>We then use the <code>str_remove</code> function from the <code>stringr</code> package to locate the <code>%</code> sign in each value and remove it.</p>
+<p>Afterwards, we dive into base R (that is, not <code>tidyverse</code> structure) and use the <code>as.numeric</code> function to change both of the boom and bust columns to the correct data type (using the <code>$</code> sign to notate that we are working on just one specific column in the data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data_stringr</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>boom_percent <span class="op">=</span> <span class="fu">str_remove</span><span class="op">(</span><span class="va">boom_percent</span>, <span class="st">"%"</span><span class="op">)</span>,</span>
+<span>         bust_percent <span class="op">=</span> <span class="fu">str_remove</span><span class="op">(</span><span class="va">bust_percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">boom_percent</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">boom_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">bust_percent</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">bust_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 106 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5
+ 2 Justin Herbert  Chargers   699         21.2         15.9
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2
+ 4 Jared Goff      Lions      587         23.6         13.3
+ 5 Jalen Hurts     Eagles     460         23.5         16.1
+ 6 Kirk Cousins    Vikings    643         21.3         17.4
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7
+ 8 Joe Burrow      Bengals    606         23.6         14.8
+ 9 Josh Allen      Bills      567         23.2         12.7
+10 Geno Smith      Seahawks   572         20.6         17.6
+# ... with 96 more rows</code></pre>
+</div>
+</div>
+<p>Our output using <code>as_tibble()</code> now shows that <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code> are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.</p>
+</section><section id="method-2-using-the-parse_number-function-in-readr" class="level4" data-number="3.6.3.2"><h4 data-number="3.6.3.2" class="anchored" data-anchor-id="method-2-using-the-parse_number-function-in-readr">
+<span class="header-section-number">3.6.3.2</span> Method #2: Using the <code>parse_number</code> Function in <code>readr</code>
+</h4>
+<p>While the above example using <code>stringr</code> and base R is suitable for our needs, we can use the <code>readr</code> package - and its <code>parse_number</code> function - to achieve the same results in a less verbose manner.</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>boom_percent <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">boom_percent</span><span class="op">)</span>,</span>
+<span>         bust_percent <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">bust_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 106 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5
+ 2 Justin Herbert  Chargers   699         21.2         15.9
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2
+ 4 Jared Goff      Lions      587         23.6         13.3
+ 5 Jalen Hurts     Eagles     460         23.5         16.1
+ 6 Kirk Cousins    Vikings    643         21.3         17.4
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7
+ 8 Joe Burrow      Bengals    606         23.6         14.8
+ 9 Josh Allen      Bills      567         23.2         12.7
+10 Geno Smith      Seahawks   572         20.6         17.6
+# ... with 96 more rows</code></pre>
+</div>
+</div>
+<p>The above example, using <code>readr</code>, is quite similar to the first version that used <code>stringr</code> in that we are using the <code>mutate</code> verb to edit our existing <code>boom_percent</code> and <code>bust_percent</code> columns. In this case, however, we are replacing our <code>stringer</code> argument with the <code>parse_number</code> function from the <code>readr</code> package. When finished, you can see in the <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output that not only are both boom and bust correctly listed as numeric, but the <code>parse_number</code> function automatically recognized and dropped the tailing percentage sign.</p>
+<p>While both examples get us to the same endpoint, using the <code>readr</code> package allows us to get there with less work.</p>
+</section></section><section id="correct-and-create-new-variables-using-mutate" class="level3" data-number="3.6.4"><h3 data-number="3.6.4" class="anchored" data-anchor-id="correct-and-create-new-variables-using-mutate">
+<span class="header-section-number">3.6.4</span> Correct and Create New Variables Using <code>mutate</code>
+</h3>
+<p>The <code>mutate</code> verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our dataset. To that end, the <code>mutate</code> verb applies a user-supplied argument to each row of the dataset to create the new metric. Additionally, the <code>mutate</code> verb - when combined with the <code>case_when()</code> argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield’s teams).</p>
+<p>The syntax of the <code>mutate</code> verb follows the <code>tidyverse</code> flow like many of the other <code>dplyr</code> verbs:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">mutate</span><span class="op">(</span>new_column_name <span class="op">=</span> <span class="fu">user_supplied_argument</span><span class="op">(</span><span class="va">existing_column_name</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>mutate</code> verb is highly flexible, allowing us to create a new column based on a wide-range of functions and arguments, including mathematical operations, logical operations, string operation, and many more - including applying functions from other packages.</p>
+<p>Importantly, the <code>mutate</code> verb allows us to create new variables <strong>without changing the original dataset</strong>. While the <code>summarize</code> verb can also create new columns based on various functions and argument, it also distills the dataset down to just the columns created within the <code>summarize</code> function (plus any column including in the <code>group_by()</code>). Conversely, the <code>mutate</code> verb creates the new column and adds it on to the current iteration of the dataset.</p>
+<p>To showcase this, let’s create a new column in our <code>sis_data</code> that calculate the difference between a quarterback’s <code>boom_percent</code> and <code>bust_percent</code>. This is also a great time to limit the quarterbacks we include based on the number of attempts for each. Not doing so results in oddities in the data, such as Christian McCaffrey (a running back) having a 100-percent boom percentage on one passing attempt. To avoid such occurrences, let’s add the <code>filter</code> verb prior to our <code>mutate</code> and limit the data to just those quarterbacks with at least 200 passing attempts:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">att</span> <span class="op">&gt;=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>difference <span class="op">=</span> <span class="va">boom_percent</span> <span class="op">-</span> <span class="va">bust_percent</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 x 6
+   player          team       att boom_percent bust_percent difference
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5      12.6 
+ 2 Justin Herbert  Chargers   699         21.2         15.9       5.3 
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2       8.5 
+ 4 Jared Goff      Lions      587         23.6         13.3      10.3 
+ 5 Jalen Hurts     Eagles     460         23.5         16.1       7.4 
+ 6 Kirk Cousins    Vikings    643         21.3         17.4       3.90
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7      12.8 
+ 8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
+ 9 Josh Allen      Bills      567         23.2         12.7      10.5 
+10 Geno Smith      Seahawks   572         20.6         17.6       3   
+# ... with 23 more rows</code></pre>
+</div>
+</div>
+<p>In the above example, by using the <code>mutate</code> verb, we created a new column in our existing <code>sis_data</code> dataset that calculates the different between a quarterback’s <code>boom_percent</code> and <code>bust_percent</code>. Importantly, as mentioned, this is done while keeping the rest of the dataset in place unlike using the <code>summarize</code> verb.</p>
+<p>As mentioned in the introduction to this section, it is possible to include other function within the <code>mutate</code> verb. In fact, doing so is necessary if we wish to make the correction to Baker Mayfield’s team. Currently, Mayfield’s value for <code>team</code> is listed as <code>2 teams</code>. Instead, let’s replace that with his most recent team in the 2022 NFL season (Rams).</p>
+<p>To make this correction, we will begin by using the <code>mutate</code> verb on the existing <code>team</code> column in our dataset. However, where we calculated the different between boom and bust percent in the above example of <code>mutate</code>, we will now use the <code>case_when()</code> function.</p>
+<p>The <code>case_when()</code> function allows us to either correct values, or create new columns, based on multiple conditions and values. The syntax of <code>case_when()</code> is as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">mutate</span><span class="op">(</span>column_name <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
+<span>  <span class="va">condition_1</span> <span class="op">==</span> <span class="va">value_1</span> <span class="op">~</span> <span class="va">new_value</span>,</span>
+<span>  <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">default_value</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code, we are essentially saying: “if condition_1 equals value_1, then replace the column_name’s existing value with this new_value.” The final argument, <code>TRUE ~ default_value</code>, specifies the default value to be used if none of the prior conditions are <code>TRUE</code>.</p>
+<p>To make this more concrete, let’s working through it using our issue with Baker Mayfield. In order to make the correction, we need to supply the <code>case_when()</code> argument three items from the data: the column name that we are applying the <code>mutate</code> to (in this case, <code>team</code>), the first condition (in this case, <code>player</code>), and the value of that condition (in this case, <code>Baker Mayfield</code>). Next, we need to include the new value (in this case, <code>Rams</code>), and then supply what to do if the above condition is not <code>TRUE</code>. In other words, if the <code>player</code> is not <code>Baker Mayfield</code> then simply keep the existing <code>team</code> in place.</p>
+<p>Following that verbal walk through of the process, we can place the conditions and values into the correct spot in the relevant code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>team <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
+<span>    <span class="va">player</span> <span class="op">==</span> <span class="st">"Baker Mayfield"</span> <span class="op">~</span> <span class="st">"Rams"</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">team</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player</span> <span class="op">==</span> <span class="st">"Baker Mayfield"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 6
+  player         team    att boom_percent bust_percent difference
+  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+1 Baker Mayfield Rams    335           17         18.9      -1.90</code></pre>
+</div>
+</div>
+<p>By filtering the data down to include just Baker Mayfield, we can use <code>as_tibble()</code> to make sure that his team is now listed as the Rams. Further, a continued look at the data shows no other players’ teams were changed in the process:</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">as_tibble</span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 x 6
+   player          team       att boom_percent bust_percent difference
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5      12.6 
+ 2 Justin Herbert  Chargers   699         21.2         15.9       5.3 
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2       8.5 
+ 4 Jared Goff      Lions      587         23.6         13.3      10.3 
+ 5 Jalen Hurts     Eagles     460         23.5         16.1       7.4 
+ 6 Kirk Cousins    Vikings    643         21.3         17.4       3.90
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7      12.8 
+ 8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
+ 9 Josh Allen      Bills      567         23.2         12.7      10.5 
+10 Geno Smith      Seahawks   572         20.6         17.6       3   
+# ... with 23 more rows</code></pre>
+</div>
+</div>
+</section><section id="merging-multiple-sets-of-data" class="level3" data-number="3.6.5"><h3 data-number="3.6.5" class="anchored" data-anchor-id="merging-multiple-sets-of-data">
+<span class="header-section-number">3.6.5</span> Merging Multiple Sets of Data</h3>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

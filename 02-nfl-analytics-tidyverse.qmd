@@ -243,11 +243,17 @@ airyards_cpoe_mutate %>%
 
 ## Core Skills for Tidy Data
 
-### Importing and Examining Data
+With your new understanding of the `tidyverse` flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by [Sports Info Solutions](https://www.sportsinfosolutions.com/). Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).
 
-### Dealing with Missing Data
+In this example, we are going to compare the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in `ggplot`, we will:
 
-### Changing Variable Types
+1.  Import and examine the data.
+2.  Deal with missing values in the data.
+3.  Charge variable types to match what it needed for visualization.
+4.  Using the `mutate` verb to correct and create new metrics within the data.
+5.  Merging the data with a secondary dataset.
+
+### Importing and Conducting Exploratory Data Analysis
 
 To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `Vroom` package.
 
@@ -256,9 +262,28 @@ To start, let's examine data from Sports Info Solutions by reading in the data f
 sis_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv")
 ```
 
-In this example, we want to prepare the data for visualization in Chapter 4. Specifically, we want to compare the the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1.
+Using `vroom::vroom`, we are reading in the `.csv` file into our environment and assigning it the name `sis_data`. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:
 
-To start, let's first implement what we learned in the above `Importing and Examining Data` section to clean and format the column names into a `tidy` structure, select the relevant columns for our pending visualization in Chapter 4, and then determine the data type for each column provided by SIS:
+1.  EDA helps to identify potential issues in the dataset, such as missing or erroneous data, outliers, or inconsistent values - all of which must be addressed prior to further analysis or visualization.
+2.  Conducting an EDA allows you to gain a deeper understanding of the distribution, variability, and relationships between all the variables contained in the dataset, thus allowing you to make informed decisions on appropriate statistical techniques, models, and visualizations that can best analyze and communicate the data effectively.
+3.  The EDA process can help you discover patterns or trends in the data that may be of interest or relevance to your research question, or help you discover to questions to answer.
+
+To start the process of EDA on our newly created `sis_data` dataset, let's examine the current status fo the dataset using the `as_tibble()` prompt:
+
+```{r sis-data-eda, eval = TRUE, echo = TRUE, output = TRUE}
+
+as_tibble(sis_data)
+```
+
+The results immediately bring to light several issues in the data:
+
+1.  There are several instances of missing data (as indicated by `NA` values in the 6th row).
+2.  Many of the column names are not in `tidy` format. Specifically, the `Boom%` and `Bust%` columns, because of the inclusion of the percentage sign, require the small ticks at either end of the word. The same issue is apparent in `Points Earned` as it includes a space between the word and, finally, many of the variable names are in full caps.
+3.  The `Boom%` and `Bust%` columns are both listed as `<chr>` which indicates that they are currently character-based columns, rather than the needed numeric-based column.
+4.  The above issue is caused by all the values within `Boom%` and `Bust%` containing a percentage sign at the tail end.
+5.  Lastly, the `team` variable for Baker Mayfield's has a value of "2 teams" since he played for both the Carolina Panthers and Los Angeles Rams during the 2022 season.
+
+To begin dealing with these issues, let's first tackle cleaning the variable names and then selecting just those columns relevant to our forthcoming data visualization in Chapter 4:
 
 ```{r sis-boom-bust-examine, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -266,10 +291,41 @@ sis_data <- sis_data %>%
   janitor::clean_names() %>%
   select(player, team, att, boom_percent, bust_percent)
 
-str(sis_data)
+as_tibble(sis_data)
 ```
 
-After preparing the data, we can see that four columns (`player`, `team`, `boom_percent`, and `bust_percent`) are listed as a `character` data type while each quarterback's number of attempts (`att`) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.
+In the above code, we are using the `clean_names()` function within the `janitor` package to automatically rework the column names into a `tidy` format. After, we use the `select` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
+
+### Dealing with Missing Data
+
+Dealing with missing data is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by `NA` values and there are several different approaches to handling the missing data in an effective manner.
+
+A dataset can present missing data for a variety of reasons, including participant non-responses (such in social science research), measurement error, or simple data processing issues. The process of handling missing data is ultimately the result of the end goal of the analysis. In some case, conducting a imputation (such as replacing all `NA` values with the mean of all existing data) is used. In other cases, a more complex method can be utilized such as the `mice` package, which can impute missing data based on several different machine learning approaches (predictive mean matching, logistic regression, Bayesian polytomous regression, proportional odds model, etc.). Ultimately, the choice of method for handling missing data depends on the attributes of the dataset, your research question, and your end goals for the data.
+
+To begin exploring missing values in our `sis_data` dataset, we can run the following code:
+
+```{r explore-missing-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data_missing <- sis_data %>%
+  filter_all(any_vars(is.na(.)))
+
+sis_data_missing
+```
+
+By using `filter_all` across all of our variables (`any_vars`), we can filter for any missing value, indicated by including `is.na` in the `filter`. The output shows each row within the dataset that includes at least missing value. In this case, we only have one row with missing data, with values for `player`, `team`, and `boom_percent` all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.
+
+Instead, we will return to our original dataset (`sis_data`) and use the `na.omit` function to drop any row that includes missing data:
+
+```{r dropping-missing-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- na.omit(sis_data)
+```
+
+In the above code, we are simply "recreating" our existing dataset but using `na.omit` to drop rows that include `NA` values. Once complete, we can move onto the next step of the data preparation/cleaning process.
+
+### Changing Variable Types
+
+As discovered in the exploratory data analysis process, we know that four columns (`player`, `team`, `boom_percent`, and `bust_percent`) are listed as a `character` data type while each quarterback's number of attempts (`att`) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.
 
 Moreover, the values in each `boom_percent` and `bust_percent` include a percentage sign at the tail-end.
 
@@ -278,14 +334,14 @@ Because of this, we have two issues we need to correct in order to eventually br
 1.  correctly changing the variable type for `boom_percent` and `bust_percent`
 2.  removing the `%` from the end of each value in `boom_percent` and `bust_percent`
 
-Much like many things while working in the R programming language, there exists more than one way to tackle the above issues. In this specific case, we will first look at a method that uses the `stringr` package before switching the columns from `character` to `numeric`. After, we will use a much easier method to do both at one time.
+Much like many things while working in the R programming language, there exists more than one way to tackle the above issues. In this specific case, we will first look at a method that uses the `stringr` package before switching the columns from `character` to `numeric` using an approach rooted in base R. After, we will use a much easier method to do both at one time.
 
 ::: callout-note
 It is important to note here that I do not necessarily endorse using the first method below to change variable types and to drop the percentage sign, as the second option is ideal.
 
 However, it is important to see how both methods work as there could be a case, somewhere down the road when you are exploring and preparing data yourself, that the first option is the *only* or *best* option.
 
-As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more tools in your toolkit for tidying data.
+As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more options in your toolkit for tidying data.
 :::
 
 #### Method #1: Using `stringr` and Changing Variables
@@ -307,15 +363,15 @@ sis_data_stringr <- sis_data %>%
 sis_data_stringr$boom_percent <- as.numeric(as.character(sis_data_stringr$boom_percent))
 sis_data_stringr$bust_percent <- as.numeric(as.character(sis_data_stringr$bust_percent))
 
-str(sis_data_stringr)
+as_tibble(sis_data_stringr)
 
 ```
 
-Our output using `str()` now shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
+Our output using `as_tibble()` now shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
 
 #### Method #2: Using the `parse_number` Function in `readr`
 
-While the above example using `stringr` and base R is suitable for our needs, we can use the `readr` package - and its `parse_number` function - to achieve the same results in a much less verbose manner.
+While the above example using `stringr` and base R is suitable for our needs, we can use the `readr` package - and its `parse_number` function - to achieve the same results in a less verbose manner.
 
 ```{r readr-examples-variables, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -323,15 +379,77 @@ sis_data <- sis_data %>%
   mutate(boom_percent = readr::parse_number(boom_percent),
          bust_percent = readr::parse_number(bust_percent))
 
-str(sis_data)
+as_tibble(sis_data)
 ```
 
 The above example, using `readr`, is quite similar to the first version that used `stringr` in that we are using the `mutate` verb to edit our existing `boom_percent` and `bust_percent` columns. In this case, however, we are replacing our `stringer` argument with the `parse_number` function from the `readr` package. When finished, you can see in the `str()` output that not only are both boom and bust correctly listed as numeric, but the `parse_number` function automatically recognized and dropped the tailing percentage sign.
 
 While both examples get us to the same endpoint, using the `readr` package allows us to get there with less work.
 
-### Creating New Variables
+### Correct and Create New Variables Using `mutate`
 
-### Writing Tidy Functions
+The `mutate` verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our dataset. To that end, the `mutate` verb applies a user-supplied argument to each row of the dataset to create the new metric. Additionally, the `mutate` verb - when combined with the `case_when()` argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield's teams).
+
+The syntax of the `mutate` verb follows the `tidyverse` flow like many of the other `dplyr` verbs:
+
+```{r mutate-example-syntax, eval = FALSE, echo = TRUE, output = FALSE}
+
+mutate(new_column_name = user_supplied_argument(existing_column_name))
+```
+
+The `mutate` verb is highly flexible, allowing us to create a new column based on a wide-range of functions and arguments, including mathematical operations, logical operations, string operation, and many more - including applying functions from other packages.
+
+Importantly, the `mutate` verb allows us to create new variables **without changing the original dataset**. While the `summarize` verb can also create new columns based on various functions and argument, it also distills the dataset down to just the columns created within the `summarize` function (plus any column including in the `group_by()`). Conversely, the `mutate` verb creates the new column and adds it on to the current iteration of the dataset.
+
+To showcase this, let's create a new column in our `sis_data` that calculate the difference between a quarterback's `boom_percent` and `bust_percent`. This is also a great time to limit the quarterbacks we include based on the number of attempts for each. Not doing so results in oddities in the data, such as Christian McCaffrey (a running back) having a 100-percent boom percentage on one passing attempt. To avoid such occurrences, let's add the `filter` verb prior to our `mutate` and limit the data to just those quarterbacks with at least 200 passing attempts:
+
+```{r boom-bust-mutate, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- sis_data %>%
+  filter(att >= 200) %>%
+  mutate(difference = boom_percent - bust_percent)
+
+as_tibble(sis_data)
+```
+
+In the above example, by using the `mutate` verb, we created a new column in our existing `sis_data` dataset that calculates the different between a quarterback's `boom_percent` and `bust_percent`. Importantly, as mentioned, this is done while keeping the rest of the dataset in place unlike using the `summarize` verb.
+
+As mentioned in the introduction to this section, it is possible to include other function within the `mutate` verb. In fact, doing so is necessary if we wish to make the correction to Baker Mayfield's team. Currently, Mayfield's value for `team` is listed as `2 teams`. Instead, let's replace that with his most recent team in the 2022 NFL season (Rams).
+
+To make this correction, we will begin by using the `mutate` verb on the existing `team` column in our dataset. However, where we calculated the different between boom and bust percent in the above example of `mutate`, we will now use the `case_when()` function.
+
+The `case_when()` function allows us to either correct values, or create new columns, based on multiple conditions and values. The syntax of `case_when()` is as follows:
+
+```{r casewhen-example-syntax, eval = FALSE, echo = TRUE, output = FALSE}
+
+mutate(column_name = case_when(
+  condition_1 == value_1 ~ new_value,
+  TRUE ~ default_value))
+```
+
+In the above code, we are essentially saying: "if condition_1 equals value_1, then replace the column_name's existing value with this new_value." The final argument, `TRUE ~ default_value`, specifies the default value to be used if none of the prior conditions are `TRUE`.
+
+To make this more concrete, let's working through it using our issue with Baker Mayfield. In order to make the correction, we need to supply the `case_when()` argument three items from the data: the column name that we are applying the `mutate` to (in this case, `team`), the first condition (in this case, `player`), and the value of that condition (in this case, `Baker Mayfield`). Next, we need to include the new value (in this case, `Rams`), and then supply what to do if the above condition is not `TRUE`. In other words, if the `player` is not `Baker Mayfield` then simply keep the existing `team` in place.
+
+Following that verbal walk through of the process, we can place the conditions and values into the correct spot in the relevant code:
+
+```{r replacing-baker-team, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- sis_data %>%
+  mutate(team = case_when(
+    player == "Baker Mayfield" ~ "Rams",
+    TRUE ~ team))
+
+sis_data %>%
+  filter(player == "Baker Mayfield") %>%
+  as_tibble()
+```
+
+By filtering the data down to include just Baker Mayfield, we can use `as_tibble()` to make sure that his team is now listed as the Rams. Further, a continued look at the data shows no other players' teams were changed in the process:
+
+```{r no-teams-harmed, eval = TRUE, echo = TRUE, output = TRUE}
+
+as_tibble(sis_data)
+```
 
 ### Merging Multiple Sets of Data
