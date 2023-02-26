@@ -6,13 +6,14 @@ source("R/book-functions.R")
 
 library(tidyverse)
 library(nflverse)
+library(seecolor)
 
 pbp <- nflreadr::load_pbp(2022)
 ```
 
 ## Downloading R and RStudio
 
-## Installing Necessary Packages
+## Installing and Loading Necessary Packages
 
 ## The `tidyverse` and Its Verbs
 
@@ -81,25 +82,205 @@ Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most impo
 
 ### NFL Data and the `filter()` verb
 
-ffffff
+The `filter` verb allows you to extract specific rows from your dataset based on one, or multiple, supplied conditions. The conditions are supplied to the `filter` verb by using logical operators, listed in the below table, that ultimately evaluate to either `TRUE` or `FALSE` in each row of the dataset. The `filter` process returns a dataset that includes only those rows that meet the specified conditions.
 
 <center>
 
-| Logical Operator |          Meaning          |
-|:----------------:|:-------------------------:|
-|       `==`       |         equal to          |
-|       `!=`       |       not equal to        |
-|       `<`        |         less than         |
-|       `<=`       |   less than or equal to   |
-|       `>`        |       greater than        |
-|       `>=`       | greater than or equal to  |
-|       `!`        |            not            |
-|       `&`        |            and            |
-|       `|`        |            or             |
-|      `%in%`      |         includes          |
-|     `is.na`      | checks for missing values |
+| Logical Operator |                 Meaning                 |
+|:----------------:|:---------------------------------------:|
+|       `==`       |                equal to                 |
+|       `!=`       |              not equal to               |
+|       `<`        |                less than                |
+|       `<=`       |          less than or equal to          |
+|       `>`        |              greater than               |
+|       `>=`       |        greater than or equal to         |
+|       `!`        |                   not                   |
+|       `&`        |                   and                   |
+|       `|`        |                   or                    |
+|      `%in%`      |                includes                 |
+|      `c()`       | used to combine arguments into a vector |
+|     `is.na`      |        checks for missing values        |
+|     `!is.na`     |     is not missing specific values      |
 
 </center>
+
+In order to work through specific examples of the above logical operators, we will use 2022 play-by-play data from `nflreadr`. To begin, let's read in the data:
+
+::: callout-note
+Please note that a more detailed overview of reading in `nflreadr` data is provided in Chapter 3. For the purposes of learning about the `filter` verb, please make sure you have both the `tidyverse` and `nflreadr` loaded by running the following:
+
+`library(tidyverse`)\
+`library(nflreadr)`
+
+If you have difficult with the above step, please see the [Installing and Loading Necessary Packages] section above.
+:::
+
+```{r loading-in-filter-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022)
+```
+
+After running the above code, you will have a dataset titled `pbp` placed into your RStudio environment consisting over 50,147 observations over 372 variables. With the dataset loaded, let's create a new dataset titled `ne_offense` that contains *only those plays where the New England Patriots are the offensive team*.
+
+```{r ne-offense-filter, eval = TRUE, echo = TRUE, output = TRUE}
+
+ne_offense <- pbp %>%
+  filter(posteam == "NE")
+
+as_tibble(ne_offense)
+```
+
+The `as_tibble()` output shows that the `posteam` variable contains only `NE`, which is the abbreviation for the New England Patriots in the `nflreadr` play-by-play data. In the code that produced `ne_offense`, **it is important to notice that:**
+
+1.  the "equal to" logical operator consist of *TWO* equal signs, not one.
+2.  the team abbreviation (`NE`) is in quotation marks.
+
+In the first, a single equal sign (`=`) can be used as a synonym for assignment (`<-`) but is most often used when passing values into functions (which is covered in Chapter 5). To avoid confusion with these possibility, **the test for equality when using `filter`** **is always `==`**.
+
+In the second, you must use quotation marks around the character-based value you are placing into the `filter()` verb because, if not, R will interpret `posteam` incorrectly and ultimately generate an error. On the other hand, you *do not* need to include quotation marks if you are filtering out numeric-based variables. Below are incorrect and correct examples of both:
+
+```{r correct-incorrect-filter, eval = FALSE, echo = TRUE, output = FALSE}
+
+ne_offense <- pbp %>%
+  filter(posteam == NE) #this is incorrect. Character values must be in quotation marks.
+
+ne_offense <- pbp %>%
+  filter(posteam == "NE") #this is correct for character values.
+
+ne_offense <- pbp %>%
+  filter(air_yards >= "5") #this is incorrect. Numeric values do not need quotation marks.
+
+ne_offense <- pbp %>%
+  filter(air_yards >= 5) #this is correct for numeric values.
+
+```
+
+How do we approach the logical operators if we want to retrieve every offensive team in the `pbp` data *except* for New England? In that case, we can use the "not equal to" (`!=`) operator:
+
+```{r not-ne-offense, eval = FALSE, echo = TRUE, output = FALSE}
+
+not_ne_offense <- pbp %>%
+  filter(posteam != "NE")
+```
+
+The resulting dataset titled `not_ne_offense` will still include all 372 variables housed within the `nflreadr` play-by-play data, but will not include any row in which New England is the offensive (`posteam`) team.
+
+**Continuing with examples, how do we use the `filter`** **verb on multiple teams at once?** For instance, let's use the above filtering process for offensive teams but only retrieve information from the play-by-play data for the four teams that comprise the AFC East (Buffalo Bills, Miami Dolphins, New England Patriots, and the New York Jets). There are, in fact, two logical operators that can produce the results we are looking for: the "or" logical operator (`|`) or by using the "includes" logical operator (`%in%`) combined with the "concatenate" operator (`c()`). Let's start with using the "or" operator.
+
+```{r afc-east-filter, eval = TRUE, echo = TRUE, output = TRUE}
+
+afc_east <- pbp %>%
+  filter(posteam == "NE" | posteam == "MIA" | posteam == "NYJ" | posteam == "BUF")
+```
+
+By using the `|` logical operator, which translates to the word "or", we can string together for separate filters for `posteam` within the play-by-platy data. That said, it probably seems odd to have to include the `posteam` argument four different times, rather than being able to do this:
+
+```{r afc-east-filter-error, eval = FALSE, echo = TRUE, output = TRUE}
+
+afc_east <- pbp %>%
+  filter(posteam == "NE" | "MIA" | "NYJ" | "BUF")
+
+```
+
+While the above example logically makes sense (verbally saying "`posteam` equals NE or MIA or NYJ or BUF"), it unfortunately results in an error. To that end, if you'd rather avoid the need to type `posteam` four different times, as in the above example, you can switch to using the `%in%` operator combined with `c()`. It is possible to combine just `filter()` and the `%in%` operator to retrieve one specific team. But, as in the above example where, we will receive an error if we try to do it for multiple teams without including the `c()` operator, as such:
+
+```{r afc-east-with-in-c, eval = TRUE, echo = TRUE, output = TRUE}
+
+afc_east <- pbp %>%
+  filter(posteam %in% c("NE", "MIA", "NYJ", "BUF"))
+
+as_tibble(afc_east)
+```
+
+The above approach is a simplified version of first creating a vector of the team abbreviations and then passing that into the `filter()` argument. For example, we can create the following vector that appears in the "Values" area of your RStudio environment, and then use that to retrieve the same results in did in the above code:
+
+```{r filter-with-vector, eval = TRUE, echo = TRUE, output = TRUE}
+
+afc_east_teams_vector <- c("NE", "MIA", "NYJ", "BUF")
+
+afc_east <- pbp %>%
+  filter(posteam %in% afc_east_teams_vector)
+
+as_tibble(afc_east_teams_vector)
+```
+
+Because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:
+
+1.  that play occurs on 2nd down.
+2.  the play must be a pass play.
+3.  the play must include a charted QB hit.
+4.  the play must result in a complete pass.
+5.  the pass must have an air yards amount that is greater than or equal to the yards to go.
+
+::: callout-tip
+Compiling the above `filter()` requires knowledge of the variable names within `nflreadr` play-by-play data. This is covered in Chapter 3.
+
+That said, it is important to point out that many of the above variables have data values that are structured in binary - that is, the value is either 1 or 0.
+
+In the above list, the `qb_hit` variable is binary. A play *with* a QB hit is denoted by the inclusion of a numeric 1 in the data, while the inclusion of a numeric 0 indicates that a QB hit did not occur.
+:::
+
+Building the `filter()` based on the above specifications requires the use of both character and numeric values:
+
+```{r filter-for-qb-hits, eval = TRUE, echo = TRUE, output = TRUE}
+
+multiple_filters <- pbp %>%
+  filter(down == 2 & play_type == "pass" & qb_hit == 1 & complete_pass == 1 & 
+           air_yards >= ydstogo)
+
+```
+
+The resulting dataset, `multiple_filters`, indicates that exactly 105 such instances took place during the 2002 NFL season.
+
+Lastly, in some instances, it is necessary to use `filter()` to remove rows that may provide you with incorrect information if include. To showcase this, it is necessary to also include the `summarize()` verb, which is covered in greater detail in the following two section. As a working example, let's gather information from the play-by-play data that will provide the total amount of yards per scrimmage - combined - for the 2022 regular season. Using our knowledge from the prior example, we can write code that first uses the `filter()` verb to retrieve just those rows that took place during the regular season and then uses the `summarize()` verb to distill the information down to the singular, combined total:
+
+```{r nfl-total-scrimmage-yards, eval = TRUE, echo = TRUE, output = TRUE}
+
+total_yards <- pbp %>%
+  filter(season_type == "REG") %>%
+  summarize(yards = sum(yards_gained, na.rm = TRUE))
+
+as_tibble(total_yards)
+```
+
+How many total scrimmage yards did NFL teams earn during the 2022 NFL regular season? According to the results from our above code, the answer is 184,444. However, that is an incorrect answer.
+
+The right answer, in fact, is 184,332 total scrimmage yards. How did the results of our above coding come up 112 shorts of the correct answer (as provided by the [2022 Team Stats page on Pro Football Reference](https://www.pro-football-reference.com/years/2022/#all_team_stats))?
+
+The difference is the result of the above code including all plays, including 2-point conversion attempts. Because a 2-point conversion is technically considered an extra point attempt - not a play from scrimmage or a official down - no player stats are officially record for the play. We can verify this is the case by using the `filter()` verb to include only those rows that include regular-season games and those plays that do not include information pertaining to `down`:
+
+```{r verify-two-points, eval = TRUE, echo = TRUE, output = TRUE}
+
+two_points <- pbp %>%
+  filter(season_type == "REG" & is.na(down)) %>%
+  summarize(total = n(),
+            total_yards = sum(yards_gained, na.rm = TRUE))
+
+as_tibble(two_points)
+```
+
+The resulting `as_tibble()` indicates that exactly 112 scrimmage yards were gained on places missing `down` information. There was, of course, not 8,137 2-point conversion attempts during the 2022 regular season. There are many other instances within the data that do not include information for `down`, including: kickoffs, extra points, time outs, the end of a quarter, etc. We can be more specific with our `filter()` argument in the above code to include only the binary argument for the `two_point_attempt` variable:
+
+```{r actual-two-point-attempts, eval = TRUE, echo = TRUE, output = TRUE}
+
+two_points_true <- pbp %>%
+  filter(season_type == "REG" & two_point_attempt == 1) %>%
+  summarize(total = n(),
+            total_yards = sum(yards_gained, na.rm = TRUE))
+
+two_points_true
+```
+
+By altering the \``is.na(down)` argument to the binary indicator for `two_point_attempt`, we see that there were 119 2-point conversion attempts in the 2022 regular season while maintain the correct 112 yards that explains our difference from above. To account for our new-found knowledge that we must remove 2-point conversions to calculate the correct amount of total scrimmage yards, we can use the `!is.na()` operator (where `!is.na()` means "is not missing this specific variable) to remove all rows that do not include information pertaining to `down`:
+
+```{r total-scrimmage-correct, eval = TRUE, echo = TRUE, output = TRUE}
+
+total_yards_correct <- pbp %>%
+  filter(season_type == "REG" & !is.na(down)) %>%
+  summarize(yards = sum(yards_gained, na.rm = TRUE))
+
+as_tibble(total_yards_correct)
+```
 
 ### NFL Data and the `group_by()` verb
 
@@ -452,4 +633,87 @@ By filtering the data down to include just Baker Mayfield, we can use `as_tibble
 as_tibble(sis_data)
 ```
 
-### Merging Multiple Sets of Data
+With that, our `sis_data` dataset is nearly complete and ready for taking over to `ggplot` in Chapter 4. Before doing so, though, we can use the `load_teams` function within `nflreadr` to combine the appropriate team colors to each quarterback in the data, allowing us to customize the appearance of the data visualization.
+
+### Merging Datasets with `dplyr` and Mutating Joins
+
+Mutating joins are a manipulation technique that allows us to add, modify, or remove columns in a dataset based on a shared variable or a set of variables. The process is done by matching rows in the datasets based on an matching identifier between the two. Once completed, the matching data from the second dataset is added to the first or, conversely, the data within the first dataset is modified as needed to include the incoming data from the second dataset.
+
+There are four common mutating joins in the `dplyr` package:
+
+1.  `left_join()`: a `left_join` adds all the columns from the first dataset by only matching columns from the second dataset.
+2.  `right_join()`: a `right_join` is the opposite of the `left_join` process in that it adds all the columns from the second dataset and only matches those columns from the first.
+3.  `inner_join()`: a `inner_join` will only match rows found in both datasets.
+4.  `full_join()`: a `full_join` will include all the rows and columns from both datasets.
+
+The picture below, from William Surles' instructional *Joining Data in R with dplyr,* showcases the above in graphical form.
+
+[![Mutating Joins in dplyr](docs/images/mutating_joins_picture.png){fig-align="center" width="400"}](https://rpubs.com/williamsurles/293454)
+
+In this instance, using our `sis_data` dataset, we will need to conduct a `left_join()` to bring in NFL team color information. To start, we can use the `load_teams` function in `nflreadr` to load the team information and then use `select` to keep just the information we needed for the merging process:
+
+::: callout-note
+Please note that a much deeper dive into the `nflverse` functions is included in Chapter 3, including a more detailed approach to working with individual team data. The below code will be expanded upon in the next chapter but, for now, allows us to walk through the merging process.
+:::
+
+```{r team-info-for-merge, eval = TRUE, echo = TRUE, output = TRUE}
+
+teams <- nflreadr::load_teams(current = TRUE) %>%
+  select(team_abbr, team_nick, team_name, team_color, team_color2)
+
+as_tibble(teams)
+```
+
+For educational purposes, we use the above code to bring in each NFL's team abbreviation, nickname, and full name. Along with identifying information for each team, we also have selected `team_color` and `team_color2` (which correspond to each team's primary and secondary colors).
+
+As mentioned, we will use the `left_join()` function to merge this information into our `sis_data`. The basic syntax of a `left_join` includes a call to the original dataset, the dataset to be merged in, and then an argument to stipulate which variable the join should match on:
+
+```{r left-join-example-syntax, eval = FALSE, echo = TRUE, output = FALSE}
+
+dataset1 <- dataset1 %>%
+  left_join(dataset2, by = c("variable_1" = "variable_2"))
+```
+
+In terms of talking through it, the above code is stating: "use dataset1, *and then* conduct a `left_join` with dataset2, by matching `variable_1` from dataset1 to corresponding `variable_2` from dataset2."
+
+To conduct the join, **we must determine which variable in `teams`** **matching a corresponding variable in `sis_data`**. We can use the `slice` function to compare the first row of data from each:
+
+```{r comparing-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data %>%
+  slice(1)
+
+teams %>%
+  slice(1)
+```
+
+In `sis_data`, the `team` column includes the nickname of the NFL team (in this case, the Chiefs). The corresponding variable in our `teams` dataset is the column titled `team_nick`. Knowing that, we can conduct the `left_join` using `team` for `variable_1` from the above example syntax and `team_nick` for `variable_2`.
+
+::: callout-tip
+Notice that the columns containing the corresponding data do not have the same name (`team` vs. `team_nick`).
+
+It is important to remember that the name of the columns *do not* have to match. It is the values contained within the column that must match.
+:::
+
+```{r left-joining-sis-with-teams, eval = TRUE, echo = TRUE, output = TRUE}
+
+sis_data <- sis_data %>%
+  left_join(teams, by = c("team" = "team_nick"))
+
+as_tibble(sis_data)
+
+```
+
+You can see in the `as_tibble()` output that our two datasets correctly merged on the `team` and `team_nick` columns. Moreover, to illustrate what happens doing the joining process, please note these two items:
+
+1.  The `team_nick` column from our `teams` dataset is not included in our merged `sis_data`, as it is dropped after matching/merging with the `team` information from our original dataset.
+2.  While the `team_nick` column was dropped, the other team identifiers (`team_abbr` and `team_name`) were kept intact, as they were not used in the matching process. As well, `team_color` and `team_color2` are now correctly match with each quarterback's team.
+
+We can use the `seecolor` package to illustrate how the hex codes in `team_color` and `team_color2` correspond to each team:
+
+```{r see-colors-example, eval = TRUE, echo = TRUE, output = TRUE}
+
+seecolor::print_color(sis_data$team_color)
+
+seecolor::print_color(sis_data$team_color2)
+```
