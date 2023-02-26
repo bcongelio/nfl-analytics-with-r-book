@@ -204,6 +204,14 @@ afc_east <- pbp %>%
 as_tibble(afc_east_teams_vector)
 ```
 
+In other cases, we may need to do the opposite of above - that is, select all teams *except* for specific ones. For example, using data from Pro Football Reference regarding a quarterback's average time to throw, let's determine how to *remove* all AFC North teams (Pittsburgh, Cleveland, Baltimore, and Cincinnati) from data while leaving all other teams intact. Such a procedures is necessary, for example, if we wanted to explore the average time to throw for the combined AFC North teams against the rest of the NFL.
+
+We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid "baking them into" the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the `!` ("is not") logical operator.
+
+```{r removing-afc-north-teams}
+
+```
+
 Because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:
 
 1.  that play occurs on 2nd down.
@@ -281,6 +289,8 @@ total_yards_correct <- pbp %>%
 
 as_tibble(total_yards_correct)
 ```
+
+By filtering out any row that does not include the `down` for a given play, we correctly calculated the total amount of scrimmage yards - 184,332 - for the 2022 NFL regular season.
 
 ### NFL Data and the `group_by()` verb
 
