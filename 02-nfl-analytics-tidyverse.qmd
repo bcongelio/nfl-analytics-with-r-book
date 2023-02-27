@@ -208,11 +208,40 @@ In other cases, we may need to do the opposite of above - that is, select all te
 
 We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid "baking them into" the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the `!` ("is not") logical operator.
 
-```{r removing-afc-north-teams}
+To begin, we will use the `vroom` package to read in the data.
 
+```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+time_in_pocket <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv")
+
+as_tibble(time_in_pocket)
 ```
 
-Because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:
+The structure and organization of the data is quite similar to the datasets we worked with in our above examples, despite coming from a different source (PFF vs. `nflreadr`). Our `time_in_pocket` data includes a quarterback's name on each row with his corresponding `team`, `player_game_count`, and `avg_time_to_throw`. Again, we are seeking to compare the average time to release - combined - for the AFC North against the rest of the NFL. In order to avoid skewing the results by "baking in data" (that is, not removing AFC North teams prior to finding the NFL average), we can use the `!` logical operator to remove all four teams at once (as oppose to structuring the `filter()` to include four separate `team_name !=` for all four different AFC North teams.
+
+```{r removing-afc-north-teams, eval = TRUE, echo = TRUE, output = TRUE}
+
+time_in_pocket_no_afcn <- time_in_pocket %>%
+  filter(!team_name %in% c("PIT", "BAL", "CIN", "CLE"))
+
+as_tibble(time_in_pocket_no_afcn)
+```
+
+With Pittsburgh, Baltimore, Cincinnati, and Cleveland removed from the dataset, we can - for the sake of completing the analysis - take our new `time_in_pocket_afcn` dataset and find the league-wide average for `avg_time_to_throw`.
+
+```{r time-to-throw-analysis, eval = TRUE, echo = TRUE, output = TRUE}
+
+time_in_pocket_no_afcn %>%
+  summarize(combined_average = mean(avg_time_to_throw))
+
+time_in_pocket %>%
+  filter(team_name %in% c("PIT", "BAL", "CIN", "CLE")) %>%
+  summarize(combined_average = mean(avg_time_to_throw))
+```
+
+The AFC North quarterbacks had an average time to throw of 2.76 seconds while the rest of the NFL averaged 2.89 seconds, meaning the AFC North QBs released the ball, on average, 0.13 seconds quicker than the rest of the quarterbacks in the league.
+
+So far, all our `filter()` operations have include just one logical operator, or multiple values built into one operator using the `%in%` option. However, because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:
 
 1.  that play occurs on 2nd down.
 2.  the play must be a pass play.
