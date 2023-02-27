@@ -687,7 +687,7 @@ There are four common mutating joins in the `dplyr` package:
 
 The picture below, from William Surles' instructional *Joining Data in R with dplyr,* showcases the above in graphical form.
 
-[![Mutating Joins in dplyr](docs/images/mutating_joins_picture.png){fig-align="center" width="400"}](https://rpubs.com/williamsurles/293454)
+[![Mutating Joins in dplyr](images/mutating_joins_graphic.png){fig-align="center" width="350"}](https://rpubs.com/williamsurles/293454)
 
 In this instance, using our `sis_data` dataset, we will need to conduct a `left_join()` to bring in NFL team color information. To start, we can use the `load_teams` function in `nflreadr` to load the team information and then use `select` to keep just the information we needed for the merging process:
 
