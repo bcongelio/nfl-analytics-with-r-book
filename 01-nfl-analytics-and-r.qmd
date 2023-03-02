@@ -275,7 +275,7 @@ ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
        subtitle = "Through Week #15")
 ```
 
-As can be seen in the resulting graph - despite a slight correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
+As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
 
 To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly "gel."\
 \
