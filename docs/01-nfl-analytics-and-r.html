@@ -519,7 +519,7 @@ Important
 </div>
 </div>
 </div>
-<p>As can be seen in the resulting graph - despite a slight correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team’s number of offensive line combinations?</p>
+<p>As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team’s number of offensive line combinations?</p>
 <p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly “gel.”<br><br>
 Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into our existing <code>total_combos</code> by matching on the individual team abbreviations.</p>
 <div class="cell">
