@@ -15,7 +15,7 @@ source("book-functions.R")
 
 ```
 
-An intro regarding the importance of data viz is going to go here.
+Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
 
 Jim Stikeleather, writing for the *Harvard Business Review*, outlined three key elements that make a successful data visualization (albeit, leaving *us* to decide the definition of what a "successful" data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: **it understands the audience, it sets up a clear framework, and it tells a story** [@stikeleather2013].
 
@@ -46,4 +46,39 @@ knitr::include_graphics(rep("images/unclerico.png"))
 
 While most of your journey through NFL analytics in this book required you to use the `tidyverse` and a handful of other packages, the process of creating compelling and meaningful data visualizations will require you to utilize multitudes of other packages. Of course, the most important is `ggplot2` which is already installed via the `tidyverse`. However, in order to recreate the visualizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:
 
+Remaining content coming soon.
+
 ## Selecting The Correct Type of Plot
+
+Content coming soon.
+
+## The Basics of Using `ggplot2`
+
+The basics of any `ggplot` visualization involves three basic calls to information in a dataset as well as stipulation which type of geom you would like to use:
+
+1.  the dataset to be used in the visualization
+2.  an aesthetic calls for the x-axis
+3.  an aesthetic call for the y-axis
+4.  your desired geom type
+
+```{r example-ggplot-call, eval = FALSE, echo = TRUE, output = FALSE}
+
+ggplot(data = 'dataset_name', aes(x = 'x_axsis', y = 'y_axis')) +
+  geom_type()
+```
+
+To showcase this, let's use data from Sports Info Solutions that pertains quarterback statistic when using play action versus when not using play action. To start, collect the data using the `vroom` function.
+
+```{r gathering-play-action-dat, eval = TRUE, echo = TRUE, output = FALSE}
+
+play_action_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv")
+
+```
+
+To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds`.
+
+```{r example-pa-action-plot, output = TRUE, fig.align='center', fig.dpi = 300}
+
+ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
+  geom_point()
+```

@@ -323,6 +323,8 @@ To begin, we can collect the QB hit data from `nflreadr` being sure to `group_by
 
 ```{r offensive-line-combos-qb-hits, output = FALSE}
 
+pbp <- nflreadr::load_pbp(2022)
+
 qb_hits <- pbp %>%
   filter(!is.na(posteam)) %>%
   group_by(posteam) %>%

@@ -260,8 +260,12 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <a href="#investigating-the-rams-2022-offensive-line" id="toc-investigating-the-rams-2022-offensive-line" class="nav-link" data-scroll-target="#investigating-the-rams-2022-offensive-line"><span class="toc-section-number">2.3</span>  Investigating the Rams’ 2022 Offensive Line</a>
   <ul class="collapse">
 <li><a href="#unique-offensive-line-combinations-how-to-collect-the-data" id="toc-unique-offensive-line-combinations-how-to-collect-the-data" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-how-to-collect-the-data"><span class="toc-section-number">2.3.1</span>  Unique Offensive Line Combinations: How to Collect The Data?</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-win-percentage" id="toc-unique-offensive-line-combinations-vs.-win-percentage" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-win-percentage"><span class="toc-section-number">2.3.2</span>  Unique Offensive Line Combinations vs.&nbsp;Win Percentage</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-pressure-rate" id="toc-unique-offensive-line-combinations-vs.-pressure-rate" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-pressure-rate"><span class="toc-section-number">2.3.3</span>  Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-qb-hits-allowed" id="toc-unique-offensive-line-combinations-vs.-qb-hits-allowed" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-qb-hits-allowed"><span class="toc-section-number">2.3.4</span>  Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</a></li>
   </ul>
 </li>
+  <li><a href="#exploring-explosive-plays-per-touchdown-drive" id="toc-exploring-explosive-plays-per-touchdown-drive" class="nav-link" data-scroll-target="#exploring-explosive-plays-per-touchdown-drive"><span class="toc-section-number">2.4</span>  Exploring Explosive Plays per Touchdown Drive</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -446,6 +450,8 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 </div>
 <p>Despite much of the media focus being on the Rams’ poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals had nearly as many unique offensive line combinations at the conclusion of the 2022 regular season.</p>
 <p>With the data cleaned and prepared, let’s use it to create a <code>ggplot</code> graph and, to do so, compare the relationship between a team’s number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing <code>total_combos</code> dataframe.</p>
+</section><section id="unique-offensive-line-combinations-vs.-win-percentage" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-win-percentage">
+<span class="header-section-number">2.3.2</span> Unique Offensive Line Combinations vs.&nbsp;Win Percentage</h3>
 <p>To bring in the individual winning percentages, we will use the <code>get_nfl_standings</code> function from <code>espnscrapeR</code> and then combine the two sets of data on team abbreviations via a <code>left_join</code>. Unfortunately, the team abbreviation returned from <code>espnscrapeR</code> does not match up with those used in the <code>nflverse</code> for both the Los Angeles Rams and the Washington Commanders (LAR vs.&nbsp;LA and WSH vs.&nbsp;WAS). As evidenced in the below code, correcting this issue is simple with the <code>clean_team_abbrs</code> function in the <code>nflreadr</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">records</span> <span class="op">&lt;-</span> <span class="fu">espnscrapeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/espnscrapeR/man/get_nfl_standings.html">get_nfl_standings</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -520,8 +526,10 @@ Important
 </div>
 </div>
 <p>As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team’s number of offensive line combinations?</p>
-<p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly “gel.”<br><br>
-Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into our existing <code>total_combos</code> by matching on the individual team abbreviations.</p>
+<p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures and an increased pressure rate as the various member of the offensive line never have time to properly “gel.”</p>
+</section><section id="unique-offensive-line-combinations-vs.-pressure-rate" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-pressure-rate">
+<span class="header-section-number">2.3.3</span> Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</h3>
+<p>Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into our existing <code>total_combos</code> by matching on the individual team abbreviations.</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"./example_data/csv/ch1_pressurerate.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -553,7 +561,7 @@ Rather than calculate the data ourselves (which is the total number dropbacks di
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Pressure Rate (per Dropback)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"# of Unique Offensive Line Combinations vs. Pressure Rate"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Through Week #15"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="01-nfl-analytics-and-r_files/figure-html/plot-pressure-rate-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
@@ -561,9 +569,44 @@ Rather than calculate the data ourselves (which is the total number dropbacks di
 </div>
 </div>
 </div>
-<p>fffffffffffffffffffffffffffff</p>
+<p>Again, there does not seem to be any statistical correlation between a team’s number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between a the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from <code>nflreadr</code> to collect total QB hits.</p>
+</section><section id="unique-offensive-line-combinations-vs.-qb-hits-allowed" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-qb-hits-allowed">
+<span class="header-section-number">2.3.4</span> Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</h3>
+<p>To begin, we can collect the QB hit data from <code>nflreadr</code> being sure to <code>group_by</code> the <code>posteam</code> variable in order to calculate the number of QB hits allowed by each team’s offensive line. After, we can merge the data into our existing <code>total_combos</code> dataset and then produce the plot.</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">qb_hits</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>total_qb_hits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">qb_hit</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">qb_hits_combined</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span></span>
+<span>  <span class="va">total_combos</span>, <span class="va">qb_hits</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"posteam"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After first filtering out any data that does not include <code>posteam</code> information, we can <code>group_by</code> each individual offensive unit and then calculate the total sum of QB hits for each. We can then take our new dataframe titled <code>qb_hits_combined</code> and plot the results.</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_hits_combined</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">total_qb_hits</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, formula <span class="op">=</span> <span class="st">'y ~ x'</span>, method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total QB Hits Allowed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"# of Unique Offensive Line Combinations vs. QB Hits Allowed"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-nfl-analytics-and-r_files/figure-html/plot-combos-qb-hits-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="exploring-explosive-plays-per-touchdown-drive" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="exploring-explosive-plays-per-touchdown-drive">
+<span class="header-section-number">2.4</span> Exploring Explosive Plays per Touchdown Drive</h2>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">explosive</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">yards_gained</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">fixed_drive_result</span> <span class="op">==</span> <span class="st">"Touchdown"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -616,7 +659,7 @@ Rather than calculate the data ourselves (which is the total number dropbacks di
 Kirschner, Alex. 2022. <span>“The Rams’ Super Bowl Afterparty Turned into a Historic Hangover.”</span> <a href="https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/">https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/</a>.
 </div>
 </div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
