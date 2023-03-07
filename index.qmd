@@ -5,14 +5,7 @@ source("book-functions.R")
 ```
 
 ```{r preface-libs, include = FALSE}
-library(tweetrmd)
 library(memoise)
-```
-
-```{r tweet-cache, include = FALSE}
-
-tweet_cached <- memoise(tweet_embed, cache = cache_filesystem('.tweets'))
-tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets'))
 ```
 
 ::: callout-note
@@ -26,7 +19,7 @@ tweet_shot_cached <- memoise(tweet_screenshot, cache = cache_filesystem('.tweets
 
 As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:
 
--   *Introduction to NFL Analytics with R* is currently under contract with CRC Press. A hard copy of the book will be avaliable for pre-order on Amazon and other locations in early 2023.
+-   *Introduction to NFL Analytics with R* is currently under contract with CRC Press. A hard copy of the book will be available for pre-order on Amazon and other locations in early 2023.
 
 -   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
 
@@ -40,13 +33,7 @@ As this book is published online, it allows me to continue real-time development
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).
 
-<center>
-
-```{r ben-baldwin-tweet, echo = FALSE}
-include_tweet("https://twitter.com/benbbaldwin/status/1254846456390975494")
-```
-
-</center>
+<center>{{< tweet benbbaldwin 1254846456390975494 >}}</center>
 
 Thanks to the work of multiple people ([\@mrcaseB](https://twitter.com/mrcaseb), [\@benbbaldwin](https://twitter.com/benbbaldwin), [\@TanHo](https://twitter.com/_TanHo), [\@LeeSharpeNFL](https://twitter.com/LeeSharpeNFL), and [\@thomas_mock](https://twitter.com/thomas_mock) ... to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.
 
@@ -56,13 +43,7 @@ The `nflverse` as we know it today was initially birthed from the `nflscrapR` pr
 
 [^index-1]: Thanks to Ben Baldwin for chatting with me on Discord and providing this brief understanding of the backstory.
 
-<center>
-
-```{r farewell-nflscrapr-tweet, echo = FALSE}
-include_tweet("https://twitter.com/nflscrapR/status/1305586160262152193")
-```
-
-</center>
+<center>{{< tweet nflscrapR 1305586160262152193 >}}</center>
 
 As a reply to his first tweet about the `nflfastR` project, Ben explained that he created the original function to scrape NFL data for the creation of his [NFL analytics website](https://rbsdm.com/stats/stats/). Thankfully, he and Seb did not keep the creation to themselves and released `nflfastR` to the public. Because of the "open source" nature of R and R packages, a laundry list of companion packages quickly developed alongside `nflfastR`. The original `nflfastR` package is now part of the larger `nflverse` of packages that drive the NFL analytics community on Twitter and beyond.
 
