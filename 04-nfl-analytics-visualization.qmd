@@ -72,7 +72,6 @@ To showcase this, let's use data from Sports Info Solutions that pertains quarte
 ```{r gathering-play-action-dat, eval = TRUE, echo = TRUE, output = FALSE}
 
 play_action_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv")
-
 ```
 
 To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds` with the `yds` variable being place on the x-axis and the `pa_yds` variable being placed on the y-axis.
@@ -118,3 +117,16 @@ To start, we will load team information using the `load_teams` function within `
 ::: callout-important
 We are only including the `team_abbr` variable in this example because we are going to create the plot both with and without the use of `nflplotr`. As of the writing of this book, the newest development version of the package is 1.1.0.9004 and does not yet (if ever) provide support to use team nicknames. Because of this, we must include `team_abbr` in our merge since it is the team name version that is standardized for use in `nflplotr`.
 :::
+
+After collecting the team information needed, we can conducted a `left_join` to match the information by `team` in `play_action_data` and `team_nick` in the team information from `load_teams()` and then confirm the merge was successful by viewing the columns names in `play_action_data` with `colnames()`.
+
+```{r merging-team-data-for-plot, eval = TRUE, echo = TRUE, output = FALSE}
+
+teams <- nflreadr::load_teams(current = FALSE) %>%
+  select(team_abbr, team_nick, team_color, team_color2)
+
+play_action_data <- play_action_data %>%
+  left_join(teams, by = c("team" = "team_nick"))
+
+colnames(play_action_data)
+```
