@@ -75,10 +75,46 @@ play_action_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nf
 
 ```
 
-To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds`.
+To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds` with the `yds` variable being place on the x-axis and the `pa_yds` variable being placed on the y-axis.
+
+::: callout-tip
+It is important to remember which axis is which as you begin to learn using `ggplot`:
+
+**The x-axis is the horizontal axis that runs left-to-right.**
+
+**The y-axis is the vertical axis that runs top-to-bottom.**
+:::
 
 ```{r example-pa-action-plot, output = TRUE, fig.align='center', fig.dpi = 300}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point()
 ```
+
+The outputted scatter plot is an excellent starting point for a more finely detailed visualization. While we are able to see the relationship between non-play action passing yards and those attempts that included play action, we are unable to discern which specific dot is which quarterback - among other issues. To provide more detail and to "prettify" the plot, let's discuss doing the following:
+
+1.  Adding team colors to each dot.
+2.  Adding player names to each dot.
+3.  Increasing the number of ticks on each axis.
+4.  Provide the numeric values in correct format (that is, including a `,` to correctly show thousands).
+5.  Rename the title of each axis.
+6.  Provide a title, subtitle, and caption for the plot.
+7.  Change the background and grid to be more visually stunning.
+
+### Adding Team Colors to Each Dot
+
+::: callout-note
+Much like anything in the R language, there are multiple ways to go about add team colors (and logos, player headshots, etc.) to visualizations.
+
+First, we can merge team color information into our `play_action_data` and then manually set the colors in our `geom_point` call.
+
+Second, we can conduct the same merge but then use the `nflplotr` package (which is part of the `nflverse`) to bring the colors in.
+
+Both examples will be included in the below example. However, **please note that I typically *do not* use the `nflplotr`** **package as, in certain circumstances, adding the colors manually provides the necessary control that `nflplotr`** **sometimes cannot provide.**
+:::
+
+To start, we will load team information using the `load_teams` function within `nflreadr`. In this case, we are requesting that the package provide only the 32 current NFL teams with by including the `current = TRUE` argument. Conversely, setting the argument to `current = FALSE` will result in historical NFL teams being included in the data (the Oakland Raiders and St. Louis Rams, for example, will be included in the data). We will also use the `select` verb from `dplyr` to gather just the variables we know we will need (`team_abbr`, `team_nick`, `team_color`, and `team_color2`.
+
+::: callout-important
+We are only including the `team_abbr` variable in this example because we are going to create the plot both with and without the use of `nflplotr`. As of the writing of this book, the newest development version of the package is 1.1.0.9004 and does not yet (if ever) provide support to use team nicknames. Because of this, we must include `team_abbr` in our merge since it is the team name version that is standardized for use in `nflplotr`.
+:::
