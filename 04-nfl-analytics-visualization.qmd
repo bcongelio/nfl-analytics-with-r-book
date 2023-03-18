@@ -5,6 +5,7 @@
 library(tidyverse)
 library(nflreadr)
 library(ggrepel)
+library(extrafont)
 ```
 
 Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
@@ -344,7 +345,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold")
 ```
 
@@ -406,7 +407,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6))
@@ -426,7 +427,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -474,7 +475,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -525,7 +526,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -572,7 +573,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Roboto Condensed",
+                  family = "Georgia",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
