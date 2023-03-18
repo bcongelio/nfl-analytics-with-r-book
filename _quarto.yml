@@ -1,6 +1,6 @@
 project:
   type: book
-  output-dir: docs
+  output-dir: _book
 
 book:
   title: "An Introduction to NFL Analytics with R"

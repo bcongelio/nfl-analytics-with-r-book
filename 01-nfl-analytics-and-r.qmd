@@ -2,7 +2,7 @@
 
 ```{r setup-ch1, include = FALSE}
 
-source("R/book-functions.R")
+source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)

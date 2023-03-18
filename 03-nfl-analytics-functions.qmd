@@ -2,7 +2,7 @@
 
 ```{r loading-library, include = FALSE}
 
-source("R/book-functions.R")
+source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)

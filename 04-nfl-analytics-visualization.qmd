@@ -2,7 +2,7 @@
 
 ```{r setup-ch4, include = FALSE}
 
-source("R/book-functions.R")
+source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)
@@ -323,7 +323,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------:|:----------------------------------------------:|
+|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
