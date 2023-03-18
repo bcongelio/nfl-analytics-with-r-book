@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>An Introduction to NFL Analytics with R - 3&nbsp; Wrangling NFL Data in the tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-nfl-analytics-functions.html" rel="next">
+<link href="./01-nfl-analytics-and-r.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">An Introduction to NFL Analytics with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+            <i class="bi bi-bi-linkedin pe-1"></i>
+          LinkedIn
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Analytics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Methods: Modeling and Big Data Bowl</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"><span class="toc-section-number">3.1</span>  Downloading R and RStudio</a>
+  <ul class="collapse">
+<li><a href="#downloading-r" id="toc-downloading-r" class="nav-link" data-scroll-target="#downloading-r"><span class="toc-section-number">3.1.1</span>  Downloading R</a></li>
+  <li><a href="#downloading-rstudio" id="toc-downloading-rstudio" class="nav-link" data-scroll-target="#downloading-rstudio"><span class="toc-section-number">3.1.2</span>  Downloading RStudio</a></li>
+  <li><a href="#the-layout-of-rstudio" id="toc-the-layout-of-rstudio" class="nav-link" data-scroll-target="#the-layout-of-rstudio"><span class="toc-section-number">3.1.3</span>  The Layout of RStudio</a></li>
+  <li><a href="#running-code-in-rstudio" id="toc-running-code-in-rstudio" class="nav-link" data-scroll-target="#running-code-in-rstudio"><span class="toc-section-number">3.1.4</span>  Running Code in RStudio</a></li>
+  </ul>
+</li>
+  <li><a href="#installing-and-loading-necessary-packages" id="toc-installing-and-loading-necessary-packages" class="nav-link" data-scroll-target="#installing-and-loading-necessary-packages"><span class="toc-section-number">3.2</span>  Installing and Loading Necessary Packages</a></li>
+  <li><a href="#the-tidyverse-and-its-verbs" id="toc-the-tidyverse-and-its-verbs" class="nav-link" data-scroll-target="#the-tidyverse-and-its-verbs"><span class="toc-section-number">3.3</span>  The <code>tidyverse</code> and Its Verbs</a></li>
+  <li><a href="#the-flow-of-the-tidyverse" id="toc-the-flow-of-the-tidyverse" class="nav-link" data-scroll-target="#the-flow-of-the-tidyverse"><span class="toc-section-number">3.4</span>  The Flow of the <code>tidyverse</code></a></li>
+  <li>
+<a href="#working-with-nfl-data-and-the-dplyr-verbs" id="toc-working-with-nfl-data-and-the-dplyr-verbs" class="nav-link" data-scroll-target="#working-with-nfl-data-and-the-dplyr-verbs"><span class="toc-section-number">3.5</span>  Working With NFL Data and the <code>dplyr</code> Verbs</a>
+  <ul class="collapse">
+<li><a href="#nfl-data-and-the-filter-verb" id="toc-nfl-data-and-the-filter-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-filter-verb"><span class="toc-section-number">3.5.1</span>  NFL Data and the <code>filter()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-group_by-verb" id="toc-nfl-data-and-the-group_by-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-group_by-verb"><span class="toc-section-number">3.5.2</span>  NFL Data and the <code>group_by()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-summarize-verb" id="toc-nfl-data-and-the-summarize-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-summarize-verb"><span class="toc-section-number">3.5.3</span>  NFL Data and the <code>summarize()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="toc-section-number">3.5.4</span>  NFL Data and the <code>mutate()</code> verb</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#core-skills-for-tidy-data" id="toc-core-skills-for-tidy-data" class="nav-link" data-scroll-target="#core-skills-for-tidy-data"><span class="toc-section-number">3.6</span>  Core Skills for Tidy Data</a>
+  <ul class="collapse">
+<li><a href="#importing-and-conducting-exploratory-data-analysis" id="toc-importing-and-conducting-exploratory-data-analysis" class="nav-link" data-scroll-target="#importing-and-conducting-exploratory-data-analysis"><span class="toc-section-number">3.6.1</span>  Importing and Conducting Exploratory Data Analysis</a></li>
+  <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="toc-section-number">3.6.2</span>  Dealing with Missing Data</a></li>
+  <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="toc-section-number">3.6.3</span>  Changing Variable Types</a></li>
+  <li><a href="#correct-and-create-new-variables-using-mutate" id="toc-correct-and-create-new-variables-using-mutate" class="nav-link" data-scroll-target="#correct-and-create-new-variables-using-mutate"><span class="toc-section-number">3.6.4</span>  Correct and Create New Variables Using <code>mutate</code></a></li>
+  <li><a href="#merging-datasets-with-dplyr-and-mutating-joins" id="toc-merging-datasets-with-dplyr-and-mutating-joins" class="nav-link" data-scroll-target="#merging-datasets-with-dplyr-and-mutating-joins"><span class="toc-section-number">3.6.5</span>  Merging Datasets with <code>dplyr</code> and Mutating Joins</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><section id="downloading-r-and-rstudio" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="downloading-r-and-rstudio">
+<span class="header-section-number">3.1</span> Downloading R and RStudio</h2>
+<p>Prior to downloading R and RStudio, it is important to explain the difference between R and RStudio, as they are two separate pieces of our analytics puzzle that are used for differing purposes. R is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer’s command line, it is also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.</p>
+<p>RStudio is free to download and use and provides a user-friendly interface for writing R code, organizing projects and files, and working with both big and small data. Regularly updated by the <a href="https://posit.co/">Posit team</a>, RStudio includes many features that are specifically designed to making working with R easier, including syntax highlighting, code suggestions, robust debugging tools, and a built-in package manager.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important that you download and successfully install R before proceeding to install RStudio on your computer.</p>
+</div>
+</div>
+<section id="downloading-r" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="downloading-r">
+<span class="header-section-number">3.1.1</span> Downloading R</h3>
+<ol type="1">
+<li>To download R, visit the official R website at <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>
+</li>
+<li>Click on the ‘CRAN’ link at the top of the page, directly underneath the word ‘Download.’ This will bring you to the Comprehensive R Archive Network.</li>
+<li>Each mirror that hosts a copy of R is sorted by country. Select a mirror that is geographically close to you.</li>
+<li>Click on the version of R that is appropriate for your operating system (Linux, macOS, or Windows).</li>
+<li>Select the ‘base’ option to download an updated version of R to your computer.</li>
+<li>Open the downloaded file and follow the provided installation instructions.</li>
+</ol></section><section id="downloading-rstudio" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="downloading-rstudio">
+<span class="header-section-number">3.1.2</span> Downloading RStudio</h3>
+<ol type="1">
+<li>To download RStudio, visit the official RStudio website at <a href="https://posit.co" class="uri">https://posit.co</a>
+</li>
+<li>Click on the ‘Download RStudio’ button in the top-right of the page.</li>
+<li>Scroll down and select ‘Download’ within the ‘RStudio Desktop - Free’ box.</li>
+<li>Open the downloaded file and follow the provided installation instructions.</li>
+</ol></section><section id="the-layout-of-rstudio" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="the-layout-of-rstudio">
+<span class="header-section-number">3.1.3</span> The Layout of RStudio</h3>
+<p>When you open RStudio for the first time, you will see the interface laid out as in the picture below (sourced from the <a href="https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html">official RStudio documentation from posit</a>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/rstudio-panes-with-labels.jpeg" class="img-fluid figure-img" width="600"></p>
+</figure>
+</div>
+<p>As you can see, RStudio provides a graphical interface for working with R and is sorted into four main panes, each of which serves a specific purpose.</p>
+<ol type="1">
+<li>
+<strong>The source pane</strong>: In the upper-left, the source pane is where you write and run your R code. It serves as the main working pane within RStudio.</li>
+<li>
+<strong>The console pane:</strong> the console pane serves multiple functions, including allowing you to interact directly with R by typing commands and receiving the output. Additionally, any errors outputted by code ran in the source pane will be detailed in the console, allowing you to troubleshoot and debug.</li>
+<li>
+<strong>Environment and history pane</strong>: this pane, in the upper-right, displays information about the current R environment and command history. Perhaps more important, it displays the information of all the R-created objects currently stored in your computer’s memory including datasets, vectors, lists, etc.</li>
+<li>
+<strong>Files, plots, packages, and help pane</strong>: in the bottom-right, this pane provides access to numerous RStudio tools and resources including the ability to browse and navigate through the files and folders on your computer and view the output of plots and graphics. As well, the ‘Packages’ tab gives you the ability to manage any R packages that you have installed on your system and to view each packages’ help documentation.</li>
+</ol></section><section id="running-code-in-rstudio" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="running-code-in-rstudio">
+<span class="header-section-number">3.1.4</span> Running Code in RStudio</h3>
+<p>To begin writing code in RStudio you first need to open a new R script. To do so, select ‘File -&gt; New File -&gt; R Script.’ A new script tab, titled <code>Untitled 1</code> will open in your RStudio’s source pane. To run a line of code - or multiple lines of code - you can do one of two options:</p>
+<ol type="1">
+<li>Place your cursor directly at the end of the last line of code, or highlight all the code you wish to run, and press ‘Ctrl + Enter’ (Windows) or ‘Command + Enter’ (Mac).</li>
+<li>Place your cursor directly at the end of the last line of code, or highlight all the code you wish to run, and then use your mouse to click the ‘Run’ button in the source pane’s toolbar.</li>
+</ol>
+<p>As a working example, let’s do a simple addition problem within the the source pane:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After following one of the two above options for running the addition problem, the output in your console should appear like below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/example_console_output.jpg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important to notice the <code>&gt;</code> after the output in the console. That indicates that the coding process has completely run and RStudio is ready to run the next task that you submit. If you have an error in your code, you will notice that the <code>&gt;</code> is replaced by what my students refer to as the ‘hanging plus sign’, <code>+</code>.</p>
+<p>You receive the <code>+</code> sign when RStudio is expecting a continuation of the code. Several issues can cause this to happen, including forgetting to provide an equal number of opening and closing parenthesis or mistakenly including a pipe, <code>%&gt;%</code>, after the last line of code.</p>
+<p>In any case, when you see the <code>+</code> in the console, simply use your mouse to click within the console and hit your keyboard’s escape key. Doing so exits the prompt and resets the console to include the <code>&gt;</code> symbol.</p>
+</div>
+</div>
+</section></section><section id="installing-and-loading-necessary-packages" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="installing-and-loading-necessary-packages">
+<span class="header-section-number">3.2</span> Installing and Loading Necessary Packages</h2>
+<p>Installing and loading packages is an important part of working with RStudio, as they provide additional functionality that allow you to more efficiently conduct data analysis and/or modeling. Several packages are widely used through this book, including the ever-important <code>tidyverse</code>, the <code>nflverse</code> family of packages to retrieve NFL statistics and data, and many others such as <code>tidymodels</code> when we tackle building and testing advanced models in Chapter 5.</p>
+<p>To begin, let’s install both <code>tidyverse</code> and <code>nflverse</code>. In your source pane, you can install a package by using the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> function. To complete the code, you simply supply the package name within quotation marks.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"nflverse"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After running the code, your console pane will output what is going on “behind the scenes.” When complete, you will again see the <code>&gt;</code> symbol within the console. At this point, you are able to load the packages you just installed.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nflverse.nflverse.com/">nflverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-tidyverse-and-its-verbs" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="the-tidyverse-and-its-verbs">
+<span class="header-section-number">3.3</span> The <code>tidyverse</code> and Its Verbs</h2>
+<p>The <code>tidyverse</code>, now installed and loaded within RStudio, is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at RStudio, and a varied team of contributors. The goal of the <code>tidyverse</code> is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.</p>
+<p>The core principle of the <code>tidyverse</code> is “tidy data,” which is the development team’s belief in creating a standard way of organizing data sets so that they can be easily manipulated, visualized, and analyzed. To that end, a “tidy” data set is one that is comprised of observations (rows) and variables (columns) with each variable being a distinct piece of information and each observation being a unit of analysis.</p>
+<p>Installing and loading the <code>tidyverse</code> results eight of the core packages automatically being loaded and ready to use:</p>
+<ol type="1">
+<li>
+<strong>dplyr:</strong> “dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.”</li>
+<li>
+<strong>tidyr:</strong> “tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable.”</li>
+<li>
+<strong>readr:</strong> “readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.”</li>
+<li>
+<strong>purrr:</strong> “purrr enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive.”</li>
+<li>
+<strong>tibble</strong>: “tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code.”</li>
+<li>
+<strong>stringr:</strong> “stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations.”</li>
+<li>
+<strong>forcats:</strong> “forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values.”</li>
+<li>
+<strong>ggplot2:</strong> “ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details” <span class="citation" data-cites="tidyverse">(<a href="references.html#ref-tidyverse" role="doc-biblioref">Wickham 2022</a>)</span>.</li>
+</ol>
+<p>Aside from the core eight packages, the <code>tidyverse</code> will also install a multiple of other packages such as <code>rvest</code> (for web scraping), <code>readxl</code> (for reading Excel sheets in the RStudio environment), <code>lubridate</code> (a very powerful tool for working with times and dates), and <code>magrittr</code> (the package that provides the pipe <code>%&gt;%</code>). As well, prior versions of the <code>tidyverse</code> utilized the <code>modelr</code>. Modeling is now handled in the <code>tidyverse</code> by the <code>tidymodels</code> package.</p>
+</section><section id="the-flow-of-the-tidyverse" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="the-flow-of-the-tidyverse">
+<span class="header-section-number">3.4</span> The Flow of the <code>tidyverse</code>
+</h2>
+<p>The underlying design of coding in the <code>tidyverse</code>, aside from the <code>dplyr</code> verbs are both the assignment statement (<code>&lt;-</code>) and the pipe (<code>%&gt;%</code>). Please note, as mentioned in the book’s Preface, that I still use the pipe (<code>%&gt;%</code>) that is part of the <code>magrittr</code> package and not the native pipe operator (<code>|&gt;</code>) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.</p>
+<p>As I explain to my Sports Analytics students, the language and flow of the <code>tidyverse</code> can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in’s and out’s of the <code>tidyverse</code> in the below section, let’s first dissect an example of the <code>tidyverse</code> workflow.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"PHI"</span> <span class="op">&amp;</span> <span class="va">rush</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The given example involves multiple iterations of the <code>tidyverse</code> paradigm. At the outset of my Sport Analytics course, when introducing the concepts of the <code>tidyverse</code>, I emphasize that it is possible to “talk your way through” the process from the beginning to your end goal (especially once you have you have a more comprehensive understanding of the <code>dplyr</code> verbs, which are expounded upon in the subsequent section). The following stepwise method illustrates this using the above example of code:</p>
+<ol type="1">
+<li>We first create a dataset, denoted by <code>pbp</code>, by utilizing the <code>load_pbp</code> function from the <code>nflreadr</code> package. To talk through this, you can say “<code>pbp</code>is an copy of <code>nflreadr::load_pbp(2022</code>.” While R language purists may laugh at teaching the <code>tidyverse</code> in such language, it does indeed work. Going forward, the assignment operator (<code>&lt;-</code>) simply implies that “<em>something is</em>.” In this case, our <code>pbp</code> dataframe <em>is</em> the containers for the play-by-play data we are collecting from <code>nflreadr</code>.</li>
+<li>We then move into our first pipe operator (<code>%&gt;%</code>). Again, R language purist will likely develop a eye twitch upon reading this, but I explain to my students that the pipe operator serves as a <em>“… and then”</em> command. In terms of the “talk it out” method above, the flow would be: “<code>pbp</code> is a copy of <code>nflreadr::load_pbp(2022)</code> and then …”</li>
+<li>After the pipe operator (or the first “and then …” command), we move into our first <code>dplyr</code> verb. In this case, we are using the <code>filter</code> verb to select just the Philadelphia Eagles as the offensive team and just offensive plays that are rush attempts. With another pipe operator, we are including a second “<em>… and then”</em> command.</li>
+<li>To finish the example, we are grouping by each individual rusher on the Eagles “<em>and then”</em> summarize the average success rate for each rusher.</li>
+</ol>
+<p><strong>To put it together, “talking it out” from beginning to end results in:</strong></p>
+<p>“First, create a dataset called <code>pbp</code> that is a copy of <code>nflreadr::load_pbp(2022)</code> <em>and then</em> <code>filter</code> for all instances where the <code>posteam</code> is <code>PHI</code> and <code>rush == 1</code> <em>and then</em> <code>group_by</code> each individual rusher, <em>and then</em> summarize the average success rate for each rusher into a new column titled <code>success_rate</code>.”</p>
+<p>To showcase this visually, the “talking through” method is inputted into the example code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pbp <span class="ot">&lt;-</span> <span class="st">"is"</span> nflreadr<span class="sc">::</span><span class="fu">load_pbp</span>(<span class="dv">2022</span>) <span class="sc">%&gt;%</span> <span class="st">"... and then"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"PHI"</span> <span class="sc">&amp;</span> rush <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="st">"... and then"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rusher) <span class="sc">%&gt;%</span> <span class="st">"... and then"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">success_rate =</span> <span class="fu">mean</span>(success))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="working-with-nfl-data-and-the-dplyr-verbs" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="working-with-nfl-data-and-the-dplyr-verbs">
+<span class="header-section-number">3.5</span> Working With NFL Data and the <code>dplyr</code> Verbs</h2>
+<p>Of the packages nestled within the <code>tidyverse</code>, <code>dplyr</code> is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, <code>dplyr</code> is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to user and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four <code>dplyr</code> verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.</p>
+<ol type="1">
+<li>
+<code>filter</code>: the <code>filter</code> verb allows you to subset data based on certain criteria. For example, you can use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the <code>filter</code> verb can be used in conjunction with logical operators such as <code>&amp;</code> and <code>|</code> to create more complex criteria.</li>
+<li>
+<code>group_by</code>: the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.</li>
+<li>
+<code>summarize</code>: the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb allows you to reduce a data set to a single summary value. The <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb is often used in conjunction with the <code>group_by</code> function, allowing you to group the data by one or more variables. The <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.</li>
+<li>
+<code>`mutate`</code>: the <code>mutate</code> verbs allows you to create new variables within your data while also preserving existing ones.</li>
+</ol>
+<section id="nfl-data-and-the-filter-verb" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="nfl-data-and-the-filter-verb">
+<span class="header-section-number">3.5.1</span> NFL Data and the <code>filter()</code> verb</h3>
+<p>The <code>filter</code> verb allows you to extract specific rows from your dataset based on one, or multiple, supplied conditions. The conditions are supplied to the <code>filter</code> verb by using logical operators, listed in the below table, that ultimately evaluate to either <code>TRUE</code> or <code>FALSE</code> in each row of the dataset. The <code>filter</code> process returns a dataset that includes only those rows that meet the specified conditions.</p>
+<center>
+<table class="table">
+<thead><tr class="header">
+<th style="text-align: center;">Logical Operator</th>
+<th style="text-align: center;">Meaning</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>==</code></td>
+<td style="text-align: center;">equal to</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>!=</code></td>
+<td style="text-align: center;">not equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>&lt;</code></td>
+<td style="text-align: center;">less than</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;=</code></td>
+<td style="text-align: center;">less than or equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: center;">greater than</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&gt;=</code></td>
+<td style="text-align: center;">greater than or equal to</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>!</code></td>
+<td style="text-align: center;">not</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&amp;</code></td>
+<td style="text-align: center;">and</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>|</code></td>
+<td style="text-align: center;">or</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>%in%</code></td>
+<td style="text-align: center;">includes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code><a href="https://rdrr.io/r/base/c.html">c()</a></code></td>
+<td style="text-align: center;">used to combine arguments into a vector</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>is.na</code></td>
+<td style="text-align: center;">checks for missing values</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>!is.na</code></td>
+<td style="text-align: center;">is not missing specific values</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>In order to work through specific examples of the above logical operators, we will use 2022 play-by-play data from <code>nflreadr</code>. To begin, let’s read in the data:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please note that a more detailed overview of reading in <code>nflreadr</code> data is provided in Chapter 3. For the purposes of learning about the <code>filter</code> verb, please make sure you have both the <code>tidyverse</code> and <code>nflreadr</code> loaded by running the following:</p>
+<p><code>library(tidyverse</code>)<br><code><a href="https://nflreadr.nflverse.com">library(nflreadr)</a></code></p>
+<p>If you have difficult with the above step, please see the <a href="#installing-and-loading-necessary-packages">Installing and Loading Necessary Packages</a> section above.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After running the above code, you will have a dataset titled <code>pbp</code> placed into your RStudio environment consisting over 50,147 observations over 372 variables. With the dataset loaded, let’s create a new dataset titled <code>ne_offense</code> that contains <em>only those plays where the New England Patriots are the offensive team</em>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"NE"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">ne_offense</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,323 x 372
+   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1      44 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 2      59 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 3      83 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 4     109 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 5     130 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 6     154 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 7     175 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 8     196 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+ 9     236 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+10     571 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
+# ... with 1,313 more rows, 362 more variables: side_of_field &lt;chr&gt;,
+#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
+#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
+#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
+#   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
+#   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
+#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...</code></pre>
+</div>
+</div>
+<p>The <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> output shows that the <code>posteam</code> variable contains only <code>NE</code>, which is the abbreviation for the New England Patriots in the <code>nflreadr</code> play-by-play data. In the code that produced <code>ne_offense</code>, <strong>it is important to notice that:</strong></p>
+<ol type="1">
+<li>the “equal to” logical operator consist of <em>TWO</em> equal signs, not one.</li>
+<li>the team abbreviation (<code>NE</code>) is in quotation marks.</li>
+</ol>
+<p>In the first, a single equal sign (<code>=</code>) can be used as a synonym for assignment (<code>&lt;-</code>) but is most often used when passing values into functions (which is covered in Chapter 5). To avoid confusion with these possibility, <strong>the test for equality when using <code>filter</code></strong> <strong>is always <code>==</code></strong>.</p>
+<p>In the second, you must use quotation marks around the character-based value you are placing into the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb because, if not, R will interpret <code>posteam</code> incorrectly and ultimately generate an error. On the other hand, you <em>do not</em>&nbsp;need to include quotation marks if you are filtering out numeric-based variables. Below are incorrect and correct examples of both:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="va">NE</span><span class="op">)</span> <span class="co">#this is incorrect. Character values must be in quotation marks.</span></span>
+<span></span>
+<span><span class="va">ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"NE"</span><span class="op">)</span> <span class="co">#this is correct for character values.</span></span>
+<span></span>
+<span><span class="va">ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="st">"5"</span><span class="op">)</span> <span class="co">#this is incorrect. Numeric values do not need quotation marks.</span></span>
+<span></span>
+<span><span class="va">ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">5</span><span class="op">)</span> <span class="co">#this is correct for numeric values.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How do we approach the logical operators if we want to retrieve every offensive team in the <code>pbp</code> data <em>except</em> for New England? In that case, we can use the “not equal to” (<code>!=</code>) operator:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">not_ne_offense</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">!=</span> <span class="st">"NE"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The resulting dataset titled <code>not_ne_offense</code> will still include all 372 variables housed within the <code>nflreadr</code> play-by-play data, but will not include any row in which New England is the offensive (<code>posteam</code>) team.</p>
+<p><strong>Continuing with examples, how do we use the <code>filter</code></strong> <strong>verb on multiple teams at once?</strong> For instance, let’s use the above filtering process for offensive teams but only retrieve information from the play-by-play data for the four teams that comprise the AFC East (Buffalo Bills, Miami Dolphins, New England Patriots, and the New York Jets). There are, in fact, two logical operators that can produce the results we are looking for: the “or” logical operator (<code>|</code>) or by using the “includes” logical operator (<code>%in%</code>) combined with the “concatenate” operator (<code><a href="https://rdrr.io/r/base/c.html">c()</a></code>). Let’s start with using the “or” operator.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">afc_east</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"NE"</span> <span class="op">|</span> <span class="va">posteam</span> <span class="op">==</span> <span class="st">"MIA"</span> <span class="op">|</span> <span class="va">posteam</span> <span class="op">==</span> <span class="st">"NYJ"</span> <span class="op">|</span> <span class="va">posteam</span> <span class="op">==</span> <span class="st">"BUF"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By using the <code>|</code> logical operator, which translates to the word “or”, we can string together for separate filters for <code>posteam</code> within the play-by-platy data. That said, it probably seems odd to have to include the <code>posteam</code> argument four different times, rather than being able to do this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">afc_east</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"NE"</span> <span class="op">|</span> <span class="st">"MIA"</span> <span class="op">|</span> <span class="st">"NYJ"</span> <span class="op">|</span> <span class="st">"BUF"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While the above example logically makes sense (verbally saying “<code>posteam</code> equals NE or MIA or NYJ or BUF”), it unfortunately results in an error. To that end, if you’d rather avoid the need to type <code>posteam</code> four different times, as in the above example, you can switch to using the <code>%in%</code> operator combined with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. It is possible to combine just <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and the <code>%in%</code> operator to retrieve one specific team. But, as in the above example where, we will receive an error if we try to do it for multiple teams without including the <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> operator, as such:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">afc_east</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NE"</span>, <span class="st">"MIA"</span>, <span class="st">"NYJ"</span>, <span class="st">"BUF"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">afc_east</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,625 x 372
+   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1      43 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 2      68 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 3      89 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 4     115 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 5     136 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 6     172 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 7     391 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 8     412 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+ 9     436 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+10     469 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
+# ... with 5,615 more rows, 362 more variables: side_of_field &lt;chr&gt;,
+#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
+#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
+#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
+#   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
+#   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
+#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...</code></pre>
+</div>
+</div>
+<p>The above approach is a simplified version of first creating a vector of the team abbreviations and then passing that into the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> argument. For example, we can create the following vector that appears in the “Values” area of your RStudio environment, and then use that to retrieve the same results in did in the above code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">afc_east_teams_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NE"</span>, <span class="st">"MIA"</span>, <span class="st">"NYJ"</span>, <span class="st">"BUF"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">afc_east</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">afc_east_teams_vector</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">afc_east_teams_vector</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 x 1
+  value
+  &lt;chr&gt;
+1 NE   
+2 MIA  
+3 NYJ  
+4 BUF  </code></pre>
+</div>
+</div>
+<p>In other cases, we may need to do the opposite of above - that is, select all teams <em>except</em> for specific ones. For example, using data from <a href="pff.com">Pro Football Focus</a> regarding a quarterback’s average time to throw, let’s determine how to <em>remove</em> all AFC North teams (Pittsburgh, Cleveland, Baltimore, and Cincinnati) from the dataset while leaving all other teams intact. Such a procedure is necessary, for example, if we wanted to explore the average time to throw for the combined AFC North teams against the rest of the NFL.</p>
+<p>We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid “baking them into” the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the <code>!</code> (“is not”) logical operator.</p>
+<p>To begin, we will use the <code>vroom</code> package to read in the data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">time_in_pocket</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">time_in_pocket</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 x 5
+   player          position team_name player_game_count avg_time_to_throw
+   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Patrick Mahomes QB       KC                       20              2.85
+ 2 Tom Brady       QB       TB                       18              2.31
+ 3 Justin Herbert  QB       LAC                      18              2.75
+ 4 Joe Burrow      QB       CIN                      19              2.51
+ 5 Josh Allen      QB       BUF                      18              2.92
+ 6 Kirk Cousins    QB       MIN                      18              2.7 
+ 7 Trevor Lawrence QB       JAX                      19              2.51
+ 8 Geno Smith      QB       SEA                      18              2.79
+ 9 Daniel Jones    QB       NYG                      18              3.03
+10 Jalen Hurts     QB       PHI                      18              2.86
+# ... with 20 more rows</code></pre>
+</div>
+</div>
+<p>The structure and organization of the data is quite similar to the datasets we worked with in our above examples, despite coming from a different source (PFF vs.&nbsp;<code>nflreadr</code>). Our <code>time_in_pocket</code> data includes a quarterback’s name on each row with his corresponding <code>team</code>, <code>player_game_count</code>, and <code>avg_time_to_throw</code>. Again, we are seeking to compare the average time to release - combined - for the AFC North against the rest of the NFL. In order to avoid skewing the results by “baking in data” (that is, not removing AFC North teams prior to finding the NFL average), we can use the <code>!</code> logical operator to remove all four teams at once (as oppose to structuring the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to include four separate <code>team_name !=</code> for all four different AFC North teams.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">time_in_pocket_no_afcn</span> <span class="op">&lt;-</span> <span class="va">time_in_pocket</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">team_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PIT"</span>, <span class="st">"BAL"</span>, <span class="st">"CIN"</span>, <span class="st">"CLE"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">time_in_pocket_no_afcn</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 26 x 5
+   player          position team_name player_game_count avg_time_to_throw
+   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Patrick Mahomes QB       KC                       20              2.85
+ 2 Tom Brady       QB       TB                       18              2.31
+ 3 Justin Herbert  QB       LAC                      18              2.75
+ 4 Josh Allen      QB       BUF                      18              2.92
+ 5 Kirk Cousins    QB       MIN                      18              2.7 
+ 6 Trevor Lawrence QB       JAX                      19              2.51
+ 7 Geno Smith      QB       SEA                      18              2.79
+ 8 Daniel Jones    QB       NYG                      18              3.03
+ 9 Jalen Hurts     QB       PHI                      18              2.86
+10 Jared Goff      QB       DET                      17              2.7 
+# ... with 16 more rows</code></pre>
+</div>
+</div>
+<p>With Pittsburgh, Baltimore, Cincinnati, and Cleveland removed from the dataset, we can - for the sake of completing the analysis - take our new <code>time_in_pocket_afcn</code> dataset and find the league-wide average for <code>avg_time_to_throw</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">time_in_pocket_no_afcn</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>combined_average <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">avg_time_to_throw</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+  combined_average
+             &lt;dbl&gt;
+1             2.76</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">time_in_pocket</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">team_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PIT"</span>, <span class="st">"BAL"</span>, <span class="st">"CIN"</span>, <span class="st">"CLE"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>combined_average <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">avg_time_to_throw</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+  combined_average
+             &lt;dbl&gt;
+1             2.89</code></pre>
+</div>
+</div>
+<p>The AFC North quarterbacks had an average time to throw of 2.76 seconds while the rest of the NFL averaged 2.89 seconds, meaning the AFC North QBs released the ball, on average, 0.13 seconds quicker than the rest of the quarterbacks in the league.</p>
+<p>So far, all our <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> operations have include just one logical operator, or multiple values built into one operator using the <code>%in%</code> option. However, because of the structure of the logical operators, we are able to construct a single <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> combined with various operator requests. For example, let’s gather only those rows that fit the following specifications:</p>
+<ol type="1">
+<li>that play occurs on 2nd down.</li>
+<li>the play must be a pass play.</li>
+<li>the play must include a charted QB hit.</li>
+<li>the play must result in a complete pass.</li>
+<li>the pass must have an air yards amount that is greater than or equal to the yards to go.</li>
+</ol>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compiling the above <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> requires knowledge of the variable names within <code>nflreadr</code> play-by-play data. This is covered in Chapter 3.</p>
+<p>That said, it is important to point out that many of the above variables have data values that are structured in binary - that is, the value is either 1 or 0.</p>
+<p>In the above list, the <code>qb_hit</code> variable is binary. A play <em>with</em> a QB hit is denoted by the inclusion of a numeric 1 in the data, while the inclusion of a numeric 0 indicates that a QB hit did not occur.</p>
+</div>
+</div>
+<p>Building the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> based on the above specifications requires the use of both character and numeric values:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_filters</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span> <span class="op">&amp;</span> <span class="va">qb_hit</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> </span>
+<span>           <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The resulting dataset, <code>multiple_filters</code>, indicates that exactly 105 such instances took place during the 2002 NFL season.</p>
+<p>Lastly, in some instances, it is necessary to use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to remove rows that may provide you with incorrect information if include. To showcase this, it is necessary to also include the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb, which is covered in greater detail in the following two section. For example, let’s gather information from the play-by-play data that will provide the total amount of yards per scrimmage - combined - for the 2022 regular season. Using our knowledge from the prior example, we can write code that first uses the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb to retrieve just those rows that took place during the regular season and then uses the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb to distill the information down to the singular, combined total:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">total_yards</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_gained</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">total_yards</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+   yards
+   &lt;dbl&gt;
+1 184444</code></pre>
+</div>
+</div>
+<p>How many total scrimmage yards did NFL teams earn during the 2022 NFL regular season? According to the results from our above code, the answer is 184,444. However, that is incorrect.</p>
+<p>The right answer, in fact, is 184,332 total scrimmage yards. How did the results of our above coding come up 112 shorts of the correct answer (as provided by the <a href="https://www.pro-football-reference.com/years/2022/#all_team_stats">2022 Team Stats page on Pro Football Reference</a>)?</p>
+<p>The difference is the result of the above code including all plays, including 2-point conversion attempts. Because a 2-point conversion is technically considered an extra point attempt - not a play from scrimmage or a official down - no player stats are officially record for the play. We can verify this is the case by using the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb to include only those rows that include regular-season games and those plays that do not include information pertaining to <code>down</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">two_points</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            total_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_gained</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">two_points</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 2
+  total total_yards
+  &lt;int&gt;       &lt;dbl&gt;
+1  8137         112</code></pre>
+</div>
+</div>
+<p>The resulting <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> indicates that exactly 112 scrimmage yards were gained on places missing <code>down</code> information. There was, of course, not 8,137 2-point conversion attempts during the 2022 regular season. There are many other instances within the data that do not include information for <code>down</code>, including: kickoffs, extra points, time outs, the end of a quarter, etc. We can be more specific with our <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> argument in the above code to include only the binary argument for the <code>two_point_attempt</code> variable:</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">two_points_true</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">two_point_attempt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            total_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_gained</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">two_points_true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 2
+  total total_yards
+  &lt;int&gt;       &lt;dbl&gt;
+1   119         112</code></pre>
+</div>
+</div>
+<p>By altering the `<code>is.na(down)</code> argument to the binary indicator for <code>two_point_attempt</code>, we see that there were 119 2-point conversion attempts in the 2022 regular season while maintain the correct 112 yards that explains our difference from above. To account for our new-found knowledge that we must remove 2-point conversions to calculate the correct amount of total scrimmage yards, we can use the <code>!is.na()</code> operator (where <code>!is.na()</code> means “is not missing this specific variable) to remove all rows that do not include information pertaining to <code>down</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">total_yards_correct</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_gained</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">total_yards_correct</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+   yards
+   &lt;dbl&gt;
+1 184332</code></pre>
+</div>
+</div>
+<p>By filtering out any row that does not include the <code>down</code> for a given play, we correctly calculated the total amount of scrimmage yards - 184,332 - for the 2022 NFL regular season.</p>
+</section><section id="nfl-data-and-the-group_by-verb" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="nfl-data-and-the-group_by-verb">
+<span class="header-section-number">3.5.2</span> NFL Data and the <code>group_by()</code> verb</h3>
+<p>As mentioned above, the <code>group_by</code> verb allows you to group data by one or more specific variables in order to conducted, among other actions, summary statistics. To showcase how <code>group_by</code> is used within the <code>nflverse</code> data, let’s first gather the 2022 regular season statistics and then use the <code>summarize</code> verb to get the average success rate on rushing plays.</p>
+<p>As well, we immediately make use of the <code>filter</code> function to do sort the data : (1.) we first instruct to filter the data to include just those instances where the <code>play_type</code> equals <code>run</code>, (2.) we then say it must also be <code>play == 1</code>, meaning there was no penalty or other interruption that “cancelled out” the play, and (3.) we lastly pass the argument that the <code>down</code> cannot be missing by using <code>!is.na</code> as a missing down is indicative of a two-point conversion attempt.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_success_ungrouped</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rushing_success_ungrouped</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 1
+  success_rate
+         &lt;dbl&gt;
+1        0.431</code></pre>
+</div>
+</div>
+<p>Without including the <code>group_by</code> verb within the above code, the output is the average success rate for rushing plays for all 32 NFL teams, wherein success rate is the percentage of rushing plays that resulted in an EPA above zero. In this case, approximately 43% of NFL rushes had a positive success rate.</p>
+<p>That said, we are interested in examining the success rate by team, not league-wide average. To do so, we add the <code>posteam</code> variable into the <code>group_by</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_success_grouped</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rushing_success_grouped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 2
+   posteam success_rate
+   &lt;chr&gt;          &lt;dbl&gt;
+ 1 PHI            0.526
+ 2 BUF            0.488
+ 3 BAL            0.478
+ 4 GB             0.476
+ 5 PIT            0.470
+ 6 ATL            0.463
+ 7 KC             0.459
+ 8 NYG            0.454
+ 9 CIN            0.454
+10 LV             0.449</code></pre>
+</div>
+</div>
+<p>In the above example, we have added the offensive team into the <code>group_by</code> verb, while also arranging the data in descending order by <code>success_rate</code>, and then used <code>slice</code> to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 52.3%. By removing the <code>slice</code> function in the above example, we can see that Tampa Bay maintained the worst rushing success rate in the league at 37.3%.</p>
+<p>While determining the rushing success rate of teams is interesting, we can also determine the same metric for individual running backs as well. To do so, we simply replace the variable in the <code>group_by</code> verb. In the below example, we replace the <code>posteam</code> variable with the <code>rusher</code> variable to see which running backs have the highest success rate.</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">running_back_success</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">running_back_success</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 2
+   rusher      success_rate
+   &lt;chr&gt;              &lt;dbl&gt;
+ 1 A.Davis                1
+ 2 B.Aiyuk                1
+ 3 B.Allen                1
+ 4 B.Skowronek            1
+ 5 C.Kmet                 1
+ 6 C.Sutton               1
+ 7 C.Wilson               1
+ 8 D.Bellinger            1
+ 9 D.Brown                1
+10 D.Gray                 1</code></pre>
+</div>
+</div>
+<p>The output, unfortunately, is not all that helpful. Because we did not use the <code>filter</code> verb to stipulate a minimum number of rushing attempts, the output is saying that - for example, Daniel Bellinger, a tight end, has among the most successful rushers in the league with a 100% rushing success rate. To correct this, we must add a second metric to our <code>summarize</code> verb (we will call it <code>n_rushes</code>) and then use the <code>filter</code> verb afterwards to include a minimum number of rushes required to be included in the final output.</p>
+<p>As well, we will provide an additional argument in the first <code>filter</code> verb that stops the output from including any rushing attempt that does not include the running back’s name. The <code>n_rushes()</code> in the <code>summarize</code> verb allows use to now include the number of attempts, per individual rusher, that fall within the first <code>filter</code> parameter. Afterwards, we include a second <code>filter</code> argument to include just those rushers with at least 200 attempts.</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">running_back_success_min</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"run"</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>success_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span>, n_rushes <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n_rushes</span> <span class="op">&gt;=</span> <span class="fl">200</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">success_rate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">running_back_success_min</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 3
+   rusher      success_rate n_rushes
+   &lt;chr&gt;              &lt;dbl&gt;    &lt;int&gt;
+ 1 M.Sanders          0.483      294
+ 2 I.Pacheco          0.469      207
+ 3 A.Jones            0.465      213
+ 4 J.Jacobs           0.444      340
+ 5 N.Chubb            0.434      302
+ 6 T.Allgeier         0.429      210
+ 7 Ja.Williams        0.427      262
+ 8 T.Etienne          0.424      250
+ 9 J.Mixon            0.422      249
+10 B.Robinson         0.420      205</code></pre>
+</div>
+</div>
+<p>Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 49% of his attempts gaining positive EPA.</p>
+<p>Much like the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb, we are able to supply multiple arguments within one <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb. This is necessary, for example, when you want to examine results over the course of multiple seasons. Let’s explore this by determining each team’s yards after catch between 2010 and 2022. To start, we will retrieve all NFL play-by-play data from those seasons.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Danger
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Loading in multiple seasons of play-by-play data can be taxing on your computer’s memory. RStudio’s memory usage monitor, located in ‘Environment’ toolbar tell you how much data is currently being stored in memory. As needed, you can click on the usage monitor and select ‘Free Unused Memory’ to purge any data that is no longer also in your ‘Environment.’</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_seasons</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2010</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once the dataset is loaded, we can think ahead to what is needed in the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb. In this case, we are exploring team results on a season basis. Because of this, we will include <em>both</em> <code>posteam</code> and <code>season</code> in the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yac_seasons</span> <span class="op">&lt;-</span> <span class="va">multiple_seasons</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">yards_after_catch</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">season</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_yac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_after_catch</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="nfl-data-and-the-summarize-verb" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="nfl-data-and-the-summarize-verb">
+<span class="header-section-number">3.5.3</span> NFL Data and the <code>summarize()</code> verb</h3>
+<p>As we’ve seen, the <code>summarize</code> function can be used to find summary statistics based whichever option we pass to it via the <code>group_by</code> verb. However, it can also be used to create new metrics built off data included in the <code>nflverse</code> play-by-play data.</p>
+<p>For example, let’s examine which teams were the most aggressive on 3rd and short passing attempts during the 2022 season. Of course, determining our definition of both what “short” is on 3rd down and “aggressive” is quite subjective. For the purposes of this example, however, let’s assume that 3rd and short is considered 3rd down with five or less yards to go and that “aggressive” is a quarterback’s air yards being to, at minimum, the first-down marker.</p>
+<p>Must like our above examples working with rushing success rate, we begin constructing the metric with the <code>filter</code> argument. In this case, we are filtering for just pass plays, we want the down to equal 3, the yards to go to be equal to or less than 5, we want it to be an official play, and we do not want it to be missing the down information. After the initial <code>filter</code> process, we include the <code>posteam</code> variable within our <code>group_by</code> verb.</p>
+<p>In our <code>summarize</code> section, we are first getting the total number of times each team passed the ball on 3rd down with no more than five yards to go. After, we are creating a new <code>aggressiveness</code> column that counts the number of times a quarterback’s air yards were, at minimum, the required yards for a first down. Next, we create another new column titled <code>percentage</code> that takes <code>aggressiveness</code> and divides it by <code>total</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">team_aggressiveness</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"pass"</span> <span class="op">&amp;</span> <span class="va">down</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">&amp;</span> <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">5</span> <span class="op">&amp;</span> <span class="va">play</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">posteam</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            aggressiveness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="va">ydstogo</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            percentage <span class="op">=</span> <span class="va">aggressiveness</span> <span class="op">/</span> <span class="va">total</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">team_aggressiveness</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 4
+   posteam total aggressiveness percentage
+   &lt;chr&gt;   &lt;int&gt;          &lt;int&gt;      &lt;dbl&gt;
+ 1 LV         60             50      0.833
+ 2 BUF        61             47      0.770
+ 3 ARI        58             44      0.759
+ 4 SF         67             50      0.746
+ 5 PIT        79             58      0.734
+ 6 SEA        60             44      0.733
+ 7 NE         54             39      0.722
+ 8 TB         92             66      0.717
+ 9 MIA        62             43      0.694
+10 CHI        42             29      0.690</code></pre>
+</div>
+</div>
+<p>The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 83% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants were the least aggressive team during the 2022 regular season, at 49.1%.</p>
+</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
+<span class="header-section-number">3.5.4</span> NFL Data and the <code>mutate()</code> verb</h3>
+<p>In the our example above working with the <code>summarize</code> verb, our output includes only the information contained in our <code>group_by</code> and then whatever information we provided in the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> (such as <code>total</code>, <code>aggressiveness</code>, and <code>percentage</code>).</p>
+<p>What if, however, you wanted to create new variables and then <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> those? That is where the <code>mutate</code> verb is used.</p>
+<p>As an example, let’s explore individual quarterback’s average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both <code>passer</code> and <code>air_yards</code> in the <code>group_by</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airyards_cpoe</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">passer</span>, <span class="va">air_yards</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>avg_cpoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cpoe</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Your output is going to include the <code>avg_cpoe</code> for each quarterback at each and every distance of <code>air_yards</code>. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with <code>ggplot</code>. To correct this issue, we must use the <code>mutate</code> verb.</p>
+<p>Rather than <code>summarize</code> the completion percentage over expected for each distance of <code>air_yards</code>, we can use the <code>mutate</code> verb to bundle together a grouping of distances. In the below example, we are using the <code>mutate</code> verb to create a new variable titled <code>ay_distance</code> using the <code>case_when</code> verb.</p>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airyards_cpoe_mutate</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cpoe</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    ay_distance <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>      <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"Negative"</span>,</span>
+<span>      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">~</span> <span class="st">"Short"</span>,</span>
+<span>      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">air_yards</span> <span class="op">&lt;</span> <span class="fl">20</span> <span class="op">~</span> <span class="st">"Medium"</span>,</span>
+<span>      <span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">20</span> <span class="op">~</span> <span class="st">"Deep"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">passer</span>, <span class="va">ay_distance</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>avg_cpoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cpoe</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the <code>air_yards</code> data now binned into four different groupings, we can examine quarterbacks at specific distances.</p>
+<div class="cell">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airyards_cpoe_mutate</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ay_distance</span> <span class="op">==</span> <span class="st">"Medium"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">avg_cpoe</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 82 x 3
+# Groups:   passer [82]
+   passer     ay_distance avg_cpoe
+   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
+ 1 A.Brown    Medium        -6.09 
+ 2 A.Cooper   Medium       -43.1  
+ 3 A.Dalton   Medium         5.01 
+ 4 A.Rodgers  Medium         2.02 
+ 5 B.Allen    Medium        44.5  
+ 6 B.Hoyer    Medium       -44.0  
+ 7 B.Mayfield Medium       -15.4  
+ 8 B.Perkins  Medium         0.266
+ 9 B.Purdy    Medium         9.72 
+10 B.Rypien   Medium        18.0  
+# ... with 72 more rows</code></pre>
+</div>
+</div>
+</section></section><section id="core-skills-for-tidy-data" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="core-skills-for-tidy-data">
+<span class="header-section-number">3.6</span> Core Skills for Tidy Data</h2>
+<p>With your new understanding of the <code>tidyverse</code> flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by <a href="https://www.sportsinfosolutions.com/">Sports Info Solutions</a>. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).</p>
+<p>In this example, we are going to compare the <code>Boom%</code> and the <code>Bust%</code> for each quarterback in the data, wherein the <code>Boom%</code> correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and <code>Bust%</code> is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in <code>ggplot</code>, we will:</p>
+<ol type="1">
+<li>Import and examine the data.</li>
+<li>Deal with missing values in the data.</li>
+<li>Charge variable types to match what it needed for visualization.</li>
+<li>Using the <code>mutate</code> verb to correct and create new metrics within the data.</li>
+<li>Merging the data with a secondary dataset.</li>
+</ol>
+<section id="importing-and-conducting-exploratory-data-analysis" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="importing-and-conducting-exploratory-data-analysis">
+<span class="header-section-number">3.6.1</span> Importing and Conducting Exploratory Data Analysis</h3>
+<p>To start, let’s examine data from Sports Info Solutions by reading in the data from this book’s Git repository using the <code>Vroom</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom::vroom</a></code>, we are reading in the <code>.csv</code> file into our environment and assigning it the name <code>sis_data</code>. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:</p>
+<ol type="1">
+<li>EDA helps to identify potential issues in the dataset, such as missing or erroneous data, outliers, or inconsistent values - all of which must be addressed prior to further analysis or visualization.</li>
+<li>Conducting an EDA allows you to gain a deeper understanding of the distribution, variability, and relationships between all the variables contained in the dataset, thus allowing you to make informed decisions on appropriate statistical techniques, models, and visualizations that can best analyze and communicate the data effectively.</li>
+<li>The EDA process can help you discover patterns or trends in the data that may be of interest or relevance to your research question, or help you discover to questions to answer.</li>
+</ol>
+<p>To start the process of EDA on our newly created <code>sis_data</code> dataset, let’s examine the current status fo the dataset using the <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> prompt:</p>
+<div class="cell">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 107 x 14
+   Season Player      Team    Att Point~1 PE Pe~2 Point~3 PAA P~4    EPA Posit~5
+    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
+ 1   2022 Patrick Ma~ Chie~   648    180.   0.267   101.    0.149 119.   52.70% 
+ 2   2022 Justin Her~ Char~   699    138.   0.187    54.2   0.074  -8.11 46.30% 
+ 3   2022 Trevor Law~ Jagu~   584    123.   0.202    48.0   0.079  32.8  48.90% 
+ 4   2022 Jared Goff  Lions   587    121.   0.199    48.4   0.079  64.7  49.00% 
+ 5   2022 Jalen Hurts Eagl~   460    106.   0.213    48.1   0.097  10.9  45.80% 
+ 6   2022 &lt;NA&gt;        &lt;NA&gt;    439    104.   0.12     41.2   0.087   8.92 45.70% 
+ 7   2022 Kirk Cousi~ Viki~   643    104.   0.151    24.0   0.035 -12.7  45.70% 
+ 8   2022 Tua Tagova~ Dolp~   400    102.   0.243    44.9   0.107  66.2  50.40% 
+ 9   2022 Joe Burrow  Beng~   606    102.   0.158    25.7   0.04   19.4  49.50% 
+10   2022 Josh Allen  Bills   567    100.   0.167    29.4   0.049  47.9  50.30% 
+# ... with 97 more rows, 4 more variables: PAR &lt;dbl&gt;, WAR &lt;dbl&gt;, `Boom%` &lt;chr&gt;,
+#   `Bust%` &lt;chr&gt;, and abbreviated variable names 1: `Points Earned`,
+#   2: `PE Per Play`, 3: `Points Above Avg`, 4: `PAA Per Play`, 5: `Positive%`</code></pre>
+</div>
+</div>
+<p>The results immediately bring to light several issues in the data:</p>
+<ol type="1">
+<li>There are several instances of missing data (as indicated by <code>NA</code> values in the 6th row).</li>
+<li>Many of the column names are not in <code>tidy</code> format. Specifically, the <code>Boom%</code> and <code>Bust%</code> columns, because of the inclusion of the percentage sign, require the small ticks at either end of the word. The same issue is apparent in <code>Points Earned</code> as it includes a space between the word and, finally, many of the variable names are in full caps.</li>
+<li>The <code>Boom%</code> and <code>Bust%</code> columns are both listed as <code>&lt;chr&gt;</code> which indicates that they are currently character-based columns, rather than the needed numeric-based column.</li>
+<li>The above issue is caused by all the values within <code>Boom%</code> and <code>Bust%</code> containing a percentage sign at the tail end.</li>
+<li>Lastly, the <code>team</code> variable for Baker Mayfield’s has a value of “2 teams” since he played for both the Carolina Panthers and Los Angeles Rams during the 2022 season.</li>
+</ol>
+<p>To begin dealing with these issues, let’s first tackle cleaning the variable names and then selecting just those columns relevant to our forthcoming data visualization in Chapter 4:</p>
+<div class="cell">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">player</span>, <span class="va">team</span>, <span class="va">att</span>, <span class="va">boom_percent</span>, <span class="va">bust_percent</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 107 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       
+ 1 Patrick Mahomes Chiefs     648 25.10%       12.50%      
+ 2 Justin Herbert  Chargers   699 21.20%       15.90%      
+ 3 Trevor Lawrence Jaguars    584 23.70%       15.20%      
+ 4 Jared Goff      Lions      587 23.60%       13.30%      
+ 5 Jalen Hurts     Eagles     460 23.50%       16.10%      
+ 6 &lt;NA&gt;            &lt;NA&gt;       439 &lt;NA&gt;         10.10%      
+ 7 Kirk Cousins    Vikings    643 21.30%       17.40%      
+ 8 Tua Tagovailoa  Dolphins   400 28.50%       15.70%      
+ 9 Joe Burrow      Bengals    606 23.60%       14.80%      
+10 Josh Allen      Bills      567 23.20%       12.70%      
+# ... with 97 more rows</code></pre>
+</div>
+</div>
+<p>In the above code, we are using the <code>clean_names()</code> function within the <code>janitor</code> package to automatically rework the column names into a <code>tidy</code> format. After, we use the <code>select</code> verb to keep only five of the included columns of data (<code>player</code>, <code>team</code>, <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code>). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.</p>
+</section><section id="dealing-with-missing-data" class="level3" data-number="3.6.2"><h3 data-number="3.6.2" class="anchored" data-anchor-id="dealing-with-missing-data">
+<span class="header-section-number">3.6.2</span> Dealing with Missing Data</h3>
+<p>Dealing with missing data is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by <code>NA</code> values and there are several different approaches to handling the missing data in an effective manner.</p>
+<p>A dataset can present missing data for a variety of reasons, including participant non-responses (such in social science research), measurement error, or simple data processing issues. The process of handling missing data is ultimately the result of the end goal of the analysis. In some case, conducting a imputation (such as replacing all <code>NA</code> values with the mean of all existing data) is used. In other cases, a more complex method can be utilized such as the <code>mice</code> package, which can impute missing data based on several different machine learning approaches (predictive mean matching, logistic regression, Bayesian polytomous regression, proportional odds model, etc.). Ultimately, the choice of method for handling missing data depends on the attributes of the dataset, your research question, and your end goals for the data.</p>
+<p>To begin exploring missing values in our <code>sis_data</code> dataset, we can run the following code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data_missing</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter_all.html">filter_all</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/all_vars.html">any_vars</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data_missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 5
+  player team    att boom_percent bust_percent
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;       
+1 &lt;NA&gt;   &lt;NA&gt;    439 &lt;NA&gt;         10.10%      </code></pre>
+</div>
+</div>
+<p>By using <code>filter_all</code> across all of our variables (<code>any_vars</code>), we can filter for any missing value, indicated by including <code>is.na</code> in the <code>filter</code>. The output shows each row within the dataset that includes at least missing value. In this case, we only have one row with missing data, with values for <code>player</code>, <code>team</code>, and <code>boom_percent</code> all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.</p>
+<p>Instead, we will return to our original dataset (<code>sis_data</code>) and use the <code>na.omit</code> function to drop any row that includes missing data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code, we are simply “recreating” our existing dataset but using <code>na.omit</code> to drop rows that include <code>NA</code> values. Once complete, we can move onto the next step of the data preparation/cleaning process.</p>
+</section><section id="changing-variable-types" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="changing-variable-types">
+<span class="header-section-number">3.6.3</span> Changing Variable Types</h3>
+<p>As discovered in the exploratory data analysis process, we know that four columns (<code>player</code>, <code>team</code>, <code>boom_percent</code>, and <code>bust_percent</code>) are listed as a <code>character</code> data type while each quarterback’s number of attempts (<code>att</code>) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.</p>
+<p>Moreover, the values in each <code>boom_percent</code> and <code>bust_percent</code> include a percentage sign at the tail-end.</p>
+<p>Because of this, we have two issues we need to correct in order to eventually bring the data over to Chapter 4 for visualization:</p>
+<ol type="1">
+<li>correctly changing the variable type for <code>boom_percent</code> and <code>bust_percent</code>
+</li>
+<li>removing the <code>%</code> from the end of each value in <code>boom_percent</code> and <code>bust_percent</code>
+</li>
+</ol>
+<p>Much like many things while working in the R programming language, there exists more than one way to tackle the above issues. In this specific case, we will first look at a method that uses the <code>stringr</code> package before switching the columns from <code>character</code> to <code>numeric</code> using an approach rooted in base R. After, we will use a much easier method to do both at one time.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important to note here that I do not necessarily endorse using the first method below to change variable types and to drop the percentage sign, as the second option is ideal.</p>
+<p>However, it is important to see how both methods work as there could be a case, somewhere down the road when you are exploring and preparing data yourself, that the first option is the <em>only</em> or <em>best</em> option.</p>
+<p>As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more options in your toolkit for tidying data.</p>
+</div>
+</div>
+<section id="method-1-using-stringr-and-changing-variables" class="level4" data-number="3.6.3.1"><h4 data-number="3.6.3.1" class="anchored" data-anchor-id="method-1-using-stringr-and-changing-variables">
+<span class="header-section-number">3.6.3.1</span> Method #1: Using <code>stringr</code> and Changing Variables</h4>
+<p>In the below example, we are creating an “example” database titled <code>sis_data_stringr</code> from our current iteration of SIS data and then pipe into the <code>mutate</code> verb (covered in more depth in the below <code>Creating New Variables</code> section). It is within this <code>mutate</code> verb that we can drop the percentage sign.</p>
+<p>We first indicate that we are going to <code>mutate</code> our already existing columns (both <code>boom_percent</code> and <code>bust_percent</code>). After, we use an <code>=</code> sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.</p>
+<p>We then use the <code>str_remove</code> function from the <code>stringr</code> package to locate the <code>%</code> sign in each value and remove it.</p>
+<p>Afterwards, we dive into base R (that is, not <code>tidyverse</code> structure) and use the <code>as.numeric</code> function to change both of the boom and bust columns to the correct data type (using the <code>$</code> sign to notate that we are working on just one specific column in the data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data_stringr</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>boom_percent <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">boom_percent</span>, <span class="st">"%"</span><span class="op">)</span>,</span>
+<span>         bust_percent <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">bust_percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">boom_percent</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">boom_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">bust_percent</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">$</span><span class="va">bust_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data_stringr</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 106 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5
+ 2 Justin Herbert  Chargers   699         21.2         15.9
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2
+ 4 Jared Goff      Lions      587         23.6         13.3
+ 5 Jalen Hurts     Eagles     460         23.5         16.1
+ 6 Kirk Cousins    Vikings    643         21.3         17.4
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7
+ 8 Joe Burrow      Bengals    606         23.6         14.8
+ 9 Josh Allen      Bills      567         23.2         12.7
+10 Geno Smith      Seahawks   572         20.6         17.6
+# ... with 96 more rows</code></pre>
+</div>
+</div>
+<p>Our output using <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> now shows that <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code> are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.</p>
+</section><section id="method-2-using-the-parse_number-function-in-readr" class="level4" data-number="3.6.3.2"><h4 data-number="3.6.3.2" class="anchored" data-anchor-id="method-2-using-the-parse_number-function-in-readr">
+<span class="header-section-number">3.6.3.2</span> Method #2: Using the <code>parse_number</code> Function in <code>readr</code>
+</h4>
+<p>While the above example using <code>stringr</code> and base R is suitable for our needs, we can use the <code>readr</code> package - and its <code>parse_number</code> function - to achieve the same results in a less verbose manner.</p>
+<div class="cell">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>boom_percent <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">boom_percent</span><span class="op">)</span>,</span>
+<span>         bust_percent <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">bust_percent</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 106 x 5
+   player          team       att boom_percent bust_percent
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5
+ 2 Justin Herbert  Chargers   699         21.2         15.9
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2
+ 4 Jared Goff      Lions      587         23.6         13.3
+ 5 Jalen Hurts     Eagles     460         23.5         16.1
+ 6 Kirk Cousins    Vikings    643         21.3         17.4
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7
+ 8 Joe Burrow      Bengals    606         23.6         14.8
+ 9 Josh Allen      Bills      567         23.2         12.7
+10 Geno Smith      Seahawks   572         20.6         17.6
+# ... with 96 more rows</code></pre>
+</div>
+</div>
+<p>The above example, using <code>readr</code>, is quite similar to the first version that used <code>stringr</code> in that we are using the <code>mutate</code> verb to edit our existing <code>boom_percent</code> and <code>bust_percent</code> columns. In this case, however, we are replacing our <code>stringer</code> argument with the <code>parse_number</code> function from the <code>readr</code> package. When finished, you can see in the <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output that not only are both boom and bust correctly listed as numeric, but the <code>parse_number</code> function automatically recognized and dropped the tailing percentage sign.</p>
+<p>While both examples get us to the same endpoint, using the <code>readr</code> package allows us to get there with less work.</p>
+</section></section><section id="correct-and-create-new-variables-using-mutate" class="level3" data-number="3.6.4"><h3 data-number="3.6.4" class="anchored" data-anchor-id="correct-and-create-new-variables-using-mutate">
+<span class="header-section-number">3.6.4</span> Correct and Create New Variables Using <code>mutate</code>
+</h3>
+<p>The <code>mutate</code> verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our dataset. To that end, the <code>mutate</code> verb applies a user-supplied argument to each row of the dataset to create the new metric. Additionally, the <code>mutate</code> verb - when combined with the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield’s teams).</p>
+<p>The syntax of the <code>mutate</code> verb follows the <code>tidyverse</code> flow like many of the other <code>dplyr</code> verbs:</p>
+<div class="cell">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>new_column_name <span class="op">=</span> <span class="fu">user_supplied_argument</span><span class="op">(</span><span class="va">existing_column_name</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>mutate</code> verb is highly flexible, allowing us to create a new column based on a wide-range of functions and arguments, including mathematical operations, logical operations, string operation, and many more - including applying functions from other packages.</p>
+<p>Importantly, the <code>mutate</code> verb allows us to create new variables <strong>without changing the original dataset</strong>. While the <code>summarize</code> verb can also create new columns based on various functions and argument, it also distills the dataset down to just the columns created within the <code>summarize</code> function (plus any column including in the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>). Conversely, the <code>mutate</code> verb creates the new column and adds it on to the current iteration of the dataset.</p>
+<p>To showcase this, let’s create a new column in our <code>sis_data</code> that calculate the difference between a quarterback’s <code>boom_percent</code> and <code>bust_percent</code>. This is also a great time to limit the quarterbacks we include based on the number of attempts for each. Not doing so results in oddities in the data, such as Christian McCaffrey (a running back) having a 100-percent boom percentage on one passing attempt. To avoid such occurrences, let’s add the <code>filter</code> verb prior to our <code>mutate</code> and limit the data to just those quarterbacks with at least 200 passing attempts:</p>
+<div class="cell">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">att</span> <span class="op">&gt;=</span> <span class="fl">200</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>difference <span class="op">=</span> <span class="va">boom_percent</span> <span class="op">-</span> <span class="va">bust_percent</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 x 6
+   player          team       att boom_percent bust_percent difference
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5      12.6 
+ 2 Justin Herbert  Chargers   699         21.2         15.9       5.3 
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2       8.5 
+ 4 Jared Goff      Lions      587         23.6         13.3      10.3 
+ 5 Jalen Hurts     Eagles     460         23.5         16.1       7.4 
+ 6 Kirk Cousins    Vikings    643         21.3         17.4       3.90
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7      12.8 
+ 8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
+ 9 Josh Allen      Bills      567         23.2         12.7      10.5 
+10 Geno Smith      Seahawks   572         20.6         17.6       3   
+# ... with 23 more rows</code></pre>
+</div>
+</div>
+<p>In the above example, by using the <code>mutate</code> verb, we created a new column in our existing <code>sis_data</code> dataset that calculates the different between a quarterback’s <code>boom_percent</code> and <code>bust_percent</code>. Importantly, as mentioned, this is done while keeping the rest of the dataset in place unlike using the <code>summarize</code> verb.</p>
+<p>As mentioned in the introduction to this section, it is possible to include other function within the <code>mutate</code> verb. In fact, doing so is necessary if we wish to make the correction to Baker Mayfield’s team. Currently, Mayfield’s value for <code>team</code> is listed as <code>2 teams</code>. Instead, let’s replace that with his most recent team in the 2022 NFL season (Rams).</p>
+<p>To make this correction, we will begin by using the <code>mutate</code> verb on the existing <code>team</code> column in our dataset. However, where we calculated the different between boom and bust percent in the above example of <code>mutate</code>, we will now use the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> function.</p>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> function allows us to either correct values, or create new columns, based on multiple conditions and values. The syntax of <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> is as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>column_name <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  <span class="va">condition_1</span> <span class="op">==</span> <span class="va">value_1</span> <span class="op">~</span> <span class="va">new_value</span>,</span>
+<span>  <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">default_value</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above code, we are essentially saying: “if condition_1 equals value_1, then replace the column_name’s existing value with this new_value.” The final argument, <code>TRUE ~ default_value</code>, specifies the default value to be used if none of the prior conditions are <code>TRUE</code>.</p>
+<p>To make this more concrete, let’s working through it using our issue with Baker Mayfield. In order to make the correction, we need to supply the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> argument three items from the data: the column name that we are applying the <code>mutate</code> to (in this case, <code>team</code>), the first condition (in this case, <code>player</code>), and the value of that condition (in this case, <code>Baker Mayfield</code>). Next, we need to include the new value (in this case, <code>Rams</code>), and then supply what to do if the above condition is not <code>TRUE</code>. In other words, if the <code>player</code> is not <code>Baker Mayfield</code> then simply keep the existing <code>team</code> in place.</p>
+<p>Following that verbal walk through of the process, we can place the conditions and values into the correct spot in the relevant code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>team <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">player</span> <span class="op">==</span> <span class="st">"Baker Mayfield"</span> <span class="op">~</span> <span class="st">"Rams"</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">team</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">player</span> <span class="op">==</span> <span class="st">"Baker Mayfield"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 6
+  player         team    att boom_percent bust_percent difference
+  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+1 Baker Mayfield Rams    335           17         18.9      -1.90</code></pre>
+</div>
+</div>
+<p>By filtering the data down to include just Baker Mayfield, we can use <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> to make sure that his team is now listed as the Rams. Further, a continued look at the data shows no other players’ teams were changed in the process:</p>
+<div class="cell">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 x 6
+   player          team       att boom_percent bust_percent difference
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Patrick Mahomes Chiefs     648         25.1         12.5      12.6 
+ 2 Justin Herbert  Chargers   699         21.2         15.9       5.3 
+ 3 Trevor Lawrence Jaguars    584         23.7         15.2       8.5 
+ 4 Jared Goff      Lions      587         23.6         13.3      10.3 
+ 5 Jalen Hurts     Eagles     460         23.5         16.1       7.4 
+ 6 Kirk Cousins    Vikings    643         21.3         17.4       3.90
+ 7 Tua Tagovailoa  Dolphins   400         28.5         15.7      12.8 
+ 8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
+ 9 Josh Allen      Bills      567         23.2         12.7      10.5 
+10 Geno Smith      Seahawks   572         20.6         17.6       3   
+# ... with 23 more rows</code></pre>
+</div>
+</div>
+<p>With that, our <code>sis_data</code> dataset is nearly complete and ready for taking over to <code>ggplot</code> in Chapter 4. Before doing so, though, we can use the <code>load_teams</code> function within <code>nflreadr</code> to combine the appropriate team colors to each quarterback in the data, allowing us to customize the appearance of the data visualization.</p>
+</section><section id="merging-datasets-with-dplyr-and-mutating-joins" class="level3" data-number="3.6.5"><h3 data-number="3.6.5" class="anchored" data-anchor-id="merging-datasets-with-dplyr-and-mutating-joins">
+<span class="header-section-number">3.6.5</span> Merging Datasets with <code>dplyr</code> and Mutating Joins</h3>
+<p>Mutating joins are a manipulation technique that allows us to add, modify, or remove columns in a dataset based on a shared variable or a set of variables. The process is done by matching rows in the datasets based on an matching identifier between the two. Once completed, the matching data from the second dataset is added to the first or, conversely, the data within the first dataset is modified as needed to include the incoming data from the second dataset.</p>
+<p>There are four common mutating joins in the <code>dplyr</code> package:</p>
+<ol type="1">
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>: a <code>left_join</code> adds all the columns from the first dataset by only matching columns from the second dataset.</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>: a <code>right_join</code> is the opposite of the <code>left_join</code> process in that it adds all the columns from the second dataset and only matches those columns from the first.</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>: a <code>inner_join</code> will only match rows found in both datasets.</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>: a <code>full_join</code> will include all the rows and columns from both datasets.</li>
+</ol>
+<p>The picture below, from William Surles’ instructional <em>Joining Data in R with dplyr,</em> showcases the above in graphical form.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="https://rpubs.com/williamsurles/293454"><img src="images/mutating_joins_graphic.png" class="img-fluid figure-img" width="350"></a></p>
+<p></p><figcaption class="figure-caption">Mutating Joins in dplyr</figcaption><p></p>
+</figure>
+</div>
+<p>In this instance, using our <code>sis_data</code> dataset, we will need to conduct a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> to bring in NFL team color information. To start, we can use the <code>load_teams</code> function in <code>nflreadr</code> to load the team information and then use <code>select</code> to keep just the information we needed for the merging process:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please note that a much deeper dive into the <code>nflverse</code> functions is included in Chapter 3, including a more detailed approach to working with individual team data. The below code will be expanded upon in the next chapter but, for now, allows us to walk through the merging process.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_nick</span>, <span class="va">team_name</span>, <span class="va">team_color</span>, <span class="va">team_color2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">teams</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 x 5
+   team_abbr team_nick team_name          team_color team_color2
+   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;      
+ 1 ARI       Cardinals Arizona Cardinals  #97233F    #000000    
+ 2 ATL       Falcons   Atlanta Falcons    #A71930    #000000    
+ 3 BAL       Ravens    Baltimore Ravens   #241773    #9E7C0C    
+ 4 BUF       Bills     Buffalo Bills      #00338D    #C60C30    
+ 5 CAR       Panthers  Carolina Panthers  #0085CA    #000000    
+ 6 CHI       Bears     Chicago Bears      #0B162A    #C83803    
+ 7 CIN       Bengals   Cincinnati Bengals #FB4F14    #000000    
+ 8 CLE       Browns    Cleveland Browns   #FF3C00    #311D00    
+ 9 DAL       Cowboys   Dallas Cowboys     #002244    #B0B7BC    
+10 DEN       Broncos   Denver Broncos     #002244    #FB4F14    
+# ... with 22 more rows</code></pre>
+</div>
+</div>
+<p>For educational purposes, we use the above code to bring in each NFL’s team abbreviation, nickname, and full name. Along with identifying information for each team, we also have selected <code>team_color</code> and <code>team_color2</code> (which correspond to each team’s primary and secondary colors).</p>
+<p>As mentioned, we will use the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> function to merge this information into our <code>sis_data</code>. The basic syntax of a <code>left_join</code> includes a call to the original dataset, the dataset to be merged in, and then an argument to stipulate which variable the join should match on:</p>
+<div class="cell">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset1</span> <span class="op">&lt;-</span> <span class="va">dataset1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dataset2</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"variable_1"</span> <span class="op">=</span> <span class="st">"variable_2"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In terms of talking through it, the above code is stating: “use dataset1, <em>and then</em> conduct a <code>left_join</code> with dataset2, by matching <code>variable_1</code> from dataset1 to corresponding <code>variable_2</code> from dataset2.”</p>
+<p>To conduct the join, <strong>we must determine which variable in <code>teams</code></strong> <strong>matching a corresponding variable in <code>sis_data</code></strong>. We can use the <code>slice</code> function to compare the first row of data from each:</p>
+<div class="cell">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 6
+  player          team     att boom_percent bust_percent difference
+  &lt;chr&gt;           &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+1 Patrick Mahomes Chiefs   648         25.1         12.5       12.6</code></pre>
+</div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 5
+  team_abbr team_nick team_name         team_color team_color2
+  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;      
+1 ARI       Cardinals Arizona Cardinals #97233F    #000000    </code></pre>
+</div>
+</div>
+<p>In <code>sis_data</code>, the <code>team</code> column includes the nickname of the NFL team (in this case, the Chiefs). The corresponding variable in our <code>teams</code> dataset is the column titled <code>team_nick</code>. Knowing that, we can conduct the <code>left_join</code> using <code>team</code> for <code>variable_1</code> from the above example syntax and <code>team_nick</code> for <code>variable_2</code>.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that the columns containing the corresponding data do not have the same name (<code>team</code> vs.&nbsp;<code>team_nick</code>).</p>
+<p>It is important to remember that the name of the columns <em>do not</em>&nbsp;have to match. It is the values contained within the column that must match.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="va">sis_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_nick"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 x 10
+   player    team    att boom_~1 bust_~2 diffe~3 team_~4 team_~5 team_~6 team_~7
+   &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1 Patrick ~ Chie~   648    25.1    12.5   12.6  KC      Kansas~ #E31837 #FFB612
+ 2 Justin H~ Char~   699    21.2    15.9    5.3  LAC     Los An~ #007BC7 #ffc20e
+ 3 Trevor L~ Jagu~   584    23.7    15.2    8.5  JAX     Jackso~ #006778 #000000
+ 4 Jared Go~ Lions   587    23.6    13.3   10.3  DET     Detroi~ #0076B6 #B0B7BC
+ 5 Jalen Hu~ Eagl~   460    23.5    16.1    7.4  PHI     Philad~ #004C54 #A5ACAF
+ 6 Kirk Cou~ Viki~   643    21.3    17.4    3.90 MIN     Minnes~ #4F2683 #FFC62F
+ 7 Tua Tago~ Dolp~   400    28.5    15.7   12.8  MIA     Miami ~ #008E97 #F58220
+ 8 Joe Burr~ Beng~   606    23.6    14.8    8.8  CIN     Cincin~ #FB4F14 #000000
+ 9 Josh All~ Bills   567    23.2    12.7   10.5  BUF     Buffal~ #00338D #C60C30
+10 Geno Smi~ Seah~   572    20.6    17.6    3    SEA     Seattl~ #002244 #69be28
+# ... with 23 more rows, and abbreviated variable names 1: boom_percent,
+#   2: bust_percent, 3: difference, 4: team_abbr, 5: team_name, 6: team_color,
+#   7: team_color2</code></pre>
+</div>
+</div>
+<p>You can see in the <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> output that our two datasets correctly merged on the <code>team</code> and <code>team_nick</code> columns. Moreover, to illustrate what happens doing the joining process, please note these two items:</p>
+<ol type="1">
+<li>The <code>team_nick</code> column from our <code>teams</code> dataset is not included in our merged <code>sis_data</code>, as it is dropped after matching/merging with the <code>team</code> information from our original dataset.</li>
+<li>While the <code>team_nick</code> column was dropped, the other team identifiers (<code>team_abbr</code> and <code>team_name</code>) were kept intact, as they were not used in the matching process. As well, <code>team_color</code> and <code>team_color2</code> are now correctly match with each quarterback’s team.</li>
+</ol>
+<p>We can use the <code>seecolor</code> package to illustrate how the hex codes in <code>team_color</code> and <code>team_color2</code> correspond to each team:</p>
+<div class="cell">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">seecolor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seecolor/man/print_color.html">print_color</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">$</span><span class="va">team_color</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ ------ $ sis_data team_color ------
+                                                                                                   </code></pre>
+</div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">seecolor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seecolor/man/print_color.html">print_color</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ ------ $ sis_data team_color2 ------
+                                                                                                   </code></pre>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-tidyverse" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley. 2022. <span>“Tidyverse Packages.”</span> <a href="https://www.tidyverse.org/packages/">https://www.tidyverse.org/packages/</a>.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./01-nfl-analytics-and-r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-nfl-analytics-functions.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
+    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
+
+
+</body></html>

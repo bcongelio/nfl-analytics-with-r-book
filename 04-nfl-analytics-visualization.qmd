@@ -612,3 +612,28 @@ By moving the average lines to the top of our `ggplot` code, both are now layere
 ### Making Changes to Theme Elements
 
 Content to be uploaded soon.
+
+## Using Team Logos in Plots
+
+To explore the process of placing team logos into a plot, let's stick with our previous example of working with play action passing data but explore it at the team level rather than individual quarterbacks. To gather the data, we can use `vroom` to read it in from the book's GitHub.
+
+```{r gathering-team-play-action, eval = TRUE, echo = TRUE, output = TRUE}
+
+team_playaction <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv")
+
+team_playaction
+```
+
+The resulting `team_playaction` data contains nearly identical information to the previous QB-level data. However, there is a slight change in how Sports Info Solutions charts passing yards on the team level. You will notice a column for both `net_yds` and `gross_yds`. When charting passing attempts in football, a player's individual passing yards are aggregated under **gross yards** with all lost yardage resulting from a sack being included. On the other hand, team passing yards are always presented in **net yards** and any lost yardage from sacks are not included. Case in point, the `gross_yds` number in our `team_playaction` data is greater than the `net_yds` for all 32 NFL teams. In any case, we will build our data visualization using `net_yds`.
+
+In order to include team logos in the plot, we must first merge in team logo information (again with the understanding that we could use `nflplotR` if team abbreviations were included in the data). We can collect the team logo information using the `load_teams()` function within `nflreadR`. There are three different variations of each team's logo available in the resulting data: (1.) the logo from ESPN, (2.) the logo from Wikipedia, (3.) a pre-edited version of the logo that is cropped into a square.
+
+::: callout-note
+**There are slight differences in disk space, pixels, and utility in the provided ESPN, Wikipedia, and squared versions of the logos.**
+
+The Wikipedia versions are, generally, smaller in size. The Arizona Cardinals logo, for example, is just 9.11 KB in size from Wikipedia while the ESPN version of the logo is 20.6 KB. This difference is disk size is the result of each images dimensions and pixels. The ESPN version, with the larger disk size, is also a higher quality image that is scaled in 500x500 dimensions (and 500 pixels). The Wikipedia version is scaled in 179x161 dimensions at 179 pixels and 161 pixels, respectively. The squared version of the logo is a 200x200 image at 200 pixels with a background matching the team's primary color.
+
+What does this mean? The ESPN version of the logo is better for those applications where the logo will be large and you do not want any loss of quality. The Wikipedia version, conversely, is better suited for applications like our: for use in a small-scale data visualization. We do not plan on "blowing up" the image, thus losing quality and the smaller disk space size of the images allows for a slightly quicker rendering time when we use the `ggimage` package. While sparingly used, the squared version of the logo can be used in certain data visualization applications that requires the team logo to quickly and easily "merge" into the background of the plot (more on this later in this chapter, though).
+:::
+
+more content arriving this weekend.
