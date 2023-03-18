@@ -1,11 +1,15 @@
 # Data Visualization with NFL Analytics
 
-```{r loading-library, include = FALSE}
+```{r setup-ch4, include = FALSE}
+
+source("R/book-functions.R")
 
 library(tidyverse)
-library(nflreadr)
-library(ggrepel)
+library(nflverse)
 library(extrafont)
+library(ggrepel)
+loadfonts(device="win")
+extrafont::loadfonts(quiet = TRUE)
 ```
 
 Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
@@ -24,7 +28,6 @@ Because of this, any data viz I create never fails to include "directables" with
 
 ```{r aggressiveness-equation-plot, echo = FALSE}
 knitr::include_graphics(rep("images/finished-aggressiveness.png"))
-
 ```
 
 The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since "aggressiveness" is not a typical, day-to-day metric discussed by NFL fans, I included a "directable" within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how "aggressiveness" was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow's 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggressive QBs in the line based on the same metric.
@@ -172,7 +175,7 @@ colnames(play_action_data)
 
 With the team color information now built into our `play_action_data`, we can incorporate the team color specific to each point by including the `color` argument within our `geom_point`.
 
-```{r adding-team-color-no-nflplotr, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r adding-team-color-no-nflplotr, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(color = play_action_data$team_color)
@@ -183,7 +186,7 @@ You may notice that we used the the `$` special operator to extract the `team_co
 
 To see this for yourself, you can run the example following code. Remember, this is an incorrect approach and serves to only highlight why the `$` special operator was used in the above code.
 
-```{r incorrect-use-of-aes, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r incorrect-use-of-aes, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(aes(color = team_color))
@@ -192,7 +195,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 
 As mentioned, the same result can be achieved using the `nflplotR` package. The following code will do so:
 
-```{r adding-color-with-nflplotr, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r adding-color-with-nflplotr, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(aes(color = team_abbr)) +
@@ -208,7 +211,7 @@ Given the two examples above, a couple items regarding the use of `nflplotR` sho
 
 Finally, because we have both `team_color` and `team_color2` - the primary and secondary colors for each team - in the data, we can get fancy and create points that are filled with the primary team color and outlined by the secondary team color. Doing so simply requires changing the type of our `geom_point`. In the below example, we are specifying that we want a specific type of `geom_point` by using `shape = 21` and then providing the `fill` color and the outline color with `color`. In each case, we are again using the `$` special operator to select the primary and secondary color associated with each team.
 
-```{r adding-shape-21-to-plot, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r adding-shape-21-to-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -256,7 +259,7 @@ For the sake of educational purposes, we can alter the size of each specific poi
 
 Again: it is important to point out that this not a good approach to data visualization, as the size of the dots correlates to just one of the variables being explored in the plot.
 
-```{r incorrect-use-of-sizing, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r incorrect-use-of-sizing, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -268,7 +271,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 
 In order to maintain correct visualization standards, we can resize the points for nothing more than aesthetic purposes (that is: making them bigger so they are easier to see). To do so, we still add the `size` argument to our `geom_point` but simply provide a numeric value to apply uniformly across all the points. To process of selecting the numeric value is a case of trial and error - inputting and running, changing and running, and changing and running again until you find the size that provides easier to see points without adding overlap into the visualization.
 
-```{r adding-correct-size-to-points, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r adding-correct-size-to-points, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -307,7 +310,7 @@ While the our current plot includes team-specific colors for the points, we are 
 
 We can do a bare minimum addition of the player names by adding one additional line of code using `geom_text_repel` and wrapping it in an `aes()` call and specifying which variable in the `play_action_data` is the `label` we would like to display.
 
-```{r basic-addition-of-player-name, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r basic-addition-of-player-name, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -320,7 +323,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------:|:-----------------------------------------------:|
+|:---------------------:|:----------------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -335,7 +338,7 @@ While it is a good first attempt at adding the names, many of them are awkwardly
 
 Of the above options, the our current issue with name and point spacing can be resolved by including a numeric value to the `box.padding`. Moreover, we can control the look and style of the text (such as size, font family, font face, etc.) in much the same way. To make these changes, we can set the `box.padding` to 0.45, set the size of the text to 3 using `size` as well as switch the font to 'Roboto Condensed' using `family`, and - finally - make it bold using `fontface`.
 
-```{r add-ggrepel-options, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r add-ggrepel-options, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -345,7 +348,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold")
 ```
 
@@ -397,7 +400,7 @@ Please know that `ggplot` will throw an error if you try to apply a continuous s
 
 In the case of our current plot, we now know we will be using the `scales_x_continuous` and `scale_y_continuous` functions as both contain continuous (numeric) data. To make the changes, we can turn to the `scales` package and its `pretty_breaks` function to change the number of "breaks" (or ticks) on each axis. By placing `n = 6` within the `pretty_breaks` argument, we are requesting a total of six axis ticks on both the x- and y-axis.
 
-```{r add-breaks-with-scales, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r add-breaks-with-scales, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -407,7 +410,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6))
@@ -417,7 +420,7 @@ Despite our request to build the plot with six ticks on each axis, you will see 
 
 With the number of axis ticks corrected, we can turn our attention to getting the labels of the axis ticks into correct numeric format. Within the same `scale_x_continuous` or `scale_y_continuous` arguments, we will use the `labels` function, combined with another tool from the `scales` package to make the adjustments.
 
-```{r add-commas-to-values, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r add-commas-to-values, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -427,7 +430,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -465,7 +468,7 @@ With much of the heavy lifting for our visualization now complete, we can move o
 
 Much like our last section, we can work on changing the title of each axis and adding a title, subtitle, and caption for the plot within one section, as all this is added and/or changed by using `labs()`.
 
-```{r using-labs-for-title-caption-sub, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r using-labs-for-title-caption-sub, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -475,7 +478,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -516,7 +519,7 @@ Within the new `labs()`, we are placing a total of five items: `x` (allowing us 
 
 Adding mean (or average) lines to both the x-axis and y-axis allows us to visualize where each quarterback falls within one of four sections (according to the amount of passing yards in both situations). Adding the lines is done by add two additional geoms to the existing plot (in this case `geom_hline` and `geom_vline`).
 
-```{r add-avg-lines-incorrectly, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r add-avg-lines-incorrectly, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
    geom_point(shape = 21,
@@ -526,7 +529,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -553,7 +556,7 @@ As we've seen so far in the process, each layer of a plot is added by including 
 
 Because of the important layering issue highlighted above, it is visually necessary for us to move the `geom_hline` and `geom_vline` to the beginning of the `ggplot` code so both are layered underneath everything else in the plot (`geom_point` and `geom_text_repel` in this case). As well, we can apply the `alpha` option to each to slightly decrease each line's transparency.
 
-```{r correctly-adding-avg-lines, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r correctly-adding-avg-lines, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_hline(yintercept = mean(play_action_data$pa_yds), 
@@ -573,7 +576,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Georgia",
+                  family = "Roboto Condensed",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -618,7 +621,7 @@ Content to be uploaded soon.
 
 To explore the process of placing team logos into a plot, let's stick with our previous example of working with play action passing data but explore it at the team level rather than individual quarterbacks. To gather the data, we can use `vroom` to read it in from the book's GitHub.
 
-```{r gathering-team-play-action, eval = TRUE, echo = TRUE, output = TRUE}
+```{r gathering-team-play-action, eval = TRUE, echo = TRUE, output = FALSE}
 
 team_playaction <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv")
 
