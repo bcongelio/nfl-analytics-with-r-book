@@ -5,15 +5,6 @@
 library(tidyverse)
 library(nflreadr)
 library(ggrepel)
-
-```
-
-```{r setup-dataviz, include = FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-
-source("book-functions.R")
-
-
 ```
 
 Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
@@ -169,7 +160,7 @@ After collecting the team information needed, we can conducted a `left_join` to 
 
 ```{r merging-team-data-for-plot, eval = TRUE, echo = TRUE, output = FALSE}
 
-teams <- nflreadr::load_teams(current = FALSE) %>%
+teams <- nflreadr::load_teams(current = TRUE) %>%
   select(team_abbr, team_nick, team_color, team_color2)
 
 play_action_data <- play_action_data %>%
@@ -328,7 +319,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:--------------------:|:------------------------------------------------:|
+|:---------------------:|:-----------------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |

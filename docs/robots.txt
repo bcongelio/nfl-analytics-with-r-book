@@ -1,1 +1,0 @@
-Sitemap: https://bradcongelio.com/nfl-analytics-with-r-book/sitemap.xml
