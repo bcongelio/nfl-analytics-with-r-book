@@ -9,6 +9,154 @@ library(nflverse)
 library(arrow)
 ```
 
+introduction coming to this location soon.
+
+## Exploring Rushing Yards Over Expected
+
+Back in January of 2021, Tej Seth posted an article to the [Michigan Football Analytics Society blog](https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/) that outlined his vision for creating a "public expected rushing yards model." The structure of his model, as explained by Tej, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowl, who previously used the college football equivalent of open-source data ([`cfbfastR`](https://cfbfastr.sportsdataverse.org/)) to create an RYOE model for the collegiate game.[^05-nfl-analytics-advanced-methods-1] In Tej's case, his approach to created an NFL-centric RYOE model culminated with the creation of his [RYOE Shiny App](https://mfbanalytics.shinyapps.io/RYOE/) that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.
+
+[^05-nfl-analytics-advanced-methods-1]: Thanks to Tej Seth for briefly chatting with me over Twitter regarding the history of both Michael's RYOE model and his own.
+
+Despite a slightly intimidating title, rushing yards over expected is a fantastic entrypoint into exploring model creation and analysis in NFL analytics - in fact, the growing number of "over expected" metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greerre, the owner of [nfeloapp.com](https://www.nfeloapp.com/) - a website that provides "data-driven analytics, picks, and predictions for the NFL" - explains that over expected metrics are a increasingly popular avenue in which analysts can "paint a more accurate picture of performance by adjusting familiar statistics like 'completion percentage' or 'yards per rush' for conflating factors like degree of difficulty or game text" [@nfelo].
+
+Some of these metrics, like completion percentage over expected (CPOE), are widely accepted. Specifically, CPOE calculates how likely any quarterback's pass is going to be complete or incomplete compared to other passing attempts. It is considered "widely accepted" because the metric itself is considered "stable" in that the r-squared value retains a strong correlation for individual quarterbacks across several seasons. In fact, as Greerre points out, the r-squared value for CPOE for just one season is 0.226 which is extremely strong based on NFL analytics standards.
+
+On the other hand, RYOE - based on Greerre's analysis - maintains an r-squared value below 0.15 until a running back's fourth season, wherein the average improves to 0.263 (an otherwise stable value). But that does not mean that RYOE is not a metric worth further exploration. The effectiveness of any one metric to account for factors such as degree of difficulty or game text largely relies on our ability to provide adequate feature engineering - specifically, how much relevant data the machine learning model can ingest to begin making predictions.
+
+Because of that, significant machine learning models have been built with information provided by the NFL's Big Data Bowl as it is the one chance that the public receives to feature engineer with the NFL's tracking data (wherein a player's position, speed, direction, etc. is tracked and recorded every 1/10th of a second). Unfortunately, only small windows of data exist from the Big Data Bowl releases and, as a result, we are often required to find creative ways to provide further context to each play/player for the machine learning model.
+
+To showcase this idea, we are going to begin exploring ways to add additional feature engineering to Tej Seth's already fantastic Rushing Yard Over Expected model. While not the most stable metric, as mentioned, the idea of RYOE is generally easy to understand for even the most analyst. Broadly, given what we know about every other rushing play during a specific span of seasons, what is the most likely amount of yards a running back is going to gain on a specific rushing play as predicted by the model on other similar situations?
+
+**That difference is rushing yards over expected**.
+
+Using Tej's Shiny app, we can explore all seasons between 2015 and 2022 for those running backs that had a minimum of 755 rushing attempts.
+
+```{r tej-seth-shiny-results, echo = FALSE, fig.cap = "Credit: Tej Seth"}
+knitr::include_graphics(rep("images/ryoe_2015_2022.jpg"))
+```
+
+According to Tej's model, since 2015, Nick Chubb of the Cleveland Browns earned - on average - 0.66 over expected. Aaron Jones is closely behind with 0.61 over expected and then a significant drop occurs for the third and fourth players.
+
+To understand how Tej engineered his model and to begin exploring other possible features to feed into the model, we can dive into his [publicly available code](https://github.com/tejseth/RYOE/blob/main/ryoe-2.R).
+
+### Tej Seth's RYOE Model: Under The Hood
+
+::: callout-important
+It is important to immediately point out that Tej built his RYOE model using the `xgboost` package whereas we will begin constructing ours using `tidymodels`.
+
+While the underlying eXtreme Gradient Boosting process is largely the same with both approaches, the necessary framework we will construct with `tidymodels` differs *greatly* from the coding used with the `xgboost` package.
+
+The `xgboost` package is a standalone package in R that provide an implementation of the eXtreme Gradient Boosting algorithm. To that end, it offers a highly efficient and flexible way to train gradient boosting models for various machine learning tasks, such as classification, regression, and ranking. The package provides its own set of functions for training, cross-validation, prediction, and feature importance evaluation.
+
+The `tidymodels` package, on the other hand, is a *collection* of R packages that provide a unified framework for modeling and machine learning tasks. It includes several package for data preprocessing, modeling, validation, and evaluation. Because of this, the core goal of the `tidymodels` teams is to offer a consistent syntax and workflow for a wide range of machine learning models. It is a fair comparison to say that `tidymodels` is the `tidyverse` of the machine learning world.
+:::
+
+Just like the model we will be building in this chapter, Tej constructed his model via eXtreme Gradient Boosting.
+
+Which may lead to a very obvious question if you are new to machine learning: **what exactly *is* eXtreme Gradient Boosting?**
+
+### eXtreme Gradient Boosting Explained
+
+eXtreme Gradient Boosting (XGBoost) is a powerful machine learning technique that is particularly good at solving supervised machine learning problems, such as classification (categorizing data into classes, for example) and regression (predicting numerical values).
+
+XGBoost can be thought of as an "expert team" that combines the knowledge and skills of multiple "individual experts" to make better decisions or predictions. Each of these "experts" in this context is what we call a decision tree, which is a flowchart structure used for making decisions based on a series of question about the data.
+
+Once provided data, XGBoost seeks to iteratively build a collection of "bad" decision trees and then build an ensemble of these poor ones into a more accurate and robust model. The term "gradient" comes from the fact that the algorithm uses the gradient (or the slope) of the loss function (a measure of how well the model fits the data) to guide the learning process.
+
+### Building RYOE with `xgboost`
+
+With a basic understanding of the differences between the `xgboost` and `tidymodels` packages, and how the eXtreme Gradient Boosting algorithm works, we can examine how Tej constructed his `xgboost` model from `nflreadR` data.
+
+::: callout-tip
+While I also include my own step-by-step instructional videos for this book, Tej created a video as he created the initial RYOE model in `xgboost` as part of the M-Fans YouTube channel ([Making a Random Forest and XGBoost Model with NFL Data](https://www.youtube.com/watch?v=p5LxuIjh6Z8&t=577s)) and I am happy to share it as it never hurts to go through the critical thinking process with more than one person.
+:::
+
+```{r tej-model-ryoe, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2015:2022)
+
+rush_attempts <- pbp %>%
+  filter(rush_attempt == 1, qb_scramble == 0, 
+         qb_dropback == 0, !is.na(yards_gained))
+
+def_ypc <- rush_attempts %>%
+  filter(!is.na(defteam)) %>%
+  group_by(defteam, season) %>%
+  summarize(def_ypc = mean(yards_gained))
+
+rush_attempts <- rush_attempts %>%
+  left_join(def_ypc, by = c("season", "defteam"))
+
+rushing_data_join <- rush_attempts %>%
+  select(label = yards_gained, yardline_100, quarter_seconds_remaining,
+         half_seconds_remaining, qtr, down, ydstogo, shotgun, no_huddle,
+         ep, wp, def_ypc, rusher_player_name, posteam, defteam) %>%
+  filter(!is.na(label), !is.na(down))
+
+rushes <- rushing_data_join %>%
+  select(-rusher_player_name, -posteam, -defteam)
+```
+
+While the coding on Tej's GitHub for his RYOE model differs from the video, I believe the version he constructs in the video is better for instructional purposes as it is a bit less complex (that is: intuitively easier for a novice to machine learning to follow and understand). To start, he uses `nflreadr` to collect all play-by-play information between the 2015 and 2022 seasons. After, since this is a metric based solely on rushing attempts, he utilizes the `filter` verb to gather play that are classified as rush attempts, but are *not* quarterback scrambles or dropbacks and to exclude any row that does not contained a numeric value for `yards_gained`.
+
+Next, Tej immediately goes into a bit of feature engineering by calculating the averaged yards allowed per rush by each defensive unit. This is not a standardized statistics within `nflreadr` data so he created a new feature for the machine learning model to make predictions with.
+
+After merging in the defensive stats, Tej created a new dataframe called `rushing_data_join` off of his existing `rush_attempts` data and, in doing so, renamed the `yards_gained` variable `label` and then did an additional `filter` for any missing `label` or `down`. Lastly, a dataframe called `rushes` is created from `rushing_data_join` with the `rusher_player_name`, `posteam`, and `defteam` all being dropped from the data.
+
+The newly created `rushes` dataframe will be the information carried over into the machine learning process. The dropping of the three variables is to avoid, for example, overfitting as the machine learning model could likely begin learning which stats belong to which specific running back. However, those three variables are still maintained in the `rushing_data_join` dataframe and, despite being created early in the process, it won't be used again until after the machine learning process is completed. At that point, it will be used to merge the training and testing predictions *back* into the play-by-play data to include, importantly, the `rusher_player_name`.
+
+As this point, the `xgboost` approach and the `tidymodels` approach diverge wildly. In the `xgboost` method, Tej must first turn the `down`, `shotgun`, and `no_huddle` variables into what is called `as.factor`, thus converting the numeric values associated with each into a factor.
+
+Why just these three variables? `down`, `shotgun`, and `no_huddle` are structured as non-continuous numeric. In other words, the two possible responses for `shotgun` are `0` for "no" or `1` for "yes". The rushing attempt either occurred from the shotgun formation, or it did not. There is no `1.1` or anything else between `1` and `2`. The same argument can be made for `down` and `no_huddle`. Because of this, switching all three to `as.factor()` instructs the model to not predict that there is a continuous line of numbers between 0 and 1.
+
+Next, Tej creates dummy variables within the data. Instead of a single column for `shotgun` wherein the binary is `0` or `1`, there will now be two columns for the `shotgun` variable: `shotgun.0` and `shotgun.1` with the appropriate value in each. If `shotgun.0` is set to a binary of `0` for a play, then `shotgun.1` must be a value of `1` since a play cannot take place *both* in the shotgun and from under center.
+
+```{r tej-model-ryoe-2, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushes$down <- as.factor(rushes$down)
+rushes$shotgun <- as.factor(rushes$shotgun)
+rushes$no_huddle <- as.factor(rushes$no_huddle)
+
+dmy <- dummyVars(" ~ .", data = rushes)
+rushing_model_data <- data.frame(predict(dmy, newdata = rushes))
+```
+
+Lastly, the data is split into training and testing and the modeling system is created within the `params` function. All that information is then passed into the `xgboost::xgboost` function that ultimately runs and creates the model.
+
+```{r tej-model-ryoe-3, eval = FALSE, echo = TRUE, output = FALSE}
+
+smp_size <- floor(0.80 * nrow(rushes))
+set.seed(123)
+ind <- sample(seq_len(nrow(rushes)), size = smp_size)
+ind_train <- rushes[ind, ]
+ind_test <- rushes[-ind, ]
+
+full_train <- xgboost::xgb.DMatrix(as.matrix(ind_train %>% select(-label)), label = as.integer(ind_train$label))
+
+nrounds <- 100
+params <-
+  list(
+    booster = "gbtree",
+    objective = "multi:softprob",
+    eval_metric = c("mlogloss"),
+    num_class = 26,
+    eta = .012,
+    gamma = 1,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    max_depth = 8,
+    min_child_weight = 21
+  )
+
+ryoe_model <- xgboost::xgboost(params = params, data = full_train, nrounds = nrounds, verbose = 2)
+```
+
+As mentioned, we are going to take the basic skeleton of Tej's RYOE model and recreate it within the `tidymodels` framework. Moreover, we will incorporate data from other sources to add to the defensive rushing yards allowed feature engineering implemented by Tej.
+
+## Building a RYOE Model with XGBoost in `tidymodels`
+
+## Navigating the NFL's Big Data Bowl
+
 lots of place holding for Big Data Bowl material below
 
 Thomas Bliss, a Data Scientist with the NFL, [provided an incredibly helpful list of potential topics](https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/discussion/365497) that can be explored using 2023 Big Data Bowl information:
