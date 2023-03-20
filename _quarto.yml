@@ -33,6 +33,7 @@ bibliography: citations.bib
 
 format:
   html:
+    css: nfl-analytics.css
     theme: cosmo
     code-link: true
   pdf:
