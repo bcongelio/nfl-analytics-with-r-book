@@ -80,6 +80,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -232,7 +251,20 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#exploring-rushing-yards-over-expected" id="toc-exploring-rushing-yards-over-expected" class="nav-link active" data-scroll-target="#exploring-rushing-yards-over-expected"><span class="toc-section-number">6.1</span>  Exploring Rushing Yards Over Expected</a>
+  <ul class="collapse">
+<li><a href="#tej-seths-ryoe-model-under-the-hood" id="toc-tej-seths-ryoe-model-under-the-hood" class="nav-link" data-scroll-target="#tej-seths-ryoe-model-under-the-hood"><span class="toc-section-number">6.1.1</span>  Tej Seth’s RYOE Model: Under The Hood</a></li>
+  <li><a href="#extreme-gradient-boosting-explained" id="toc-extreme-gradient-boosting-explained" class="nav-link" data-scroll-target="#extreme-gradient-boosting-explained"><span class="toc-section-number">6.1.2</span>  eXtreme Gradient Boosting Explained</a></li>
+  <li><a href="#building-ryoe-with-xgboost" id="toc-building-ryoe-with-xgboost" class="nav-link" data-scroll-target="#building-ryoe-with-xgboost"><span class="toc-section-number">6.1.3</span>  Building RYOE with <code>xgboost</code></a></li>
+  </ul>
+</li>
+  <li><a href="#building-a-ryoe-model-with-xgboost-in-tidymodels" id="toc-building-a-ryoe-model-with-xgboost-in-tidymodels" class="nav-link" data-scroll-target="#building-a-ryoe-model-with-xgboost-in-tidymodels"><span class="toc-section-number">6.2</span>  Building a RYOE Model with XGBoost in <code>tidymodels</code></a></li>
+  <li><a href="#navigating-the-nfls-big-data-bowl" id="toc-navigating-the-nfls-big-data-bowl" class="nav-link" data-scroll-target="#navigating-the-nfls-big-data-bowl"><span class="toc-section-number">6.3</span>  Navigating the NFL’s Big Data Bowl</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -251,7 +283,143 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><p>lots of place holding for Big Data Bowl material below</p>
+</header><p>introduction coming to this location soon.</p>
+<section id="exploring-rushing-yards-over-expected" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="exploring-rushing-yards-over-expected">
+<span class="header-section-number">6.1</span> Exploring Rushing Yards Over Expected</h2>
+<p>Back in January of 2021, Tej Seth posted an article to the <a href="https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/">Michigan Football Analytics Society blog</a> that outlined his vision for creating a “public expected rushing yards model.” The structure of his model, as explained by Tej, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowl, who previously used the college football equivalent of open-source data (<a href="https://cfbfastr.sportsdataverse.org/"><code>cfbfastR</code></a>) to create an RYOE model for the collegiate game.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In Tej’s case, his approach to created an NFL-centric RYOE model culminated with the creation of his <a href="https://mfbanalytics.shinyapps.io/RYOE/">RYOE Shiny App</a> that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.</p>
+<p>Despite a slightly intimidating title, rushing yards over expected is a fantastic entrypoint into exploring model creation and analysis in NFL analytics - in fact, the growing number of “over expected” metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greerre, the owner of <a href="https://www.nfeloapp.com/">nfeloapp.com</a> - a website that provides “data-driven analytics, picks, and predictions for the NFL” - explains that over expected metrics are a increasingly popular avenue in which analysts can “paint a more accurate picture of performance by adjusting familiar statistics like ‘completion percentage’ or ‘yards per rush’ for conflating factors like degree of difficulty or game text” <span class="citation" data-cites="nfelo">(<a href="references.html#ref-nfelo" role="doc-biblioref">Greerre 2022</a>)</span>.</p>
+<p>Some of these metrics, like completion percentage over expected (CPOE), are widely accepted. Specifically, CPOE calculates how likely any quarterback’s pass is going to be complete or incomplete compared to other passing attempts. It is considered “widely accepted” because the metric itself is considered “stable” in that the r-squared value retains a strong correlation for individual quarterbacks across several seasons. In fact, as Greerre points out, the r-squared value for CPOE for just one season is 0.226 which is extremely strong based on NFL analytics standards.</p>
+<p>On the other hand, RYOE - based on Greerre’s analysis - maintains an r-squared value below 0.15 until a running back’s fourth season, wherein the average improves to 0.263 (an otherwise stable value). But that does not mean that RYOE is not a metric worth further exploration. The effectiveness of any one metric to account for factors such as degree of difficulty or game text largely relies on our ability to provide adequate feature engineering - specifically, how much relevant data the machine learning model can ingest to begin making predictions.</p>
+<p>Because of that, significant machine learning models have been built with information provided by the NFL’s Big Data Bowl as it is the one chance that the public receives to feature engineer with the NFL’s tracking data (wherein a player’s position, speed, direction, etc. is tracked and recorded every 1/10th of a second). Unfortunately, only small windows of data exist from the Big Data Bowl releases and, as a result, we are often required to find creative ways to provide further context to each play/player for the machine learning model.</p>
+<p>To showcase this idea, we are going to begin exploring ways to add additional feature engineering to Tej Seth’s already fantastic Rushing Yard Over Expected model. While not the most stable metric, as mentioned, the idea of RYOE is generally easy to understand for even the most analyst. Broadly, given what we know about every other rushing play during a specific span of seasons, what is the most likely amount of yards a running back is going to gain on a specific rushing play as predicted by the model on other similar situations?</p>
+<p><strong>That difference is rushing yards over expected</strong>.</p>
+<p>Using Tej’s Shiny app, we can explore all seasons between 2015 and 2022 for those running backs that had a minimum of 755 rushing attempts.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/ryoe_2015_2022.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Credit: Tej Seth</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>According to Tej’s model, since 2015, Nick Chubb of the Cleveland Browns earned - on average - 0.66 over expected. Aaron Jones is closely behind with 0.61 over expected and then a significant drop occurs for the third and fourth players.</p>
+<p>To understand how Tej engineered his model and to begin exploring other possible features to feed into the model, we can dive into his <a href="https://github.com/tejseth/RYOE/blob/main/ryoe-2.R">publicly available code</a>.</p>
+<section id="tej-seths-ryoe-model-under-the-hood" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="tej-seths-ryoe-model-under-the-hood">
+<span class="header-section-number">6.1.1</span> Tej Seth’s RYOE Model: Under The Hood</h3>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important to immediately point out that Tej built his RYOE model using the <code>xgboost</code> package whereas we will begin constructing ours using <code>tidymodels</code>.</p>
+<p>While the underlying eXtreme Gradient Boosting process is largely the same with both approaches, the necessary framework we will construct with <code>tidymodels</code> differs <em>greatly</em> from the coding used with the <code>xgboost</code> package.</p>
+<p>The <code>xgboost</code> package is a standalone package in R that provide an implementation of the eXtreme Gradient Boosting algorithm. To that end, it offers a highly efficient and flexible way to train gradient boosting models for various machine learning tasks, such as classification, regression, and ranking. The package provides its own set of functions for training, cross-validation, prediction, and feature importance evaluation.</p>
+<p>The <code>tidymodels</code> package, on the other hand, is a <em>collection</em> of R packages that provide a unified framework for modeling and machine learning tasks. It includes several package for data preprocessing, modeling, validation, and evaluation. Because of this, the core goal of the <code>tidymodels</code> teams is to offer a consistent syntax and workflow for a wide range of machine learning models. It is a fair comparison to say that <code>tidymodels</code> is the <code>tidyverse</code> of the machine learning world.</p>
+</div>
+</div>
+<p>Just like the model we will be building in this chapter, Tej constructed his model via eXtreme Gradient Boosting.</p>
+<p>Which may lead to a very obvious question if you are new to machine learning: <strong>what exactly <em>is</em> eXtreme Gradient Boosting?</strong></p>
+</section><section id="extreme-gradient-boosting-explained" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="extreme-gradient-boosting-explained">
+<span class="header-section-number">6.1.2</span> eXtreme Gradient Boosting Explained</h3>
+<p>eXtreme Gradient Boosting (XGBoost) is a powerful machine learning technique that is particularly good at solving supervised machine learning problems, such as classification (categorizing data into classes, for example) and regression (predicting numerical values).</p>
+<p>XGBoost can be thought of as an “expert team” that combines the knowledge and skills of multiple “individual experts” to make better decisions or predictions. Each of these “experts” in this context is what we call a decision tree, which is a flowchart structure used for making decisions based on a series of question about the data.</p>
+<p>Once provided data, XGBoost seeks to iteratively build a collection of “bad” decision trees and then build an ensemble of these poor ones into a more accurate and robust model. The term “gradient” comes from the fact that the algorithm uses the gradient (or the slope) of the loss function (a measure of how well the model fits the data) to guide the learning process.</p>
+</section><section id="building-ryoe-with-xgboost" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="building-ryoe-with-xgboost">
+<span class="header-section-number">6.1.3</span> Building RYOE with <code>xgboost</code>
+</h3>
+<p>With a basic understanding of the differences between the <code>xgboost</code> and <code>tidymodels</code> packages, and how the eXtreme Gradient Boosting algorithm works, we can examine how Tej constructed his <code>xgboost</code> model from <code>nflreadR</code> data.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While I also include my own step-by-step instructional videos for this book, Tej created a video as he created the initial RYOE model in <code>xgboost</code> as part of the M-Fans YouTube channel (<a href="https://www.youtube.com/watch?v=p5LxuIjh6Z8&amp;t=577s">Making a Random Forest and XGBoost Model with NFL Data</a>) and I am happy to share it as it never hurts to go through the critical thinking process with more than one person.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rush_attempts</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rush_attempt</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">qb_scramble</span> <span class="op">==</span> <span class="fl">0</span>, </span>
+<span>         <span class="va">qb_dropback</span> <span class="op">==</span> <span class="fl">0</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">yards_gained</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">def_ypc</span> <span class="op">&lt;-</span> <span class="va">rush_attempts</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">defteam</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">defteam</span>, <span class="va">season</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>def_ypc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">yards_gained</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rush_attempts</span> <span class="op">&lt;-</span> <span class="va">rush_attempts</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">def_ypc</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"season"</span>, <span class="st">"defteam"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rushing_data_join</span> <span class="op">&lt;-</span> <span class="va">rush_attempts</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span>label <span class="op">=</span> <span class="va">yards_gained</span>, <span class="va">yardline_100</span>, <span class="va">quarter_seconds_remaining</span>,</span>
+<span>         <span class="va">half_seconds_remaining</span>, <span class="va">qtr</span>, <span class="va">down</span>, <span class="va">ydstogo</span>, <span class="va">shotgun</span>, <span class="va">no_huddle</span>,</span>
+<span>         <span class="va">ep</span>, <span class="va">wp</span>, <span class="va">def_ypc</span>, <span class="va">rusher_player_name</span>, <span class="va">posteam</span>, <span class="va">defteam</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rushes</span> <span class="op">&lt;-</span> <span class="va">rushing_data_join</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">rusher_player_name</span>, <span class="op">-</span><span class="va">posteam</span>, <span class="op">-</span><span class="va">defteam</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While the coding on Tej’s GitHub for his RYOE model differs from the video, I believe the version he constructs in the video is better for instructional purposes as it is a bit less complex (that is: intuitively easier for a novice to machine learning to follow and understand). To start, he uses <code>nflreadr</code> to collect all play-by-play information between the 2015 and 2022 seasons. After, since this is a metric based solely on rushing attempts, he utilizes the <code>filter</code> verb to gather play that are classified as rush attempts, but are <em>not</em> quarterback scrambles or dropbacks and to exclude any row that does not contained a numeric value for <code>yards_gained</code>.</p>
+<p>Next, Tej immediately goes into a bit of feature engineering by calculating the averaged yards allowed per rush by each defensive unit. This is not a standardized statistics within <code>nflreadr</code> data so he created a new feature for the machine learning model to make predictions with.</p>
+<p>After merging in the defensive stats, Tej created a new dataframe called <code>rushing_data_join</code> off of his existing <code>rush_attempts</code> data and, in doing so, renamed the <code>yards_gained</code> variable <code>label</code> and then did an additional <code>filter</code> for any missing <code>label</code> or <code>down</code>. Lastly, a dataframe called <code>rushes</code> is created from <code>rushing_data_join</code> with the <code>rusher_player_name</code>, <code>posteam</code>, and <code>defteam</code> all being dropped from the data.</p>
+<p>The newly created <code>rushes</code> dataframe will be the information carried over into the machine learning process. The dropping of the three variables is to avoid, for example, overfitting as the machine learning model could likely begin learning which stats belong to which specific running back. However, those three variables are still maintained in the <code>rushing_data_join</code> dataframe and, despite being created early in the process, it won’t be used again until after the machine learning process is completed. At that point, it will be used to merge the training and testing predictions <em>back</em> into the play-by-play data to include, importantly, the <code>rusher_player_name</code>.</p>
+<p>As this point, the <code>xgboost</code> approach and the <code>tidymodels</code> approach diverge wildly. In the <code>xgboost</code> method, Tej must first turn the <code>down</code>, <code>shotgun</code>, and <code>no_huddle</code> variables into what is called <code>as.factor</code>, thus converting the numeric values associated with each into a factor.</p>
+<p>Why just these three variables? <code>down</code>, <code>shotgun</code>, and <code>no_huddle</code> are structured as non-continuous numeric. In other words, the two possible responses for <code>shotgun</code> are <code>0</code> for “no” or <code>1</code> for “yes”. The rushing attempt either occurred from the shotgun formation, or it did not. There is no <code>1.1</code> or anything else between <code>1</code> and <code>2</code>. The same argument can be made for <code>down</code> and <code>no_huddle</code>. Because of this, switching all three to <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> instructs the model to not predict that there is a continuous line of numbers between 0 and 1.</p>
+<p>Next, Tej creates dummy variables within the data. Instead of a single column for <code>shotgun</code> wherein the binary is <code>0</code> or <code>1</code>, there will now be two columns for the <code>shotgun</code> variable: <code>shotgun.0</code> and <code>shotgun.1</code> with the appropriate value in each. If <code>shotgun.0</code> is set to a binary of <code>0</code> for a play, then <code>shotgun.1</code> must be a value of <code>1</code> since a play cannot take place <em>both</em> in the shotgun and from under center.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushes</span><span class="op">$</span><span class="va">down</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">rushes</span><span class="op">$</span><span class="va">down</span><span class="op">)</span></span>
+<span><span class="va">rushes</span><span class="op">$</span><span class="va">shotgun</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">rushes</span><span class="op">$</span><span class="va">shotgun</span><span class="op">)</span></span>
+<span><span class="va">rushes</span><span class="op">$</span><span class="va">no_huddle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">rushes</span><span class="op">$</span><span class="va">no_huddle</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dmy</span> <span class="op">&lt;-</span> <span class="fu">dummyVars</span><span class="op">(</span><span class="st">" ~ ."</span>, data <span class="op">=</span> <span class="va">rushes</span><span class="op">)</span></span>
+<span><span class="va">rushing_model_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">dmy</span>, newdata <span class="op">=</span> <span class="va">rushes</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lastly, the data is split into training and testing and the modeling system is created within the <code>params</code> function. All that information is then passed into the <code><a href="https://rdrr.io/pkg/xgboost/man/xgb.train.html">xgboost::xgboost</a></code> function that ultimately runs and creates the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smp_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="fl">0.80</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">rushes</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">rushes</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">smp_size</span><span class="op">)</span></span>
+<span><span class="va">ind_train</span> <span class="op">&lt;-</span> <span class="va">rushes</span><span class="op">[</span><span class="va">ind</span>, <span class="op">]</span></span>
+<span><span class="va">ind_test</span> <span class="op">&lt;-</span> <span class="va">rushes</span><span class="op">[</span><span class="op">-</span><span class="va">ind</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">full_train</span> <span class="op">&lt;-</span> <span class="fu">xgboost</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/xgboost/man/xgb.DMatrix.html">xgb.DMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">ind_train</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">label</span><span class="op">)</span><span class="op">)</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">ind_train</span><span class="op">$</span><span class="va">label</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nrounds</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">params</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    booster <span class="op">=</span> <span class="st">"gbtree"</span>,</span>
+<span>    objective <span class="op">=</span> <span class="st">"multi:softprob"</span>,</span>
+<span>    eval_metric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mlogloss"</span><span class="op">)</span>,</span>
+<span>    num_class <span class="op">=</span> <span class="fl">26</span>,</span>
+<span>    eta <span class="op">=</span> <span class="fl">.012</span>,</span>
+<span>    gamma <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    subsample<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span>    colsample_bytree<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span>    max_depth <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    min_child_weight <span class="op">=</span> <span class="fl">21</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">ryoe_model</span> <span class="op">&lt;-</span> <span class="fu">xgboost</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/xgboost/man/xgb.train.html">xgboost</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>, data <span class="op">=</span> <span class="va">full_train</span>, nrounds <span class="op">=</span> <span class="va">nrounds</span>, verbose <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As mentioned, we are going to take the basic skeleton of Tej’s RYOE model and recreate it within the <code>tidymodels</code> framework. Moreover, we will incorporate data from other sources to add to the defensive rushing yards allowed feature engineering implemented by Tej.</p>
+</section></section><section id="building-a-ryoe-model-with-xgboost-in-tidymodels" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="building-a-ryoe-model-with-xgboost-in-tidymodels">
+<span class="header-section-number">6.2</span> Building a RYOE Model with XGBoost in <code>tidymodels</code>
+</h2>
+</section><section id="navigating-the-nfls-big-data-bowl" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="navigating-the-nfls-big-data-bowl">
+<span class="header-section-number">6.3</span> Navigating the NFL’s Big Data Bowl</h2>
+<p>lots of place holding for Big Data Bowl material below</p>
 <p>Thomas Bliss, a Data Scientist with the NFL, <a href="https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/discussion/365497">provided an incredibly helpful list of potential topics</a> that can be explored using 2023 Big Data Bowl information:</p>
 <ol type="1">
 <li>analyze blocker positioning after the QB leaves the pocket and/or is pressured</li>
@@ -260,7 +428,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li>link between QB release time, receiver separation, and offensive line performance</li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### reading all weeks and writing to a parquet file</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### reading all weeks and writing to a parquet file</span></span>
 <span><span class="va">all_bdb_weeks</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">'core-data'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">dir</span>, regexp <span class="op">=</span> <span class="st">'week\\d+'</span><span class="op">)</span></span>
 <span>  <span class="va">all_weeks</span> <span class="op">&lt;-</span></span>
@@ -304,7 +472,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 <p>fffff</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rotate_the_dots</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rotate_the_dots</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="st">"play_direction"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Cannot find play directions. Inferring from offense and defense locations at snap."</span><span class="op">)</span></span>
@@ -363,7 +531,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 <p>ffff</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">find_o_diff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">"qb"</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">find_o_diff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">"qb"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">name_x</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_x"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">name_y</span> <span class="op">&lt;-</span> <span class="fu">sym</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="st">"_y"</span><span class="op">)</span><span class="op">)</span></span>
@@ -392,7 +560,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">########</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">########</span></span>
 <span><span class="co">## READING IN PITTSBURGH VS. BUFFALO - WEEK 1</span></span>
 <span><span class="co">########</span></span>
 <span></span>
@@ -498,8 +666,15 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-nfelo" class="csl-entry" role="doc-biblioentry">
+Greerre, Robby. 2022. <span>“Over Expected Metrics Explained – What Are CPOE, RYOE, and YACOE.”</span> <a href="https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/">https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/</a>.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Thanks to Tej Seth for briefly chatting with me over Twitter regarding the history of both Michael’s RYOE model and his own.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
