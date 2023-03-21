@@ -1,10 +1,33 @@
-/* ----- CALLOUT EDITS ----- */
+/* ----- BODY AND HEADER TEXT ----- */
 
-div.rmdnote {
-  padding: 1em:
-  margin: 1em 0;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+div.font-family {
+  font-family: 'Lato';
+  color: #404040;
 }
 
-div.rmdnote{
+
+
+/* ----- CALLOUT EDITS ----- */
+
+div.callout-note {
+  padding: 0em 1em 0em 4em;
+  background: #FFFFFF 5px center/3em no-repeat;
+}
+
+div.callout-note{
   background-image: url("images/football-note.png")
+}
+
+div.callout-note{
+  font-family: 'Lato';
+  margin: 1em 0;
+  padding-left: 100px;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 15px 1.5em;
+  min-height: 120px;
+  font-size: 0.85em;
+  margin-bottom: 1.5;
 }

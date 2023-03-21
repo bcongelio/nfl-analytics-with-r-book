@@ -328,4 +328,85 @@ tibble(average.airyards)
 
 Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
 
-## Working with the Various `nflverse` Functions
+## Working with the Various `nflreadr` Functions
+
+The `nflreadr` package comes with a multitude of "under the hood" functions designed to provide you with supplemental data, items for data visualization, and utilities for efficiently collecting and storing the data on your system. You can view the entire list of these options using the `ls` to output all the objects in the package.
+
+```{r list-of-nfl-readr-functions, eval = TRUE, echo = TRUE, output = TRUE}
+
+ls("package:nflreadr")
+```
+
+Going forward in this chapter, we will be exploring specific use cases for the functions provided by `nflreadr` - but not all of them. For example, the `dictionary_` functions can more easily be used directly on the `nflreadr` website where the package's maintainers keep a copy of each. Many, like the dictionary for play-by-play data, includes a search feature to allow you to quickly find how the variables you are looking for is provided in the column name. Others, like the `clear_cache()` function is used only when you want to wipe any memoized data stored by `nflreadr` - often needed if you are troubleshooting a pesky error message - `join_coalesce()` which is an experimental function that is only used internally to help build player IDs into the data. The `load_pbp()` and `load_player_stats()` function will also not be covered here, as the first portion of this chapter explored the use of both in great detail. We will briefly discuss the use of `load_players()` and `load_rosters()` but a more detailed discussion of each is provided in Chapter 4: Data Visualization with NFL Analytics. The remaining functions will be presented in the order provided on the [`nflreadr` function reference website.](https://nflreadr.nflverse.com/reference/index.html)
+
+### The `load_participation()` Function
+
+The `load_participation()` function allows us to create a dataframe of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting dataframe, when not including play-by-play data, includes information pertaining to: the individial game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
+
+Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe) uses the data to create tables (built with the `gt` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluncuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/) that allows anybody to explore the data and output the results in .png format.
+
+{{< tweet josephjefe 1621217561437409280 >}}
+
+To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the `season` and `include_pbp` argument with the `load_participation()` function.
+
+```{r loading-2022-participation, eval = TRUE, echo = TRUE, output = TRUE}
+
+participation <- nflreadr::load_participation(season = 2022, include_pbp = TRUE)
+
+participation
+```
+
+Rather than exploring the data at the league-level, let's take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the `load_participation()` function, is not fully prepped for immediate analysis as the `players_on_play`, `offense_players`, and `defense_players` information (which contains the unique player indentification numbers) are separated by a delimiter (in this case, a semicolon) in what are called "concatenated strings" or "delimited strings." While this is a compact way to store the values in the core dataframe, it does require us to clean the information through the "splitting" or "tokenizing" process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the `separate_rows()` function in `tidyr`.
+
+::: callout-tip
+If you use `load_participation()` but set `include_pbp = FALSE` it is important to remember that the `posteam` variable that is part of the play-by-play data will not exist. Instead, the offensive team is indicated by the `possession_team` column.
+
+If you gather the participation data *with* play-by-play information, you can use either `possession_team` or `posteam` for any filtering.
+
+The same is not true when looking at defensive participation data. A defensive team variable is not provided without included the play-by-play in the data. Once set to `TRUE`, the defensive team is housed under the typical `defteam` column.
+:::
+
+```{r prepping-participation-data, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE}
+
+participation_split <- participation %>%
+  filter(!is.na(offense_formation)) %>%
+  filter(posteam == "PIT") %>%
+  tidyr::separate_rows(offense_players, sep = ";") %>%
+  group_by(offense_personnel, offense_players) %>%
+  summarize(total = n()) %>%
+  ungroup()
+
+participation_split
+```
+
+We are doing quite a few things in the above example:
+
+1.  **Those rows where the is an 'NA' value for `offense_formation`** **are removed.** The participation data includes information for kickoffs, extra points, field goals, punts, QB kneels, no plays, and more. It is possible to remove items using `play_type == "run" | play_type == "pass"` but such an approach, if done with the Steelers, results in one fake punt being included in the data (as the `play_type` was listed as "run"). If you wish to include plays such as fake punts, you do so by filtering for only specific play types.
+2.  **Only those rows that includes 'PIT' as the `posteam`** **are included.**
+3.  **The `separate_rows()`** **function from `tidyr`** **is used to conduct the splitting of the concatenated players identifiers in the `offense_players`** **column**. The `separate_rows()` function needs just to arguments to complete the process - the column name and the delimiter (provided in the argument as `sep =`).
+4.  **The newly split data is then grouped by `offense_personnel`** **and `offense_players`** **in order to calculate the number of times each specific ID was associated with personnel package**. The resulting dataframe lists the offense formation type for each player that participated in it, along with the player's respective participation count.
+
+As is, the `load_participation()` data does not include any way to further identify players outside of the unique players IDs. Because of this, it is necessary to use the `load_rosters()` function to include this information (this process is included below in the `load_rosters()` section).
+
+### The `load_rosters()` Function
+
+The `load_rosters()` function houses a multitude of useful tools for use in the `nflverse`. With player information dating back to 1920, `load_rosters()` will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.
+
+Importantly, `load_rosters()` also provides the unique identifier for each player over nine different sources: the `gsis_id` (which is the core ID used in `nflverse` data), `sleeper_id`, `espn_id`, `yahoo_id`, `rotowire_id`, `pff_id`, `fantasy_data_id`, `sportradar_id`, and `pfr_id`. The different IDs become extremely useful when using data collected from outside the `nflverse`, or when combining data from two outside sources, matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in `load_rosters()` data.
+
+Let's return to our `participation_split` dataframe that we built prior in this chapter while working with the `load_participation()` function. The the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.
+
+```{r loading-rosters-for-partic, eval = TRUE, echo = TRUE, output = FALSE}
+
+rosters <- nflreadr::load_rosters(2022)
+```
+
+The only argument you must provide the `load_rosters()` function is the years in which you want to collect roster information (in this specific case, 2022). While we know we only want the Steelers' roster, it is not suggested to use `filter()` to gather any specific team at this point. Case in point: do so with this example will result in the `gsis_id` *00-0036326* having an "NA" value for a name, despite having over 380 snaps in the 1 RB, 1TE, 3 WR offensive formation. The player associated with that `gsis_id` is Chase Claypool, who the Steelers traded to the Bears on November 1 of 2022. Because of this, no player name will be associated with that specific `gsis_id` on the Steelers' roster (with the end result being a missing value).
+
+::: callout-note
+You may notice that the resulting dataframe, titled `pit_roster`, has 80 players on the roster despite NFL teams only being permitted to have 53 active players at a time.
+
+This is because the information collected with `load_rosters()` includes not only active players, but those listed on the practice squad and injured reserve. Additionally, you may notice players listed as `R/Retired` (such as Stephon Tuitt in our dataframe, who retired at the end of the 2022 season). In these situations, this `status` indicated that the player is listed as 'reserved-retired' and that the team continues to hold the player's rights until the official expiration of their contract. In this case, Tuitt could not come out of retirement prior to his contract ending and play with another team unless first released or traded by Pittsburgh.
+:::
+
+Despite the wealth of information in the roster information, only the `gsis_id` and the `full_name` is required to complete our `participation_split` dataframe. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use `left_join()` to merge each player's name on the matching ID in the `offense_players` column and `gsis_id` from the roster information.

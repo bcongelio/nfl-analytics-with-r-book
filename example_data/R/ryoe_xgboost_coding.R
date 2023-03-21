@@ -1,5 +1,5 @@
-library(doParallel)
-library(tictoc)
+library(tidyverse)
+library(nflverse)
 
 ### reading in NFL play-by-play data from 2015 to 2022
 pbp <- nflreadr::load_pbp(2015:2022)
@@ -9,7 +9,7 @@ rush_attempts <- pbp %>%
   filter(rush_attempt == 1, qb_scramble == 0,
          qb_dropback == 0, !is.na(yards_gained)) 
 
-### quickly calculating each defteam's avg. rushing yards allowed per game per season
+### quickly calculating each defteam's avg. rushing yards allowed per season
 def_ypc <- rush_attempts %>%
   filter(!is.na(defteam)) %>%
   group_by(defteam, season) %>%
@@ -19,12 +19,22 @@ def_ypc <- rush_attempts %>%
 rush_attempts <- rush_attempts %>%
   left_join(def_ypc, by = c("defteam", "season"))
 
+### PARTICIPATION DATA HAS MEN IN BOX SINCE 2016!!! GRAB IT HERE AND MERGED IN
+### OFFENSIVE FORMATION, DEFENSIVE PERSONNEL TOO!!! 
+
 ### creating a secondary dataframe for joining back in player names
 rushing_data_join <- rush_attempts %>%
+  group_by(game_id, posteam, fixed_drive) %>%
+  mutate(play_count = cumsum(rush_attempt)) %>%
+  ungroup() %>%
+  mutate(red_zone = if_else(yardline_100 <= 20, 1, 0),
+         fg_range = if_else(yardline_100 <= 35, 1, 0),
+         two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
   select(label = yards_gained, yardline_100, quarter_seconds_remaining,
          half_seconds_remaining, qtr, down, ydstogo, shotgun, no_huddle,
-         ep, wp, def_ypc, rusher_player_name, posteam, defteam) %>%
-  filter(!is.na(label), !is.na(down))
+         ep, wp, def_ypc, play_count, red_zone, fg_range, two_min_drill,
+         rusher_player_name, posteam, defteam) %>%
+  filter(!is.na(label) & !is.na(down))
 
 ### going to build model from rushes so will remove identifying information
 rushes <- rushing_data_join %>%
@@ -45,28 +55,34 @@ rushing_recipe <-
   recipe(formula = label ~ ., data = rushing_train) %>%
   step_mutate(down = as.factor(down),
               shotgun = as.factor(shotgun),
-              no_huddle = as.factor(no_huddle)) %>%
+              no_huddle = as.factor(no_huddle),
+              play_count = as.factor(play_count),
+              red_zone = as.factor(red_zone),
+              fg_range = as.factor(fg_range),
+              two_min_drill = as.factor(two_min_drill)) %>%
+  step_zv(all_predictors()) %>%
   step_dummy(all_nominal_predictors(), one_hot = TRUE)
 
 ### creating the model boosting tree specifications
 rushing_specs <- boost_tree(
-  trees = 1000,
-  tree_depth = tune(), min_n = tune(),
+  trees = tune(),
+  tree_depth = tune(), 
+  min_n = tune(),
   loss_reduction = tune(),
-  sample_size = tune(), mtry = tune(),
+  sample_size = tune(),
   learn_rate = tune()) %>%
   set_engine("xgboost", objective = "reg:squarederror") %>%
   set_mode("regression")
 
 ### creating the tuning grid
 rushing_grid <- grid_latin_hypercube(
+  trees(),
   tree_depth(),
   min_n(),
   loss_reduction(),
   sample_size = sample_prop(),
-  finalize(mtry(), rushing_train),
   learn_rate(),
-  size = 60)
+  size = 30)
 
 ### adding everything into the workflow
 rushing_workflow <-
