@@ -10,15 +10,78 @@ library(ggpmisc)
 library(tidymodels)
 library(lightgbm)
 library(bonsai)
+library(ggtext)
+library(extrafont)
 ```
 
 ## Introduction to Statistics and Modeling with NFL Data
 
 ## Basic Statistical Modeling
 
+## Deciphering Statistical Results
+
+information here will be provided to assist in understanding what the results of the models mean and will serve as a reference point for the rest of the chapter.
+
+### How To Read Simple Linear Regression Results
+
 ### Linear Regressions
 
-introduction to linear regressions here.
+Using the below example that explores the relationship between an NFL's teams total yards and total points over the course of a season, the results of a linear regression model calculated using the `lm()` function includes the following information (explained afterward):
+
+```{r example-regression-results-explained, eval = FALSE, echo = TRUE, output = FALSE}
+
+`Residuals:
+    Min      1Q  Median      3Q     Max 
+-71.443 -22.334   1.157  19.145  68.080 
+
+Coefficients:
+              Estimate Std. Error t value      Pr(>|t|)    
+(Intercept) -225.03520   65.44927  -3.438       0.00174 ** 
+total_yards    0.10341    0.01132   9.135 0.00000000036 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 32.04 on 30 degrees of freedom
+Multiple R-squared:  0.7356,	Adjusted R-squared:  0.7268 
+F-statistic: 83.45 on 1 and 30 DF,  p-value: 0.0000000003599`
+```
+
+1.  **Residuals:** a linear model's residuals are the calculated difference between actual values of the dependent values as found in the data used to build the model and those values predicted by the regression model. In a perfect uniform relationship, all of the values from a dataset would sit perfectly on top of the "line of best fit." Take the below graph, for example.
+
+    ```{r perfect-line-of-fit, eval = TRUE, echo = FALSE, output = TRUE}
+
+    example_fit <- tibble(
+      x = 1:10,
+      y = 2 * x + 3)
+
+    example_perfect_fit <- lm(y ~ x, data = example_fit)
+
+    ggplot(example_perfect_fit, aes(x = x, y = y)) +
+      geom_smooth(method = "lm", se = FALSE, color = "black", size = .8, linetype = "dashed") +
+      geom_image(image = "./images/football-tip.png") +
+      scale_x_continuous(breaks = scales::pretty_breaks()) +
+      scale_y_continuous(breaks = scales::pretty_breaks()) +
+      labs(title = "A Perfect Regression Model",
+           subtitle = "Every Point Falls on the Line",
+           caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+      xlab("Our Predictor Variable") +
+      ylab("Our Response Variable") +
+      nfl_analytics_theme()
+    ```
+
+In this example model, our regression model was able to successfully capture the entirety of the relationship between `Our Predictor Variable` on the x-axis and the `Our Response Variable` on the y-axis. This means that the model leaves no unexplained or undetermined variance between the variables and, because of this, the model can take additional unused data to predict, with 100% accuracy, the resulting value of the dependent variable. **It is exceedingly rare to have real-world data be perfectly situated on the line of best fit**. In fact, it is more often than not a sign of "overfitting," which occurs when the model successfully discovers the "random noise" in the data. In the majority of cases, a regression model with a perfect line of fit will perform exceedingly poorly when introduced to unseen data.
+
+A regression model that is not "overfitted" will have data points that do not fit on the line of best fit, but fall over and under it. The results of the regression model uses a simple formula - `residual = observed_value - predicted_value` to help us interpret the difference between those actual and estimated values.
+
+The information produced in the example `lm()` summary above includes statistical information about the distribution of the model's residual errors.
+
+|   Summary Distribution    | Meaning                                                                                                                                                                                                                                                                                                                                                   |
+|:-------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  The `Min` Distribution   | The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**                      |
+|   The `1Q` Distribution   | The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                                                          |
+| The `Median` Distribution | The `Median` distribution, much like the `1Q` distribution is data from the first quartile, is the residuals from the 50th percentile of the data. **The `Median` residual in the above summary is 1.157, which means that the `lm()` model - for 50% of teams - either overestimated or underestimated a teams total points by less than 1.157 points.** |
+|   The `3Q` Distribution   | Covering the third quartile of the residuals, **the `3Q` Distribution is 19.145 which means that 75% of the NFL teams in the data had a total points prediction either overestimated or underestimated by less than 19.145 points.**                                                                                                                      |
+|  The `Max` Distribution   | The opposite of the `Min` distribution, the `Max` distribution is the largest difference between the model's observed and predicted values for a team's total points. In this case, for one specific team, **the model predicted the team scored 68.080 points less than the actual value.**                                                              |
 
 #### Simple Linear Regression
 
@@ -37,14 +100,45 @@ $$
 
 To better illustrate this, let's use basic football terms using the above regression equation to compare a team's offensive points scored in a season based on how many offensive yards it accumulated. The intercept (${\beta}_o$) represents the value when a team's points scored and offensive yards are both zero. The slope (${\beta}_1$) represents the rate of change in $Y$ as the unit of $X$ changes. The error term ($\epsilon$) is represents the difference between the actual observed values of the regression's dependent variable and the value as predicted by the model.
 
-Using our points scored/total yards example, a team's total yards gained is the **independent variable** and total points scored is the **dependent variable**, as a team's total yardage **is what drives the change in total points** (in other words, a team's total points *is dependent* on its total yardage).
+Using our points scored/total yards example, a team's total yards gained is the **independent variable** and total points scored is the **dependent variable**, as a team's total yardage **is what drives the change in total points** (in other words, a team's total points *is dependent* on its total yardage). A team will not score points in the NFL if it is not also gaining yardage. We can view this relationship by building a simple linear regression model in R using the `lm()` function.
 
-fffff
+::: callout-note
+The `lm()` function is a built-in function in RStudio that stands for "linear model" and is used, as described above, to fit a linear regression to the data that you provide. The completed regression estimates the coefficients of the regression, and also includes both the intercept and slope, which are the main factors in explaining the relationship between your data's response and predictor variables.
+
+The `lm()` function requires just two arguments in order to provide results: a formula and the dataframe to use and is structured like so: `model_results <- lm(formula, data)`.
+
+The `formula` argument require that you specify both the response and predictor variables, as named in your dataframe, in the structure of `Y ~ X`(wherein `Y` is the response variables and `X` is the predictor). In the case that you have more than one predictor variable, the `+` is used to add to the formula (`lm(Y ~ X1 + X2`).
+
+The `lm()` function returns the coefficients, residuals, and other statistics of the model in a `lm` data object. There are There are numerous ways to access this data which are discussed in further detail below.
+:::
+
+Let's build a simple linear regression model that explores the relationship between the total yardage earned by a team over the course of a season and the number of points scored. To begin, place the prepared data in the `simple_regression_data` dataframe by running the code below.
 
 ```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
 
 simple_regression_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
+
+simple_regression_data
 ```
+
+The data contains the total yardage and points scored for each NFL team between 2012 and 2022. The data does not include any playoff games. Before running a model on all ten years of data, we will begin by selecting just information from 2022 and then build our `lm()` model.
+
+```{r lm-model-2022, eval = TRUE, echo = TRUE, output = FALSE}
+
+regression_2022 <- simple_regression_data %>%
+  filter(season == 2022)
+
+results_2022 <- lm(total_points ~ total_yards, data = regression_2022)
+```
+
+Using the `lm()` function, the $Y$ variable (the dependent) is `total_yards` and the $X$ variable (the predictor) is entered as `total_yards` with the argument that the `data` is coming from the `regression_2022` dataframe stored in the RStudio environment. We can view the results of the regression model by using the `summary()` function.
+
+```{r viewing-regression-summary, eval = TRUE, echo = TRUE, output = TRUE}
+
+summary(results_2022)
+```
+
+The wide range of residuals could be due to the presence of outliers, a non-linear relationship between the variables, or other factors not considered in the model.
 
 #### Multiple Linear Regression
 
@@ -64,7 +158,7 @@ examples of multiclass classification here using nfl data.
 
 ## Advanced Regression Techniques
 
-### Regularization 
+### Regularization
 
 intro to regularization techniques here.
 
