@@ -239,8 +239,15 @@ pkgs <- c(
   "scales",
   "tidymodels",
   "tidyverse",
-  "webshot"
-)
+  "webshot",
+  "tidymodels",
+  "lightGBM",
+  "bonsai",
+  "ggpmisc",
+  "ggimage",
+  "doParallel",
+  "arrow"
+) %>% sort()
 
 pkgs <- sessioninfo::package_info(pkgs, dependencies = FALSE)
 df <- tibble::tibble(

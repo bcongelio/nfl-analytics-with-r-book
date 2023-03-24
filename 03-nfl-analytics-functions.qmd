@@ -388,7 +388,7 @@ We are doing quite a few things in the above example:
 
 As is, the `load_participation()` data does not include any way to further identify players outside of the unique players IDs. Because of this, it is necessary to use the `load_rosters()` function to include this information (this process is included below in the `load_rosters()` section).
 
-### The `load_rosters()` Function
+### The `load_rosters()` and `load_rosters_weekly()` Functions
 
 The `load_rosters()` function houses a multitude of useful tools for use in the `nflverse`. With player information dating back to 1920, `load_rosters()` will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.
 
@@ -410,3 +410,146 @@ This is because the information collected with `load_rosters()` includes not onl
 :::
 
 Despite the wealth of information in the roster information, only the `gsis_id` and the `full_name` is required to complete our `participation_split` dataframe. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use `left_join()` to merge each player's name on the matching ID in the `offense_players` column and `gsis_id` from the roster information.
+
+```{r merging-rosters-participation, eval = TRUE, echo = TRUE, output = TRUE}
+
+rosters <- nflreadr::load_rosters(2022)
+
+rosters <- rosters %>%
+  select(gsis_id, full_name)
+
+participation_split <- participation_split %>%
+  left_join(rosters, by = c("offense_players" = "gsis_id"))
+
+participation_split
+```
+
+::: callout-tip
+The `load_rosters()` data is capable of providing data for multiple seasons at once. Through each season, a player's `gsis_id` will remain static. Despite this, when merging multiple years of participation data with multiple years of roster information, the data must be matched on the `season` variable was well. This process involves including `season` in both the participation data `group_by()` and the roster information, as seen below.
+
+```{r roster-multi-year-merge, eval = FALSE, echo = TRUE, output = FALSE}
+
+participation_multi_years <- load_participation(season = 2018:2022, include_pbp = TRUE)
+
+participation_2018_2022 <- participation_multi_years %>%
+  filter(!is.na(offense_formation)) %>%
+  filter(posteam == "PIT") %>%
+  tidyr::separate_rows(offense_players, sep = ";") %>%
+  group_by(season, offense_personnel, offense_players) %>%
+  summarize(total = n())
+
+rosters_2018_2022 <- nflreadr::load_rosters(2018:2022) %>%
+  select(season, gsis_id, full_name)
+
+participation_2018_2022 <- participation_2018_2022 %>%
+  left_join(rosters_2018_2022, by = c("season", "offense_players" = "gsis_id"))
+
+```
+:::
+
+If your analysis requires providing great granularity, the `load_rosters_weekly()` function provides the same information as `load_rosters()` but structures it in weekly format by season (or over multiple seasons, if needed).
+
+### The `load_teams()` Function
+
+A tool heavily used in the data vizualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge dataframes that have differing values for teams. The
+
+### The `load_schedules()` Function
+
+fffff
+
+### The `load_officials()` Function
+
+The `load_officials()` data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee's position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a `game_id` and `game_key` that are sorted by `season` and `week`, allowing you to merge the information other dataframes.
+
+With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique `crew_id` to each stable of officials "working" under a lead referee.
+
+```{r creating-crew-id, eval = TRUE, echo = TRUE, output = FALSE}
+
+nfl_officials <- nflreadr::load_officials(seasons = 2022)
+
+referees <- nfl_officials %>%
+  filter(position == "Referee") %>%
+  mutate(crew_id = match(official_id, unique(official_id)))
+
+nfl_officials <- nfl_officials %>%
+  left_join(referees %>% select(game_id, crew_id), by = "game_id")
+
+penalty_pbp <- nflreadr::load_pbp(seasons = 2022)
+
+penalties <- penalty_pbp %>%
+  filter(penalty == 1) %>%
+  select(game_id, old_game_id, season, play_id, desc, home_team, away_team,
+         posteam, defteam, week, penalty_team, penalty_type, penalty, penalty_player_id,
+         penalty_player_name, penalty_yards)
+
+total_penalties <- penalties %>%
+  group_by(old_game_id) %>%
+  summarize(
+    total_called = sum(penalty == 1, na.rm = TRUE),
+    total_yards = sum(penalty_yards, na.rm = TRUE))
+
+nfl_officials <- nfl_officials %>%
+  left_join(total_penalties, by = c("game_id" = "old_game_id")) %>%
+  select(game_id, official_name, position, crew_id, total_called, total_yards)
+  
+tallied <- nfl_officials %>%
+  group_by(game_id) %>%
+  filter(position == "Referee") %>%
+  ungroup() %>%
+  group_by(crew_id) %>%
+  reframe(
+    referee = unique(official_name),
+    all_pen = sum(total_called, na.rm = TRUE),
+    all_yards = sum(total_yards, na.rm = TRUE))
+
+```
+
+### The `load_trades()` Function
+
+ffffff
+
+### The `load_draft_picks()` Function
+
+fffffff
+
+### The `load_combine()` Function
+
+fffffff
+
+### The `load_nextgen_stats()` Function
+
+ffffff
+
+### The `load_depth_charts()` Function
+
+fffffff
+
+### The `load_injuries()` Function
+
+fffffff
+
+### The `load_espn_qbr()` Function
+
+ffffff
+
+### The `load_pfr_advstats()` Function
+
+fffffff
+
+### The `load_snap_counts()` Function
+
+fffffff
+
+### The `load_contracts()` Function
+
+fffffff
+
+### The `clean_player_names()` Function
+
+ffffff
+
+### The `clean_team_abbrs()` Function
+
+ffffff
+
+### The `clean_homeaway()` Function
