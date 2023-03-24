@@ -43,8 +43,7 @@ fffff
 
 ```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-
-
+simple_regression_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
 ```
 
 #### Multiple Linear Regression
