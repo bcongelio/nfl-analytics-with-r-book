@@ -12,9 +12,116 @@ library(lightgbm)
 library(bonsai)
 ```
 
-introduction coming to this location soon.
+## Introduction to Statistics and Modeling with NFL Data
 
-## Exploring Rushing Yards Over Expected
+## Basic Statistical Modeling
+
+### Linear Regressions
+
+introduction to linear regressions here.
+
+#### Simple Linear Regression
+
+A simple linear regression is a fundamental statistical technique that is used to explore the relationship between two variables, specifically the dependent variable (also called the "response variable") and the independent variable (also called the "predictor"). By using a simple linear regression, we can model the relationship between the two variables as a linear equation that best fits the observed data points.
+
+A simple linear regression aims to fit a straight line through all the observed data points in such a way that the total squared distance between the actual observations and the values predicted by the model are minimal. This line is often referred to as either the "line of best fit" or the "regression line" and it represents the interaction between the dependent and independent variables. Mathematically, the equation for a simple linear regression is as follows:
+
+$$
+Y = {\beta}_0 + {\beta}_1 * X + \epsilon
+$$
+
+1.  $Y$, in the above equation, is the dependent variable where the $X$ represents the independent variable.
+2.  ${\beta}_o$ is the intercept of the regression model.
+3.  ${\beta}_1$ is the slope of the model's "line of best fit."
+4.  $\epsilon$ represents the error term.
+
+To better illustrate this, let's use basic football terms using the above regression equation to compare a team's offensive points scored in a season based on how many offensive yards it accumulated. The intercept (${\beta}_o$) represents the value when a team's points scored and offensive yards are both zero. The slope (${\beta}_1$) represents the rate of change in $Y$ as the unit of $X$ changes. The error term ($\epsilon$) is represents the difference between the actual observed values of the regression's dependent variable and the value as predicted by the model.
+
+Using our points scored/total yards example, a team's total yards gained is the **independent variable** and total points scored is the **dependent variable**, as a team's total yardage **is what drives the change in total points** (in other words, a team's total points *is dependent* on its total yardage).
+
+fffff
+
+```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+
+
+```
+
+#### Multiple Linear Regression
+
+examples of multiple linear regression using nfl data.
+
+### Logistic Regressions
+
+introduction to logistic regressions here.
+
+#### Binary Classification
+
+examples of binary classification here using nfl data.
+
+#### Multiclass Classification
+
+examples of multiclass classification here using nfl data.
+
+## Advanced Regression Techniques
+
+### Regularization 
+
+intro to regularization techniques here.
+
+#### Ridge Regression
+
+examples of ridge regression using nfl data.
+
+#### Lasso Regression
+
+examples of lasso regression using nfl data.
+
+#### Elastic Ridge Regression
+
+examples of elastic ridge regression using nfl data.
+
+### Generalized Linear and Additive Models (GLM/GAM)
+
+intro to both GLM and GAM here.
+
+#### Poisson Regression (GLM)
+
+example of poisson regression using nfl data.
+
+#### Polynominal Regression(GAM)
+
+example of polynominal regression using nfl data.
+
+## Advanced Modeling Techniques
+
+introduction to advanced modeling techniques in the nfl.
+
+### Clustering
+
+introduction to clustering.
+
+#### K-means Clustering
+
+examples of k-means clustering here.
+
+#### Hierarchical Clustering
+
+examples of hierarchical clustering here.
+
+### Decision Trees/Random Forests
+
+introduction to decision trees/random forests in nfl data.
+
+#### Classification Trees
+
+example of classification tree using nfl data.
+
+#### Regression Trees
+
+example of regression tree using nfl data.
+
+## Creating Our Own Rushing Yards Over Expected Model
 
 Back in January of 2021, Tej Seth posted an article to the [Michigan Football Analytics Society blog](https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/) that outlined his vision for creating a "public expected rushing yards model." The structure of his model, as explained by Tej, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowl, who previously used the college football equivalent of open-source data ([`cfbfastR`](https://cfbfastr.sportsdataverse.org/)) to create an RYOE model for the collegiate game.[^05-nfl-analytics-advanced-methods-1] In Tej's case, his approach to created an NFL-centric RYOE model culminated with the creation of his [RYOE Shiny App](https://mfbanalytics.shinyapps.io/RYOE/) that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.
 
