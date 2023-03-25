@@ -7,6 +7,7 @@ source("book-functions.R")
 library(tidyverse)
 library(nflverse)
 library(extrafont)
+library(ggtext)
 loadfonts(device="win")
 ```
 
@@ -198,14 +199,12 @@ total_combos <- total_combos %>%
 After collecting team records and merging them into the offensive line combination data, we can use `ggplot` to visualize the data. Individual team logos are used in place of the typical `geom_point` by using the `nflplotR` package.
 
 ::: callout-important
-Please note in the below `ggplot` coding that we are using a custom theme, `nfl_analytics_theme()`. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`.
+Please note in the below `ggplot` coding that we are using a custom theme, `nfl_analytics_theme()`. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`. Be sure to install and run the `ggtext` package as the theme uses the package's `element_markdown()` function.
 
 If you do not have the "Roboto Condensed" font installed, `ggplot` will give an error message but ultimately replace it with another font on your system. If you wish to install "Roboto Condensed," you can do so with the `showtext` package.
 :::
 
-```{r theme-code, eval = FALSE}
-
-nfl_analytics_theme <- function(..., base_size = 12) {
+```{nfl_analytics_theme <- function(..., base_size = 12) {}
   
   theme(
     text = element_text(family = "Roboto Condensed", size = base_size, color = "black"),
@@ -213,13 +212,11 @@ nfl_analytics_theme <- function(..., base_size = 12) {
     axis.title = element_text(face = "bold"),
     axis.text = element_text(face = "bold"),
     plot.title.position = "plot",
-    plot.title = element_text(size = 16,
-                              face = "bold",
-                              vjust = .02,
-                              hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5),
-    plot.caption = element_text(size = 8,
-                                face = "italic"),
+    plot.title = element_markdown(size = 16,
+                                  vjust = .02,
+                                  hjust = 0.5),
+    plot.subtitle = element_markdown(hjust = 0.5),
+    plot.caption = element_markdown(size = 8),
     panel.grid.minor = element_blank(),
     panel.grid.major =  element_line(color = "#d0d0d0"),
     panel.background = element_rect(fill = "#f7f7f7"),
