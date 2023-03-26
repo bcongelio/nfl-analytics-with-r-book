@@ -405,7 +405,7 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"G"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">team</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">offense_pct</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, we obtain snap count data from the 2022 season and write it into a dateframe titled <code>oline_snap_counts</code>. After, we select just the necessary columns and then filter out the <code>position</code> information to include only tackles, guards, and centers. After grouping each individual offensive line by <code>game_id</code> and its respective <code>team</code>, we arrange each player’s snap count in descending order using <code>offense_pct</code>.</p>
@@ -473,7 +473,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Please note in the below <code>ggplot</code> coding that we are using a custom theme, <code>nfl_analytics_theme()</code>. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within <code>ggplot</code>.</p>
+<p>Please note in the below <code>ggplot</code> coding that we are using a custom theme, <code>nfl_analytics_theme()</code>. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within <code>ggplot</code>. Be sure to install and run the <code>ggtext</code> package as the theme uses the package’s <code>element_markdown()</code> function.</p>
 <p>If you do not have the “Roboto Condensed” font installed, <code>ggplot</code> will give an error message but ultimately replace it with another font on your system. If you wish to install “Roboto Condensed,” you can do so with the <code>showtext</code> package.</p>
 </div>
 </div>
@@ -486,13 +486,11 @@ Important
 <span>    axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
 <span>    axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
 <span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
-<span>    plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span>,</span>
-<span>                              face <span class="op">=</span> <span class="st">"bold"</span>,</span>
-<span>                              vjust <span class="op">=</span> <span class="fl">.02</span>,</span>
-<span>                              hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    plot.subtitle <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    plot.caption <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>,</span>
-<span>                                face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu">element_markdown</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span>,</span>
+<span>                                  vjust <span class="op">=</span> <span class="fl">.02</span>,</span>
+<span>                                  hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu">element_markdown</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.caption <span class="op">=</span> <span class="fu">element_markdown</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.major <span class="op">=</span>  <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span>,</span>
 <span>    panel.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span>,</span>
@@ -500,7 +498,7 @@ Important
 <span>    panel.border <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">total_combos</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">win_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, formula <span class="op">=</span> <span class="st">'y ~ x'</span>, method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
@@ -510,8 +508,9 @@ Important
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Win Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"# of Unique Offensive Line Combinations vs. Win Percentage"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Through Week #15"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Win Percentage**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Through Week #15*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics With R*&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="01-nfl-analytics-and-r_files/figure-html/plot-combos-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
@@ -544,7 +543,7 @@ Important
 </div>
 </div>
 <p>With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior <code>ggplot</code> code to examine any potential relationship.</p>
-<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">total_combos</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">pressure_percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, formula <span class="op">=</span> <span class="st">'y ~ x'</span>, method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
@@ -554,7 +553,7 @@ Important
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Pressure Rate (per Dropback)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"# of Unique Offensive Line Combinations vs. Pressure Rate"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Unique Offensive Line Combinations vs. Pressure Rate"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -579,7 +578,7 @@ Important
 <span>  <span class="va">total_combos</span>, <span class="va">qb_hits</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"posteam"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After first filtering out any data that does not include <code>posteam</code> information, we can <code>group_by</code> each individual offensive unit and then calculate the total sum of QB hits for each. We can then take our new dataframe titled <code>qb_hits_combined</code> and plot the results.</p>
-<div class="cell" data-layout-align="center" data-fig.dpi="300">
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_hits_combined</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">total_qb_hits</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, formula <span class="op">=</span> <span class="st">'y ~ x'</span>, method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
@@ -588,7 +587,7 @@ Important
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total QB Hits Allowed"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"# of Unique Offensive Line Combinations vs. QB Hits Allowed"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Unique Offensive Line Combinations vs. QB Hits Allowed"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">

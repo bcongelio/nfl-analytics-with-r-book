@@ -254,7 +254,23 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <a href="#working-with-the-various-nflreadr-functions" id="toc-working-with-the-various-nflreadr-functions" class="nav-link" data-scroll-target="#working-with-the-various-nflreadr-functions"><span class="toc-section-number">4.4</span>  Working with the Various <code>nflreadr</code> Functions</a>
   <ul class="collapse">
 <li><a href="#the-load_participation-function" id="toc-the-load_participation-function" class="nav-link" data-scroll-target="#the-load_participation-function"><span class="toc-section-number">4.4.1</span>  The <code>load_participation()</code> Function</a></li>
-  <li><a href="#the-load_rosters-function" id="toc-the-load_rosters-function" class="nav-link" data-scroll-target="#the-load_rosters-function"><span class="toc-section-number">4.4.2</span>  The <code>load_rosters()</code> Function</a></li>
+  <li><a href="#the-load_rosters-and-load_rosters_weekly-functions" id="toc-the-load_rosters-and-load_rosters_weekly-functions" class="nav-link" data-scroll-target="#the-load_rosters-and-load_rosters_weekly-functions"><span class="toc-section-number">4.4.2</span>  The <code>load_rosters()</code> and <code>load_rosters_weekly()</code> Functions</a></li>
+  <li><a href="#the-load_teams-function" id="toc-the-load_teams-function" class="nav-link" data-scroll-target="#the-load_teams-function"><span class="toc-section-number">4.4.3</span>  The <code>load_teams()</code> Function</a></li>
+  <li><a href="#the-load_schedules-function" id="toc-the-load_schedules-function" class="nav-link" data-scroll-target="#the-load_schedules-function"><span class="toc-section-number">4.4.4</span>  The <code>load_schedules()</code> Function</a></li>
+  <li><a href="#the-load_officials-function" id="toc-the-load_officials-function" class="nav-link" data-scroll-target="#the-load_officials-function"><span class="toc-section-number">4.4.5</span>  The <code>load_officials()</code> Function</a></li>
+  <li><a href="#the-load_trades-function" id="toc-the-load_trades-function" class="nav-link" data-scroll-target="#the-load_trades-function"><span class="toc-section-number">4.4.6</span>  The <code>load_trades()</code> Function</a></li>
+  <li><a href="#the-load_draft_picks-function" id="toc-the-load_draft_picks-function" class="nav-link" data-scroll-target="#the-load_draft_picks-function"><span class="toc-section-number">4.4.7</span>  The <code>load_draft_picks()</code> Function</a></li>
+  <li><a href="#the-load_combine-function" id="toc-the-load_combine-function" class="nav-link" data-scroll-target="#the-load_combine-function"><span class="toc-section-number">4.4.8</span>  The <code>load_combine()</code> Function</a></li>
+  <li><a href="#the-load_nextgen_stats-function" id="toc-the-load_nextgen_stats-function" class="nav-link" data-scroll-target="#the-load_nextgen_stats-function"><span class="toc-section-number">4.4.9</span>  The <code>load_nextgen_stats()</code> Function</a></li>
+  <li><a href="#the-load_depth_charts-function" id="toc-the-load_depth_charts-function" class="nav-link" data-scroll-target="#the-load_depth_charts-function"><span class="toc-section-number">4.4.10</span>  The <code>load_depth_charts()</code> Function</a></li>
+  <li><a href="#the-load_injuries-function" id="toc-the-load_injuries-function" class="nav-link" data-scroll-target="#the-load_injuries-function"><span class="toc-section-number">4.4.11</span>  The <code>load_injuries()</code> Function</a></li>
+  <li><a href="#the-load_espn_qbr-function" id="toc-the-load_espn_qbr-function" class="nav-link" data-scroll-target="#the-load_espn_qbr-function"><span class="toc-section-number">4.4.12</span>  The <code>load_espn_qbr()</code> Function</a></li>
+  <li><a href="#the-load_pfr_advstats-function" id="toc-the-load_pfr_advstats-function" class="nav-link" data-scroll-target="#the-load_pfr_advstats-function"><span class="toc-section-number">4.4.13</span>  The <code>load_pfr_advstats()</code> Function</a></li>
+  <li><a href="#the-load_snap_counts-function" id="toc-the-load_snap_counts-function" class="nav-link" data-scroll-target="#the-load_snap_counts-function"><span class="toc-section-number">4.4.14</span>  The <code>load_snap_counts()</code> Function</a></li>
+  <li><a href="#the-load_contracts-function" id="toc-the-load_contracts-function" class="nav-link" data-scroll-target="#the-load_contracts-function"><span class="toc-section-number">4.4.15</span>  The <code>load_contracts()</code> Function</a></li>
+  <li><a href="#the-clean_player_names-function" id="toc-the-clean_player_names-function" class="nav-link" data-scroll-target="#the-clean_player_names-function"><span class="toc-section-number">4.4.16</span>  The <code>clean_player_names()</code> Function</a></li>
+  <li><a href="#the-clean_team_abbrs-function" id="toc-the-clean_team_abbrs-function" class="nav-link" data-scroll-target="#the-clean_team_abbrs-function"><span class="toc-section-number">4.4.17</span>  The <code>clean_team_abbrs()</code> Function</a></li>
+  <li><a href="#the-clean_homeaway-function" id="toc-the-clean_homeaway-function" class="nav-link" data-scroll-target="#the-clean_homeaway-function"><span class="toc-section-number">4.4.18</span>  The <code>clean_homeaway()</code> Function</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -1084,8 +1100,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <p>The <code>load_participation()</code> function allows us to create a dataframe of player participation data dating back to 2016 with an option to infuse that information into the existing <code>nflreadr</code> play-by-play data. The resulting dataframe, when not including play-by-play data, includes information pertaining to: the individial game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.</p>
 <p>Despite the <code>load_participation()</code> function being one of the newest editions to the <code>nflreadr</code> package, it is already being used to create contextual analysis regarding a team’s use of its players out out formations. For example, <a href="https://twitter.com/josephjefe">Joseph Hefner</a> uses the data to create tables (built with the <code>gt</code> packages) that calculates not only each player’s rate of usage out of different personnel packages, but how the team’s EPA per play and pass rate fluncuate with each. In the spirit of R’s open-source nature, he also created a <a href="https://josephjefe.shinyapps.io/formations_app/">Team Formation ShinyApp</a> that allows anybody to explore the data and output the results in .png format.</p>
 <p></p>
-<div id="tweet-97117"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-97117").innerHTML = tweet["html"];</script><p>To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
+<div id="tweet-81566"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-81566").innerHTML = tweet["html"];</script><p>To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -1169,8 +1185,8 @@ Tip
 <strong>The newly split data is then grouped by <code>offense_personnel</code></strong> <strong>and <code>offense_players</code></strong> <strong>in order to calculate the number of times each specific ID was associated with personnel package</strong>. The resulting dataframe lists the offense formation type for each player that participated in it, along with the player’s respective participation count.</li>
 </ol>
 <p>As is, the <code>load_participation()</code> data does not include any way to further identify players outside of the unique players IDs. Because of this, it is necessary to use the <code>load_rosters()</code> function to include this information (this process is included below in the <code>load_rosters()</code> section).</p>
-</section><section id="the-load_rosters-function" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="the-load_rosters-function">
-<span class="header-section-number">4.4.2</span> The <code>load_rosters()</code> Function</h3>
+</section><section id="the-load_rosters-and-load_rosters_weekly-functions" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="the-load_rosters-and-load_rosters_weekly-functions">
+<span class="header-section-number">4.4.2</span> The <code>load_rosters()</code> and <code>load_rosters_weekly()</code> Functions</h3>
 <p>The <code>load_rosters()</code> function houses a multitude of useful tools for use in the <code>nflverse</code>. With player information dating back to 1920, <code>load_rosters()</code> will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.</p>
 <p>Importantly, <code>load_rosters()</code> also provides the unique identifier for each player over nine different sources: the <code>gsis_id</code> (which is the core ID used in <code>nflverse</code> data), <code>sleeper_id</code>, <code>espn_id</code>, <code>yahoo_id</code>, <code>rotowire_id</code>, <code>pff_id</code>, <code>fantasy_data_id</code>, <code>sportradar_id</code>, and <code>pfr_id</code>. The different IDs become extremely useful when using data collected from outside the <code>nflverse</code>, or when combining data from two outside sources, matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in <code>load_rosters()</code> data.</p>
 <p>Let’s return to our <code>participation_split</code> dataframe that we built prior in this chapter while working with the <code>load_participation()</code> function. The the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.</p>
@@ -1193,6 +1209,149 @@ Note
 </div>
 </div>
 <p>Despite the wealth of information in the roster information, only the <code>gsis_id</code> and the <code>full_name</code> is required to complete our <code>participation_split</code> dataframe. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use <code>left_join()</code> to merge each player’s name on the matching ID in the <code>offense_players</code> column and <code>gsis_id</code> from the roster information.</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rosters</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rosters</span> <span class="op">&lt;-</span> <span class="va">rosters</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">gsis_id</span>, <span class="va">full_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">participation_split</span> <span class="op">&lt;-</span> <span class="va">participation_split</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">rosters</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"offense_players"</span> <span class="op">=</span> <span class="st">"gsis_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">participation_split</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 157 x 4
+   offense_personnel offense_players total full_name        
+   &lt;chr&gt;             &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;            
+ 1 1 RB, 1 TE, 3 WR  00-0032897          3 Derek Watt       
+ 2 1 RB, 1 TE, 3 WR  00-0033869        262 Mitchell Trubisky
+ 3 1 RB, 1 TE, 3 WR  00-0034142         37 J.C. Hassenauer  
+ 4 1 RB, 1 TE, 3 WR  00-0034347        781 James Daniels    
+ 5 1 RB, 1 TE, 3 WR  00-0034768        781 Chukwuma Okorafor
+ 6 1 RB, 1 TE, 3 WR  00-0034785        744 Mason Cole       
+ 7 1 RB, 1 TE, 3 WR  00-0034928        235 Steven Sims      
+ 8 1 RB, 1 TE, 3 WR  00-0035216        745 Diontae Johnson  
+ 9 1 RB, 1 TE, 3 WR  00-0035217         25 Benny Snell      
+10 1 RB, 1 TE, 3 WR  00-0035222        258 Zach Gentry      
+# ... with 147 more rows</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>load_rosters()</code> data is capable of providing data for multiple seasons at once. Through each season, a player’s <code>gsis_id</code> will remain static. Despite this, when merging multiple years of participation data with multiple years of roster information, the data must be matched on the <code>season</code> variable was well. This process involves including <code>season</code> in both the participation data <code>group_by()</code> and the roster information, as seen below.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation_multi_years</span> <span class="op">&lt;-</span> <span class="fu">load_participation</span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2018</span><span class="op">:</span><span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">participation_2018_2022</span> <span class="op">&lt;-</span> <span class="va">participation_multi_years</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">offense_formation</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"PIT"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">offense_players</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">season</span>, <span class="va">offense_personnel</span>, <span class="va">offense_players</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rosters_2018_2022</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">season</span>, <span class="va">gsis_id</span>, <span class="va">full_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">participation_2018_2022</span> <span class="op">&lt;-</span> <span class="va">participation_2018_2022</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">rosters_2018_2022</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"season"</span>, <span class="st">"offense_players"</span> <span class="op">=</span> <span class="st">"gsis_id"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>If your analysis requires providing great granularity, the <code>load_rosters_weekly()</code> function provides the same information as <code>load_rosters()</code> but structures it in weekly format by season (or over multiple seasons, if needed).</p>
+</section><section id="the-load_teams-function" class="level3" data-number="4.4.3"><h3 data-number="4.4.3" class="anchored" data-anchor-id="the-load_teams-function">
+<span class="header-section-number">4.4.3</span> The <code>load_teams()</code> Function</h3>
+<p>A tool heavily used in the data vizualization process, the <code>load_teams()</code> function provides information pertaining to each NFL team’s colors and logos, as well as providing a way to merge dataframes that have differing values for teams. The</p>
+</section><section id="the-load_schedules-function" class="level3" data-number="4.4.4"><h3 data-number="4.4.4" class="anchored" data-anchor-id="the-load_schedules-function">
+<span class="header-section-number">4.4.4</span> The <code>load_schedules()</code> Function</h3>
+<p>fffff</p>
+</section><section id="the-load_officials-function" class="level3" data-number="4.4.5"><h3 data-number="4.4.5" class="anchored" data-anchor-id="the-load_officials-function">
+<span class="header-section-number">4.4.5</span> The <code>load_officials()</code> Function</h3>
+<p>The <code>load_officials()</code> data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee’s position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a <code>game_id</code> and <code>game_key</code> that are sorted by <code>season</code> and <code>week</code>, allowing you to merge the information other dataframes.</p>
+<p>With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique <code>crew_id</code> to each stable of officials “working” under a lead referee.</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_officials.html">load_officials</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">referees</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op">==</span> <span class="st">"Referee"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>crew_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">official_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">official_id</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nfl_officials</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">referees</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">crew_id</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"game_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">penalty_pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">penalties</span> <span class="op">&lt;-</span> <span class="va">penalty_pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">penalty</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">old_game_id</span>, <span class="va">season</span>, <span class="va">play_id</span>, <span class="va">desc</span>, <span class="va">home_team</span>, <span class="va">away_team</span>,</span>
+<span>         <span class="va">posteam</span>, <span class="va">defteam</span>, <span class="va">week</span>, <span class="va">penalty_team</span>, <span class="va">penalty_type</span>, <span class="va">penalty</span>, <span class="va">penalty_player_id</span>,</span>
+<span>         <span class="va">penalty_player_name</span>, <span class="va">penalty_yards</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">total_penalties</span> <span class="op">&lt;-</span> <span class="va">penalties</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">old_game_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    total_called <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">penalty</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    total_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">penalty_yards</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nfl_officials</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">total_penalties</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"old_game_id"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">official_name</span>, <span class="va">position</span>, <span class="va">crew_id</span>, <span class="va">total_called</span>, <span class="va">total_yards</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">tallied</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op">==</span> <span class="st">"Referee"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">crew_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">reframe</span><span class="op">(</span></span>
+<span>    referee <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">official_name</span><span class="op">)</span>,</span>
+<span>    all_pen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">total_called</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    all_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">total_yards</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-load_trades-function" class="level3" data-number="4.4.6"><h3 data-number="4.4.6" class="anchored" data-anchor-id="the-load_trades-function">
+<span class="header-section-number">4.4.6</span> The <code>load_trades()</code> Function</h3>
+<p>ffffff</p>
+</section><section id="the-load_draft_picks-function" class="level3" data-number="4.4.7"><h3 data-number="4.4.7" class="anchored" data-anchor-id="the-load_draft_picks-function">
+<span class="header-section-number">4.4.7</span> The <code>load_draft_picks()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_combine-function" class="level3" data-number="4.4.8"><h3 data-number="4.4.8" class="anchored" data-anchor-id="the-load_combine-function">
+<span class="header-section-number">4.4.8</span> The <code>load_combine()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_nextgen_stats-function" class="level3" data-number="4.4.9"><h3 data-number="4.4.9" class="anchored" data-anchor-id="the-load_nextgen_stats-function">
+<span class="header-section-number">4.4.9</span> The <code>load_nextgen_stats()</code> Function</h3>
+<p>ffffff</p>
+</section><section id="the-load_depth_charts-function" class="level3" data-number="4.4.10"><h3 data-number="4.4.10" class="anchored" data-anchor-id="the-load_depth_charts-function">
+<span class="header-section-number">4.4.10</span> The <code>load_depth_charts()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_injuries-function" class="level3" data-number="4.4.11"><h3 data-number="4.4.11" class="anchored" data-anchor-id="the-load_injuries-function">
+<span class="header-section-number">4.4.11</span> The <code>load_injuries()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_espn_qbr-function" class="level3" data-number="4.4.12"><h3 data-number="4.4.12" class="anchored" data-anchor-id="the-load_espn_qbr-function">
+<span class="header-section-number">4.4.12</span> The <code>load_espn_qbr()</code> Function</h3>
+<p>ffffff</p>
+</section><section id="the-load_pfr_advstats-function" class="level3" data-number="4.4.13"><h3 data-number="4.4.13" class="anchored" data-anchor-id="the-load_pfr_advstats-function">
+<span class="header-section-number">4.4.13</span> The <code>load_pfr_advstats()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_snap_counts-function" class="level3" data-number="4.4.14"><h3 data-number="4.4.14" class="anchored" data-anchor-id="the-load_snap_counts-function">
+<span class="header-section-number">4.4.14</span> The <code>load_snap_counts()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-load_contracts-function" class="level3" data-number="4.4.15"><h3 data-number="4.4.15" class="anchored" data-anchor-id="the-load_contracts-function">
+<span class="header-section-number">4.4.15</span> The <code>load_contracts()</code> Function</h3>
+<p>fffffff</p>
+</section><section id="the-clean_player_names-function" class="level3" data-number="4.4.16"><h3 data-number="4.4.16" class="anchored" data-anchor-id="the-clean_player_names-function">
+<span class="header-section-number">4.4.16</span> The <code>clean_player_names()</code> Function</h3>
+<p>ffffff</p>
+</section><section id="the-clean_team_abbrs-function" class="level3" data-number="4.4.17"><h3 data-number="4.4.17" class="anchored" data-anchor-id="the-clean_team_abbrs-function">
+<span class="header-section-number">4.4.17</span> The <code>clean_team_abbrs()</code> Function</h3>
+<p>ffffff</p>
+</section><section id="the-clean_homeaway-function" class="level3" data-number="4.4.18"><h3 data-number="4.4.18" class="anchored" data-anchor-id="the-clean_homeaway-function">
+<span class="header-section-number">4.4.18</span> The <code>clean_homeaway()</code> Function</h3>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

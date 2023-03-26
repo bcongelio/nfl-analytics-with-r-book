@@ -2,6 +2,8 @@
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 source("book-functions.R")
+
+library(tidyverse)
 ```
 
 ```{r preface-libs, include = FALSE}

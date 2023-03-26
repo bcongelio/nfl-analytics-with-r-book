@@ -9,6 +9,7 @@ library(nflverse)
 library(extrafont)
 library(ggrepel)
 library(ggimage)
+library(ggtext)
 loadfonts(device="win")
 extrafont::loadfonts(quiet = TRUE)
 ```
@@ -324,7 +325,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -990,7 +991,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
        subtitle = "Non-Play Action vs. Play Action",
        caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
   nfl_analytics_theme() +
-  theme(plot.title = element_text(color = "#E31837"))
+  theme(plot.title = element_markdown(color = "#E31837"))
 ```
 
 ## Using Team Logos in Plots

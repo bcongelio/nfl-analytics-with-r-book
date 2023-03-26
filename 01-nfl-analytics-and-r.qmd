@@ -131,7 +131,7 @@ oline_snap_counts <- oline_snap_counts %>%
   filter(position %in% c("T", "G", "C")) %>%
   group_by(game_id, team) %>%
   arrange(-offense_pct) %>%
-  slice(1:5) %>%
+  dplyr::slice(1:5) %>%
   ungroup()
 ```
 
@@ -204,7 +204,9 @@ Please note in the below `ggplot` coding that we are using a custom theme, `nfl_
 If you do not have the "Roboto Condensed" font installed, `ggplot` will give an error message but ultimately replace it with another font on your system. If you wish to install "Roboto Condensed," you can do so with the `showtext` package.
 :::
 
-```{nfl_analytics_theme <- function(..., base_size = 12) {}
+```{r example-theme, eval = FALSE, echo = TRUE, output = FALSE}
+
+nfl_analytics_theme <- function(..., base_size = 12) {
   
   theme(
     text = element_text(family = "Roboto Condensed", size = base_size, color = "black"),
@@ -225,7 +227,7 @@ If you do not have the "Roboto Condensed" font installed, `ggplot` will give an 
 }
 ```
 
-```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
@@ -236,8 +238,9 @@ ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Win Percentage") +
-  labs(title = "# of Unique Offensive Line Combinations vs. Win Percentage",
-       subtitle = "Through Week #15")
+  labs(title = "**Unique Offensive Line Combinations vs. Win Percentage**",
+       subtitle = "*Through Week #15*",
+       caption = "*An Introduction to NFL Analytics With R*<br>Brad J. Congelio")
 ```
 
 As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
@@ -263,7 +266,7 @@ head(pressure_rate)
 
 With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior `ggplot` code to examine any potential relationship.
 
-```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
@@ -274,7 +277,7 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Pressure Rate (per Dropback)") +
-  labs(title = "# of Unique Offensive Line Combinations vs. Pressure Rate",
+  labs(title = "Unique Offensive Line Combinations vs. Pressure Rate",
        subtitle = "2022 Season")
 ```
 
@@ -299,7 +302,7 @@ qb_hits_combined <- left_join(
 
 After first filtering out any data that does not include `posteam` information, we can `group_by` each individual offensive unit and then calculate the total sum of QB hits for each. We can then take our new dataframe titled `qb_hits_combined` and plot the results.
 
-```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
@@ -309,7 +312,7 @@ ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Total QB Hits Allowed") +
-  labs(title = "# of Unique Offensive Line Combinations vs. QB Hits Allowed",
+  labs(title = "Unique Offensive Line Combinations vs. QB Hits Allowed",
        subtitle = "2022 Season")
 ```
 
