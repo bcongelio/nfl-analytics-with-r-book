@@ -1125,3 +1125,122 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
 ```
+
+ffffffffff
+
+## Creating a `geom_col` Plot
+
+To begin creating our `geom_col` plot, we will use `vroom` to gather the necessary data into a dataframe titled `qb_thirddown_data`.
+
+```{r geom_col_data, eval = TRUE, echo = TRUE, output = TRUE}
+
+qb_thirddown_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv")
+
+qb_thirddown_data
+```
+
+The resulting dataframe include the top ten quarterback in
+
+```{r geom_col_reorder, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_plot, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col()
+```
+
+ffffffffffffff
+
+```{r geom_col_adding_color, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2)
+```
+
+ffffffffffff
+
+```{r geom_col_cleaning_scales, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(),
+                     expand = c(0,0)) +
+  theme(axis.text.x = element_blank()) +
+  xlab("") +
+  ylab("QB Aggressiveness on 3rd Down") +
+  nfl_analytics_theme()
+```
+
+ffffffffffffff
+
+```{r geom_col_adding_names, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+  geom_text(aes(label = passer), position = position_stack(vjust = .98), 
+            angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(),
+                     expand = c(0,0)) +
+  xlab("") +
+  ylab("QB Aggressiveness on 3rd Down") +
+  nfl_analytics_theme()
+```
+
+ffffffffffffff
+
+```{r geom_col_adding_headshots, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+  geom_text(aes(label = passer), position = position_stack(vjust = .98), 
+            angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(),
+                     expand = c(0,0)) +
+  theme(axis.text.x = element_nfl_headshot(size = 1)) +
+  xlab("") +
+  ylab("QB Aggressiveness on 3rd Down") +
+  nfl_analytics_theme()
+
+
+```
+
+ffffffffff
+
+```{r geom_col_adding_ggfx, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
+              angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8),
+              sigma = 6, expand = 1, color = "black") +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(),
+                     expand = c(0,0)) +
+  theme(axis.text.x = element_nfl_headshot(size = 1)) +
+  xlab("") +
+  ylab("QB Aggressiveness on 3rd Down") +
+  nfl_analytics_theme()
+
+```
+
+fffffffff
+
+```{r geom_col_adding_titleinfo, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
+              angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8),
+              sigma = 6, expand = 1, color = "black") +
+ scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(),
+                     expand = c(0,0)) +
+  theme(axis.text.x = element_nfl_headshot(size = 1)) +
+  xlab("") +
+  ylab("QB Aggressiveness on 3rd Down") +
+  nfl_analytics_theme() +
+  labs(title = "**QB Aggressiveness on Third Down**",
+       subtitle = "*Numbers of Times Air Yards >= Yards To Go*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
