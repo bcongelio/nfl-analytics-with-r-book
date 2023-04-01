@@ -1244,3 +1244,31 @@ ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb
        subtitle = "*Numbers of Times Air Yards >= Yards To Go*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
+
+### An Alternative `geom_col` Plot
+
+fffffffff
+
+```{r epa-per-play-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+epa_per_play <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv")
+```
+
+ffffffffff
+
+```{r epa_per_play_plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = epa_per_play, aes(x = epa_per_play, y = reorder(posteam, epa_per_play))) +
+  geom_col(aes(fill = if_else(epa_per_play >= 0, "#2c7bb6", "#d7181c")), width = 0.2) +
+  scale_fill_identity() +
+  geom_image(aes(image = team_logo_wikipedia), asp = 16/9, size = .035) +
+  xlab("EPA Per Play") +
+  ylab("") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
+  scale_y_discrete(expand = c(.05, 0)) +
+  nfl_analytics_theme() +
+  theme(axis.text.y = element_blank()) +
+  labs(title = "**Expected Points Added per Play**",
+       subtitle = "*2022 Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
