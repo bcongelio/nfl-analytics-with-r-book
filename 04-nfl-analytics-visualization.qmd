@@ -1272,3 +1272,60 @@ ggplot(data = epa_per_play, aes(x = epa_per_play, y = reorder(posteam, epa_per_p
        subtitle = "*2022 Regular Season*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
+
+## Creating Plots to Show Distribution
+
+### Creating a `geom_box` Plot
+
+Viewing the distribution of air yards for all 2022 playoff teams.
+
+```{r reading_airyards_plot_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+playoff_airyards_plot <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv")
+```
+
+```{r finished_boxplot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = playoff_airyards_plot, aes(x = posteam, y = air_yards, fill = posteam)) +
+  geom_jitter(color = playoff_airyards_plot$team_color, alpha = 0.09) +
+  geom_boxplot(color = "black") +
+  nflplotR::scale_fill_nfl() +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  ylab("Air Yards") +
+  xlab("") +
+  labs(title = "**Distribution of Regular Season Air Yards**",
+       subtitle = "*2022 NFL Playoff Teams*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  theme(axis.text.x = element_nfl_logo(size = 1.25))
+```
+
+### Creating a `geom_ridges` Plot
+
+```{r reading_in_ridges_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+playoff_airyards_ridges_plot <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv")
+```
+
+```{r finished_geom_ridges, output = TRUE, fig.align='center', fig.dpi = 400}
+
+### creating function to add SD, mean, and mean + sd
+meansd <- function(x, ...) {
+  mean <- mean(x)
+  sd <- sd(x)
+  c(mean - sd, mean, mean + sd)
+}
+
+### plotting the data
+ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,y = reorder(posteam, -air_yards), fill = posteam)) +
+  geom_density_ridges(quantile_lines = T, quantile_fun = meansd, color = "#d0d0d0") +
+  nflplotR::scale_fill_nfl() +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  xlab("Air Yards") +
+  ylab("") +
+  labs(title = "**Distribution of Regular Season Air Yards**",
+       subtitle = "*2022 NFL Playoff Teams*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  theme(axis.text.y = element_nfl_logo(size = 1.25))
+```
