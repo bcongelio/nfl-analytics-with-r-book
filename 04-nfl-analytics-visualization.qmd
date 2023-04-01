@@ -1329,3 +1329,37 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,y = reorder(postea
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   theme(axis.text.y = element_nfl_logo(size = 1.25))
 ```
+
+### Creating a `geom_violin` Plot
+
+```{r reading_in_violin_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+yards_gained_compared <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv")
+```
+
+```{r violin_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
+
+custom_labeller <- function(variable, value){
+  new_labels <- c("1st Down", "2nd Down", "3rd Down")
+  return(new_labels[value])
+}
+
+ggplot(data = yards_gained_compared, aes(x = posteam, y = yards_gained, group = posteam, fill = posteam)) +
+  geom_violin() +
+  stat_summary(fun.y = mean, fun.ymin = mean, fun.ymax = mean,
+               geom = "crossbar",
+               width = 0.50,
+               position = position_dodge(width = .25)) +
+  facet_wrap(~down, labeller = labeller(down = custom_labeller)) +
+  scale_fill_manual(values = c("#E31837", "#013369")) +
+  ylab("Average Yards Gained") +
+  xlab("") +
+  labs(title = "*Averaged Yards Gained per Down*",
+       subtitle = "**KC Chiefs vs. NFL: 2022 Regular Season**",
+       caption = "**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*") +
+  theme(axis.text.x = nflplotR::element_nfl_logo(size = 1.5),
+        legend.position = "none",
+        strip.text = element_text(family = "Roboto Condensed", face = "bold"),
+        strip.background = element_rect(fill = "#f7f7f7")) +
+  nfl_analytics_theme()
+```
