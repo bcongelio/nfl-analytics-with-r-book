@@ -1130,6 +1130,11 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
 
 fffff
 
+```{r reading_in_eagles_fourth, eval = TRUE, echo = TRUE, output = FALSE}
+
+eagles_fourth_downs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
+```
+
 ```{r finished_eagles_line, eval = TRUE, echo = TRUE, output = TRUE}
 
 ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
