@@ -1126,7 +1126,26 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
   nfl_analytics_theme()
 ```
 
-ffffffffff
+## Creating a `geom_line` Plot
+
+fffff
+
+```{r finished_eagles_line, eval = TRUE, echo = TRUE, output = TRUE}
+
+ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
+  geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
+  geom_point(size = 5, color = "#f7f7f7") +
+  geom_point(size = 3, color = eagles_fourth_downs$team_color) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format()) +
+  nfl_analytics_theme() +
+  xlab("Season") +
+  ylab("Go For It Percentage") +
+  labs(title = "**Philadelphia Eagles: Fourth-Down Attempt Percentage**",
+        subtitle = "*2012 - 2022: Regular Season*",
+        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
 
 ## Creating a `geom_col` Plot
 
@@ -1363,3 +1382,32 @@ ggplot(data = yards_gained_compared, aes(x = posteam, y = yards_gained, group = 
         strip.background = element_rect(fill = "#f7f7f7")) +
   nfl_analytics_theme()
 ```
+
+### Creating a `geom_histogram` Plot
+
+```{r reading_in_histogram_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+def_yards_allowed <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv")
+```
+
+```{r histogram_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
+  geom_histogram(binwidth = 50) +
+  nflplotR::scale_fill_nfl(type = "primary") +
+  scale_x_continuous(breaks = seq(200, 500, 100)) +
+  scale_y_continuous(breaks = seq(0, 8, 2)) +
+  facet_wrap(vars(defteam), scales = "free_x") +
+  theme(strip.text = element_nfl_wordmark(size = .5)) +
+  nfl_analytics_theme() +
+  theme(strip.background = element_rect(fill = "#f7f7f7")) +
+  xlab("Defensive Yards Allowed") +
+  ylab("Total Count") +
+  labs(title = "*Histogram of Defensive Yards Allowed*",
+       subtitle = "**2022 NFL Regular Season**",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+## Bootstrapping and Visualization with `ggplot2()` 
+
+Introduction to bootstrapping here.
