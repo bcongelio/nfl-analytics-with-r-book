@@ -272,6 +272,28 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </li>
   <li><a href="#creating-your-own-ggplot2-theme" id="toc-creating-your-own-ggplot2-theme" class="nav-link" data-scroll-target="#creating-your-own-ggplot2-theme"><span class="toc-section-number">5.6</span>  Creating Your Own <code>ggplot2</code> Theme</a></li>
   <li><a href="#using-team-logos-in-plots" id="toc-using-team-logos-in-plots" class="nav-link" data-scroll-target="#using-team-logos-in-plots"><span class="toc-section-number">5.7</span>  Using Team Logos in Plots</a></li>
+  <li>
+<a href="#creating-a-geom_line-plot" id="toc-creating-a-geom_line-plot" class="nav-link" data-scroll-target="#creating-a-geom_line-plot"><span class="toc-section-number">5.8</span>  Creating a <code>geom_line</code> Plot</a>
+  <ul class="collapse">
+<li><a href="#adding-secondary-geom_line-for-nfl-averages" id="toc-adding-secondary-geom_line-for-nfl-averages" class="nav-link" data-scroll-target="#adding-secondary-geom_line-for-nfl-averages"><span class="toc-section-number">5.8.1</span>  Adding Secondary <code>geom_line</code> For NFL Averages</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#creating-a-geom_col-plot" id="toc-creating-a-geom_col-plot" class="nav-link" data-scroll-target="#creating-a-geom_col-plot"><span class="toc-section-number">5.9</span>  Creating a <code>geom_col</code> Plot</a>
+  <ul class="collapse">
+<li><a href="#an-alternative-geom_col-plot" id="toc-an-alternative-geom_col-plot" class="nav-link" data-scroll-target="#an-alternative-geom_col-plot"><span class="toc-section-number">5.9.1</span>  An Alternative <code>geom_col</code> Plot</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#creating-plots-to-show-distribution" id="toc-creating-plots-to-show-distribution" class="nav-link" data-scroll-target="#creating-plots-to-show-distribution"><span class="toc-section-number">5.10</span>  Creating Plots to Show Distribution</a>
+  <ul class="collapse">
+<li><a href="#creating-a-geom_box-plot" id="toc-creating-a-geom_box-plot" class="nav-link" data-scroll-target="#creating-a-geom_box-plot"><span class="toc-section-number">5.10.1</span>  Creating a <code>geom_box</code> Plot</a></li>
+  <li><a href="#creating-a-geom_ridges-plot" id="toc-creating-a-geom_ridges-plot" class="nav-link" data-scroll-target="#creating-a-geom_ridges-plot"><span class="toc-section-number">5.10.2</span>  Creating a <code>geom_ridges</code> Plot</a></li>
+  <li><a href="#creating-a-geom_violin-plot" id="toc-creating-a-geom_violin-plot" class="nav-link" data-scroll-target="#creating-a-geom_violin-plot"><span class="toc-section-number">5.10.3</span>  Creating a <code>geom_violin</code> Plot</a></li>
+  <li><a href="#creating-a-geom_histogram-plot" id="toc-creating-a-geom_histogram-plot" class="nav-link" data-scroll-target="#creating-a-geom_histogram-plot"><span class="toc-section-number">5.10.4</span>  Creating a <code>geom_histogram</code> Plot</a></li>
+  </ul>
+</li>
+  <li><a href="#bootstrapping-and-visualization-with-ggplot2" id="toc-bootstrapping-and-visualization-with-ggplot2" class="nav-link" data-scroll-target="#bootstrapping-and-visualization-with-ggplot2"><span class="toc-section-number">5.11</span>  Bootstrapping and Visualization with <code>ggplot2()</code></a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -1580,6 +1602,360 @@ Note
 </div>
 </div>
 </div>
+</section><section id="creating-a-geom_line-plot" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="creating-a-geom_line-plot">
+<span class="header-section-number">5.8</span> Creating a <code>geom_line</code> Plot</h2>
+<p>fffff</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">eagles_fourth_downs</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">eagles_fourth_downs</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">season</span>, y <span class="op">=</span> <span class="va">go_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="va">eagles_fourth_downs</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, color <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, color <span class="op">=</span> <span class="va">eagles_fourth_downs</span><span class="op">$</span><span class="va">team_color</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Season"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Go For It Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Philadelphia Eagles: Fourth-Down Attempt Percentage**"</span>,</span>
+<span>        subtitle <span class="op">=</span> <span class="st">"*2012 - 2022: Regular Season*"</span>,</span>
+<span>        caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="04-nfl-analytics-visualization_files/figure-html/finished_eagles_line-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<section id="adding-secondary-geom_line-for-nfl-averages" class="level3" data-number="5.8.1"><h3 data-number="5.8.1" class="anchored" data-anchor-id="adding-secondary-geom_line-for-nfl-averages">
+<span class="header-section-number">5.8.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</h3>
+<p>fffff</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combined_fourth_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">combined_fourth_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">season</span>, y <span class="op">=</span> <span class="va">go_pct</span>, group <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#013369"</span>, <span class="st">"#004C54"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, color <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Season"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Go For It Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Philadelphia Eagles vs. NFL: Fourth-Down Attempt Percentage**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2012 - 2022: Regular Season*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="04-nfl-analytics-visualization_files/figure-html/finished_two_line-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+</section></section><section id="creating-a-geom_col-plot" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="creating-a-geom_col-plot">
+<span class="header-section-number">5.9</span> Creating a <code>geom_col</code> Plot</h2>
+<p>To begin creating our <code>geom_col</code> plot, we will use <code>vroom</code> to gather the necessary data into a dataframe titled <code>qb_thirddown_data</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qb_thirddown_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">qb_thirddown_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 8
+   passer       passer_id  total qb_agg qb_agg_pct team_color team_col~1 heads~2
+   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  
+ 1 T.Tagovailoa 00-0036212    88     58      0.659 #008E97    #F58220    https:~
+ 2 D.Carr       00-0031280   121     73      0.603 #000000    #A5ACAF    https:~
+ 3 P.Mahomes    00-0033873   154     90      0.584 #E31837    #FFB612    https:~
+ 4 K.Pickett    00-0038102   114     66      0.579 #000000    #FFB612    https:~
+ 5 T.Lawrence   00-0036971   140     79      0.564 #006778    #000000    https:~
+ 6 K.Cousins    00-0029604   159     89      0.560 #4F2683    #FFC62F    https:~
+ 7 A.Dalton     00-0027973   118     66      0.559 #D3BC8D    #000000    https:~
+ 8 M.Stafford   00-0026498    74     41      0.554 #003594    #FFD100    https:~
+ 9 J.Garoppolo  00-0031345    84     46      0.548 #AA0000    #B3995D    https:~
+10 M.Jones      00-0036972   107     58      0.542 #002244    #C60C30    https:~
+# ... with abbreviated variable names 1: team_color2, 2: headshot_url</code></pre>
+</div>
+</div>
+<p>The resulting dataframe include the top ten quarterback in</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_reorder-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ffffffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_adding_color-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ffffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_cleaning_scales-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ffffffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">passer</span><span class="op">)</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">.98</span><span class="op">)</span>, </span>
+<span>            angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.98</span>, color <span class="op">=</span> <span class="st">"white"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_adding_names-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ffffffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer_id</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">passer</span><span class="op">)</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">.98</span><span class="op">)</span>, </span>
+<span>            angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.98</span>, color <span class="op">=</span> <span class="st">"white"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_nfl_headshot</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_adding_headshots-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer_id</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">with_outer_glow</span><span class="op">(</span><span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">passer</span><span class="op">)</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">.98</span><span class="op">)</span>,</span>
+<span>              angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.98</span>, color <span class="op">=</span> <span class="st">"white"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,</span>
+<span>              sigma <span class="op">=</span> <span class="fl">6</span>, expand <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_nfl_headshot</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_adding_ggfx-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>fffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">qb_thirddown_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">passer_id</span>, <span class="op">-</span><span class="va">qb_agg_pct</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">qb_agg_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color</span>, color <span class="op">=</span> <span class="va">qb_thirddown_data</span><span class="op">$</span><span class="va">team_color2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">with_outer_glow</span><span class="op">(</span><span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">passer</span><span class="op">)</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">.98</span><span class="op">)</span>,</span>
+<span>              angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">.98</span>, color <span class="op">=</span> <span class="st">"white"</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,</span>
+<span>              sigma <span class="op">=</span> <span class="fl">6</span>, expand <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_nfl_headshot</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**QB Aggressiveness on Third Down**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Numbers of Times Air Yards &gt;= Yards To Go*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_adding_titleinfo-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="an-alternative-geom_col-plot" class="level3" data-number="5.9.1"><h3 data-number="5.9.1" class="anchored" data-anchor-id="an-alternative-geom_col-plot">
+<span class="header-section-number">5.9.1</span> An Alternative <code>geom_col</code> Plot</h3>
+<p>fffffffff</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">epa_per_play</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ffffffffff</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">epa_per_play</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epa_per_play</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">posteam</span>, <span class="va">epa_per_play</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">epa_per_play</span> <span class="op">&gt;=</span> <span class="fl">0</span>, <span class="st">"#2c7bb6"</span>, <span class="st">"#d7181c"</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_identity</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_image</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>image <span class="op">=</span> <span class="va">team_logo_wikipedia</span><span class="op">)</span>, asp <span class="op">=</span> <span class="fl">16</span><span class="op">/</span><span class="fl">9</span>, size <span class="op">=</span> <span class="fl">.035</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"EPA Per Play"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_discrete</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Expected Points Added per Play**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Regular Season*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/epa_per_play_plot-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="creating-plots-to-show-distribution" class="level2" data-number="5.10"><h2 data-number="5.10" class="anchored" data-anchor-id="creating-plots-to-show-distribution">
+<span class="header-section-number">5.10</span> Creating Plots to Show Distribution</h2>
+<section id="creating-a-geom_box-plot" class="level3" data-number="5.10.1"><h3 data-number="5.10.1" class="anchored" data-anchor-id="creating-a-geom_box-plot">
+<span class="header-section-number">5.10.1</span> Creating a <code>geom_box</code> Plot</h3>
+<p>Viewing the distribution of air yards for all 2022 playoff teams.</p>
+<div class="cell">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">playoff_airyards_plot</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">posteam</span>, y <span class="op">=</span> <span class="va">air_yards</span>, fill <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_jitter</span><span class="op">(</span>color <span class="op">=</span> <span class="va">playoff_airyards_plot</span><span class="op">$</span><span class="va">team_color</span>, alpha <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_boxplot</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Distribution of Regular Season Air Yards**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Playoff Teams*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_nfl_logo</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/finished_boxplot-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="creating-a-geom_ridges-plot" class="level3" data-number="5.10.2"><h3 data-number="5.10.2" class="anchored" data-anchor-id="creating-a-geom_ridges-plot">
+<span class="header-section-number">5.10.2</span> Creating a <code>geom_ridges</code> Plot</h3>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_ridges_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### creating function to add SD, mean, and mean + sd</span></span>
+<span><span class="va">meansd</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">sd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">mean</span> <span class="op">-</span> <span class="va">sd</span>, <span class="va">mean</span>, <span class="va">mean</span> <span class="op">+</span> <span class="va">sd</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co">### plotting the data</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">playoff_airyards_ridges_plot</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">air_yards</span>,y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">posteam</span>, <span class="op">-</span><span class="va">air_yards</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_density_ridges</span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">T</span>, quantile_fun <span class="op">=</span> <span class="va">meansd</span>, color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Distribution of Regular Season Air Yards**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Playoff Teams*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu">element_nfl_logo</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/finished_geom_ridges-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="creating-a-geom_violin-plot" class="level3" data-number="5.10.3"><h3 data-number="5.10.3" class="anchored" data-anchor-id="creating-a-geom_violin-plot">
+<span class="header-section-number">5.10.3</span> Creating a <code>geom_violin</code> Plot</h3>
+<div class="cell">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yards_gained_compared</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">custom_labeller</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">new_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1st Down"</span>, <span class="st">"2nd Down"</span>, <span class="st">"3rd Down"</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">new_labels</span><span class="op">[</span><span class="va">value</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yards_gained_compared</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">posteam</span>, y <span class="op">=</span> <span class="va">yards_gained</span>, group <span class="op">=</span> <span class="va">posteam</span>, fill <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">stat_summary</span><span class="op">(</span>fun.y <span class="op">=</span> <span class="va">mean</span>, fun.ymin <span class="op">=</span> <span class="va">mean</span>, fun.ymax <span class="op">=</span> <span class="va">mean</span>,</span>
+<span>               geom <span class="op">=</span> <span class="st">"crossbar"</span>,</span>
+<span>               width <span class="op">=</span> <span class="fl">0.50</span>,</span>
+<span>               position <span class="op">=</span> <span class="fu">position_dodge</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">down</span>, labeller <span class="op">=</span> <span class="fu">labeller</span><span class="op">(</span>down <span class="op">=</span> <span class="va">custom_labeller</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#E31837"</span>, <span class="st">"#013369"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Average Yards Gained"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"*Averaged Yards Gained per Down*"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"**KC Chiefs vs. NFL: 2022 Regular Season**"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"**An Introduction to NFL Analytics with R**&lt;br&gt;*Brad J. Congelio*"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/element.html">element_nfl_logo</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>        strip.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>        strip.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/violin_plot_completed-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="creating-a-geom_histogram-plot" class="level3" data-number="5.10.4"><h3 data-number="5.10.4" class="anchored" data-anchor-id="creating-a-geom_histogram-plot">
+<span class="header-section-number">5.10.4</span> Creating a <code>geom_histogram</code> Plot</h3>
+<div class="cell">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">def_yards_allowed</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">def_yards_allowed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yards_allowed</span>, fill <span class="op">=</span> <span class="va">defteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">500</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">defteam</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu">element_nfl_wordmark</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>strip.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Defensive Yards Allowed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total Count"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"*Histogram of Defensive Yards Allowed*"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"**2022 NFL Regular Season**"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/histogram_plot_completed-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="bootstrapping-and-visualization-with-ggplot2" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="bootstrapping-and-visualization-with-ggplot2">
+<span class="header-section-number">5.11</span> Bootstrapping and Visualization with <code>ggplot2()</code>
+</h2>
+<p>Introduction to bootstrapping here.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

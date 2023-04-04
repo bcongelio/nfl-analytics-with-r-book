@@ -10,6 +10,8 @@ library(extrafont)
 library(ggrepel)
 library(ggimage)
 library(ggtext)
+library(ggfx)
+library(ggridges)
 loadfonts(device="win")
 extrafont::loadfonts(quiet = TRUE)
 ```
@@ -1152,6 +1154,37 @@ ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
         caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
+### Adding Secondary `geom_line` For NFL Averages
+
+fffff
+
+```{r reading_combined_line_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+combined_fourth_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
+```
+
+```{r finished_two_line, eval = TRUE, echo = TRUE, output = TRUE}
+
+ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
+  geom_line(size = 2, aes(color = posteam)) +
+  scale_color_manual(values = c("#013369", "#004C54")) +
+  geom_point(size = 5, color = "#f7f7f7") +
+  geom_point(size = 3, aes(color = posteam)) +
+  nfl_analytics_theme() +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format()) +
+  nfl_analytics_theme() +
+  theme(legend.position = "none") +
+  xlab("Season") +
+  ylab("Go For It Percentage") +
+  labs(title = "**Philadelphia Eagles vs. NFL: Fourth-Down Attempt Percentage**",
+       subtitle = "*2012 - 2022: Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+
+
+```
+
 ## Creating a `geom_col` Plot
 
 To begin creating our `geom_col` plot, we will use `vroom` to gather the necessary data into a dataframe titled `qb_thirddown_data`.
@@ -1167,7 +1200,7 @@ The resulting dataframe include the top ten quarterback in
 
 ```{r geom_col_reorder, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_plot, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col()
 ```
 
@@ -1413,6 +1446,6 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
-## Bootstrapping and Visualization with `ggplot2()` 
+## Bootstrapping and Visualization with `ggplot2()`
 
 Introduction to bootstrapping here.
