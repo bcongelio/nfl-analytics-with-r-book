@@ -12,6 +12,10 @@ library(ggimage)
 library(ggtext)
 library(ggfx)
 library(ggridges)
+library(geomtextpath)
+library(cropcircles)
+library(magick)
+library(glue)
 loadfonts(device="win")
 extrafont::loadfonts(quiet = TRUE)
 ```
@@ -327,7 +331,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -1137,7 +1141,7 @@ fffff
 eagles_fourth_downs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
 ```
 
-```{r finished_eagles_line, eval = TRUE, echo = TRUE, output = TRUE}
+```{r finished_eagles_line, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
   geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
@@ -1163,7 +1167,7 @@ fffff
 combined_fourth_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
 ```
 
-```{r finished_two_line, eval = TRUE, echo = TRUE, output = TRUE}
+```{r finished_two_line, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
   geom_line(size = 2, aes(color = posteam)) +
@@ -1184,6 +1188,38 @@ ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
 
 
 ```
+
+fffff
+
+## Creating a `geom_area` Plot
+
+ffff
+
+```{r reading_mahomes_epa_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+mahomes_epa <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv")
+```
+
+```{r mahomes_epa_finished, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
+  geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
+  geom_area(fill = "#FFB612", alpha = 0.4) +
+  geom_line(color = "#E31837", size = 1.5) +
+  geom_image(aes(image = team_logo_wikipedia), size = 0.045, asp = 16/9) +
+  ##geom_point(color = "#F7F7F7",size = 6.5) +
+ ## geom_point(color = "#FFB612", size = 3.5) +
+  scale_x_continuous(breaks = seq(1,17,1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  xlab("Week") +
+  ylab("Average QB EPA") +
+  labs(title = "**Patrick Mahomes: Mean QB EPA per Week**",
+       subtitle = "*2022 Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+ffffff
 
 ## Creating a `geom_col` Plot
 
@@ -1446,6 +1482,76 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
-## Bootstrapping and Visualization with `ggplot2()`
+## Advanced Data Visualization Methods
 
-Introduction to bootstrapping here.
+fffffffffff
+
+### Creating Circular Headshots
+
+```{r cropcircles_on_headshots, eval = FALSE, echo = TRUE, output = FALSE}
+
+crop_circles_data <- complete_wr_ay %>%
+  select(receiver_id, headshot_url) %>%
+  distinct(receiver_id, .keep_all = TRUE)
+
+crop_circles_data <- crop_circles_data %>%
+  mutate(circle = cropcircles::circle_crop(headshot_url))
+
+crop_circles_data <- crop_circles_data %>%
+  select(receiver_id, circle)
+```
+
+fffff
+
+```{r circle_image_border, eval = FALSE, echo = TRUE, output = FALSE}
+
+border <- function(im) {
+  ii <- magick::image_info(im)
+  ii_min <- min(ii$width, ii$height)
+  
+  img <- image_blank(width = ii_min, height = ii_min, color = "none")
+  drawing <- image_draw(img)
+  symbols(ii_min/2, ii_min/2, circles = ii_min/2.2, bg = "white", inches = FALSE, add = TRUE)
+  dev.off()
+  
+  x = image_composite(image_scale(drawing, "x430"), image_scale(im, "x400"), offset = "+15+15")
+  
+  x
+}
+
+### now let's add the player's name and wrap it around the circle
+plot_image_label<-function(image,
+                           label,
+                           font_color="black", 
+                           top_bottom="top",
+                           hjust = 0.5){
+  
+  t = seq(0, 1, length.out = 100) * pi
+  
+  ### set up data
+  if(top_bottom=="top"){data = data.frame(x = cos(t),y = sin(t))}
+  else if(top_bottom=="bottom"){data=data.frame(x = cos(t),y = sin(t)*-1)}
+  
+  ### set up data   ### the `vjust` option here changes how close name is
+  if(top_bottom=="top"){vjust=0.5}
+  else if(top_bottom=="bottom"){vjust=-0.1}
+  
+  ### set up data
+  if(top_bottom=="top"){ymax=1.2}
+  else if(top_bottom=="bottom"){ymax=0.9}
+  
+  ### set up data
+  if(top_bottom=="top"){ymin=-0.9}
+  else if(top_bottom=="bottom"){ymin=-1.2}
+  
+  ### now taking the text an adding it into a ggplot with the circle
+  ggplot() +
+    geom_image(aes(x=0, y=0, image = image), asp=2.4/2.1, size=.7, image_fun=border) +
+    scale_x_continuous(limits = c(-1.2, 1.2))+
+    scale_y_continuous(limits=c(ymin, ymax))+
+    geom_textpath(data = data, aes(x,y,label = toupper(label)), linecolor=NA, color=font_color,
+                  size = 16,  fontface="bold", vjust = vjust, hjust=hjust, family = "Roboto Condensed")+
+    coord_equal()+
+    theme_void()
+}
+```
