@@ -1555,3 +1555,65 @@ plot_image_label<-function(image,
     theme_void()
 }
 ```
+
+ffffff
+
+```{r creating_new_path, eval = FALSE, echo = TRUE, output = FALSE}
+
+crop_circles_data <- crop_circles_data %>%
+  mutate(new_image_path = paste0(receiver_id, ".png"))
+```
+
+fffffff
+
+```{r looping_over_images, eval = FALSE, echo = TRUE, output = FALSE}
+
+for(i in 1:nrow(crop_circles_data)) {
+  
+  pos = "top"
+  hjust = 0.5
+  path = crop_circles_data$new_image_path[i]
+  plot = plot_image_label(image = crop_circles_data$circle[i],
+                          label = crop_circles_data$receiver[i],
+                          font_color = "black",
+                          top_bottom = "top",
+                          hjust = hjust)
+  
+  ggsave(filename = glue("./images/circle_headshots/{path}"), plot=plot, height=3.95, width=4.5)
+}
+
+```
+
+**NOTE ABOUT RUNNING DEV.OFF() HERE TO GET GGPLOT TO DISPLAY AGIAN.**
+
+```{r adding_image_path, eval = FALSE, echo = TRUE, output = FALSE}
+
+crop_circles_data <- crop_circles_data %>%
+  mutate(image = glue("./images/circle_headshots/{new_image_path}"))
+```
+
+ffffff
+
+```{r reading_in_circle_data, eval = TRUE, echo = FALSE, output = FALSE}
+
+complete_wr_ay <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
+```
+
+```{r finished_kernel_density, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
+  geom_density(alpha = .4) +
+  nflplotR::scale_fill_nfl() +
+  geom_image(data = complete_wr_ay, aes(x = 40, y = 0.04, image = image), size = 0.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  facet_wrap(~ receiver_id) +
+  nfl_analytics_theme() +
+  theme(strip.background = element_blank(),
+        strip.text= element_blank()) +
+  xlab("Air Yards") +
+  ylab("Density") +
+  labs(title = "**Top Ten WRs in Total Air Yards**",
+       subtitle = "*Density Plot of How They Were Earned - 2022 Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
