@@ -543,11 +543,13 @@ The model determined, based on the new predictor variables provided, that this h
 
 ### Logistic Regressions
 
-introduction to logistic regressions here.
+There are three main types of logistic regressions: binary, multinomial, and ordinal.
 
 #### Binary Classification
 
-examples of binary classification here using nfl data.
+We will build a binary regression model to predict the probability that an NFL QB will win the MVP at the conclusion of the season.
+
+Let's first create a dataframe, called `qb_mvp`, that contains the statistics for quarterbacks that we intuitively believe impact the likelihood of a QB being named MVP.
 
 #### Multiclass Classification
 
