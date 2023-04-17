@@ -5,21 +5,23 @@ library(tictoc)
 library(data.table)
 library(nnet)
 library(caret)
-library(plotROC)
+library(doParallel)
+
 
 pbp <- nflreadr::load_pbp(2006:2022) %>%
   filter(season_type == "REG")
 
-pbp_2022 <- pbp %>%
-  filter(season == 2022)
+### matt dougherty: up-tempo (play clock)
+### posteam formation, personnel, men in box
+### cole roche: defensive personnel
 
-pbp_prep <- pbp_2022 %>%
+pbp_prep <- pbp %>%
   select(
     game_id, game_date, game_seconds_remaining, week, season,
     play_type, yards_gained, ydstogo, down, yardline_100, qtr, posteam,
     posteam_score, defteam, defteam_score, score_differential, shotgun,
     no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
-    wp, penalty, half_seconds_remaining, goal_to_go, fixed_drive, run_location, air_yards) %>%
+    wp, penalty, half_seconds_remaining, goal_to_go,run_location, air_yards) %>%
   filter(play_type %in% c("run", "pass"), penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
   mutate(in_red_zone = if_else(yardline_100 <= 20, 1, 0),
          in_fg_range = if_else(yardline_100 <= 35, 1, 0),
@@ -65,14 +67,12 @@ model_data <- pbp_prep %>%
 toc() ### 1352.5 seconds (22 minutes) using case_when()
       ### 17.69 seconds using fcase()
 
-write.csv(model_data, "multinomial_model_data.csv", row.names = FALSE)
-
 ##################
 ## BUILDING THE MODEL
 ##################
 
 model_data_clean <- model_data %>%
-  select(-game_id, -game_date, -week, -season, -play_type, -yards_gained, -posteam, -defteam)
+  select(-game_id, -game_date, -week, -play_type, -yards_gained, -defteam)
 
 model_data_clean <- model_data_clean %>%
   mutate(play_call = case_when(
@@ -81,137 +81,89 @@ model_data_clean <- model_data_clean %>%
     short_pass == 1 ~ "short_pass",
     medium_pass == 1 ~ "medium_pass",
     long_pass == 1 ~ "long_pass",
-    TRUE ~ "other_play")) %>%
+    TRUE ~ NA)) %>%
   select(-run_outside, -run_inside, -short_pass, -medium_pass, -long_pass) %>%
   mutate(play_call = as.factor(play_call))
 
-play_pred_split <- rsample::initial_split(model_data_clean, 0.75)
-play_pred_training <- rsample::training(play_pred_split)
-play_pred_testing <- rsample::testing(play_pred_split)
+model_data_clean <- na.omit(model_data_clean)
 
-### running the model
-play_pred_model_train <- multinom(play_call ~ game_seconds_remaining + ydstogo + down + yardline_100 + qtr + posteam + 
-                    posteam_score + defteam + defteam_score + score_differential + shotgun + 
-                    no_huddle + posteam_timeouts_remaining + defteam_timeouts_remaining + wp + 
-                    goal_to_go + in_red_zone + in_fg_range + two_min_drill + total_runs + 
-                    total_pass + previous_play, data = play_pred_training)
-
-### making predictiong and checking the model's accuracy
-play_pred_testing$predicted_play_call <- predict(play_pred_model_train, newdata = play_pred_testing, type = "class")
-
-### checking the accuracy
-accuracy <- mean(play_pred_testing$predicted_play_call == play_pred_testing$play_call)
-print(accuracy)
-
-# Get the unique play_call levels
-play_call_levels <- unique(play_pred_testing$play_call)
-
-# Convert both variables to factors with the same levels
-play_pred_testing$predicted_play_call <- factor(play_pred_testing$predicted_play_call, levels = play_call_levels)
-play_pred_testing$play_call <- factor(play_pred_testing$play_call, levels = play_call_levels)
-
-# Create the confusion matrix
-cm <- confusionMatrix(play_pred_testing$predicted_play_call, play_pred_testing$play_call)
-
-# Extract the table from the confusion matrix
-cm_table <- cm$table
-
-# Calculate precision, recall, and F1-score
-precision <- cm_table[2, 2] / (cm_table[2, 2] + cm_table[1, 2])
-recall <- cm_table[2, 2] / (cm_table[2, 2] + cm_table[2, 1])
-f1_score <- 2 * (precision * recall) / (precision + recall)
-
-# Display the results
-cat("Precision:", precision, "\n")
-cat("Recall:", recall, "\n")
-cat("F1-score:", f1_score, "\n")
-
-
-##########################
-## testing with tidymodels
-##########################
-
-library(tidymodels)
-
-play_pred_split <- rsample::initial_split(model_data_clean, 0.75, strata = play_call)
+set.seed(1984)
+play_pred_split <- rsample::initial_split(model_data_clean, 0.80, strata = play_call)
 play_pred_training <- rsample::training(play_pred_split)
 play_pred_testing <- rsample::testing(play_pred_split)
 play_pred_folds <- rsample::vfold_cv(play_pred_training)
 
-play_call_boot <- bootstraps(model_data_clean)
-
-### confirming ratios
-play_pred_training %>%
-  count(play_call) %>%
-  mutate(ratio = n/sum(n))
-
-play_pred_testing %>%
-  count(play_call) %>%
-  mutate(ratio = n/sum(n))
-
-########
-## building the tidymodels workflow
-########
-
-glmnet_recipe <- 
+play_call_recipe <- 
   recipe(formula = play_call ~ ., data = play_pred_training) %>%
+  update_role(posteam, new_role = "posteam_id") %>%
+  update_role(season, new_role = "season_id") %>%
   step_dummy(all_nominal_predictors()) %>%
   step_zv(all_predictors()) %>%
-  step_normalize(all_predictors()) %>%
-  step_center(all_numeric()) %>%
-  step_corr(all_numeric(), threshold = 0.7)
+  step_corr(all_predictors(), threshold = .7)
 
-glmnet_spec <-
-  multinom_reg(penalty = tune(), mixture = tune()) %>%
-  set_mode("classification") %>%
-  set_engine("glmnet", family = "multinomial") %>%
-  translate()
+play_call_model <- multinom_reg(
+  penalty = .001,
+  mixture = 1) %>%
+  set_engine("glmnet", family = "multinomial")
 
-glmnet_workflow <-
-  workflow() %>%
-  add_recipe(glmnet_recipe) %>%
-  add_model(glmnet_spec)
+play_call_workflow <- workflow() %>%
+  add_recipe(play_call_recipe) %>%
+  add_model(play_call_model)
 
-glmnet_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20),
-                               mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1)) 
+sum(is.na(play_pred_training))
 
 tic()
-glmnet_tune <-
-  tune_grid(glmnet_workflow, resamples = play_pred_folds, grid = glmnet_grid,
-            control = control_grid(save_pred = TRUE,
-                                   verbose = TRUE))
-toc() ### 273 seconds (4.5 minutes)
+set.seed(123)
+play_call_fit <- fit(play_call_workflow, data = play_pred_training)
+toc()
 
-### viewing metrics
-collect_metrics(glmnet_tune) %>%
-  filter(.metric == "accuracy") %>%
-  arrange(.metric)
+play_call_predictions <- augment(play_call_fit, new_data = play_pred_testing)
 
-### quick plot
-collect_metrics(glmnet_tune) %>%
-  ggplot(aes(penalty, mean)) +
-  geom_line() +
-  facet_wrap(".metric")
+play_call_predictions %>%
+  select(starts_with(".pred")) %>%
+  head()
 
-#### extracting the best tuning parameters
-best_glmnet <- glmnet_tune %>%
-  select_best(metric = "accuracy")
+play_call_metrics <- metric_set(accuracy, roc_auc)
 
-### building the final workflow with the best parameters included
-glmnet_final_wf <- glmnet_workflow %>%
-  finalize_workflow(best_glmnet)
-
-### fitting the model on the testing data
-glmnet_final_model <- glmnet_final_wf %>%
-  fit(data = play_pred_testing)
-
-### binding hard class predictions and probabilities into one tibble
-glmnet_results <- glmnet_final_model %>%
-  predict(new_data = play_pred_testing, type = "prob") %>%
-  bind_cols(play_pred_testing %>% select(play_call))
+play_call_predictions %>%
+  play_call_metrics(play_call, .pred_long_pass:.pred_short_pass, estimate = .pred_class)
 
 
+### combing training and testing into one dataframe
+all_data <- bind_rows(play_pred_training, play_pred_testing)
 
+### running the predictions wholly
+all_predictions <- augment(play_call_fit, new_data = all_data)
+
+options(digits = 3)
+
+### determing most/least predictable teams
+predictions_by_team <- all_predictions %>%
+  mutate(.pred_class = as.character(.pred_class)) %>%
+  mutate(.pred_class = as.character(.pred_class),
+         play_call = as.character(play_call),
+         posteam = as.character(posteam)) %>%
+  group_by(season, posteam) %>%
+  summarize(total_plays = n(),
+            total_pred = sum(.pred_class == play_call),
+            pred_pct = total_pred / total_plays * 100)
+
+
+##########################
+## baseline accuracy
+##########################
+
+# Count the frequency of each class in the training data
+class_counts <- table(play_pred_training$play_call)
+class_counts
+
+# Get the count of the most common class
+max_count <- max(class_counts)
+
+# Calculate the baseline accuracy
+baseline_acc <- max_count / sum(class_counts)
+
+#### baseline accuracy is 30% (if the model always picked run_outside). Model is an 11% increase.
 
 
 
