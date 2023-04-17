@@ -1,56 +1,54 @@
+library(tidyverse)
+library(tidymodels)
+library(nflverse)
+library(quarto)
+
 ###non-qb winner seasons: 2000, 2005, 2006, 2012
 
-pbp <- nflreadr::load_pbp(2000:2022) %>%
-  filter(season_type == "REG")
-
-pbp <- pbp %>%
+player_stats <- nflreadr::load_player_stats(2000:2022) %>%
+  filter(season_type == "REG" & position == "QB") %>%
   filter(season != 2000 & season != 2005 & season != 2006 & season != 2012)
 
-qb_mvp <- pbp %>%
-  group_by(season, passer, passer_id) %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1, !is.na(down)) %>%
-  filter(!is.na(passer)) %>%
+qb_mvp_stats <- player_stats %>%
+  group_by(season, player_display_name, player_id) %>%
   summarize(
-    total_att = n(),
-    total_cmp = sum(complete_pass == 1, na.rm = TRUE),
-    cmp_pct = total_cmp / total_att,
-    total_yds = sum(yards_gained, na.rm = TRUE),
-    total_td = sum(touchdown == 1, na.rm = TRUE),
-    td_pct = (total_td / total_att) * 100,
-    total_int = sum(interception == 1, na.rm = TRUE),
-    total_1d = sum(first_down_pass == 1 ,na.rm = TRUE),
-    yard_att = total_yds / total_att,
-    yard_cmp = total_yds / total_cmp)
+    total_cmp = sum(completions, na.rm = TRUE),
+    total_attempts = sum(attempts, na.rm = TRUE),
+    total_yards = sum(passing_yards, na.rm = TRUE),
+    total_tds = sum(passing_tds, na.rm = TRUE),
+    total_ints = sum(interceptions, na.rm = TRUE),
+    sacks = sum(sacks, na.rm = TRUE),
+    sack_yards = sum(sack_yards, na.rm = TRUE),
+    total_airyards = sum(passing_air_yards, na.rm = TRUE),
+    passing_yac = sum(passing_yards_after_catch, na.rm = TRUE),
+    total_firstdowns = sum(passing_first_downs, na.rm = TRUE),
+    mean_epa = mean(passing_epa, na.rm = TRUE),
+    mean_dakota = mean(dakota, na.rm = TRUE),
+    total_carries = sum(carries, na.rm = TRUE),
+    total_rush_yards = sum(rushing_yards, na.rm = TRUE),
+    total_rush_tds = sum(rushing_tds, na.rm = TRUE),
+    mean_rush_epa = mean(rushing_epa, na.rm = TRUE))
 
-rosters <- nflreadr::load_rosters(2000:2022) %>%
-  select(season, gsis_id, full_name)
+###read in pfr mvp data here
 
-qb_mvp <- qb_mvp %>%
-  left_join(rosters, by = c("season", "passer_id" = "gsis_id"))
+
 
 pfr_mvp_data$mvp <- 1
 
-pfr_mvp_data <- pfr_mvp_data %>%
-  filter(season != 2000 & season != 2005 & season != 2006 & season != 2012)
+qb_mvp_stats <- qb_mvp_stats %>%
+  left_join(pfr_mvp_data, by = c("season" = "season", "player_display_name" = "player_name"))
 
-qb_mvp <- qb_mvp %>% ###mvp years data from pfr
-  left_join(pfr_mvp_data, by = c("season" = "season", "full_name" = "player_name"))
+qb_mvp_stats$mvp[is.na(qb_mvp_stats$mvp)] <- 0
 
-qb_mvp$mvp[is.na(qb_mvp$mvp)] <- 0
+qb_mvp_stats <- qb_mvp_stats %>%
+  filter(total_attempts >= 150)
 
-qb_mvp <- qb_mvp %>%
-  filter(total_att >= 300) %>%
-  select(-full_name) %>%
-  ungroup()
 
 ################################
 ##building the model
 ###############################
 
-colnames(qb_mvp)
-library(tidymodels)
-
-mvp_model_split <- rsample::initial_split(qb_mvp, strata = mvp)
+mvp_model_split <- rsample::initial_split(qb_mvp_stats, strata = mvp)
 mvp_model_train <- rsample::training(mvp_model_split)
 mvp_model_test <- rsample::testing(mvp_model_split)
 
@@ -58,26 +56,103 @@ mvp_model <- glm(formula = mvp ~ ., family = binomial, data = mvp_model_train[,-
 
 summary(mvp_model)
 
-mvp_model_validation <- predict(mvp_model, newdata = mvp_model_test[,-c(1,2,3)])
+qb_mvp_stats_plots <- qb_mvp_stats %>%
+  select(total_cmp, total_attempts, total_yards, total_tds, total_ints, sacks, sack_yards, total_airyards, passing_yac,
+         total_firstyards, mean_epa, mean_dakota, total_carries, total_rush_yards, total_rush_tds, mean_rush_epa,
+         mvp)
 
-validation_binary_predictions <- ifelse(mvp_model_validation > 0.5, 1, 0)
+qb_mvp_stats_long <- qb_mvp_stats_plots %>%
+  pivot_longer(cols = -mvp, names_to = "predictor", values_to = "value")
 
-qb_mvp
+# Create the scatter plot using facet_wrap()
+ggplot(qb_mvp_stats_long, aes(x = mvp, y = value, group = mvp)) +
+  geom_boxplot(aes(fill = as.factor(mvp))) +
+  scale_x_continuous(breaks = seq(0, 1, 1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_fill_manual(values = c("0" = "#56b4e9", "1" = "#3c8da3")) +
+  facet_wrap(~ predictor, scales = "free") +
+  labs(title = "**Examining Binary Regression Separation Issues**",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("MVP Binary") +
+  ylab("Metric Value") +
+  nfl_analytics_theme() +
+  theme(legend.position = "none")
 
-test_new_data <- data.frame(total_att = 500,
-                      total_cmp = 488,
-                       cmp_pct = 0.98,
-                       total_yds = 8023,
-                       total_td = 82,
-                       td_pct = 0.16,
-                       total_int = 89,
-                       total_1d = 500,
-                       yard_att = 16,
-                       yard_cmp = 16.4)
+qb_mvp_corr <- cor(qb_mvp_stats[, c("mean_dakota", "mean_epa", "mean_rush_epa", "passing_yac",
+                                "sack_yards", "sacks", "total_airyards", "total_attempts",
+                                "total_carries", "total_cmp", "total_firstyards", "total_ints",
+                                "total_rush_tds", "total_rush_yards", "total_tds", "total_yards")])
 
-new_data_preds <- predict(mvp_model, newdata = test_new_data, type = "response")
+qb_mvp_corr_melted <- melt(qb_mvp_corr)
 
-new_data_preds_pct <- new_data_preds * 100
-new_data_preds_pct
+ggplot(data = qb_mvp_corr_melted, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_distiller(palette = "PuBu", direction = -1, limits = c(-1, +1)) +
+  geom_text(aes(x = Var1, y = Var2, label = round(value, 2)), color = "black",
+            fontface = "bold", family = "Roboto Condensed", size = 5) +
+  labs(title = "Multicollinearity Correlation Matrix",
+       subtitle = "QB MVP Binary Regression",
+       caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+  nfl_analytics_theme() +
+  labs(fill = "Correlation \n Measure", x = "", y = "") +
+  theme(legend.background = element_rect(fill = "#F7F7F7"),
+        legend.key = element_rect(fill = "#F7F7F7"),
+        axis.text.x = element_text(angle = 90))
 
-options(scipen = 999)
+
+qb_mvp_stats_updated <- qb_mvp_stats %>%
+  select(total_attempts, total_yards, total_tds, total_ints, sacks, sack_yards, total_airyards,
+         mean_dakota, total_rush_yards, total_rush_tds, mean_rush_epa, mvp)
+
+qb_mvp_stats_up_long <- qb_mvp_stats_updated %>%
+  pivot_longer(cols = -mvp, names_to = "predictor", values_to = "value")
+
+# Create the scatter plot using facet_wrap()
+ggplot(qb_mvp_stats_up_long, aes(x = mvp, y = value, group = mvp)) +
+  geom_boxplot(aes(fill = as.factor(mvp))) +
+  scale_x_continuous(breaks = seq(0, 1, 1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_fill_manual(values = c("0" = "#56b4e9", "1" = "#3c8da3")) +
+  facet_wrap(~ predictor, scales = "free") +
+  labs(title = "**Examining Binary Regression Separation Issues: Take 2**",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("MVP Binary") +
+  ylab("Metric Value") +
+  nfl_analytics_theme() +
+  theme(legend.position = "none")
+
+qb_mvp_stats_new <- qb_mvp_stats_updated %>%
+  select(-sack_yards, -sacks, -total_rush_tds, total_rush_yards)
+
+
+##############
+## building the model
+#############
+
+qb_mvp_new_split <- rsample::initial_split(qb_mvp_stats_new, strata = mvp)
+mvp_model_new_train <- rsample::training(qb_mvp_new_split)
+mvp_model_new_test <- rsample::testing(qb_mvp_new_split)
+
+mvp_model_updated <- glm(formula = mvp ~ ., family = binomial, data = mvp_model_new_train)
+
+summary(mvp_model_updated)
+
+###############
+## evaluating model on testing data
+##############
+
+qb_mvp_predicted <- predict(mvp_model_updated, mvp_model_new_test, type = "response")
+
+threshold <- 0.5
+predicted_classes <- ifelse(qb_mvp_predicted > threshold, 1, 0)
+
+predicted_corr <- confusionMatrix(as.factor(predicted_classes), as.factor(mvp_model_new_test$mvp))
+
+print(predicted_corr)
+
+accurary <- predicted_corr$overall["Accuracy"]
+precision <- predicted_corr$byClass["Pos Pred Value"]
+recall <- predicted_corr$byClass["Sensitivity"]
+f1_score <- 2 * (precision * recall) / (precision + recall)
