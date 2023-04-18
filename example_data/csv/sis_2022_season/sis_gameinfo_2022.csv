@@ -1,0 +1,257 @@
+GameId,Season,Week,HomeTeamId,HomeTeam,AwayTeamId,AwayTeam,StadiumName,CoveredStadium,HomeScore,AwayScore,SpreadLine,TotalLine,SpreadResult,TotalResult,Weather,PrecipIntensity,PrecipProbability,PrecipType,Temperature,WindSpeed
+2793,2020,1,16,Chiefs,13,Texans,Arrowhead Stadium,0,34,20,9.5,53.5,14,54,Mostly Cloudy,0.0002,0.01,rain,57.33,6
+2794,2020,1,2,Falcons,27,Seahawks,Mercedes-Benz Stadium,1,25,38,1,49.5,-13,63,Mostly Cloudy,0,0,NA,80.25,4
+2795,2020,1,3,Ravens,8,Browns,M&T Bank Stadium,0,38,6,7,47,32,44,Partly Cloudy,0.0011,0.029999999,rain,75.76999664,5
+2796,2020,1,4,Bills,22,Jets,Highmark Stadium,0,27,17,6.5,39.5,10,44,Possible Light Rain,0.019300001,0.330000013,rain,70.27999878,15
+2797,2020,1,5,Panthers,23,Raiders,Bank of America Stadium,0,30,34,-3,48,-4,64,Clear,0.0014,0.02,rain,80.16999817,3
+2798,2020,1,11,Lions,6,Bears,Ford Field,1,23,27,2.5,42.5,-4,50,Clear,0.0014,0.01,rain,74.80999756,12
+2799,2020,1,15,Jaguars,14,Colts,TIAA Bank Field,0,27,20,-7,44,7,47,Rain and Humid,0.0535,0.340000004,rain,86.43000031,8
+2800,2020,1,18,Vikings,12,Packers,U.S. Bank Stadium,1,34,43,1,45,-9,77,Clear,0.0011,0.01,rain,63.97000122,3
+2801,2020,1,19,Patriots,17,Dolphins,Gillette Stadium,0,21,11,7.5,41.5,10,32,Partly Cloudy,0.0014,0.01,rain,73.09999847,7
+2802,2020,1,32,Football Team,24,Eagles,FedEx Field,0,27,17,-5.5,41.5,10,44,Partly Cloudy,0.0002,0.01,rain,76.37999725,4
+2803,2020,1,7,Bengals,26,Chargers,Paul Brown Stadium,0,13,16,-2.5,41.5,-3,29,Mostly Cloudy,0,0,NA,83.76999664,4
+2804,2020,1,20,Saints,30,Buccaneers,Mercedes-Benz Superdome,1,34,23,4,48.5,11,57,Humid and Partly Cloudy,0.0002,0.039999999,rain,88.48999786,9
+2805,2020,1,28,49ers,1,Cardinals,Levi's Stadium,0,20,24,7,48.5,-4,44,Clear,0,0,NA,71.66000366,6
+2806,2020,1,29,Rams,9,Cowboys,SoFi Stadium,0,20,17,1,52,3,37,Clear,0,0,NA,74.76999664,8
+2807,2020,1,21,Giants,25,Steelers,MetLife Stadium,0,16,26,-6,44,-10,42,Clear,0,0,NA,71.06999969,11
+2808,2020,1,10,Broncos,31,Titans,Empower Field at Mile High,0,14,16,-3,41,-2,30,Foggy,0,0,NA,78.38999939,8
+2809,2020,2,8,Browns,7,Bengals,FirstEnergy Stadium,0,35,30,6,44.5,5,65,Clear,0,0,NA,64.33000183,7
+2810,2020,2,6,Bears,21,Giants,Soldier Field,0,17,13,4.5,42.5,4,30,Clear,0,0,NA,66.91000366,9
+2811,2020,2,9,Cowboys,2,Falcons,AT&T Stadium,1,40,39,3,53,1,79,Clear,0,0,NA,74.19000244,8
+2812,2020,2,12,Packers,11,Lions,Lambeau Field,0,42,21,7,51,21,63,Clear,0,0,NA,68.23000336,12
+2813,2020,2,14,Colts,18,Vikings,Lucas Oil Stadium,1,28,11,3.5,49,17,39,Clear,0,0,NA,68.5,10
+2814,2020,2,17,Dolphins,4,Bills,Hard Rock Stadium,0,28,31,-5.5,42.5,-3,59,Humid and Partly Cloudy,0.0108,0.029999999,rain,89.81999969,8
+2815,2020,2,22,Jets,28,49ers,MetLife Stadium,0,13,31,-7,41.5,-18,44,Clear,0,0,NA,62.63999939,10
+2816,2020,2,24,Eagles,29,Rams,Lincoln Financial Field,0,19,37,2,46,-18,56,Clear,0,0,NA,62.54000092,8
+2817,2020,2,25,Steelers,10,Broncos,Heinz Field,0,26,21,6,41,5,47,Clear,0,0,NA,64.48999786,2
+2818,2020,2,30,Buccaneers,5,Panthers,Raymond James Stadium,0,31,17,7.5,47,14,48,Humid and Mostly Cloudy,0.0072,0.039999999,rain,87.97000122,14
+2819,2020,2,31,Titans,15,Jaguars,Nissan Stadium,0,33,30,7,44.5,3,63,Clear,0,0,NA,73.20999908,6
+2820,2020,2,1,Cardinals,32,Football Team,State Farm Stadium,1,30,15,7.5,46.5,15,45,Clear,0,0,NA,100.8600006,3
+2821,2020,2,13,Texans,3,Ravens,NRG Stadium,1,16,33,-7.5,49.5,-17,49,Rain,0.095100001,0.670000017,rain,74.06999969,15
+2822,2020,2,26,Chargers,16,Chiefs,SoFi Stadium,0,20,23,-8.5,47,-3,43,Clear,0,0,NA,76.66000366,6
+2823,2020,2,27,Seahawks,19,Patriots,Lumen Field,0,35,30,4,45,5,65,Partly Cloudy,0,0,NA,68.73000336,3
+2824,2020,2,23,Raiders,20,Saints,Allegiant Stadium,1,34,24,-4,47.5,10,58,Clear,0,0,NA,95.23000336,14
+2825,2020,3,15,Jaguars,17,Dolphins,TIAA Bank Field,0,13,31,3,49,-18,44,Humid,0.0023,0.029999999,rain,80.01999664,8
+2826,2020,3,2,Falcons,6,Bears,Mercedes-Benz Stadium,1,26,30,2.5,46,-4,56,Partly Cloudy,0,0,NA,79.55000305,4
+2827,2020,3,4,Bills,29,Rams,Highmark Stadium,0,35,32,1.5,46.5,3,67,Clear,0,0,NA,78.80999756,14
+2828,2020,3,8,Browns,32,Football Team,FirstEnergy Stadium,0,34,20,7.5,45,14,54,Clear,0,0,NA,77.87999725,14
+2829,2020,3,18,Vikings,31,Titans,U.S. Bank Stadium,1,30,31,-3,49.5,-1,61,Partly Cloudy,0,0,NA,63.5,12
+2830,2020,3,19,Patriots,23,Raiders,Gillette Stadium,0,36,20,7,47,16,56,Mostly Cloudy,0.0007,0.01,rain,76.94999695,8
+2831,2020,3,21,Giants,28,49ers,MetLife Stadium,0,9,36,-3,44,-27,45,Partly Cloudy,0,0,NA,78.05000305,5
+2832,2020,3,24,Eagles,7,Bengals,Lincoln Financial Field,0,23,23,5.5,46.5,0,46,Mostly Cloudy,0.0004,0.01,rain,76.86000061,3
+2833,2020,3,25,Steelers,13,Texans,Heinz Field,0,28,21,4,46.5,7,49,Clear,0,0,NA,76.54000092,4
+2834,2020,3,14,Colts,22,Jets,Lucas Oil Stadium,1,36,7,12.5,44,29,43,Clear,0,0,NA,80.79000092,10
+2835,2020,3,26,Chargers,5,Panthers,SoFi Stadium,0,16,21,6,43.5,-5,37,Clear,0,0,NA,75.11000061,6
+2836,2020,3,1,Cardinals,11,Lions,State Farm Stadium,1,23,26,4.5,55.5,-3,49,Clear,0,0,NA,99.26999664,5
+2837,2020,3,10,Broncos,30,Buccaneers,Empower Field at Mile High,0,10,28,-6,42.5,-18,38,Foggy,0.0006,0.02,rain,54.06999969,4
+2838,2020,3,27,Seahawks,9,Cowboys,Lumen Field,0,38,31,5.5,58,7,69,Partly Cloudy,0.0003,0.01,rain,65.11000061,4
+2839,2020,3,20,Saints,12,Packers,Mercedes-Benz Superdome,1,30,37,3.5,52,-7,67,Humid,0,0,NA,79.23000336,5
+2840,2020,3,3,Ravens,16,Chiefs,M&T Bank Stadium,0,20,34,3.5,55,-14,54,Clear,0.0007,0.02,rain,72.98000336,8
+2841,2020,4,22,Jets,10,Broncos,MetLife Stadium,0,28,37,1,41,-9,65,Mostly Cloudy,0.0007,0.01,rain,65.48000336,4
+2842,2020,4,5,Panthers,1,Cardinals,Bank of America Stadium,0,31,21,-3,52.5,10,52,Clear,0,0,NA,66.22000122,6
+2843,2020,4,6,Bears,14,Colts,Soldier Field,0,11,19,-3.5,43.5,-8,30,Partly Cloudy,0,0,NA,52.59999847,10
+2844,2020,4,7,Bengals,15,Jaguars,Paul Brown Stadium,0,33,25,1,50,8,58,Partly Cloudy,0,0,NA,67.05999756,9
+2845,2020,4,9,Cowboys,8,Browns,AT&T Stadium,1,38,49,3.5,56.5,-11,87,Clear,0,0,NA,74.41999817,11
+2846,2020,4,11,Lions,20,Saints,Ford Field,1,29,35,-3,51.5,-6,64,Possible Light Rain,0.0106,0.319999993,rain,52.18999863,6
+2847,2020,4,13,Texans,18,Vikings,NRG Stadium,1,23,31,3.5,52.5,-8,54,Clear,0,0,NA,79.69000244,3
+2848,2020,4,17,Dolphins,27,Seahawks,Hard Rock Stadium,0,23,31,-4.5,55,-8,54,Humid and Mostly Cloudy,0.0015,0.029999999,rain,87.84999847,13
+2849,2020,4,30,Buccaneers,26,Chargers,Raymond James Stadium,0,38,31,7.5,42.5,7,69,Possible Drizzle and Humid,0.0078,0.25,rain,75.68000031,8
+2850,2020,7,31,Titans,25,Steelers,Nissan Stadium,0,24,27,1,51,-3,51,Overcast,0.0002,0.01,rain,58.65999985,3
+2851,2020,4,32,Football Team,3,Ravens,FedEx Field,0,17,31,-14.5,45,-14,48,Clear,0,0,NA,66.93000031,5
+2852,2020,4,29,Rams,21,Giants,SoFi Stadium,0,17,9,13.5,49.5,8,26,Clear,0,0,NA,88.44000244,4
+2853,2020,4,16,Chiefs,19,Patriots,Arrowhead Stadium,0,26,10,7,52.5,16,36,Clear,0,0,NA,71.77999878,12
+2854,2020,4,23,Raiders,4,Bills,Allegiant Stadium,1,23,30,-3,53,-7,53,Clear,0,0,NA,92.61000061,4
+2855,2020,4,28,49ers,24,Eagles,Levi's Stadium,0,20,25,8.5,45.5,-5,45,Clear,0,0,NA,84.91000366,6
+2856,2020,4,12,Packers,2,Falcons,Lambeau Field,0,30,16,5,56.5,14,46,Clear,0,0,NA,54.54999924,12
+2857,2020,5,6,Bears,30,Buccaneers,Soldier Field,0,20,19,-3.5,44,1,39,Clear,0,0,NA,57.63999939,7
+2858,2020,5,2,Falcons,5,Panthers,Mercedes-Benz Stadium,1,16,23,2.5,53.5,-7,39,Possible Light Rain,0.0106,0.370000005,rain,71.58999634,9
+2859,2020,5,3,Ravens,7,Bengals,M&T Bank Stadium,0,27,3,12.5,49,24,30,Possible Light Rain,0.0106,0.370000005,rain,70.23000336,5
+2860,2020,5,13,Texans,15,Jaguars,NRG Stadium,1,30,14,6.5,55,16,44,Humid,0,0,NA,86.62000275,8
+2861,2020,5,16,Chiefs,23,Raiders,Arrowhead Stadium,0,32,40,11,54.5,-8,72,Clear,0,0,NA,79.15000153,12
+2862,2020,6,19,Patriots,10,Broncos,Gillette Stadium,0,12,18,7,43.5,-6,30,Partly Cloudy,0,0,NA,60.36999893,6
+2863,2020,5,22,Jets,1,Cardinals,MetLife Stadium,0,10,30,-7,48.5,-20,40,Mostly Cloudy,0,0,NA,65.61000061,7
+2864,2020,5,25,Steelers,24,Eagles,Heinz Field,0,38,29,7.5,44,9,67,Mostly Cloudy,0.0005,0.029999999,rain,69.5,5
+2865,2020,5,31,Titans,4,Bills,Nissan Stadium,0,42,16,-3,52,26,58,Clear,0,0,NA,67.33000183,2
+2866,2020,5,32,Football Team,29,Rams,FedEx Field,0,10,30,-7,45,-20,40,Possible Light Rain,0.0145,0.379999995,rain,70.05999756,4
+2867,2020,5,28,49ers,17,Dolphins,Levi's Stadium,0,17,43,8.5,50.5,-26,60,Clear,0,0,NA,74.41999817,8
+2868,2020,5,8,Browns,14,Colts,FirstEnergy Stadium,0,32,23,1,48.5,9,55,Mostly Cloudy,0,0,NA,63.13999939,13
+2869,2020,5,9,Cowboys,21,Giants,AT&T Stadium,1,37,34,7.5,52,3,71,Clear,0,0,NA,95.86000061,10
+2870,2020,5,27,Seahawks,18,Vikings,Lumen Field,0,27,26,6.5,54,1,53,Rain,0.078199998,0.819999993,rain,55.77999878,13
+2871,2020,5,20,Saints,26,Chargers,Mercedes-Benz Superdome,1,30,27,7,49.5,3,57,Humid,0.001,0.01,rain,79.01000214,6
+2872,2020,6,4,Bills,16,Chiefs,Highmark Stadium,0,17,26,-5.5,55,-9,43,Possible Drizzle,0.0086,0.529999971,rain,49.81999969,5
+2873,2020,6,5,Panthers,6,Bears,Bank of America Stadium,0,16,23,2,45,-7,39,Clear,0,0,NA,62.27000046,4
+2874,2020,6,14,Colts,7,Bengals,Lucas Oil Stadium,1,31,27,7.5,46,4,58,Mostly Cloudy,0.0006,0.01,rain,59.38999939,12
+2875,2020,6,15,Jaguars,11,Lions,TIAA Bank Field,0,16,34,-3,52.5,-18,50,Humid and Mostly Cloudy,0.0049,0.079999998,rain,79.76999664,9
+2876,2020,6,18,Vikings,2,Falcons,U.S. Bank Stadium,1,23,40,3.5,53,-17,63,Partly Cloudy,0.0005,0.02,snow,33.59000015,10
+2877,2020,6,21,Giants,32,Football Team,MetLife Stadium,0,20,19,2,42.5,1,39,Partly Cloudy,0,0,NA,63.95999908,11
+2878,2020,6,24,Eagles,3,Ravens,Lincoln Financial Field,0,28,30,-10.5,46.5,-2,58,Clear,0.0004,0.01,rain,64.69000244,7
+2879,2020,6,25,Steelers,8,Browns,Heinz Field,0,38,7,3,50,31,45,Mostly Cloudy,0,0,NA,60.63999939,9
+2880,2020,6,31,Titans,13,Texans,Nissan Stadium,0,42,36,4,52,6,78,Mostly Cloudy,0.0319,0.159999996,rain,61.54999924,6
+2881,2020,11,10,Broncos,17,Dolphins,Empower Field at Mile High,0,20,13,-4,46,7,33,Foggy,0,0,NA,46.02000046,3
+2882,2020,11,26,Chargers,22,Jets,SoFi Stadium,0,34,28,10,47,6,62,Clear,0.0006,0.01,rain,69.05000305,6
+2883,2020,6,30,Buccaneers,12,Packers,Raymond James Stadium,0,38,10,-3,55,28,48,Partly Cloudy,0,0,NA,87.13999939,16
+2884,2020,6,28,49ers,29,Rams,Levi's Stadium,0,24,16,-2,51,8,40,Clear,0,0,NA,84.22000122,7
+2885,2020,6,9,Cowboys,1,Cardinals,AT&T Stadium,1,10,38,1,55.5,-28,48,Clear,0.0011,0.01,rain,64.37000275,4
+2886,2020,7,24,Eagles,21,Giants,Lincoln Financial Field,0,22,21,5,44.5,1,43,Partly Cloudy,0.0057,0.039999999,rain,68.36000061,3
+2887,2020,7,2,Falcons,11,Lions,Mercedes-Benz Stadium,1,22,23,1,54,-1,45,Mostly Cloudy,0,0,NA,72.44999695,2
+2888,2020,8,3,Ravens,25,Steelers,M&T Bank Stadium,0,24,28,4,44,-4,52,Rain,0.071599998,0.74000001,rain,52.63999939,9
+2889,2020,7,7,Bengals,8,Browns,Paul Brown Stadium,0,34,37,-4.5,50,-3,71,Mostly Cloudy,0,0,NA,49.25,6
+2890,2020,7,13,Texans,12,Packers,NRG Stadium,1,20,35,-2.5,55.5,-15,55,Mostly Cloudy,0.0003,0.01,rain,72.45999908,6
+2891,2020,10,17,Dolphins,26,Chargers,Hard Rock Stadium,0,29,21,1,48.5,8,50,Humid,0.0004,0.02,rain,82.45999908,6
+2892,2020,7,20,Saints,5,Panthers,Mercedes-Benz Superdome,1,27,24,7,49.5,3,51,Partly Cloudy,0,0,NA,74.05999756,6
+2893,2020,7,22,Jets,4,Bills,MetLife Stadium,0,10,18,-9.5,47,-8,28,Partly Cloudy,0,0,NA,51.13000107,7
+2894,2020,7,32,Football Team,9,Cowboys,FedEx Field,0,25,3,-1,44.5,22,28,Overcast,0.0066,0.140000001,rain,47.04999924,6
+2895,2020,7,1,Cardinals,27,Seahawks,State Farm Stadium,1,37,34,-3.5,55.5,3,71,Partly Cloudy,0,0,NA,83.55999756,11
+2896,2020,7,10,Broncos,16,Chiefs,Empower Field at Mile High,0,16,43,-7,46,-27,59,Snow,0.0154,0.310000002,snow,14.77000046,9
+2897,2020,7,19,Patriots,28,49ers,Gillette Stadium,0,6,33,3,44,-27,39,Overcast,0,0,NA,48.70999908,6
+2898,2020,7,23,Raiders,30,Buccaneers,Allegiant Stadium,1,20,45,-3.5,51.5,-25,65,Clear,0,0,NA,76.37999725,8
+2899,2020,7,29,Rams,6,Bears,SoFi Stadium,0,24,10,6.5,44,14,34,Clear,0,0,NA,73.56999969,4
+2900,2020,8,5,Panthers,2,Falcons,Bank of America Stadium,0,17,25,1.5,52,-8,42,Clear,0.0032,0.140000001,rain,74.19999695,8
+2901,2020,8,4,Bills,19,Patriots,Highmark Stadium,0,24,21,4,41,3,45,Rain,0.074000001,0.670000017,rain,42.59000015,18
+2902,2020,8,7,Bengals,31,Titans,Paul Brown Stadium,0,31,20,-7.5,49.5,11,51,Clear,0,0,NA,51.79999924,20
+2903,2020,8,8,Browns,23,Raiders,FirstEnergy Stadium,0,6,16,1,48,-10,22,Light Rain and Windy,0.0103,0.709999979,rain,44.47999954,27
+2904,2020,8,11,Lions,14,Colts,Ford Field,1,21,41,-3.5,49,-20,62,Mostly Cloudy,0.0005,0.039999999,snow,38.75,20
+2905,2020,8,12,Packers,18,Vikings,Lambeau Field,0,22,28,5.5,47,-6,50,Overcast,0.0006,0.050000001,snow,36.74000168,23
+2906,2020,8,16,Chiefs,22,Jets,Arrowhead Stadium,0,35,9,20,49,26,44,Clear,0,0,NA,51.25,11
+2907,2020,8,17,Dolphins,29,Rams,Hard Rock Stadium,0,28,17,-3.5,46.5,11,45,Humid and Partly Cloudy,0.0063,0.07,rain,85.56999969,9
+2908,2020,7,26,Chargers,15,Jaguars,SoFi Stadium,0,39,29,8,48,10,68,Mostly Cloudy,0,0,NA,67.73999786,7
+2909,2020,8,6,Bears,20,Saints,Soldier Field,0,23,26,-5.5,41,-3,49,Partly Cloudy,0.0008,0.02,rain,38.56999969,18
+2910,2020,8,27,Seahawks,28,49ers,Lumen Field,0,37,27,1,54.5,10,64,Clear,0.0008,0.01,rain,57.66999817,2
+2911,2020,8,24,Eagles,9,Cowboys,Lincoln Financial Field,0,23,9,10,43,14,32,Partly Cloudy,0.0012,0.050000001,rain,48.18000031,11
+2912,2020,8,21,Giants,30,Buccaneers,MetLife Stadium,0,23,25,-13,47,-2,48,Clear,0,0,NA,40.70000076,10
+2913,2020,9,28,49ers,12,Packers,Levi's Stadium,0,17,34,-6,48.5,-17,51,Partly Cloudy,0,0,NA,73.04000092,3
+2914,2020,9,2,Falcons,10,Broncos,Mercedes-Benz Stadium,1,34,27,4.5,50,7,61,Overcast,0,0,NA,71.79000092,12
+2915,2020,9,4,Bills,27,Seahawks,Highmark Stadium,0,44,34,-3,55,10,78,Clear,0.0013,0.01,rain,67.86000061,4
+2916,2020,9,14,Colts,3,Ravens,Lucas Oil Stadium,1,10,24,1,48,-14,34,Clear,0.0012,0.01,rain,76.98000336,7
+2917,2020,9,15,Jaguars,13,Texans,TIAA Bank Field,0,25,27,-7,49,-2,52,Mostly Cloudy,0.0026,0.039999999,rain,80.51999664,6
+2918,2020,9,16,Chiefs,5,Panthers,Arrowhead Stadium,0,33,31,10,51.5,2,64,Mostly Cloudy,0,0,NA,72.34999847,15
+2919,2020,9,18,Vikings,11,Lions,U.S. Bank Stadium,1,34,20,3,51.5,14,54,Clear,0.0011,0.01,rain,68.61000061,16
+2920,2020,9,31,Titans,6,Bears,Nissan Stadium,0,24,17,6.5,46.5,7,41,Clear,0.0012,0.01,rain,78.29000092,8
+2921,2020,9,32,Football Team,21,Giants,FedEx Field,0,20,23,3,43,-3,43,Clear,0,0,NA,73.25,2
+2922,2020,9,26,Chargers,23,Raiders,SoFi Stadium,0,26,31,-1,52.5,-5,57,Clear,0,0,NA,62,12
+2923,2020,9,1,Cardinals,17,Dolphins,State Farm Stadium,1,31,34,6,49,-3,65,Partly Cloudy,0.0005,0.01,rain,63.88999939,8
+2924,2020,9,9,Cowboys,25,Steelers,AT&T Stadium,1,19,24,-14,44,-5,43,Clear,0.0004,0.01,rain,74.12000275,12
+2925,2020,9,30,Buccaneers,20,Saints,Raymond James Stadium,0,3,38,3,51,-35,41,Overcast,0.0044,0.100000001,rain,75.94999695,11
+2926,2020,9,22,Jets,19,Patriots,MetLife Stadium,0,27,30,-9.5,41.5,-3,57,Clear,0,0,NA,59.56999969,2
+2927,2020,10,31,Titans,14,Colts,Nissan Stadium,0,17,34,-1,49,-17,51,Clear,0,0,NA,51.97999954,3
+2928,2020,10,5,Panthers,30,Buccaneers,Bank of America Stadium,0,23,46,-6,49.5,-23,69,Mostly Cloudy,0.0009,0.02,rain,69.51000214,14
+2929,2020,10,8,Browns,13,Texans,FirstEnergy Stadium,0,10,7,4.5,46,3,17,Possible Light Rain,0.0092,0.319999993,rain,59.13000107,18
+2930,2020,10,11,Lions,32,Football Team,Ford Field,1,30,27,2.5,46,3,57,Possible Light Rain and Windy,0.0105,0.360000014,rain,51.34999847,27
+2931,2020,10,12,Packers,15,Jaguars,Lambeau Field,0,24,20,13.5,47,4,44,Possible Light Rain and Windy,0.0122,0.419999987,rain,36.97999954,25
+2932,2020,10,21,Giants,24,Eagles,MetLife Stadium,0,27,17,-4.5,45,10,44,Mostly Cloudy,0.0003,0.01,rain,56.13999939,16
+2933,2020,10,25,Steelers,7,Bengals,Heinz Field,0,36,10,6.5,45.5,26,46,Partly Cloudy,0.011,0.200000003,rain,53.40000153,9
+2934,2020,10,1,Cardinals,4,Bills,State Farm Stadium,1,32,30,3,55.5,2,62,Clear,0,0,NA,76.76999664,3
+2935,2020,10,23,Raiders,10,Broncos,Allegiant Stadium,1,37,12,3.5,50.5,25,49,Clear,0,0,NA,64.27999878,3
+2936,2020,6,17,Dolphins,22,Jets,Hard Rock Stadium,0,24,0,9.5,46,24,24,Humid and Partly Cloudy,0.0143,0.189999998,rain,83.77999878,15
+2937,2020,10,29,Rams,27,Seahawks,SoFi Stadium,0,23,16,3,55,7,39,Clear,0,0,NA,80.83999634,6
+2938,2020,10,20,Saints,28,49ers,Mercedes-Benz Superdome,1,27,13,9.5,49.5,14,40,Partly Cloudy,0.0008,0.01,rain,72.95999908,12
+2939,2020,10,19,Patriots,3,Ravens,Gillette Stadium,0,23,17,-7,44,6,40,Possible Drizzle,0.0039,0.449999988,rain,53.02999878,14
+2940,2020,10,6,Bears,18,Vikings,Soldier Field,0,13,19,-3.5,44,-6,32,Clear,0.001,0.029999999,rain,43.56999969,10
+2941,2020,11,27,Seahawks,1,Cardinals,Lumen Field,0,28,21,3,56.5,7,49,Possible Drizzle,0.0032,0.270000011,rain,46.79999924,8
+2942,2020,11,3,Ravens,31,Titans,M&T Bank Stadium,0,24,30,6,50.5,-6,54,Overcast,0.0012,0.029999999,rain,52.24000168,7
+2943,2020,11,5,Panthers,11,Lions,Bank of America Stadium,0,20,0,-3,47,20,20,Mostly Cloudy,0.0033,0.029999999,rain,64.13999939,4
+2944,2020,11,8,Browns,24,Eagles,FirstEnergy Stadium,0,22,17,2.5,45.5,5,39,Rain,0.093500003,0.709999979,rain,38.65000153,5
+2945,2020,11,13,Texans,19,Patriots,NRG Stadium,1,27,20,-2.5,49.5,7,47,Partly Cloudy,0.0014,0.01,rain,78.16999817,2
+2946,2020,11,14,Colts,12,Packers,Lucas Oil Stadium,1,34,31,1.5,52,3,65,Possible Drizzle,0.0031,0.280000001,rain,39.81000137,12
+2947,2020,11,15,Jaguars,25,Steelers,TIAA Bank Field,0,3,27,-11,47,-24,30,Partly Cloudy,0.0058,0.119999997,rain,71.41999817,4
+2948,2020,11,20,Saints,2,Falcons,Mercedes-Benz Superdome,1,24,9,3.5,49.5,15,33,Clear,0.0014,0.01,rain,74.88999939,5
+2949,2020,11,32,Football Team,7,Bengals,FedEx Field,0,20,9,2,48,11,29,Mostly Cloudy,0,0,NA,57.33000183,7
+2950,2020,8,10,Broncos,26,Chargers,Empower Field at Mile High,0,31,30,-3,44.5,1,61,Foggy,0,0,NA,66.66999817,8
+2951,2020,11,18,Vikings,9,Cowboys,U.S. Bank Stadium,1,28,31,7,50,-3,59,Mostly Cloudy,0.001,0.090000004,rain,38.97999954,11
+2952,2020,11,23,Raiders,16,Chiefs,Allegiant Stadium,1,31,35,-7.5,56.5,-4,66,Clear,0,0,NA,62.84999847,2
+2953,2020,11,30,Buccaneers,29,Rams,Raymond James Stadium,0,24,27,4,47.5,-3,51,Clear,0,0,NA,67.31999969,4
+2954,2020,12,11,Lions,13,Texans,Ford Field,1,25,41,-3,52.5,-16,66,Overcast,0.0022,0.159999996,rain,46.88999939,10
+2955,2020,12,9,Cowboys,32,Football Team,AT&T Stadium,1,16,41,2.5,46,-25,57,Clear,0,0,NA,71.94000244,9
+2956,2020,12,25,Steelers,3,Ravens,Heinz Field,0,19,14,10.5,41.5,5,33,Clear,0.0004,0.02,rain,37.68000031,12
+2957,2020,12,2,Falcons,23,Raiders,Mercedes-Benz Stadium,1,43,6,-3.5,53,37,49,Overcast,0.0004,0.050000001,rain,54.90999985,5
+2958,2020,12,4,Bills,26,Chargers,Highmark Stadium,0,27,17,4.5,51,10,44,Clear,0.001,0.01,rain,51.65999985,13
+2959,2020,12,7,Bengals,21,Giants,Paul Brown Stadium,0,17,19,-6.5,45,-2,36,Clear,0,0,NA,53.13999939,4
+2960,2020,12,14,Colts,31,Titans,Lucas Oil Stadium,1,26,45,3,51.5,-19,71,Partly Cloudy,0.0013,0.02,rain,51.65000153,5
+2961,2020,12,15,Jaguars,8,Browns,TIAA Bank Field,0,25,27,-7.5,48.5,-2,52,Mostly Cloudy,0.001,0.059999999,rain,72.33999634,2
+2962,2020,12,18,Vikings,5,Panthers,U.S. Bank Stadium,1,28,27,3,50,1,55,Partly Cloudy,0.0008,0.01,snow,35.25999832,16
+2963,2020,12,19,Patriots,1,Cardinals,Gillette Stadium,0,20,17,-1,51,3,37,Clear,0.0009,0.01,rain,53.36000061,6
+2964,2020,12,22,Jets,17,Dolphins,MetLife Stadium,0,3,20,-7.5,46,-17,23,Clear,0.0007,0.01,rain,54.68000031,4
+2965,2020,12,10,Broncos,20,Saints,Empower Field at Mile High,0,3,31,-17,36.5,-28,34,Foggy,0.0015,0.02,rain,38.90999985,5
+2966,2020,12,29,Rams,28,49ers,SoFi Stadium,0,20,23,5,44.5,-3,43,Clear,0.0017,0.01,rain,74.47000122,5
+2967,2020,12,30,Buccaneers,16,Chiefs,Raymond James Stadium,0,24,27,-3.5,56,-3,51,Clear,0.001,0.01,rain,79.80000305,7
+2968,2020,12,12,Packers,6,Bears,Lambeau Field,0,41,25,7.5,44,16,66,Partly Cloudy,0.0006,0.01,snow,34.13999939,12
+2969,2020,12,24,Eagles,27,Seahawks,Lincoln Financial Field,0,17,23,-6.5,50,-6,40,Possible Drizzle,0.008,0.349999994,rain,59.45000076,6
+2970,2020,13,3,Ravens,9,Cowboys,M&T Bank Stadium,0,34,17,8.5,46,17,51,Clear,0,0,NA,36.79999924,10
+2971,2020,13,2,Falcons,20,Saints,Mercedes-Benz Stadium,1,16,21,-2.5,46,-5,37,Mostly Cloudy,0,0,NA,53.11000061,3
+2972,2020,13,6,Bears,11,Lions,Soldier Field,0,30,34,3,44,-4,64,Overcast,0.0004,0.02,snow,35.72000122,3
+2973,2020,13,13,Texans,14,Colts,NRG Stadium,1,20,26,-3.5,50,-6,46,Clear,0,0,NA,58.04999924,6
+2974,2020,13,17,Dolphins,7,Bengals,Hard Rock Stadium,0,19,7,10.5,43,12,26,Mostly Cloudy,0,0,NA,82.02999878,4
+2975,2020,13,18,Vikings,15,Jaguars,U.S. Bank Stadium,1,27,24,10.5,51,3,51,Overcast,0,0,NA,34.77000046,6
+2976,2020,13,22,Jets,23,Raiders,MetLife Stadium,0,28,31,-7.5,48,-3,59,Clear,0,0,NA,40.56000137,15
+2977,2020,13,25,Steelers,32,Football Team,Heinz Field,0,17,23,5.5,43.5,-6,40,Mostly Cloudy,0.0009,0.01,snow,33.43999863,8
+2978,2020,13,31,Titans,8,Browns,Nissan Stadium,0,35,41,4,54,-6,76,Clear,0,0,NA,53.36999893,3
+2979,2020,13,1,Cardinals,29,Rams,State Farm Stadium,1,28,38,-2.5,49,-10,66,Clear,0,0,NA,67.76000214,2
+2980,2020,13,27,Seahawks,21,Giants,Lumen Field,0,12,17,11,48.5,-5,29,Mostly Cloudy,0.0022,0.100000001,rain,52.70000076,8
+2981,2020,13,12,Packers,24,Eagles,Lambeau Field,0,30,16,8,50,14,46,Mostly Cloudy,0.0019,0.02,snow,33.5,6
+2982,2020,13,26,Chargers,19,Patriots,SoFi Stadium,0,0,45,2.5,47,-45,45,Clear,0.0018,0.01,rain,71.36000061,6
+2983,2020,13,16,Chiefs,10,Broncos,Arrowhead Stadium,0,22,16,13,51,6,38,Clear,0,0,NA,38.93999863,5
+2984,2020,13,28,49ers,4,Bills,State Farm Stadium,1,24,34,1.5,48,-10,58,Partly Cloudy,0,0,NA,74.52999878,6
+2985,2020,14,29,Rams,19,Patriots,SoFi Stadium,0,24,3,5,43.5,21,27,Clear,0.0005,0.01,rain,58.27000046,3
+2986,2020,14,5,Panthers,10,Broncos,Bank of America Stadium,0,27,32,4,46,-5,59,Clear,0.0016,0.01,rain,66.70999908,5
+2987,2020,14,6,Bears,13,Texans,Soldier Field,0,36,7,-1,46,29,43,Partly Cloudy,0.0015,0.02,snow,33.59999847,3
+2988,2020,14,7,Bengals,9,Cowboys,Paul Brown Stadium,0,7,30,-3,44,-23,37,Overcast,0,0,NA,45.02999878,2
+2989,2020,14,11,Lions,12,Packers,Ford Field,1,24,31,-9.5,55.5,-7,55,Overcast,0.0013,0.050000001,rain,35.54999924,4
+2990,2020,14,15,Jaguars,31,Titans,TIAA Bank Field,0,10,31,-7.5,53,-21,41,Mostly Cloudy,0.0016,0.02,rain,69.80999756,2
+2991,2020,14,17,Dolphins,16,Chiefs,Hard Rock Stadium,0,27,33,-7.5,51.5,-6,60,Clear,0.0015,0.02,rain,82.55999756,5
+2992,2020,14,21,Giants,1,Cardinals,MetLife Stadium,0,7,26,-3,47,-19,33,Partly Cloudy,0.0013,0.02,rain,59.56999969,12
+2993,2020,14,30,Buccaneers,18,Vikings,Raymond James Stadium,0,26,14,7,52.5,12,40,Mostly Cloudy,0.0009,0.01,rain,78.36000061,5
+2994,2020,14,23,Raiders,14,Colts,Allegiant Stadium,1,27,44,-2.5,51.5,-17,71,Mostly Cloudy,0,0,NA,44.11999893,6
+2995,2020,14,27,Seahawks,22,Jets,Lumen Field,0,40,3,16.5,49.5,37,43,Possible Light Rain,0.011,0.389999986,rain,42.72000122,6
+2996,2020,14,26,Chargers,2,Falcons,SoFi Stadium,0,20,17,1,49,3,37,Clear,0.0011,0.01,rain,69.16000366,3
+2997,2020,14,24,Eagles,20,Saints,Lincoln Financial Field,0,24,21,-7.5,43,3,45,Partly Cloudy,0.0011,0.01,rain,53.33000183,7
+2998,2020,14,28,49ers,32,Football Team,State Farm Stadium,1,15,23,3,43.5,-8,38,Partly Cloudy,0,0,NA,59.40000153,8
+2999,2020,14,4,Bills,25,Steelers,Highmark Stadium,0,26,15,2,48.5,11,41,Overcast,0.0009,0.01,rain,34.83000183,6
+3000,2020,14,8,Browns,3,Ravens,FirstEnergy Stadium,0,42,47,-3,45.5,-5,89,Overcast,0,0,NA,34.50999832,13
+3001,2020,15,23,Raiders,26,Chargers,Allegiant Stadium,1,27,30,3.5,52,-3,57,Mostly Cloudy,0.007,0.150000006,rain,54.34000015,10
+3002,2020,15,12,Packers,5,Panthers,Lambeau Field,0,24,16,9.5,53,8,40,Overcast,0.0005,0.02,snow,31.45999908,2
+3003,2020,15,10,Broncos,4,Bills,Empower Field at Mile High,0,19,48,-5.5,49,-29,67,Foggy,0.0011,0.059999999,rain,46.88000107,12
+3004,2020,15,14,Colts,13,Texans,Lucas Oil Stadium,1,27,20,7.5,52.5,7,47,Overcast,0.0002,0.050000001,rain,39.18000031,5
+3005,2020,15,29,Rams,22,Jets,SoFi Stadium,0,20,23,17.5,44.5,-3,43,Clear,0,0,NA,53.99000168,2
+3006,2020,15,31,Titans,11,Lions,Nissan Stadium,0,46,25,9.5,54.5,21,71,Rain,0.036800001,0.829999983,rain,43.29000092,3
+3007,2020,15,2,Falcons,30,Buccaneers,Mercedes-Benz Stadium,1,27,31,-6,49.5,-4,58,Mostly Cloudy,0,0,NA,53.99000168,2
+3008,2020,15,3,Ravens,15,Jaguars,M&T Bank Stadium,0,40,14,13,49.5,26,54,Mostly Cloudy,0.0006,0.100000001,rain,42.97000122,7
+3009,2020,15,17,Dolphins,19,Patriots,Hard Rock Stadium,0,22,12,-1.5,40,10,34,Mostly Cloudy,0.0007,0.029999999,rain,80.69999695,10
+3010,2020,15,18,Vikings,6,Bears,U.S. Bank Stadium,1,27,33,2.5,47.5,-6,60,Clear,0.0003,0.029999999,rain,35.68999863,6
+3011,2020,15,21,Giants,8,Browns,MetLife Stadium,0,6,20,-6,44.5,-14,26,Mostly Cloudy,0.0031,0.170000002,rain,35.65999985,1
+3012,2020,15,32,Football Team,27,Seahawks,FedEx Field,0,15,20,-6,44.5,-5,35,Overcast,0,0,NA,43.58000183,8
+3013,2020,15,1,Cardinals,24,Eagles,State Farm Stadium,1,33,26,6.5,49.5,7,59,Clear,0,0,NA,63.84000015,1
+3014,2020,15,20,Saints,16,Chiefs,Mercedes-Benz Superdome,1,29,32,-2.5,53.5,-3,61,Partly Cloudy,0.0003,0.02,rain,59.49000168,5
+3015,2020,15,9,Cowboys,28,49ers,AT&T Stadium,1,41,33,-4,46,8,74,Clear,0,0,NA,58.77000046,6
+3016,2020,15,7,Bengals,25,Steelers,Paul Brown Stadium,0,27,17,-14.5,40.5,10,44,Partly Cloudy,0,0,NA,44.93000031,8
+3017,2020,16,20,Saints,18,Vikings,Mercedes-Benz Superdome,1,52,33,6.5,49,19,85,Clear,0,0,NA,49.66999817,9
+3018,2020,16,11,Lions,30,Buccaneers,Ford Field,1,7,47,-12,55,-40,54,Overcast,0.002,0.029999999,snow,25.32999992,10
+3019,2020,16,1,Cardinals,28,49ers,State Farm Stadium,1,12,20,6,49,-8,32,Clear,0,0,NA,66.65000153,2
+3020,2020,16,26,Chargers,10,Broncos,SoFi Stadium,0,19,16,2.5,47.5,3,35,Partly Cloudy,0.0005,0.01,rain,62.43000031,3
+3021,2020,16,23,Raiders,17,Dolphins,Allegiant Stadium,1,25,26,-2,50,-1,51,Partly Cloudy,0,0,NA,51.27999878,3
+3022,2020,16,22,Jets,8,Browns,MetLife Stadium,0,23,16,-6.5,45,7,39,Clear,0,0,NA,38.25999832,5
+3023,2020,16,3,Ravens,21,Giants,M&T Bank Stadium,0,27,13,10,43.5,14,40,Clear,0,0,NA,37.50999832,5
+3024,2020,16,13,Texans,7,Bengals,NRG Stadium,1,31,37,7.5,46,-6,68,Mostly Cloudy,0,0,NA,70.72000122,13
+3025,2020,16,15,Jaguars,6,Bears,TIAA Bank Field,0,17,41,-9.5,47,-24,58,Clear,0,0,NA,56.18999863,2
+3026,2020,16,16,Chiefs,2,Falcons,Arrowhead Stadium,0,17,14,11,54,3,31,Clear,0,0,NA,53.5,10
+3027,2020,16,25,Steelers,14,Colts,Heinz Field,0,28,24,-1,43,4,52,Partly Cloudy,0.0022,0.090000004,rain,36.50999832,7
+3028,2020,16,32,Football Team,5,Panthers,FedEx Field,0,13,20,-1,41,-7,33,Partly Cloudy,0.0005,0.02,rain,38.81000137,6
+3029,2020,16,27,Seahawks,29,Rams,Lumen Field,0,20,9,1.5,48,11,29,Overcast,0.0026,0.140000001,rain,47.70999908,4
+3030,2020,16,9,Cowboys,24,Eagles,AT&T Stadium,1,37,17,-3,50,20,54,Clear,0,0,NA,74.88999939,7
+3031,2020,16,12,Packers,31,Titans,Lambeau Field,0,40,14,3,52.5,26,54,Snow,0.029300001,0.280000001,snow,27.43000031,13
+3032,2020,16,19,Patriots,4,Bills,Gillette Stadium,0,9,38,-7,47,-29,47,Clear,0.0015,0.039999999,rain,40.25,5
+3033,2020,17,4,Bills,17,Dolphins,Highmark Stadium,0,56,26,-3.5,42.5,30,82,Overcast,0.0011,0.230000004,rain,36.5,3
+3034,2020,17,5,Panthers,20,Saints,Bank of America Stadium,0,7,33,-6,47,-26,40,Mostly Cloudy,0.0004,0.02,rain,53.50999832,4
+3035,2020,17,6,Bears,12,Packers,Soldier Field,0,16,35,-4.5,48.5,-19,51,Overcast,0.0005,0.039999999,snow,32.13000107,6
+3036,2020,17,7,Bengals,3,Ravens,Paul Brown Stadium,0,3,38,-13.5,46,-35,41,Overcast,0.0008,0.07,rain,39.47000122,9
+3037,2020,17,8,Browns,25,Steelers,FirstEnergy Stadium,0,24,22,10.5,45,2,46,Overcast,0.0005,0.050000001,rain,38.81999969,10
+3038,2020,17,11,Lions,18,Vikings,Ford Field,1,35,37,-3,54,-2,72,Foggy,0.0009,0.150000006,snow,34.91999817,3
+3039,2020,17,13,Texans,31,Titans,NRG Stadium,1,38,41,-7,55.5,-3,79,Clear,0,0,NA,67.51999664,10
+3040,2020,17,19,Patriots,22,Jets,Gillette Stadium,0,28,14,3,41,14,42,Overcast,0.0008,0.109999999,rain,35.50999832,6
+3041,2020,17,21,Giants,9,Cowboys,MetLife Stadium,0,23,19,-1.5,44.5,4,42,Overcast,0.0027,0.140000001,rain,36.24000168,8
+3042,2020,17,30,Buccaneers,2,Falcons,Raymond James Stadium,0,44,27,7.5,51,17,71,Overcast,0.016000001,0.039999999,rain,65.33000183,5
+3043,2020,17,14,Colts,15,Jaguars,Lucas Oil Stadium,1,28,14,15.5,48,14,42,Overcast,0.0006,0.07,snow,34.00999832,7
+3044,2020,17,16,Chiefs,26,Chargers,Arrowhead Stadium,0,21,38,-7,43,-17,59,Partly Cloudy,0.0007,0.059999999,rain,33.83000183,6
+3045,2020,17,24,Eagles,32,Football Team,Lincoln Financial Field,0,14,20,-6.5,43.5,-6,34,Possible Light Rain,0.0142,0.529999971,rain,37.54000092,6
+3046,2020,17,10,Broncos,23,Raiders,Empower Field at Mile High,0,31,32,-2.5,50.5,-1,63,Foggy,0.0004,0.01,rain,52.75,8
+3047,2020,17,29,Rams,1,Cardinals,SoFi Stadium,0,18,7,1,42,11,25,Partly Cloudy,0.0002,0.01,rain,60.86999893,3
+3048,2020,17,28,49ers,27,Seahawks,Levi's Stadium,0,23,26,-7,45,-3,49,Mostly Cloudy,0.0003,0.01,rain,56.38999939,3
