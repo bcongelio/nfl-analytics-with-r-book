@@ -7,20 +7,17 @@ library(nnet)
 library(caret)
 library(doParallel)
 library(gt)
-library(gtExtras)  
+library(gtExtras)
+library(arrow)
 
 
 
 pbp <- nflreadr::load_pbp(2006:2022) %>%
   filter(season_type == "REG")
 
-### matt dougherty: up-tempo (play clock)
-### posteam formation, personnel, men in box
-### cole roche: defensive personnel
-
 pbp_prep <- pbp %>%
   select(
-    game_id, game_date, game_seconds_remaining, week, season,
+    game_id, play_id, game_date, game_seconds_remaining, week, season,
     play_type, yards_gained, ydstogo, down, yardline_100, qtr, posteam,
     posteam_score, defteam, defteam_score, score_differential, shotgun,
     no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
@@ -90,6 +87,10 @@ model_data_clean <- model_data_clean %>%
 
 model_data_clean <- na.omit(model_data_clean)
 
+write.csv(model_data_clean, "model_data_clean.csv", row.names = FALSE) ### this is too big to push
+
+### writing as parquet
+##write_parquet(model_data_clean, "./example_data/csv/model_data_clean.parquet")
 
 ###########
 ## splitting and running
