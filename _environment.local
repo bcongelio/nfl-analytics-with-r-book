@@ -1,4 +1,0 @@
-### keys to access bits of data from s3 bucket
-Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIAUMVVTEUC763GYG6T",
-           "AWS_SECRET_ACCESS_KEY" = "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",
-           "AWS_DEFAULT_REGION" = "us-east-1")

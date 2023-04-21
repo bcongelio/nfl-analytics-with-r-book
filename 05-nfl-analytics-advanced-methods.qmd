@@ -83,7 +83,7 @@ A regression model that is not "overfitted" will have data points that do not fi
 The information produced in the example `lm()` summary above includes statistical information about the distribution of the model's residual errors.
 
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
-|:--------------:|:------------------------------------------------------:|
+|:-------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
 | The `Median` Distribution | The `Median` distribution, much like the `1Q` distribution is data from the first quartile, is the residuals from the 50th percentile of the data. **The `Median` residual in the above summary is 1.157, which means that the `lm()` model - for 50% of teams - either overestimated or underestimated a teams total points by less than 1.157 points.** |
@@ -769,7 +769,7 @@ As explained above in our creation of a linear model, two predictors become prob
 19. `mean_epa` and `mean_dakota` (0.90)
 20. `mean_epa` and `total_tds` (0.77)
 
-To start dropping predictor variables, we will first start by using problematic correlation before doubling-back to separation issues. Despite providing an overwhelming look at the relationship between our predictor variables, the correlation visualization does suggest a few clear variables to drop.
+To start dropping predictor varaibles, we will first start by using problematic correlation before doubling-back to separation issues. Despite providing an overwhelming look at the relationship between our predictor variables, the correlation visualization does suggest a few clear variables to drop.
 
 1.  Because a quarterback's expected points added is used in the calculation of DAKOTA, we can drop the model's `mean_epa` predictor variable as it is "baked" into the `mean_dakota` predictor.
 2.  It is unsurprising that `total_attempts` and `total_cmp` are highly correlated, as a quarterback's total completions can only go up with increased attempts. The answer on which to drop is not as clear as `mean_epa`/`DAKOTA` as both predictor variables have further troubled relationships with others. However, our domain knowledge of the NFL should result in us dropping `total_cmps` as a QB's number of completions can be altered by forces outside of their control (such as a wide receiver dropping an easy pass, etc.).
@@ -891,7 +891,7 @@ If we were determined to make this model work, a further dive into exploring var
 
 #### Multinomial Regression
 
-A multinomial regression model is used when exploring the relationship between predictor variables and a dependent variables that has more than two levels. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. The core underlying the main assumptions of th model are:
+A multinomial regression model is used when exploring the relationship between predictor variables and a dependent variables that has more than two levels. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. Using the softmax function to ensure that the probabilities for each dependent variable total 1, the main assumptions of th model are:
 
 1.  the dependent variable must be categorical with multiple unordered categories
 2.  the predictor variables can be a combination of continuous values or categorical
@@ -921,7 +921,7 @@ The construction of a multinomial regression will allow us to find the probabili
 
 ```{r loading-model-data, eval = TRUE, echo = FALSE, output = FALSE}
 
-going to be editing this
+model_data <- arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
 ```
 
 ```{r multinomial-data-prep-2, eval = FALSE, echo = TRUE, output = FALSE}
@@ -931,13 +931,12 @@ pbp <- nflreadr::load_pbp(2006:2022) %>%
 
 pbp_prep <- pbp %>%
   select(
-    game_id, play_id, game_date, game_seconds_remaining, week, season,
+    game_id, game_date, game_seconds_remaining, week, season,
     play_type, yards_gained, ydstogo, down, yardline_100, qtr, posteam,
-    posteam_score, defteam_score, score_differential, shotgun,
+    posteam_score, defteam, defteam_score, score_differential, shotgun,
     no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
-    wp, penalty, half_seconds_remaining, goal_to_go,run_location, air_yards) %>%
-    filter(play_type %in% c("run", "pass"), penalty == 0,
-           !is.na(down), !is.na(yardline_100)) %>%
+    wp, penalty, half_seconds_remaining, goal_to_go, td_prob, fixed_drive, run_location, air_yards) %>%
+  filter(play_type %in% c("run", "pass"), penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
   mutate(in_red_zone = if_else(yardline_100 <= 20, 1, 0),
          in_fg_range = if_else(yardline_100 <= 35, 1, 0),
          two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
@@ -989,10 +988,11 @@ model_data <- pbp_prep %>%
     previous_play = if_else(is.na(previous_play),
                             replace_na("First play of drive"), previous_play)) %>%
   ungroup() %>%
-  mutate(across(c(play_type, season, down, qtr, posteam_timeouts_remaining,
-                  defteam_timeouts_remaining, previous_play), as.factor)) %>%
-  select(-play_id, -game_id, -game_date, -week,
-         -play_type, -yards_gained, -run, -pass, -air_yards, -run_location)
+  mutate(across(c(play_type, season, posteam, defteam, shotgun, down, qtr, no_huddle,
+                 posteam_timeouts_remaining, defteam_timeouts_remaining, in_red_zone,
+                 in_fg_range, previous_play, goal_to_go, two_min_drill), as.factor)) %>%
+  select(-game_id, -game_date, -week, -play_type, -yards_gained, -defteam, -run, -pass,
+         -air_yards, -run_location)
 ```
 
 We are now using the `mutate()` and `case_when()` functions to create our response variables (`run_inside`, `run_outside`, `short_pass`, `medium_pass`, `long_pass`) by providing both the binary `1` and `0` arguments for the `play_type`. After, we create two more binary columns based on whether the called play was a rush or a pass and then use those two columns to calculate each team's cumulative runs and passes for each game. We conclude the feature engineering process by using the `lag()` function to provide the the previous play (or, to use "First play of drive" if there was no prior play).
@@ -1005,7 +1005,7 @@ Because we are focusing on completing a multinomial regression, it must now conv
 
 ```{r multinomial-data-prep-4, eval = FALSE, echo = TRUE, output = FALSE}
 
-model_data_clean <- model_data %>%
+model_data <- model_data %>%
   mutate(play_call = case_when(
     run_outside == 1 ~ "run_outside",
     run_inside == 1 ~ "run_inside",
@@ -1016,10 +1016,7 @@ model_data_clean <- model_data %>%
   select(-run_outside, -run_inside, -short_pass, -medium_pass, -long_pass) %>%
   mutate(play_call = as.factor(play_call))
 
-model_data_clean <- na.omit(model_data_clean)
-
-multinom_play_data <- model_data_clean %>%
-  select(season, posteam, play_call, everything())
+model_data_clean <- na.omit(model_data)
 ```
 
 With data preparation and feature engineering complete, we can turn to constructing the model within the `tidymodels` framework.
@@ -1028,141 +1025,58 @@ With data preparation and feature engineering complete, we can turn to construct
 
 set.seed(1984)
 
-multinom_play_split <- rsample::initial_split(multinom_play_data, strata = play_call)
-multinom_play_train <- rsample::training(multinom_play_split)
-multinom_play_test <- rsample::testing(multinom_play_split)
+play_pred_split <- rsample::initial_split(model_data_clean, strata = play_call)
+play_pred_training <- rsample::training(play_pred_split)
+play_pred_testing <- rsample::testing(play_pred_split)
 
-set.seed(1958)
-multinom_play_folds <- rsample::vfold_cv(multinom_play_train, strata = play_call)
+set.seed(1985)
+play_pred_folds <- rsample::vfold_cv(play_pred_training, strata = play_call)
 ```
 
 ffff
 
 ```{r multinomial-recipe, eval = FALSE, echo = TRUE, output = FALSE}
 
-multinom_play_recipe <-
-  recipe(play_call ~ ., data = multinom_play_train) %>%
+play_call_recipe <-
+  recipe(play_call ~ ., data = play_pred_training) %>%
   update_role(posteam, new_role = "posteam_id") %>%
   update_role(season, new_role = "season_id") %>%
-  step_corr(all_numeric(), threshold = 0.7) %>%
-  step_zv(all_predictors()) %>%
-  step_dummy(all_factor_predictors())
+  step_dummy(all_factor_predictors(), one_hot = TRUE)
 ```
 
 ffffff
 
 ```{r multinomial-model-wf, eval = FALSE, echo = TRUE, output = FALSE}
 
-#### making the model
-multinom_play_model <-
+play_call_model <-
   multinom_reg(penalty = tune(), mixture = 1) %>%
   set_mode("classification") %>%
   set_engine("glmnet", family = "multinomial")
 
-### adding both to workflow
-multinom_play_workflow <- workflow() %>%
-  add_recipe(multinom_play_recipe) %>%
-  add_model(multinom_play_model)
+play_call_workflow <- workflow() %>%
+  add_recipe(play_call_recipe) %>%
+  add_model(play_call_model)
 
-### creating hyperparameter grid
-multinom_play_grid <- grid_regular(penalty(range = c(-5, 0)), levels = 20)
+play_call_grid <- grid_regular(penalty(range = c(-5, 0)), levels = 20)
 ```
 
 ffff
 
 ```{r multinomial-parallel-tune, eval = FALSE, echo = TRUE, output = FALSE}
 
-all_cores <- parallel::detectCores(logical = FALSE) - 1
-cl <- makePSOCKcluster(all_cores)
-registerDoParallel(cl)
-
+doParallel::registerDoParallel()
 set.seed(1988)
 
-multinom_play_tune <- tune_grid(
-  multinom_play_workflow,
-  resample = multinom_play_folds,
-  grid = multinom_play_grid,
-  control = control_grid(save_pred = TRUE,
-                         verbose = TRUE))
-
-parallel::stopCluster(cl = cl)
+tic()
+play_call_resample <-
+  tune_grid(
+    play_call_workflow,
+    play_pred_folds,
+    grid = play_call_grid)
+toc() ### 285 seconds
 ```
 
 ffff
-
-```{r multinomial-tune-results, eval = FALSE, echo = TRUE, output = FALSE}
-
-`> multinom_play_tune
-# A tibble: 10 x 5
-   splits                 id     .metrics          .notes           .predictions           
-   <list>                 <chr>  <list>            <list>           <list>                 
- 1 <split [349579/38845]> Fold01 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,900 x 10]>
- 2 <split [349579/38845]> Fold02 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,900 x 10]>
- 3 <split [349580/38844]> Fold03 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,880 x 10]>
- 4 <split [349581/38843]> Fold04 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,860 x 10]>
- 5 <split [349581/38843]> Fold05 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,860 x 10]>
- 6 <split [349582/38842]> Fold06 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,840 x 10]>
- 7 <split [349583/38841]> Fold07 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,820 x 10]>
- 8 <split [349583/38841]> Fold08 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,820 x 10]>
- 9 <split [349584/38840]> Fold09 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,800 x 10]>
-10 <split [349584/38840]> Fold10 <tibble [40 x 5]> <tibble [0 x 3]> <tibble [776,800 x 10]>
-`
-
-```
-
-fffff
-
-```{r multinom-show-best, eval = FALSE, echo = TRUE, output = FALSE}
-
-show_best(multinom_play_tune, metric = "roc_auc")
-
-`# A tibble: 5 x 7
-    penalty .metric .estimator  mean     n  std_err .config              
-      <dbl> <chr>   <chr>      <dbl> <int>    <dbl> <chr>                
-1 0.00001   roc_auc hand_till  0.668    10 0.000468 Preprocessor1_Model01
-2 0.0000183 roc_auc hand_till  0.668    10 0.000468 Preprocessor1_Model02
-3 0.0000336 roc_auc hand_till  0.668    10 0.000468 Preprocessor1_Model03
-4 0.0000616 roc_auc hand_till  0.668    10 0.000468 Preprocessor1_Model04
-5 0.000113  roc_auc hand_till  0.668    10 0.000468 Preprocessor1_Model05`
-```
-
-ffff
-
-```{r multinom-best-and-last-fit, eval = FALSE, echo = TRUE, output = FALSE}
-
-### selecting the best roc_auc/penalty tune
-final_penalty <- multinom_play_tune %>%
-  select_by_one_std_err(metric = "roc_auc", desc(penalty))
-
-### adding best auc to workflow and then fitting one time to training and evaluating on testing
-multinom_final_results <- multinom_play_workflow %>%
-  finalize_workflow(final_penalty) %>%
-  last_fit(multinom_play_split)
-
-### viewing metrics on the testing data
-collect_metrics(multinom_final_results)
-
-`# A tibble: 2 x 4
-  .metric  .estimator .estimate .config             
-  <chr>    <chr>          <dbl> <chr>               
-1 accuracy multiclass     0.425 Preprocessor1_Model1
-2 roc_auc  hand_till      0.667 Preprocessor1_Model1`
-```
-
-ffff
-
-```{r multinom-pulling-workflow-merge, eval = FALSE, echo = TRUE, output = FALSE}
-
-### pulling workflow from training work
-workflow_for_merging <- multinom_final_results$.workflow[[1]]
-
-### combining the two predictions into one
-multinom_all_predictions <- bind_rows(
-  augment(workflow_for_merging, new_data = multinom_play_train) %>%
-    mutate(type = "train"),
-  augment(workflow_for_merging, new_data = multinom_play_test) %>%
-    mutate(type = "test"))
-```
 
 #### Ordinal Regression
 
