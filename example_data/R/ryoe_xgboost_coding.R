@@ -126,8 +126,8 @@ rushing_folds <- vfold_cv(rushing_train)
 rushing_recipe <-
   recipe(formula = label ~ ., data = rushing_train) %>%
   step_dummy(tidyselect::where(is.factor)) %>%
-  step_zv(all_predictors()) %>%
-  prep()
+  step_zv(all_predictors())
+  ### maybe figure out the distribution of 'run_outside' here?
 
 ### creating the model boosting tree specifications
 rushing_specs <- boost_tree(

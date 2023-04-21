@@ -38,5 +38,9 @@ nfl_analytics_theme <- function(..., base_size = 12) {
     panel.grid.major =  element_line(color = "#d0d0d0"),
     panel.background = element_rect(fill = "#f7f7f7"),
     plot.background = element_rect(fill = "#f7f7f7"),
-    panel.border = element_blank())
+    panel.border = element_blank(),
+    legend.background = element_rect(color = "#F7F7F7"),
+    legend.key = element_rect(color = "#F7F7F7"),
+    legend.title = element_text(face = "bold"),
+    legend.title.align = 0.5)
 }
