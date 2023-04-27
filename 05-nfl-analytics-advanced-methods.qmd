@@ -19,6 +19,9 @@ library(ggimage)
 library(ggcorrplot)
 library(reshape2)
 library(RColorBrewer)
+library(gt)
+library(gtExtras)
+options(digits = 3)
 ```
 
 ## Introduction to Statistics and Modeling with NFL Data
@@ -83,7 +86,7 @@ A regression model that is not "overfitted" will have data points that do not fi
 The information produced in the example `lm()` summary above includes statistical information about the distribution of the model's residual errors.
 
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
-|:-------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|:----------------:|:----------------------------------------------------:|
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
 | The `Median` Distribution | The `Median` distribution, much like the `1Q` distribution is data from the first quartile, is the residuals from the 50th percentile of the data. **The `Median` residual in the above summary is 1.157, which means that the `lm()` model - for 50% of teams - either overestimated or underestimated a teams total points by less than 1.157 points.** |
@@ -541,7 +544,7 @@ The model determined, based on the new predictor variables provided, that this h
 
 Logistic regressions are particularity useful when modeling the relationship between a categorical dependent variable and a given set of predictor variables. While linear models, as covered in the last section, handles data with a continuous dependent variable, logistic regressions are used when the response variable is categorical (whether a team successfully converted a third down, whether a pass was completed, whether a running back fumbled on the play, etc.). In each example, there are only two possible outcomes: "yes" or "no".
 
-Moreover, a logistic regression model does not model the relationship between the predictors and the response variables in a linear fashion. Instead, logistic regressions using the `logistic function` that seeks to mutate the predictors into a values between 0 and 1. Specifically, the formula for a logistic regression is as follows:
+Moreover, a logistic regression model does not model the relationship between the predictors and the response variables in a linear fashion. Instead, logistic regressions use seek to mutate the predictors into a values between 0 and 1. Specifically, the formula for a logistic regression is as follows:
 
 $$
 P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n)}}
@@ -556,9 +559,9 @@ $$
 
 To better explain the formula, let's assume we want to predict the probability of any one NFL team winning a game (again, in a binary `1` for winning, or `0` for losing). These binary outcome is represented by the $Y$. The predictor variables, such as the team's average points scored, the average points allowed by the opposing defense, home-field advantage, and any other statistics likely to be important in making the prediction are represented by $X1, X2, ..., Xn$. The model's coefficients, or the relationship between the predictors and a team's chance of winning, are represented by $\beta_0 + \beta_1X_1 + \beta_2$. In the event that a team's average passing yards is represented by the $B1$ coefficient, a positive number suggests that higher average passing yards results in an increase in the probability of winning. Conversely, a negative coefficient number indicates the statistic has a negative impact on winning probability.
 
-To that end, there are three distinct types of logistic regressions: binary, multinomial, and ordinal. All three allow for working with various types of dependent variables.
+To that end, there are three distinct types of logistic regressions: binary, multinomial, and ordinal (we will only be covering binary and ordinal in this chapter). All three allow for working with various types of dependent variables.
 
-**Binary regression models** are used when the dependent variable (the outcome) has just two outcomes (typically presented in binary format - `1` or `0`). Using the logistic function, a binary regression model determines the probability of the dependent event occurring given the predictor variables As highlighted below, a binary regression model can be used to predict the probability that a QB is named MVP at the conclusion of the season. The response variable is a binary (`1` indicating that the player was named MVP and `0` indicating that the player did not win MVP). Various passing statistics can serve as the predictor variables.
+**Binary regression models** are used when the dependent variable (the outcome) has just two outcomes (typically presented in binary format - `1` or `0`). Using the logistic function, a binary regression model determines the probability of the dependent event occurring given the predictor variables. As highlighted below, a binary regression model can be used to predict the probability that a QB is named MVP at the conclusion of the season. The response variable is a binary (`1` indicating that the player was named MVP and `0` indicating that the player did not win MVP). Various passing statistics can serve as the predictor variables.
 
 A **multinomial regression model** is an extension of the binary model in that it allows for the dependent variable to have more than two unordered categories. For example, a multinomial regression model would be used to predict the type of play a team is going to run (run or pass) based on the predictor variables (down and distance, time remaining, score differential, etc.).
 
@@ -621,7 +624,7 @@ qb_mvp_stats <- qb_mvp_stats %>%
 The above results in a dataframe with 723 observations with 17 associated statistics for each quarterback. We can now turn to the construction of the binary regression model.
 
 ::: callout-important
-If you have not already done so, please install `Tidy Models` and load it.
+If you have not already done so, please install `tidymodels` and load it.
 
 ```{r installing-tidymodels, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -863,7 +866,7 @@ $$
 (TP + TN) / (TP + TN + FP + FN) = 0.9724
 $$
 
-Based on these preliminary analysis, the model is 97.24% accurate, which is quite high. However, further examination of the model's sensitivity and specificity is less promising. The model's sensitivity score is 0.99, which means it correctly predicted 99.43% of the non-MVP players. However, the specificity - which is the proportion of TP out of the negative instances - indicates that the model correctly identified just 20.0% of the actual MVP players.
+Based on these preliminary analysis, the model is 97.24% accurate, which is quite high. However, further examination of the model's sensitivity and specificity is less promising. The model's sensitivity score is 0.99, which means it correctly predicted 99.43% of the non-MVP players. However, the specificity - which is the proportion of TP out of the negative instances - indicates that the model correctly identified 20.0% of the actual MVP players.
 
 The balanced accuracy metric takes overall average between the model's sensitivity and specificity.
 
@@ -886,10 +889,27 @@ You now know how to design a binary regression and, importantly, you are now cap
 
 If we were determined to make this model work, a further dive into exploring variable correlations and separation would be needed as well as the inclusion of new predictive variables to see if any change occurs in the results.
 
-**However, we are going to use this failure to examine another approach to regression in the next section: Penalized Regression Techniques**. By using a ridge, lasso, or elastic net regression, the model will either "shrink" the coefficients of those features found to be less important or by controlling their size against the overall numbers in the model. We will revert back to our original model data (before removing variables based on correlation and separation) to see if using a penalized regression technique can do a better job at removing/handling problematic predictor variables than we did.
+**However, we are going to use this failure to examine another approach to regression in the next section: Penalized Regression Techniques**. By using a ridge or lasso regression, the model will either "shrink" the coefficients of those features found to be less important or by controlling their size against the overall numbers in the model. We will revert back to our original model data (before removing variables based on correlation and separation) to see if using a penalized regression technique can do a better job at removing/handling problematic predictor variables than we did.
 :::
 
-#### Multinomial Regression
+#### Multinomial Regression using `tidymodels`
+
+::: callout-important
+**An Introduction to the `tidymodels` package.**
+
+As just mentioned, the [`tidymodels` package](https://www.tidymodels.org/) is a collection of various packages for statistical modeling and machine learning. Importantly, the `tidymodels` package is structured much in the same way that `tidyverse` is - meaning that the packages work together to provide a unified and efficient workflow for constructing, testing, and evaluating models. A total of 43 different model types come in the base installation of `tidymodels`, ranging from simple linear regressions to more complex approaches such as neural networks and Bayesian analysis. You can view the different model types, housed within the `parsnip` package at the `tidymodels` website: [Type of models included in `tidymodels`.](https://www.tidymodels.org/find/parsnip/)
+
+Because `tidymodels` follows the `tidyverse` philosophy of "providing a uniform interface" so that "packages work together naturally," there is a general flow in which users construct a model.
+
+1.  First, data preprocessing and feature engineering is done with the `recipes` package.
+2.  Next, the `parsnip` package is used to create a model specification.
+3.  If any resampling or tuning is being conducted during the model, the `rsample` package is used to organize the necessary type of hyperparameter tuning (grid search, regular search, etc.).
+4.  The `workflows` package is then used to combine all of the prior steps into a singular object in your RStudio environment.
+5.  After training the model on the initial split of data, the `yardstick` packages allows for various forms of evaluation, including accuracy, precision, recall, F-1 score, RMSE, and MAE.
+6.  Once you are happy with the training evaluation of the model. the `last_fit()` conducts the process on the entire dataset to generate predictions.
+
+Below, we will take our newly created `model_data_clean` data frame and conduct a multinomial logistic regression using the `tidymodels` package.
+:::
 
 A multinomial regression model is used when exploring the relationship between predictor variables and a dependent variables that has more than two levels. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. Using the softmax function to ensure that the probabilities for each dependent variable total 1, the main assumptions of th model are:
 
@@ -1019,82 +1039,239 @@ model_data <- model_data %>%
 model_data_clean <- na.omit(model_data)
 ```
 
-With data preparation and feature engineering complete, we can turn to constructing the model within the `tidymodels` framework.
+With data preparation and feature engineering complete, we can turn to constructing the model and examining the results by starting with splitting the data into training and testing sets.
+
+Before doing any feature engineering with the `recipes` package, we will first split the data into training and testing sets using the aforementioned `rsample` package. The model is first trained on the training data and then evaluated on the testing data. This crucial first step ensures that the model is able to generalize well to any unseen data (as is withheld in the testing data). As well, splitting the data helps in avoiding overfitting, which occurs when the model is able to recognize any random noise in the data. As a result, the model may perform very well on training data but then fail to reach acceptable evaluation metrics when fit on the withheld testing data.
+
+To start the splitting process of the `qb_mvp_stats` data frame, we first use `set.seed()` and pick a random number to run with it. The number inside `set.seed()` literally does not matter, as it is simply the initial value of what is otherwise a random-number as the rows are split - at random - into training and testing sets. However, using `set.seed()` allows for reproducible results in that conducting the split a second time, with the same initial value in `set.seed()` will result in an identical split from the first time.
+
+We then use the `initial_split` function in `rsample` to create the `qb_mvp_split` data frame. The `initial_split` process take the provided data frame and creates a single binary split of the information. Because there is an imbalance in the number of players that have won the MVP and those who have not, we use the `strata` argument to collect a balanced number of `mvp == 1` in both the training and testing data.
+
+With the `initial_split()` process completed, the data is divided into a `qb_mvp_training` data frame and a `qb_mvp_testing` data frame using the `training()` and `testing()` functions within `rsample` to conduct the process on the `` `qb_mvp_split` `` data.
 
 ```{r multinomial-data-split, eval = FALSE, echo = TRUE, output = FALSE}
 
 set.seed(1984)
 
-play_pred_split <- rsample::initial_split(model_data_clean, strata = play_call)
-play_pred_training <- rsample::training(play_pred_split)
-play_pred_testing <- rsample::testing(play_pred_split)
+multinom_play_split <- rsample::initial_split(multinom_play_data, strata = play_call)
+multinom_play_train <- rsample::training(multinom_play_split)
+multinom_play_test <- rsample::testing(multinom_play_split)
 
-set.seed(1985)
-play_pred_folds <- rsample::vfold_cv(play_pred_training, strata = play_call)
+set.seed(1958)
+multinom_play_folds <- rsample::vfold_cv(multinom_play_train, strata = play_call)
 ```
 
-ffff
+The `recipes` package within `tidymodels`, first and foremost, is where the formula for the model is passed into the eventful `workflow`. However, it also provides the opportunity for further preprocessing of the data by using the the `step_` function that allows for multitudes of refinement, including imputation, individual transformations, discretization, the creation of dummy variables and encodings, interactions, normalization, multivariate transformations, filters, and row operations. The complete list of possible `step_` functions can be fond on the [reference section of the `recipes` website.](https://recipes.tidymodels.org/reference/index.html) We use several of these `step_` functions below in preparing the `recipes` for our multinomial logisitic regression model.
 
-```{r multinomial-recipe, eval = FALSE, echo = TRUE, output = FALSE}
+::: callout-tip
+When building your recipe in the `tidymodels` framework, there is a general suggested order that your steps should be in to avoid issues with how the data becomes structure for the tuning/modeling process.
 
-play_call_recipe <-
-  recipe(play_call ~ ., data = play_pred_training) %>%
-  update_role(posteam, new_role = "posteam_id") %>%
-  update_role(season, new_role = "season_id") %>%
-  step_dummy(all_factor_predictors(), one_hot = TRUE)
+1.  Imputation
+2.  Handle factor levels
+3.  Transformations
+4.  Discretize
+5.  Creating dummy variables and (if needed) one-hot encoding
+6.  Creating interactions between variables
+7.  Normalization steps
+8.  Multivariate transformations
+
+Not every recipe will require all of these steps, of course. But, when using more than one, it is important to follow the above order when building the recipe.
+:::
+
+We provide the formula for our regression model (`play_call ~ .`, and then provide the name of our training data (`multinom_play_train`). We then apply the optional `update_role()` function to both the `posteam` and `season` variables from the data before adding additional steps into the recipe using the pipe operator.
+
+1.  **`update_role()`** - by applying the the `update_role()` function to the `posteam` and `season` variables, we are able to retain the information without including it in the model process allowing us to investigate the prediction on a season and team basis.
+2.  **`step_zv()`** - the `step_zv()` function will remove any variables that contain zero variance (that is, only a single value).
+3.  **`step_normalize()`** - in short, the `step_normalize()` function applies both the mean and the standard deviation from the split training set to the testing set. Doing so helps prevent data leakage during the process.
+4.  **`step_dummy()`** - the `step_dummy()` function creates a set of binary variables from the inputted factor.
+
+```{r multinomial-data-recipe, eval = FALSE, ehco = TRUE, output = FALSE}
+
+multinom_play_recipe <- 
+  recipe(formula = play_call ~ ., data = multinom_play_train) %>%
+  update_role(posteam, new_role = "variable_id") %>%
+  update_role(season, new_role = "variable_id") %>%
+  step_zv(all_predictors(), -has_role("variable_id")) %>% 
+  step_normalize(all_numeric_predictors(), - has_role("variable_id")) %>%
+  step_dummy(down, qtr, posteam_timeouts_remaining, defteam_timeouts_remaining,
+             in_red_zone, in_fg_range, two_min_drill, previous_play)
 ```
 
-ffffff
+fffff
 
 ```{r multinomial-model-wf, eval = FALSE, echo = TRUE, output = FALSE}
 
-play_call_model <-
-  multinom_reg(penalty = tune(), mixture = 1) %>%
+multinom_play_model <-
+  multinom_reg(penalty = tune(), mixture = tune()) %>%
   set_mode("classification") %>%
   set_engine("glmnet", family = "multinomial")
 
-play_call_workflow <- workflow() %>%
-  add_recipe(play_call_recipe) %>%
-  add_model(play_call_model)
+multinom_play_workflow <- workflow() %>%
+  add_recipe(multinom_play_recipe) %>%
+  add_model(multinom_play_model)
 
-play_call_grid <- grid_regular(penalty(range = c(-5, 0)), levels = 20)
+multinom_play_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20),
+                                      mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1)) 
 ```
 
 ffff
 
 ```{r multinomial-parallel-tune, eval = FALSE, echo = TRUE, output = FALSE}
 
-doParallel::registerDoParallel()
+all_cores <- parallel::detectCores(logical = FALSE) - 1
+registerDoParallel(all_cores)
+
 set.seed(1988)
 
-tic()
-play_call_resample <-
-  tune_grid(
-    play_call_workflow,
-    play_pred_folds,
-    grid = play_call_grid)
-toc() ### 285 seconds
+multinom_play_tune <- tune_grid(
+  multinom_play_workflow,
+  resample = multinom_play_folds,
+  grid = multinom_play_grid,
+  control = control_grid(save_pred = TRUE,
+                         verbose = TRUE))
+
+doParallel::stopImplicitCluster()
 ```
 
 ffff
 
-#### Ordinal Regression
+```{r viewing-best-rocauc-multinom, eval = FALSE, echo = TRUE, output = FALSE}
 
-nfl player injury severity? could be interesting.
+show_best(multinom_play_tune, metric = "roc_auc")
 
-## Penalized Regression Techniques
+`# A tibble: 5 x 8
+     penalty mixture .metric .estimator  mean     n  std_err .config               
+       <dbl>   <dbl> <chr>   <chr>      <dbl> <int>    <dbl> <chr>                 
+1 0.000001       0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model021
+2 0.00000183     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model022
+3 0.00000336     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model023
+4 0.00000616     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model024
+5 0.0000113      0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model025`
+```
 
-#### Ridge Regression
+fffff
 
-examples of ridge regression using nfl data.
+```{r multinom-final-fit, eval = FALSE, echo = TRUE, output = FALSE}
 
-#### Lasso Regression
+### selecting the best roc_auc/penalty tune
+final_penalty <- multinom_play_tune %>%
+  select_by_one_std_err(metric = "roc_auc", desc(penalty))
 
-examples of lasso regression using nfl data.
+### adding best auc to workflow and then fitting one time to training and evaluating on testing
+multinom_final_results <- multinom_play_workflow %>%
+  finalize_workflow(final_penalty) %>%
+  last_fit(multinom_play_split)
 
-#### Elastic Net Regression
+```
 
-examples of elastic ridge regression using nfl data.
+ffffff
+
+```{r multinom-augmenting, eval = FALSE, echo = TRUE, output = FALSE}
+
+### pulling workflow from training work
+workflow_for_merging <- multinom_final_results$.workflow[[1]]
+
+### combining the two predictions into one
+multinom_all_predictions <- bind_rows(
+  augment(workflow_for_merging, new_data = multinom_play_train) %>%
+    mutate(type = "train"),
+  augment(workflow_for_merging, new_data = multinom_play_test) %>%
+    mutate(type = "test"))
+```
+
+```{r loading-multinom-results, eval = TRUE, echo = FALSE, output = FALSE}
+
+multinom_final_results <- readr::read_rds("./example_data/R/multinom_final_results.rds")
+```
+
+fffff
+
+```{r multinom-roc_auc_curve, echo = TRUE, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+collect_predictions(multinom_final_results) %>%
+  roc_curve(truth = play_call, .pred_long_pass:.pred_short_pass) %>%
+  ggplot(aes(1 - specificity, sensitivity, color = .level)) +
+  geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
+  geom_path(size = 1.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_color_brewer(palette = "Paired", labels = c("Long Pass", "Medium Pass", "Run Inside",
+                                                    "Run Outside", "Short Pass")) +
+  coord_fixed() +
+  nfl_analytics_theme() +
+  theme(legend.background = element_rect("#F7F7F7"),
+        legend.key = element_rect("#F7F7F7")) +
+  xlab("1 - Specificity") +
+  ylab("Sensitivity") +
+  annotate("text", x = .50, y = .47, label = "At or Below Is No Better Than A Coin Flip", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .46, y = .64, label = "Good", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .40, y = .74, label = "Better", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .23, y = .97, label = "Best", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  labs(color = "Play Type",
+       title = "**Offensive Play Prediction Model**",
+       subtitle = "*2006-2022 | Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+
+```
+
+fffff
+
+```{r loading-multinom-teams, eval = TRUE, echo = FALSE, output = FALSE}
+
+multinom_all_predictions <- readr::read_rds("./example_data/R/multinom_all_predictions.rds")
+
+```
+
+ffff
+
+```{r multinom-most-pred-teams, eval = TRUE, echo = TRUE, output = FALSE}
+
+predictions_by_team <- multinom_all_predictions %>%
+  mutate(.pred_class = as.character(.pred_class)) %>%
+  mutate(.pred_class = as.character(.pred_class),
+         play_call = as.character(play_call),
+         posteam = as.character(posteam)) %>%
+  group_by(season, posteam) %>%
+  summarize(total_plays = n(),
+            total_pred = sum(.pred_class == play_call),
+            pred_pct = total_pred / total_plays * 100) %>%
+  ungroup() %>%
+  arrange(-pred_pct) %>%
+  slice(1:10)
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+predictions_by_team <- predictions_by_team %>%
+  left_join(teams, by = c("posteam" = "team_abbr"))
+```
+
+ffff
+
+```{r multinom-team-chart, eval = TRUE, echo = TRUE, output = TRUE, message = FALSE}
+
+predictions_by_team %>%
+  dplyr::select(season, team_logo_wikipedia, total_plays, total_pred, pred_pct) %>%
+  gt() %>%
+  tab_spanner(
+    label = "Most Predictable Offenses: 2006 - 2022",
+    columns = c("season", "team_logo_wikipedia", "total_plays", "total_pred", "pred_pct")) %>%
+  cols_label(
+    season = "Season",
+    team_logo_wikipedia = "",
+    total_plays = "# of Plays",
+    total_pred = "# Predicted",
+    pred_pct = "Percent Predicted") %>%
+  cols_align(align = "center", columns = everything()) %>%
+  gt_img_rows(columns = team_logo_wikipedia, height = 25) %>%
+  gt_color_rows(pred_pct, palette = "ggsci::blue_material") %>%
+  gtExtras::gt_theme_espn()
+```
 
 ### Generalized Linear and Additive Models (GLM/GAM)
 

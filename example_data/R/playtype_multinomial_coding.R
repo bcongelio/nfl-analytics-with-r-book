@@ -21,10 +21,10 @@ pbp_prep <- pbp %>%
     posteam_score, defteam_score, score_differential, shotgun,
     no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
     wp, penalty, half_seconds_remaining, goal_to_go,run_location, air_yards) %>%
-  filter(play_type %in% c("run", "pass"), penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
-  mutate(in_red_zone = if_else(yardline_100 <= 20, 1, 0),
-         in_fg_range = if_else(yardline_100 <= 35, 1, 0),
-         two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
+  filter(play_type %in% c("run", "pass"), qtr <= 4, down <= 3, penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
+  mutate(in_red_zone = factor(if_else(yardline_100 <= 20, 1, 0)),
+         in_fg_range = factor(if_else(yardline_100 <= 35, 1, 0)),
+         two_min_drill = factor(if_else(half_seconds_remaining <= 120, 1, 0))) %>%
   select(-penalty, -half_seconds_remaining)
 
 tic()
@@ -85,6 +85,8 @@ model_data_clean <- na.omit(model_data_clean)
 multinom_play_data <- model_data_clean %>%
   select(season, posteam, play_call, everything())
 
+str(multinom_play_data)
+
 write.csv(multi_reg_data, "multi_reg_data.csv", row.names = FALSE)
 
 write.csv(model_data_clean, "model_data_clean.csv", row.names = FALSE) ### this is too big to push
@@ -110,19 +112,18 @@ multinom_play_folds <- rsample::vfold_cv(multinom_play_train, strata = play_call
 #########
 
 ### making the recipe
-multinom_play_recipe <-
-  recipe(play_call ~ ., data = multinom_play_train) %>%
-  update_role(posteam, new_role = "posteam_id") %>%
-  update_role(season, new_role = "season_id") %>%
-  step_corr(all_numeric(), threshold = 0.7) %>%
-  step_zv(all_predictors()) %>%
-  step_dummy(all_factor_predictors())
-
-multinom_play_recipe
+multinom_play_recipe <- 
+  recipe(formula = play_call ~ ., data = multinom_play_train) %>%
+  update_role(posteam, new_role = "variable_id") %>%
+  update_role(season, new_role = "variable_id") %>%
+  step_zv(all_predictors(), -has_role("variable_id")) %>% 
+  step_normalize(all_numeric_predictors(), - has_role("variable_id")) %>%
+  step_dummy(down, qtr, posteam_timeouts_remaining, defteam_timeouts_remaining,
+             in_red_zone, in_fg_range, two_min_drill, previous_play)
 
 #### making the model
 multinom_play_model <-
-  multinom_reg(penalty = tune(), mixture = 1) %>%
+  multinom_reg(penalty = tune(), mixture = tune()) %>%
   set_mode("classification") %>%
   set_engine("glmnet", family = "multinomial")
 
@@ -132,13 +133,13 @@ multinom_play_workflow <- workflow() %>%
   add_model(multinom_play_model)
 
 ### creating hyperparameter grid
-multinom_play_grid <- grid_regular(penalty(range = c(-5, 0)), levels = 20)
+multinom_play_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20),
+                                      mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1)) 
 
 ### prepping for parallel processing on ec2
 all_cores <- parallel::detectCores(logical = FALSE) - 1
-cl <- makePSOCKcluster(all_cores)
-registerDoParallel(cl)
-parallel::stopCluster(cl = cl)
+registerDoParallel(all_cores)
+
 
 ### tuning the grid
 set.seed(1988)
@@ -150,9 +151,9 @@ multinom_play_tune <- tune_grid(
   grid = multinom_play_grid,
   control = control_grid(save_pred = TRUE,
                          verbose = TRUE))
-toc() ### 285 seconds
-### 53 seconds on ec2 (using the fork method) ** this causes r to hang in cloud environment
-### 81 seconds on ec2 (not using the fork method)
+toc() ### 1549.07 seconds (25 minutes) using parallel on cpu
+
+doParallel::stopImplicitCluster()
 
 show_best(multinom_play_tune, metric = "roc_auc")
 
@@ -165,9 +166,6 @@ multinom_final_results <- multinom_play_workflow %>%
   finalize_workflow(final_penalty) %>%
   last_fit(multinom_play_split)
 
-### viewing metrics on the testing data
-collect_metrics(multinom_final_results)
-
 ### pulling workflow from training work
 workflow_for_merging <- multinom_final_results$.workflow[[1]]
 
@@ -177,6 +175,11 @@ multinom_all_predictions <- bind_rows(
     mutate(type = "train"),
   augment(workflow_for_merging, new_data = multinom_play_test) %>%
     mutate(type = "test"))
+
+### writing results to disk
+readr::write_rds(multinom_final_results, "./example_data/R/multinom_full_model.rds", compress = "gz")
+readr::write_rds(multinom_all_predictions, "./example_data/R/multinom_all_predictions.rds", compress = "gz")
+readr::write_rds(multinom_final_results, "./example_data/R/multinom_final_results.rds", compress = "gz")
 
 ### viewing the roc_curves
 collect_predictions(multinom_final_results) %>%
@@ -208,14 +211,6 @@ collect_predictions(multinom_final_results) %>%
        title = "**Offensive Play Prediction Model**",
        subtitle = "*2006-2022 | Regular Season*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
-
-arrow::write_dataset(multinom_all_predictions, "./example_data/R/multinom_all_predictions", format = "parquet")
-
-arrow::write_parquet(multinom_all_predictions, "./example_data/R/multinom_all_predictions.parquet")
-
-readr::write_rds(multinom_final_results, "./example_data/R/multinom_all_predictions.rds", compress = "gz")
-
-
 
 
 ### determing most/least predictable teams

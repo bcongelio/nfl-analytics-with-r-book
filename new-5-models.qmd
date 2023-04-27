@@ -1,0 +1,362 @@
+# Statistical Modeling with NFL Data
+
+```{r setup-ch5, include = FALSE}
+
+source("book-functions.R")
+
+library(tidyverse)
+library(nflverse)
+library(ggpmisc)
+library(tidymodels)
+library(caret)
+library(nnet)
+library(lightgbm)
+library(bonsai)
+library(ggtext)
+library(extrafont)
+library(ggpmisc)
+library(ggimage)
+library(ggcorrplot)
+library(reshape2)
+library(RColorBrewer)
+library(gt)
+library(gtExtras)
+options(digits = 3)
+```
+
+## Introduction to Statistical and Modeling with NFL Data
+
+fff
+
+## Regression Models with NFL Data
+
+fffff
+
+### Simple Linear Regression
+
+A linear regression is a fundamental statistical technique that is used to explore the relationship between two variables - the dependent variable (also called the "response variable") and the independent variables (also called the "predictor variables"). By using a simple linear regression, we can model the relationship between the two variables as a linear equation that best fits the observed data points.
+
+A simple linear regression aims to fit a straight line through all the observed data points in such a way that the total squared distance between the actual observations and the values predicted by the model are minimal. This line is often referred to as either the "line of best fit" or the "regression line" and it represents the interaction between the dependent and independent variables. Mathematically, the equation for a simple linear regression is as follows:
+
+$$
+Y = {\beta}_0 + {\beta}_1 * X + \epsilon
+$$
+
+1.  $Y$, in the above equation, is the dependent variable where the $X$ represents the independent variable.
+2.  ${\beta}_o$ is the intercept of the regression model.
+3.  ${\beta}_1$ is the slope of the model's "line of best fit."
+4.  $\epsilon$ represents the error term.
+
+To better illustrate this, let's use basic football terms using the above regression equation to compare a team's offensive points scored in a season based on how many offensive yards it accumulated. The intercept (${\beta}_o$) represents the value when a team's points scored and offensive yards are both zero. The slope (${\beta}_1$) represents the rate of change in $Y$ as the unit of $X$ changes. The error term ($\epsilon$) is represents the difference between the actual observed values of the regression's dependent variable and the value as predicted by the model.
+
+Using our points scored/total yards example, a team's total yards gained is the **independent variable** and total points scored is the **dependent variable**, as a team's total yardage **is what drives the change in total points** (in other words, a team's total points *is dependent* on its total yardage). A team will not score points in the NFL if it is not also gaining yardage. We can view this relationship by building a simple linear regression model in R using the `lm()` function.
+
+::: callout-note
+The `lm()` function is a built-in RStudio tool as part of the `stats` package and stand for "linear model." It is used, as described above, to fit a linear regression to the data that you provide. The completed regression estimates the coefficients of the data and also includes both the intercept and slope, which are the main factors in explaining the relationship between the data's response and predictor variables.
+
+The `lm()` function requires just two argument in order to provide results: the formula the data frame to use:
+
+`model_results <- lm(formula, data)`
+
+The `formula` argument requires that you specify both the response and predictor variables, as named in your data frame, in the structure of `y ~ x` wherein `y` is the response variable and `x` is the predictor. In the case that you have more than one predictor variable, the `+` is used to add to the formula:
+
+`model_results <- lm(y ~ x1 + x2 + x3, data)`
+
+The returned coefficients, residuals, and other statistical results of the model are return in a `lm` data object. There are several ways to access this data and are discussed below in further detail.
+:::
+
+To put theory into action, **let's build a simple linear regression model that explores the relationship between the total yardage earned by a team over the course of a season and the number of points scored**. To begin, gather the prepared information into a data frame titled `simple_regression_data` by running the code below.
+
+```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+simple_regression_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
+```
+
+The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let's first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.
+
+```{r simple-linear-lobf, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+regression_2022 <- simple_regression_data %>%
+  filter(season == 2022)
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+regression_2022 <- regression_2022 %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+
+  ggplot(regression_2022, aes(x = total_yards, y = total_points)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed", size = .8) +
+  geom_image(aes(image = team_logo_wikipedia), asp = 16/9) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  labs(title = "**Line of Best Fit: 2022 Season**",
+       subtitle = "*Y = total_yards ~ total_points*",
+       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+  xlab("Total Yards") +
+  ylab("Total Points") +
+  nfl_analytics_theme()
+```
+
+The plot shows that a regression between `total_yards` and `total_points` results in several teams - the Titans, Giants, Packers, Raiders, Jaguars, and Chiefs - being fitted nearly perfectly with the line of best fit. These teams scored points based on total yards in a *linear fashion*. The Cowboys, however, are well above the regression line. This indicates that Dallas scored more total points than what the relationship between `total_yards` and `total_points` found as "normal" for a team that earned just a hair over 6,000 total yards. The opposite is true for the Colts, Jets, and Denver. In each case, the `total_points` scored is below what is expected for teams that gained approximately 5,500 total yards.
+
+The line of best fit can explain this relationship in slightly more detail. For example, the `total_yards` value of 5,500 cross the regression line just below the `total_points` value of 350. This means that a team that gains a total of 5,500 yards should - based on this fit - score just under 350 points during the season. Viewing it the other way, if you want your team to score 450 points during the upcoming season, you will need the offensive unit to gain roughly 6,500 total yards.
+
+To further examine this relationship, we can pass the data into a simple linear regression model to start exploring the summary statistics.
+
+```{r lm-model-2022, eval = TRUE, echo = TRUE, output = FALSE}
+
+results_2022 <- lm(total_points ~ total_yards, data = regression_2022)
+```
+
+Using the `lm()` function, the $Y$ variable (the dependent) is `total_yards` and the $X$ variable (the predictor) is entered as `total_yards` with the argument that the `data` is coming from the `regression_2022` dataframe stored in the RStudio environment. We can view the results of the regression model by using the `summary()` function.
+
+```{r viewing-regression-summary, eval = TRUE, echo = TRUE, output = TRUE}
+
+summary(results_2022)
+```
+
+::: callout-important
+## Reading & Understanding Regression Results
+
+You have now run and output the summary statistics for your first linear regression model that explore the relationship between an NFL team's total yards and total points over the course of the 2022 season.
+
+*But what do they mean?*
+
+The `summary()` output of any regression models contains two core components: **the residuals and the coefficients.**
+
+***Residuals***
+
+A model's residuals are the calculated difference between the actual values of the predictor variables as found in the data and the values *predicted* by the regression model. In a perfect uniform relationship, all of the values in the data frame would sit perfectly on the line of best fit. Take the below graph, for example.
+
+```{r perfect-line-of-fit, echo = FALSE, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+example_fit <- tibble(
+  x = 1:10,
+  y = 2 * x + 3)
+
+example_perfect_fit <- lm(y ~ x, data = example_fit)
+
+ggplot(example_perfect_fit, aes(x = x, y = y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black",
+              size = .8, linetype = "dashed") +
+  geom_image(image = "./images/football-tip.png", asp = 16/9) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  labs(title = "A Perfect Regression Model",
+       subtitle = "Every Point Falls on the Line",
+       caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+  xlab("Our Predictor Variable") +
+  ylab("Our Response Variable") +
+  nfl_analytics_theme()
+```
+
+In this example, the regression model was able to successfully "capture" the entirety of the relationship between the predictor variable on the x-axis and the response variable on the y-axis. This means that the model leaves no unexplained or undetermined variance between the variables. As a result, we could provide the model new, unseen data and the result would predict - with 100% accuracy - the resulting values of the response variable.
+
+**However, it is rare to have real-world data be perfectly situated on the line of best fit.** In fact, it is more often than not a sign of "overfitting," which occurs when the model successfully discovered the "random noise" in the data. In such cases, a model with a "perfect line of fit" will perform incredibly poorly when introduced to unseen data.
+
+A regression model that is not overfitted will have data points that do not fall on the line of best fit, but fall over and under it. The results of the regression model uses a simple formula to help us interpret the difference between those actual and estimated values:
+
+`residuals = observed_value - predicted_value`
+
+Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
+
+|                           |                                                                                                                                                                                                                                                                                                                                                           |
+|:-----------------:|:---------------------------------------------------:|
+|   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
+|  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
+|   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
+| The `Median` Distribution | The `Median` distribution, much like the `1Q` distribution is data from the first quartile, is the residuals from the 50th percentile of the data. **The `Median` residual in the above summary is 1.157, which means that the `lm()` model - for 50% of teams - either overestimated or underestimated a teams total points by less than 1.157 points.** |
+|   The `3Q` Distribution   |                                                           Covering the third quartile of the residuals, **the `3Q` Distribution is 19.145 which means that 75% of the NFL teams in the data had a total points prediction either overestimated or underestimated by less than 19.145 points.**                                                            |
+|  The `Max` Distribution   |                               The opposite of the `Min` distribution, the `Max` distribution is the largest difference between the model's observed and predicted values for a team's total points. In this case, for one specific team, **the model predicted the team scored 68.080 points less than the actual value.**                                |
+
+A model's residuals allow you to quickly get a broad view of accurately it is predicting the data. Ideally, a well-performing model will return residuals that are small and distributed evenly around zero. In such cases, it is good first sign that the predictions are close to the actual value in the data and the model is not producing over or under estimates.
+
+**But that is not always the case**.
+
+For example, we can compare our above example residuals to the residuals produced by manually created data.
+
+```{r creating-example-residuals, echo = TRUE, echo = FALSE, output = TRUE}
+
+set.seed(42)
+residual_example <- tibble(
+  x = 1:50,
+  y = 3 * x + 5 + rnorm(50, mean = 0, sd = 5)
+)
+
+residual_example_output <- lm(y ~ x, data = residual_example)
+
+summary(residual_example_output$residuals)
+```
+
+Compared to the residuals from the above NFL data, the residuals from the randomly created data are small in comparison and are more evenly distributed around zero. Given that, it is likely that the linear model is doing a good job at making predictions that are close to the actual value.
+
+**But that does not mean the residuals from the NFL data indicate a flawed and unreliable model.**
+
+It needs to be noted that the "goodness" of any specific linear regression model is wholly dependent on both the context and the specific problem that the model is attempting to predict. To that end, it is also a matter of trusting your subject matter expertise on matters regarding the NFL.
+
+There could be any number of reasons that can explain why the residuals from the regression model are large and not evenly distributed from zero. For example:
+
+1.  **Red-zone efficiency:** a team that moves the ball downfield with ease, but then struggles to score points once inside the 20-yardline , will accumulate total_yards but failed to produce total_points in the way the model predicted.
+
+2.  **Turnovers:** Similar to above, a team may rack up total_yards but ultimately continue to turn the ball over prior to being able to score.
+
+3.  **Defensive scoring:** a score by a team's defense, in this model, still counts towards total_points but does not count towards total_yards.
+
+4.  **Strength of Opponent:** At the end of the 2022 season, the Philadelphia Eagles and the New York Jets both allowed just 4.8 yards per play. The model's predicted values of the other three teams in each respective division (NFC East and AFC East) could be incorrect because information, for example, the opponent's strength of defense was not included in the model.
+
+All that to say: residuals are a first glance at the results of the data and provide a broad generalization of how the model performed without taking outside contextual factors into consideration.
+
+**Coefficients**
+
+fffffff
+:::
+
+Returning to the summary statistics of our analysis of the 2022 season, the residuals have a wide spread and an inconsistent deviation from zero. While the `median` residual value is the closest to zero at 1.157, it is still a bit too high to safely conclude that the model is making predictions that adequately reflect the actual values. Moreover, both tail ends of the residual values (`Min` and `Max`) are a large negative and positive number, respectively, which is a possible indication that both over- and underestimating a team's `total_points` by statistically significant amount.
+
+However, as mentioned in this chapter's explanation of how to interpret residuals from a model's summary statistics, the widespread and deviation from zero in the results is likely the result of numerous factors outside the model's purview that occur in any one NFL game. To get a better idea of what the residual values represent, we can plot the data and include NFL team logos.
+
+```{r plotting-residual-values, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+regression_2022$residuals <- residuals(results_2022)
+
+ggplot(regression_2022, aes(x = total_yards, y = residuals)) +
+  geom_hline(yintercept = 0, color = "black", linewidth = .7) +
+  stat_fit_residuals(size = 0.01) +
+  stat_fit_deviations(size = 1.75, color = regression_2022$team_color) +
+  geom_image(aes(image = team_logo_wikipedia), asp = 16/9, size = .0325) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  labs(title = "**Total Yards & Residual Values**",
+       subtitle = "*Y = total_points ~ total_yards*",
+       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+  xlab("Total Yards") +
+  ylab("Residual of Total Points") +
+  nfl_analytics_theme() +
+  theme(panel.grid.minor.y = element_line(color = "#d0d0d0"))
+```
+
+With the data visualized, it is clear that the model's `Min` distribution of -71.44 is associated with the Tampa Bay Buccaneers, while the `Max` distribution of 68.08 is the prediction for the total points earned by the Dallas Cowboys. Because a negative residual means that the model's predicted value is too high, and a positive residual means it was too low, we can conclude that the Buccaneers actually scored 71.4 points less than the the results of the model, while the Cowboys scored 68.08 more than predicted.
+
+```{r showing-cofficients-lm, eval = FALSE, echo = TRUE, output = FALSE}
+
+`Coefficients:
+             Estimate Std. Error t value      Pr(>|t|)    
+(Intercept) -225.0352    65.4493   -3.44        0.0017 ** 
+total_yards    0.1034     0.0113    9.14 0.00000000036 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1`
+
+```
+
+The `(Intercept)` of the model, or where the regression line crosses the y-axis, is -225.0350. When working with NFL data, it of course does not make sense that the `(Intercept)` is negative. Given the model is built on a team's total yards and total points, it seems intuitive that the regression line would cross the y-axis at the point of (0,0) as an NFL team not gaining any yards is highly unlike to score any points.
+
+It is important to remember that the linear model attempts to position the regression line to come as close to all the individual points as possible. Because of this, it is not uncommon for regression line to not cross exactly where the x-axis and y-axis meet. Again, contextual factors of an NFL game are not account for in the model's data: strength of the opponent's defense, the quality of special teams play, defensive turnovers and/or touchdowns, field position, etc. can all impact a team's ability to score points without gaining any yardage. The lack of this information in the data ultimately impact the positioning of the line of best fit.
+
+The `total_yards` coefficient represents the slope of the model's regression line. It is this slope that represents how a team's total points are predicted to change with every additional gain of one yard. In this example, the `total_yards` coefficient is 0.10341 - so for every additional yard gained by a team, it is expected to add 0.10341 points to the team's cumulative amount.
+
+The `Std. Error` summary statistic provides guidance on the accuracy of the other estimated coefficients. The `Std. Error` for the model's `(Intercept)` is quite large at 65.44927. Given the ability to resample the data from NFL terms numerous times and then allowing the linear model to predict again, this specific `Std. Error` argues that the regression line will cross the y-axis with 65.44972 of -225.03520 in either direction. Under normal circumstances, a large `Std. Error` for the `(Intercept)` would cause concern about the validity of the regression line's crossing point. However, given the nature of this data - an NFL team cannot score negative points - we should not have any significant concern about the large `Std. Error` summary statistic for the `(Intercept)`.
+
+At 0.01132, the `Std. Error` for the `total_yards` coefficient is small and indicates that the `Estimate` of `total_yards` - that is, the increase in points per every yard gained - is quite accurate. Given repeated re-estimating of the data, the relationship between `total_yards` and `total_points` would vary by just 0.01132, either positively or negatively.
+
+With a `t-value` of 9.135, the `total_yards` coefficient has a significant relationship with `total_points`. The A value of -3.438 indicates that the `(Intercept)` is statistically different from 0 but we should still largely ignore this relationship given the nature of the data.
+
+The model's `Pr(>|t|)` value of highly significant for `total_yards` and is still quite strong for the `(Intercept)`. The value of 0.00000000036 indicates an incredibly significant relationship between `total_yards` and `total_points`.
+
+The linear model's `Residual Standard Error` is 32.04, which means that the average predicted values of `total_points` are 32.04 points different from the actual values in the data. The linear model was able to explain 73.56% of the variance between `total_yards` and `total_points` based on the `multiple R-squared` value of 0.7356. Additionally, the `Adjusted R-squared` value of 0.7268 is nearly identical to the multiple R2, which is a sign that the linear model is not overfitting (in this case because of the simplicity of the data). The model's `F-Statistic` of 83.45 indicates a overall significance to the data, which is backed up by an extremely strong `p-value`.
+
+Based on the summary statistics, the linear model did an extremely good job at capturing the relationship between a team's `total_yards` and `total_points`. However, with residuals ranging from -71.443 to 68.080, it is likely that the model can be improved upon by adding additional information and statistics. However, before providing additional metrics, we can try to improve the model's predictions by including all of the data (rather than just the 2022 season). By including 20-seasons worth of `total_yards` and `total_points`, we are increasing the sample size which, in theory, allows for a reduced impact of any outliers and an improve generalizability.
+
+::: callout-important
+Working with 10+ years of play-by-play data can be problematic in that them model, using just `total_yards` and `total_points`, is not aware of changes in the overall style of play NFL. The balance between rushing and passing has shifted, there's been a philosophical shift in the coaching ranks in "going for it" on 4th down, etc. A simple linear regression cannot account for how these shifts impact the data on a season-by-season basis.
+:::
+
+The results from including the `total_points` and `total_yards` for each NFL team from 2012-2022 show an improvement of the model, specifically with the residual values.
+
+```{r all-seasons-regression, eval = TRUE, echo = TRUE, output = FALSE}
+
+regression_all_seasons <- simple_regression_data %>%
+  select(-season)
+
+all_season_results <- lm(total_points ~ total_yards, data = regression_all_seasons)
+
+summary(all_season_results)
+```
+
+The residual values after including 20-seasons worth of data are a bit better. The `Median` is -1.26 which is slightly higher than just one season (`M` = 1.16). The `1Q` and `3Q` distributions are both approximately symmetric around the model's `M` value compared to just the 2022 season regression that results in a deviation between `1Q` and `3Q` (-22.33 and 19.15, respectively). The `Min` and `Max` values of the new model still indicate longtail cases on both ends of the regression line much like the 2022 model found.
+
+::: callout-tip
+To further examine the residual values, we can use a **Shapiro-Wilk Test** to test the whether results are normally distributed.
+
+The Shapiro-Wilk Test provides two values with the output: the test statistic (provided as a `W` score) and the model's `p-value`. Scores for `W` can range between 0 and 1, where results closer to 1 meaning the residuals are in a normal distribution. The `p-value` is used make decision on the null hypothesis (that there *is* enough evidence to conclude that there is uneven distribution). In most cases, if the `p-value` is larger than the regression's level of significance (typically 0.05), than you may **reject** the null hypothesis.
+
+We can run the Shapiro-Wilk Test on our 2012-2022 data using the `shapiro.test` function that is part of the `stats` package in R.
+
+```{r running-shapiro-wilk, eval = TRUE, echo = TRUE, output = TRUE}
+
+results_2012_2020 <- residuals(all_season_results)
+
+shapiro_test_result <- shapiro.test(results_2012_2020)
+
+shapiro_test_result
+```
+
+The `W` score for the residual is 1, meaning a very strong indication that the data in our model is part of a normal distribution. The `p-value` is 0.8, which is much large than the regression's level of significance (0.05). As a result, we can reject the null hypothesis and again conclude that the data is in a normal distribution.
+
+fff
+:::
+
+The `W` score for the residual is 1, meaning a very strong indication that the data in our model is part of a normal distribution. The `p-value` is 0.8, which is much large than the regression's level of significance (0.05). As a result, we can reject the null hypothesis and again conclude that the data is in a normal distribution.
+
+```{r plotting-all-season-residuals, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+regression_all_seasons <- left_join(regression_all_seasons, teams, by = c("team" = "team_abbr"))
+
+regression_all_seasons$residuals <- residuals(all_season_results)
+
+ggplot(regression_all_seasons, aes(x = total_yards, y = residuals)) +
+  geom_hline(yintercept = 0, color = "black", linewidth = .7) +
+  stat_fit_residuals(size = 2, color = regression_all_seasons$team_color) +
+  stat_fit_deviations(size = 1, color = regression_all_seasons$team_color, alpha = 0.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  labs(title = "**Total Yards & Residual Values: 2012-2022**",
+       subtitle = "*Y = total_points ~ total_yards*",
+       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+  xlab("Total Yards") +
+  ylab("Residual of Total Points") +
+  nfl_analytics_theme() +
+  theme(panel.grid.minor.y = element_line(color = "#d0d0d0"))
+```
+
+We can also compare the multiple R2 and adjusted R2 score between the two regression models.
+
+    2012 - 2022 Data:
+    Multiple R-squared:  0.683
+    Adjusted R-squared:  0.682
+
+    2022 Data
+    Multiple R-squared:  0.736
+    Adjusted R-squared:  0.727
+
+The regression using just the 2022 data results in a slightly better multiple and adjusted R2 score compared to using data from the last twenty seasons of the NFL. While this does indicate that the model based on the single season is better at defining the relationship between a team's `total_yards` and `total_points` it is essential to remember that there is different underlying patterns in the data as a result of the changing culture in the NFL and, ultimately, the epp and flow of team performance as a result of high levels of parity in the league.
+
+In order to account for this "epp and flow" in both team performance and the changing culture/rules of the NFL, we need to turn to a multiple linear regression in include these additional factors as it is a model that is capable of better accounting for the nuances of NFL data.
+
+### Multiple Linear Regression
+
+### Logistic Regression
+
+fffffff
+
+#### Logistic Regression #1: Binary Classification
+
+#### Logistic Regression #2: Multinomial Regression with `tidymodels`
+
+## Advanced Model Creation with NFL Data
+
+### 
