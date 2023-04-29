@@ -162,7 +162,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-----------------:|:---------------------------------------------------:|
+|:------------------:|:--------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -303,11 +303,7 @@ shapiro_test_result
 ```
 
 The `W` score for the residual is 1, meaning a very strong indication that the data in our model is part of a normal distribution. The `p-value` is 0.8, which is much large than the regression's level of significance (0.05). As a result, we can reject the null hypothesis and again conclude that the data is in a normal distribution.
-
-fff
 :::
-
-The `W` score for the residual is 1, meaning a very strong indication that the data in our model is part of a normal distribution. The `p-value` is 0.8, which is much large than the regression's level of significance (0.05). As a result, we can reject the null hypothesis and again conclude that the data is in a normal distribution.
 
 ```{r plotting-all-season-residuals, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
 
@@ -349,11 +345,313 @@ In order to account for this "epp and flow" in both team performance and the cha
 
 ### Multiple Linear Regression
 
+A multiple linear regression is extremely similar to a simple linear regression (both in design and implementation in RStudio). The main difference is that a multiple linear regression allows for us to include additional predictor variables by using the `+` sign in the model's formula. The inclusion of these additional predictive variables, in theory, allow the model to compute more complex relationships in NFL data and improve on the model's final performance.
+
+We will again create our first multiple regression linear regression with data from just the 2022 regular season that includes the same predictor (`total_yards`) and response variable (`total_points`). For additional predictors, we must consider what circumstances may lead a team to have high `total_yards` but an amount of `total_points` that would fall below the model's predicted value. We will include the following as additional predictors:
+
+1.  **Redzone Efficiency:** provided as a percentage, this is a calculation of how many times a team drove into the red zone and scored. A higher percentage is better.
+2.  **Redzone Touchdown Efficiency:** This is the same as redzone efficiency, but includes only the number of red zone trips divided by the total touchdowns scored from the redzone.
+3.  **Redzone Field Goal Efficiency:** The same as redzone touchdown efficiency, but with field goals.
+4.  **Cumulative Turnovers**: The total number of turnovers during the regular season.
+5.  **Defensive Touchdowns**: The number of touchdowns scored by each team's defensive unit.
+6.  **Special Teams Touchdowns**: The number of touchdowns scored by special teams (kick/punt returns).
+
+To begin building the multiple linear regression model for the 2022 season, we can read in the data below using `vroom::vroom()`.
+
+```{r getting-m-lm-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+multiple_lm_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/multiple_lm_data.csv")
+
+multiple_lm_data
+```
+
+The data for our multiple linear regression has the same four columns as the simple linear regression (`season`, `team`, `total_points`, and `total_yards`) but also includes the new predictor variables (`rz_eff`, `rz_td_eff`, `rz_fg_eff`, `def_td`, and `spec_tds`).
+
+::: callout-caution
+Please note that, of the predictor and response variables, all of the values are in whole number format except for `rz_eff`, `rz_td_eff`, and `rz_fg_eff`. While it is not a problem to include predictors that are on differing scales (in this case, whole numbers and percentages), it may cause difficulty in interpreting the summary statistics. If this is the case, the issue can be resolved by using the `scale()` function to standardize all the data's predictors against one another.
+:::
+
+The construction of the multiple linear regression model is the same process of the simple regression, with the inclusion of additional predictors to the formula using the `+` sign. We are also applying a `filter()` to our `multiple_lm_data` to retrieve just the 2022 season.
+
+The summary statistic residuals for the multiple linear regression are more evenly distributed towards the mean than our simple linear regression. Based on the residuals, we can conclude that - for 50% of the teams - the model either over or underestimated their `total_points` by just -0.35 (as listed in the `Median` residual). The interquartile range (within the `1Q` and `3Q` quartiles) are both close to the median and the `Min` and `Max` residuals both decreased significantly from our simple linear model, indicating a overall better line of fit.
+
+We can confirm that the multiple linear regression resulted in an even distribution of the residuals by again using a Shapiro-Wilk's Test.
+
+```{r multiple-lm-shapiro, eval = TRUE, echo = FALSE, output = TRUE}
+
+results_lm_2022 <- residuals(lm_multiple_2022)
+
+shapiro.test(results_lm_2022)
+```
+
+The results of the Shapiro-Wilk's test (`W = 1` and `p-value = 0.9`) confirm that residuals are indeed evenly distributed. A visualization showcases the model's even distribution of the residuals.
+
+```{r multiple-regression-plot, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+mlm_2022_fitted <- predict(lm_multiple_2022)
+mlm_2022_residuals <- residuals(lm_multiple_2022)
+
+plot_data_2022 <- data.frame(Fitted = mlm_2022_fitted, Residuals = mlm_2022_residuals)
+
+plot_data_2022 <- plot_data_2022 %>%
+  cbind(teams)
+
+ggplot(plot_data_2022, aes(x = Fitted, y = Residuals)) +
+  geom_hline(yintercept = 0, color = "black", linewidth = .7) +
+  stat_fit_deviations(size = 1.75, color = plot_data_2022$team_color) +
+  geom_image(aes(image = team_logo_espn), asp = 16/9, size = .0325) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  labs(title = "**Multiple Linear Regression Model: 2022**",
+       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+  xlab("Fitted Values") +
+  ylab("Residual Values") +
+  nfl_analytics_theme() +
+  theme(panel.grid.minor.y = element_line(color = "#d0d0d0"))
+```
+
+Just as the residual values in the summary statistics indicated, plotting the `fitted_values` against the `residual_values` shows an acceptable spread in the distribution, especially given the nature of NFL data. Despite positive results in the residual values, the summary statistics of the multiple linear regression indicates a significant issue with the data. Within the `Coefficients`, it is explained that one of the items is "not defined because of singularities."
+
+::: callout-important
+"Singularities" occur in the data as a result of the dreaded multicollinearity between two or more predictors. The involved predictors were found to have a high amount of correlation between one another, meaning **that one of the variables can be predicted in a near linear fashion with one or more of the other predictive variables**. As a result, it is difficult for the regression model to correctly estimate the contribution of these dependent variables to the response variable.
+
+The model's Coefficients of our multiple linear regression shows `NA` values for the `rz_fg_eff` predictor (the percentage of times a team made a field goal in the red zone rather than a touchdown). This is because `rz_fg_eff` was one of the predictive variables strongly correlated with another but just that it was the one dropped by the regression model to avoid producing flawed statistics as a result of the multicollinearity.
+
+**If you are comfortable producing the lienar regression with `rz_fg_eff`** **being a dropped predictor, that are no issues with that**. However, we can create a correlation plot that allows is to determine which predictors have high correlation values with others. Examining the issue allows us to determine if `rz_fg_eff` is, indeed, the predictive variable we want the regression to drop or if we'd rather, for example, drop `rz_eff` and keep just the split between touchdowns and field goals.
+
+```{r building-corr-matrix, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+regression_corr <- cor(multiple_lm_2022[, c("total_yards", "rz_eff", "rz_td_eff",
+                                            "rz_fg_eff", "total_to", "def_td", "spec_tds")])
+
+### melting the regression_corr to prep for ggplot
+melted_regression_corr <- melt(regression_corr)
+
+## plotting
+ggplot(data = melted_regression_corr, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_distiller(palette = "PuBu", direction = -1, limits = c(-1, +1)) +
+  geom_text(aes(x = Var1, y = Var2, label = round(value, 2)), color = "black",
+            fontface = "bold", family = "Roboto Condensed", size = 5) +
+  labs(title = "Multicollinearity Correlation Matrix",
+       subtitle = "Multiple Linear Regression: 2022 Data",
+       caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+  nfl_analytics_theme() +
+  labs(fill = "Correlation \n Measure", x = "", y = "") +
+  theme(legend.background = element_rect(fill = "#F7F7F7"),
+        legend.key = element_rect(fill = "#F7F7F7"))
+```
+
+Using a correlation plot allows for easy identification of those predictive variables that have high correlation with one another. The general rule is that two predictors become problematic in the regression model in the coefficient between the two is above 0.7 (or 0.8, given domain knowledge about the context of the data).
+
+In our correlation plot, there are two squares in (indicated by the darkest blue color) that have a value greater than 0.7 (or -0.7 in this case, as both strong and negative correlations are capable of producing multicollinearity. The two squares happen to relate to the same relationship between the `rz_fg_eff` and `rz_td_eff` predictors.
+
+Recall that the regression model automatically removed the `rz_fg_eff` from the measured Coefficients. Given the context of the data, I am not sure that is the best decision. Given we are examining the relationship the predictive variables and `total_points`, removing the `rz_fg_eff` variable inherently erases a core source of points in a game of football.
+
+Because of this - and since our `rz_eff` predictor accounts for both touchdowns and field goals - I believe we could move forward on rerunning the regression without either `rz_fg_eff` and `rz_td_eff`.
+:::
+
+To run the multiple linear regression again, without the predictors relating to red zone touchdown and field efficiency, we will drop both from our `multiple_lm_2022` dataframe, rerun the regression model, and then examine the ensuing summary statistics.
+
+```{r removing-predictor-corr, eval = TRUE, echo = TRUE, output = TRUE}
+
+multiple_lm_2022_edit <- multiple_lm_2022 %>%
+  select(-rz_td_eff, -rz_fg_eff)
+
+lm_multiple_2022_edit <- lm(total_points ~ total_yards + rz_eff +
+                         total_to + def_td + spec_tds, data = multiple_lm_2022_edit)
+
+summary(lm_multiple_2022_edit)
+```
+
+We have certainly simplified the model by removing both `rz_td_eff` and `rz_fg_eff` but the impact of this change is a fair trade off, it seems, to avoid further issues with multicollinearity. Our new adjusted R is still high (0.784), only dropping a bit from the original model that included both predictors (0.807). Both models did well at explaining the amount of variance between the predictors and the response variable. While the `F-statistic` and the `p-value` are strong in both models, it is important to note that the `Residual standard error` dropped from 27 in the original model to 28 in the more simplified version. Given that this value is the average difference between the data's actual values and the predicted equivalents in the regression, both would ideally be smaller.
+
+With multiple linear regression model producing acceptable results over the course of the 2022 season, we can now see if the results remain stable when produced from the course of 2012-2022.
+
+```{r running-lm-all-seasons, eval = TRUE, echo = TRUE, output = TRUE}
+
+multiple_lm_data_all <- multiple_lm_data %>%
+  select(-rz_td_eff, -rz_fg_eff, -season)
+
+lm_multiple_all <- lm(total_points ~ total_yards + rz_eff +
+                              total_to + def_td + spec_tds, data = multiple_lm_data_all)
+
+summary(lm_multiple_all)
+```
+
+The results of the multiple linear regression over data from the 2012-2022 indicates a statistically significant relationship between our predictor variables and a team's total yards. That said, two items are worth further exploration.
+
+1.  The model's Residual standard error increased to 30, as opposed to the values of 27 and 28 from the models built on a single season of data. This means that the model, on average, is over or underpredicting the actual values by 30 total points. To verify that a residual standard error of 30 is not too high given the nature of our data, we can need to evaluate its value against the scale of our data based on the mean and/or median averages of the `total_points` variable. As seen below, the model's RSE as a percentage of the mean is `8.1%` and its percentage of the median is `8.2%`. Given that both values are below 10%, it is reasonable to conclude that the value of the model's residual standard error is statistically small compared to the scale of the `total_points` dependent variable.
+
+::: callout-tip
+```{r checking-scale-against-rse, eval = TRUE, echo = TRUE, output = TRUE}
+
+total_mean_points <- mean(multiple_lm_data_all$total_points)
+total_points_median <- median(multiple_lm_data_all$total_points)
+
+rse_mean_percentage <- (30 / total_mean_points) * 100
+rse_median_percentage <- (30 / total_points_median) * 100
+```
+:::
+
+The `spec_tds` predictor, which is the total number of special teams touchdowns scored by a team, has a `p-value` of 0.61. This high of a `p-value` indicates that the amount of special teams touchdowns earned by a team is not a dependable predictor of the team's total points. Given the rarity of kickoff and punt returns, it is not surprising that the predictor returned a high `p-value`. If we run the regression again, without the `spec_tds` predictive variable, we get results that are nearly identical to the regression model that includes it as a predictor. The only significant difference is a decrease in the `F-statistic` from 398 to 317. Given the small decrease, we will keep `spec_tds` in the model.
+
+::: callout-important
+The final step of our multiple linear regression model is feeding it new data to make predictions on.
+
+To begin, we need to create a new dataframe that holds the new predictor variables. For nothing more than fun, let's grab the highest value from each predictive variable between the 2012-2022 season.
+
+```{r creating-predictor-variabes, eval = TRUE, echo = TRUE, output = FALSE}
+
+new_observations <- data.frame(
+  total_yards = max(multiple_lm_data$total_yards),
+  rz_eff = max(multiple_lm_data$rz_eff),
+  total_to = max(multiple_lm_data$total_to),
+  def_td = max(multiple_lm_data$def_td),
+  spec_tds = max(multiple_lm_data$spec_tds))
+```
+
+This hypothetical team gained a total of 7,317 yards in one season and was incredibly efficient in the red zone, scoring 96% of the time. It also scored nine defensive touchdowns and returned a punt or a touchdown to the house four times. Unfortunately, the offense also turned the ball over a whopping total of 41 times.
+
+We can now pass this information into our existing model using the `predict` function and it will output the predicted `total_points` earned by this hypothetical team based on the multiple linear regression model we built with 20 years of NFL data.
+
+```{r prediction-output, eval = TRUE, echo = TRUE, output = FALSE}
+
+new_predictions <- predict(lm_multiple_all, newdata = new_observations)
+
+new_predictions
+```
+
+The model determined, based on the new predictor variables provided, that this hypothetical team will score a total of 566 points, which is the second-highest cumulative amount scored by a team dating back to the 2012 season (the 2013 Denver Broncos scored 606 total points). In this situation, the hypothetical team has nearly double the turnovers as the 2013 Bronco (41 turnovers to 21). It is reasonable that providing this hypothetical team a lower number of turnovers would result in it becoming the highest scoring team since 2012.
+:::
+
 ### Logistic Regression
 
-fffffff
+Logistic regressions are particularity useful when modeling the relationship between a categorical dependent variable and a given set of predictor variables. While linear models, as covered in the last section, handles data with a continuous dependent variable, logistic regressions are used when the response variable is categorical (whether a team successfully converted a third down, whether a pass was completed, whether a running back fumbled on the play, etc.). In each example, there are only two possible outcomes: "yes" or "no".
+
+Moreover, a logistic regression model does not model the relationship between the predictors and the response variables in a linear fashion. Instead, logistic regressions use seek to mutate the predictors into a values between 0 and 1. Specifically, the formula for a logistic regression is as follows:
+
+$$
+P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n)}}
+$$
+
+1.  $P(Y=1|X)$ in the equation is the likelihood of the event $Y=1$ taking place given the provided predictor variables ($X$).
+2.  The model's coefficients are represented by $\beta_0 + \beta_1X_1 + \beta_2$.
+3.  $X1, X2, ..., Xn$ represent the model's predictor variables.
+4.  The $1$ in the formula's numerator results in the model's probability values always being between 0 and 1.
+5.  The $1$ in the denominator is a part of the underlying logistic function and ensures that the value is always greater than or equal to 1.
+6.  Finally, the $e$ is part of the model's logarithm (or the constant of 2.71828). In short, this function allows the linear combination to be a positive value.
+
+To better explain the formula, let's assume we want to predict the probability of any one NFL team winning a game (again, in a binary `1` for winning, or `0` for losing). These binary outcome is represented by the $Y$. The predictor variables, such as the team's average points scored, the average points allowed by the opposing defense, home-field advantage, and any other statistics likely to be important in making the prediction are represented by $X1, X2, ..., Xn$. The model's coefficients, or the relationship between the predictors and a team's chance of winning, are represented by $\beta_0 + \beta_1X_1 + \beta_2$. In the event that a team's average passing yards is represented by the $B1$ coefficient, a positive number suggests that higher average passing yards results in an increase in the probability of winning. Conversely, a negative coefficient number indicates the statistic has a negative impact on winning probability.
+
+To that end, there are three distinct types of logistic regressions: binary, multinomial, and ordinal (we will only be covering binary and ordinal in this chapter). All three allow for working with various types of dependent variables.
+
+**Binary regression models** are used when the dependent variable (the outcome) has just two outcomes (typically presented in binary format - `1` or `0`). Using the logistic function, a binary regression model determines the probability of the dependent event occurring given the predictor variables. As highlighted below, a binary regression model can be used to predict the probability that a QB is named MVP at the conclusion of the season. The response variable is a binary (`1` indicating that the player was named MVP and `0` indicating that the player did not win MVP). Various passing statistics can serve as the predictor variables.
+
+A **multinomial regression model** is an extension of the binary model in that it allows for the dependent variable to have more than two unordered categories. For example, a multinomial regression model would be used to predict the type of play a team is going to run (run or pass) based on the predictor variables (down and distance, time remaining, score differential, etc.).
+
+An **ordinal regression model** is used when the dependent variables not only have ordered categories, but the structure and/or order of these categories house meaningful information. Ordinal regression could be used, for example, to possibly predict the severity of a player's injury. The ordered and meaningful categories of the dependent variable can coincide with the severity of the injury itself (mild, moderate, severe, season-ending) while the predictor variables include several other types of categories (the type of contact, the playing surface, what position the player played, how late into the season it occurred, whether the team is coming off a bye week, etc.).
 
 #### Logistic Regression #1: Binary Classification
+
+A binary regression model is used when the dependent variable is in binary format (that is, `1` for "yes" or `0` for "no). This binary represents two - and only two - possible outcomes such as a a team converting on third down or not or if a team won or lost the game. Constructing binary regression models allows use to predict the likelihood of the dependent event occurring based on the provided set of predictor variables.
+
+We will build a binary regression model to predict the probability that an NFL QB will win the MVP at the conclusion of the season.
+
+Let's first create a dataframe, called `qb_mvp`, that contains the statistics for quarterbacks that we intuitively believe impact the likelihood of a QB being named MVP.
+
+```{r qb_mvp_model_data, eval = TRUE, echo = TRUE, output = FALSE}
+
+player_stats <- nflreadr::load_player_stats(2000:2022) %>%
+  filter(season_type == "REG" & position == "QB") %>%
+  filter(season != 2000 & season != 2005 & season != 2006 & season != 2012)
+
+qb_mvp_stats <- player_stats %>%
+  group_by(season, player_display_name, player_id) %>%
+  summarize(
+    total_cmp = sum(completions, na.rm = TRUE),
+    total_attempts = sum(attempts, na.rm = TRUE),
+    total_yards = sum(passing_yards, na.rm = TRUE),
+    total_tds = sum(passing_tds, na.rm = TRUE),
+    total_ints = sum(interceptions, na.rm = TRUE),
+    sacks = sum(sacks, na.rm = TRUE),
+    sack_yards = sum(sack_yards, na.rm = TRUE),
+    total_airyards = sum(passing_air_yards, na.rm = TRUE),
+    passing_yac = sum(passing_yards_after_catch, na.rm = TRUE),
+    total_firstdowns = sum(passing_first_downs, na.rm = TRUE),
+    mean_epa = mean(passing_epa, na.rm = TRUE),
+    mean_dakota = mean(dakota, na.rm = TRUE),
+    total_carries = sum(carries, na.rm = TRUE),
+    total_rush_yards = sum(rushing_yards, na.rm = TRUE),
+    total_rush_tds = sum(rushing_tds, na.rm = TRUE),
+    mean_rush_epa = mean(rushing_epa, na.rm = TRUE))
+
+
+###############
+qb_mvp_stats_new <- qb_mvp_stats_new %>%
+  dplyr::group_by(season) %>%
+  mutate(att_rank = order(order(total_attempts, decreasing = TRUE)),
+         yds_rank = order(order(total_yards, decreasing = TRUE)),
+         tds_rank = order(order(total_ints, decreasing = TRUE)),
+         ay_rank = order(order(total_airyards, decreasing = TRUE)),
+         dakota_rank = order(order(mean_dakota, decreasing = TRUE)),
+         rush_yds = order(order(total_rush_yards, decreasing = TRUE)),
+         repa_rank = order(order(mean_rush_epa, decreasing = TRUE))) %>%
+  select(season, player_display_name, att_rank, yds_rank, tds_rank, ay_rank,
+         dakota_rank, rush_yds, repa_rank, mvp)
+  
+```
+
+We are using data from over the course of 22 NFL seasons (2000 to 2022), but then removing the 2000, 2005, 2006, and 2012 seasons as the MVP for each was not a quarterback (Marshall Faulk, Shaun Alexander, LaDainian Tomlison, and Adrian Peterson, respectively). To begin building the model, collect QB-specific metric from the `load_player_stats()` function from `nflreadr`, including: total completions, total attempts, total yards, total touchdowns, total interceptions, sacks taken, yards loss on sacks, total air yards, total yards after catch, total first downs, the QB's mean expected points added. the mean DAKOTA (which is the adjusted EPA + CPOE composite), total carries, total rush yards, total rushing touchdowns, and the QB's average EPA earned on rushes.
+
+The data, as collected from `load_player_stats()`, does not contain information pertaining to MVP winners. To include this, we can load a prepared file using data from Pro Football Reference. The data contains two variables: `season` and `player_name` wherein the name represents the player that won that season's MVP. After reading the data in, we can use the `mutate` function to create a new variable called `mvp` that is in binary (`1` representing that the player was the MVP). After, we can merge this data into our `qb_mvp_stats` dataframe. After merging, you will notice that the `mvp` column has mainly `NA` values. As we only brought in `1` in binary, we must set all the `NA` values to `0` to indicate that those players did not win the MVP that season. Lastly, we will limit the number of `total_attempts` to only those quarterbacks with 150 or more in a season.
+
+```{r load-pfr-mvp-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+pfr_mvp_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pfr_mvp_data.csv")
+
+pfr_mvp_data$mvp <- 1
+
+qb_mvp_stats <- qb_mvp_stats %>%
+  left_join(pfr_mvp_data, by = c("season" = "season", "player_display_name" = "player_name"))
+
+qb_mvp_stats$mvp[is.na(qb_mvp_stats$mvp)] <- 0
+
+qb_mvp_stats <- qb_mvp_stats %>%
+  filter(total_attempts >= 150)
+```
+
+The above results in a dataframe with 723 observations with 17 associated statistics for each quarterback. We can now turn to the construction of the binary regression model.
+
+::: callout-important
+If you have not already done so, please install `tidymodels` and load it.
+
+```{r installing-tidymodels, eval = FALSE, echo = TRUE, output = FALSE}
+
+install.packages("tidymodels")
+library(tidymodels)
+```
+:::
+
+While we will not be building the binary model with the `tidymodels` package, we will be utilizing the associated `rsample` package - which is used to created various types of resamples and classes for analysis - to split our `qb_mvp_stats` data into both a training and testing set.
+
+::: callout-important
+Like many of the models to follow in this chapter, it is important to have both a training and testing set of data when performing a binary regression study for three reasons:
+
+1.  **Assess model performance**. Have a trained set of data allows us to evaluate the models performance on the testing set, allowing us to gather information regarding how we can expect the model to handle new data.
+2.  **It allow us to avoid overfitting**. Overfitting is a process that occurs when the regression model recognizes the "statistical noise" in the training data but not necessarily the underlying patterns. When this happens, the model will perform quite well on the training data but will then fail when fed new, unseen data. By splitting the data, we can use the withheld testing data to make sure the model is not "memorizing" the information in the training set.
+3.  **Model selection**. In the case that you are evaluating several different model types to identify the best performing one, having a testing set allows us to determine which model type is likely to perform best when provided unseen data.
+:::
+
+The process of splitting the data into a training and testing set involves three lines of code with the `rsample` package. We first use the `initial_split` function to create a binary split of the data into a training and testing set. Moreover, we use the `strata` argument to conduct what is called "stratified sampling." Because there are very few MVPs in our data compared to those non-MVP players, using the `strata` argument allows us to create a training and test set with a similar amount of MVPs in the data. We then use the `training` and `testing` argument to create our data off of the initial split.
+
+```{r qb-mvp-initial-split, eval = TRUE, echo = TRUE, output = FALSE}
+
+mvp_model_split <- rsample::initial_split(qb_mvp_stats, strata = mvp)
+mvp_model_train <- rsample::training(mvp_model_split)
+mvp_model_test <- rsample::testing(mvp_model_split)
+```
 
 #### Logistic Regression #2: Multinomial Regression with `tidymodels`
 

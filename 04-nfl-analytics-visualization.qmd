@@ -1,4 +1,4 @@
-# Data Visualization with NFL Analytics
+#  Data Visualization with NFL Analytics
 
 ```{r setup-ch4, include = FALSE}
 
@@ -50,11 +50,25 @@ knitr::include_graphics(rep("images/unclerico.png"))
 
 While most of your journey through NFL analytics in this book required you to use the `tidyverse` and a handful of other packages, the process of creating compelling and meaningful data visualizations will require you to utilize multitudes of other packages. Of course, the most important is `ggplot2` which is already installed via the `tidyverse`. However, in order to recreate the visualizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:
 
-Need to install: `ggrepel`
+```{r installing-data-viz-packages, eval = FALSE, echo = TRUE, output = FALSE}
+
+install.packages(c("extrafont",
+                   "ggrepel",
+                   "ggimage",
+                   "ggridges",
+                   "ggtext",
+                   "ggfx",
+                   "geomtextpath",
+                   "cropcirlces",
+                   "magick",
+                   "glue"))
+```
 
 ## Selecting The Correct Type of Plot
 
-Content coming soon and testing flowchart.
+Not all types of data and examination of relationships will work with all the various types of plots within the `ggplot2` family of packages. In general, much of the NFL data you work with will explore correlations, deviation, rankings, and change. A `geom_point()` plot will not work well with deviation (while a `geom_boxplot()` will) and vice versa.
+
+The below flowchart will help you In determining which type of plot works best for the data you are working with.
 
 ```{mermaid}
 
@@ -331,7 +345,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -1134,12 +1148,54 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
 
 ## Creating a `geom_line` Plot
 
-fffff
+A `geom_line()` plot are useful when you want to display the trends and/or relationships in data over a continuous variable (such as seasons). In that context a `geom_line()` plot can be used to explore player statistics over time (such as passing yards and rushing yards), or to do the same but at the team level, or even comparing one team against another by including two (or more!) lines on one plot.
+
+Like all other `geom_` types, the basic foundation of a line graph can be created by, first, calling the `ggplot()` function and then adding `geom_line()` after. To begin building our first line graph, let's read in the below data that contains information regarding the fourth-down attempt percentages by the Philadelphia Eagles into a data frame titled `eagles_fourth_downs`.
 
 ```{r reading_in_eagles_fourth, eval = TRUE, echo = TRUE, output = FALSE}
 
 eagles_fourth_downs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
 ```
+
+The data frames includes information regarding the `season`, the `total` fourth downs in each season, the number of fourth-down attempts in `total_go`, and the conversion percentage in `go_pct`. As well, the data has already been joined with information from `nflreadr::load_teams()` to include colors and logos.
+
+Let's build the foundation of the plot by using `ggplot()` and `geom_line()` and placing the `season` on the x-axis and the `go_pct` on the y-axis.
+
+```{r eagles-line-1, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
+  geom_line()
+```
+
+The above output is a very basic line graph. Based on this output, we can start making modifications to multiple items to reach the end result in a step-by-step fashion. First, let's explore making changes to scale of both the x and y-axis. Given that this is an examination of a yearly statistic, the x-axis should include every season in the data frame (whereas it currently from 2012 to 2015, and then 2015 to 2018). The y-axis can be changed to be whole numbers, and to include the `%` after each number.
+
+```{r eagles-line-2, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
+  geom_line() +
+  scale_x_continuous(breaks = seq(2012, 2022, 1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format())
+```
+
+Please note that difference in how the `breaks` on each scale was handled. Because we want each year on the x-axis, we manually controlled the output by using the `seq()` function to start the x-axix at `2012` and to increase by `1` until the final number of `2022` is reached. On the other hand, we used the `pretty_breaks()` function from `scales` to format the number of breaks on the y-axis and then used `percent_format()` to edit the labels to be whole numbers with the percentage sign included.
+
+Next, we can add more `geom_` types to highlight the general percentage for each season on the x-axis. We will add one `geom_point()` to to indicate the percentage for each season. And then, for aesthetic purposes, we will add a *second* `geom_point()` that is larger than the original, with a color that matches the eventual background, to give the visual impression that the line doesn't quite "reach" the point. Lastly, because we are dealing with aesthetic issues like size and color, we will increase the size of the `geom_line()` and also add the Eagles' secondary team color to it.
+
+```{r eagles-line-3, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
+  geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
+  geom_point(size = 5, color = "#f7f7f7") +
+  geom_point(size = 3, color = eagles_fourth_downs$team_color) +
+  scale_x_continuous(breaks = seq(2012, 2022, 1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format())
+```
+
+The order in which we apply all three `geom_` types is important because, as previously discussed, a `ggplot()` is layered with the first items being placed under the items that come next. In this case, `geom_line()` is under the first `geom_point()` which is then placed under the second `geom_point()`.
+
+To complete the visualization, we can attached our custom `nfl_analytics_theme()` and then use `xlab`, `ylab`, and `labs` to edit the titles of the each axis and to include a title, subtitle, and caption.
 
 ```{r finished_eagles_line, output = TRUE, fig.align='center', fig.dpi = 400}
 
@@ -1147,25 +1203,31 @@ ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
   geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
   geom_point(size = 5, color = "#f7f7f7") +
   geom_point(size = 3, color = eagles_fourth_downs$team_color) +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_x_continuous(breaks = seq(2012, 2022, 1)) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format()) +
   nfl_analytics_theme() +
   xlab("Season") +
   ylab("Go For It Percentage") +
   labs(title = "**Philadelphia Eagles: Fourth-Down Attempt Percentage**",
-        subtitle = "*2012 - 2022: Regular Season*",
-        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       subtitle = "*2012 - 2022: Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
+
+The resulting visualization shows cases how often the Philadelphia Eagles went for it on fourth down between 2012 and 2022. The upward trend , especially starting in 2019, generally follows an established trend among NFL head coaches. Given that, how does the Eagles' trend compare to the rest of the NFL?
+
+We can visualize this by adding a second `geom_line` that shows the averaged `go_pct` for the other 31 NFL teams.
 
 ### Adding Secondary `geom_line` For NFL Averages
 
-fffff
+The `combined_fourth_data` data frame created by running the below code includes the same information as before for the Philadelphia Eagles, but also includes the `NFL` as a `posteam` for the 2012-2022 seasons along with the total fourth down attempt and conversion rate.
 
 ```{r reading_combined_line_data, eval = TRUE, echo = TRUE, output = FALSE}
 
 combined_fourth_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
 ```
+
+The addition of a second `geom_line()` to the plot - one that belongs to the Eagles and one that belongs to averaged number for all other NFL teams - requires a few new additions to our previous code. First, in the `ggplot()` call, we've added `group = posteam`. Because the data is structured so that `PHI` and `NFL` are both observations in the `posteam` column, the use of `group = posteam` instructs `ggplot()` to "split" that information into two and to create a `geom_line()` for each. Second, we've added `scale_color_manual` to the code and manually assigned the appropriate hex code colors to each like (`#004C54` for the Eagles and `#013369` for the rest of the NFL).
 
 ```{r finished_two_line, output = TRUE, fig.align='center', fig.dpi = 400}
 
@@ -1175,7 +1237,7 @@ ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
   geom_point(size = 5, color = "#f7f7f7") +
   geom_point(size = 3, aes(color = posteam)) +
   nfl_analytics_theme() +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_x_continuous(breaks = seq(2012, 2022, 1)) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format()) +
   nfl_analytics_theme() +
@@ -1185,20 +1247,49 @@ ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
   labs(title = "**Philadelphia Eagles vs. NFL: Fourth-Down Attempt Percentage**",
        subtitle = "*2012 - 2022: Regular Season*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
-
-
 ```
 
-fffff
+The resulting visualization does a very good job at showing the upward trend in head coaches going for it on fourth down and that the Eagles are consistently more aggressive in such situations than the rest of the NFL.
 
 ## Creating a `geom_area` Plot
 
-ffff
+A `geom_area()` plot is similar to a `geom_line()` plot in that it is also often used to display quantitative data over a continuous variable. The core difference, however, is that the `geom_area()` plot provides the ability to fill in the surface area between the x-axis and the line. To showcase this, the `mahomes_epa` data frame created by running the below code contains Patrick Mahomes' average EPA for each week of the 2022 regular season, as well as the opponent and the opponent's team logo.
 
 ```{r reading_mahomes_epa_data, eval = TRUE, echo = TRUE, output = FALSE}
 
 mahomes_epa <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv")
 ```
+
+The basics of the completed plot can be output by placing `week` on the x-axis and `mean_qb_epa` on the y-axis and then using `geom_area()`. Also included in the `geom_area()` are two arguments (`fill` and `alpha`). The hex color for the Kansas City Chiefs' secondary color is provided to "fill" in the area and then the `alpha` is set to 0.4 to make it slightly transparent.
+
+```{r mahomes_epa_1, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
+  geom_area(fill = "#FFB612", alpha = 0.4)
+```
+
+To help the `geom_area()` "pop" a bit more off the background, we will now included a `geom_line()` that "rides" across the top of the `geom_area()` and also add `geom_smooth()` to show the week-by-week trend of Mahomes' average EPA.
+
+```{r mahomes_epa_2, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
+  geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
+  geom_area(fill = "#FFB612", alpha = 0.4) +
+  geom_line(color = "#E31837", size = 1.5)
+```
+
+While the plot does provide information regarding Mahomes' average EPA, we still do not know who he was playing on any given week. To add this information, we can use the `geom_image()` function from `ggimage` to add the logo of each opponent to the points of the `geom_area()`.
+
+```{r mahomes_epa_3, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
+  geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
+  geom_area(fill = "#FFB612", alpha = 0.4) +
+  geom_line(color = "#E31837", size = 1.5) +
+  geom_image(aes(image = team_logo_wikipedia), size = 0.045, asp = 16/9)
+```
+
+With the logos of each opponent added, we can turn to the finishing touches including adding our custom theme, changing the title of each axis, and adding a title. We also need to make edits to the scale of each axis, again using `seq()` to include all 18 weeks on the x-axis.
 
 ```{r mahomes_epa_finished, output = TRUE, fig.align='center', fig.dpi = 400}
 
@@ -1207,9 +1298,7 @@ ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
   geom_area(fill = "#FFB612", alpha = 0.4) +
   geom_line(color = "#E31837", size = 1.5) +
   geom_image(aes(image = team_logo_wikipedia), size = 0.045, asp = 16/9) +
-  ##geom_point(color = "#F7F7F7",size = 6.5) +
- ## geom_point(color = "#FFB612", size = 3.5) +
-  scale_x_continuous(breaks = seq(1,17,1)) +
+  scale_x_continuous(breaks = seq(1,18,1)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   xlab("Week") +
@@ -1219,11 +1308,13 @@ ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
-ffffff
+The finished visualization indicates that Mahomes' had his highest average EPA in week 1 against the Arizona Cardinals (at roughly 0.8) before dropping considerably for week two through six. However, after a spike in week 7 against the 49ers, the `geom_smooth()` shows a continued downward trend for the remainder of the season, including four poor performances (by Mahomes' standard, anyways) against the Broncos, Seahawks, and Raiders to end the season.
 
 ## Creating a `geom_col` Plot
 
-To begin creating our `geom_col` plot, we will use `vroom` to gather the necessary data into a dataframe titled `qb_thirddown_data`.
+To begin creating our `geom_col` plot, we will use `vroom` to gather the necessary data into a data frame titled `qb_thirddown_data`. The resulting data frame includes the top ten quarterback in "third down aggressiveness." The metric is calculated by first gathering the total number of 3rd down passing attempts by each quarterback with 10 or less yards to go. A pass attempt is considered "aggressive" if the total air yards is equal to - or greater than - the needed yards to go. Based on this calculation, Tua Tagovailoa was the most aggressive quarterback on 3rd downs during the 2022 regular season.
+
+Because this is *not* a metric that is constructed against a continuous variable (such as `season` in the `geom_line()` examples), we turn to using `geom_col()`.
 
 ```{r geom_col_data, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -1232,45 +1323,50 @@ qb_thirddown_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/n
 qb_thirddown_data
 ```
 
-The resulting dataframe include the top ten quarterback in
+To start, we will place `passer_id` on the x-axis and `qb_agg_pct` on the y-axis. However, to make sure the columns are plotted in descending order, we use the `reorder()` function to reorder `passer_id` in descending order by the `qb_agg_pct` variable.
 
 ```{r geom_col_reorder, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col()
 ```
 
-ffffffffffffff
+The resulting plot is a solid foundation and just needs aesthetic adjustments and additions to bring it to the final version. We will first use the `fill` argument to add the respective team colors to each column and then the `color` argument to add the secondary team color as an outline to each column.
 
 ```{r geom_col_adding_color, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2)
 ```
 
-ffffffffffff
+Next we can make adjustments to each axis. Using `scale_y_continuous`, we will set the number of breaks with `pretty_breaks()` and then use `percent_format()` to adjust the scale into whole numbers with the accompanying percentage sign. The `expand()` argument is used is set to `c(0,0)` to get rid of the "dead space" between the bottom of each column and the y-axis.
+
+We can also provide the `xlab()`, `ylab()`, and include our custom `nfl_analytics_theme()` to the plot.
 
 ```{r geom_col_cleaning_scales, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
                      expand = c(0,0)) +
-  theme(axis.text.x = element_blank()) +
   xlab("") +
   ylab("QB Aggressiveness on 3rd Down") +
   nfl_analytics_theme()
 ```
 
-ffffffffffffff
+We will provide two ways to identify which column belong to which quarterback: by adding the player name to the column and by including each player's headshot at the bottom of each.
+
+To place the player name on each column, we will use the `geom_text()` function wrapped inside the `with_outer_glow()` function (which is part of the `ggfx` package). The `with_outer_glow()` function allows us to apply a drop shadow effect to the text, making sure that it is easy to read on the colored background of each column. The `geom_text` function accepts the arguments relating to the `angle`, horizontal adjustment `hjust`, `color`, font family, font face, and size of the text. The `with_outer_glow` function is used to apply the `sigma` (how dark or light to make the shadow/glow), `expand` (how far to spread out the glow/shadow), and `color`.
 
 ```{r geom_col_adding_names, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_agg_pct)) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  geom_text(aes(label = passer), position = position_stack(vjust = .98), 
-            angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8) +
+  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
+                            angle = 90, hjust = .98, color = "white",
+                            family = "Roboto Condensed", fontface = "bold", size = 8),
+                  sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
                      expand = c(0,0)) +
@@ -1279,80 +1375,70 @@ ggplot(data = qb_thirddown_data, aes(x = reorder(passer, -qb_agg_pct), y = qb_ag
   nfl_analytics_theme()
 ```
 
-ffffffffffffff
+To add player headshot to the bottom of each column, we use the `element_nfl_headshot` function from the `nflplotR` package. Inside the `theme()` option, we use `element_nfl_headshot()` to replace the `axis_text.x()`. It is important to remember to use `passer_id` on the x-axis (rather than `passer_name` or something similar). The `nflplotR` package uses the `passer_id` to automatically pull the correct headshot for each player. Without including `passer_id` in the x-axis, the resulting headshots will be the "blank" NFL picture.
 
 ```{r geom_col_adding_headshots, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  geom_text(aes(label = passer), position = position_stack(vjust = .98), 
-            angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8) +
+  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
+                            angle = 90, hjust = .98, color = "white",
+                            family = "Roboto Condensed", fontface = "bold", size = 8),
+                  sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
                      expand = c(0,0)) +
-  theme(axis.text.x = element_nfl_headshot(size = 1)) +
+  theme(axis.text.x = nflplotR::element_nfl_headshot(size = 1)) +
   xlab("") +
   ylab("QB Aggressiveness on 3rd Down") +
   nfl_analytics_theme()
-
-
 ```
 
-ffffffffff
+To complete the plot, we can add the `title`, `subtitle`, and `caption` using the `labs` function.
 
-```{r geom_col_adding_ggfx, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r geom_col_final, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
   geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
   with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
-              angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8),
-              sigma = 6, expand = 1, color = "black") +
+                            angle = 90, hjust = .98, color = "white",
+                            family = "Roboto Condensed", fontface = "bold", size = 8),
+                  sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
                      expand = c(0,0)) +
-  theme(axis.text.x = element_nfl_headshot(size = 1)) +
-  xlab("") +
-  ylab("QB Aggressiveness on 3rd Down") +
-  nfl_analytics_theme()
-
-```
-
-fffffffff
-
-```{r geom_col_adding_titleinfo, output = TRUE, fig.align='center', fig.dpi = 400}
-
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
-              angle = 90, hjust = .98, color = "white", family = "Roboto Condensed", fontface = "bold", size = 8),
-              sigma = 6, expand = 1, color = "black") +
- scale_y_continuous(breaks = scales::pretty_breaks(),
-                     labels = scales::percent_format(),
-                     expand = c(0,0)) +
-  theme(axis.text.x = element_nfl_headshot(size = 1)) +
+  theme(axis.text.x = nflplotR::element_nfl_headshot(size = 1)) +
   xlab("") +
   ylab("QB Aggressiveness on 3rd Down") +
   nfl_analytics_theme() +
   labs(title = "**QB Aggressiveness on Third Down**",
        subtitle = "*Numbers of Times Air Yards >= Yards To Go*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+
 ```
+
+As highlighted in the resulting plot, Tagovailoa was the only QB in the league to go above 60% in aggressiveness (Derek Carr was an even 60%). In this case, our domain knowledge of the NFL is important as we will recall that Tua was out for portions of the 2022 regular season as a result of concussions. His aggressive percentage could be slightly inflated because of the fewer games compared to the other quarterbacks.
 
 ### An Alternative `geom_col` Plot
 
-fffffffff
+The `geom_col()` plot is incredibly versatile, allowing you to create multiple types of visualizations. For example, we can use the data frame below, `epa_per_play`, to graph each teams average EPA per play during the 2022 regular season. However, rather than plot it in a standard column format like above, we will plot it in a "left-to-right" design with each team diverging from the 0.00 EPA per Play.
 
 ```{r epa-per-play-data, eval = TRUE, echo = TRUE, output = FALSE}
 
 epa_per_play <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv")
 ```
 
-ffffffffff
+The `ggplot()` code required to output the visulization is quite similar to our above `geom_col()` plot for QB aggressiveness. There are several distinct differences, however.
+
+1.  We've included a `fill = if_else()` argument in `geom_col()`. If a team has a positive EPA per play, the column for that team will be blue. If the team has a negative EPA per play, the column will be red.
+2.  The use of `scale_fill_identity()` is used because the data has already been scaled (by EPA per play) and already represents aesthetic values that are native to `ggplot2()`.
+3.  `scale_y_discrete` is used because the y-axis is team names rather than a continuous variables. Moreover,`expand = c(.05, 0))` is included to make sure that the Chiefs and Texans logos are not clipped during the processing of the plot.
 
 ```{r epa_per_play_plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = epa_per_play, aes(x = epa_per_play, y = reorder(posteam, epa_per_play))) +
   geom_col(aes(fill = if_else(epa_per_play >= 0, "#2c7bb6", "#d7181c")), width = 0.2) +
+  geom_vline(xintercept = 0, color = "black") +
   scale_fill_identity() +
   geom_image(aes(image = team_logo_wikipedia), asp = 16/9, size = .035) +
   xlab("EPA Per Play") +
@@ -1366,14 +1452,18 @@ ggplot(data = epa_per_play, aes(x = epa_per_play, y = reorder(posteam, epa_per_p
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
+It should not be a surprise that the Chiefs outperfor - by a large margin - the rest of the NFL. The Texans and Colts, on the other hand, averaged -0.15 expected points added per play during the 2022 regular season.
+
 ## Creating a `geom_box` Plot
 
-Viewing the distribution of air yards for all 2022 playoff teams.
+We can create a `geom_box()` plot to examine the distribution of air yards for each playoff team from the 2022 season. A box plot is a suitable way to, as mentioned, view distribution but to also view the "skewness" of a metric by also including the interquartile ranges, averages, and any outliers in the data.
 
 ```{r reading_airyards_plot_data, eval = TRUE, echo = TRUE, output = FALSE}
 
 playoff_airyards_plot <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv")
 ```
+
+The `geom_boxplot()` function includes one more argument - `color`. In this case, we have set the argument to `black`. We will also include the `geom_jitter()` function, which will plot each pass underneath the box plot. This is not a requirement for a box plot, but does add an additional level of aesthetics and detail to the final plot. Last, we use the `element_nfl_logo` function to place the respective team logo under each box plot.
 
 ```{r finished_boxplot, output = TRUE, fig.align='center', fig.dpi = 400}
 
@@ -1391,14 +1481,24 @@ ggplot(data = playoff_airyards_plot, aes(x = posteam, y = air_yards, fill = post
   theme(axis.text.x = element_nfl_logo(size = 1.25))
 ```
 
+In the visualization, each box plot represent the interquartile range (IQR) of air yards distribution for each team. The black line represents the median average, while the area below the black line is the lower quartile (Q1), or the 25th percentile, while the area above is the upper quartile (Q3), or the 75th percentile. The "whisker" coming from both ends of the box plot represent the minimum and maximum amounts (where the minimum is `Q1 - 1.5 * IQR` and the maximum is `Q3 + 1.5 * IQR`). The black dots above the whiskers indicate outliers.
+
+Based on the results, the Miami Dolphins had the highest median air yards of the 2022 playoff teams while the New York Giants had the smallest spread (indicated by the 25th and 75th percentiles being closest to the median).
+
 ## Creating a `geom_ridges` Plot
+
+We can take the same idea used in the `geom_boxplot()` graph to reformat it to be used in a `geom_ridges()` plot, which is another option to represent the distribution of a continuous variable.
 
 ```{r reading_in_ridges_data, eval = TRUE, echo = TRUE, output = FALSE}
 
 playoff_airyards_ridges_plot <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv")
 ```
 
-```{r finished_geom_ridges, output = TRUE, fig.align='center', fig.dpi = 400}
+Before creating the plot, we will create a function titled `meansd` that will assist in including lines within the `geom_ridges()` to show the mean and standard deviation for each team.
+
+The `meansd` function is included in the `geom_density_ridges()` arguments. We do wish to show `quantile_lines`, so we provide `meansd` to the `quantile_fun` argument and then set the `color` of the quantile lines.
+
+```{r finished_geom_ridges, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
 
 ### creating function to add SD, mean, and mean + sd
 meansd <- function(x, ...) {
@@ -1428,7 +1528,7 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,y = reorder(postea
 yards_gained_compared <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv")
 ```
 
-```{r violin_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r violin_plot_completed, output = TRUE, fig.align='center', warning= FALSE, fig.dpi = 400}
 
 custom_labeller <- function(variable, value){
   new_labels <- c("1st Down", "2nd Down", "3rd Down")
@@ -1468,7 +1568,7 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
   geom_histogram(binwidth = 50) +
   nflplotR::scale_fill_nfl(type = "primary") +
   scale_x_continuous(breaks = seq(200, 500, 100)) +
-  scale_y_continuous(breaks = seq(0, 8, 2)) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
   facet_wrap(vars(defteam), scales = "free_x") +
   theme(strip.text = element_nfl_wordmark(size = .5)) +
   nfl_analytics_theme() +
@@ -1480,19 +1580,25 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
-## Other Example Visualizations
+## Advanced Headshots Method
 
-ffff
+The ability to include player headshots onto plots is an outstanding addition to the NFL analytics universe. However, the headshots themselves quite often have "harsh" aesthetics in that the image is cut off at the shoulders and, as a result, can result in plots where the shoulders just seem to "fall off" into the abyss of the plot itself.
 
-## Advanced Data Visualization Methods
+To correct this, we can use several different package to create circular croppings of the of the individual headshot images and then wrap the player's name around the image itself.
 
-fffffffffff
+To showcase the process, let's create a data frame titled `complete_wr_airyards` with the below code:
 
-### Creating Circular Headshots
+```{r reading_headshot_csv, eval = FALSE, echo = TRUE, output = FALSE}
+
+complete_wr_airyards <- vroom::vroom("url here")
+
+```
+
+To begin the process, we create a data frame called `crop_circles_data` that includes just one observation for each wide receive that includes the `receiver_id` and `headshot_url` variables. After, we create a new column in `crop_circles_data` called `circle` and then use the `circle_crop` function from the `cropcircles` package to automatically crop each player's headshot into a uniform circle. The resulting image is saved locally on your device. Last, since we no longer need the `headshot_url` information, we drop that from the `crop_circles_data` data frame.
 
 ```{r cropcircles_on_headshots, eval = FALSE, echo = TRUE, output = FALSE}
 
-crop_circles_data <- complete_wr_ay %>%
+crop_circles_data <- complete_wr_airyards %>%
   select(receiver_id, headshot_url) %>%
   distinct(receiver_id, .keep_all = TRUE)
 
@@ -1503,7 +1609,9 @@ crop_circles_data <- crop_circles_data %>%
   select(receiver_id, circle)
 ```
 
-fffff
+The next step, which is a modified version of an approach used by [Tanya Shapiro](https://twitter.com/tanya_shapiro), is multifaceted. We first use the `magick` package to create a composite of the image and place a white background behind the circular cropped headshot.
+
+We then create a function called `plot_image_label` that will wrap each player's name around the top of the circular headshot and then proceed with producing the images with the names wrapped using `ggplot()`.
 
 ```{r circle_image_border, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -1558,7 +1666,7 @@ plot_image_label<-function(image,
 }
 ```
 
-ffffff
+After the process finishes running (it may take a while depending on your computing power), we create a new column titled `new_image_path` and use `past0` to copy the `receiver_id` for each player and tag ".png" on the end.
 
 ```{r creating_new_path, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -1566,7 +1674,7 @@ crop_circles_data <- crop_circles_data %>%
   mutate(new_image_path = paste0(receiver_id, ".png"))
 ```
 
-fffffff
+We then loop our `crop_cirlces_data` function back over the images and save them into a new images folder on our computer.
 
 ```{r looping_over_images, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -1583,10 +1691,11 @@ for(i in 1:nrow(crop_circles_data)) {
   
   ggsave(filename = glue("./images/circle_headshots/{path}"), plot=plot, height=3.95, width=4.5)
 }
-
 ```
 
-**NOTE ABOUT RUNNING DEV.OFF() HERE TO GET GGPLOT TO DISPLAY AGIAN.**
+::: callout-important
+If RStudio happens to stop outputting `ggplot()` visualizations at this point, please run `dev.off()`.
+:::
 
 ```{r adding_image_path, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -1594,7 +1703,7 @@ crop_circles_data <- crop_circles_data %>%
   mutate(image = glue("./images/circle_headshots/{new_image_path}"))
 ```
 
-ffffff
+We can now take our new cropped headshots and bring them into a visualization created with `ggplot()`.
 
 ```{r reading_in_circle_data, eval = TRUE, echo = FALSE, output = FALSE}
 
