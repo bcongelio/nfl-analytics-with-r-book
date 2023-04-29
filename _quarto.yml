@@ -17,7 +17,6 @@ book:
     - 02-nfl-analytics-tidyverse.qmd
     - 03-nfl-analytics-functions.qmd
     - 04-nfl-analytics-visualization.qmd
-    - 05-nfl-analytics-advanced-methods.qmd
     - references.qmd
   appendices: 
     - a1-nfl-analytics-dictionary.qmd
@@ -38,6 +37,5 @@ format:
   pdf:
     documentclass: krantz
     keep-tex: true
-    latex-auto-mk: false
 
 
