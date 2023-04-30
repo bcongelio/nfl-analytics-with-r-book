@@ -7,6 +7,8 @@ source("book-functions.R")
 library(tidyverse)
 library(nflverse)
 library(seecolor)
+library(extrafont)
+extrafont::loadfonts(quiet = TRUE)
 
 pbp <- nflreadr::load_pbp(2022)
 ```

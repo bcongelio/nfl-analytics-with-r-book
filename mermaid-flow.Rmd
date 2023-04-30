@@ -1,0 +1,33 @@
+{mermaid}
+
+flowchart
+
+A[Data Type]
+A --> B(Continuous)
+A --> C(Discrete)
+C --> D(Two Discrete Variables)
+D --> E(Relationships)
+D --> F(Counts)
+E --> G{geom_point}
+E --> H{geom_jitter}
+C --> I(One Discrete, One Continuous)
+I --> J(Distribution)
+I --> K(Summary)
+J --> L{geom_boxplot}
+J --> M{geom_violin}
+K --> N{geom_bar}
+K --> O{geom_col}
+B --> P(Two Continuous Variables)
+P --> Q{geom_point}
+P --> R{geom_line}
+B --> S(One Continuous, One Discrete)
+S --> T(Distribution)
+S --> U(Summary)
+T --> V{geom_boxplot}
+T --> W{geom_violin}
+U --> X{geom_bar}
+B --> Y(One Continuous)
+Y --> Z(Histogram)
+Y --> AA(Density)
+Z --> BB{geom_histogram}
+Z --> CC{geom_density}

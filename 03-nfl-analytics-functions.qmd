@@ -6,6 +6,10 @@ source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)
+library(extrafont)
+library(ggtext)
+library(ggrepel)
+extrafont::loadfonts(quiet = TRUE)
 ```
 
 As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current version of the `nflverse` is comprised of five separate R packages:
@@ -463,16 +467,37 @@ The `load_officials()` data will return data, from 2015 to present, outlining wh
 
 With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique `crew_id` to each stable of officials "working" under a lead referee.
 
-```{r creating-crew-id, eval = TRUE, echo = TRUE, output = FALSE}
+As an example, we can create data frame called `nfl_officials` that contains the official and referee information for each game during the 2022 season. After, in order to get the referee for each crew, use `filter()` to select those crew members with the "Referee" position and then create a new column titled `crew_id` that takes the numeric official ID for each distinct Referee.
+
+```{r officials-starting-data, eval = TRUE, echo = TRUE, output = FALSE}
 
 nfl_officials <- nflreadr::load_officials(seasons = 2022)
 
 referees <- nfl_officials %>%
   filter(position == "Referee") %>%
   mutate(crew_id = match(official_id, unique(official_id)))
+```
+
+With a unique `crew_id` associated with each Referee, we can now use `left_join()` to bring that information back into our `nfl_officials` data by merging the `game_id` and `crew_id` to the corresponding `game_id`.
+
+```{r merging-crew-id-to-data, eval = TRUE, echo = TRUE, output = FALSE}
 
 nfl_officials <- nfl_officials %>%
   left_join(referees %>% select(game_id, crew_id), by = "game_id")
+```
+
+The resulting `nfl_officials` data frame now includes all the original information and now a consistent `crew_id` for each team that the referee works with.
+
+```{r showcasing-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+nfl_officials
+```
+
+To calculate the total number of penalties flagged by each crew, we must first bring in the play-by-play from the 2022 season. After, we will use `filter()` to gather only those plays where a flag was thrown, and then `select()` the relevant columns, and finally `summarize()` by the `old_game_id` to get the total penalties called and the total penalty yards as a result of those penalties.
+
+After, we conducted another `left_join()` to bring in the specific penalty information into our `nfl_officials` data frame.
+
+```{r penalties-from-pbp, eval = TRUE, echo = TRUE, output = FALSE}
 
 penalty_pbp <- nflreadr::load_pbp(seasons = 2022)
 
@@ -480,45 +505,230 @@ penalties <- penalty_pbp %>%
   filter(penalty == 1) %>%
   select(game_id, old_game_id, season, play_id, desc, home_team, away_team,
          posteam, defteam, week, penalty_team, penalty_type, penalty, penalty_player_id,
-         penalty_player_name, penalty_yards)
-
-total_penalties <- penalties %>%
+         penalty_player_name, penalty_yards) %>%
   group_by(old_game_id) %>%
-  summarize(
-    total_called = sum(penalty == 1, na.rm = TRUE),
-    total_yards = sum(penalty_yards, na.rm = TRUE))
+  summarize(total_called = sum(penalty == 1, na.rm = TRUE),
+            total_yards = sum(penalty_yards, na.rm = TRUE))
 
 nfl_officials <- nfl_officials %>%
-  left_join(total_penalties, by = c("game_id" = "old_game_id")) %>%
+  left_join(penalties, by = c("game_id" = "old_game_id")) %>%
   select(game_id, official_name, position, crew_id, total_called, total_yards)
-  
-tallied <- nfl_officials %>%
+
+```
+
+With the data now combined, we can `group_by()` each game's unique `game_id` and then use `summarize()` to sum the penalties called and the penalty yardage. After descending by the total number of penalties, we can see that Referee Carl Cheffers, and his crew, called the most penalties during the 2022 NFL season with 223 and, unsurprisingly, also had the highest amount of penalty yards with 1,916.
+
+```{r summarizing-referee-information, eval = TRUE, echo = TRUE, output = TRUE}
+
+nfl_officials %>%
   group_by(game_id) %>%
   filter(position == "Referee") %>%
   ungroup() %>%
   group_by(crew_id) %>%
-  reframe(
-    referee = unique(official_name),
-    all_pen = sum(total_called, na.rm = TRUE),
-    all_yards = sum(total_yards, na.rm = TRUE))
-
+  summarize(referee = unique(official_name),
+            all_pen = sum(total_called, na.rm = TRUE),
+            all_yards = sum(total_yards, na.rm = TRUE)) %>%
+  arrange(desc(all_pen)) %>%
+  slice(1:10)
 ```
 
 ### The `load_trades()` Function
 
-ffffff
+The `load_trades()` function returns a data frames that includes all trades in the NFL on a season-by-season basis with information pertaining to: `trade_id`, `season`, `trade_date`, `gave`, `received`, `pick_season`, `pick_round`, `pick_number`, `conditional`, `pfr_id`, `pfr_name`.
+
+For example, we can gather every trade involving the New England Patriots with the following code:
+
+```{r collecting-ne-trade, eval = TRUE, echo = TRUE, output = TRUE}
+
+ne_trades <- nflreadr::load_trades(seasons = 2000:2022) %>%
+  filter(gave == "NE" | received == "NE")
+
+ne_trades
+```
+
+If you want to view a trade that involves a specific player, you can do the same as above but `filter()` for a specific player. As an example, we do search for the trade that resulted in the New England Patriots sending Drew Bledsoe to the Buffalo Bills.
+
+```{r bledsoe-to-bills, eval = TRUE, echo = TRUE, output = TRUE}
+
+bledsoe_trade <- nflreadr::load_trades() %>%
+  filter(trade_id == trade_id[pfr_name %in% c("Drew Bledsoe")])
+
+bledsoe_trade
+```
+
+Since the `load_trades()` function also includes NFL Draft round and pick numbers (if included in a trade), we can also - for example - determine all trades that involved a top ten pick switching hands.
+
+```{r top-ten-picks-trades, eval = TRUE, echo = TRUE, output = TRUE}
+
+top_ten_picks <- nflreadr::load_trades() %>%
+  filter(pick_round == 1 & pick_number <= 10)
+
+top_ten_picks
+```
 
 ### The `load_draft_picks()` Function
 
-fffffff
+The `load_draft_picks()` function will load information pertaining to every draft pick dating back to 1980. Aside from the information you would expect (the player's name, the team that draft, round, pick number, position, etc.), the `load_draft_picks()` function also includes data regarding how many seasons the player played, the amount of times they were named to Pro Bowls, and top-level statistics regarding rushing, passing, receiving, and defensive metrics.
+
+The `load_draft_picks()` function can be used to explore multiple different facets of the NFL Draft. For example, there is a belief in the analytics community to never draft a running back in the first round. Without getting into the reasoning behind that belief, we can quickly create a visualization of career rushing yards per running back compared to their draft position.
+
+```{r running-back-draft-position, eval = TRUE, echo = TRUE, output = FALSE}
+
+draft_picks <- nflreadr::load_draft_picks()
+teams <- nflreadr::load_teams()
+
+rb_picks <- draft_picks %>%
+  filter(position == "RB") %>%
+  select(pick, team, rush_atts, rush_yards) %>%
+  filter(pick <= 100)
+
+rb_picks <- rb_picks %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+```
+
+```{r running-back-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = rb_picks, aes(x = rush_yards, y = pick)) +
+  geom_point(color = rb_picks$team_color, size = rb_picks$rush_atts / 500) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  geom_smooth(se = FALSE) +
+  xlab("Career Rushing Yards") +
+  ylab("Pick Number") +
+  nfl_analytics_theme() +
+  labs(title = "**Career Rushing Yards vs. Pick Number**",
+       subtitle = "1980 to 2022",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+
+```
+
+According to the plot, there has been a limited number of running backs draft in the top 20 to go over 10,000 career yards. However, there are more running backs - some still active - drafted in the mid-range of the draft that are approaching, or have eclipsed, the 10,000 yard mark.
 
 ### The `load_combine()` Function
 
-fffffff
+The `load_combine()` function provides NFL Combine data dating back to 2000. Aside from biographical information for each player (including eventual draft position), the data include the player's scores in the 40-yard dash, the bench press, the vertical, the broad jump, the cone drill, and the shuttle drill.
+
+We can join information from `load_combine()` with outside information to determine if there is any correlation between a running back's 40-yard dash time in the combine and the total number of rushing yard accumulated during his career.
+
+```{r 40-dash-yards-correlation, eval = TRUE, echo = TRUE, output = FALSE}
+
+combine_data <- nflreadr::load_combine() %>%
+  select(pfr_id, forty) %>%
+  filter(!is.na(pfr_id) & !is.na(forty))
+
+rosters <- nflreadr::load_rosters(2000:2022) %>%
+  select(gsis_id, pfr_id) %>%
+  distinct(gsis_id, .keep_all = TRUE)
+
+player_stats <- nflreadr::load_player_stats(seasons = TRUE, stat_type = "offense") %>%
+  filter(position == "RB" & !is.na(player_name) & season_type == "REG") %>%
+  group_by(player_name, player_id) %>%
+  summarize(total_yards = sum(rushing_yards, na.rm = TRUE),
+            team = last(recent_team))
+
+player_stats <- player_stats %>%
+  left_join(rosters, by = c("player_id" = "gsis_id"))
+
+player_stats <- player_stats %>%
+  filter(!is.na(pfr_id))
+
+player_stats <- player_stats %>%
+  left_join(combine_data, by = c("pfr_id" = "pfr_id")) %>%
+  filter(!is.na(forty))
+
+player_stats <- player_stats %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+```
+
+```{r running-back-40-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = player_stats, aes(x = forty, y = total_yards)) +
+  geom_point(color = player_stats$team_color, size = 3.5) +
+  geom_smooth(method = lm, se = FALSE, color = "black", linetype = "dashed", size = 0.8) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  nfl_analytics_theme() +
+  xlab("Forty-Yard Dash Time") +
+  ylab("Career Rushing Yards") +
+  labs(title = "**Forty-Yard Dash Time vs. Career Rushing Yards**",
+       subtitle = "2000 to 2022",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+The visualization indicates that there is little, if any, direct correlation between a running back's 40-yard dash time and his career total rushing yards. There are likely other factors that contribute to total rushing yards, such as a running back's agility and vision and - perhaps most important - the quality of the offensive line over the duration of the running back's career.
 
 ### The `load_nextgen_stats()` Function
 
-ffffff
+The `load_nextgen_stats()` function retrieves player-level weekly statistics as provided by NFL Next Gen Stats dating back to the 2016 season. While three different stat types are provided (passing, receiving, and rushing), it is important to note that the data will only contain those players above a minimum number of attempts as determined by the NFL Next Gen Stats team.
+
+To illustrate what can be done with the `load_nextgen_stats()` function, we will gather information to create two different plots. First, we can plot each quarterback's average time to throw against their average completed air yards. Second, we will construct a graph to highlight which running backs had more actual rushing yards than the NGS "expected rushing yards" model.
+
+```{r ngs-passing-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+ngs_data_passing <- nflreadr::load_nextgen_stats(seasons = 2022, stat_type = "passing") %>%
+  filter(week == 0) %>%
+  select(player_display_name, team_abbr, avg_time_to_throw, avg_completed_air_yards)
+
+ngs_data_passing <- ngs_data_passing %>%
+  left_join(teams, b = c("team_abbr" = "team_abbr"))
+```
+
+```{r ngs-passing-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw, y = avg_completed_air_yards)) +
+  geom_hline(yintercept = mean(ngs_data_passing$avg_completed_air_yards),
+             color = "black", size = 0.8, linetype = "dashed") +
+  geom_vline(xintercept = mean(ngs_data_passing$avg_time_to_throw),
+             color = "black", size = 0.8, linetype = "dashed") +
+  geom_point(size = 3.5, color = ngs_data_passing$team_color) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  geom_text_repel(aes(label = player_display_name),
+                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  nfl_analytics_theme() +
+  xlab("Average Time to Throw") +
+  ylab("Average Completed Air Yards") +
+  labs(title = "**Avgerage Time to Throw vs. Average Air Yards**",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+The resulting plot shows that Dak Prescott, Jalen Hurts, and Ryan Tannehill had an average completed air yard above the NFL average despite getting rid of the ball quicker than most other quarterbacks in the league. Conversely, Patrick Mahomes, Daniel Jones, and Justin Herbert has under average completed air yards despite holding on to the ball longer than the rest of the league (on average).
+
+```{r nga-rushing-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+ngs_data_rushing <- nflreadr::load_nextgen_stats(seasons = 2022, stat_type = "rushing") %>%
+  filter(week == 0) %>%
+  select(player_display_name, team_abbr, expected_rush_yards, rush_yards_over_expected) %>%
+  mutate(actual_rush_yards = expected_rush_yards + rush_yards_over_expected)
+
+ngs_data_rushing <- ngs_data_rushing %>%
+  left_join(teams, by = c("team_abbr" = "team_abbr"))
+```
+
+```{r ngs-rushing-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards, y = actual_rush_yards)) +
+  geom_smooth(method = lm, se = FALSE, color = "black", size = 0.8, linetype = "dashed") +
+  geom_point(size = 3.5, color = ngs_data_rushing$team_color) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  geom_text_repel(aes(label = player_display_name), family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  nfl_analytics_theme() +
+  xlab("Expected Rush Yards") +
+  ylab("Actual Rush Yards") +
+  labs(title = "Expected Rush Yards vs. Actual Rush Yards",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+After plotting the rushing data from Next Gen Stats, we can see that Nick Chubb was well above the expected yardage metric while Ezekiel Elliott, Alvin Kamara, Najee Harris, and Dalvin Cook all had actual rushing yards that fell below what was expected by the model.
 
 ### The `load_depth_charts()` Function
 

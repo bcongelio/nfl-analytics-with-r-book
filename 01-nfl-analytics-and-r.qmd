@@ -8,7 +8,8 @@ library(tidyverse)
 library(nflverse)
 library(extrafont)
 library(ggtext)
-loadfonts(device="win")
+library(hrbrthemes)
+hrbrthemes::import_roboto_condensed()
 ```
 
 ## Introduction

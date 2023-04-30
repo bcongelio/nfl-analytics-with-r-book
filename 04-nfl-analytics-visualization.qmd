@@ -1,4 +1,4 @@
-#  Data Visualization with NFL Analytics
+# Data Visualization with NFL Analytics
 
 ```{r setup-ch4, include = FALSE}
 
@@ -69,42 +69,6 @@ install.packages(c("extrafont",
 Not all types of data and examination of relationships will work with all the various types of plots within the `ggplot2` family of packages. In general, much of the NFL data you work with will explore correlations, deviation, rankings, and change. A `geom_point()` plot will not work well with deviation (while a `geom_boxplot()` will) and vice versa.
 
 The below flowchart will help you In determining which type of plot works best for the data you are working with.
-
-```{mermaid}
-
-flowchart
-
-A[Data Type]
-A --> B(Continuous)
-A --> C(Discrete)
-C --> D(Two Discrete Variables)
-D --> E(Relationships)
-D --> F(Counts)
-E --> G{geom_point}
-E --> H{geom_jitter}
-C --> I(One Discrete, One Continuous)
-I --> J(Distribution)
-I --> K(Summary)
-J --> L{geom_boxplot}
-J --> M{geom_violin}
-K --> N{geom_bar}
-K --> O{geom_col}
-B --> P(Two Continuous Variables)
-P --> Q{geom_point}
-P --> R{geom_line}
-B --> S(One Continuous, One Discrete)
-S --> T(Distribution)
-S --> U(Summary)
-T --> V{geom_boxplot}
-T --> W{geom_violin}
-U --> X{geom_bar}
-B --> Y(One Continuous)
-Y --> Z(Histogram)
-Y --> AA(Density)
-Z --> BB{geom_histogram}
-Z --> CC{geom_density}
-
-```
 
 ## The Basics of Using `ggplot2`
 
@@ -345,7 +309,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:----------------------------:|:----------------------------------------:|
+|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |

@@ -142,7 +142,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
-</script><script src="site_libs/quarto-diagram/mermaid.min.js"></script><script src="site_libs/quarto-diagram/mermaid-init.js"></script><link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+</script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -343,51 +343,6 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span class="header-section-number">5.3</span> Selecting The Correct Type of Plot</h2>
 <p>Not all types of data and examination of relationships will work with all the various types of plots within the <code>ggplot2</code> family of packages. In general, much of the NFL data you work with will explore correlations, deviation, rankings, and change. A <code>geom_point()</code> plot will not work well with deviation (while a <code>geom_boxplot()</code> will) and vice versa.</p>
 <p>The below flowchart will help you In determining which type of plot works best for the data you are working with.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<p>
-</p>
-<pre class="mermaid mermaid-js" data-tooltip-selector="#mermaid-tooltip-1">flowchart
-
-A[Data Type]
-A --&gt; B(Continuous)
-A --&gt; C(Discrete)
-C --&gt; D(Two Discrete Variables)
-D --&gt; E(Relationships)
-D --&gt; F(Counts)
-E --&gt; G{geom_point}
-E --&gt; H{geom_jitter}
-C --&gt; I(One Discrete, One Continuous)
-I --&gt; J(Distribution)
-I --&gt; K(Summary)
-J --&gt; L{geom_boxplot}
-J --&gt; M{geom_violin}
-K --&gt; N{geom_bar}
-K --&gt; O{geom_col}
-B --&gt; P(Two Continuous Variables)
-P --&gt; Q{geom_point}
-P --&gt; R{geom_line}
-B --&gt; S(One Continuous, One Discrete)
-S --&gt; T(Distribution)
-S --&gt; U(Summary)
-T --&gt; V{geom_boxplot}
-T --&gt; W{geom_violin}
-U --&gt; X{geom_bar}
-B --&gt; Y(One Continuous)
-Y --&gt; Z(Histogram)
-Y --&gt; AA(Density)
-Z --&gt; BB{geom_histogram}
-Z --&gt; CC{geom_density}
-
-</pre>
-<div id="mermaid-tooltip-1" class="mermaidTooltip">
-
-</div>
-
-</div>
-</div>
-</div>
 </section><section id="the-basics-of-using-ggplot2" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="the-basics-of-using-ggplot2">
 <span class="header-section-number">5.4</span> The Basics of Using <code>ggplot2</code>
 </h2>
