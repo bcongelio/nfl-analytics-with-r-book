@@ -398,7 +398,7 @@ The `load_rosters()` function houses a multitude of useful tools for use in the 
 
 Importantly, `load_rosters()` also provides the unique identifier for each player over nine different sources: the `gsis_id` (which is the core ID used in `nflverse` data), `sleeper_id`, `espn_id`, `yahoo_id`, `rotowire_id`, `pff_id`, `fantasy_data_id`, `sportradar_id`, and `pfr_id`. The different IDs become extremely useful when using data collected from outside the `nflverse`, or when combining data from two outside sources, matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in `load_rosters()` data.
 
-Let's return to our `participation_split` dataframe that we built prior in this chapter while working with the `load_participation()` function. The the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.
+Let's return to our `participation_split` data frame that we built prior in this chapter while working with the `load_participation()` function. The the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.
 
 ```{r loading-rosters-for-partic, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -740,26 +740,282 @@ fffffff
 
 ### The `load_espn_qbr()` Function
 
-ffffff
+With information dating back to the 2006 season, the `load_espn_qbr()` function provides a multitude of data points, including:
+
+1.  `qbr_total` - the adjusted total QBR which is calculated on a scale of 0-100 based on the strength of the defenses played.
+2.  `pts_added` - the number of total points added by a quarterback adjusted above the average level of all other QBs.
+3.  `epa_total` - the total number of expected points added for each quarterback as calculated by ESPN's win probability model.
+4.  `pass` - the total of expected points added for just pass plays.
+5.  `run` - the total of expected points added for just run plays.
+6.  `qbr_raw` - the QBR without adjustment for strength of defense.
+7.  `sack` - the adjustment for expected points added for sacks.
+
+While the QBR metric has fallen out of grace among the analytics community in recent years, we can still compare the difference between the adjusted and unadjusted QBR scores to visualize the impact of defensive strength on the total.
+
+```{r qbr-adjusted-unadjusted, eval = TRUE, echo = TRUE, output = FALSE}
+
+espn_qbr <- nflreadr::load_espn_qbr(seasons = 2022) %>%
+  select(name_short, team_abb, qbr_total, qbr_raw)
+
+espn_qbr <- espn_qbr %>%
+  left_join(teams, by = c("team_abb" = "team_abbr"))
+```
+
+```{r qbr-adjusted-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
+  geom_smooth(method = lm, se = FALSE, color = "black", linetype = "dashed", size = 0.8) +
+  geom_point(color = espn_qbr$team_color, size = 3.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  xlab("QBR - Adjusted") +
+  ylab("QBR - Unadjusted") +
+  labs(title = "QBR: Adjusted vs. Adjusted Scores",
+       subtitle = "Based on ESPN's Model: 2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
 
 ### The `load_pfr_advstats()` Function
 
-fffffff
+The `load_pfr_advstats()` function provides statistics from Pro Football Reference starting with the 2018 season for passing, rushing, receiving, and defense. The function allows for collecting the data at either the weekly or season level with the `summary_level` argument.
+
+To begin exploring the data, let's examine the relationship between the number of dropped passes each quarterback endured during the 2022 regular season compared to the total number of `bad_throws` charted by Pro Football Reference. An argument can be made that a dropped pass without the pass being considered "bad" is the fault of the wide receiver, while a dropped pass that *is* charted as "bad" falls on the quarterback.
+
+::: callout-important
+When working with data from `load_pfr_advstats()`, it is important to remember that you must use the `clean_team_abbrs()` function from `nflreadr` as there is a difference between the abbreviations used by PFR and the abbreviations used within the `nflverse`.
+:::
+
+```{r pfr-stats-qb, eval = TRUE, echo = TRUE, output = FALSE}
+
+pfr_stats_pass <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "pass",
+                                              summary_level = "season") %>%
+  select(player, pass_attempts, team, drops, bad_throws) %>%
+  filter(pass_attempts >= 400)
+
+pfr_stats_pass$team <- clean_team_abbrs(pfr_stats_pass$team)
+
+pfr_stats_pass <- pfr_stats_pass %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+```
+
+```{r qb-pfr-stats-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
+  geom_hline(yintercept = mean(pfr_stats_pass$drops),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_vline(xintercept = mean(pfr_stats_pass$bad_throws),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_point(color = pfr_stats_pass$team_color, size = 3.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  geom_text_repel(aes(label = player),
+                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  xlab("Bad Throws") +
+  ylab("Drops") +
+  labs(title = "**QB Bad Throws vs. WR Drops**",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+Quarterbacks such as Patrick Mahomes, Josh Allen, and Tom Brady had some of the highest drop numbers in the league but were also charted as having the highest number of bad throws, as well. This indicates that - without additional context - the wide receivers may not be as much at fault for the drops compared to the wide receivers that dropped passes from Daniel Jones and Russell Wilson, both of whom had a lower number of bad throws.
+
+By using the rushing data provided by `load_pfr_advstats()`, we can examine how "hard" it is to tackle a running back by examining the relationship between their yards before contact and yards after contact.
+
+::: callout-important
+Because the list of running backs with more than 200 attempts includes Christian McCaffrey, it is necessary to use the `case_when()` function to switch his `tm` from `2TMS` to the team that he finished the season with (`SF`). Otherwise, using `left_join()` for team colors would not work for McCafffrey since `2TMS` is not a recognized team abbreviation.
+:::
+
+```{r pfr-rush-stats, eval = TRUE, echo = TRUE, output = FALSE}
+
+pfr_stats_rush <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "rush",
+                                              summary_level = "season") %>%
+  select(player, tm, att, ybc, yac) %>%
+  filter(att >= 200) %>%
+  mutate(tm = case_when(
+    player == "Christian McCaffrey" ~ "SF",
+    TRUE ~ tm))
+
+pfr_stats_rush$tm <- clean_team_abbrs(pfr_stats_rush$tm)
+
+pfr_stats_rush <- pfr_stats_rush %>%
+  left_join(teams, by = c("tm" = "team_abbr"))
+```
+
+```{r pfr-rush-stats-plot}
+
+ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
+  geom_hline(yintercept = mean(pfr_stats_rush$yac),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_vline(xintercept = mean(pfr_stats_rush$ybc),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_point(color = pfr_stats_rush$team_color, size = 3.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  geom_text_repel(aes(label = player),
+                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  xlab("Yards Before Contact") +
+  ylab("Yards After Contact") +
+  labs(title = "**Running Backs: Yards Before and After Contact**",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+In the same vein as the running back statistics, we can use `load_pfr_advstats()` to explore which wide receivers gained the most yardage after catching the ball.
+
+```{r pfr-rec-stats, eval = TRUE, echo = TRUE, output = FALSE}
+
+pfr_stats_rec <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "rec",
+                                             summary_level = "season") %>%
+  filter(rec >= 80 & pos == "WR") %>%
+  select(player, tm, rec, ybc, yac)
+
+pfr_stats_rec <- pfr_stats_rec %>%
+  left_join(teams, by = c("tm" = "team_abbr"))
+```
+
+```{r pfr-rec-stats-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
+  geom_hline(yintercept = mean(pfr_stats_rec$yac),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_vline(xintercept = mean(pfr_stats_rec$ybc),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_point(color = pfr_stats_rec$team_color, size = 3.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  geom_text_repel(aes(label = player),
+                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  xlab("Yards At Point of Catch") +
+  ylab("Yards After Catch") +
+  labs(title = "**Yards at Point of Catch vs. Yards After Catch",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFl Analytics with R*<br>**Brad J. Congelio**")
+```
+
+Given the outstanding season that Justin Jefferson had in 2022, it is unsurprising to see him in the upper-right quadrant of the plot. Of his 1,809 receiving yards in the season, just under 1,200 of them came through air yards while he gained just over an additional 600 yards on the ground after the catch. On the other hand, D.K. Metcalf and Diontae Johnson were more often than not tackled almost immediately after catching the football.
+
+Given the structure of the data collected from `load_pfr_advstats()`, the information can also be aggregated to define team total. For example, we can use the defensive statistics for blitzes and sacks from individual players to calculate the relationship between a team's total number of blitzes against the number of sacks those blitzes produce.
+
+```{r blitze-sacks-code, eval = TRUE, echo = TRUE, output = FALSE}
+
+pfr_stats_def <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "def",
+                                             summary_level = "season") %>%
+  filter(!tm %in% c("2TM", "3TM")) %>%
+  select(tm, bltz, sk) %>%
+  group_by(tm) %>%
+  summarize(total_blitz = sum(bltz, na.rm = TRUE),
+            total_sack = sum(sk, na.rm = TRUE))
+
+pfr_stats_def <- pfr_stats_def %>%
+  left_join(teams, by = c("tm" = "team_abbr"))
+```
+
+```{r blitz-sacks-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = pfr_stats_def, aes(x = total_blitz, y = total_sack)) +
+  geom_hline(yintercept = mean(pfr_stats_def$total_sack),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_vline(xintercept = mean(pfr_stats_def$total_blitz),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_image(aes(image = team_logo_wikipedia), asp = 16/9) +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  nfl_analytics_theme() +
+  xlab("Total Blitzes") +
+  ylab("Total Sacks") +
+  labs(title = "**Total Blitzes vs. Total Sacks**",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+The Philadelphia Eagles were absolutely dominate during the 2022 regular season when it came to turning blitzes into sacks. On the other hand, the Arizona Cardinals, New York Giants, and Pittsburgh Steelers produced high amounts of pressure with blitzes but were not able to convert them into sacks as a consistent basis.
 
 ### The `load_snap_counts()` Function
 
-fffffff
+The `load_snap_counts()` function returns week-level snap counts for all players from Pro Football Reference dating back to the 2012 season.
 
 ### The `load_contracts()` Function
 
-fffffff
+The `load_contracts()` function brings in data from [OverTheCap.com](https://overthecap.com/). It is important to remember that much of the information is "nested" and, if you wish to see the yearly information, you must use the `unnest()` function from `tidyr`. To highlight this, we can run the following code to bring in the data as it is stored in the `nflverse`.
+
+```{r nfl-contracts-load, eval = TRUE, echo = TRUE, output = TRUE}
+
+nfl_contracts <- nflreadr::load_contracts()
+
+colnames(nfl_contracts)
+```
+
+The returned data includes the contract information for the year in which it was signed, but does not include a year-by-year breakdown of money paid and other relevant information. This data is stored in the `cols` information and needs to be "opened" up in order to view, like below.
+
+```{r unnesting-contract-information, eval = TRUE, echo = TRUE, output = FALSE}
+
+nfl_contracts_unnested <- nfl_contracts %>%
+  tidyr::unnest(cols, name_sep = "_") %>%
+  select(player, year, cash_paid) %>%
+  filter(year != "Total") %>%
+  mutate(cash_paid = as.numeric(as.character(cash_paid)))
+```
+
+After using the `unnest` function, we use `select()` to gather just the player's name, the year, and the cash paid for each year. After, we use `filter()` to remove the column that tallies the total of the player's contact and then `mutate()` the `cash_paid` column in order to turn it into a number rather than a character.
+
+We can now bring in other information to compare a player's cash paid to their performance on the field. I am going to use an example from the final research project from one of my former Sport Analytics students, Matt Dougherty.[^03-nfl-analytics-functions-1] We will compare a player's yearly pay against their DAKOTA score (which is the adjusted EPA + CPOE composite based on the coefficients which best predict adjusted EPA/play. In order to do so, we must merge each quarterback's DAKOTA composite based on the year.
+
+[^03-nfl-analytics-functions-1]: Matt was in my SPT 313 class during the Spring 2023 semester and asked more questions and showed more willingness to learn coding and analytics than all of my prior classes combined. If he is not yet hired by an NFL team, it is a complete injustice.
+
+```{r qb-contract-dakota, eval = TRUE, echo = TRUE, output = FALSE}
+
+nfl_contracts_unnested <- nfl_contracts %>%
+  tidyr::unnest(cols, name_sep = "_") %>%
+  select(player, year, cash_paid) %>%
+  filter(year != "Total") %>%
+  mutate(cash_paid = as.numeric(as.character(cash_paid)),
+         year = as.numeric(as.character(year))) %>%
+  filter(year == 2022)
+
+dakota_composite <- nflreadr::load_player_stats(2022) %>%
+  filter(position == "QB") %>%
+  group_by(player_display_name, season) %>%
+  summarize(attempts = sum(attempts, na.rm = TRUE),
+            mean_dakota = mean(dakota, na.rm = TRUE)) %>%
+  filter(attempts >= 200)
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+nfl_contracts_unnested <- nfl_contracts_unnested %>%
+  left_join(dakota_composite, by = c("player" = "player_display_name"))
+
+nfl_contracts_unnested <- na.omit(nfl_contracts_unnested)
+
+nfl_contracts_unnested <- nfl_contracts_unnested %>%
+  distinct(player, year, .keep_all = TRUE)
+```
+
+```{r cash-paid-dakota-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+
+ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
+  geom_hline(yintercept = mean(nfl_contracts_unnested$mean_dakota),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_vline(xintercept = mean(nfl_contracts_unnested$cash_paid),
+             color = "black", linetype = "dashed", size = 0.8) +
+  geom_point(size = 3.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::dollar_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  xlab("Cash Paid (in millions)") +
+  ylab("Mean DAKOTA Composite") +
+  geom_text_repel(aes(label = player),
+                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  nfl_analytics_theme() +
+  labs(title = "Cash Paid vs. Mean DAKOTA Composite",
+       subtitle = "2022 Regular Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
 
 ### The `clean_player_names()` Function
 
 ffffff
-
-### The `clean_team_abbrs()` Function
-
-ffffff
-
-### The `clean_homeaway()` Function
