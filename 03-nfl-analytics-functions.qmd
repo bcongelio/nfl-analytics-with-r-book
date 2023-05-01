@@ -46,6 +46,7 @@ The `load_player_stats()` function includes the following offensive information:
 ```{r load_player_stats-information, echo = TRUE}
 
 offensive.stats <- nflreadr::load_player_stats(2021)
+
 ls(offensive.stats)
 ```
 
@@ -54,6 +55,7 @@ As well, switching the `stat_type` to "kicking" provides the following informati
 ```{r load_player_stats-kicking, echo = TRUE}
 
 kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
+
 ls(kicking.stats)
 ```
 
@@ -62,76 +64,6 @@ While the data returned is not as rich as the play-by-play data we will covering
 As an example, let's say you need to get Ben Roethlisberger's total passing yard and attempts from the 2021 season. You could do so via `load_pbp()` but, if you do not need further context, using `load_player_stats()` is much more efficient.
 
 ### Getting Weekly Player Stats via `load_player_stats()`
-
-If you are familiar with R, it might seem logical to do the following to get Roethlisberger's total passing yards and number of attempts from the 2021 regular season:
-
-```{r ben-load-stats, echo = TRUE}
-
-weekly.data <- nflreadr::load_player_stats(2021)
-
-ben.weekly <- weekly.data %>%
-  group_by(player_id, player_name) %>%
-  filter(season_type == "REG" & player_name == "B.Roethlisberger") %>%
-  summarize(total.yards = sum(passing_yards),
-            n.attempts = sum(attempts))
-
-tibble(ben.weekly)
-```
-
-As you can see in the `ben.weekly` output, we have matched his official 2021 regular stats perfectly with 3,740 passing yards on 605 attempts. The code we just created is doing several things. First, we are using `nflreadr::load_player_stats(2021)` to place the data into our R environment in a DF titled `weekly.data`.
-
-Next, we group the data together by alike `player_id` (as every individual player has a unique ID number) as well as the player's actual name. At the filtering level, we are looking for just the regular season (`REG`) within `season_type` and also removing all quarterbacks except for Ben Roethlisberger. It is important to note that player names are just first initial and last name, without a space after the period.
-
-After filtering for the regular season, we are able to summarize all of the weekly data into combined statistics by summing the weekly totals of passing yards and attempts.
-
-**However, filtering by `player_name` can lead to significant issues with your results.** An excellent example of this is Josh Allen. Let's recreate the code above that successfully provided Roethlisberger's stats, but replace Ben with Josh Allen:
-
-```{r josh-allen-no-merge-weekly, echo = TRUE}
-
-josh.allen <- weekly.data %>%
-  group_by(player_name) %>%
-  filter(player_name == "J.Allen" & season_type == "REG") %>%
-  summarize(total.yards = sum(passing_yards),
-            n.attempts = sum(attempts))
-
-tibble(josh.allen)
-```
-
-The output tells us Allen threw for 4,049 yards on 603 attempts during the 2021 regular season. A check of his [Pro Football Reference page](https://www.pro-football-reference.com/players/A/AlleJo02.htm) tells us those numbers are incorrect. In fact, he had 4,407 passing yards on 646 attempts. How did we end up 358 passing yards and 43 attempts short?
-
-The answer comes from Aaron Schatz, the creator of [Football Outsiders](https://www.footballoutsiders.com/), who explained in a [Tweet](https://twitter.com/fo_aschatz/status/1442191416826888192?s=21) that the official Buffalo Bills' scorer, during week 3 of the NFL season, decided to refer to Allen as "Jos.Allen" as a result of the Washington Commanders having a player named "Jonathan Allen."
-
-To double check this, we can run the same code as above, but remove the `player_name` filter and switch to searching for just those players on the Buffalo Bills by using `recent_team`.
-
-```{r two-josh-allens, echo = TRUE}
-
-two.josh.allens <- weekly.data %>%
-  group_by(player_id, player_name) %>%
-  filter(season_type == "REG" & recent_team == "BUF") %>%
-  summarize(total.yards = sum(passing_yards),
-            n.attempts = sum(attempts))
-
-tibble(two.josh.allens)
-```
-
-Grouping by `player_id` and `player_name` (as well as filtering down to Buffalo), we can see that, indeed, Josh Allen is in the data twice under the same `player_id`. Moreover, if you do the math, you can see that the numbers from his two entries add up to the official statistics on his Pro Football Reference page.
-
-#### Using `load_player_stats()` Correctly
-
-To avoid these situations, you *could* load up NFL rosters via the `nflreadr::load_rosters()` function, but that would require unnecessary code in order to merge the two DFs together by matching the `player_id` to the `gsis_id` number found within the roster information. Doing so would correct the above issue of Josh Allen appearing in the data under different spellings. Instead, and to write the minimal amount of code to complete the task, we can do the following:
-
-```{r josh-allen-correct, echo = TRUE}
-
-josh.allen <- weekly.data %>%
-  filter(season_type == "REG") %>%
-  group_by(player_id) %>%
-  summarize(player_name = first(player_name),
-            total.yards = sum(passing_yards),
-            n.attempts = sum(attempts)) %>%
-  filter(player_name == "J.Allen")
-```
-
-The most efficient way to gather correct player statistics is to do the `group_by` with ONLY the `player_id` as, despite the variation in name, the `player_id` remained the same for Josh Allen. In order to include his correct name in the output, we can gather QB names within the `summarize` prior to calculating the sum of `passing_yards` and `attempts`. After, if you desire to see only Josh Allen's number, you can filter out to just his name.
 
 ### Using `load_player_stats()` To Find Leaders
 
@@ -455,11 +387,13 @@ If your analysis requires providing great granularity, the `load_rosters_weekly(
 
 ### The `load_teams()` Function
 
-A tool heavily used in the data vizualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge dataframes that have differing values for teams. The
+A tool heavily used in the data vizualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge dataframes that have differing values for teams.
 
-### The `load_schedules()` Function
+More often than not, we will be using `left_join` to bring in team informtion (colors, logos, etc.) into a another data frame. We will utilize this function heavily in the example below.
 
-fffff
+However, it is important to note the one argument that `load_teams()` accepts: `current`. Depending on the time span of your data, it is possible that you have teams included prior to relation (like the St. Louis Rams). If you are sure that you do not have such a scenario, you can use `load_teams(current = TRUE)` which will bring in just the current 32 NFL teams.
+
+However, if you need to include teams before expansion, you can use `load_teams(current = FALSE)` which will result in a data frame with 36 NFL teams.
 
 ### The `load_officials()` Function
 
@@ -729,14 +663,6 @@ ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards, y = actual_rush_yar
 ```
 
 After plotting the rushing data from Next Gen Stats, we can see that Nick Chubb was well above the expected yardage metric while Ezekiel Elliott, Alvin Kamara, Najee Harris, and Dalvin Cook all had actual rushing yards that fell below what was expected by the model.
-
-### The `load_depth_charts()` Function
-
-fffffff
-
-### The `load_injuries()` Function
-
-fffffff
 
 ### The `load_espn_qbr()` Function
 
@@ -1015,7 +941,3 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
        subtitle = "2022 Regular Season",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
-
-### The `clean_player_names()` Function
-
-ffffff
