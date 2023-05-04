@@ -61,46 +61,221 @@ ls(kicking.stats)
 
 While the data returned is not as rich as the play-by-play data we will covering next, the `load_player_stats()` function is extremely helpful when you need to quickly (and correctly!) recreate the official stats listed on either the NFL's website or on [Pro Football Reference](https://www.pro-football-reference.com/).
 
-As an example, let's say you need to get Ben Roethlisberger's total passing yard and attempts from the 2021 season. You could do so via `load_pbp()` but, if you do not need further context, using `load_player_stats()` is much more efficient.
+As an example, let's say you need to get Patrick Mahomes' total passing yard and attempts from the 2022 season. You could do so via `load_pbp()` but, if you do not need further context (such as down, distance, quarter, etc.), using `load_player_stats()` is much more efficient.
 
-### Getting Weekly Player Stats via `load_player_stats()`
+### Getting Player Stats via `load_player_stats()`
 
-### Using `load_player_stats()` To Find Leaders
+We can generate a data frame titled `mahomes_pyards` but running the following code:
+
+```{r loading-mahomes-stats, eval = TRUE, echo = TRUE, output = FALSE}
+
+mahomes_pyards <- nflreadr::load_player_stats(seasons = 2022)
+```
+
+In the above example, we specified that the returned data be from the 2022 season. It needs to be noted that running `load_play_stats()` (without a specific season) will return the newest season in the data. Moreover, separating two seasons with a colon (`:`) will provide multiple seasons of data. In our working example, the `mahomes_pyards` data frame contains statistics for every player from every week of the 2022 season.
+
+It is important to note that the structure of the data returned by `load_player_stats()` includes passing yards, rushing yards, receiving yards, etc. for each player. As a result, the data returns - for example - the week-by-week statistics for rushing and receiving for Peyton Manning, not just his passing numbers. Because of this, we can calculate Peyton's rushing statistics from 2000 to 2022.
+
+    # A tibble: 1 x 4
+      carries rushing_yards rushing_tds rush_epa
+        <int>         <dbl>       <int>    <dbl>
+    1     409           531          18   -0.740
+
+Knowing that Peyton's average rushing EPA from 2000 to the end of his career was -0.740 is not going to win you final Jeopardy nor is it going to be helpful in any sort of Twitter football discourse. When working with `load_player_stats()`, it is important that you know the variable names that are useful to the research you are doing.
+
+::: callout-tip
+The relevant passing statistics housed in `load_player_stats()` includes:
+
+```{r player-stats-passing, eval = TRUE, echo = FALSE, output = TRUE}
+
+passing_columns <- load_player_stats() %>%
+  select(completions, attempts, passing_yards, passing_tds, interceptions, sacks,
+         sack_yards, sack_fumbles, sack_fumbles_lost, passing_air_yards,
+         passing_yards_after_catch, passing_first_downs, passing_epa,
+         passing_2pt_conversions, pacr, dakota)
+
+colnames(passing_columns)
+```
+
+The columns relevant to rushing statistics in `load_player_stats()` are:
+
+```{r player-stats-rushing, eval = TRUE, echo = FALSE, output = TRUE}
+
+rushing_columns <- load_player_stats() %>%
+  select(carries, rushing_yards, rushing_tds, rushing_fumbles, rushing_fumbles_lost,
+         rushing_first_downs, rushing_epa, rushing_2pt_conversions)
+
+colnames(rushing_columns)
+```
+
+Lastly, the columns for receiving statistics in `load_player_stats()` include:
+
+```{r player-stats-receiving, eval = TRUE, echo = FALSE, output = TRUE}
+
+receiving_columns <- load_player_stats() %>%
+  select(receptions, targets, receiving_yards, receiving_tds, receiving_fumbles,
+         receiving_fumbles_lost, receiving_air_yards, receiving_yards_after_catch,
+         receiving_first_downs, receiving_epa, receiving_2pt_conversions, racr,
+         target_share, air_yards_share)
+
+colnames(receiving_columns)
+```
+:::
+
+Continuing with our above example working with `load_player_stats()` and Patrick Mahomes, we can find his total passing yards during the 2022 regular season by using the `filter()` function to sort the data for either `player_name` or `player_display_name` as well the the `season_type` and then use `summarize()` to get the total of his `passing_yards` over the course of the regular season.
+
+```{r getting-mahomes-pyards, eval = TRUE, echo = TRUE, output = TRUE}
+
+mahomes_pyards <- mahomes_pyards %>%
+  filter(player_name == "P.Mahomes" & season_type == "REG") %>%
+  summarize(passing_yards = sum(passing_yards))
+
+mahomes_pyards
+```
+
+The above code returns a result of 5,250 passing yards which is an exact match from the data provided by [Pro Football Reference.](https://www.pro-football-reference.com/players/M/MahoPa00.htm) In the above example, we used the `filter()` function on the `player_name` column in the data. You will get the same result if you replace that with `player_display_name == "Patrick Mahomes"`. While there is no difference in how the data is collected, there will be a difference if you were to visualize the data frame and wished to display the player names along with their respective statistics. In most cases, in order to maintain a clean design, using the `player_name` option is best which allows you to plot just the player's first initial and last name.
+
+We can build upon the passing yards example to replicate the vast majority of statistics found in the["Passing" data table for Mahomes from Pro Football Reference](https://www.pro-football-reference.com/players/M/MahoPa00.htm#passing).
+
+```{r mahomes-replicate-pfr, eval = TRUE, echo = TRUE, output = TRUE}
+
+mahomes_pfr <- nflreadr::load_player_stats(seasons = 2022) %>%
+  filter(player_name == "P.Mahomes" & season_type == "REG") %>%
+  summarize(
+    completions = sum(completions),
+    attempts = sum(attempts),
+    cmp_pct = completions / attempts,
+    yards = sum(passing_yards),
+    touchdowns = sum(passing_tds),
+    td_pct = touchdowns / attempts * 100,
+    interceptions = sum(interceptions),
+    int_pct = interceptions / attempts * 100,
+    first_down = sum(passing_first_downs),
+    yards_attempt = yards / attempts,
+    adj_yards_attempt = (yards + 20 * touchdowns - 45 * interceptions) / attempts,
+    yards_completions = yards / completions,
+    yards_game = yards / 17,
+    sacks = sum(sacks),
+    sack_yards = sum(sack_yards),
+    sack_pct = sacks / (attempts + sacks) * 100)
+
+mahomes_pfr
+```
+
+What if we wanted to find Mahomes' adjusted yards gained per pass attempt for every one of his seasons between 2018 and 2022? It is as simple as gathering all the data from years (`seasons = 2018:2022`), using the same `filter()` from above, and then using `group_by()` on the `season` variable.
+
+```{r mahomes-career-adjusted, eval = TRUE, echo = TRUE, output = TRUE}
+
+mahomes_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
+  filter(player_name == "P.Mahomes" & season_type == "REG") %>%
+  group_by(season) %>%
+  summarize(
+    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts))
+
+mahomes_adjusted_yards
+```
+
+Based on the data output, Mahomes' best year for adjusted yards gained per pass attempt was 2018 with 9.58 adjusted yards. How does this compare to other quarterbacks from the same season? We can find the answer by doing slight modifications to our above code. Rather than filtering the information out to just Patrick Mahomes, we will add the `player_name` column as a second argument in the `group_by()` function.
+
+```{r all-qbs-adjusted, eval = TRUE, echo = TRUE, output = TRUE}
+
+all_qbs_adjusted <- nflreadr::load_player_stats(seasons = 2018) %>%
+  filter(season_type == "REG" & position == "QB") %>%
+  group_by(player_name) %>%
+  summarize(
+    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+  arrange(-adj_yards_attempt)
+
+all_qbs_adjusted
+```
+
+Mahomes, with an adjusted yards per pass attempt of 9.58, finishes in sixth place in the 2018 season behind C. Henne (9.67), K. Allen (9.87), and then three others that have results between 10 and 20. This is a situation where I tell my students the results do not pass the "eye test." Why? It is unlikely that an adjusted yards per pass attempt of 21 and 13.3 for Nate Sudfeld and Garrett Gilbert, respectively, are from a season worth of data. The results for Kyle Allen and Matt Barkley are questionable, as well.
+
+::: callout-important
+You will often discover artificially-inflated statistics like above when the players have limited number of pass attempts/rushing attempts/receptions/etc. compared to the other players on the list. To confirm this, we can add `pass_attempts = sum(attempts)` to the above code to compare the number of attempts Sudfeld and Gilbert had compared to the rest of the list.
+
+```{r qbs-adjusted-w-attempts, eval = TRUE, echo = TRUE, output = TRUE}
+
+all_qbs_adjusted_with_attempts <- nflreadr::load_player_stats(seasons = 2018) %>%
+  filter(season_type == "REG" & position == "QB") %>%
+  group_by(player_name) %>%
+  summarize(
+    pass_attempts = sum(attempts),
+    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+  arrange(-adj_yards_attempt)
+
+all_qbs_adjusted_with_attempts
+
+```
+
+The results are even worse than initially thought. There are a total of six players with an inflated adjusted yards per pass attempt:
+
+1.  Nate Sudfeld (2 attempts, 21 adjusted yards).
+2.  Garrett Gilbert (3 attempts, 13.3 adjusted yards).
+3.  Matt Barkley (25 attempts, 11.7 adjusted yards).
+4.  Kyle Allen (31 attempts, 9.87 adjusted yards).
+5.  Chris Henne (3 attempts, 9.67 adjusted yards).
+
+To remove those players with inflated statistics resulting from a lack of attempts, we can apply a second `filter()` at the end of our above code to limit the results to just those quarterbacks with no less than 100 pass attempts in the 2018 season.
+
+```{r all-qbs-attempts-100, eval = TRUE, echo = TRUE, output = FALSE}
+
+all_qbs_attempts_100 <- nflreadr::load_player_stats(seasons = 2018) %>%
+  filter(season_type == "REG" & position == "QB") %>%
+  group_by(player_name) %>%
+  summarize(
+    pass_attempts = sum(attempts),
+    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+  filter(pass_attempts >= 100) %>%
+  arrange(-adj_yards_attempt)
+
+all_qbs_attempts_100
+```
+:::
+
+After including a `filter()` to the code to remove those quarterbacks with less than 100 attempts, it is clear that Mahomes has the best adjusted pass yards per attempt (9.58) in the 2018 season with Drew Brees in second place with 9.01. Based on our previous examples, we know that a Mahomes 9.58 adjusted pass yards per attempt in 2018 was his career high (and is also the highest in the 2018 season). How do his other seasons stack up? His is lowest adjusted pass yards (7.59) in 2021 still the best among NFL quarterbacks in that specific season?
+
+To find the answer, we can make slight adjustments to our existing code.
+
+```{r best-adjusted-yards, eval = TRUE, echo = TRUE, output = TRUE}
+
+best_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
+  filter(season_type == "REG" & position == "QB") %>%
+  group_by(season, player_name) %>%
+  summarize(
+    pass_attempts = sum(attempts),
+    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+  filter(pass_attempts >= 100) %>%
+  ungroup() %>%
+  group_by(season) %>%
+  filter(adj_yards_attempt == max(adj_yards_attempt))
+  
+  
+best_adjusted_yards
+```
+
+To get the answer, we've created code that follows along with our prior examples. However, after using `filter()` to limit the number of attempts each quarterback must have, we use `ungroup()` to remove the previous grouping between `season` and `player_name` and then create use `group_by()` again on just the `season` information in the data. After, we use `filter()` to select just the highest adjusted yards per attempt for each individual season. As a result, we can see that Mahomes only led the NFL in this specific metric in the 2018 season. In fact, between the 2018 and 2022 seasons, Ryan Tannehill had the highest adjusted yards per attempt with 10.2 (but notice he had just 286 passing attempts).
+
+As mentioned, the `load_player_stats()` information is provided on a week-by-week basis. In our above example, we are aggregating all regular season weeks into a season-long metric. Given the structure of the data, we can take a similar approach but to determine the leaders on a week-by-week basis. To showcase this, we can determine the leader in rushing EPA for every week during the 2022 regular season.
+
+```{r rushing-epa-leaders, eval = TRUE, echo = TRUE, output = TRUE}
+
+rushing_epa_leader <- nflreadr::load_player_stats(season = 2022) %>%
+  filter(season_type == "REG" & position == "RB") %>%
+  filter(!is.na(rushing_epa)) %>%
+  group_by(week, player_name) %>%
+  summarize(
+    carries = carries,
+    rush_epa = rushing_epa) %>%
+  filter(carries >= 10) %>%
+  ungroup() %>%
+  group_by(week) %>%
+  filter(rush_epa == max(rush_epa))
+
+rushing_epa_leader
+```
 
 While using `load_player_stats()` does not provide the ability to add context to your analysis as we will soon see with `load_pbp()`, it does provide an easy and efficient way to determine weekly or season-long leaders over many top-level, widely-used NFL statistics. In the below example, we will determine the 2021 leaders in air yards per attempt.
-
-#### An Example: 2021 QB Air Yards per Attempt Leaders
-
-```{r 2021-air-yards-per-attempt, echo = TRUE}
-
-data <- nflreadr::load_player_stats(2021)
-
-ay.per.attempt <- data %>%
-  group_by(player_id) %>%
-  filter(season_type == "REG") %>%
-  summarize(player_name = first(player_name),
-            n.attempts = sum(attempts),
-            n.airyards = sum(passing_air_yards),
-            ay.attempt = n.airyards / n.attempts) %>%
-  filter(n.attempts >= 400) %>%
-  select(player_name, ay.attempt) %>%
-  arrange(-ay.attempt)
-```
-
-In the above example, we are using `group_by` to combine the desired statistics based on each unique `player_id` to, again, avoid any issues with player names within the data. After filtering to include just those statistics for the regular season, we first use the `summarize` function to grab the first `player_name` associated with the `player_id`. After, we find two items: (1.) the total number of passing attempts by each QB which is outputted into a new row titled `n.attempts` and the regular season total of each QB's air yards, again outputted into a new row titled `n.airyards`.
-
-It is important to note that the final row created with the `summarize` function is not a statistic included within `load_player_stats()`. In order to find a QB's average air yards per attempt, we must use the first two items we've created and do some simple division (the created `n.airyards` divided by `n.attempts`).
-
-Finally, to "clear the noise" of those QBs with minimal attempts through the season, we included a filter to include only those passers with at least 400 attempts. After, we arrange the new DF by sorting the QBs in descending order by average air yards per attempt.
-
-The end results look like this:
-
-```{r average-air-yards-tibble, echo = FALSE}
-
-tibble(ay.per.attempt)
-```
-
-Russell Wilson led the NFL in 2021 with 9.89 air yards per attempt.
 
 ## Using `load_pbp()` to Add Context to Statistics
 
