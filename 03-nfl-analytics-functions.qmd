@@ -539,6 +539,119 @@ Ben Baldwin followed up on Carl's thoughts:
 
 Based on that advice, I typically stick to the 5-95% range when filtering for win probability in the `nflverse` play-by-play data. And, in this case, it did have an impact. In fact, when accounting for "garbage time," Kenny Pickett went from being the second most aggressive QB in the league to not even being in the top ten. Conversely, Kirk Cousin went from being the ninth most aggressive quarterback to the second when accounting for win probability and the time left in the half.
 
+That said, I more often than not do not concern myself with removing "garbage time" statistics. Despite the robust amount of data provided by the `nflverse` play-by-play function, the information still lacks great amount of granularity and, because of this, I believe removing "garbage time" plays often does more harm than good in the data analysis process.
+
+## More Examples Using `load_pbp()` Data
+
+### QB Air Yards EPA by Down
+
+To continue working with quarterback information using the `load_pbp()` function, we can explore each quarterback's air yards EPA for 1st, 2nd, and 3rd down.
+
+```{r qb-mean-ayepa-down, eval = TRUE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+qb_ay_by_down <- pbp %>%
+  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(down <= 3) %>%
+  group_by(passer, down) %>%
+  summarize(
+    attempts = n(),
+    team = last(posteam),
+    mean_airepa = mean(air_epa, na.rm = TRUE)) %>%
+  filter(attempts >= 80) %>%
+  arrange(-mean_airepa)
+
+qb_ay_by_down
+```
+
+Josh Allen, Dak Prescott, and Tua Tagovailoa were all outstanding on 3rd down during the 2022 season, all recording over 1.00 in mean air yards EPA.
+
+### Measuring Impact of Offensive Line
+
+Brian Burke - prior to moving to ESPN - used to host his own blog where he showcased his analytics work. Way back in November of 2014, he wrote a post that detailed his process in determining how to value an offensive line's performance over the course of an NFL season.
+
+The process of making such a valuation is understandably difficult as, as Burke pointed out, an offensive line's performance on the field is often characterized by the overall absence of stats. The less sacks, short yardage plays, tackles for loss, and quarterback scrambles - for example - the better. But how can the performance of an offensive line be quantified based on statistics that are absent?
+
+To do so, Burke devised a rather ingenious method that is simple at its core: to measure the value of an offensive line's play, we must determine the impact in which the opposing defensive line had on the game.
+
+In his 2014 work on the topic, Burke used quarterback sacks, tackles for losses, short gains, tipped passes, and quarterback hits to provide a quantifiable valuation to a defensive line to then calculate the opposing valuation of the offensive line. Building upon this philosophy, we can build the same sort of study using the publicly available data in the `nflverse` play-by-play data by first using the following standard metrics:
+
+1.  sacks
+2.  QB hits
+3.  tackles for loss
+4.  yards gained less than/equal to 2
+5.  forcing a QB scramble
+
+To add more context, we can also create two new variables in the data that dictate whether a `qb_hit` and `incomplete_pass` are present in the same play, and the same for `qb_hit` and `interception`.
+
+```{r oline-impact-start, eval = TRUE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG") %>%
+  mutate(qbh_inc = ifelse(qb_hit == 1 & incomplete_pass == 1, 1,0),
+         qb_int = ifelse(qb_hit == 1 & interception == 1, 1,0))
+
+pitt_plays <- pbp %>%
+  filter(posteam == "PIT") %>%
+  group_by(week) %>%
+  summarize(
+    total_plays = sum(play_type == "run" | play_type == "pass", na.rm = TRUE))
+
+pitt_line_value <- pbp %>%
+  filter(sack == 1 | tackled_for_loss == 1 | yards_gained <= 2
+         | qb_scramble == 1 | qb_hit == 1 | qbh_inc == 1 | qb_int == 1) %>%
+  filter(posteam == "PIT") %>%
+  group_by(posteam, week) %>%
+  left_join(pitt_plays, by = c("week" = "week")) %>%
+  summarize(opponent = unique(defteam),
+            sum_wpa = sum(wpa, na.rm = TRUE),
+            avg_wpa = (sum_wpa / unique(total_plays) * 100))
+```
+
+However, as Burke pointed out in his initial study of the topic, calculating the number for just Pittsburgh, as above, does not provide enough information to draw a meaningful conclusion because even the most elite offensive lines in the NFL cannot avoid negative-pointed plays. In order to build this assumption into the data, we can gather the same information as above, but for the entire NFL minus the Steelers, and then calculate the difference in the Steelers' weekly WPA to the league-wide average WPA.
+
+```{r adding-league-wide-epa, eval = TRUE, echo = TRUE, output = FALSE}
+
+nfl_plays <- pbp %>%
+  filter(posteam != "PIT") %>%
+  group_by(week, posteam) %>%
+  summarize(total_plays = sum(play_type == "run" | play_type == "pass",
+                              na.rm = TRUE))
+
+nfl_line_value <- pbp %>%
+  filter(posteam != "PIT") %>%
+  filter(sack == 1 | tackled_for_loss == 1 | yards_gained <= 2
+         | qb_scramble == 1 | qb_hit == 1 | qbh_inc == 1 | qb_int == 1) %>%
+  left_join(nfl_plays, by = c("posteam" = "posteam", "week" = "week")) %>%
+  group_by(week) %>%
+  mutate(nfl_weekly_plays = sum(unique(total_plays))) %>%
+  summarize(nfl_sum_wpa = sum(wpa, na.rm = TRUE),
+            nfl_avg_wpa = (nfl_sum_wpa / unique(nfl_weekly_plays) * 100))
+```
+
+We can now merge the NFL data back into the Steelers data to conduct the final calculation.
+
+```{r add-nfl-to-pitt, eval = TRUE, echo = TRUE, output = FALSE}
+
+pitt_line_value <- pitt_line_value %>%
+  left_join(nfl_line_value, by = c("week" = "week"))
+
+pitt_line_value <- pitt_line_value %>%
+  mutate(final_value = avg_wpa - nfl_avg_wpa) %>%
+  select(week, opponent, final_value)
+
+pitt_line_value %>%
+  print(n = 17)
+```
+
+The output provides a quantitative value of the Steelers' offensive line performance over the course of the season in the `final_value` column. We've structured the data so that we can make the argument that the Steelers' offensive line, in week 1, provided 1.55% more WPA than the rest of the NFL. In week 11, against New Orleans, the offensive line added a 1.11% chance of winning the game compared to all the other offensive line performances that specific week.
+
+Conversely, negative numbers indicate that the play of the offensive line took away that percentage amount towards the probability of winning.
+
+Unsurprisingly, the numbers across the board for the Steelers' offensive line remain small, indicated that the group's performance provided little to no help in earning victories for Pittsburgh.
+
 ## Retrieving & Working With Data for Multiple Seasons
 
 In the case of both `load_pbp()` and `load_player_stats()`, it is possible to load data over multiple seasons.
