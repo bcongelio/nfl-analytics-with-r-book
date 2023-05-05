@@ -275,7 +275,63 @@ rushing_epa_leader <- nflreadr::load_player_stats(season = 2022) %>%
 rushing_epa_leader
 ```
 
-While using `load_player_stats()` does not provide the ability to add context to your analysis as we will soon see with `load_pbp()`, it does provide an easy and efficient way to determine weekly or season-long leaders over many top-level, widely-used NFL statistics. In the below example, we will determine the 2021 leaders in air yards per attempt.
+Rather than using the `season` variable in the `group_by()` function, we instead use `week` to calculate the leader in rushing EPA. The results show that the weekly leader is varied, with only Austin Ekeler and Aaron Jones appearing on the list more than once. The Bengals' Joe Mixon produced the largest rushing EPA in the 2022 season, recording 11.3 in week 9 while James Cook's 2.92 output in week 11 was the "least" of the best weekly performances.
+
+Much like we did with the passing statistics, we can use the rushing data in `load_player_stats()` to replicate the majority found on Pro Football Reference. To do so, let's use Joe Mixon's week 9 performance from the 2022 season.
+
+```{r mixon-week-9, eval = TRUE, echo = TRUE, output = TRUE}
+
+mixon_week_9 <- nflreadr::load_player_stats(seasons = 2022) %>%
+  filter(player_name == "J.Mixon" & week == 9) %>%
+  summarize(
+    rushes = sum(carries),
+    yards = sum(rushing_yards),
+    yards_att = yards / rushes,
+    tds = sum(rushing_tds),
+    first_down = sum(rushing_first_downs))
+
+mixon_week_9
+```
+
+Mixon gained a total of 153 yards on the ground on 22 carries, which is just under 7 yards per attempt. Four of those carries resulting in touchdowns, while 12 of them kept drives alive with first downs. Other contextual statistics for this performance, such as yards after contact, are not included in `load_player_stats()` but can be retrieved using other functions within the `nflverse()` (which are covered later in this chapter).
+
+Finally, we can use the `load_player_stats()` function to explore wide receiver performances. As listed above, the wide receivers statistics housed within `load_player_stats()` include those to be expected: yards, touchdowns, air yards, yards after catch, etc. Rather than working with those in an example, let's use `wopr` which stands for `Weighted Opportunity Rating`, which is a weighted average that contextualizes how much value any one wide receivers bring to a fantasy football team. The equation is already built into the data, but for clarity it is as follows:
+
+$$
+1.5 * target share + 0.7 * air yards share
+$$
+
+We can use `wopr` to determine which wide receiver was the most valuable to fantasy football owners during the 2022 season.
+
+```{r receivers-wopr, eval = TRUE, echo = TRUE, output = TRUE}
+
+receivers_wopr <- nflreadr::load_player_stats(seasons = 2022) %>%
+  filter(season_type == "REG" & position == "WR") %>%
+  group_by(player_name) %>%
+  summarize(
+    total_wopr = sum(wopr)) %>%
+  arrange(-total_wopr)
+
+receivers_wobr
+```
+
+D.J. Moore led the NFL in the 2022 season with a 13.9 Weighted Opportunity Rating, followed closely by Davante Adams with 13.4. However, before deciding that D.J. Moore is worth the number one pick in your upcoming fantasy football draft, it is worth exploring if there is a relationship between a high Weight Opportunity Rating and a player's total fantasy points. To do so, we can take our above code that was used to gather each player's `WOPR` over the course of the season and add `total_ff = sum(fantasy_points)` and also calculate a new metric called "Fantasy Points per Weighted Opportunity" which is simply the total of a player's points divided by the `wopr`.
+
+```{r wopr-plus-fantasy}
+
+receivers_wobr_ff_context <- nflreadr::load_player_stats(seasons = 2022) %>%
+  filter(season_type == "REG" & position == "WR") %>%
+  group_by(player_name) %>%
+  summarize(
+    total_wopr = sum(wopr),
+    total_ff = sum(fantasy_points),
+    ff_per_wopr = total_ff / total_wopr) %>%
+  arrange(-total_wopr)
+
+receivers_wobr_ff_context
+```
+
+There are several insights evident in the results. Of the top `wopr` earners in the 2022 season. only Diontae Johnson scored fewer fantasy points than D.J. Moore (94.7 to 136). Given the relationship between `total_wopr` and `total_ff`, a lower `ff_per_wopr` is indicative of less stellar play. In this case, Moore maintained a large amount of both the team's `target_share` and `air_yards_share`, but was not able to translate that into a higher amount of fantasy points (as evidenced by a lower `ff_per_wopr` score). On the other hand, Justin Jefferson's `ff_per_wopr` score of 20.3 argues that he used his amount of `target_share` and `air_yards_share` to increase the amount of fantasy points he produced.
 
 ## Using `load_pbp()` to Add Context to Statistics
 
