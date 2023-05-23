@@ -76,10 +76,12 @@ In the above example, we specified that the returned data be from the 2022 seaso
 
 It is important to note that the structure of the data returned by `load_player_stats()` includes passing yards, rushing yards, receiving yards, etc. for each player. As a result, the data returns - for example - the week-by-week statistics for rushing and receiving for Peyton Manning, not just his passing numbers. Because of this, we can calculate Peyton's rushing statistics from 2000 to 2022.
 
-    # A tibble: 1 x 4
-      carries rushing_yards rushing_tds rush_epa
-        <int>         <dbl>       <int>    <dbl>
-    1     409           531          18   -0.740
+```         
+# A tibble: 1 x 4
+  carries rushing_yards rushing_tds rush_epa
+    <int>         <dbl>       <int>    <dbl>
+1     409           531          18   -0.740
+```
 
 Knowing that Peyton's average rushing EPA from 2000 to the end of his career was -0.740 is not going to win you final Jeopardy nor is it going to be helpful in any sort of Twitter football discourse. When working with `load_player_stats()`, it is important that you know the variable names that are useful to the research you are doing.
 
@@ -662,7 +664,7 @@ In our first example of working with data across multiple seasons, let's examine
 
 ```{r avg-ay-5-years, echo = TRUE}
 
-ay.five.years <- nflreadr::load_pbp(2017:2021)
+ay_five_years <- nflreadr::load_pbp(2017:2022)
 ```
 
 To retrieve multiple seasons of data, a colon `:` is placed between the years that you want. When you run the code, `nflreadr` will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season).
@@ -671,7 +673,7 @@ Once you have the data collected, we can run code that looks quite similar to ou
 
 ```{r avg-ay-5-results, echo = TRUE}
 
-average.airyards <- ay.five.years %>%
+average_airyards <- ay_five_years %>%
   group_by(passer_id) %>%
   filter(season_type == "REG" & complete_pass == 1) %>%
   summarize(player = first(passer_player_name),
@@ -681,10 +683,10 @@ average.airyards <- ay.five.years %>%
   filter(completions >= 1000) %>%
   arrange(-average)
 
-tibble(average.airyards)
+average_airyards
 ```
 
-Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.11.
+Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.17.
 
 ## Working with the Various `nflreadr` Functions
 
@@ -1363,3 +1365,5 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
        subtitle = "2022 Regular Season",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
+
+Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).

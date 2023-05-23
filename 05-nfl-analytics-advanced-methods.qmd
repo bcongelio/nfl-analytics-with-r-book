@@ -163,7 +163,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-----------:|:---------------------------------------------------------:|
+|:------------------:|:--------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -332,13 +332,15 @@ ggplot(regression_all_seasons, aes(x = total_yards, y = residuals)) +
 
 We can also compare the multiple R2 and adjusted R2 score between the two regression models.
 
-    2012 - 2022 Data:
-    Multiple R-squared:  0.683
-    Adjusted R-squared:  0.682
+```         
+2012 - 2022 Data:
+Multiple R-squared:  0.683
+Adjusted R-squared:  0.682
 
-    2022 Data
-    Multiple R-squared:  0.736
-    Adjusted R-squared:  0.727
+2022 Data
+Multiple R-squared:  0.736
+Adjusted R-squared:  0.727
+```
 
 The regression using just the 2022 data results in a slightly better multiple and adjusted R2 score compared to using data from the last twenty seasons of the NFL. While this does indicate that the model based on the single season is better at defining the relationship between a team's `total_yards` and `total_points` it is essential to remember that there is different underlying patterns in the data as a result of the changing culture in the NFL and, ultimately, the epp and flow of team performance as a result of high levels of parity in the league.
 
@@ -566,47 +568,38 @@ Let's first create a dataframe, called `qb_mvp`, that contains the statistics fo
 
 player_stats <- nflreadr::load_player_stats(2000:2022) %>%
   filter(season_type == "REG" & position == "QB") %>%
-  filter(season != 2000 & season != 2005 & season != 2006 & season != 2012)
-
-qb_mvp_stats <- player_stats %>%
+  filter(season != 2000 & season != 2005 & season != 2006 & season != 2012) %>%
   group_by(season, player_display_name, player_id) %>%
   summarize(
     total_cmp = sum(completions, na.rm = TRUE),
     total_attempts = sum(attempts, na.rm = TRUE),
-    total_yards = sum(passing_yards, na.rm = TRUE),
-    total_tds = sum(passing_tds, na.rm = TRUE),
-    total_ints = sum(interceptions, na.rm = TRUE),
-    sacks = sum(sacks, na.rm = TRUE),
-    sack_yards = sum(sack_yards, na.rm = TRUE),
-    total_airyards = sum(passing_air_yards, na.rm = TRUE),
-    passing_yac = sum(passing_yards_after_catch, na.rm = TRUE),
-    total_firstdowns = sum(passing_first_downs, na.rm = TRUE),
-    mean_epa = mean(passing_epa, na.rm = TRUE),
-    mean_dakota = mean(dakota, na.rm = TRUE),
-    total_carries = sum(carries, na.rm = TRUE),
-    total_rush_yards = sum(rushing_yards, na.rm = TRUE),
-    total_rush_tds = sum(rushing_tds, na.rm = TRUE),
-    mean_rush_epa = mean(rushing_epa, na.rm = TRUE))
-
-
-###############
-qb_mvp_stats_new <- qb_mvp_stats_new %>%
-  dplyr::group_by(season) %>%
-  mutate(att_rank = order(order(total_attempts, decreasing = TRUE)),
-         yds_rank = order(order(total_yards, decreasing = TRUE)),
-         tds_rank = order(order(total_ints, decreasing = TRUE)),
-         ay_rank = order(order(total_airyards, decreasing = TRUE)),
-         dakota_rank = order(order(mean_dakota, decreasing = TRUE)),
-         rush_yds = order(order(total_rush_yards, decreasing = TRUE)),
-         repa_rank = order(order(mean_rush_epa, decreasing = TRUE))) %>%
-  select(season, player_display_name, att_rank, yds_rank, tds_rank, ay_rank,
-         dakota_rank, rush_yds, repa_rank, mvp)
-  
+    total_yards = sum(passing_yards + rushing_yards, na.rm = TRUE),
+    total_tds = sum(passing_tds + rushing_tds, na.rm = TRUE),
+    total_interceptions = sum(interceptions, na.rm = TRUE),
+    mean_epa = mean(passing_epa, na.rm = TRUE)) %>%
+  filter(total_attempts >= 150) %>%
+  ungroup()
 ```
 
-We are using data from over the course of 22 NFL seasons (2000 to 2022), but then removing the 2000, 2005, 2006, and 2012 seasons as the MVP for each was not a quarterback (Marshall Faulk, Shaun Alexander, LaDainian Tomlison, and Adrian Peterson, respectively). To begin building the model, collect QB-specific metric from the `load_player_stats()` function from `nflreadr`, including: total completions, total attempts, total yards, total touchdowns, total interceptions, sacks taken, yards loss on sacks, total air yards, total yards after catch, total first downs, the QB's mean expected points added. the mean DAKOTA (which is the adjusted EPA + CPOE composite), total carries, total rush yards, total rushing touchdowns, and the QB's average EPA earned on rushes.
+We are using data from over the course of 22 NFL seasons (2000 to 2022), but then removing the 2000, 2005, 2006, and 2012 seasons as the MVP for each was not a quarterback (Marshall Faulk, Shaun Alexander, LaDainian Tomlison, and Adrian Peterson, respectively). To begin building the model, collect QB-specific metric from the `load_player_stats()` function from `nflreadr`, including: total completions, total attempts, total yards (passing + rushing), total touchdowns (passing + rushing), the QB's average EPA (only for pass attempts).
 
-The data, as collected from `load_player_stats()`, does not contain information pertaining to MVP winners. To include this, we can load a prepared file using data from Pro Football Reference. The data contains two variables: `season` and `player_name` wherein the name represents the player that won that season's MVP. After reading the data in, we can use the `mutate` function to create a new variable called `mvp` that is in binary (`1` representing that the player was the MVP). After, we can merge this data into our `qb_mvp_stats` dataframe. After merging, you will notice that the `mvp` column has mainly `NA` values. As we only brought in `1` in binary, we must set all the `NA` values to `0` to indicate that those players did not win the MVP that season. Lastly, we will limit the number of `total_attempts` to only those quarterbacks with 150 or more in a season.
+Because the style of play in the NFL has changed between the earliest seasons in the data frame and the 2022 season, I may not be fair to compare the specific statistics to each other. Rather, we can rank the quarterbacks for each season, per statistic, in a decreasing fashion as the statistical numbers increase. For example, Patrick Mahomes led the league in passing yards in the 2022 season. As a result, he is ranked as `1` in the forthcoming `yds_rank` column while the QB with the second-most yards (Justin Herbert, with 4,739) will be ranked as `2` in the `yds_rank` column. This process allows us to normalize the data and takes into the account the change in play style in the NFL over the time span of the data frame. To add the rankings to our data, we will create a new data frame titled `qb_mvp_stats` off our existing `player_stats` and then use the `order` function from base R to provide the rankings in descending order. After, we use the `select()` function to gather the `season`, `player_display_name`, and `player_id` as well as the rankings that we created using `order()`.
+
+```{r add-rankings-to-qb-mvp, eval = TRUE, echo = TRUE, output = FALSE}
+
+qb_mvp_stats <- player_stats %>%
+  dplyr::group_by(season) %>%
+  mutate(cmp_rank = order(order(total_cmp, decreasing = TRUE)),
+         att_rank = order(order(total_attempts, decreasing = TRUE)),
+         yds_rank = order(order(total_yards, decreasing = TRUE)),
+         tds_rank = order(order(total_tds, decreasing = TRUE)),
+         int_rank = order(order(total_interceptions, decreasing = FALSE)),
+         epa_rank = order(order(mean_epa, decreasing = TRUE))) %>%
+  select(season, player_display_name, player_id, cmp_rank, att_rank, yds_rank, tds_rank,
+         int_rank, epa_rank)
+```
+
+The data, as collected from `load_player_stats()`, does not contain information pertaining to MVP winners. To include this, we can load a prepared file using data from Pro Football Reference. The data contains two variables: `season` and `player_name` wherein the name represents the player that won that season's MVP. After reading the data in, we can use the `mutate` function to create a new variable called `mvp` that is in binary (`1` representing that the player was the MVP). After, we can merge this data into our `qb_mvp_stats` data frame. After merging, you will notice that the `mvp` column has mainly `NA` values. As we only brought in `1` in binary, we must set all the `NA` values to `0` to indicate that those players did not win the MVP that season.
 
 ```{r load-pfr-mvp-data, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -618,12 +611,9 @@ qb_mvp_stats <- qb_mvp_stats %>%
   left_join(pfr_mvp_data, by = c("season" = "season", "player_display_name" = "player_name"))
 
 qb_mvp_stats$mvp[is.na(qb_mvp_stats$mvp)] <- 0
-
-qb_mvp_stats <- qb_mvp_stats %>%
-  filter(total_attempts >= 150)
 ```
 
-The above results in a dataframe with 723 observations with 17 associated statistics for each quarterback. We can now turn to the construction of the binary regression model.
+The above results in a data frame with 723 observations with 6 predictive variables used to determine the probability of the QB being named MVP. We can now turn to the construction of the regression model.
 
 ::: callout-important
 If you have not already done so, please install `tidymodels` and load it.
@@ -645,17 +635,878 @@ Like many of the models to follow in this chapter, it is important to have both 
 3.  **Model selection**. In the case that you are evaluating several different model types to identify the best performing one, having a testing set allows us to determine which model type is likely to perform best when provided unseen data.
 :::
 
-The process of splitting the data into a training and testing set involves three lines of code with the `rsample` package. We first use the `initial_split` function to create a binary split of the data into a training and testing set. Moreover, we use the `strata` argument to conduct what is called "stratified sampling." Because there are very few MVPs in our data compared to those non-MVP players, using the `strata` argument allows us to create a training and test set with a similar amount of MVPs in the data. We then use the `training` and `testing` argument to create our data off of the initial split.
+The process of splitting the data into a training and testing set involves three lines of code with the `rsample` package. Prior to splitting the data, we will create a new data frame titled `mvp_model_data` that is our existing `qb_mvp_stats` information, but then using the `ungroup()` function to overwrite any prior `group_by()` that was applied to the data frame. We first use the `initial_split` function to create a binary split of the data into a training and testing set. Moreover, we use the `strata` argument to conduct what is called "stratified sampling." Because there are very few MVPs in our data compared to those non-MVP players, using the `strata` argument allows us to create a training and test set with a similar amount of MVPs in each. We then use the `training` and `testing` argument to create our data off of the initial split.
 
 ```{r qb-mvp-initial-split, eval = TRUE, echo = TRUE, output = FALSE}
 
-mvp_model_split <- rsample::initial_split(qb_mvp_stats, strata = mvp)
+mvp_model_data <- qb_mvp_stats %>%
+  ungroup()
+
+### splitting using rsample ... might need to manually split by season
+mvp_model_split <- rsample::initial_split(mvp_model_data, strata = mvp)
 mvp_model_train <- rsample::training(mvp_model_split)
 mvp_model_test <- rsample::testing(mvp_model_split)
 ```
 
+With the MVP data split into both a training and testing set, we can use the `glm` package to conduct the regression analysis on the `mvp_model_train` data frame.
+
+```{r running-mvp-regression, eval = TRUE, echo = TRUE, output = FALSE, warning = FALSE}
+
+mvp_model <- glm(formula = mvp ~ cmp_rank + att_rank + yds_rank +
+                   tds_rank + int_rank + epa_rank,
+                 data = mvp_model_train, family = binomial)
+```
+
+While the model does run, creating the `mvp_model` in the RStudio environment, we receive the following warning message in the Console:
+
+`Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred`
+
+As the message indicates, this is not necessarily an error in the modeling process, but an indication that some of the fitted probabilities in the model are fitted numerically to 0 or 1. This most often occurs in binomial regression models when there is nearly perfect separation within the data underpinning the model, meaning there is one or more predictor variables (passing yards, passing touchdowns, etc.) that are able to perfectly classify the outcome (MVP) of the model. This type of "perfect separation" in modeling is usual when working with data that is both limited and "rare" - only one QB per season in our data is able to win the MVP award. We can create a quick histogram of the fitted probabilities wherein multitudes of probabilities close to either 0 or 1 is a good explanation for the warning message.
+
+```{r mvp-model-histogram, eval = TRUE, echo = TRUE, output = TRUE}
+
+plot(residuals(mvp_model))
+```
+
+The histogram clearly shows the separation issue in the model's data. The majority of the QBs in the data have a 0% to an incredibly slim chance to win the MVP, while the bar for those fitted probability from 0.2 to 1.0 are barely visible in the plot. While a warning that "fitted probabilities numerically 0 or 1 occurred" is cause for further examination, we are quickly able to diagnose the issue by using our "domain knowledge" of the data - that is, of course separation is going to occur since only one QB can be MVP in any season.
+
+To verify that the model is predicting reasonable probabilities, we can calculate the predicted values and probabilities on the existing training data.
+
+```{r predict-probs-mvp, eval = TRUE, echo = TRUE, output = FALSE}
+
+training_probs <- mvp_model_train %>%
+  mutate(pred = predict(mvp_model, mvp_model_train, type = "response")) %>%
+  group_by(season) %>%
+  mutate(pred_mvp = as.numeric(pred == max(pred, na.rm = TRUE)),
+         mvp_prob = pred / sum(pred))
+```
+
+With the model now trained, we can take the results of the model and apply it to our withheld `mvp_model_test` data frame. Using the `predict` function, we instruct to take the modeled predictions from the satisfactorily trained `mvp_model` and generate further predictions on the `mvp_model_test` data frame. Because the the `type = "response"` argument results in a probability between `0` and `1`, we use `ifelse` to create a "cutoff" for the probabilities, where any number above 0.5 will be `1` while any number below will be `0`.
+
+```{r applying-model-to-test, eval = TRUE, echo = TRUE, output = FALSE}
+
+test_predictions <- predict(mvp_model, newdata = mvp_model_test, type = "response")
+
+test_class_predictions <- ifelse(test_predictions > 0.5, 1, 0)
+```
+
+With the model now fitted to previously unseen data (the withheld `mvp_model_test` data frame), we can calculate the its accuracy.
+
+```{r glm-model-accuracy, eval = TRUE, echo = TRUE, output = TRUE}
+
+accuracy <- sum(test_class_predictions == mvp_model_test$mvp) / nrow(mvp_model_test)
+
+accuracy <- round(accuracy, 2)
+
+print(paste("Accuracy:", accuracy))
+```
+
+::: callout-important
+A model with that predicts with 97% accuracy seems great, right?
+
+However, we must keep in mind the significant class imbalance in our data as visualized on our earlier histogram. Roughly 3% of the quarterbacks in the `qb_mvp_stats` data frame won the MVP award, meaning the remaining 97% of the quarterbacks did not.
+
+Because of this, a model could always predict "not MVP" and, as a result, also have an accuracy of 97%.
+
+While a high accuracy score like the model produced is a promising first sign, it is important to remember that accuracy - as a metric - only gives the broad picture. It does not depict how the model is performing on each individual class (that is, `0` and `1`). To get a more granular understanding of the model's performance, we can turn to metrics such as precision, recall, and the F1-score.
+
+To begin determining the scores for each, we must conduct a bit of data preparation by ensuring that both `test_class_predictions` and `mvp_model_test$mvp` are both `as.factor()`. After, we use the `confusionMatrix` function from the `caret` package to build a matrix between the binary class predictions (from `test_class_predictions`) and the true labels (from `mvp_model_test$mvp`).
+
+```{r turn-to-as-factor, eval = TRUE, echo = TRUE, output = FALSE}
+
+test_class_predictions <- as.factor(test_class_predictions)
+mvp_model_test$mvp <- as.factor(mvp_model_test$mvp)
+
+mvp_cm <- confusionMatrix(test_class_predictions, mvp_model_test$mvp)
+
+```
+
+After constructing the confusion matrix, we can calculate the results for precision, recall, and F1.
+
+```{r precision-recall-f1-scores, eval = TRUE, echo = TRUE, output = TRUE}
+
+precision <- cm$byClass['Pos Pred Value']
+
+recall <- cm$byClass['Sensitivity']
+
+f1 <- 2 * (precision * recall) / (precision + recall)
+
+print(paste("Precision:", precision))
+print(paste("Recall:", recall))
+print(paste("F1 Score:", f1))
+```
+
+The resulting scores further indicate a well-trained and performing model.
+
+1.  **Precision** - the Positive Predictive Value is the fraction of true positives among all positive predictions (including false positives). The resulting score of 0.994 means that the model correctly predicted the MVP 99.4% of the time.
+2.  **Recall** - the Sensitivity or True Positive Rate is similar to precision in that it is also the fraction of true positive predictions, but only those among all true positives. Our recall scores of 0.994, again, means that the model correctly predicted the MVP 99.4% of the time.
+3.  **F1 Score** - the F1 Score is the "harmonic mean" between precision and recall, providing a balanced combination of both. With another score of 0.994, the model's F1 Score indicates a healthy balance between both precision and recall in its predictions.
+
+The model producing the same score for each metric is indicative that it contains an equal number of both false positives and false negatives, which is ultimately a sign of balance in the prediction making process.
+:::
+
+Based on the results of accruacy, precision, recall, and the F1 Score, our model is quite accurate. We can now create our own "fictional" data frame with corresponding predictor variables to determine the probabilities for each of the quarterbacks to be named MVP.
+
+```{r fictional-qb-test, eval = TRUE, echo = TRUE, output = TRUE}
+
+new_mvp_data <- data.frame(
+  cmp_rank = c(1, 4, 2),
+  att_rank = c(2, 1, 5),
+  yds_rank = c(5, 3, 7),
+  tds_rank = c(3, 1, 2),
+  int_rank = c(21, 17, 14),
+  epa_rank = c(3, 1, 5))
+
+new_mvp_predictions <- predict(mvp_model, newdata = new_mvp_data, type = "response")
+
+new_mvp_predictions
+```
+
+According to our fully trained and tested model, fictional quarterback #2 has almost a 90% probability of winning the MVP when compared to the two other opposing quarterbacks.
+
+Finally, we use use the `broom` package to transform the model's information into a tidyverse-friendly data frame allowing us to visualize the information using `ggplot`.
+
+```{r visualizing-glm-model, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+
+tidy_mvp_model <- broom::tidy(mvp_model) %>%
+  filter(term != "(Intercept)")
+
+ggplot(tidy_mvp_model, aes(x = reorder(term, estimate), y = estimate, fill = estimate)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "Predictive Variables",
+       y = "Estimate",
+       title = "**Probability of a QB Being NFL MVP**",
+       subtitle = "*GLM Model | F1-Score: 99.4%*",
+       caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**") +
+  theme(legend.position = "none") +
+  nfl_analytics_theme()
+```
+
+A negative `Estimate` for a `Predictive Variable` means that as that statistics increases (a player has a worse rank among his peers), the probable odds of that quarterback being awarded the Most Value Players decreases. For example, in our model, the `epa_rank` predictor has an `Estimate` of approximately -0.8 which means for each drop in rank, a quarterback's chance of being named MVP decreases by -0.8. Within the model, `int_rank`, `att_rank`, `yds_rank`, `tds_ranks`, and `epa_rank` align with our domain knowledge intuition: as quarterbacks perform worse in these areas, their chance of being MVP decreases.
+
+Why, then, does a worse performance in `cmp_rank` provide a quarterback an increased chance in becoming MVP? Several issues could be causing this, including statistical noise, a variable that is highly correlated with `cmp_rank`, or a general non-linear relationship between `cmp_rank` and the response variable. If we were to continue working on this model, a good first step would using the `filter()` function to remove those quarterbacks with a limited number of attempts during the season.
+
 #### Logistic Regression #2: Multinomial Regression with `tidymodels`
+
+In our previous example building a binomial regression model, there were only two exactly outcomes: `0` and `1` for whether the specific quarterback was named that season's MVP. A multinomial regression is an extension of the binomial model, but is used when there are multiple categories of outcomes rather than just two. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. Using the softmax function to ensure that the probabilities for each dependent variable total 1, the main assumptions of th model are:
+
+1.  the dependent variable must be categorical with multiple unordered categories
+2.  the predictor variables can be a combination of continuous values or categorical
+3.  much like all the other models we've worked on, there must not be multicollinearity among the predictor values
+4.  the observations must be independent of each other
+
+The specific formula for a multinomial regression is as follows:
+
+$$
+P(Y_{i} = k | X_{i}) = \frac{e^{(\beta_{k0} + \beta_{k1}X_{i1} + \beta_{k2}X_{i2} + … + \beta_{kp}X_{ip})}}{\sum_{j=1}^{K} e^{(\beta_{j0} + \beta_{j1}X_{i1} + \beta_{j2}X_{i2} + … + \beta_{jp}X_{ip})}}
+$$
+
+1.  $P(Y_{i} = k | X_{i})$ is the likelihood of the observation $i$ belonging to class $k$ given the model's predictive variables
+2.  In the formula, $X_{i1}, X_{i2}, ..., X_{ip}$ are the predictive variables
+3.  The coefficients are represented by $\beta_{k0}, \beta_{k1}, ...,\beta_{kp}$
+4.  Finally, $K$ represents the number of categories the dependent variable has
+
+As an example, let's build a multinomial regression model that predicts the type of offensive play call based on contextual factors of the game. We will build the model around five depending categories:
+
+1.  run inside (noted as `middle` in the play-by-play data)
+2.  run outside (noted as `left` or `right` in the play-by-play data)
+3.  short pass (passes with air yards under 5 yards)
+4.  medium pass (passes with air yards between 6-10 yards)
+5.  long passes (passes with air yards of 11+ yards)
+
+The construction of a multinomial regression will allow us to find the probability of each play type based on factors in the game. Such a model speaks directly to coach play-calling tendencies given the situations. To begin, we will gather data from the 2010-2022 NFL regular season. After loading the data, we will select the predictor variables and then conduct some featured engineering (which is, in this case, inspired by a presentation given by Thomas Mock on how to use `tidymodels` to predict a run or pass using binary regression)[@thomas_mock].
+
+::: callout-important
+**An Introduction to the `tidymodels` package.**
+
+As just mentioned, the [`tidymodels` package](https://www.tidymodels.org/) is a collection of various packages for statistical modeling and machine learning. Importantly, the `tidymodels` package is structured much in the same way that `tidyverse` is - meaning that the packages work together to provide a unified and efficient workflow for constructing, testing, and evaluating models. A total of 43 different model types come in the base installation of `tidymodels`, ranging from simple linear regressions to more complex approaches such as neural networks and Bayesian analysis. You can view the different model types, housed within the `parsnip` package at the `tidymodels` website: [Type of models included in `tidymodels`.](https://www.tidymodels.org/find/parsnip/)
+
+Because `tidymodels` follows the `tidyverse` philosophy of "providing a uniform interface" so that "packages work together naturally," there is a general flow in which users construct a model.
+
+1.  First, data preprocessing and feature engineering is done with the `recipes` package.
+2.  Next, the `parsnip` package is used to create a model specification.
+3.  If any resampling or tuning is being conducted during the model, the `rsample` package is used to organize the necessary type of hyperparameter tuning (grid search, regular search, etc.).
+4.  The `workflows` package is then used to combine all of the prior steps into a singular object in your RStudio environment.
+5.  After training the model on the initial split of data, the `yardstick` packages allows for various forms of evaluation, including accuracy, precision, recall, F-1 score, RMSE, and MAE.
+6.  Once you are happy with the training evaluation of the model. the `last_fit()` conducts the process on the entire dataset to generate predictions.
+
+Below, we will take our newly created `model_data_clean` data frame and conduct a multinomial logistic regression using the `tidymodels` package.
+:::
+
+```{r loading-model-data, eval = TRUE, echo = FALSE, output = FALSE}
+
+model_data <- arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
+```
+
+```{r multinomial-data-prep-2, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2006:2022) %>%
+  filter(season_type == "REG")
+
+pbp_prep <- pbp %>%
+  select(
+    game_id, game_date, game_seconds_remaining, week, season,
+    play_type, yards_gained, ydstogo, down, yardline_100, qtr, posteam,
+    posteam_score, defteam, defteam_score, score_differential, shotgun,
+    no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
+    wp, penalty, half_seconds_remaining, goal_to_go, td_prob, fixed_drive, run_location, air_yards) %>%
+  filter(play_type %in% c("run", "pass"), penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
+  mutate(in_red_zone = if_else(yardline_100 <= 20, 1, 0),
+         in_fg_range = if_else(yardline_100 <= 35, 1, 0),
+         two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
+  select(-penalty, -half_seconds_remaining)
+```
+
+There is a lot going in on the first bit of code to prepare our multinomial regression. We first collect regular season play-by-play data from 2006 to 2022. It is important to note that the 2006 season was not arbitrarily chosen. Rather, it is the first season in which the `air_yards` variable is included in the data. After gathering the data, we use the `select()` function to keep just those variables that may give an indication of what type of pay to expect next. Lastly, we conduct feature engineering by creating three new metrics in the data (`in_red_zone`, `in_fg_range`, and `two_min_drill`) and use `if_else()` to turn all three into a `1`/`0` binary.
+
+::: callout-warning
+Before running the next bit of code, **be sure that your installed version of `dplyr`** **is 1.1.1 or newer**.
+
+An issue was discovered in version 1.1.0 that created major computational slowdowns when using `case_when()` and `mutate()` together within a `group_by()` variable. Prior to discovering this issue, running the below code took an absurd 22 minutes.
+
+As a result, you will notice I resorted to using the `fcase()` function from the `data.table()` package. You can also use the `dt_case_when()` function from `tidyfast` if you prefer to use the same syntax of `case_when()` but utilize the speed of `data.table::ifelse()`.
+
+After switching to `fcase()`, the code finished running in 17.69 seconds. After upgrading to `dplyr` 1.1.1, the `case_when()` version of the code completed in 18.94 seconds.
+:::
+
+```{r multinomial-data-prep-3, eval = FALSE, echo = TRUE, output = FALSE}
+
+model_data <- pbp_prep %>%
+  group_by(game_id, posteam) %>%
+  mutate(run_inside = fcase(
+    play_type == "run" & run_location == "middle", 1,
+    play_type == "run", 0,
+    default = 0),
+    run_outside = fcase(
+      play_type == "run" & (run_location == "left" | run_location == "right"), 1,
+      play_type == "run", 0,
+      default = 0),
+    short_pass = fcase(
+      play_type == "pass" & air_yards <= 5, 1,
+      play_type == "pass", 0,
+      default = 0),
+    medium_pass = fcase(
+      play_type == "pass" & air_yards > 5 & air_yards <= 10, 1,
+      play_type == "pass", 0,
+      default = 0),
+    long_pass = fcase(
+      play_type == "pass" & air_yards > 10, 1,
+      play_type == "pass", 0,
+      default = 0),
+    run = if_else(play_type == "run", 1, 0),
+    pass = if_else(play_type == "pass", 1, 0),
+    total_runs = if_else(play_type == "run", cumsum(run) - 1, cumsum(run)),
+    total_pass = if_else(play_type == "pass", cumsum(pass) - 1, cumsum(pass)),
+    previous_play = if_else(posteam == lag(posteam),
+                            lag(play_type), "First play of drive"),
+    previous_play = if_else(is.na(previous_play),
+                            replace_na("First play of drive"), previous_play)) %>%
+  ungroup() %>%
+  mutate(across(c(play_type, season, posteam, defteam, shotgun, down, qtr, no_huddle,
+                 posteam_timeouts_remaining, defteam_timeouts_remaining, in_red_zone,
+                 in_fg_range, previous_play, goal_to_go, two_min_drill), as.factor)) %>%
+  select(-game_id, -game_date, -week, -play_type, -yards_gained, -defteam, -run, -pass,
+         -air_yards, -run_location)
+```
+
+We are now using the `mutate()` and `case_when()` functions to create our response variables (`run_inside`, `run_outside`, `short_pass`, `medium_pass`, `long_pass`) by providing both the binary `1` and `0` arguments for the `play_type`. After, we create two more binary columns based on whether the called play was a rush or a pass and then use those two columns to calculate each team's cumulative runs and passes for each game. We conclude the feature engineering process by using the `lag()` function to provide the the previous play (or, to use "First play of drive" if there was no prior play).
+
+Before moving on to building out the model, we use `mutate(across(c())` to turn categorical variables in factors, as well as those numeric variables that are not continuous in nature. Variables **that can take on just a limited number of unique values are typically made into a factor.** For example, the `previous_play` variable is categorical and is only capable of being one of two values: `run` or `pass`. Because of this, it will be converted into a factor.
+
+Deciding which numeric variables to convert with `as.factor()` can be a bit more tricky. We can compare the `down` and `half_seconds_remaining` variables, as you see the first in the `mutate()` function but not the second. This is because `down` is not a continuous variable as it can only take on a specific number of unique values (1, 2, 3, or 4). On the other hand, `half_seconds_remaining` is not continuous as there is no rhyme or reason to how it appears in the data - or, in other hands, there is no specific amount by which the `half_seconds_remaining` decreases for each individual play (while there *is* an ordered increase in how `down` changes).
+
+Because we are focusing on completing a multinomial regression, it must now convert the various play type columns (`run_inside`, `run_outside`, etc.) from binary format and then unite all five into a single response variable column titled `play_call`.
+
+```{r multinomial-data-prep-4, eval = FALSE, echo = TRUE, output = FALSE}
+
+model_data <- model_data %>%
+  mutate(play_call = case_when(
+    run_outside == 1 ~ "run_outside",
+    run_inside == 1 ~ "run_inside",
+    short_pass == 1 ~ "short_pass",
+    medium_pass == 1 ~ "medium_pass",
+    long_pass == 1 ~ "long_pass",
+    TRUE ~ NA)) %>%
+  select(-run_outside, -run_inside, -short_pass, -medium_pass, -long_pass) %>%
+  mutate(play_call = as.factor(play_call))
+
+model_data_clean <- na.omit(model_data)
+```
+
+With data preparation and feature engineering complete, we can turn to constructing the model and examining the results by starting with splitting the data into training and testing sets.
+
+Before doing any feature engineering with the `recipes` package, we will first split the data into training and testing sets using the aforementioned `rsample` package. The model is first trained on the training data and then evaluated on the testing data. This crucial first step ensures that the model is able to generalize well to any unseen data (as is withheld in the testing data). As well, splitting the data helps in avoiding overfitting, which occurs when the model is able to recognize any random noise in the data. As a result, the model may perform very well on training data but then fail to reach acceptable evaluation metrics when fit on the withheld testing data.
+
+To start the splitting process of the `qb_mvp_stats` data frame, we first use `set.seed()` and pick a random number to run with it. The number inside `set.seed()` literally does not matter, as it is simply the initial value of what is otherwise a random-number as the rows are split - at random - into training and testing sets. However, using `set.seed()` allows for reproducible results in that conducting the split a second time, with the same initial value in `set.seed()` will result in an identical split from the first time.
+
+We then use the `initial_split` function in `rsample` to create the `qb_mvp_split` data frame. The `initial_split` process take the provided data frame and creates a single binary split of the information. Because there is an imbalance in the number of players that have won the MVP and those who have not, we use the `strata` argument to collect a balanced number of `mvp == 1` in both the training and testing data.
+
+With the `initial_split()` process completed, the data is divided into a `qb_mvp_training` data frame and a `qb_mvp_testing` data frame using the `training()` and `testing()` functions within `rsample` to conduct the process on the `` `qb_mvp_split` `` data. Last, we create folds of the data using the `vfold_cv` function in `rsample` that will allow use to conduct K-fold cross validation during the training process.
+
+```{r multinomial-data-split, eval = FALSE, echo = TRUE, output = FALSE}
+
+set.seed(1984)
+
+multinom_play_split <- rsample::initial_split(multinom_play_data, strata = play_call)
+multinom_play_train <- rsample::training(multinom_play_split)
+multinom_play_test <- rsample::testing(multinom_play_split)
+
+set.seed(1958)
+multinom_play_folds <- rsample::vfold_cv(multinom_play_train, strata = play_call)
+```
+
+The `recipes` package within `tidymodels`, first and foremost, is where the formula for the model is passed into the eventful `workflow`. However, it also provides the opportunity for further preprocessing of the data by using the the `step_` function that allows for multitudes of refinement, including imputation, individual transformations, discretization, the creation of dummy variables and encodings, interactions, normalization, multivariate transformations, filters, and row operations. The complete list of possible `step_` functions can be fond on the [reference section of the `recipes` website.](https://recipes.tidymodels.org/reference/index.html) We use several of these `step_` functions below in preparing the `recipes` for our multinomial logisitic regression model.
+
+::: callout-tip
+When building your recipe in the `tidymodels` framework, there is a general suggested order that your steps should be in to avoid issues with how the data becomes structure for the tuning/modeling process.
+
+1.  Imputation
+2.  Handle factor levels
+3.  Transformations
+4.  Discretize
+5.  Creating dummy variables and (if needed) one-hot encoding
+6.  Creating interactions between variables
+7.  Normalization steps
+8.  Multivariate transformations
+
+Not every recipe will require all of these steps, of course. But, when using more than one, it is important to follow the above order when building the recipe.
+:::
+
+We provide the formula for our regression model (`play_call ~ .`, and then provide the name of our training data (`multinom_play_train`). We then apply the optional `update_role()` function to both the `posteam` and `season` variables from the data before adding additional steps into the recipe using the pipe operator.
+
+1.  **`update_role()`** - by applying the the `update_role()` function to the `posteam` and `season` variables, we are able to retain the information without including it in the model process allowing us to investigate the prediction on a season and team basis.
+2.  **`step_zv()`** - the `step_zv()` function will remove any variables that contain zero variance (that is, only a single value).
+3.  **`step_normalize()`** - in short, the `step_normalize()` function applies both the mean and the standard deviation from the split training set to the testing set. Doing so helps prevent data leakage during the process.
+4.  **`step_dummy()`** - the `step_dummy()` function creates a set of binary variables from the inputted factor.
+
+```{r multinomial-data-recipe, eval = FALSE, ehco = TRUE, output = FALSE}
+
+multinom_play_recipe <- 
+  recipe(formula = play_call ~ ., data = multinom_play_train) %>%
+  update_role(posteam, new_role = "variable_id") %>%
+  update_role(season, new_role = "variable_id") %>%
+  step_zv(all_predictors(), -has_role("variable_id")) %>% 
+  step_normalize(all_numeric_predictors(), - has_role("variable_id")) %>%
+  step_dummy(down, qtr, posteam_timeouts_remaining, defteam_timeouts_remaining,
+             in_red_zone, in_fg_range, two_min_drill, previous_play)
+```
+
+With the recipe for our model created, we can build the model itself and then pass both `multinom_play_recipe` and the below `multinom_play_model` into a combined `workflow()` created within the `tidymodels` framework.
+
+```{r creating-model-and-workflow, eval = FALSE, echo = TRUE, output = FALSE}
+
+multinom_play_model <-
+  multinom_reg(penalty = tune(), mixture = tune()) %>%
+  set_mode("classification") %>%
+  set_engine("glmnet", family = "multinomial")
+
+multinom_play_workflow <- workflow() %>%
+  add_recipe(multinom_play_recipe) %>%
+  add_model(multinom_play_model)
+
+```
+
+There are three important items provided to `multinom_play_model`: the **model type**, the **mode**, and the **computational engine.**
+
+1.  **Model type** - the first argument provided is the specific type of model that will be used in the analysis. As of the writing of this book, the `parsnip` package within `tidymodels` provides access to 43 various model types. You can see the complete list on the [`tidymodels` Explore Models page](https://www.tidymodels.org/find/parsnip/). In this case, we are using the `multinom_reg()` model type. In many cases, each type of each maintains its own page on the `parsnip` website that provides further details about the various engines that be used to run the model.
+2.  **Mode** - Because we are utilizing a multinomial regression, the only valid `mode` for the model is "classification." The most common modes in the `tidymodels` universe are "classification" and "regression." In those circumstances where a model's mode can accept various arguments, the list of available options is provided on the engine's website (such as "censored regression", "risk regression", and "clustering").
+3.  **Engine** - the engine provides instructions on how the model is to be fit. In many cases, the provide engine type results in `tidymodels` calling in outside R packages (such as `randomForest` or `ranger`) to complete the process. In the case of a `multinom_reg()` model, there are six available type of engines: `nnet`, `brulee`, `glmnet`, `h20`, `keras`, and `spark`. While not wanting to over complicate the process for first-time users of `tidymodels`, it is important to know that each engine type within a model type comes with various options for tuning parameters (if that is a desired part of your model design). Our model will be using the `glmnet` engine which provides the ability to tune for `penalty` (the amount of regularization within the model) and `mixture` (the proportion of Lasso Penalty, if desired, wherein a `mixture` of `1` results in a pure Lasso model, `0` results in a ridge regression and anything between is an elastic net model. Other engines, like `brulee` provides upwards of nine tuning parameters (such as `epochs`, `learn_rate`, `momentum`, and `class_weights`). The parameters you wish to tune during the training process are providing when providing your model type. We will be conducting a tuning process for both `penalty` and `mixture`.
+
+::: callout-note
+You will notice that we've included `family = "multinomial"` in the construction of our model's engine, which makes since as the model we are using is a multinomial regression. However, the `glmnet` engine allows you to fit multiple family types, including gaussian, binomial, Possion.
+:::
+
+Because we provided specific tuning parameters in the model type, it is necessary to provide a grid for the process of finding the best hyperparameters - which are those parameters within the model (again, `penalty` and `mixture`) that are not provided in the original data frame. The use of these parameters ultimately control the learning process of the model and, as a result, can have a significant impact on the performance and accuracy of the final results. Because of this, we create what is called a "grid" in order to allow the model to run over and over again on a set range of each parameter, a process coined hyperparameter tuning. The end result is a model that has determined the best `penalty` and `mixture`.
+
+We will use the `crossing` function from the `tidyr` package to manually create a grid for the hyperparameter tuning process.
+
+```{r creating-multinom-grid, eval = FALSE, echo = TRUE, output = FALSE}
+
+multinom_play_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20),
+                                      mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1))
+```
+
+1.  **Penalty** - we are creating a sequence of 20 numbers that are evenly spaced on a log scale between 10\^-6 and 10\^-1. The training process will be conducted with each number in the `penalty` argument. A correctly tuned `penalty` allows us to avoid overfitting.
+2.  **Mixture** - to tune the `mixture` parameter, we create a simple sequence of 6 values between 0.05 and 1.
+
+The model will use `multinom_play_grid` to train and evaluate against every possible combination of `penalty` and `mixture` as defined in our above arguments. With the hyperparameter tuning grid created, we now turn to actually running the model.
+
+```{r multinomial-parallel-tune, eval = FALSE, echo = TRUE, output = FALSE}
+
+all_cores <- parallel::detectCores(logical = FALSE) - 1
+
+registerDoParallel(all_cores)
+
+set.seed(1988)
+
+multinom_play_tune <- tune_grid(
+  multinom_play_workflow,
+  resample = multinom_play_folds,
+  grid = multinom_play_grid,
+  control = control_grid(save_pred = TRUE,
+                         verbose = TRUE))
+
+doParallel::stopImplicitCluster()
+```
+
+::: callout-warning
+The process of using the `paralell` package is included in the above code.
+
+The process is important if you want to speed up the training of your model as, by default, RStudio runs **one just one core of your CPU**. The processor in my computer, an Intel Core i5-10400F, has 6 cores. The `paralell` package allows us to provide more computational cores to RStudio, which in turns allows the modeling process to be conducting different tasks on different cores, then compiling the information back together when completed.
+
+When using the `parallel` package, our multinomial model took 25 minutes to complete on my computer. Out of curiosity, I spun up an Ubuntu server running R and RStudio in the Amazon cloud on an instance with 16 cores. Just this small increase in computing power dropped the model's training time to under three minutes.
+:::
+
+As mentioned, we are using the `parallel` package to provide the model as much computational power we can. We let the package discover the exact number of cores in the computer by using the `detectCores` function and then place this number in a vector called `all_cores` after subtracting one from it (as the computer will need one free core during the modeling process to stay operational). Next, we utilize the `doParallel` package to physically begin the process of parallel processing.
+
+Finally, we use the `tune_grid()` function, from `tune` housed within `tidymodels`, to begin the tuning process on our play-by-play data. At bare minium, the `tune_grid()` function requires the model's `workflow` and `grid` to successfully run. In our case, we are passing in `multinom_play_workflow`, our `multinom_play_folds` resample data to allow for K-fold cross validation, and `multinom_play_grid`. Additionally, we are requesting, via the `control` argument in `grid` to both save the model's predictions and to provide verbose output in the Console regarding the current status of the tuning process. When the model completes the tuning process, be sure to run `doParallel::stopImplicitCluster()` to stop your computer from parallel processing.
+
+::: callout-note
+If conducting the tuning process in a parallel processing environment, there will be not verbose output in the console regardless of how you set the argument. In many cases, even when parallel processing, I will set this option to `TRUE`, as the lack of verbose output is an indication itself that the model is properly tuning and still working.
+:::
+
+When the tuning process is complete, we can use the `show_best()` function to retrieve the top 5 models as determined, in this case, by AUC (area under the curve). The output of `show_best()` includes important pieces of information pertaining to specific performance metrics for each tuning of the model.
+
+1.  `penalty` and `mixture` - each respective column displays the value used from the hyperparameter tuning grid used in that specific model's configuration. In model 1, the `penalty` was set to 0.000001 while the `mixture` used was 0.2.
+2.  `.metric` - this column provides the type of performance metric being used to evaluate each model. As mentioned, we are used `roc_auc` to help in determining the best performing model.
+3.  `.estimator` - the `.estimator` indicates the specific method used to calculate the `.metric`. In the case of our model using the `glmnet` engine, the "hand and till" estimator, a method described in Hand, Till (2001), was used to determine the area `roc_auc`.
+4.  `mean` - this is the average of the `roc_auc` among those folds in the cross-validation with the same `penalty` and `mixture` configuration.
+5.  `n` - this number represents the specific number of folds used in the cross validation process.
+6.  `std_err` - each model's standard error metric.
+7.  `.config` - the unique identifier for each model.
+
+```{r viewing-best-rocauc-multinom, eval = FALSE, echo = TRUE, output = FALSE}
+
+show_best(multinom_play_tune, metric = "roc_auc")
+
+`# A tibble: 5 x 8
+     penalty mixture .metric .estimator  mean     n  std_err .config               
+       <dbl>   <dbl> <chr>   <chr>      <dbl> <int>    <dbl> <chr>                 
+1 0.000001       0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model021
+2 0.00000183     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model022
+3 0.00000336     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model023
+4 0.00000616     0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model024
+5 0.0000113      0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model025`
+```
+
+There is very little difference among the five top-performing models from the tuning process. Among the five best, the `mixtures` is the same (0.2), the `mean` is the same (0.668), as well as the `n` (10) and `std_err` (0.000537). The only difference between each model is found in the `penalty`, wherein a smaller number equates to a model with less regularization, allowing the model to fit more closely to the training data. On the other hand, a larger `penalty` value provides a model with more regularization, forcing the model to fit less closely to the training data. However, the amount of regularization in the model had no significant impact on any other performance metric, as they remained static across all models.
+
+Rather than make an arbitrary choice in the model to take forward in the process, we will use the `select_by_one_std_err()` function to select the appropriate model. The function operates under the "one-standard-error-rule", which argues that we should move forward with the model whose standard error is no more than one standard error above the error of the best model. Moreover, we can sort by models in descending order by `penalty`, thus following the principles of Occam's Razor, as selecting the model with the largest `penalty` is essentially selecting simplest model we can based on the criteria of the "one-standard-error-rule."
+
+```{r multinom-final-penalty, eval = FALSE, echo = TRUE, output = FALSE}
+
+final_penalty <- multinom_play_tune %>%
+  select_by_one_std_err(metric = "roc_auc", desc(penalty))
+```
+
+After identifying the best model in the above step and storing it in `final_penalty`, we pass it along into the `finalize_workflow()`. This "finalized workflow" cancels out our previously constructed `workflow()` and replaces it with *only* our select best model. We then use the `last_fit()` function to run the `finalize_workflow()` over the previously created `multinom_play_split`, which again fits the model on the training data and evaluates it on the withheld validation data.
+
+```{r multinom-final-fit, eval = FALSE, echo = TRUE, output = FALSE}
+
+multinom_final_results <- multinom_play_workflow %>%
+  finalize_workflow(final_penalty) %>%
+  last_fit(multinom_play_split)
+```
+
+With the the `finalize_workflow()` fitted to our data, we can now make and collect predictions on both the training and test data frames and then combine both to explore the model's performance.
+
+```{r multinom-augmenting, eval = FALSE, echo = TRUE, output = FALSE}
+
+workflow_for_merging <- multinom_final_results$.workflow[[1]]
+
+multinom_all_predictions <- bind_rows(
+  augment(workflow_for_merging, new_data = multinom_play_train) %>%
+    mutate(type = "train"),
+  augment(workflow_for_merging, new_data = multinom_play_test) %>%
+    mutate(type = "test"))
+```
+
+In the first step, we are extracting the final workflow creating in the prior step and placing the information into an object called `workflow_for_merging`. Next, we create a data frame called `multinom_all_predictions` that uses the `augment` function to make predictions on both the training and testing data using the workflow that holds the parameters of the best model. After creating a column called `type` that indicates whether the play was from the training or testing data, we combine both sets of predictions using the `bind_rows()` function.
+
+```{r loading-final-results, eval = TRUE, echo = FALSE, output = FALSE}
+
+multinom_final_results <- readr::read_rds("./example_data/R/multinom_final_results.rds")
+```
+
+With both sets of predictions combined, we can use the `collect_predictions` function to gather the predictions into a data frame that allows us to further evaluate how the model performed. Additionally, by piping into the `roc_curve()` function, we can calculate the the ROC curve for each class in our data frame (`long_pass`, `short_pass`, etc.). The resulting `predictions_with_auc` data frame includes the true positive and false positive rates for each different play type at various classification thresholds. Including the calculated ROC curve gives us the ability to visualize the model's performance using the area under the curve (AUC).
+
+```{r collecting-predictions, eval = FALSE, echo = TRUE, output = FALSE, warning = FALSE}
+
+predictions_with_auc <- collect_predictions(multinom_final_results) %>%
+  roc_curve(truth = play_call, .pred_long_pass:.pred_short_pass)
+```
+
+::: callout-important
+The area under the curve (AUC) is a single-value of the model's performance. In this case, we are calculating it for each play type classification. An AUC score ranges from 0 to 1, wherein a score of 1 (100%) means the model's predictions were never incorrect. A score of 0.5 (50%) indicates that the model's performance was no more predictive than flipping a coin to determine the response variable.
+:::
+
+```{r roc-curve-for-coding, eval = FALSE, echo = TRUE, output = FALSE}
+
+ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .level)) +
+  geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
+  geom_path(size = 1.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_color_brewer(palette = "Paired", labels = c("Long Pass", "Medium Pass", "Run Inside",
+                                                    "Run Outside", "Short Pass")) +
+  coord_fixed() +
+  nfl_analytics_theme() +
+  theme(legend.background = element_rect("#F7F7F7"),
+        legend.key = element_rect("#F7F7F7")) +
+  xlab("1 - Specificity") +
+  ylab("Sensitivity")
+
+```
+
+```{r roc-curve-for-show, output = TRUE, warning = FALSE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .level)) +
+  geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
+  geom_path(size = 1.5) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::number_format(accuracy = 0.01)) +
+  scale_color_brewer(palette = "Paired", labels = c("Long Pass", "Medium Pass", "Run Inside",
+                                                    "Run Outside", "Short Pass")) +
+  coord_fixed() +
+  nfl_analytics_theme() +
+  theme(legend.background = element_rect("#F7F7F7"),
+        legend.key = element_rect("#F7F7F7")) +
+  xlab("1 - Specificity") +
+  ylab("Sensitivity") +
+  annotate("text", x = .50, y = .47, label = "At or Below Is No Better Than A Coin Flip", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .46, y = .64, label = "Good", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .40, y = .74, label = "Better", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  annotate("text", x = .23, y = .97, label = "Best", angle = 45,
+           size = 5, family = "Roboto Condensed", fontface = "bold") +
+  labs(color = "Play Type",
+       title = "**Offensive Play Prediction Model**",
+       subtitle = "*2000-2022 | Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+This visualization is a Receiver Operating Characteristic (ROC) curve, which is created by plotting the `True Positive Rate` against the `False Positive Rate` for each of the different play types in the data frame. The "arching" of the `run_outside` line towards the 0.80 mark indicates that the model is doing a commendable job at recognizing the patterns that result in the `run_outside` class against the others. The model had slightly more difficulty in distinguishing the other play types (`long_pass`, `medium_pass`, `run_inside`, and `short_pass`) from one another. But, each is still solidly above the line of no-discrimination (shown as the dashed, diagonal line in the plot) where the model's performance would be no better than random guesses.
+
+With reasonably good results given the complexity in both NFL offenses and decision making, we can use the results of our model to determine which teams over the course of the model's time period were most predictable. To start, we will created a data frame titled `predictions_by_team` from the combined `multinom_all_predictions`. Next, we need to switch `.pred_class` to `as.character` as well as `play_call` and `posteam`. After using `summarize()` to find the `total_plays`, the `total_pred`, and `pred_pct` for each team by season, we find that the 2017 New Orleans Saints when the most predictable team in the data, with the model selecting the right play type nearly 59% of the time.
+
+```{r predictions-by-team, eval = TRUE, echo = TRUE, output = TRUE}
+
+predictions_by_team <- multinom_all_predictions %>%
+  mutate(.pred_class = as.character(.pred_class),
+         play_call = as.character(play_call),
+         posteam = as.character(posteam)) %>%
+  group_by(season, posteam) %>%
+  summarize(total_plays = n(),
+            total_pred = sum(.pred_class == play_call),
+            pred_pct = total_pred / total_plays * 100) %>%
+  ungroup() %>%
+  arrange(-pred_pct) %>%
+  slice(1:10)
+
+predictions_by_team
+```
+
+Finally, to conclude the process of designing a multinomial regression model, we can use the data we just created in `predictions_by_team` and use knowledge we've gained in the Data Visualization chapter to place the data into a visually appealing table using `gt` and `gtExtra`.
+
+```{r team-predictions-table, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE}
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+predictions_by_team <- predictions_by_team %>%
+  left_join(teams, by = c("posteam" = "team_abbr"))
+
+options(digits = 3)
+
+predictions_by_team %>%
+  dplyr::select(season, team_logo_wikipedia, total_plays, total_pred, pred_pct) %>%
+  gt() %>%
+  tab_spanner(
+    label = "Most Predictable Offenses: 2006 - 2022",
+    columns = c("season", "team_logo_wikipedia",
+                "total_plays", "total_pred", "pred_pct")) %>%
+  cols_label(
+    season = "Season",
+    team_logo_wikipedia = "",
+    total_plays = "# of Plays",
+    total_pred = "# Predicted",
+    pred_pct = "Percent Predicted") %>%
+  cols_align(align = "center", columns = everything()) %>%
+  gt_img_rows(columns = team_logo_wikipedia, height = 25) %>%
+  gt_color_rows(pred_pct, palette = "ggsci::blue_material") %>%
+  gtExtras::gt_theme_espn()
+```
 
 ## Advanced Model Creation with NFL Data
 
-### 
+### K-means Clustering
+
+The K-means technique, originally titled as "bagging predictors," was originally formulated by Hugo Steinhaus, a Polish mathematician, in 1956 and was introduced in his paper *"*Sur la Division des Corps Materielsen Parties." The modern and refined version of the algorithm that is widely-used today was developed a year later by Stuart Lloyd, an electrical engineer employed at Bell Labs. The process was dubbed with the *K-means* moniker in 1967.
+
+In short, K-means is an unsupervised machine learning algorithm that is used for the clustering process. The algorithm aims to find similarities between data points and then group, or cluster, them into the same class (wherein "K" is the defined number of clusters for the data to be grouped into). The assumption that underpins the K-means process is that a closer data point to the center of the cluster is more related than a data point that is at a further distance, with this measure of closeness typically determined through the use of Euclidean distance.
+
+The K-means process is used in a wide range of applications, including in business to segment customers into different groups based on their purchase history or used to help develop markets for advertising and promotional efforts. In this example, we will be conducting the process on running backs from the 2022 NFL season (with at least 50 rushing attempts) over various different metrics collected from both Sports Info Solutions and Pro Football Focus, including:
+
+1.  the player's elusive rating from PFF (success of runner independently of blocking
+2.  the number of broken and/or missed tackle created by the runner
+3.  the amount of runs that results in first downs
+4.  the number of time the runner was stuffed at the line
+5.  the number of times the runner used the play's designed running gap
+6.  the player's boom percent (rushes with an EPA of at least 1)
+7.  the player's bust percent (rushes with an EPA of less than -1)
+
+Before jumping into the K-means process, a principal component analysis (PCA) is conducted on the data frame. It is common practice to do so, as the PCA process reduces the dimensionality in the data resulting in noise reduction. The PCA process takes our provided data frame and converts it into linearly correlated set of values called principal components. The first principal component produced (PC1) has accounts for the largest amount of variance in the data, while PC2 accounts for the next largest amount with the continued results being cumulative in nature. That is, if PC1 accounts for 25% of the variance in the data and PC2 accounts for 15%, the cumulative variance explained between the two principal components is 40%.
+
+The results of conducting a PCA and a K-means on the running backs data is a division of the players into groups, where those players in the same group have similar attributes based on the variables we have collected from SIS and PFF. This clustering process allows us to produce a quantitative and data-driven way to both understand and compare running back attributes and tendencies from the 2022 season.
+
+#### Principal Component Analysis
+
+The Principal Component Analysis process is a common part of data preprocessing prior to conducting the k-means analysis, allowing us to achieve several results with the data.
+
+1.  **Variable scaling** - In many cases, the variables within a data frame will be in different units (such ain our case, as some of the statistics are provided in whole numbers, like attempts and touchdowns, while others are in "per attempt" like fumbles and designed gap.). Because of this, scaling the data ensures that each of the variables - regardless of numeric unit - contribute equally to the K-means process. Otherwise, it is possible that one single variable could become dominant, thus introducing bias into the process. The scaling process processes the data frame so that each variable has a standard deviation of one and a mean of zero, with the equation to produce these results below.
+
+$$
+\frac{x-1 - \text{mean}(x)}{\text{sd}(x)}
+$$
+
+2.  **Dimensionality Reduction** - Our data frame has 12 variables, with each of these serving as a dimension. The PCA process seeks to find a simpler way to represent all 12 of these variables, while still capturing as much as possible of the original information. These simplified dimensions are outputted into numbered principal components (Principal Component 1, Principal Component 2, etc.) with each additional one adding to the cumulative total of variance explained in the data.
+3.  **Noise Reduction** - Because the principal components outputted in the PCA process are ranked in the order of variance explained, the higher-numbered ones that provide little cumulative impact on the variance explained are typically the ones holding the noise and other minor nuances in the data. To provide a more robust data frame to the K-means process, we can drop these components that contain unhelpful data.
+
+To begin this process, we first create a vector of each rusher's name and unique ID number from the `rushing_kmeans_data` data frame, as we will want to use the names as the data frame's row names during the data visualization process and have the player's ID to merge in further data, if needed (such as headshot URLs). After, we create a data frame titled `rushers_pca` that is a copy of `rushing_kmeans_data` but using `filter()` to drop both `player` and `player_id`, but then adding each name back into the data frame using the `rownames` function. Now, rather than each row being associated by an ascending number, each rusher's name will be the identification method.
+
+```{r pca-process-1, eval = TRUE, echo = TRUE, output = FALSE, warning = FALSE}
+
+rusher_names <- rushing_kmeans_data$player
+rusher_ids <- rushing_kmeans_data$player_id
+
+rushers_pca <- rushing_kmeans_data %>%
+  select(-player, -player_id)
+
+rownames(rushers_pca) <- rusher_names
+
+rushers_pca <- prcomp(rushers_pca, center = TRUE, scale = TRUE)
+```
+
+After that brief bit of data cleaning and preparation, we use the `prcomp` function from the `stats` package to both center and scale the variables in the data frame. The results of the PCA process includes the first look at relationship between all of our variables.
+
+```{r pca-process-2, eval = TRUE, echo = FALSE, output = TRUE}
+
+rushers_pca
+```
+
+First, the results provided the standard deviations for each variable as well as the `Rotation` in which a number is provided to show how much each variable contributed to each principal component. For example, `bust_percent` and `designed_gap` both contributed very little to `PC1` with values of -0.14, while `elusive_rating` had the largest contribution with a value of -0.55. A further examination of the results show that `PC1` is perhaps a measure of a running back's ability to use his elusive ability to break tackle and break the "homerun" plays. Further, `PC2` has a strong contribution from `fd_rush` (-0.56) and very little from `broken_missed` (-0.006), suggesting that `PC2` is favoring those running backs that are regularly gaining short yardage on the ground and getting first downs, but not producing much EPA (based on the high contribution from `bust_percent`).
+
+::: callout-note
+It is important to note that a negative sign does that indicate "negative influence," or a a lack of. Rather, a negative sign means that the specific variable is inversely related to the principal component. In `PC3`, for example, `elusive_rating` has a value of -0.399, which means that as the value of `elusive_rating` decreases, the values of `PC3` increases.
+:::
+
+We can also visualize these results using the `factoextra` package which provides the ability to extract and visualize the output of various types of multivariate data analyses, including a Principal Component Analysis. Using `factoextra`, we can explore the results in three different arrangements: the individual data points (in this case, the play callers) using `fviz_pca_ind()`, the variables using `fviz_pca_var()`, or a combination of both using `fviz_pca_biplot()`. As an example, let's construct a biplot that shows `PC1` on the x-axis and `PC2` on the y-axis along with the positioning of the variables and rusher names.
+
+```{r pca-biplot, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE}
+
+fviz_pca_biplot(rushers_pca, geom = c("point", "text"),
+                ggtheme = nfl_analytics_theme()) +
+  xlim(-6, 3) +
+  labs(title = "**PCA Biplot: PC1 and PC2**") +
+  xlab("PC1 - 35.8%") +
+  ylab("PC2 - 24.6%")
+```
+
+The resulting plot contains a few unique pieces of information regarding the principle component analysis. The information on each axis provides a numeric value regarding how much variance each principle component account for. In this case, `PC1` captured 35.8% of the variance while `PC2` captured 24.6%. Between both, a cumulative total of 60.4% of the variance was explained.
+
+Each point on the plot, represented by the rusher's name, is a single sample in the reduced-dimensionality space created with the PCA process. The positioning of each rusher is determined his values from the principal components, where each value is a weighted averaged of the original variable for each sample. In other words, the placement of each runner is dependent on their traits and attributes. The arrows and associated variable labels are also representative of the reduced-dimensionality space with the direction and length of each arrow being determine by the contribution tot he variable for each principal component.
+
+#### Determining the Amount of K
+
+In our biplot, we determined that `PC1` and `PC2` accounted for 60.4% of the variance in the data. The total number of principal components we select, based on cumulative variance explained, will be the number of clusters the running backs are grouped into during the K-means process. To get a better understanding of the amount being explained, we can use the `get_eigenvalue` function from `factoextra`.
+
+```{r pca-eigenvalue, eval = TRUE, echo = TRUE, output = TRUE}
+
+get_eigenvalue(rushers_pca)
+```
+
+The output provides the amount of variance explained by each principal (`Dim`) along with the cumulative value. We can see what we already discovered about `PC1` (35.8%) and `PC2` (24.6%) with the cumulative total of the two being correct at 60.4%. Going further, `PC3` explains 13.9% more of the variance in the data, bringing the cumulative total to 74.3%. Adding `PC4` bring the cumulative total to 85.1%. The fifth principal component brings the cumulative total to over 90%, with the remaining two (`PC6`, `PC7`) more than likely accounting for noise and small nuances within the data.
+
+Unfortunately, there is no widely-accepted process to decide with certainty how many components are enough. A popular method, however, is called the "elbow method" or the Scree plot wherein the "elbow of the curve" reflects the correct number of components to select, as the resulting cumulative amount of variance explained is not worth the noise brought in.
+
+We can product a Scree plot using the `fviz_eig` function.
+
+```{r pca-scree-plot, eval = TRUE, echo = TRUE, output = TRUE}
+
+fviz_eig(playcallers_pca, addlabels = TRUE, ggtheme = nfl_analytics_theme()) +
+  xlab("Principal Component") +
+  ylab("% of Variance Explained") +
+  labs(title = "**PCA Analysis: Scree Plot**")
+```
+
+In the plot, each bar represents the amount of variance explained for each principal component with the included numeric value at top. In this case, there is a fairly evident "elbow" in the plot at the third principal component. Compared to the rapid growth in the cumulative gain in the first three principal components, the final six provide diminishing returns.
+
+We can view the contribution to the variables of each component in a combined manner using the `fviz_contrib` function and then arranging the results together using the `plot_grid` function from `cowplot`.
+
+```{r pca-contributions, eval = TRUE, echo = TRUE, output = TRUE}
+
+pc1 <- fviz_contrib(rushers_pca, choice = "var", axes = 1)
+pc2 <- fviz_contrib(rushers_pca, choice = "var", axes = 2)
+pc3 <- fviz_contrib(rushers_pca, choice = "var", axes = 3)
+
+plot_grid(pc1, pc2, pc3)
+```
+
+The results mirror the information we gathered from `Rotation` when we first explored the results of `rusher_pca`. However, the plots include the expected average contribution of each variable as represented by the dashed line. For each principal component, a variable that ha a contribution higher than this average contribution is considered to be important in explaining the variance within that component.
+
+With the PCA completed and knowing that four components account for an acceptable amount of variance in the data, the K-means process can be conducted.
+
+#### Conducting the K-means Process
+
+As a result of the PCA process, we know we will be grouping the running back into four distinctive clusters, so we will create a value in our environment called `k` and set it to `4`.
+
+```{r setting-k, eval = TRUE, echo = TRUE, output = FALSE}
+
+k <- 3
+```
+
+We then must extract the values created during the PCA process and write them into a new data frame in order to pass the information into the `kmeans()` function. This information is stored within `rushers_pca$x`.
+
+```{r extracting-pca-scores, eval = TRUE, echo = TRUE, output = FALSE}
+
+pca_scores <- rushers_pca$x
+```
+
+We write the PCA results into a data frame called `pca_scores` and are now able to conduct the K-means process on the data, passing the correct number of `K` into the function's required arguments.
+
+```{r conducting-kmeans, eval = TRUE, echo = TRUE, output = FALSE}
+set.seed(1928)
+rushing_kmeans <- kmeans(pca_scores, centers = k)
+```
+
+Compared to other models in this chapter, a K-means process completes almost instantly. After, the created `rushing_kmeans` provides access to eight components pertaining to the results, including `cluster`, `centers`, `totss`, `withinss`, `tot.withinss`, `betweenss`, `size`, `iter`, and `ifault`. For our purposes, we can view the cluster assigned to each running back. After, we write this information out into a data frame called `cluster_assignment` and then merge it back into the original data frame.
+
+```{r cluster-results, eval = TRUE, echo = TRUE, output = TRUE}
+
+rushing_kmeans$cluster
+
+cluster_assignment <- rushing_kmeans$cluster
+
+rushing_kmeans_data$cluster <- cluster_assignment
+```
+
+The results of the K-means process placed, for example, Derrick Henry, Josh Jacobs, and Nick Chubb all into cluster `2` and Najee Harris, Tony Pollard, Aaron Jones into cluster `3`. To better visualize the traits and attributes associated with each cluster, we can conduct some preparation and then produce a plot.
+
+```{r attribute-trait-plot-prep, eval = TRUE, echo = TRUE, output = FALSE}
+
+kmean_dataviz <- rushing_kmeans_data %>%
+  rename(c("Elusiveness" = elusive_rating,
+           "Broken/Missed" = broken_missed,
+           "1st Downs" = fd_rush,
+           "Stuffed" = stuff_percent,
+           "Desi. Gap" = designed_gap,
+           "Boom %" = boom_percent,
+           "Bust %" = bust_percent))
+
+kmean_dataviz <- kmean_dataviz %>%
+  mutate(cluster = case_when(
+    cluster == 1 ~ "Cluster 1",
+    cluster == 2 ~ "Cluster 2",
+    cluster == 3 ~ "Cluster 3"))
+
+kmean_data_long <- kmean_dataviz %>%
+  gather("Variable", "Value", -player, -player_id, -cluster)
+```
+
+```{r cluster-plot, output = TRUE, warning = FALSE, fig.align='center', fig.dpi = 400}
+
+ggplot(kmean_data_long, aes(x = Variable, y = Value, color = cluster)) +
+  geom_point(size = 3) +
+  facet_wrap(~ cluster) +
+  scale_color_brewer(palette = "Set1") +
+  gghighlight(use_direct_label = FALSE) +
+  nfl_analytics_theme() +
+  theme(axis.text = element_text(angle = 90, size = 8),
+        strip.text = element_text(face = "bold"),
+        legend.position = "none")
+```
+
+When visualized, we are able to see and note the differences in the attributes and traits among the clustered running backs.
+
+1.  **Cluster 1 - "Feast or Famine"**
+    1.  Highest contribution in 1st down runs
+    2.  Average broken/missed tackles
+    3.  High use of designed gap
+    4.  Just as like to boom as bust per run
+    5.  Most elusiveness among the clusters
+    6.  Gets stuffed at line more than others
+2.  **Cluster 2 - "Blue Collar Backs"**
+    1.  Also high contribution in 1st down runs
+    2.  Does not break or cause missed tackles
+    3.  Not very elusive running backs
+    4.  Rarely gets stuffed at the line of scrimmage
+3.  **Cluster 3 - "Cautious Carriers"**
+    1.  Low contribution in 1st down runs
+    2.  Low boom percentage
+    3.  High bust percentage
+    4.  Average elusiveness
+    5.  Occasionally gets stuffed at the line of scrimmage
+
+To complete the process, we can take the completed model and transition the data into a presentable `gt` table. Before creating it, though, we must complete a bit of data preparation, such as merging in player headshots and team logos.
+
+```{r gt-table-prep, eval = TRUE, echo = TRUE, output = FALSE}
+
+roster <- nflreadr::load_rosters(seasons = 2022) %>%
+  select(pff_id, team, headshot_url) %>%
+  mutate(pff_id = as.numeric(as.character(pff_id)))
+
+teams <- nflreadr::load_teams(current = TRUE) %>%
+  select(team_abbr, team_logo_wikipedia)
+
+gt_table_data <- rushing_kmeans_data %>%
+  left_join(roster, by = c("player_id" = "pff_id"))
+
+gt_table_data <- na.omit(gt_table_data)
+
+gt_table_data <- gt_table_data %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+
+gt_table_data <- gt_table_data %>%
+  select(player, cluster, headshot_url, team_logo_wikipedia)
+
+gt_table_data <- gt_table_data %>%
+  mutate(cluster = case_when(
+    cluster == 1 ~ "Cluster 1 - Feast or Famine",
+    cluster == 2 ~ "Cluster 2 - Blue Collar Backs",
+    cluster == 3 ~ "Cluster 3 - Cautious Carriers"))
+
+```
+
+First, we use the `load_rosters` and `load_teams` function from `nflreadr` to bring in the necessary columns that contain the information for player headshot and team logos (matching on `pff_id` for roster information and the `team` column to bring in logos). Unfortunately, a small number of the running backs are missing headshot URLS[^05-nfl-analytics-advanced-methods-1]. Rather than including missing images in the table, we will use `na.omit()` to drop this players. Next, we create a data frame called `gt_table_data` that includes just the `player`, `cluster`, `headshot_url`, and `team_logo_wikipedia`. Last, we format the `cluster` information from numeric values to a character-based description based on the previous created titles for each.
+
+[^05-nfl-analytics-advanced-methods-1]: At the time of writing this book, this was an ongoing issue. Most missing headshots in the data are those belonging to rookies. The issue is a result of an issue with how the the data is collected and a change to the API that provides access to the information.
+
+With the data addition and preparation completed, we can use both the `gt` and `gtExtras` package to create the table.
+
+```{r rb-kmean-table, eval = TRUE, echo = TRUE, output = TRUE}
+
+gt_table_data %>%
+  mutate(cluster = fct_relevel(cluster, c("Cluster 1 - Feast or Famine",
+                                          "Cluster 2 - Blue Collar Backs",
+                                          "Cluster 3 - Cautious Carriers"))) %>%
+  arrange(cluster, player) %>%
+  gt(groupname_col = "cluster") %>%
+  tab_spanner(label = "Clustered Running Backs",
+              columns = c("player", "headshot_url", "team_logo_wikipedia")) %>%
+  cols_align(align = "center",
+             columns = everything()) %>%
+  cols_label(headshot_url = "", team_logo_wikipedia = "Team") %>%
+  gt_img_rows(columns = team_logo_wikipedia, height = 25) %>%
+  gt_img_rows(columns = headshot_url, height = 25) %>%
+  cols_label(player = "Running Back") %>%
+  tab_source_note(source_note = md("**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*")) %>%
+  gtExtras::gt_theme_pff()
+```
+
+### Creating an XGBoost Model

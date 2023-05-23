@@ -117,7 +117,7 @@ multinom_play_recipe <-
   update_role(posteam, new_role = "variable_id") %>%
   update_role(season, new_role = "variable_id") %>%
   step_zv(all_predictors(), -has_role("variable_id")) %>% 
-  step_normalize(all_numeric_predictors(), - has_role("variable_id")) %>%
+  step_normalize(all_numeric_predictors(), -has_role("variable_id")) %>%
   step_dummy(down, qtr, posteam_timeouts_remaining, defteam_timeouts_remaining,
              in_red_zone, in_fg_range, two_min_drill, previous_play)
 
@@ -181,10 +181,18 @@ readr::write_rds(multinom_final_results, "./example_data/R/multinom_full_model.r
 readr::write_rds(multinom_all_predictions, "./example_data/R/multinom_all_predictions.rds", compress = "gz")
 readr::write_rds(multinom_final_results, "./example_data/R/multinom_final_results.rds", compress = "gz")
 
+multinom_final_results <- readr::read_rds("./example_data/R/multinom_final_results.rds")
+
+
+
 ### viewing the roc_curves
-collect_predictions(multinom_final_results) %>%
-  roc_curve(truth = play_call, .pred_long_pass:.pred_short_pass) %>%
-  ggplot(aes(1 - specificity, sensitivity, color = .level)) +
+predictions_with_auc <- collect_predictions(multinom_final_results) %>%
+  roc_curve(truth = play_call, .pred_long_pass:.pred_short_pass)
+
+
+
+
+ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .level)) +
   geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
   geom_path(size = 1.5) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
@@ -209,8 +217,13 @@ collect_predictions(multinom_final_results) %>%
            size = 5, family = "Roboto Condensed", fontface = "bold") +
   labs(color = "Play Type",
        title = "**Offensive Play Prediction Model**",
-       subtitle = "*2006-2022 | Regular Season*",
+       subtitle = "*2000-2022 | Regular Season*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+
+library(tidymodels)
+library(tidyverse)
+library(nflverse)
+library(ggtext)
 
 
 ### determing most/least predictable teams
@@ -227,14 +240,14 @@ predictions_by_team <- multinom_all_predictions %>%
   arrange(-pred_pct) %>%
   slice(1:10)
 
+predictions_by_team
+
 teams <- nflreadr::load_teams(current = TRUE)
 
 predictions_by_team <- predictions_by_team %>%
   left_join(teams, by = c("posteam" = "team_abbr"))
 
 options(digits = 3)
-library(gt)
-library(gtExtras)
 
 predictions_by_team %>%
   dplyr::select(season, team_logo_wikipedia, total_plays, total_pred, pred_pct) %>%
