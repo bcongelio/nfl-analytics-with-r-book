@@ -115,8 +115,6 @@ str(rushes)
 ################################
 set.seed(1984)
 
-str(rushes)
-
 rushing_split <- initial_split(rushes)
 rushing_train <- training(rushing_split)
 rushing_test <- testing(rushing_split)

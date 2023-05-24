@@ -6,7 +6,6 @@ source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)
-library(ggpmisc)
 library(tidymodels)
 library(caret)
 library(nnet)
@@ -25,13 +24,21 @@ extrafont::loadfonts(quiet = TRUE)
 options(digits = 3)
 ```
 
-## Introduction to Statistical and Modeling with NFL Data
+## Introduction to Statistical Modeling with NFL Data
 
-fff
+The process of conducting statistical modeling with NFL data is difficult to cover in a single chapter of a book, as the topic realistically deserves an entire book as the field of modeling and machine learning is vast and complex, and continues to grow as a result of access to new data and the releases of packages (as of November 2020, over 16,000 packages are avalible in the R ecosystem).[@Wikipedia] The list of options for conducting statistical analysis and machine learning is vast, with the more widely-used ones including `caret` (combined functions for creating predictive models), `mgcv` (for generalized additive models), `lme4` (for linear mixed effects models), `randomForest` (for creating random forests models), `torch` (for image recognition, time series forecasting, and audio processing), and `glmnet` (for lasso and elastic-net regression methods). A newer addition to the modeling and machine learning ecosystem is `tidymodels`, which is a collection of various packages that operate cohesively using `tidyverse` principles.
+
+While it is not possible for this chapter to cover every aspect of modeling and machine learning, its goal is to provide the necessary foundation in both to provide you with the necessary skills, understanding, and knowledge to independently explore and analyze NFL data using different methodologies and tools. The techniques covered in this chapter, from creating a simple linear regression to a predictive XGBoost model, are building blocks to all further analysis and machine learning you will conduct. In doing so, you will learn how to use built-in options such as `stats` to more technical packages such as `tidymodels`.
+
+To that end, by mastering these introductory concepts and techniques, you not only learn the process and coding needed to create models or do machine learning, but you will begin developing an analytical mindset which will allow you to understand why one statistical approach is not correct for your data and which one is, how to interpret the results of your model, and - when necessary - how to correct issues and problems in the process as they arise. The fundamentals provided in this chapter, I believe, serve as a actionable stepping stone for a futher journey into the modeling and machine learning in the R programming language, with or without the use of NFL data.
 
 ## Regression Models with NFL Data
 
-fffff
+Regression models are the bedrock of many more advanced machine learning techniques. For example, the "decision tree" process that is conducted in random forests models and XGBoost, for example, are created based on the split in variable relationships and neural networks are, at their core, just a intricate web of regression-like calculations. Because of this, regression models are an outstanding starting point for not only learning the basics of modeling and machine learning in R, but an important step in comprehending more advanced modeling techniques.
+
+As you will see, a regression model is simply a mathematical determination of the relationship between two or more variables (the response and dependent variables). In the context of the NFL, a team's average points per game would be a response variable while those metrics that *cause* the average points per game are the predictor variables (average passing and rushing yards, turnovers, defensive yards allowed, etc.). The results of regression models allow us to determine which predictor variables have the largest impact on the response variable. Are passing yards a more predictive variable to averaged points per game than rushing yards? A regression model is capable of answering that question.
+
+This section starts with exploring simple linear regression and then extends this knowledge to creating both multiple linear and logistic regression models which deal, respectively, with multiple predictors and categorical dependent variables. After, we will focus on creating binary and multinomial regression models.
 
 ### Simple Linear Regression
 
@@ -163,7 +170,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:------------------:|:--------------------------------------------------:|
+|:-------------------:|:-------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -210,7 +217,12 @@ All that to say: residuals are a first glance at the results of the data and pro
 
 **Coefficients**
 
-fffffff
+The coefficients of the model are the weights assigned to each predictor variable and provide insight into the relationship between the various predictor and response variables, with the provided table outlining the statistical metrics.
+
+1.  **Estimate** - representing the actual coefficient of the model, these numbers represent the mathematical relationship between the predictor and response variables. In our case, the estimate for `total_yards` is 0.1034 which means that, for each additional one yard gained, we can expected a team's `total_points` to increase by approximately 0.1034.
+2.  **Std. Error** - the standard error is the numeric value for the level of uncertainty in the model's estimate. In general, a lower standard error indicates a more reliable estimate. In other words, if we were to resample the data and then run the regression model again, we could expect the `total_yards` coefficient to vary by approximately 0.0113, on average, for each re-fitting of the model.
+3.  **t value** - The t-statistic value, this is the measure of how many standard deviations the estimate is from 0. A larger t-value indicates that it is less likely that the model's coefficient is not equal to 0 by chance.
+4.  **Pr(\>\|t\|)** - This value is the p-value associated with the hypothesis test for the coefficient. The level of significance for a statistical model is typically 0.05, meaning a value less than this results in a rejection of the null hypothesis and the conclusion that the predictor does have a statistically significant relationship with the response variable. In the case of our regression model, a *p-value* of 0.00000000036 indicates a highly significant relationship.
 :::
 
 Returning to the summary statistics of our analysis of the 2022 season, the residuals have a wide spread and an inconsistent deviation from zero. While the `median` residual value is the closest to zero at 1.157, it is still a bit too high to safely conclude that the model is making predictions that adequately reflect the actual values. Moreover, both tail ends of the residual values (`Min` and `Max`) are a large negative and positive number, respectively, which is a possible indication that both over- and underestimating a team's `total_points` by statistically significant amount.
@@ -1278,7 +1290,12 @@ $$
 2.  **Dimensionality Reduction** - Our data frame has 12 variables, with each of these serving as a dimension. The PCA process seeks to find a simpler way to represent all 12 of these variables, while still capturing as much as possible of the original information. These simplified dimensions are outputted into numbered principal components (Principal Component 1, Principal Component 2, etc.) with each additional one adding to the cumulative total of variance explained in the data.
 3.  **Noise Reduction** - Because the principal components outputted in the PCA process are ranked in the order of variance explained, the higher-numbered ones that provide little cumulative impact on the variance explained are typically the ones holding the noise and other minor nuances in the data. To provide a more robust data frame to the K-means process, we can drop these components that contain unhelpful data.
 
-To begin this process, we first create a vector of each rusher's name and unique ID number from the `rushing_kmeans_data` data frame, as we will want to use the names as the data frame's row names during the data visualization process and have the player's ID to merge in further data, if needed (such as headshot URLs). After, we create a data frame titled `rushers_pca` that is a copy of `rushing_kmeans_data` but using `filter()` to drop both `player` and `player_id`, but then adding each name back into the data frame using the `rownames` function. Now, rather than each row being associated by an ascending number, each rusher's name will be the identification method.
+To begin this process, first download the `rushing_kmeans_data`. After, we create a vector of each rusher's name and unique ID number from the `rushing_kmeans_data` data frame, as we will want to use the names as the data frame's row names during the data visualization process and have the player's ID to merge in further data, if needed (such as headshot URLs). After, we create a data frame titled `rushers_pca` that is a copy of `rushing_kmeans_data` but using `filter()` to drop both `player` and `player_id`, but then adding each name back into the data frame using the `rownames` function. Now, rather than each row being associated by an ascending number, each rusher's name will be the identification method.
+
+```{r download-rushing-kmean, eval = TRUE, echo = TRUE, output = FALSE}
+
+rushing_kmeans_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/rushing_kmeans_data.csv")
+```
 
 ```{r pca-process-1, eval = TRUE, echo = TRUE, output = FALSE, warning = FALSE}
 
@@ -1509,4 +1526,478 @@ gt_table_data %>%
   gtExtras::gt_theme_pff()
 ```
 
-### Creating an XGBoost Model
+### Creating an XGBoost Model for Rushing Yards over Expected
+
+Back in January of 2021, Tej Seth posted an article to the [Michigan Football Analytics Society blog](https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/) that outlined his vision for creating a "public expected rushing yards model." The structure of his model, as explained by Tej, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowl, who previously used the college football equivalent of open-source data ([`cfbfastR`](https://cfbfastr.sportsdataverse.org/)) to create an RYOE model for the collegiate game.[^05-nfl-analytics-advanced-methods-2] In Tej's case, his approach to created an NFL-centric RYOE model culminated with the creation of his [RYOE Shiny App](https://mfbanalytics.shinyapps.io/RYOE/) that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.
+
+[^05-nfl-analytics-advanced-methods-2]: Thanks to Tej Seth for briefly chatting with me over Twitter regarding the history of both Michael's RYOE model and his own.
+
+Despite a slightly intimidating title, rushing yards over expected is a fantastic entry point into exploring model creation and analysis in NFL analytics - in fact, the growing number of "over expected" metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greerre, the owner of [nfeloapp.com](https://www.nfeloapp.com/) - a website that provides "data-driven analytics, picks, and predictions for the NFL" - explains that over expected metrics are a increasingly popular avenue in which analysts can "paint a more accurate picture of performance by adjusting familiar statistics like 'completion percentage' or 'yards per rush' for conflating factors like degree of difficulty or game text" [@nfelo].
+
+Some of these metrics, like completion percentage over expected (CPOE), are widely accepted. Specifically, CPOE calculates how likely any quarterback's pass is going to be complete or incomplete compared to other passing attempts. It is considered "widely accepted" because the metric itself is considered "stable" in that the r-squared value retains a strong correlation for individual quarterbacks across several seasons. In fact, as Greerre points out, the r-squared value for CPOE for just one season is 0.226 which is extremely strong based on NFL analytics standards.
+
+On the other hand, RYOE - based on Greerre's analysis - maintains an r-squared value below 0.15 until a running back's fourth season, wherein the average improves to 0.263 (an otherwise stable value). But that does not mean that RYOE is not a metric worth further exploration. The effectiveness of any one metric to account for factors such as degree of difficulty or game text largely relies on our ability to provide adequate feature engineering - specifically, how much relevant data the machine learning model can ingest to begin making predictions.
+
+Because of that, significant machine learning models have been built with information provided by the NFL's Big Data Bowl as it is the one chance that the public receives to feature engineer with the NFL's tracking data (wherein a player's position, speed, direction, etc. is tracked and recorded every 1/10th of a second). Unfortunately, only small windows of data exist from the Big Data Bowl releases and, as a result, we are often required to find creative ways to provide further context to each play/player for the machine learning model.
+
+To showcase this idea, we are going to begin exploring ways to add additional feature engineering to Tej Seth's already fantastic Rushing Yard Over Expected model. While not the most stable metric, as mentioned, the idea of RYOE is generally easy to understand for even the most analyst. Broadly, given what we know about every other rushing play during a specific span of seasons, what is the most likely amount of yards a running back is going to gain on a specific rushing play as predicted by the model on other similar situations?
+
+That difference is rushing yards over expected.
+
+Using Tej's Shiny app, we can explore all seasons between 2015 and 2022 for those running backs that had a minimum of 755 rushing attempts.
+
+```{r tej-seth-shiny-results, echo = FALSE, fig-cap = "Credit: Tej Seth"}
+knitr::include_graphics(rep("images/ryoe_2015_2022.jpg"))
+```
+
+According to Tej's model, since 2015, Nick Chubb of the Cleveland Browns earned - on average - 0.66 over expected. Aaron Jones is closely behind with 0.61 over expected and then a significant drop occurs for the third and fourth players.
+
+To understand how Tej engineered his model and to begin exploring other possible features to feed into the model, we can dive into his [publicly available code](https://github.com/tejseth/RYOE/blob/main/ryoe-2.R).
+
+::: callout-important
+It is important to immediately point out that Tej built his RYOE model using the `xgboost` package whereas we will begin constructing ours using `tidymodels`.
+
+While the underlying eXtreme Gradient Boosting process is largely the same with both approaches, the necessary framework we will construct with `tidymodels` differs *greatly* from the coding used with the `xgboost`package.
+
+The `xgboost` package is a standalone package in R that provide an implementation of the eXtreme Gradient Boosting algorithm. To that end, it offers a highly efficient and flexible way to train gradient boosting models for various machine learning tasks, such as classification, regression, and ranking. The package provides its own set of functions for training, cross-validation, prediction, and feature importance evaluation.
+:::
+
+Just like the model we will be building in this chapter, Tej constructed his model via eXtreme Gradient Boosting.
+
+Which may lead to a very obvious question if you are new to machine learning: **what exactly *is* eXtreme Gradient Boosting?**
+
+#### eXtreme Gradient Boosting Explained
+
+eXtreme Gradient Boosting is a powerful machine learning technique that is particularly good at solving supervised machine learning problems, such as classification (categorizing data into classes, for example) and regression (predicting numerical values).
+
+eXtreme Gradient Boosting can be thought of as an "expert team" that combines the knowledge and skills of multiple "individual experts" to make better decisions or predictions. Each of these "experts" in this context is what we call a decision tree, which is a flowchart structure used for making decisions based on a series of question about the data.
+
+Once provided data, XGBoost seeks to iteratively build a collection of "bad" decision trees and then build an ensemble of these poor ones into a more accurate and robust model. The term "gradient" comes from the fact that the algorithm uses the gradient (or the slope) of the loss function (a measure of how well the model fits the data) to guide the learning process.
+
+#### Xtreme Gradient Boosting with Tidymodels
+
+As always, the first step in the modeling process is gathering the data and conducting the necessary feature engineering. In the case of our XGBoost model, we will gather play-by-play data from the 2016-2022 season and begin the work of creating additional metrics from the information contained in the data.
+
+##### Data Preparation and Feature Engineering
+
+```{r ryoe-model-prep, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2016:2022)
+
+rush_attempts <- pbp %>%
+  filter(season_type == "REG") %>%
+  filter(rush_attempt == 1, qb_scramble == 0,
+         qb_dropback == 0, is.na(yards_gained))
+
+def_ypc <- rush_attempts %>%
+  filter(!is.na(defteam)) %>%
+  group_by(defteam, season) %>%
+  summarize(def_ypc = mean(yards_gained))
+
+rush_attempts <- rush_attempts %>%
+  left_join(def_ypc, by = c("defteam", "season"))
+```
+
+After gathering the play-by-play data from 2016-2022 and doing a bit of preparation, we conduct our first bit of feature engineering by determining the average yards per carry allowed by each defense by season and then merge the sresult sback into the main `rush_attempts` data frame.
+
+Aside from the typical contextual variables such as down, yards to go, score, time remaining, etc., we can use the `load_participation` function from `nflreadr` to include information regarding what formation both the offense and defense were in, per play, as well as the personnel on the field for each and the total number of defenders in the box.
+
+```{r ryoe-model-participation, eval = FALSE, echo = TRUE, output = FALSE}
+
+participation <- nflreadr::load_participation(seasons = 2016:2022) %>%
+  select(nflverse_game_id, play_id, possession_team, offense_formation,
+         offense_personnel, defense_personnel, defenders_in_box)
+
+rush_attempts <- rush_attempts %>%
+  left_join(participation, by = c("game_id" = "nflverse_game_id",
+                                  "play_id" = "play_id",
+                                  "posteam" = "possession_team"))
+```
+
+After collecting the information for each `play_id` in the data from 2016-2022, we again use `left_join()` to bring it into the `rush_attempts` data frame, joining by the matching `game_id`, `play_id`, and `posteam`. Before continuing with the feature engineering process, we will create a secondary data frame to work with called `rushing_data_join` that will allow us to bring player names back into the data after the modeling process is complete.
+
+```{r ryoe-more-feature-engineering, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_data_join <- rush_attempts %>%
+  group_by(game_id, rusher, fixed_drive) %>%
+  mutate(drive_rush_count = cumsum(rush_attempt)) %>%
+  ungroup() %>%
+  group_by(game_id, rusher) %>%
+  mutate(game_rush_count = cumsum(rush_attempt)) %>%
+  mutate(rush_prob = (1 - xpass) * 100,
+         strat_score = rush_prob / defenders_in_box,
+         wp = wp * 100) %>%
+  ungroup() %>%
+  mutate(red_zone = if_else(yardline_100 <= 20, 1, 0),
+         fg_range = if_else(yardline_100 <= 35, 1, 0),
+         two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
+  select(label = yards_gained, season, week, yardline_100, quarter_seconds_remaining,
+         half_seconds_remaining, qtr, down, ydstogo, shotgun, no_huddle,
+         ep, wp, drive_rush_count, game_rush_count, red_zone, fg_range, two_min_drill,
+         offense_formation, offense_personnel, defense_personnel, defenders_in_box,
+         rusher, rush_prob, def_ypc, strat_score, rusher_player_id, posteam, defteam) %>%
+  na.omit()
+```
+
+There are multiple new features being created within our data in the above code:
+
+1.  We first group the data by `game_id`, `rusher`, and `fixed_drive` and then create a new column titled `drive_rush_count`. This column calculated, using the `cumsum()` function the cumulative total of rushes, per running back, on each the offensive drives in the game.
+2.  The pre-snap probability that the play is going to be a rush is calculated in the created `rush_prob` column that uses the `xpass` variable to determine the likelihood. The `strat_score` column attempts to quantify the team's decision to run based on the just calculated `rush_prob` against the total number of defenders in the box.
+3.  Finally, numeric `1` and `0` values are provided based on if the offense is in the `red_zone`, in `fg_range`, or if it is in a two-minute drill scenario.
+
+We can continue to add to the data frame using information from the `next_gen_stats()` function, specifically information pertaining to the percent of rushing attempts that had eight defenders in the box and each running back's average time from handoff to the line of scrimmage.
+
+```{r ryoe-nextgen-stats, eval = FALSE, echo = TRUE, output = FALSE}
+
+next_gen_stats <- load_nextgen_stats(seasons = 2016:2022, stat_type = "rushing") %>%
+  filter(week > 0 & season_type == "REG") %>%
+  select(season, week, player_gsis_id,
+         against_eight = percent_attempts_gte_eight_defenders, avg_time_to_los)
+
+rushing_data_join <- rushing_data_join %>%
+  left_join(next_gen_stats, by = c("season", "week",
+                                   "rusher_player_id" = "player_gsis_id")) %>%
+  na.omit()
+```
+
+Last, we will conduct a bit of engineering on both the `offense_personnel` and `defense_personnel` we previously added into the data. Currently, the information for each is structured, for example, as `1 RB, 1 TE, 3 WR`. Instead, we can create a new column for each position with the numeric value indicating the number on the field for each play.
+
+```{r ryoe-personnel-cleaning, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_data_join <- rushing_data_join %>%
+  mutate(
+    ol = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sOL)") %>% as.numeric(),
+    rb = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sRB)") %>% as.numeric(),
+    te = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sTE)") %>% as.numeric(),
+    wr = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sWR)") %>% as.numeric()) %>%
+  replace_na(list(ol = 5)) %>%
+  mutate(extra_ol = if_else(ol > 5, 1, 0)) %>%
+  mutate(across(ol:wr, as.factor)) %>%
+  select(-ol, -offense_personnel)
+
+### doing some as above but for defense personnel
+rushing_data_join <- rushing_data_join %>%
+  mutate(dl = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sDL)") %>% as.numeric(),
+         lb = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric(),
+         db = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric()) %>%
+  mutate(across(dl:db, as.factor)) %>%
+  select(-defense_personnel)
+```
+
+We use the `str_extract` function to identify the abbreviation for each position, and then place the associated number with each with the specific `play_id`. The offensive personnel included the additional requirement of including a column for offensive linemen, in that the offensive line is not accounted for in the data unless there are more than six on the line of scrimmage. In this case, we use the `ol` column to determine if there is an extra lineman on the field (indicated by the new `extra_ol` variable).
+
+```{r ryoe-final-prep, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_data_join <- rushing_data_join %>%
+  filter(qtr < 5) %>%
+  mutate(qtr = as.factor(qtr),
+         down = as.factor(down),
+         shotgun = as.factor(shotgun),
+         no_huddle = as.factor(no_huddle),
+         red_zone = as.factor(red_zone),
+         fg_range = as.factor(fg_range),
+         two_min_drill = as.factor(two_min_drill),
+         extra_ol = as.factor(extra_ol))
+
+rushes <- rushing_data_join %>%
+  select(-season, -week, -rusher, -rusher_player_id, -posteam, -defteam) %>%
+  mutate(across(where(is.character), as.factor))
+```
+
+In the last step of data preparation, we use `filter()` to remove any plays that took place in overtime, turn the created binary variables into factors using `as.factor()` and then created a data frame called `rushes` to use in our model that excludes identifying information and turns any remaining character variables into factors as well.
+
+##### Model Creation in `tidymodels`
+
+To begin creating the model, we will follow much the same steps as we did in creating our multinomial regression by following the `tidymodels` framework which needs split data, folds for cross-validation, a recipe, a model specification, a grid for hyperparameter tuning, and a workflow that combines all these elements. Using the `rushes` data frame, we use the `rsample` packages to create an initial split of the data and then produce the model's training and testing datasets from that split. Lastly, we utilize the `vfold_cv()` function to create folds of the training data to pass into the hyperparameter tuning grid.
+
+```{r ryoe-splitting-data, eval = FALSE, echo = TRUE, output = FALSE}
+set.seed(1988)
+
+rushing_split <- initial_split(rushes)
+rushing_train <- training(rushing_split)
+rushing_test <- testing(rushing_split)
+rushing_folds <- vfold_cv(rushing_train)
+```
+
+With the data split into the required components, we can create the recipe for our XGBoost model.
+
+```{r ryoe-model, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_recipe <-
+  recipe(formula = label ~ ., data = rushing_train) %>%
+  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+```
+
+The formula in our recipe is `label ~ .` as we renamed the rushing yards gained variable and all other columns in the data frame are the predictive variables. We are also using `step_dummy` to one hot encode all the model's nomial predictors, which are those variables that contain two or more categories but do not contain any intrinsic order.
+
+The next required component to push into the model's `workflow()` is the model specification.
+
+```{r ryoe-model-spec, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_specs <- boost_tree(
+  trees = tune(),
+  tree_depth = tune(), 
+  min_n = tune(),
+  mtry = tune(),
+  loss_reduction = tune(),
+  sample_size = tune(),
+  learn_rate = tune(),
+  stop_iter = tune()) %>%
+  set_engine("lightgbm", num_leaves = tune()) %>%
+  set_mode("regression")
+```
+
+Given that we are building an XGBoost model, we will specify the use of the `boost_tree()` function from the `parsnip` package which will create a decision tree wherein each tree depends on the results of the previous trees. Within the `tidymodels` framework, there are six engines that can drive a `boost_tree()` model: `xgboost`, `C5.0`, `h20`, `lightgbm`, `mboost`, and `spark`. As you will notice, rather than using the default `xgboost` engine, we are opting to run the model using `lightgbm`.
+
+::: callout-note
+Why are we using `lightgbm` instead of `xgboost` as the engine for the model?
+
+Using `lightgbm` and `xgboost` on the same model and data will provide nearly identical results, as they are both decision tree framework at their core. However, `lightgbm` performs significantly faster than `xgboost`, as it uses a histrogram-based process for optimization that reduces the amount of data required to complete one tree in the ensemble.
+
+This speed increase is the result of `lightgbm` building the tree in a vertical growth pattern while `xgboost` does so in a horizontal fashion. While the vertical ensemble-building approach is unquestionably faster, it is prone to overfitting in the training process (but this can be adequately addressed through hyperparameter tuning). The caveat is that despite using `lightgbm`, the training process still required 4.5 hours when tuning for hyperparameters over 100 grids.
+:::
+
+Regardless of using `lightgbm` or `xgboost` as the model's engine, we have the ability to tune the same items, including `tree`, `tree_depth`, `min_n`, `mtry`, `loss_reduction`, `sample_size`, `learn_rate`, and `stop_iter`. The `lightgbm` engine, specifically, can tune for the `num_leaves` in the vertical growth pattern. After creating the model's specifications, we pass the required `tune()` information into `grid_latin_hypercube()` and then pass the created recipe and model specifications into our `workflow()`.
+
+```{r ryoe-grid-workflow, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_grid <- grid_latin_hypercube(
+  trees(),
+  tree_depth(),
+  finalize(mtry(), rushes),
+  min_n(),
+  num_leaves(),
+  loss_reduction(),
+  sample_size = sample_prop(),
+  learn_rate(),
+  stop_iter(),
+  size = 100)
+
+rushing_workflow <-
+  workflow() %>%
+  add_recipe(rushing_recipe) %>%
+  add_model(rushing_specs)
+```
+
+With a completed workflow that contains the recipe and the model's engine and tuning requirements, we can tune the hyperparameters using the `tune_grid()` function.
+
+```{r ryoe-tune-grid, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_tune <- tune_grid(rushing_workflow,
+                          resample = rushing_folds,
+                          grid = rushing_grid,
+                          control_grid(save_pred = TRUE))
+```
+
+Depending on your computing power, the process of tuning the hyperparameters can take a significant amount of time, even when using `DoParallel` to conduct the process with parallel processing. Manually setting for 100 trees over 30 grids took just 5 minutes, while increasing it to 1,000 trees over 60 grids took 96 minutes. Tuning for the number of trees over 100 grids took, as mentioned, 4.5 hours.
+
+```{r loading-tuned-data, eval = TRUE, echo = FALSE, output = FALSE}
+
+load("./example_data/R/ryoe_tuning_model.RData")
+```
+
+With the hyperparameter tuning process complete we can view the best performing ones based on RMSE (Root Mean Square Error).
+
+```{r ryoe-viewing-best, eval = TRUE, echo = TRUE, output = TRUE}
+
+best_params <- rushing_tune %>%
+  select_best(metric = "rmse")
+
+best_params
+```
+
+The values in the output of `best_params` are the result of the hyperparameter tuning process and represent the values for each item that provided the best performance on a withheld validation set.
+
+1.  **mtry (5)** - this represented the number of variables that are randomly sampled as candidates at each split in the ensemble building process
+2.  **trees (644)** - the `trees` item is the total number of trees within the model, with each subsequent tree helping to correct the errors made in prior trained trees
+3.  **min_n (37)** - this is the minimum number of observations that need to reside in a node before the model permits a split to occur
+4.  **tree_depth (8)** - this is the maximum number of nodes allowed in any one tree
+5.  **learn_rate (0.0257)** - the `learn_rate` represents the "shrinkage" within the model and controls the contribution of each tree in the model, wherein lower rates require more trees but generally provide more robust results
+6.  **loss_reduction (0.0359)** - this is the minimum loss reduction the model requires before making a split in the trees. A larger value equates to a more conservative model
+7.  **sample_size (0.533)** - the `sample_size` value is the fraction of the training data used to sample the building of each tree within the tuning process.
+8.  **stop_iter (9)** - This is the number of iterations permitted if the validation scores does not make enough improvement
+9.  **num_leaves (71)** - the total number of leaves permitted in each node before a new tree must be created
+
+In totality , the tuning of our model's hyperparameters suggest that it is fairly complex, as indicated by the number of `trees` and `tree_depth`. Specifically, the high number of `trees` suggests that the model is likely detecting and capturing very subtle patterns within the data. The low `learning_rate` and `stop_itr` will help the model avoid overfitting, while the moderate `sample_size` and `mtry` values indicate the potential for a robust final result.
+
+With the tuning process complete and the best hyperparameters selected, we can take those parameters and pass them into a final workflow to verify the model on the testing data using only those metrics.
+
+```{r ryoe-verify-on-testing, eval = FALSE, echo = TRUE, output = FALSE}
+
+rushing_final_workflow <- rushing_workflow %>%
+  finalize_workflow(best_params)
+
+final_model <- rushing_final_workflow %>%
+  fit(data = rushing_test)
+
+rushing_predictions <- predict(final_model, rushing_data_join)
+
+ryoe_projs <- cbind(rushing_data_join, rushing_predictions) %>%
+  rename(actual_yards = label,
+         exp_yards = .pred)
+```
+
+In the above code, we are creating a second `workflow` titled `rushing_final_workflow` that will still contain the information from `rushing_recipe` and `rushing_specs` but will now only conduct the process using the tuned hyperparamters. We then take the final workflow and fit it onto the testing data.
+
+When the final fitting process is complete, which is typically much faster than the tuning process, we can take the results of `final_model` and use the `predict()` function to create a combined data frame and then, in the next step, use `cbind()` to create a file containing all of the projections created by the model called `ryoe_projs`.
+
+At this point, the modeling process is completed and how there is left to do is explore the results To do so, we will use basic commands from `tidyverse` to make some necessary manipulations, merge in team color information from `nflreadr` and then visualize the data.
+
+```{r ryoe-data-viz-prep, eval = FALSE, echo = TRUE, output = FALSE}
+
+mean_ryoe <- ryoe_projs %>%
+  dplyr::group_by(season) %>%
+  summarize(nfl_mean_ryoe = mean(actual_yards) - mean(exp_yards))
+
+ryoe_projs <- ryoe_projs %>%
+  left_join(mean_ryoe, by = c("season" = "season"))
+
+ryoe_projs <- ryoe_projs %>%
+  mutate(ryoe = actual_yards - exp_yards + nfl_mean_ryoe)
+
+for_plot <- ryoe_projs %>%
+  group_by(rusher) %>%
+  summarize(
+    rushes = n(),
+    team = last(posteam),
+    yards = sum(actual_yards),
+    exp_yards = sum(exp_yards),
+    ypc = yards / rushes,
+    exp_ypc = exp_yards / rushes,
+    avg_ryoe = mean(ryoe)) %>%
+  arrange(-avg_ryoe)
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+for_plot <- for_plot %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+```
+
+```{r ryoe-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(data = for_plot, aes(x = yards, y = exp_yards)) +
+  stat_poly_line(method = "lm", se = FALSE,
+                 linetype = "dashed", color = "black") +
+  stat_poly_eq(mapping = use_label(c("R2", "P")),
+               p.digits = 2, label.x = .35, label.y = 3) +
+  geom_point(color = for_plot$team_color2, size = for_plot$rushes / 165) +
+  geom_point(color = for_plot$team_color, size = for_plot$rushes / 200) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  labs(title = "**Actual Rushing Yards vs. Expected Rushing Yards**",
+       subtitle = "*2016 - 2022 | Model: LightGBM*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("Actual Rushing Yards") +
+  ylab("Expected Rushing Yards") +
+  nfl_analytics_theme() +
+  geom_text_repel(data = filter(for_plot, yards >= 4600),
+                  aes(label = rusher),
+                  box.padding = 1.7,
+                  segment.curvature = -0.1,
+                  segment.ncp = 3, segment.angle = 20,
+                  family = "Roboto Condensed", size = 4, fontface = "bold")
+```
+
+The graph shows the "line of best fit" between `Actual Rushing Yards` and `Expected Rushing Yards`. Those running backs that outperformed the models expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards over this period of time while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model's expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook's 5,656 actual yards and 5,342 expected yards).
+
+However, these results are over all of 2016-2022. We can use the results stored in our `ryoe_projs` data frame to produce more granular results to see which running backs performed the best against the model's expectation based on a number of different factors. For example, let's view the data by season and determine which rusher had the largest positive difference between their actual yards and expected yards.
+
+```{r ryoe-leaders-per-season-prep, eval = TRUE, echo = TRUE, output = FALSE}
+
+diff_per_season <- ryoe_projs %>%
+  group_by(season, rusher) %>%
+  summarize(
+    rushes = n(),
+    team = last(posteam),
+    yards = sum(actual_yards),
+    exp_yards = sum(exp_yards),
+    yards_diff = yards - exp_yards)
+
+diff_per_season <- diff_per_season %>%
+  left_join(teams, by = c("team" = "team_abbr"))
+
+diff_per_season <- diff_per_season %>%
+  group_by(season) %>%
+  mutate(is_max_diff = ifelse(yards_diff == max(yards_diff), 1, 0))
+```
+
+To plot the leaders per season required just two additions to the current `ryoe_projs` data frame. We first use `summarize()` to gather each running back's rushes, team, actual yards, and expected rushing yards per season and then created the `yards_diff` column which is simply the difference between the player's `yards` and `exp_yards`. In order to label just the leader's name in the plot for each season, we use `mutate()` to create the `is_max_diff` column where a rusher is provided a numeric `1` if their `yards_diff` was the highest positive value for the season.
+
+```{r ryoe-season-leaders-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
+  stat_poly_line(method = "lm", se = FALSE, linetype = "dashed", color = "black") +
+  stat_poly_eq(mapping = use_label(c("R2", "P")), p.digits = 2, label.x = .20, label.y = 3) +
+  geom_point(color = diff_per_season$team_color2, size = diff_per_season$rushes / 165) +
+  geom_point(color = diff_per_season$team_color, size = diff_per_season$rushes / 200) +
+  scale_x_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::comma_format()) +
+  geom_label_repel(data = subset(diff_per_season, is_max_diff == 1),
+                  aes(label = rusher),
+                  box.padding = 1.5, nudge_y = 1, nudge_x = 2,
+                  segment.curvature = -0.1, segment.ncp = 3, segment.angle = 20,
+                  family = "Roboto Condensed", size = 3.5, fontface = "bold") +
+  labs(title = "**Rushing Yards over Expected Leader Per Season**",
+       subtitle = "*2016 - 2022 | Model: LightGBM*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("Actual Rushing Yards") +
+  ylab("Expected Rushing Yards") +
+  facet_wrap(~ season, scales = "free") +
+  nfl_analytics_theme() +
+  theme(strip.text = element_text(face = "bold", family = "Roboto Condensed", size = 12),
+        strip.background = element_rect(fill = "#F6F6F6"))
+```
+
+Last, given the success of Jonathan Taylor's 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against the his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.
+
+```{r jtaylor-2021-prep, eval = TRUE, echo = TRUE, output = FALSE}
+
+j_taylor_2021 <- ryoe_projs %>%
+  filter(rusher == "J.Taylor" & posteam == "IND" & season == 2021) %>%
+  mutate(cumulative_rushes = as.numeric(rownames(j_taylor_2021))) %>%
+  reframe(
+    rusher = rusher,
+    team = last(posteam),
+    cumulative_rushes = cumulative_rushes,
+    cumulative_yards = cumsum(actual_yards),
+    cumulative_exyards = cumsum(exp_yards))
+
+j_taylor_image <- png::readPNG("./images/j_taylor_background.png")
+```
+
+In order to create the `j_taylor_2021` data frame, we are first creating a new variables titled `cumulative_rushes` that is simply copying the numeric row names so that each subsequent rushing attempt increases this number, resulting in his total number of carries in the season. Similarly , the `cumulative_yards` and `cumulative_exyards` are calculated using the `cumsum` function which sums the results, play by play, in a rolling fashion.
+
+Lastly, in order to provide a bit of "eye candy" to the plot, we use the `readPNG()` function from the `png` package to read in an image of Taylor rushing the football. We will place this image into the plot.
+
+```{r j-taylor-2021-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot() +
+  geom_line(aes(x = j_taylor_2021$cumulative_rushes, y = j_taylor_2021$cumulative_yards),
+            color = "#002C5F", size = 1.75) +
+  geom_line(aes(x = j_taylor_2021$cumulative_rushes, y = j_taylor_2021$cumulative_exyards),
+            color = "#A2AAAD", size = 1.75) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 12),
+                     labels = scales::comma_format()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10),
+                     labels = scales::comma_format()) +
+  annotate(geom = "text", label = "Cumulative Actual Yards", x = 200, y = 1050,
+           angle = 38, family = "Roboto Condensed", size = 5) +
+  annotate(geom = "text", label = "Cumulative Expected Yards", x = 200, y = 700,
+           angle = 35, family = "Roboto Condensed", size = 5) +
+  annotation_custom(grid::rasterGrob(j_taylor_image, 
+                               width = unit(1,"npc"), 
+                               height = unit(1,"npc")),
+                    175, 375, 0, 1000) +
+  labs(title = "**Jonathan Taylor: 2021 Cumulative Actual Yards vs. Expected Yards**",
+       subtitle = "*Model: **LightGBM** Using ***boost_trees()*** in ***tidymodels****",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("Cumulative Rushes in 2021 Season") +
+  ylab("Cumulative Actual Yards and Expected Yards") +
+  nfl_analytics_theme()
+```
+
+## Exercises
