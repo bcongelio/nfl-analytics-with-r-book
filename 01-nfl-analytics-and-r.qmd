@@ -323,6 +323,85 @@ ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
        caption = "*An Introduction to NFl Analytics with R*<br>**Brad J. Congelio**")
 ```
 
+There is again very little, if any, correlation between a team's unique number of offensive line combinations and the number of times its quarterback is hit on passing attempts.
+
+To continue this exploration, let's pivot away from exploring the impact of offensive line combinations on the quarterback and examine any potential correlation with the running game and run blocking. We can gather statistics provided by [Football Outsiders](https://www.footballoutsiders.com/) concerning the performance of offensive lines:
+
+1.  **Adjusted Line Yards** - derived by Football Outsiders with a regression analysis, this metric takes the total of a team's total rushing attempts and assigns a quantitative value to the offensive line's impact. Any run that ends of a loss of yards results in 120% of the value being placed on the offensive line, while a 0-4 yard rush is 100%, a 5-10 yard rush is 50%, and anything over 11 yards is a 0% value. As explained by Football Outsiders, if a running back breaks free for a 50-yard gain, just how much of that is the offensive line responsible for? The adjusted line yards metric is a stable metric that can provide a numeric value as an answer.
+2.  **Power Rank** - a ranking between 1 (best) and 32 (worst), power rank is the result of the power success metric, which is the percentage of rushing attempts on 3rd or 4th down, with two or less yards to go, that resulted in either a 1st down or a touchdown.
+3.  **Stuffed Rank** - again provided in the data frame as a ranking between 1 and 32, stuffed rank is the percentage of rushing attempts where the running back was tackled at, or behind, the line of scrimmage.
+
+To begin, we can gather the necessary data into a data frame called `fb_outsiders_oline`.
+
+```{r fb-outsiders-data, eval = TRUE, echo = TRUE, output = TRUE}
+
+fb_outsiders_oline <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/fboutsiders_line_stats.csv")
+
+fb_outsiders_oline
+```
+
+You can see in the output of the data that `power_rank` and `stuffed_rank` are both in a "ranked format," meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1 while the team with the worst (the Minnesota Vikings) are ranked 32. The `adj_line_yards` variable is provided in its unranked, raw format. Because of this, let's first both `power_rank` and `stuffed_rank` and use the `cowplot` package to view them together, and then construct the plot for `adj_line_yards` separately since it operates on a differing y-axis scale.
+
+```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
+  geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = power_rank),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_reverse(breaks = seq(1, 32, 2)) +
+  labs(title = "**Unique Offensive Line Combinations vs. Power Ranking**",
+       subtitle = "*2022 Season  |  FootballOutsiders.com*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Power Ranking (1 = best, 32 = worst)") +
+  nfl_analytics_theme()
+
+stuffed_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = stuffed_rank)) +
+  geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = stuffed_rank),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_reverse(breaks = seq(1, 32, 2)) +
+  labs(title = "**Unique Offensive Line Combinations vs. Stuffed Rank**",
+       subtitle = "*2022 Season  |  FootballOutsiders.com*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Stuffed Ranking (1 = best, 32 = worst)") +
+  nfl_analytics_theme()
+
+plot_grid(power_rank_plot, stuffed_rank_plot, ncol = 1)
+```
+
+Based on the results, it does not seem that the number of unique offensive line combinations has impact on either power rank or stuffed rank. The Los Angeles Rams and Arizona Cardinals, despite have the two highest unique line combinations, are among the best in the league in the metric. In fact, the opposite seems to be true in that the Minnesota Vikings, with just six unique line combinations during the 2022 season, are last in the league in power ranking. The Rams performed in bit worse when comparing line combinations to stuffed rank, but the Cardinals are still among the best in the league. The Vikings again are at the bottom, only underperformed by the Jacksonville Jaguars (who had just three unique combinations throughout the season).
+
+```{r adj-yard-line-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
+  geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_line_yards),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Line Yards**",
+       subtitle = "*2022 Season  |  FootballOutsiders.com*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Adjusted Line Yards") +
+  nfl_analytics_theme()
+```
+
+Comparing a team's unique offensive line combinations to adjusted line yards is more promising than power and stuffed rank, as the team's with the highest combination numbers begin to fall under the league-average line for ALY. There are still several teams that, despite having a low number of combinations through the season, performed poorly such as the Houston Texans, Seattle Seahawks, and the Jaguars.
+
+So what do we make of this?
+
+Given that adjusted line yards is constructed to measure the responsibility of the offensive line, it is logical to also want to consider the "performance" of the running back. A running back that is able to avoid early hits, or break tackles and earn yards after contact, can overcome an underperforming offensive line (whether that be from lack of talent or lack of cohesiveness from a high number of combinations).
+
+For the last exploration in this topic, we can bring in `Elusive Rating`, which is a signature statistic from Pro Football Focus that quantifies the "success and impact of a runner with the ball independently of the blocking."
+
 ## Exploring Explosive Plays per Touchdown Drive
 
 ```{r placeholding-next-example, eval = FALSE, echo = TRUE, output = FALSE}
