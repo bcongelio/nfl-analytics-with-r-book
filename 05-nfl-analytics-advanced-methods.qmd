@@ -170,7 +170,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-------------------:|:-------------------------------------------------:|
+|:--------------------:|:------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -1721,7 +1721,7 @@ rushing_folds <- vfold_cv(rushing_train)
 
 With the data split into the required components, we can create the recipe for our XGBoost model.
 
-```{r ryoe-model, eval = FALSE, echo = TRUE, output = FALSE}
+```{r ryoe-model, eval = TRUE, echo = TRUE, output = FALSE}
 
 rushing_recipe <-
   recipe(formula = label ~ ., data = rushing_train) %>%
@@ -1732,7 +1732,7 @@ The formula in our recipe is `label ~ .` as we renamed the rushing yards gained 
 
 The next required component to push into the model's `workflow()` is the model specification.
 
-```{r ryoe-model-spec, eval = FALSE, echo = TRUE, output = FALSE}
+```{r ryoe-model-spec, eval = TRUE, echo = TRUE, output = FALSE}
 
 rushing_specs <- boost_tree(
   trees = tune(),
@@ -1759,7 +1759,7 @@ This speed increase is the result of `lightgbm` building the tree in a vertical 
 
 Regardless of using `lightgbm` or `xgboost` as the model's engine, we have the ability to tune the same items, including `tree`, `tree_depth`, `min_n`, `mtry`, `loss_reduction`, `sample_size`, `learn_rate`, and `stop_iter`. The `lightgbm` engine, specifically, can tune for the `num_leaves` in the vertical growth pattern. After creating the model's specifications, we pass the required `tune()` information into `grid_latin_hypercube()` and then pass the created recipe and model specifications into our `workflow()`.
 
-```{r ryoe-grid-workflow, eval = FALSE, echo = TRUE, output = FALSE}
+```{r ryoe-grid-workflow, eval = TRUE, echo = TRUE, output = FALSE}
 
 rushing_grid <- grid_latin_hypercube(
   trees(),
@@ -1821,6 +1821,13 @@ The values in the output of `best_params` are the result of the hyperparameter t
 In totality , the tuning of our model's hyperparameters suggest that it is fairly complex, as indicated by the number of `trees` and `tree_depth`. Specifically, the high number of `trees` suggests that the model is likely detecting and capturing very subtle patterns within the data. The low `learning_rate` and `stop_itr` will help the model avoid overfitting, while the moderate `sample_size` and `mtry` values indicate the potential for a robust final result.
 
 With the tuning process complete and the best hyperparameters selected, we can take those parameters and pass them into a final workflow to verify the model on the testing data using only those metrics.
+
+ryoe_projs \<- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+
+```{r reading-ryoe-csv, eval = TRUE, echo = FALSE, output = FALSE}
+
+ryoe_projs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+```
 
 ```{r ryoe-verify-on-testing, eval = FALSE, echo = TRUE, output = FALSE}
 

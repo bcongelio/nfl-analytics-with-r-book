@@ -1630,7 +1630,7 @@ plot_image_label<-function(image,
 }
 ```
 
-After the process finishes running (it may take a while depending on your computing power), we create a new column titled `new_image_path` and use `past0` to copy the `receiver_id` for each player and tag ".png" on the end.
+After the process finishes running (it may take a while depending on your computing power), we create a new column titled `new_image_path` and use `paste0` to copy the `receiver_id` for each player and add ".png" on the end.
 
 ```{r creating_new_path, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -1693,4 +1693,195 @@ ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
+## Creating Tables with `gt` and `gtExtras`
+
 ## Creating a Shiny App
+
+With a solid understanding of the data visualization process, we can now turn our attention to take a completed data frame and transitioning it into a Shiny App, resulting in an interactive application for users to explore your data and findings.
+
+To do this, we will be utilize a data frame that you will see again in Chapter 5 that is created during an XGBoost modeling process. It contains the actual rushing yards and expected rushing yards, based on predictive machine learning, for all running backs from 2016 to 2022. You can read in the data to view it with the following `vroom` code.
+
+```{r reading-in-shiny-app-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+ryoe_shiny <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+```
+
+The resulting `ryoe_shiny` data frame contains information regarding `actual_yards`, `season`, `down`, `ydstogo`, `red_zone`, `rusher`, `rusher_player_id`, `posteam`, `defteam`, `exp_yards`. As you will soon see, despite being in the data frame, will will not use all of the variables while also adding some in the backend of the Shiny App. To that end, the Shiny App we will be producing will allow users to select one or more seasons to see each running back's total rushing yards, total expected yards, and the difference between the two (where a positive number indicates the running back gained more yards than the XGBoost model predicted). Users will be able to select specific downs and yards to go, as well as indicate if they want to see the information pertaining to only those rushing attempts in the red zone. We will also build in the capability for the Shiny App to automatically update and format a `ggplot` scatterplot to visualize the information.
+
+You can see the end result and the functioning Shiny App here: [NFL Analytics with R: RYOE Shiny App](https://bcongelio.shinyapps.io/nfl_r_book_ryoe/).
+
+### Requirements for a Shiny App
+
+First, it is important to know that a Shiny App cannot be built within a typical R script. Rather, you must select "Shiny Web App" from File -\> New File inside RStudio. You will then be prompted to indicate the folder in which you would like to save the files and whether or not you want a combined file or a separate `ui.R` and `server.R`. A single file containing both is acceptable for a simple Shiny App but more complex designs will require separate files to maintain organization.
+
+1.  **User Interface (`ui.R`**) - the `ui.R` file controls the layout and appearance of your Shiny App, including controlling all the elements of the user interface such as text, inputs, sliders, checkboxes, tables, and plots. The most basic requirements to construct a user interface are `fluidpage()`, `sidebarLayout()`, `sidebarPanel()`, and `mainPanel()`. The `sidebarPanel()` is what contains the options for user input, while `mainPanel()` is where the results of the input display in the web app.
+2.  **Server Function (`server.R`**) - the `server.R` file contains the information needed to build and modify the outputs in response to user input, as well as where you construct the inner-workings of the Shiny App (like data manipulation). Each `server.R` file will contain a `function(input, output)` where the `input` is an object that contains the requests from the user input and `output` is the required items to be rendered.
+
+Both the `ui.R` and `server.R` are ultimately passed into the `shinyApp()` function that outputs the final product.
+
+### Building our `ui.R` File
+
+Both the `ui.R` and `server.R` files will start with similar information: reading in the data, any necessary preparation, and - in our case - including the custom `nfl_analytics_theme()` to be passed into the `ggplot` output.
+
+```{r shiny-ui-1, eval = FALSE, echo = TRUE, output = FALSE}
+
+### loading required packages
+library(shiny)
+library(tidyverse)
+library(gt)
+library(vroom)
+
+### load data
+ryoe_shiny <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+
+ryoe_shiny <- ryoe_shiny %>%
+  filter(ydstogo <= 10)
+
+teams <- nflreadr::load_teams(current = TRUE) %>%
+  select(team_abbr, team_logo_wikipedia, team_color, team_color2)
+
+ryoe_shiny <- ryoe_shiny %>%
+  left_join(teams, by = c("posteam" = "team_abbr"))
+
+nfl_analytics_theme <- function(..., base_size = 12) {
+  
+  theme(
+    text = element_text(family = "Roboto Condensed", size = base_size, color = "black"),
+    axis.ticks = element_blank(),
+    axis.title = element_text(face = "bold"),
+    axis.text = element_text(face = "bold"),
+    plot.title.position = "plot",
+    plot.title = element_markdown(size = 16,
+                                  vjust = .02,
+                                  hjust = 0.5),
+    plot.subtitle = element_markdown(hjust = 0.5),
+    plot.caption = element_markdown(size = 8),
+    panel.grid.minor = element_blank(),
+    panel.grid.major =  element_line(color = "#d0d0d0"),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    plot.background = element_rect(fill = "#f7f7f7"),
+    panel.border = element_blank(),
+    legend.background = element_rect(color = "#F7F7F7"),
+    legend.key = element_rect(color = "#F7F7F7"),
+    legend.title = element_text(face = "bold"),
+    legend.title.align = 0.5)
+}
+```
+
+After gathering the data into a data frame called `ryoe_shiny`, we use `filter()` to limited the rushes plays to just those with 10 or less yards to go, and then use the `load_teams()` function from `nflreadr` to merge in `team_color`, `team_color2`, and `team_logo_wikipedia`. After pasting in our existing code for the custom theme, we can construct the user interface.
+
+```{r shiny-ui-2, eval = FALSE, echo = TRUE, output = FALSE}
+
+ui <- fluidPage(
+  titlePanel("NFL Analytics with R: RYOE Shiny App"),
+  sidebarLayout(fluid = TRUE,
+    sidebarPanel(
+      selectInput("season", "Season:", choices = unique(ryoe_shiny$season), selected = NULL, multiple = TRUE),
+      sliderInput("down", "Down:", min = min(ryoe_shiny$down),
+                  max = max(ryoe_shiny$down), value = range(ryoe_shiny$down)),
+      sliderInput("ydstogo", "Yards to Go:", min = min(ryoe_shiny$ydstogo),
+                  max = 10, value = range(ryoe_shiny$ydstogo)),
+      checkboxInput("red_zone", "Red Zone:", value = FALSE)),
+    mainPanel(
+      tableOutput("myTable"),
+      plotOutput("myPlot", width = "500px"),
+      width = 6)))
+```
+
+We begin constructing the user interface by calling in the `fluidPage()` function. Each "fluid page" in a Shiny application consists of rows, which are created either either with `fluidRow()`/`column()` function or, in our case, by using `sidebarLayout()`. Within `sidebarLayout()`, we can provide the arguments for both `sidebarPanel()`, which is the column that contains the user input controls, and `mainPanel()` which shows the requested outputs.
+
+Within the `sidebarPanel()`, we begin inputting the options that users will be able to select. There are several different options in which you can allow users manipulate the data, including text inputs, selection inputs, check boxes, radio buttons, date inputs, and even file uploads. For the purposes of our application, we are providing four different options for input using four different options of input type:
+
+1.  users can select a specific season/seasons using `selectInput()`. The first `season` in the input indicates the specific column name from the data to use, while the uppercase `Season:` is the title of the input that displays on the application. Within `choices`, we use the `unique()` function to pass in the individual season values in the data (2016, 2017, 2018, 2019, 2020, 2021, and 2022). While the `selected` argument permits "pre-filling" the input with a selection, we will leave it at `NULL` and then set `multiple` to `TRUE` to allow for users to select more than one season at once.
+2.  Each `sliderInput()` allows the user to select from a predetermined set values: either 1-4 for down and 1-10 for yards to go. The `min` and `max` arguments are set to 1st and 4th down and 1 yard to go and 10 yards to go, respectively. For `value`, we are supplying all the numeric values in the data so that the user sees each number on the input bar.
+3.  Finally, the `checkboxInput` is permits users to either select/deselect the `Red Zone` argument to view the data when the offense is either in or outside of the opposing red zone.
+
+The `mainPanel()` options takes information that is constructed within the `server.R` file (specifically, in this case, a table with results and the including scatterplot of the data) and displays it beside the user input area. We are also instructing the plot is to have a width of 500px with the totality of the `mainPanel()` having, itself, a width of 6.
+
+### Building our `server.R` File
+
+The `server.R` file begins with three different arguments.
+
+```{r server-r-beginnings, eval = FALSE, echo = TRUE, output = FALSE}
+
+server <- function(input, output) {
+  
+  selectedSeasons <- reactive({
+    paste(input$season, collapse = ", ")
+  })
+  
+  filteredData <- reactive({
+    ryoe_shiny %>%
+      filter(
+        season %in% input$season,
+        down >= input$down[1] & down <= input$down[2],
+        ydstogo >= input$ydstogo[1] & ydstogo <= input$ydstogo[2],
+        red_zone == input$red_zone
+      )
+  })
+```
+
+Each `server.R` file will begin with `function(input, output)` with the specifics of each application coming after. After, the first object created in the Shiny App is `selectedSeasons` which stores the season(s) that the user selects so that the values can be placed in the resulting `ggplot` data visualization. After, we take our `ryoe_shiny` data frame and wrap it inside the `reactive()` function and write it into a data frame called `filteredData`, thus causing `filteredData` to become what is called a "reactive expression." Reactive expressions are what give Shiny the ability to update outputs (like tables and plots, in our case) in response to user input.
+
+The information *after* the `reactive()` function is the data that is to be updated in real time. For our Shiny App, we are using the `filter()` function to keep only the criteria from `ryoe_shiny` that the user request. That is, we are filtering for the `season` in the data frame that includes (`%in%`) the season(s) selected on the user interface. The filtering of `down` is done by instructing that the first `down` must be greater than or equal to the user input while the second `down` must be less than or equal to. The `[1]` and `[2]` including in both `down` and `ydstogo` are indices that specify the first and second elements of the value. For example, if the user selects a range of `down` from first to third, `input$down[1]` would be `1` and `input$down[2]` would be `3` (with the equivalent `tidyverse` version of it being `filter(down >= 1 & down <= 3)`. Last, if the box is checked for `red_zone`, it will filter the data to include only those plays that include the binary `1` in the `red_zone` variable.
+
+The data, now filtered based on the user input, can be passed into the output table and plot.
+
+```{r ryoe-shiny-table-plot, eval = FALSE, echo = TRUE, output = FALSE}
+
+  output$myTable <- renderTable({
+    resultTable <- filteredData() %>%
+      group_by(rusher) %>%
+      summarise(
+        total_rushes = as.integer(n()),
+        total_actual_yards = as.integer(sum(actual_yards)),  
+        total_expected_yards = as.integer(sum(exp_yards)),       
+        difference = as.integer(sum(actual_yards) - sum(exp_yards)) 
+      ) %>%
+      rename(
+        "Rusher" = rusher,
+        "Total Rushes" = total_rushes,
+        "Total Actual Yards" = total_actual_yards,
+        "Total Expected Yards" = total_expected_yards,
+        "Difference" = difference
+      ) %>%
+      arrange(desc(Difference)) %>%
+      head(10) %>%
+      as.data.frame()
+    
+        resultTable
+  })
+```
+
+To create the output table, we use the `renderTable()` function, another reactive element within the Shiny App. We write the information contained in `filteredData()` (which was created above during the `reactive()` filtering process) to a new data frame called `resultTable`. After, we handle the data just like we would within the `tidyverse` outside of `Shiny`, aside from ensuring the information is written out in data frame form by including `as.data.frame()` at the end. All of this is ultimately written into the `output$myTable` to be passed along to the user interface. As highlighted in the below code, outputting the `ggplot` is done in the same fashion, except for the use of `renderPlot()`. After, we create the data frame called `top10` that is also built off of the filtered data contained in `filteredData()`. After, the process includes the basic tenants of `group_by()`, `summarize()`, and building out the visualization in `ggplot()`.
+
+```{r r-shiny-plot, eval = FALSE, echo = TRUE, output = FALSE}
+
+  output$myPlot <- renderPlot({
+    top10 <- filteredData() %>%
+      group_by(rusher) %>%
+      summarize(
+        team_color = last(team_color),
+        total_actual_yards = as.integer(sum(actual_yards)),  
+        total_expected_yards = as.integer(sum(exp_yards))      
+      ) %>%
+      top_n(10, wt = total_actual_yards)
+    
+    ggplot(data = top10, aes(x = total_actual_yards, y = total_expected_yards)) +
+      stat_poly_line(method = "lm", se = FALSE, linetype = "dashed", color = "black") +
+      stat_poly_eq(mapping = use_label(c("R2", "P")), p.digits = 2, label.x = .20, label.y = 3) +
+      geom_point(color = top10$team_color, size = 3.5) +
+      geom_text_repel(data = top10, aes(label = rusher)) +
+      labs(
+        x = "Total Actual Yards", 
+        y = "Total Expected Yards", 
+        title = paste("Actual Rushing Yards vs. Expected for Season(s):", selectedSeasons()),
+        subtitle = "Model: *LightGBM* in **tidymodels**",
+        caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**"
+      ) +
+      nfl_analytics_theme()
+  }, width = 500)
+}
+```
+
+As you build the `Shiny` app, you can check the validity of your coding by clicking the `Run App` button in the upper-right part of the coding screen. If everything is correct, the application will run within your local system. If there are issues, the information will be provided in the 'Console' area of RStudio. Once you are content with functioning and style of the application, you can publish it and host it, for free, on [ShinyApps.io](https://www.shinyapps.io/).

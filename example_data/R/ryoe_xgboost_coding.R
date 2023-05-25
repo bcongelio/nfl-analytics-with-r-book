@@ -224,3 +224,5 @@ teams <- nflreadr::load_teams(current = TRUE)
 for_plot <- for_plot %>%
   left_join(teams, by = c("team" = "team_abbr"))
 
+write.csv(ryoe_projs, "ryoe_projs.csv", row.names = FALSE)
+
