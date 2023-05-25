@@ -165,7 +165,7 @@ The end result includes the `game_id`, the `week`, the `team` abbreviation, and 
 
 ```{r oline-combos-finished-out, echo = TRUE, output = TRUE}
 
-head(oline_final_data)
+oline_final_data
 ```
 
 With the data cleaned and prepared, we are now able to take our first look at the results. In the code below, we are grouping by all 32 NFL team and then summarizing the total number of unique offensive line combinations used through the first 15 weeks of the 2022 season.
@@ -180,7 +180,7 @@ total_combos <- oline_final_data %>%
 
 Despite much of the media focus being on the Rams' poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals had nearly as many unique offensive line combinations at the conclusion of the 2022 regular season.
 
-With the data cleaned and prepared, let's use it to create a `ggplot` graph and, to do so, compare the relationship between a team's number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing `total_combos` dataframe.
+With the data cleaned and prepared, let's use it to create a `ggplot` graph and, to do so, compare the relationship between a team's number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing `total_combos` data frame.
 
 ### Unique Offensive Line Combinations vs. Win Percentage
 
@@ -224,7 +224,11 @@ nfl_analytics_theme <- function(..., base_size = 12) {
     panel.grid.major =  element_line(color = "#d0d0d0"),
     panel.background = element_rect(fill = "#f7f7f7"),
     plot.background = element_rect(fill = "#f7f7f7"),
-    panel.border = element_blank())
+    panel.border = element_blank(),
+    legend.background = element_rect(color = "#F7F7F7"),
+    legend.key = element_rect(color = "#F7F7F7"),
+    legend.title = element_text(face = "bold"),
+    legend.title.align = 0.5)
 }
 ```
 
@@ -232,7 +236,7 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
-  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065, alpha = 0.7) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_number(accuracy = 0.001)) +
@@ -241,7 +245,7 @@ ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   ylab("Win Percentage") +
   labs(title = "**Unique Offensive Line Combinations vs. Win Percentage**",
        subtitle = "*Through Week #15*",
-       caption = "*An Introduction to NFL Analytics With R*<br>Brad J. Congelio")
+       caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**")
 ```
 
 As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a better metric that correlates more strongly with a team's number of offensive line combinations?
@@ -262,7 +266,7 @@ total_combos <- total_combos %>%
 
 ```{r show-pressure-rate, echo = FALSE}
 
-head(pressure_rate)
+pressure_rate
 ```
 
 With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior `ggplot` code to examine any potential relationship.
@@ -271,7 +275,7 @@ With the pressure rate now merged with our unique offensive line combination dat
 
 ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
-  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065, alpha = 0.7) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::percent_format(scale = 1, accuracy = 0.1)) +
@@ -279,14 +283,15 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Pressure Rate (per Dropback)") +
   labs(title = "Unique Offensive Line Combinations vs. Pressure Rate",
-       subtitle = "2022 Season")
+       subtitle = "2022 Season",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
 Again, there does not seem to be any statistical correlation between a team's number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between a the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from `nflreadr` to collect total QB hits.
 
 ### Unique Offensive Line Combinations vs. QB Hits Allowed
 
-To begin, we can collect the QB hit data from `nflreadr` being sure to `group_by` the `posteam` variable in order to calculate the number of QB hits allowed by each team's offensive line. After, we can merge the data into our existing `total_combos` dataset and then produce the plot.
+To begin, we can collect the QB hit data from `nflreadr` being sure to `group_by` the `posteam` variable in order to calculate the number of QB hits allowed by each team's offensive line. After, we can merge the data into our existing `total_combos` data set and then produce the plot.
 
 ```{r offensive-line-combos-qb-hits, output = FALSE}
 
@@ -301,20 +306,21 @@ qb_hits_combined <- left_join(
   total_combos, qb_hits, by = c("team" = "posteam"))
 ```
 
-After first filtering out any data that does not include `posteam` information, we can `group_by` each individual offensive unit and then calculate the total sum of QB hits for each. We can then take our new dataframe titled `qb_hits_combined` and plot the results.
+After first filtering out any data that does not include `posteam` information, we can `group_by` each individual offensive unit and then calculate the total sum of QB hits for each. We can then take our new data frame titled `qb_hits_combined` and plot the results.
 
 ```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
   geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
-  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065, alpha = 0.7) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Total QB Hits Allowed") +
   labs(title = "Unique Offensive Line Combinations vs. QB Hits Allowed",
-       subtitle = "2022 Season")
+       subtitle = "2022 Season",
+       caption = "*An Introduction to NFl Analytics with R*<br>**Brad J. Congelio**")
 ```
 
 ## Exploring Explosive Plays per Touchdown Drive

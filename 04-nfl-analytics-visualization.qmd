@@ -64,17 +64,11 @@ install.packages(c("extrafont",
                    "glue"))
 ```
 
-## Selecting The Correct Type of Plot
-
-Not all types of data and examination of relationships will work with all the various types of plots within the `ggplot2` family of packages. In general, much of the NFL data you work with will explore correlations, deviation, rankings, and change. A `geom_point()` plot will not work well with deviation (while a `geom_boxplot()` will) and vice versa.
-
-The below flowchart will help you In determining which type of plot works best for the data you are working with.
-
 ## The Basics of Using `ggplot2`
 
-The basics of any `ggplot` visualization involves three basic calls to information in a dataset as well as stipulation which type of geom you would like to use:
+The basics of any `ggplot` visualization involves three basic calls to information in a data set as well as stipulation which type of geom you would like to use:
 
-1.  the dataset to be used in the visualization
+1.  the data set to be used in the visualization
 2.  an aesthetic calls for the x-axis
 3.  an aesthetic call for the y-axis
 4.  your desired geom type
@@ -168,7 +162,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 ```
 
 ::: callout-important
-You may notice that we used the the `$` special operator to extract the `team_color` information within our `play_action_data` dataframe. This is an extremely important distinction, as using the `aes()` argument from `ggplot` and not using the `$` operator will result in a custom scale color being applied to each team, without the correct team colors associating with the correct team.
+You may notice that we used the the `$` special operator to extract the `team_color` information within our `play_action_data` data frame. This is an extremely important distinction, as using the `aes()` argument from `ggplot` and not using the `$` operator will result in a custom scale color being applied to each team, without the correct team colors associating with the correct team.
 
 To see this for yourself, you can run the example following code. Remember, this is an incorrect approach and serves to only highlight why the `$` special operator was used in the above code.
 
@@ -238,7 +232,7 @@ Determining when and how to resize the individual points in a scatterplot is a m
 3.  Visual aesthetics: the size of the points can be adjusted simply for visual appeal.
 4.  Contextual factors: can the size of the points be used to highlight even more uniqueness in the data? For example, given the right data structure, we can size individual dots to show the spread in total attempts across the quarterbacks.
 
-Given the above guidelines, the resizing of the points in our `play_action_data` dataframe is going to be a strictly aesthetic decision. We cannot, as mentioned above, alter the size of each specific points based on each quarterback's number of attempts as the data provides attempts for *both* play action and non-play action passes. Moreover, we *could* create a new column that add both attempt numbers to get a QB's cumulative total but that does not have a distinct correlation to the data on either axis.
+Given the above guidelines, the resizing of the points in our `play_action_data` data frame is going to be a strictly aesthetic decision. We cannot, as mentioned above, alter the size of each specific points based on each quarterback's number of attempts as the data provides attempts for *both* play action and non-play action passes. Moreover, we *could* create a new column that add both attempt numbers to get a QB's cumulative total but that does not have a distinct correlation to the data on either axis.
 
 ::: callout-caution
 For the sake of educational purposes, we can alter the size of each specific point to correlate to the total number of play action attempts for each quarterback (and then divide this by 25 in order to decrease the size of the points to fit them all onto the plot).
@@ -285,7 +279,7 @@ Our data visualization "to do list":
 
 7.  Provide a title, subtitle, and caption for the plot.
 
-8.  Add mean lines to both the x-axix and y-axis.
+8.  Add mean lines to both the x-axis and y-axis.
 
 9.  Change `theme` elements to make data viz more appealing.
 :::
@@ -366,7 +360,7 @@ Our data visualization "to do list":
 
 Because steps 4 and 5 from the above "to do list" can be accomplished with the same package, we will lump both together and complete them at once.
 
-Let's first examine the idea of increasing the number of ticks on each axis. The "axis ticks" refer to the specific spots on each axis wherein a numeric datapoint resides. With our current visualization, we currently have "1000, 2000, 3000" on the x-axis and "400, 800, 1200, 1600" on the y-axis.
+Let's first examine the idea of increasing the number of ticks on each axis. The "axis ticks" refer to the specific spots on each axis wherein a numeric data point resides. With our current visualization, we currently have "1000, 2000, 3000" on the x-axis and "400, 800, 1200, 1600" on the y-axis.
 
 We may want to increase the number of axis ticks in this visualization as it can provide a more detailed view of the data being presented. Typically, increasing the number of tickets will show more granularity in the data and make it easier to interpret the values represented by each point. In this specific case, we can look at the cluster of points represented by Andy Dalton, Mac Jones, and Matt Ryan. Given the current structure of the axis ticks, we can guess that Matt Ryan has roughly 2,500 yards on non-play action passing attempts. Given we know Matt Ryan's amount, we can make guesses that Andy Dalton may be around 2,300 and Mac Jones somewhere between the two.
 
@@ -851,7 +845,7 @@ There is a lot going on now in our `theme()` argument. Importantly, you may noti
 
 When working on editing your plot to your liking, you can make changes to one of four theme elements:
 
-1.  `element_blank()` - this used to entirely remove an element from the plot (like we did with `axis.ticks`.
+1.  `element_blank()` - this used to entirely remove an element from the plot like we did with `axis.ticks`.
 2.  `element_rect()` - this is used to make changes to the borders and backgrounds of a plot.
 3.  `element_lines()` - this is used to make changes to any element in the plot that is a line.
 4.  `element_text()` - this is used to make change to any element in the plot that is text.
@@ -877,7 +871,7 @@ After removing the panel's minor grid lines (again, a personal preference of min
 
 ## Creating Your Own `ggplot2` Theme
 
-As mentioned, I have a distinctive "brand and look" for the data visualizations I create that make use of the same design elements and choices. Rather than copy and paste those into each and every `ggplot` piece of code I write, I've opted to consolidate all the `theme()` element changes into my own `theme()` function. In much the same way, I've created a "quick and easy" theme for use in this book. To get started, running the following chunk of code will create a function titled `nfl_analytics_theme` and place it into your RStudio environment.
+As mentioned, I have a distinctive "brand and look" for the data visualizations I create that make use of the same design elements and choices. Rather than copy and paste those into each and every `ggplot` piece of code I write, I've opted to consolidate all the `theme()` element changes into my own `nfl_analytics_theme()` function. In much the same way, I've created a "quick and easy" theme for use in this book. To get started, running the following chunk of code will create a function titled `nfl_analytics_theme` and place it into your RStudio environment.
 
 ```{r providing-theme-code, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -909,7 +903,7 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 }
 ```
 
-You may notice that the elements in the above theme creation are quite similar to the ones we passed into our previous plot. And that is true, but the results will be nearly 99.9% identical. After wrapping our `theme()` inside a function, indicated by the opening and closing curly brackets `{ }`, we can provide our desired theme element appearances as we would within a regular `ggplot2` code block.
+You may notice that the elements in the above theme creation are quite similar to the ones we passed into our previous plot. And that is true, and the results will be nearly 99.9% identical. After wrapping our `theme()` inside a function, indicated by the opening and closing curly brackets `{ }`, we can provide our desired theme element appearances as we would within a regular `ggplot2` code block.
 
 However, in the above theme function, we have streamlined the basis a bit by indicating a `base_size` of all the text, when means all text output will be in size 12 font unless specifically indicated in the element (for example, we have the `plot.title` set to have a `size` of 16). As well, the same process was done for font (Roboto Condensed) so there was not a need to type it repeatedly into every element.
 
@@ -1142,7 +1136,7 @@ ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
                      labels = scales::percent_format())
 ```
 
-Please note that difference in how the `breaks` on each scale was handled. Because we want each year on the x-axis, we manually controlled the output by using the `seq()` function to start the x-axix at `2012` and to increase by `1` until the final number of `2022` is reached. On the other hand, we used the `pretty_breaks()` function from `scales` to format the number of breaks on the y-axis and then used `percent_format()` to edit the labels to be whole numbers with the percentage sign included.
+Please note that difference in how the `breaks` on each scale was handled. Because we want each year on the x-axis, we manually controlled the output by using the `seq()` function to start the x-axis at `2012` and to increase by `1` until the final number of `2022` is reached. On the other hand, we used the `pretty_breaks()` function from `scales` to format the number of breaks on the y-axis and then used `percent_format()` to edit the labels to be whole numbers with the percentage sign included.
 
 Next, we can add more `geom_` types to highlight the general percentage for each season on the x-axis. We will add one `geom_point()` to to indicate the percentage for each season. And then, for aesthetic purposes, we will add a *second* `geom_point()` that is larger than the original, with a color that matches the eventual background, to give the visual impression that the line doesn't quite "reach" the point. Lastly, because we are dealing with aesthetic issues like size and color, we will increase the size of the `geom_line()` and also add the Eagles' secondary team color to it.
 
@@ -1695,6 +1689,144 @@ ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
 
 ## Creating Tables with `gt` and `gtExtras`
 
+In some instances, you may find that a plot produced by `ggplot2` is not the best medium in which to display your data. In that case, you may want to turn to use the `gt` package (and the accompanying add-on from Thomas Mock, `gtExtras`). Much like `ggplot2` stands for the "grammar of graphics", the `gt` package is short for the "grammar of tables." Taking a data frame into a `gt` table is as simple as piping into the `gt()` function, but the end result will likely not be visually pleasing. To make the necessary adjustments, you will need to begin making changes to the output by altering the core parts of a `gt` table: the table header, the stub and stub head, the column labels, the table body, and the table footer.
+
+To provide a walk through of this process, let's read in prepared data that examines the top ten average completion percentage over expected for those attempts in a pure passing situation (that is, plays that have a predictive probability of 70% or greater of being a passing attempt).
+
+```{r reading-in-pure-cpoe, eval = TRUE, echo = TRUE, output = FALSE}
+
+pure_cpoe <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pure_cpoe.csv")
+```
+
+As mentioned, we can quickly take the data and turn it into a `gt` table by piping it directly into the package's core function.
+
+```{r pure-cpoe-straight-pipe, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt()
+```
+
+In some cases, the results might not be *terrible* ... but, in this case, it is. The output is realistically just the data frame outputted into a different format, including the complete URLs for both the player headshot and team logos. Let's begin making incremental changes to the table by first adding a title and subtitle, using Markdown (`md()`) to provide bold and italicized styling to each.
+
+```{r pure-cpoe-tab-header, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt() %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*"))
+```
+
+Adding the title and subtitle to the top of the table may not help much, as the two long-form URLs are stretching out the table and making it difficult to see the changes that are being made. Rather than including both the player's picture and the team logo, let's remove `team_logo_wikipedia` from being used by `gt` with the `cols_hide()` function and then place the player pictures into table by using `gt_img_rows()` from the `gtExtras` package.
+
+```{r remove-wiki-add-photo, eval = TRUE, echo = TRUE, output = FALSE}
+
+pure_cpoe %>%
+  gt() %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  gt_img_rows(headshot, height = 25)
+```
+
+That is considerably better. But it can be even better. For example, the column labels are still in the format from the `pure_cpoe` data frame with underscores and issues with capitalized letters. Let's make these grammatical corrections using `cols_label()`. As well, let's move the `passer` column to the far left and use the `tab_stubhead()` function, allowing us to position the names to the left of the column labels and with a vertical line separating them from the other data being presented. This also requires placing `rowname_col = "passer"` into the call to the `gt()` package.
+
+```{r add-stub-head-label, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE")
+```
+
+We are almost there. But, it looks strange to have the player's picture so far removed from their name. Let's place the `headshot` column as the first column and, while we are at it, use the `cols_align()` function to center align the `passer` and `total_attempts` columns.
+
+```{r moving-images-and-align, eval = TRUE, echo = TRUE, output = FALSE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE") %>%
+  cols_move_to_start(
+    columns = headshot) %>%
+  cols_align(align = "center", columns = c("passer", "total_attempts"))
+```
+
+As one last visual enhancement, we will use the `gt_color_box()` function from `gtExtras` to replace the values in `mean_cpoe` with colorboxes that are similar to those used in data visualizations on Pro Football Focus.
+
+```{r adding-color-boxes, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE") %>%
+  cols_move_to_start(
+    columns = headshot) %>%
+  cols_align(align = "center", columns = c("passer", "total_attempts")) %>%
+  gt_color_box(mean_cpoe, domain = 7:11,
+               palette = "ggsci::blue_material", accuracy = 0.01)
+```
+
+It is important to include the `accuracy = 0.01` within the `gt_color_box()`, otherwise the output of the table includes just whole numbers. At this point, the table is complete all for adding a caption at the bottom and using one of the formatted themes from `gtExtras` (I am partial to `gt_theme_538`).
+
+```{r caption-and-theme, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE") %>%
+  cols_move_to_start(
+    columns = headshot) %>%
+  cols_align(align = "center", columns = c("passer", "total_attempts")) %>%
+  gt_color_box(mean_cpoe, domain = 7:11,
+               palette = "ggsci::blue_material", accuracy = 0.01) %>%
+  tab_source_note(
+    source_note = md("*An Introduction to NFL Analytics with R*<br>
+                     **Brad J. Congelio**")) %>%
+  gtExtras::gt_theme_538()
+```
+
 ## Creating a Shiny App
 
 With a solid understanding of the data visualization process, we can now turn our attention to take a completed data frame and transitioning it into a Shiny App, resulting in an interactive application for users to explore your data and findings.
@@ -1885,3 +2017,5 @@ To create the output table, we use the `renderTable()` function, another reactiv
 ```
 
 As you build the `Shiny` app, you can check the validity of your coding by clicking the `Run App` button in the upper-right part of the coding screen. If everything is correct, the application will run within your local system. If there are issues, the information will be provided in the 'Console' area of RStudio. Once you are content with functioning and style of the application, you can publish it and host it, for free, on [ShinyApps.io](https://www.shinyapps.io/).
+
+## Exercises

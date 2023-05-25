@@ -135,7 +135,7 @@ mahomes_pyards <- mahomes_pyards %>%
 mahomes_pyards
 ```
 
-The above code returns a result of 5,250 passing yards which is an exact match from the data provided by [Pro Football Reference.](https://www.pro-football-reference.com/players/M/MahoPa00.htm) In the above example, we used the `filter()` function on the `player_name` column in the data. You will get the same result if you replace that with `player_display_name == "Patrick Mahomes"`. While there is no difference in how the data is collected, there will be a difference if you were to visualize the data frame and wished to display the player names along with their respective statistics. In most cases, in order to maintain a clean design, using the `player_name` option is best which allows you to plot just the player's first initial and last name.
+The above code returns a result of 5,250 passing yards which is an exact match from the data provided by [Pro Football Reference.](https://www.pro-football-reference.com/players/M/MahoPa00.htm) In the above example, we used the `filter()` function on the `player_name` column in the data. You will get the same result if you replace that with `player_display_name == "Patrick Mahomes"`. While there is no difference in how the data is collected, there will be a difference if you were to visualize the data frame and wished to display the player names along with their respective statistics. In most cases, in order to maintain a clean design, using the `player_name` option is best as it allows you to plot just the player's first initial and last name.
 
 We can build upon the passing yards example to replicate the vast majority of statistics found in the["Passing" data table for Mahomes from Pro Football Reference](https://www.pro-football-reference.com/players/M/MahoPa00.htm#passing).
 
@@ -177,7 +177,7 @@ mahomes_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
 mahomes_adjusted_yards
 ```
 
-Based on the data output, Mahomes' best year for adjusted yards gained per pass attempt was 2018 with 9.58 adjusted yards. How does this compare to other quarterbacks from the same season? We can find the answer by doing slight modifications to our above code. Rather than filtering the information out to just Patrick Mahomes, we will add the `player_name` column as a second argument in the `group_by()` function.
+Based on the data output, Mahomes' best year for adjusted yards gained per pass attempt was 2018 with 9.58 adjusted yards. How does this compare to other quarterbacks from the same season? We can find the answer by doing slight modifications to our above code. Rather than filtering the information out to just Patrick Mahomes, we will add the `player_name` variable as the argument in the `group_by()` function.
 
 ```{r all-qbs-adjusted, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -235,7 +235,7 @@ all_qbs_attempts_100
 ```
 :::
 
-After including a `filter()` to the code to remove those quarterbacks with less than 100 attempts, it is clear that Mahomes has the best adjusted pass yards per attempt (9.58) in the 2018 season with Drew Brees in second place with 9.01. Based on our previous examples, we know that a Mahomes 9.58 adjusted pass yards per attempt in 2018 was his career high (and is also the highest in the 2018 season). How do his other seasons stack up? His is lowest adjusted pass yards (7.59) in 2021 still the best among NFL quarterbacks in that specific season?
+After including a `filter()` to the code to remove those quarterbacks with less than 100 attempts, it is clear that Mahomes has the best adjusted pass yards per attempt (9.58) in the 2018 season with Drew Brees in second place with 9.01. Based on our previous examples, we know that a Mahomes 9.58 adjusted pass yards per attempt in 2018 was his career high (and is also the highest in the 2018 season). How do his other seasons stack up? Is his lowest adjusted pass yards (7.59) in 2021 still the best among NFL quarterbacks in that specific season?
 
 To find the answer, we can make slight adjustments to our existing code.
 
@@ -429,7 +429,7 @@ By using `filter()` to remove any play that included a QB spike, a QB scramble, 
 
 It is also important to remember that you will receive differing numbers based on your use of `passer` and `passer_player_name`. The `passer` variable is created internally by the `nflverse` system and is used to "mimic" the statistics without spikes, scrambles, or sacks in the data. The `passer_player_name` variable comes from the official statistics and inherently includes this information.
 
-The following, with the first method using `group_by(passer)` and the second using `group_by(passer_player_name)` return differing results.
+The following, with the first method using `group_by(passer)` and the second using `group_by(passer_player_name)` returns differing results.
 
 ```{r passer-vs-passer-player-name, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -716,7 +716,7 @@ participation <- nflreadr::load_participation(season = 2022, include_pbp = TRUE)
 participation
 ```
 
-Rather than exploring the data at the league-level, let's take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the `load_participation()` function, is not fully prepped for immediate analysis as the `players_on_play`, `offense_players`, and `defense_players` information (which contains the unique player indentification numbers) are separated by a delimiter (in this case, a semicolon) in what are called "concatenated strings" or "delimited strings." While this is a compact way to store the values in the core dataframe, it does require us to clean the information through the "splitting" or "tokenizing" process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the `separate_rows()` function in `tidyr`.
+Rather than exploring the data at the league-level, let's take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the `load_participation()` function, is not fully prepped for immediate analysis as the `players_on_play`, `offense_players`, and `defense_players` information (which contains the unique player indentification numbers) are separated by a delimiter (in this case, a semicolon) in what are called "concatenated strings" or "delimited strings." While this is a compact way to store the values in the core data frame, it does require us to clean the information through the "splitting" or "tokenizing" process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the `separate_rows()` function in `tidyr`.
 
 ::: callout-tip
 If you use `load_participation()` but set `include_pbp = FALSE` it is important to remember that the `posteam` variable that is part of the play-by-play data will not exist. Instead, the offensive team is indicated by the `possession_team` column.
@@ -744,7 +744,7 @@ We are doing quite a few things in the above example:
 1.  **Those rows where the is an 'NA' value for `offense_formation`** **are removed.** The participation data includes information for kickoffs, extra points, field goals, punts, QB kneels, no plays, and more. It is possible to remove items using `play_type == "run" | play_type == "pass"` but such an approach, if done with the Steelers, results in one fake punt being included in the data (as the `play_type` was listed as "run"). If you wish to include plays such as fake punts, you do so by filtering for only specific play types.
 2.  **Only those rows that includes 'PIT' as the `posteam`** **are included.**
 3.  **The `separate_rows()`** **function from `tidyr`** **is used to conduct the splitting of the concatenated players identifiers in the `offense_players`** **column**. The `separate_rows()` function needs just to arguments to complete the process - the column name and the delimiter (provided in the argument as `sep =`).
-4.  **The newly split data is then grouped by `offense_personnel`** **and `offense_players`** **in order to calculate the number of times each specific ID was associated with personnel package**. The resulting dataframe lists the offense formation type for each player that participated in it, along with the player's respective participation count.
+4.  **The newly split data is then grouped by `offense_personnel`** **and `offense_players`** **in order to calculate the number of times each specific ID was associated with personnel package**. The resulting data frame lists the offense formation type for each player that participated in it, along with the player's respective participation count.
 
 As is, the `load_participation()` data does not include any way to further identify players outside of the unique players IDs. Because of this, it is necessary to use the `load_rosters()` function to include this information (this process is included below in the `load_rosters()` section).
 
@@ -764,12 +764,12 @@ rosters <- nflreadr::load_rosters(2022)
 The only argument you must provide the `load_rosters()` function is the years in which you want to collect roster information (in this specific case, 2022). While we know we only want the Steelers' roster, it is not suggested to use `filter()` to gather any specific team at this point. Case in point: do so with this example will result in the `gsis_id` *00-0036326* having an "NA" value for a name, despite having over 380 snaps in the 1 RB, 1TE, 3 WR offensive formation. The player associated with that `gsis_id` is Chase Claypool, who the Steelers traded to the Bears on November 1 of 2022. Because of this, no player name will be associated with that specific `gsis_id` on the Steelers' roster (with the end result being a missing value).
 
 ::: callout-note
-You may notice that the resulting dataframe, titled `pit_roster`, has 80 players on the roster despite NFL teams only being permitted to have 53 active players at a time.
+You may notice that the resulting data frame, titled `pit_roster`, has 80 players on the roster despite NFL teams only being permitted to have 53 active players at a time.
 
-This is because the information collected with `load_rosters()` includes not only active players, but those listed on the practice squad and injured reserve. Additionally, you may notice players listed as `R/Retired` (such as Stephon Tuitt in our dataframe, who retired at the end of the 2022 season). In these situations, this `status` indicated that the player is listed as 'reserved-retired' and that the team continues to hold the player's rights until the official expiration of their contract. In this case, Tuitt could not come out of retirement prior to his contract ending and play with another team unless first released or traded by Pittsburgh.
+This is because the information collected with `load_rosters()` includes not only active players, but those listed on the practice squad and injured reserve. Additionally, you may notice players listed as `R/Retired` (such as Stephon Tuitt in our data frame, who retired at the end of the 2022 season). In these situations, this `status` indicates that the player is listed as 'reserved-retired' and that the team continues to hold the player's rights until the official expiration of their contract. In this case, Tuitt could not come out of retirement prior to his contract ending and play with another team unless first released or traded by Pittsburgh.
 :::
 
-Despite the wealth of information in the roster information, only the `gsis_id` and the `full_name` is required to complete our `participation_split` dataframe. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use `left_join()` to merge each player's name on the matching ID in the `offense_players` column and `gsis_id` from the roster information.
+Despite the wealth of information in the roster information, only the `gsis_id` and the `full_name` is required to complete our `participation_split` data frame. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use `left_join()` to merge each player's name on the matching ID in the `offense_players` column and `gsis_id` from the roster information.
 
 ```{r merging-rosters-participation, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -811,9 +811,9 @@ If your analysis requires providing great granularity, the `load_rosters_weekly(
 
 ### The `load_teams()` Function
 
-A tool heavily used in the data vizualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge dataframes that have differing values for teams.
+A tool heavily used in the data visualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge data frames that have differing values for teams.
 
-More often than not, we will be using `left_join` to bring in team informtion (colors, logos, etc.) into a another data frame. We will utilize this function heavily in the example below.
+More often than not, we will be using `left_join` to bring in team information (colors, logos, etc.) into a another data frame. We will utilize this function heavily in the example below.
 
 However, it is important to note the one argument that `load_teams()` accepts: `current`. Depending on the time span of your data, it is possible that you have teams included prior to relation (like the St. Louis Rams). If you are sure that you do not have such a scenario, you can use `load_teams(current = TRUE)` which will bring in just the current 32 NFL teams.
 
@@ -821,7 +821,7 @@ However, if you need to include teams before expansion, you can use `load_teams(
 
 ### The `load_officials()` Function
 
-The `load_officials()` data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee's position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a `game_id` and `game_key` that are sorted by `season` and `week`, allowing you to merge the information other dataframes.
+The `load_officials()` data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee's position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a `game_id` and `game_key` that are sorted by `season` and `week`, allowing you to merge the information other data frames.
 
 With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique `crew_id` to each stable of officials "working" under a lead referee.
 
@@ -1313,7 +1313,7 @@ nfl_contracts_unnested <- nfl_contracts %>%
 
 After using the `unnest` function, we use `select()` to gather just the player's name, the year, and the cash paid for each year. After, we use `filter()` to remove the column that tallies the total of the player's contact and then `mutate()` the `cash_paid` column in order to turn it into a number rather than a character.
 
-We can now bring in other information to compare a player's cash paid to their performance on the field. I am going to use an example from the final research project from one of my former Sport Analytics students, Matt Dougherty.[^03-nfl-analytics-functions-1] We will compare a player's yearly pay against their DAKOTA score (which is the adjusted EPA + CPOE composite based on the coefficients which best predict adjusted EPA/play. In order to do so, we must merge each quarterback's DAKOTA composite based on the year.
+We can now bring in other information to compare a player's cash paid to their performance on the field. I am going to use an example from the final research project from one of my former Sport Analytics students, Matt Dougherty.[^03-nfl-analytics-functions-1] We will compare a player's yearly pay against their DAKOTA score (which is the adjusted EPA + CPOE composite based on the coefficients which best predict adjusted EPA/play). In order to do so, we must merge each quarterback's DAKOTA composite based on the year.
 
 [^03-nfl-analytics-functions-1]: Matt was in my SPT 313 class during the Spring 2023 semester and asked more questions and showed more willingness to learn coding and analytics than all of my prior classes combined. If he is not yet hired by an NFL team, it is a complete injustice.
 
@@ -1367,3 +1367,5 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
 ```
 
 Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).
+
+## Exercises

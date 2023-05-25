@@ -687,11 +687,11 @@ sis_data_stringr <- sis_data %>%
 sis_data_stringr$boom_percent <- as.numeric(as.character(sis_data_stringr$boom_percent))
 sis_data_stringr$bust_percent <- as.numeric(as.character(sis_data_stringr$bust_percent))
 
-as_tibble(sis_data_stringr)
+sis_data_stringr
 
 ```
 
-Our output using `as_tibble()` now shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
+Our output shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
 
 #### Method #2: Using the `parse_number` Function in `readr`
 
@@ -860,3 +860,5 @@ seecolor::print_color(sis_data$team_color)
 
 seecolor::print_color(sis_data$team_color2)
 ```
+
+## Exercises
