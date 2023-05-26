@@ -235,7 +235,9 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 ```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
-  geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
+  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = win_pct),
+                            color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
@@ -274,10 +276,12 @@ With the pressure rate now merged with our unique offensive line combination dat
 ```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
-  geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
+  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = pressure_percent),
+                            color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
+  scale_y_reverse(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::percent_format(scale = 1, accuracy = 0.1)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
@@ -311,10 +315,12 @@ After first filtering out any data that does not include `posteam` information, 
 ```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
-  geom_smooth(se = FALSE, formula = 'y ~ x', method = "lm") +
+    geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = total_qb_hits),
+                            color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
-  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_reverse(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Total QB Hits Allowed") +
@@ -324,6 +330,56 @@ ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
 ```
 
 There is again very little, if any, correlation between a team's unique number of offensive line combinations and the number of times its quarterback is hit on passing attempts.
+
+### Unique Offensive Line Combinations vs. Adjusted Sack Rate
+
+In the previous examples, both pressure rate and QB hits are unadjusted metrics, meaning the results are not adjusted to account for context within the data. To add an example of a metric that *is* adjusted to our list of examples, we will use Adjusted Sack Rate from [Football Outsiders](https://www.footballoutsiders.com/). Aaron Schatz, in an article introducing the measurements in December of 2003, explained his findings that the league-wide sack rate varied based on both the down and yards to go.
+
+|                  |         |         |          |           |          |
+|:----------------:|---------|---------|----------|-----------|----------|
+| **YARDS TO GO**  | **1-4** | **5-8** | **9-12** | **13-16** | **\>17** |
+|   **1st Down**   | *1.5%*  | *5.4%*  | *4.8%*   | *3.3%*    | *5.6%*   |
+|   **2nd Down**   | *5.6%*  | *4.7%*  | *5.0%*   | *6.1%*    | *4.5%*   |
+| **3rd/4th Down** | *5.9%*  | *8.2%*  | *10.5%*  | *7.6%*    | *11.1%*  |
+
+: 2003 NFL Sack Rate - Aaron Schatz (FootballOutsiders.com)
+
+As a result of this, Schatz designed Adjusted Sack Rate which accounts for the number of pass attempts, down, distance, and - importantly - the team's opponent. We can plot the Adjusted Sack Rate for each team from the 2022 season against the unique number of offensive line combinations.
+
+Let's read in the data and then create the data visualization.
+
+```{r asr-data-for-plot, eval = TRUE, echo = TRUE, output = FALSE}
+
+adjusted_sack_rate <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/adjusted_sack_rate.csv")
+```
+
+```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+
+adjusted_sack_rate %>%
+  filter(season == 2022) %>%
+  ggplot(aes(x = combos, y = adj_sack_rate)) +
+  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_reverse(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(scale = 1)) +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Adjusted Sack Rate") +
+  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Sack Rate**",
+       subtitle = "*2022 Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  nfl_analytics_theme()
+```
+
+The graph shows that, in general, those teams with higher numbers of unique offensive line combinations trend towards the lower-left quadrant and some - the Rams and Bears - are significantly below the league average, indicating a worse adjusted sack rate (with the Arizona Cardinals being an outlier). Compared to the prior metrics (pressure rate and QB hits), it seems that adjusted sack rate may be impacted by the consistency of a team's offensive linemen.
+
+Using the `adjusted_sack_rate` data, we can easily visualize the same results over the last three NFL seasons to see if there is any consistency between the offensive line combinations and a team's adjusted sack rate.
+
+```{r asr-facet-plot}
+
+```
 
 To continue this exploration, let's pivot away from exploring the impact of offensive line combinations on the quarterback and examine any potential correlation with the running game and run blocking. We can gather statistics provided by [Football Outsiders](https://www.footballoutsiders.com/) concerning the performance of offensive lines:
 
@@ -345,7 +401,6 @@ You can see in the output of the data that `power_rank` and `stuffed_rank` are b
 ```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
-  geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = power_rank),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -407,31 +462,36 @@ For the last exploration in this topic, we can bring in `Elusive Rating`, which 
 oline_combo_elusive <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/online_combo_elusive.csv")
 ```
 
-Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's ability to created Adjusted Line Weights, we can create a new variables that uses the team's `elusive_rating` to statistically weight the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, etc.), we will conduct a linear transformation wherein we scale/normalize the `avg_elu` variable and then subtract that from each team's `adj_line_yards`. As a result, those teams with high `avg_elu` value will result in lower `adj_line_yards`, as the running back is successful despite the performance the offensive line in front of him.
+Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's Adjusted Line Yards, we can create a new variable that use the team's `elusive_rating` to, in an elementary fashion, add weight to the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, using coefficients from a regression model, etc.), we will conduct a more simple type of feature engineering by first using the `scale` package to standardize the values, resulting in each team receiving what is called a 'z-score' (or the total standard deviations away from the mean). After, we will created the `weighted_aly` metric by subtracting each team's z-score from the existing `adj_line_yards`, and then plot the results.
 
 ```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400}
 
 oline_combo_elusive <- oline_combo_elusive %>%
-  mutate(avg_elu = scale(avg_elu)) %>%
-  mutate(adj_line_yards_weighted = adj_line_yards - (avg_elu / max(avg_elu)))
-  
-ggplot(oline_combo_elusive, aes(x = combos, y = adj_line_yards_weighted)) +
+  mutate(adjusted_elu = scale(avg_elu),
+         weighted_aly = adj_line_yards - adjusted_elu)
+
+online_combo_test <- oline_combo_elusive %>%
+  mutate(weighted_aly = adj_line_yards - adjusted_elu)
+
+ggplot(oline_combo_elusive, aes(x = combos, y = weighted_aly)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_line_yards_weighted),
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = weighted_aly),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
-  scale_y_continuous(breaks = scales::pretty_breaks(),
-                     labels = scales::label_number(accuracy = 0.01)) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
   labs(title = "**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**",
-       subtitle = "*2022 Season  |  ALY Weighted by PFF's Elusive Rating*",
+       subtitle = "*2022 Season  |  Adjusted with PFF's 'Elusive'*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Weighted Adjusted Line Yards") +
   nfl_analytics_theme()
+
 ```
 
-The results are quite promising in that both the Los Angeles Rams and the Arizona Cardinals, with the most unique offensive line combinations in the league, have the third and fourth-lowest weighted adjusted line yards, while the teams with the lowest number of combinations have among the highest weighted ALY (such as the Carolina Panthers, Atlanta Falcons, and Philadelphia Eagles). There are clearly some outliers in the results in the Denver Broncos and Washington Commanders.
+Despite have two of the bottom four scores in `elusive_rating` (21.4 and 21.8), the Rams and the Cardinals are in the league's top five for `Weighted Adjusted Line Yard`. This is an indication that each team's offensive line proficient at run blocking and that any perceived shortcoming in the ground game was the result of a lack of elusive running backs. Conversely, the Washington Commanders unweighted `Adjusted Line Yards` was 4.29 but, when account for the high elusiveness score among the team's running backs, the metric dipped to a league-worst 2.14 weighted adjusted line yards.
+
+It is notable that, despite the assumption that a high number of offensive line combinations throughout a season will result in poor metrics, the results of this brief data analysis concludes otherwise.
 
 While there is certainly more examination that could be conducted, the early results seem to indicate that a higher amount of unique offensive line combinations impacts the rushing game more than the passing game - and, even then, there are caveat within that assumption because we must consider the talent level of the running back that is behind each offensive line.
 
