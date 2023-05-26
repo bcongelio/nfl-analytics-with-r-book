@@ -398,9 +398,42 @@ Comparing a team's unique offensive line combinations to adjusted line yards is 
 
 So what do we make of this?
 
-Given that adjusted line yards is constructed to measure the responsibility of the offensive line, it is logical to also want to consider the "performance" of the running back. A running back that is able to avoid early hits, or break tackles and earn yards after contact, can overcome an underperforming offensive line (whether that be from lack of talent or lack of cohesiveness from a high number of combinations).
+Given that adjusted line yards is constructed to measure the responsibility of the offensive line, it is logical to also want to consider the "performance" of the running back. A running back that is able to avoid early hits, or break tackles and earn yards after contact, can overcome an underperforming offensive line (whether that be from lack of talent or lack of cohesiveness from a high number of combinations). In the description of the adjusted line yards metrics, Football Outsiders confirms this, writing that a "team with a very good running back will appear higher no matter how bad their line, and a team with a great line will appear lower if the running back is terrible."
 
-For the last exploration in this topic, we can bring in `Elusive Rating`, which is a signature statistic from Pro Football Focus that quantifies the "success and impact of a runner with the ball independently of the blocking."
+For the last exploration in this topic, we can bring in `Elusive Rating`, which is a signature statistic from Pro Football Focus that quantifies the "success and impact of a runner with the ball independently of the blocking. Let's bring in the data that contains all of the information from `fb_outsiders_oline`, but with the addition of an averaged `elusive` rating for each tea from PFF.
+
+```{r oline-combo-elusive, eval = TRUE, echo = TRUE, output = FALSE}
+
+oline_combo_elusive <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/online_combo_elusive.csv")
+```
+
+Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's ability to created Adjusted Line Weights, we can create a new variables that uses the team's `elusive_rating` to statistically weight the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, etc.), we will conduct a linear transformation wherein we scale/normalize the `avg_elu` variable and then subtract that from each team's `adj_line_yards`. As a result, those teams with high `avg_elu` value will result in lower `adj_line_yards`, as the running back is successful despite the performance the offensive line in front of him.
+
+```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400}
+
+oline_combo_elusive <- oline_combo_elusive %>%
+  mutate(avg_elu = scale(avg_elu)) %>%
+  mutate(adj_line_yards_weighted = adj_line_yards - (avg_elu / max(avg_elu)))
+  
+ggplot(oline_combo_elusive, aes(x = combos, y = adj_line_yards_weighted)) +
+  geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_line_yards_weighted),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::label_number(accuracy = 0.01)) +
+  labs(title = "**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**",
+       subtitle = "*2022 Season  |  ALY Weighted by PFF's Elusive Rating*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Weighted Adjusted Line Yards") +
+  nfl_analytics_theme()
+```
+
+The results are quite promising in that both the Los Angeles Rams and the Arizona Cardinals, with the most unique offensive line combinations in the league, have the third and fourth-lowest weighted adjusted line yards, while the teams with the lowest number of combinations have among the highest weighted ALY (such as the Carolina Panthers, Atlanta Falcons, and Philadelphia Eagles). There are clearly some outliers in the results in the Denver Broncos and Washington Commanders.
+
+While there is certainly more examination that could be conducted, the early results seem to indicate that a higher amount of unique offensive line combinations impacts the rushing game more than the passing game - and, even then, there are caveat within that assumption because we must consider the talent level of the running back that is behind each offensive line.
 
 ## Exploring Explosive Plays per Touchdown Drive
 
