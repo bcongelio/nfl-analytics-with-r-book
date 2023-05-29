@@ -5,6 +5,7 @@
 source("book-functions.R")
 
 library(tidyverse)
+library(vroom)
 library(nflverse)
 library(extrafont)
 library(ggrepel)
@@ -16,7 +17,8 @@ library(geomtextpath)
 library(cropcircles)
 library(magick)
 library(glue)
-loadfonts(device="win")
+library(gt)
+library(gtExtras)
 extrafont::loadfonts(quiet = TRUE)
 ```
 
@@ -39,12 +41,6 @@ knitr::include_graphics(rep("images/finished-aggressiveness.png"))
 ```
 
 The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since "aggressiveness" is not a typical, day-to-day metric discussed by NFL fans, I included a "directable" within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how "aggressiveness" was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow's 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggressive QBs in the line based on the same metric.
-
-As another example, below is what I deemed my "Uncle Rico Metric" (because who does not like a good Napoleon Dynamite reference?):
-
-```{r uncle-rico-plot, echo = FALSE}
-knitr::include_graphics(rep("images/unclerico.png"))
-```
 
 ## Setting Up for Data Viz
 
@@ -303,7 +299,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -466,9 +462,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio")
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
 Within the new `labs()`, we are placing a total of five items: `x` (allowing us to name the x-axis outside the confines of what it is called in the beginning `aes()` call, `y` (allowing us to name the y-axis), `title` (allowing us to add a title to the top of the plot), `subtitle` (allowing us to add a subtitle below the title and provide more contextual information), and `caption` (allowing us to provide information about where the graph come from and who designed it). We will explore ways to change the font, size, color, and more of these items when we move on to the last item of our "to do list."
@@ -517,9 +513,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   geom_hline(yintercept = mean(play_action_data$pa_yds), linewidth = .8, color = "black", linetype = "dashed") +
   geom_vline(xintercept = mean(play_action_data$yds), linewidth = .8, color = "black", linetype = "dashed")
 ```
@@ -564,9 +560,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio")
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
 By moving the average lines to the top of our `ggplot` code, both are now layered under the other two `geom_` and are not visually impacting the final plot.
@@ -600,9 +596,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio")
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
 
 By using the `geom_mean_lines()` function within `nflplotR`, we can construct both of the lines together rather than needing to provide a `geom_hline()` and a `geom_vline()` argument. Because of this, we can also provide the size, width, and type of our line just once (rather than repeating it again like we had to in the former method).
@@ -772,9 +768,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   theme(
     axis.ticks = element_blank())
 ```
@@ -804,9 +800,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   theme(
     axis.ticks = element_blank(),
     axis.title = element_text(family = "Roboto Condensed",
@@ -932,9 +928,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   nfl_analytics_theme()
 ```
 
@@ -965,9 +961,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio") +
+       title = "**Cumulative Passing Yards**",
+       subtitle = "*Non-Play Action vs. Play Action*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   nfl_analytics_theme() +
   theme(plot.title = element_markdown(color = "#E31837"))
 ```
@@ -1026,9 +1022,9 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
-  labs(title = "Net Passing Yards Without Play Action vs. With Play Action",
-       subtitle = "2022 NFL Regular Season",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio",
+  labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
+       subtitle = "*2022 NFL Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1056,9 +1052,9 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
-  labs(title = "Net Passing Yards Without Play Action vs. With Play Action",
-       subtitle = "2022 NFL Regular Season",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio",
+  labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
+       subtitle = "*2022 NFL Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1096,9 +1092,9 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
-  labs(title = "Net Passing Yards Without Play Action vs. With Play Action",
-       subtitle = "2022 NFL Regular Season",
-       caption = "An Introduction to NFL Analytics with R - Brad J. Congelio",
+  labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
+       subtitle = "*2022 NFL Regular Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1528,9 +1524,9 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
   scale_x_continuous(breaks = seq(200, 500, 100)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   facet_wrap(vars(defteam), scales = "free_x") +
-  theme(strip.text = element_nfl_wordmark(size = .5)) +
   nfl_analytics_theme() +
-  theme(strip.background = element_rect(fill = "#f7f7f7")) +
+  theme(strip.text = element_nfl_wordmark(size = .5),
+        strip.background = element_rect(fill = "#F7F7F7")) +
   xlab("Defensive Yards Allowed") +
   ylab("Total Count") +
   labs(title = "*Histogram of Defensive Yards Allowed*",
@@ -1719,7 +1715,7 @@ pure_cpoe %>%
 
 Adding the title and subtitle to the top of the table may not help much, as the two long-form URLs are stretching out the table and making it difficult to see the changes that are being made. Rather than including both the player's picture and the team logo, let's remove `team_logo_wikipedia` from being used by `gt` with the `cols_hide()` function and then place the player pictures into table by using `gt_img_rows()` from the `gtExtras` package.
 
-```{r remove-wiki-add-photo, eval = TRUE, echo = TRUE, output = FALSE}
+```{r remove-wiki-add-photo, eval = TRUE, echo = TRUE, output = TRUE}
 
 pure_cpoe %>%
   gt() %>%
@@ -1752,7 +1748,7 @@ pure_cpoe %>%
 
 We are almost there. But, it looks strange to have the player's picture so far removed from their name. Let's place the `headshot` column as the first column and, while we are at it, use the `cols_align()` function to center align the `passer` and `total_attempts` columns.
 
-```{r moving-images-and-align, eval = TRUE, echo = TRUE, output = FALSE}
+```{r moving-images-and-align, eval = TRUE, echo = TRUE, output = TRUE}
 
 pure_cpoe %>%
   gt(rowname_col = "passer") %>%

@@ -8,8 +8,9 @@ library(tidyverse)
 library(nflverse)
 library(extrafont)
 library(ggtext)
-library(hrbrthemes)
-hrbrthemes::import_roboto_condensed()
+library(vroom)
+library(cowplot)
+extrafont::loadfonts(quiet = TRUE)
 ```
 
 ## Introduction
@@ -377,11 +378,41 @@ The graph shows that, in general, those teams with higher numbers of unique offe
 
 Using the `adjusted_sack_rate` data, we can easily visualize the same results over the last three NFL seasons to see if there is any consistency between the offensive line combinations and a team's adjusted sack rate.
 
-```{r asr-facet-plot}
+```{r asr-facet-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
+adjusted_sack_rate %>%
+  ggplot(aes(x = combos, y = adj_sack_rate)) +
+  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
+                            color = "black", size = .8) +
+  nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  scale_x_reverse(breaks = scales::pretty_breaks()) +
+  scale_y_reverse(breaks = scales::pretty_breaks(),
+                  labels = scales::percent_format(scale = 1)) +
+  xlab("# of Unique Offensive Line Combinations") +
+  ylab("Adjusted Sack Rate") +
+  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Sack Rate**",
+       subtitle = "*2020 - 2022 Seasons*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  nfl_analytics_theme() +
+  facet_wrap(~season, nrow = 2)
 ```
 
-To continue this exploration, let's pivot away from exploring the impact of offensive line combinations on the quarterback and examine any potential correlation with the running game and run blocking. We can gather statistics provided by [Football Outsiders](https://www.footballoutsiders.com/) concerning the performance of offensive lines:
+Given the result of just the 2022 season, the output for the 2021 season remains consistent, perhaps even more so with less spread from the line of best fit. In 2021, the Carolina Panthers had the most unique offensive line combinations as well as one of the worst adjusted sack rates in the league, while those teams with fewer combinations generally trend towards the upper-right quadrant of the plot.
+
+However, the consistency between the 2022 and 2021 seasons is not found in the 2020 season. The Philadelphia Eagles had the most unique combinations in 2020 (13 in total), but were all but tied with the Houston Texans for worst adjusted sack rate (9.4% to 9.5%). Moreover, the Pittsburgh Steelers, Buffalo Bills, and Indianapolis Colts - despite all having more than 10 unique offensive line combinations - are among the best in adjusted sack rate.
+
+Why is there this sudden departure from the consistency in 2022 and 2021?
+
+The answer is within the context of data, in that Ben Roethlisberger - the long-time quarterback for the Steelers - had one of the fastest Time to Throw scores in modern NFL history, getting rid of the ball, on average, in just 2.19 seconds after the snap. Philip Rivers, of the Colts, was nearly as quick to release the ball with an average of 2.39 seconds. It proved to be quite difficult for opposing defenses to get to either Roethlisberger or Rivers given these incredibly quick snap-to-release times.
+
+It should be noted that the same contextual explanation does not hold true for Buffalo. In the 2020 season, Josh Allen released the ball, on average, 3.04 seconds after the snap which is plenty of time for the opposing defense to generate pressure and record sacks. Because of this, if we were to add statistical weight using average time to throw, the Buffalo Bills would remain an outlier in this specific season while both the Steelers and Colts would likely regress closer to the mean for those teams with higher numbers of offensive line combinations.
+
+While pressure rate and QB hits did not prove to impacted by a team's number of line combinations, there is a broad relationship (though not strong enough to begin using the term "correlation") between the number of combinations and adjusted sack rate.
+
+To continue this exploration, let's pivot away from exploring the impact of offensive line combinations on the quarterback and examine any potential correlation with the running game and run blocking, while using metrics that are adjusted such as sack rate, as the additional context and weighting seemed to be helpful in finding relationsips. We can gather statistics provided by [Football Outsiders](https://www.footballoutsiders.com/) concerning the performance of offensive lines.
+
+### Unique Offensive Line Combinations vs. Adjusted Line Yards
 
 1.  **Adjusted Line Yards** - derived by Football Outsiders with a regression analysis, this metric takes the total of a team's total rushing attempts and assigns a quantitative value to the offensive line's impact. Any run that ends of a loss of yards results in 120% of the value being placed on the offensive line, while a 0-4 yard rush is 100%, a 5-10 yard rush is 50%, and anything over 11 yards is a 0% value. As explained by Football Outsiders, if a running back breaks free for a 50-yard gain, just how much of that is the offensive line responsible for? The adjusted line yards metric is a stable metric that can provide a numeric value as an answer.
 2.  **Power Rank** - a ranking between 1 (best) and 32 (worst), power rank is the result of the power success metric, which is the percentage of rushing attempts on 3rd or 4th down, with two or less yards to go, that resulted in either a 1st down or a touchdown.
@@ -396,7 +427,7 @@ fb_outsiders_oline <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-ana
 fb_outsiders_oline
 ```
 
-You can see in the output of the data that `power_rank` and `stuffed_rank` are both in a "ranked format," meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1 while the team with the worst (the Minnesota Vikings) are ranked 32. The `adj_line_yards` variable is provided in its unranked, raw format. Because of this, let's first both `power_rank` and `stuffed_rank` and use the `cowplot` package to view them together, and then construct the plot for `adj_line_yards` separately since it operates on a differing y-axis scale.
+You can see in the output of the data that `power_rank` and `stuffed_rank` are both in a "ranked format," meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1st while the team with the worst (the Minnesota Vikings) are ranked 32nd. The `adj_line_yards` variable is provided in its unranked, raw format. Because of this, let's first both `power_rank` and `stuffed_rank` and use the `cowplot` package to view them together, and then construct the plot for `adj_line_yards` separately since it operates on a differing y-axis scale.
 
 ```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400}
 
@@ -489,59 +520,62 @@ ggplot(oline_combo_elusive, aes(x = combos, y = weighted_aly)) +
 
 ```
 
-Despite have two of the bottom four scores in `elusive_rating` (21.4 and 21.8), the Rams and the Cardinals are in the league's top five for `Weighted Adjusted Line Yard`. This is an indication that each team's offensive line proficient at run blocking and that any perceived shortcoming in the ground game was the result of a lack of elusive running backs. Conversely, the Washington Commanders unweighted `Adjusted Line Yards` was 4.29 but, when account for the high elusiveness score among the team's running backs, the metric dipped to a league-worst 2.14 weighted adjusted line yards.
+Despite have two of the bottom four scores in `elusive_rating` (21.4 and 21.8), the Rams and the Cardinals are in the league's top five for `Weighted Adjusted Line Yard`. This is an indication that each team's offensive line is proficient at run blocking and that any perceived shortcoming in the ground game was the result of a lack of elusive running backs. Conversely, the Washington Commanders unweighted `Adjusted Line Yards` was 4.29 but, when account for the high elusiveness score among the team's running backs, the metric dipped to a league-worst 2.14 weighted adjusted line yards.
 
-It is notable that, despite the assumption that a high number of offensive line combinations throughout a season will result in poor metrics, the results of this brief data analysis concludes otherwise.
-
-While there is certainly more examination that could be conducted, the early results seem to indicate that a higher amount of unique offensive line combinations impacts the rushing game more than the passing game - and, even then, there are caveat within that assumption because we must consider the talent level of the running back that is behind each offensive line.
+While there is certainly more examination that could be conducted, these preliminary results seem to indicate that a higher number of unique offensive line combinations has little impact on both the passing and rushing games, with the exception of a general relationship with the number of combinations and a team's adjusted sack rate. Even then, there are caveats within the data that force us to consider further ways to contextualize the data such as a quarterback's average time to release.
 
 ## Exploring Explosive Plays per Touchdown Drive
 
-```{r placeholding-next-example, eval = FALSE, echo = TRUE, output = FALSE}
+In November of the 2022 NFL season, Warren Sharp - of [Sharp Football Analysis](https://www.sharpfootballanalysis.com/) - tweeted perhaps the most ridiculous statistic thus far into the season.
+
+{{< tweet SharpFootball 1590489624518234112 >}}
+
+Heading into their week 9 bye week, the Steelers' longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.
+
+However, the statistics as presented by Sharp do not tell the complete story as it isolates the entirety of a touchdown drive to the a single play. While the team's longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.
+
+To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.
+
+```{r explosive-play-calc, eval = TRUE, echo = TRUE, output = FALSE}
 
 pbp <- nflreadr::load_pbp(2022)
 
 explosive <- pbp %>%
   filter(!is.na(posteam) & !is.na(yards_gained) & fixed_drive_result == "Touchdown") %>%
-  filter(play_type != "kickoff" & play_type != "extra_point" & !is.na(down)) %>%
-  select(posteam, game_id, drive, yards_gained)
-  
-explosive_per_td <- explosive %>%
+  filter(special == 0 & fumble == 0 & interception == 0) %>%
   group_by(posteam, game_id, drive) %>%
   summarize(max_yards = max(yards_gained)) %>%
-  mutate(explosive_play = if_else(max_yards >= 20, 1, 0))
-
-explosive_final <- explosive_per_td %>%
+  mutate(explosive_play = if_else(max_yards >= 20, 1, 0)) %>%
+  ungroup() %>%
   group_by(posteam) %>%
-  summarize(
-    tds_no_explosive = sum(explosive_play == 0),
-    tds_explosive = sum(explosive_play == 1)
-  )
+  summarize(tds_no_explosive = sum(explosive_play == 0),
+            tds_explosive = sum(explosive_play == 1),
+            total_drives = sum(tds_no_explosive + tds_explosive),
+            percent_no_exp = tds_no_explosive / total_drives,
+            percent_w_exp = tds_explosive / total_drives) %>%
+  select(posteam, percent_w_exp, percent_no_exp)
+```
 
-total_drives_calc <- pbp %>%
-  group_by(posteam, week) %>%
-  filter(!is.na(posteam) & fixed_drive_result == "Touchdown") %>%
-  summarize(total_drives = n_distinct(fixed_drive))
+After collecting the play-by-play information for the 2022 NFL season, we use `filter()` to gather only those `fixed_drive_result` rows include `Touchdown` and then remove any play that is a special teams play and includes a fumble or interception. This is done as we only want those touchdowns scored by the offense, not a fumble or interception return for a score. Because of this, the results of total touchdowns is lower than the "official" number from Pro Football Reference, as the site's "Touchdown Log" includes this data.
 
-total_drives_calc <- total_drives_calc %>%
-  group_by(posteam) %>%
-  summarize(total_drives = sum(total_drives))
+We then use `group_by()` on `posteam`, `game_id`, and `drive` in order to create the column `max_yards` with `summarize`. The resulting numeric value in `max_yards` represents the largest amount of yards gained on a single play, per drive. The important `explosive_play` metric is returned, in a binary `1` or `0` format, based on whether or not the `max_yards` in each drive was greater than or equal to 20 yards. With this calculation complete, we `ungroup()` the data and then group it only by `posteam` to determine the results. After finding the percent of drives with an explosive play and those without, we can plot the results.
 
-explosive_final <- explosive_final %>%
-  left_join(total_drives_calc, by = c("posteam" = "posteam")) %>%
-  mutate(percent_no_exp = tds_no_explosive / total_drives,
-         percent_w_exp = tds_explosive / total_drives) %>%
-  select(posteam, percent_no_exp, percent_w_exp)
+```{r explosive-play-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(explosive_final, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
-  ggplot2::geom_col(aes(color = posteam, fill = posteam), width = 0.5) +
+ggplot(explosive, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
+  geom_col(aes(color = posteam, fill = posteam), width = 0.5) +
   nflplotR::scale_color_nfl(type = "secondary") +
-  nflplotR::scale_fill_nfl(alpha = 0.4) +
+  nflplotR::scale_fill_nfl(alpha = 0.5) +
   nfl_analytics_theme() +
   theme(axis.text.y = element_nfl_logo(size = .65)) +
   scale_x_continuous(expand = c(0,0),
-                     breaks = scales::pretty_breaks(),
+                     breaks = scales::pretty_breaks(n = 5),
                      label = scales::percent_format()) +
+  labs(title = "**Which Team Has The Highest % of Explosive Plays per TD Drive?**",
+       subtitle = "*2022 Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   xlab("Percent of TD Drives with an Explosive Play (20+ Yards)") +
   ylab("")
 ```
+
+The Carolina Panthers had a play that gained 20 or more yards on nearly 82% of their touchdown drives, while the Indianapolis Colts had a league-worst 52% of touchdown drives including an explosive plays. Notably, the Steelers are the near bottom as well with result of just under 61%. Given the statistic in Sharp's tweet, we can make an assumption that Pittsburgh (as well as other the other teams with lower percentages) methodically "marched down" the field on the way to scoring touchdowns while teams such as the Panthers and Cleveland Browns heavily relied on at least one big "homerun" play per touchdown drive in order to move the ball

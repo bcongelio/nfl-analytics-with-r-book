@@ -6,7 +6,9 @@ source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)
+library(vroom)
 library(extrafont)
+library(ggimage)
 library(ggtext)
 library(ggrepel)
 extrafont::loadfonts(quiet = TRUE)
@@ -207,7 +209,6 @@ all_qbs_adjusted_with_attempts <- nflreadr::load_player_stats(seasons = 2018) %>
   arrange(-adj_yards_attempt)
 
 all_qbs_adjusted_with_attempts
-
 ```
 
 The results are even worse than initially thought. There are a total of six players with an inflated adjusted yards per pass attempt:
@@ -314,14 +315,14 @@ receivers_wopr <- nflreadr::load_player_stats(seasons = 2022) %>%
     total_wopr = sum(wopr)) %>%
   arrange(-total_wopr)
 
-receivers_wobr
+receivers_wopr
 ```
 
 D.J. Moore led the NFL in the 2022 season with a 13.9 Weighted Opportunity Rating, followed closely by Davante Adams with 13.4. However, before deciding that D.J. Moore is worth the number one pick in your upcoming fantasy football draft, it is worth exploring if there is a relationship between a high Weight Opportunity Rating and a player's total fantasy points. To do so, we can take our above code that was used to gather each player's `WOPR` over the course of the season and add `total_ff = sum(fantasy_points)` and also calculate a new metric called "Fantasy Points per Weighted Opportunity" which is simply the total of a player's points divided by the `wopr`.
 
 ```{r wopr-plus-fantasy}
 
-receivers_wobr_ff_context <- nflreadr::load_player_stats(seasons = 2022) %>%
+receivers_wopr_ff_context <- nflreadr::load_player_stats(seasons = 2022) %>%
   filter(season_type == "REG" & position == "WR") %>%
   group_by(player_name) %>%
   summarize(
@@ -330,7 +331,7 @@ receivers_wobr_ff_context <- nflreadr::load_player_stats(seasons = 2022) %>%
     ff_per_wopr = total_ff / total_wopr) %>%
   arrange(-total_wopr)
 
-receivers_wobr_ff_context
+receivers_wopr_ff_context
 ```
 
 There are several insights evident in the results. Of the top `wopr` earners in the 2022 season. only Diontae Johnson scored fewer fantasy points than D.J. Moore (94.7 to 136). Given the relationship between `total_wopr` and `total_ff`, a lower `ff_per_wopr` is indicative of less stellar play. In this case, Moore maintained a large amount of both the team's `target_share` and `air_yards_share`, but was not able to translate that into a higher amount of fantasy points (as evidenced by a lower `ff_per_wopr` score). On the other hand, Justin Jefferson's `ff_per_wopr` score of 20.3 argues that he used his amount of `target_share` and `air_yards_share` to increase the amount of fantasy points he produced.
@@ -526,7 +527,6 @@ aggressiveness_garbage <- pbp %>%
   slice(1:10)
   
 aggressiveness_garbage
-
 ```
 
 We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense's win probability (the `wp` variable) was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.

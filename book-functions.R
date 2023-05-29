@@ -42,5 +42,6 @@ nfl_analytics_theme <- function(..., base_size = 12) {
     legend.background = element_rect(color = "#F7F7F7"),
     legend.key = element_rect(color = "#F7F7F7"),
     legend.title = element_text(face = "bold"),
-    legend.title.align = 0.5)
+    legend.title.align = 0.5,
+    strip.text = element_text(face = "bold"))
 }

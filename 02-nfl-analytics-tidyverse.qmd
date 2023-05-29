@@ -6,11 +6,9 @@ source("book-functions.R")
 
 library(tidyverse)
 library(nflverse)
-library(seecolor)
+library(vroom)
 library(extrafont)
 extrafont::loadfonts(quiet = TRUE)
-
-pbp <- nflreadr::load_pbp(2022)
 ```
 
 ## Downloading R and RStudio
@@ -129,7 +127,6 @@ pbp <- nflreadr::load_pbp(2022) %>%
   filter(posteam == "PHI" & rush == 1) %>%
   group_by(rusher) %>%
   summarize(success_rate = mean(success))
-  
 ```
 
 The given example involves multiple iterations of the `tidyverse` paradigm. At the outset of my Sport Analytics course, when introducing the concepts of the `tidyverse`, I emphasize that it is possible to "talk your way through" the process from the beginning to your end goal (especially once you have you have a more comprehensive understanding of the `dplyr` verbs, which are expounded upon in the subsequent section). The following stepwise method illustrates this using the above example of code:
@@ -151,7 +148,6 @@ pbp <- "is" nflreadr::load_pbp(2022) %>% "... and then"
   filter(posteam == "PHI" & rush == 1) %>% "... and then"
   group_by(rusher) %>% "... and then"
   summarize(success_rate = mean(success))
-
 ```
 
 ## Working With NFL Data and the `dplyr` Verbs
@@ -210,10 +206,10 @@ After running the above code, you will have a dataset titled `pbp` placed into y
 ne_offense <- pbp %>%
   filter(posteam == "NE")
 
-as_tibble(ne_offense)
+ne_offense
 ```
 
-The `as_tibble()` output shows that the `posteam` variable contains only `NE`, which is the abbreviation for the New England Patriots in the `nflreadr` play-by-play data. In the code that produced `ne_offense`, **it is important to notice that:**
+The output shows that the `posteam` variable contains only `NE`, which is the abbreviation for the New England Patriots in the `nflreadr` play-by-play data. In the code that produced `ne_offense`, **it is important to notice that:**
 
 1.  the "equal to" logical operator consist of *TWO* equal signs, not one.
 2.  the team abbreviation (`NE`) is in quotation marks.
@@ -262,7 +258,6 @@ By using the `|` logical operator, which translates to the word "or", we can str
 
 afc_east <- pbp %>%
   filter(posteam == "NE" | "MIA" | "NYJ" | "BUF")
-
 ```
 
 While the above example logically makes sense (verbally saying "`posteam` equals NE or MIA or NYJ or BUF"), it unfortunately results in an error. To that end, if you'd rather avoid the need to type `posteam` four different times, as in the above example, you can switch to using the `%in%` operator combined with `c()`. It is possible to combine just `filter()` and the `%in%` operator to retrieve one specific team. But, as in the above example where, we will receive an error if we try to do it for multiple teams without including the `c()` operator, as such:
@@ -272,7 +267,7 @@ While the above example logically makes sense (verbally saying "`posteam` equals
 afc_east <- pbp %>%
   filter(posteam %in% c("NE", "MIA", "NYJ", "BUF"))
 
-as_tibble(afc_east)
+afc_east
 ```
 
 The above approach is a simplified version of first creating a vector of the team abbreviations and then passing that into the `filter()` argument. For example, we can create the following vector that appears in the "Values" area of your RStudio environment, and then use that to retrieve the same results in did in the above code:
@@ -297,7 +292,7 @@ To begin, we will use the `vroom` package to read in the data.
 
 time_in_pocket <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv")
 
-as_tibble(time_in_pocket)
+time_in_pocket
 ```
 
 The structure and organization of the data is quite similar to the datasets we worked with in our above examples, despite coming from a different source (PFF vs. `nflreadr`). Our `time_in_pocket` data includes a quarterback's name on each row with his corresponding `team`, `player_game_count`, and `avg_time_to_throw`. Again, we are seeking to compare the average time to release - combined - for the AFC North against the rest of the NFL. In order to avoid skewing the results by "baking in data" (that is, not removing AFC North teams prior to finding the NFL average), we can use the `!` logical operator to remove all four teams at once (as oppose to structuring the `filter()` to include four separate `team_name !=` for all four different AFC North teams.
@@ -307,7 +302,7 @@ The structure and organization of the data is quite similar to the datasets we w
 time_in_pocket_no_afcn <- time_in_pocket %>%
   filter(!team_name %in% c("PIT", "BAL", "CIN", "CLE"))
 
-as_tibble(time_in_pocket_no_afcn)
+time_in_pocket_no_afcn
 ```
 
 With Pittsburgh, Baltimore, Cincinnati, and Cleveland removed from the dataset, we can - for the sake of completing the analysis - take our new `time_in_pocket_afcn` dataset and find the league-wide average for `avg_time_to_throw`.
@@ -347,7 +342,6 @@ Building the `filter()` based on the above specifications requires the use of bo
 multiple_filters <- pbp %>%
   filter(down == 2 & play_type == "pass" & qb_hit == 1 & complete_pass == 1 & 
            air_yards >= ydstogo)
-
 ```
 
 The resulting dataset, `multiple_filters`, indicates that exactly 105 such instances took place during the 2002 NFL season.
@@ -360,7 +354,7 @@ total_yards <- pbp %>%
   filter(season_type == "REG") %>%
   summarize(yards = sum(yards_gained, na.rm = TRUE))
 
-as_tibble(total_yards)
+total_yards
 ```
 
 How many total scrimmage yards did NFL teams earn during the 2022 NFL regular season? According to the results from our above code, the answer is 184,444. However, that is incorrect.
@@ -376,7 +370,7 @@ two_points <- pbp %>%
   summarize(total = n(),
             total_yards = sum(yards_gained, na.rm = TRUE))
 
-as_tibble(two_points)
+two_points
 ```
 
 The resulting `as_tibble()` indicates that exactly 112 scrimmage yards were gained on places missing `down` information. There was, of course, not 8,137 2-point conversion attempts during the 2022 regular season. There are many other instances within the data that do not include information for `down`, including: kickoffs, extra points, time outs, the end of a quarter, etc. We can be more specific with our `filter()` argument in the above code to include only the binary argument for the `two_point_attempt` variable:
@@ -399,7 +393,7 @@ total_yards_correct <- pbp %>%
   filter(season_type == "REG" & !is.na(down)) %>%
   summarize(yards = sum(yards_gained, na.rm = TRUE))
 
-as_tibble(total_yards_correct)
+total_yards_correct
 ```
 
 By filtering out any row that does not include the `down` for a given play, we correctly calculated the total amount of scrimmage yards - 184,332 - for the 2022 NFL regular season.
@@ -596,7 +590,7 @@ To start the process of EDA on our newly created `sis_data` dataset, let's exami
 
 ```{r sis-data-eda, eval = TRUE, echo = TRUE, output = TRUE}
 
-as_tibble(sis_data)
+sis_data
 ```
 
 The results immediately bring to light several issues in the data:
@@ -615,7 +609,7 @@ sis_data <- sis_data %>%
   janitor::clean_names() %>%
   select(player, team, att, boom_percent, bust_percent)
 
-as_tibble(sis_data)
+sis_data
 ```
 
 In the above code, we are using the `clean_names()` function within the `janitor` package to automatically rework the column names into a `tidy` format. After, we use the `select` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
@@ -688,7 +682,6 @@ sis_data_stringr$boom_percent <- as.numeric(as.character(sis_data_stringr$boom_p
 sis_data_stringr$bust_percent <- as.numeric(as.character(sis_data_stringr$bust_percent))
 
 sis_data_stringr
-
 ```
 
 Our output shows that `att`, `boom_percent`, and `bust_percent` are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.
@@ -703,7 +696,7 @@ sis_data <- sis_data %>%
   mutate(boom_percent = readr::parse_number(boom_percent),
          bust_percent = readr::parse_number(bust_percent))
 
-as_tibble(sis_data)
+sis_data
 ```
 
 The above example, using `readr`, is quite similar to the first version that used `stringr` in that we are using the `mutate` verb to edit our existing `boom_percent` and `bust_percent` columns. In this case, however, we are replacing our `stringer` argument with the `parse_number` function from the `readr` package. When finished, you can see in the `str()` output that not only are both boom and bust correctly listed as numeric, but the `parse_number` function automatically recognized and dropped the tailing percentage sign.
@@ -733,7 +726,7 @@ sis_data <- sis_data %>%
   filter(att >= 200) %>%
   mutate(difference = boom_percent - bust_percent)
 
-as_tibble(sis_data)
+sis_data
 ```
 
 In the above example, by using the `mutate` verb, we created a new column in our existing `sis_data` dataset that calculates the different between a quarterback's `boom_percent` and `bust_percent`. Importantly, as mentioned, this is done while keeping the rest of the dataset in place unlike using the `summarize` verb.
@@ -773,7 +766,7 @@ By filtering the data down to include just Baker Mayfield, we can use `as_tibble
 
 ```{r no-teams-harmed, eval = TRUE, echo = TRUE, output = TRUE}
 
-as_tibble(sis_data)
+sis_data
 ```
 
 With that, our `sis_data` dataset is nearly complete and ready for taking over to `ggplot` in Chapter 4. Before doing so, though, we can use the `load_teams` function within `nflreadr` to combine the appropriate team colors to each quarterback in the data, allowing us to customize the appearance of the data visualization.
@@ -804,7 +797,7 @@ Please note that a much deeper dive into the `nflverse` functions is included in
 teams <- nflreadr::load_teams(current = TRUE) %>%
   select(team_abbr, team_nick, team_name, team_color, team_color2)
 
-as_tibble(teams)
+teams
 ```
 
 For educational purposes, we use the above code to bring in each NFL's team abbreviation, nickname, and full name. Along with identifying information for each team, we also have selected `team_color` and `team_color2` (which correspond to each team's primary and secondary colors).
@@ -843,22 +836,12 @@ It is important to remember that the name of the columns *do not* have to match
 sis_data <- sis_data %>%
   left_join(teams, by = c("team" = "team_nick"))
 
-as_tibble(sis_data)
-
+sis_data
 ```
 
-You can see in the `as_tibble()` output that our two datasets correctly merged on the `team` and `team_nick` columns. Moreover, to illustrate what happens doing the joining process, please note these two items:
+You can see in the output that our two data sets correctly merged on the `team` and `team_nick` columns. Moreover, to illustrate what happens doing the joining process, please note these two items:
 
 1.  The `team_nick` column from our `teams` dataset is not included in our merged `sis_data`, as it is dropped after matching/merging with the `team` information from our original dataset.
 2.  While the `team_nick` column was dropped, the other team identifiers (`team_abbr` and `team_name`) were kept intact, as they were not used in the matching process. As well, `team_color` and `team_color2` are now correctly match with each quarterback's team.
-
-We can use the `seecolor` package to illustrate how the hex codes in `team_color` and `team_color2` correspond to each team:
-
-```{r see-colors-example, eval = TRUE, echo = TRUE, output = TRUE}
-
-seecolor::print_color(sis_data$team_color)
-
-seecolor::print_color(sis_data$team_color2)
-```
 
 ## Exercises

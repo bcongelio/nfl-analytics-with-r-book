@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/index.html</loc>
-    <lastmod>2023-04-30T01:00:50.221Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.424Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/01-nfl-analytics-and-r.html</loc>
-    <lastmod>2023-04-30T01:00:50.224Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.429Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/02-nfl-analytics-tidyverse.html</loc>
-    <lastmod>2023-04-30T01:00:50.230Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.434Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/03-nfl-analytics-functions.html</loc>
-    <lastmod>2023-04-30T01:01:48.142Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.448Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/04-nfl-analytics-visualization.html</loc>
-    <lastmod>2023-04-30T01:01:12.287Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.465Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bradcongelio.com/nfl-analytics-with-r-book/05-nfl-analytics-advanced-methods.html</loc>
+    <lastmod>2023-05-29T23:40:44.690Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/references.html</loc>
-    <lastmod>2023-04-30T01:00:50.252Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.483Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a1-nfl-analytics-dictionary.html</loc>
-    <lastmod>2023-04-30T01:00:50.253Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.484Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a2-nfl-further-reading.html</loc>
-    <lastmod>2023-04-30T01:00:50.254Z</lastmod>
+    <lastmod>2023-05-29T23:39:51.485Z</lastmod>
   </url>
 </urlset>
