@@ -175,7 +175,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:--------------:|:------------------------------------------------------:|
+|:-------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -2035,3 +2035,26 @@ ggplot() +
 ```
 
 ## Exercises
+
+### Exercise #1
+
+First, run the code below to create the data frame titled `fieldgoal_regression`
+
+```{r ch-5-ex-1, eval = FALSE, echo = TRUE, output = FALSE}
+
+### QUESTION #1
+pbp <- nflreadr::load_pbp(2015:2022) %>%
+  filter(season_type == "REG")
+
+fieldgoal_regression <- pbp %>%
+  filter(play_type == "field_goal" & field_goal_result != "blocked") %>%
+  select(play_type, field_goal_result, kick_distance) %>%
+  mutate(field_goal_result = ifelse(
+    field_goal_result == "made", 1, 0))
+```
+
+Using the data, construct a generalized linear model (`glm()`) with the `family` set to `binomial`. Use `field_goal_result` as the target variable and `kick_distance` as the predictor. View the results using `summary()`.
+
+### Exercise #2
+
+Reproduce the above model into a data frame called `fieldgoal_regression_2` and include information pertaining to the field playing surface, the temperature, and the wind. Use `na.omit()` to exclude those plays with missing information. After, rerun the `glm()` model and view the results using `summary()`.

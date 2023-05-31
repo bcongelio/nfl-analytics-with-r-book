@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.475">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics with R - Appendix A — NFL Analytics Reference Guide</title>
+<title>An Introduction to NFL Analytics with R - Appendix A — NFL Analytics Quick Reference Guide</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Appendix A — NFL Analytics Reference Guide</h1>
+      <h1 class="quarto-secondary-nav-title">Appendix A — NFL Analytics Quick Reference Guide</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -217,7 +217,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -234,12 +234,24 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
    
   <ul>
 <li><a href="#air-yards" id="toc-air-yards" class="nav-link active" data-scroll-target="#air-yards"><span class="toc-section-number">A.1</span>  Air Yards</a></li>
-  <li><a href="#average-depth-of-target" id="toc-average-depth-of-target" class="nav-link" data-scroll-target="#average-depth-of-target"><span class="toc-section-number">A.2</span>  Average Depth of Target</a></li>
+  <li><a href="#air-yards-share" id="toc-air-yards-share" class="nav-link" data-scroll-target="#air-yards-share"><span class="toc-section-number">A.2</span>  Air Yards Share</a></li>
+  <li><a href="#average-cushion" id="toc-average-cushion" class="nav-link" data-scroll-target="#average-cushion"><span class="toc-section-number">A.3</span>  Average Cushion</a></li>
+  <li><a href="#average-separation" id="toc-average-separation" class="nav-link" data-scroll-target="#average-separation"><span class="toc-section-number">A.4</span>  Average Separation</a></li>
+  <li><a href="#average-depth-of-target" id="toc-average-depth-of-target" class="nav-link" data-scroll-target="#average-depth-of-target"><span class="toc-section-number">A.5</span>  Average Depth of Target</a></li>
+  <li><a href="#completion-percentage-over-expected-cpoe" id="toc-completion-percentage-over-expected-cpoe" class="nav-link" data-scroll-target="#completion-percentage-over-expected-cpoe"><span class="toc-section-number">A.6</span>  Completion Percentage Over Expected (CPOE)</a></li>
+  <li><a href="#dakota" id="toc-dakota" class="nav-link" data-scroll-target="#dakota"><span class="toc-section-number">A.7</span>  DAKOTA</a></li>
+  <li><a href="#running-back-efficiency" id="toc-running-back-efficiency" class="nav-link" data-scroll-target="#running-back-efficiency"><span class="toc-section-number">A.8</span>  Running Back Efficiency</a></li>
+  <li><a href="#expected-points-added-epa" id="toc-expected-points-added-epa" class="nav-link" data-scroll-target="#expected-points-added-epa"><span class="toc-section-number">A.9</span>  Expected Points Added (EPA)</a></li>
+  <li><a href="#expected-yards-after-catch-success-xyac-success" id="toc-expected-yards-after-catch-success-xyac-success" class="nav-link" data-scroll-target="#expected-yards-after-catch-success-xyac-success"><span class="toc-section-number">A.10</span>  Expected Yards After Catch Success (xYAC Success)</a></li>
+  <li><a href="#expected-yards-after-catch-mean-yardage-xyac-mean-yardage" id="toc-expected-yards-after-catch-mean-yardage-xyac-mean-yardage" class="nav-link" data-scroll-target="#expected-yards-after-catch-mean-yardage-xyac-mean-yardage"><span class="toc-section-number">A.11</span>  Expected Yards After Catch Mean Yardage (xYAC Mean Yardage)</a></li>
+  <li><a href="#pass-over-expected" id="toc-pass-over-expected" class="nav-link" data-scroll-target="#pass-over-expected"><span class="toc-section-number">A.12</span>  Pass Over Expected</a></li>
+  <li><a href="#success-rate" id="toc-success-rate" class="nav-link" data-scroll-target="#success-rate"><span class="toc-section-number">A.13</span>  Success Rate</a></li>
+  <li><a href="#time-to-line-of-scrimmage" id="toc-time-to-line-of-scrimmage" class="nav-link" data-scroll-target="#time-to-line-of-scrimmage"><span class="toc-section-number">A.14</span>  Time to Line of Scrimmage</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-appendix-starting" class="quarto-section-identifier d-none d-lg-block">Appendix A — NFL Analytics Reference Guide</span></h1>
+<h1 class="title"><span id="sec-appendix-starting" class="quarto-section-identifier d-none d-lg-block">Appendix A — NFL Analytics Quick Reference Guide</span></h1>
 </div>
 
 
@@ -252,17 +264,16 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><p>This is a work in progress. Reviewers given access to the earliest version of this book suggest a “Football 101” section to bring people up to speed on analytics and definitions <em>of</em> those analytics. This is going to serve as that reference point, and also include a “quick reference guide” on how to find/calculate the metrics within the <code>nflverse</code>. Before are just a couple examples of how I see this section being displayed.</p>
-<section id="air-yards" class="level2" data-number="A.1"><h2 data-number="A.1" class="anchored" data-anchor-id="air-yards">
+</header><section id="air-yards" class="level2" data-number="A.1"><h2 data-number="A.1" class="anchored" data-anchor-id="air-yards">
 <span class="header-section-number">A.1</span> Air Yards</h2>
 <p>Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not catch, the football. It does not take into consideration the amount of yardage gained after the catch by the wide receiver (which would be <em>yards after catch</em>).</p>
-<p>For an example, please see the below illustration. In it, the line of scrimmag is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.</p>
+<p>For an example, please see the below illustration. In it, the line of scrimmage is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.</p>
 <p>However, because air yards is a better metric to explore a QB’s <em>true</em> impact on a play, he is credited with 30 air yards while the wide receiver is credited with 20 yards after catch.</p>
 <p>In the end, quarterbacks with higher air yards per attempt are generally assumed to be throwing the ball deeper downfield than QBs with lower air yards per attempt.</p>
 <center>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="images/airyards_101.png" class="img-fluid" width="473"></p>
+<p><img src="images/airyards_101.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
 </center>
@@ -282,7 +293,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">air.yards</span>, <span class="va">avg.ay</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">air.yards</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">air.yards</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">air.yards</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 42 x 3
    name       air.yards avg.ay
@@ -301,11 +312,98 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 </div>
 <p>In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.</p>
-</section><section id="average-depth-of-target" class="level2" data-number="A.2"><h2 data-number="A.2" class="anchored" data-anchor-id="average-depth-of-target">
-<span class="header-section-number">A.2</span> Average Depth of Target</h2>
+</section><section id="air-yards-share" class="level2" data-number="A.2"><h2 data-number="A.2" class="anchored" data-anchor-id="air-yards-share">
+<span class="header-section-number">A.2</span> Air Yards Share</h2>
+<p>A receiving statistics, air yards share is the measure of a player’s share of the team’s total air yards in a game/season. This metric can be found using <code>load_player_stats()</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">total_ay_share</span> <span class="op">&lt;-</span> <span class="va">nfl_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op">==</span> <span class="st">"WR"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    total_rec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">receptions</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    ay_share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">air_yards_share</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_rec</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">ay_share</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">total_ay_share</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 3
+   player_name total_rec ay_share
+   &lt;chr&gt;           &lt;int&gt;    &lt;dbl&gt;
+ 1 A.Brown           101     8.17
+ 2 D.Adams           100     7.15
+ 3 J.Jefferson       135     7.07
+ 4 T.Hill            126     7.01
+ 5 C.Lamb            121     6.79
+ 6 D.Metcalf         100     6.69
+ 7 D.Smith           111     6.11
+ 8 S.Diggs           119     6.08
+ 9 J.Chase           107     5.78
+10 A.St. Brown       106     4.66</code></pre>
+</div>
+</div>
+</section><section id="average-cushion" class="level2" data-number="A.3"><h2 data-number="A.3" class="anchored" data-anchor-id="average-cushion">
+<span class="header-section-number">A.3</span> Average Cushion</h2>
+<p>The average cushion measures the distance, in yards, between a WR/TE and the defender lined up against them at the line of scrimmage. This metric is included in the <code>load_nextgen_stats()</code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nextgen_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>stat_type <span class="op">=</span> <span class="st">"receiving"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wr_cushion</span> <span class="op">&lt;-</span> <span class="va">nextgen_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">==</span> <span class="fl">2022</span> <span class="op">&amp;</span> <span class="va">receptions</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_display_name</span>, <span class="va">avg_cushion</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">avg_cushion</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wr_cushion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 2
+  player_display_name avg_cushion
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 Chris Godwin               6.68
+2 CeeDee Lamb                6.56
+3 Amon-Ra St. Brown          6.52
+4 Tyreek Hill                6.38
+5 Travis Kelce               6.28
+6 Davante Adams              5.55
+7 Justin Jefferson           5.43
+8 Stefon Diggs               5.36</code></pre>
+</div>
+</div>
+</section><section id="average-separation" class="level2" data-number="A.4"><h2 data-number="A.4" class="anchored" data-anchor-id="average-separation">
+<span class="header-section-number">A.4</span> Average Separation</h2>
+<p>Average separation measures the distance (in yards) between the receivers and the nearest defender at the time of catch/incompletion.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nextgen_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>stat_type <span class="op">=</span> <span class="st">"receiving"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wr_separation</span> <span class="op">&lt;-</span> <span class="va">nextgen_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">==</span> <span class="fl">2022</span> <span class="op">&amp;</span> <span class="va">receptions</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_display_name</span>, <span class="va">avg_separation</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">avg_separation</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wr_separation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 2
+  player_display_name avg_separation
+  &lt;chr&gt;                        &lt;dbl&gt;
+1 Tyreek Hill                   3.31
+2 Amon-Ra St. Brown             3.10
+3 Justin Jefferson              3.09
+4 CeeDee Lamb                   3.07
+5 Chris Godwin                  2.98
+6 Davante Adams                 2.95
+7 Travis Kelce                  2.88
+8 Stefon Diggs                  2.83</code></pre>
+</div>
+</div>
+</section><section id="average-depth-of-target" class="level2" data-number="A.5"><h2 data-number="A.5" class="anchored" data-anchor-id="average-depth-of-target">
+<span class="header-section-number">A.5</span> Average Depth of Target</h2>
 <p>As mentioned above, a QB’s air yards per attempt can highlight whether or not he is attempting to push the ball deeper down field than his counterparts. The official name of this is <strong>Average Depth of Target</strong> (or ADOT). We can easily generate this statistic using the <code>load_player_stats</code> function within <code>nflreader</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">adot</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -318,7 +416,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">attempts</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">adot</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">tibble</span><span class="op">(</span><span class="va">adot</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">adot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 42 x 5
    player_id  name       attempts air.yards  adot
@@ -336,7 +434,325 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 # ... with 32 more rows</code></pre>
 </div>
 </div>
-<p>As seen in the results, if we ignore Drew Lock’s 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furtherst downfield among QBs with atleast 100 attempts.</p>
+<p>As seen in the results, if we ignore Drew Lock’s 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furthest downfield among QBs with at least 100 attempts.</p>
+</section><section id="completion-percentage-over-expected-cpoe" class="level2" data-number="A.6"><h2 data-number="A.6" class="anchored" data-anchor-id="completion-percentage-over-expected-cpoe">
+<span class="header-section-number">A.6</span> Completion Percentage Over Expected (CPOE)</h2>
+<p>At the conclusion fo the 2016 season, Sam Bradford, the quarterback of the Minnesota Vikings, recorded the highest completion percentage in NFL history, connecting on 71.6% of his attempts during the season. However, Bradford achieved this record by averaging just 6.4 yards per attempt. Bradford’s record-breaking completion percentage is suddenly less impressive when one realizes that he was rarely attempting downfield passes.</p>
+<p>Because of this example, we can conclude that a quarterback’s completion percentage may not tell us the whole “story.” To adjust a quarterback’s completion percentage to include such contextual inputs such as air yards, we can turn to using completion percentage over expected (CPOE). A pre-calculated metric based on historical attempts in similar situations, CPOE take into account multiple variables, including: field position, down, yards to go, total air yards, etc.</p>
+<p>The CPOE metric in the <code>nflverse</code> was developed by Ben Baldwin with a further explanation of it here: <a href="https://www.opensourcefootball.com/posts/2020-09-28-nflfastr-ep-wp-and-cp-models/">nflfastR EP, WP, CP, xYAC, and xPass Models</a>. The data is included in the <code>load_pbp()</code> function of <code>nflreadR</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cpoe_2022</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">interception</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>total_attempts <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>            mean_cpoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cpoe</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_attempts</span> <span class="op">&gt;=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">mean_cpoe</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cpoe_2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 3
+   passer       total_attempts mean_cpoe
+   &lt;chr&gt;                 &lt;int&gt;     &lt;dbl&gt;
+ 1 G.Smith                 571      5.68
+ 2 P.Mahomes               648      3.59
+ 3 J.Brissett              366      2.86
+ 4 J.Burrow                605      2.74
+ 5 J.Hurts                 460      2.73
+ 6 D.Jones                 467      2.32
+ 7 T.Lawrence              582      1.45
+ 8 T.Tagovailoa            399      1.43
+ 9 J.Herbert               697      1.35
+10 K.Cousins               640      1.26</code></pre>
+</div>
+</div>
+</section><section id="dakota" class="level2" data-number="A.7"><h2 data-number="A.7" class="anchored" data-anchor-id="dakota">
+<span class="header-section-number">A.7</span> DAKOTA</h2>
+<p>A QB’s DAKOTA score is the adjusted EPA+CPOE composite that is based on the coefficients which best predicted the adjusted EPA/play in the prior year. The DAKOTA score is available in the <code>load_player_stats()</code> function within the <code>nflverse</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mean_dakota</span> <span class="op">&lt;-</span> <span class="va">nfl_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    total_cmp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">completions</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    mean_dakota <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dakota</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_cmp</span> <span class="op">&gt;=</span> <span class="fl">250</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">mean_dakota</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mean_dakota</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 3
+   player_name  total_cmp mean_dakota
+   &lt;chr&gt;            &lt;int&gt;       &lt;dbl&gt;
+ 1 P.Mahomes          507       0.181
+ 2 D.Prescott         309       0.149
+ 3 J.Hurts            365       0.142
+ 4 T.Tagovailoa       259       0.135
+ 5 J.Burrow           486       0.133
+ 6 G.Smith            424       0.127
+ 7 J.Allen            407       0.126
+ 8 J.Goff             382       0.116
+ 9 K.Cousins          455       0.114
+10 D.Jones            356       0.112</code></pre>
+</div>
+</div>
+</section><section id="running-back-efficiency" class="level2" data-number="A.8"><h2 data-number="A.8" class="anchored" data-anchor-id="running-back-efficiency">
+<span class="header-section-number">A.8</span> Running Back Efficiency</h2>
+<p>A running back’s efficiency is measured by taking the total distance traveled, according to NextGen Stats, per the total of yards gained on the run. A lower number indicates a more North/South type runner, while a higher number indicates a running back that “dances” and runs laterally relevant to the line of scrimmage.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nextgen_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>stat_type <span class="op">=</span> <span class="st">"rushing"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rb_efficiency</span> <span class="op">&lt;-</span> <span class="va">nextgen_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">rush_attempts</span> <span class="op">&gt;=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_display_name</span>, <span class="va">efficiency</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">efficiency</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rb_efficiency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 x 2
+   player_display_name efficiency
+   &lt;chr&gt;                    &lt;dbl&gt;
+ 1 Jonathan Taylor           3.17
+ 2 Josh Jacobs               3.33
+ 3 Derrick Henry             3.45
+ 4 Ezekiel Elliott           3.49
+ 5 Ezekiel Elliott           3.57
+ 6 Derrick Henry             3.57
+ 7 Ezekiel Elliott           3.65
+ 8 Dalvin Cook               3.74
+ 9 Nick Chubb                3.80
+10 Derrick Henry             3.85
+11 Najee Harris              3.97
+12 Le'Veon Bell              4.17</code></pre>
+</div>
+</div>
+</section><section id="expected-points-added-epa" class="level2" data-number="A.9"><h2 data-number="A.9" class="anchored" data-anchor-id="expected-points-added-epa">
+<span class="header-section-number">A.9</span> Expected Points Added (EPA)</h2>
+<p>Expected Points Added is a measure of how well a team/player performed on a single play against relative expectations. At its core, EPA is the difference in <em>expected points</em> before and after each play. Because of this, on any given play, a team has the ability to either increase or decrease the <em>expected points</em>, with EPA being that specific difference. Importantly, EPA includes various contextual factors into its calculation such as down, distance, position on the field, etc. Then, based on historical data, an estimation of how many points, on average, a team is expected to score on a given situation is provided.</p>
+<p>For instance, if the Chiefs are on their own 20-yard line with a 1st and 10, the <em>expected points</em> might be 0.5 based on historical data. This is the <em>expected points</em> before the play. If Mahomes completes a 10-yard pass, and now it is 1st and 10 on their own 30-yard line, the <em>expected points</em> for this new situation may increase to 0.8.</p>
+<p>Therefore, the <em>expected points added</em> (EPA) of that 10-yard pass would be <code>0.8 - 0.5 = 0.3 points</code>. The resulting positive number indicates that the pass was beneficial and increased the team’s <em>expected points</em>.</p>
+<p>The <code>EP</code> and <code>EPA</code> values are provided for each play in the play-by-play data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ep_and_epa</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">posteam</span> <span class="op">==</span> <span class="st">"KC"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">play_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"kickoff"</span>, <span class="st">"no_play"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">posteam</span>, <span class="va">down</span>, <span class="va">ydstogo</span>, <span class="va">desc</span>, <span class="va">play_type</span>, <span class="va">ep</span>, <span class="va">epa</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ep_and_epa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,252 x 7
+   posteam  down ydstogo desc                               play_~1    ep    epa
+   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                              &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 KC          1      10 (15:00) (Shotgun) 25-C.Edwards-He~ run     0.931  0.841
+ 2 KC          2       1 (14:27) (Shotgun) 15-P.Mahomes sc~ run     1.77  -0.263
+ 3 KC          1      10 (13:52) 25-C.Edwards-Helaire up t~ run     1.51   0.454
+ 4 KC          2       3 (13:15) (Shotgun) 25-C.Edwards-He~ run     1.96   1.37 
+ 5 KC          1      10 (12:36) (Shotgun) 15-P.Mahomes pa~ pass    3.34  -0.573
+ 6 KC          2      10 (12:30) (Shotgun) 15-P.Mahomes pa~ pass    2.76   1.32 
+ 7 KC          1      10 (11:54) 15-P.Mahomes pass short r~ pass    4.09  -0.178
+ 8 KC          2       7 (11:11) (Shotgun) 25-C.Edwards-He~ run     3.91  -0.634
+ 9 KC          3       7 (10:28) (Shotgun) 15-P.Mahomes pa~ pass    3.28   2.03 
+10 KC          1       9 (9:47) (Shotgun) 15-P.Mahomes pas~ pass    5.30  -0.565
+# ... with 1,242 more rows, and abbreviated variable name 1: play_type</code></pre>
+</div>
+</div>
+<p>As well, the <code>load_player_stats()</code> function provides calculated <code>passing_epa</code>, <code>rushing_epa</code>, and <code>receiving_epa</code> per player on a weekly basis.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">weekly_epa</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_display_name</span> <span class="op">==</span> <span class="st">"Tom Brady"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_display_name</span>, <span class="va">week</span>, <span class="va">passing_epa</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">weekly_epa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 x 3
+   player_display_name  week passing_epa
+   &lt;chr&gt;               &lt;int&gt;       &lt;dbl&gt;
+ 1 Tom Brady               1       1.05 
+ 2 Tom Brady               2       2.43 
+ 3 Tom Brady               3       1.08 
+ 4 Tom Brady               4       9.51 
+ 5 Tom Brady               5      13.0  
+ 6 Tom Brady               6       8.72 
+ 7 Tom Brady               7      -2.38 
+ 8 Tom Brady               8       4.88 
+ 9 Tom Brady               9      -4.88 
+10 Tom Brady              10      15.3  
+11 Tom Brady              12      -1.71 
+12 Tom Brady              13       0.435
+13 Tom Brady              14      -9.47 
+14 Tom Brady              15       5.47 
+15 Tom Brady              16      -1.86 
+16 Tom Brady              17      17.3  
+17 Tom Brady              18       3.00 
+18 Tom Brady              19      -3.68 </code></pre>
+</div>
+</div>
+</section><section id="expected-yards-after-catch-success-xyac-success" class="level2" data-number="A.10"><h2 data-number="A.10" class="anchored" data-anchor-id="expected-yards-after-catch-success-xyac-success">
+<span class="header-section-number">A.10</span> Expected Yards After Catch Success (xYAC Success)</h2>
+<p>xYAC Success is the probability that a play results in positive EPA (relative to where the play started) based on where the receiver caught the ball.</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xyac</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">xyac_success</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">receiver</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span></span>
+<span>    completetions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    mean_xyac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">xyac_success</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">completetions</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">mean_xyac</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xyac</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 3
+  receiver    completetions mean_xyac
+  &lt;chr&gt;               &lt;int&gt;     &lt;dbl&gt;
+1 S.Diggs               100     0.872
+2 T.Kelce               106     0.872
+3 J.Jefferson           124     0.863
+4 T.Hill                125     0.856
+5 C.Lamb                103     0.832
+6 A.St. Brown           103     0.810
+7 C.Godwin              103     0.788
+8 A.Ekeler              106     0.548</code></pre>
+</div>
+</div>
+<p>Considering only those receivers with 100 or more receptions during the 2022 regular season, Stefon Diggs and Travis Kelcoe had the highest expected yards after catch success rate, with the model predicting that just over 82% of their receptions would result with a positive EPA once factoring in yards after catch.</p>
+</section><section id="expected-yards-after-catch-mean-yardage-xyac-mean-yardage" class="level2" data-number="A.11"><h2 data-number="A.11" class="anchored" data-anchor-id="expected-yards-after-catch-mean-yardage-xyac-mean-yardage">
+<span class="header-section-number">A.11</span> Expected Yards After Catch Mean Yardage (xYAC Mean Yardage)</h2>
+<p>Just as above XYAC Success is the probability that the reception results in a positive EPA, xYAC Mean Yardage is the expected yards after catch based on where the ball was caught. We can use this metric to determine how much impact the receiver had after the reception against what the xYAC Mean Yardage model predicted.</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xyac_meanyardage</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">xyac_mean_yardage</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">receiver</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>mean_yardage_result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">yards_after_catch</span> <span class="op">&gt;=</span> <span class="va">xyac_mean_yardage</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>total_receptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            total_higher <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">mean_yardage_result</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            pct <span class="op">=</span> <span class="va">total_higher</span> <span class="op">/</span> <span class="va">total_receptions</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_receptions</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="op">-</span><span class="va">pct</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xyac_meanyardage</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 4
+  receiver    total_receptions total_higher   pct
+  &lt;chr&gt;                  &lt;int&gt;        &lt;dbl&gt; &lt;dbl&gt;
+1 T.Kelce                  106           51 0.481
+2 A.Ekeler                 106           47 0.443
+3 A.St. Brown              103           44 0.427
+4 J.Jefferson              124           47 0.379
+5 S.Diggs                  100           37 0.37 
+6 C.Lamb                   103           35 0.340
+7 T.Hill                   125           41 0.328
+8 C.Godwin                 103           29 0.282</code></pre>
+</div>
+</div>
+</section><section id="pass-over-expected" class="level2" data-number="A.12"><h2 data-number="A.12" class="anchored" data-anchor-id="pass-over-expected">
+<span class="header-section-number">A.12</span> Pass Over Expected</h2>
+<p>Pass Over Expected is the probability that a play will be a pass scaled from 0 to 100 and is based on multiple factors, including yard line, score differential, to who is the home team. The numeric value indicates how much over (or under) expectation each offense called a pass play in a given situation.</p>
+<p>For example, we can use the metric to determine the pass over expected value for Buffalo, Cincinnati, Kansas City, and Philadelphia on 1st down with between 1 and 10 yards to go.</p>
+<div class="cell" data-layout-align="center" data-fig.dpi="400">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pass_over_expected</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">down</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BUF"</span>, <span class="st">"CIN"</span>, <span class="st">"KC"</span>, <span class="st">"PHI"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">posteam</span>, <span class="va">ydstogo</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>mean_passoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pass_oe</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">pass_over_expected</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ydstogo</span>, y <span class="op">=</span> <span class="va">mean_passoe</span>, group <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_color_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"1st Down - Yards To Go"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Average Pass Over Expected"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Average Pass Over Expected**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*1st Down: BUF, CIN, KC, PHI*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="a1-nfl-analytics-dictionary_files/figure-html/pass-oe-dictionary-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Noticeably, the Chiefs pass well over expected (especially compared to the other three teams) when it is 1st down with six yards to go.</p>
+</section><section id="success-rate" class="level2" data-number="A.13"><h2 data-number="A.13" class="anchored" data-anchor-id="success-rate">
+<span class="header-section-number">A.13</span> Success Rate</h2>
+<p>Prior to the formulation of EP and EPA, success rate was calculated based on the percentage of yardage gained on a play (40% of the necessary yards on 1st down, 60% on 2nd down, and 100% of the yards needed for a 1st down on both 3rd and 4th downs). However, modern success rate is determined simply by whether or not the specific play had an EPA greater than 0. Using success rate allows us to determine, for example, whether an offensive unit is stronger in rushing or passing attempts, as well as serving as a baseline indicator of a team’s consistency.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">success_rate</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pass"</span>, <span class="st">"run"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">posteam</span>, <span class="va">play_type</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>mean_success <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">success</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BAL"</span>, <span class="st">"CIN"</span>, <span class="st">"CLE"</span>, <span class="st">"PIT"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">success_rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 3
+# Groups:   posteam [4]
+  posteam play_type mean_success
+  &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;
+1 BAL     pass             0.423
+2 BAL     run              0.484
+3 CIN     pass             0.492
+4 CIN     run              0.439
+5 CLE     pass             0.433
+6 CLE     run              0.449
+7 PIT     pass             0.434
+8 PIT     run              0.470</code></pre>
+</div>
+</div>
+<p>As seen in the output of <code>success_rate</code>, the teams in the AFC North were generally evenly matched. The Ravens had more success running the ball (.48 to .42) while the Bengals found more success in the air (.49 to .43). The Browns’ success rate on passing and rushing attempts were nearly equal (.43 to .44).</p>
+</section><section id="time-to-line-of-scrimmage" class="level2" data-number="A.14"><h2 data-number="A.14" class="anchored" data-anchor-id="time-to-line-of-scrimmage">
+<span class="header-section-number">A.14</span> Time to Line of Scrimmage</h2>
+<p>Measured by NextGen Stats, this is a calculation (to the 1/10th of a second), regarding how long it take the running back to cross the line of scrimmage.</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nextgen_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>stat_type <span class="op">=</span> <span class="st">"rushing"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">avg_los</span> <span class="op">&lt;-</span> <span class="va">nextgen_stats</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">==</span> <span class="fl">2022</span> <span class="op">&amp;</span> <span class="va">rush_attempts</span> <span class="op">&gt;=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">player_display_name</span>, <span class="va">avg_time_to_los</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">avg_time_to_los</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">avg_los</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 2
+   player_display_name avg_time_to_los
+   &lt;chr&gt;                         &lt;dbl&gt;
+ 1 Jamaal Williams                2.64
+ 2 D'Onta Foreman                 2.64
+ 3 Joe Mixon                      2.66
+ 4 Saquon Barkley                 2.70
+ 5 Derrick Henry                  2.70
+ 6 Najee Harris                   2.72
+ 7 Ezekiel Elliott                2.72
+ 8 Rhamondre Stevenson            2.73
+ 9 Alvin Kamara                   2.75
+10 Austin Ekeler                  2.76</code></pre>
+</div>
+</div>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

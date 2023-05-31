@@ -19,7 +19,6 @@ style_data <- function(dat, n_rows = NULL, caption = NULL) {
 # Set the knitr options
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, out.width = "100%")
 
-
 ### creating theme used in ggplot
 nfl_analytics_theme <- function(..., base_size = 12) {
   

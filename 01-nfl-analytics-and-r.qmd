@@ -10,7 +10,6 @@ library(extrafont)
 library(ggtext)
 library(vroom)
 library(cowplot)
-extrafont::loadfonts(quiet = TRUE)
 ```
 
 ## Introduction
@@ -234,6 +233,8 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 ```
 
 ```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400}
+
+extrafont::loadfonts(device = "win")
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +

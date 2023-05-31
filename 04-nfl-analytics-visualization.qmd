@@ -55,9 +55,11 @@ install.packages(c("extrafont",
                    "ggtext",
                    "ggfx",
                    "geomtextpath",
-                   "cropcirlces",
+                   "cropcircles",
                    "magick",
-                   "glue"))
+                   "glue",
+                   "gt",
+                   "gtExtras"))
 ```
 
 ## The Basics of Using `ggplot2`
@@ -2015,3 +2017,61 @@ To create the output table, we use the `renderTable()` function, another reactiv
 As you build the `Shiny` app, you can check the validity of your coding by clicking the `Run App` button in the upper-right part of the coding screen. If everything is correct, the application will run within your local system. If there are issues, the information will be provided in the 'Console' area of RStudio. Once you are content with functioning and style of the application, you can publish it and host it, for free, on [ShinyApps.io](https://www.shinyapps.io/).
 
 ## Exercises
+
+### Exercise #1
+
+To begin, run the following code to create the data frame titled `rb_third_down`:
+
+```{r exercise-1-ch-4, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+rb_third_down <- pbp %>%
+  filter(play_type == "run" & !is.na(rusher)) %>%
+  filter(down == 3 & ydstogo <= 10) %>%
+  group_by(rusher, rusher_player_id) %>%
+  summarize(
+    total = n(),
+    total_first = sum(yards_gained >= ydstogo, na.rm = TRUE),
+    total_pct = total_first / total) %>%
+  filter(total >= 20) %>%
+  arrange(-total_pct)
+```
+
+After, do the following:
+
+1.  Create a `geom_col` plot
+2.  Place `rusher_player_id` on the x-axis and `total_pct` on the y-axis
+3.  Reorder `rusher` in descending order by `total_pct`
+4.  On the y-axis, set the `breaks` and `labels` use the `scales::` option (note: the y-axis should be in percent format)
+5.  Again on the y-axis, use `expand = c(0,0)` to remove the space of the bottom of the plot
+6.  Use `xlab()` and `ylab()` to add a title to *only* the y-axis
+7.  Use the `nflplotR` package, add the primary team color as the column `fill` and secondary as `color`
+8.  Use the `nflplotR` package, edit the `axis.text.x` within the `theme()` option to add the player headshots
+9.  Add `theme_minimal()` to the plot
+10. Use `labs()` to include a title and subtitle
+
+### Exercise #2
+
+Run the code below to create the `offensive_epa` data frame, then follow the instructions below to complete the exercise.
+
+```{r ch-4-ex-2, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+offensive_epa <- pbp %>%
+  filter(!is.na(posteam) & !is.na(down)) %>%
+  group_by(posteam) %>%
+  summarize(mean_epa = mean(epa, na.rm = TRUE))
+```
+
+1.  Place `mean_epa` on the x-axis and `posteam` on the y-axis, using reordering the teams by `mean_epa`
+2.  Use `geom_col` with the `posteam` set as both the `color` and `fill` and add a `width` of 0.75
+3.  Use `nflplotR` to set the `color` and `fill` to "secondary" and "primary"
+4.  Add a `geom_vline` with an `xintercept` of 0, add the color as "black" and a `linewidth` of 1
+5.  Use `nflplotR` to add team logos to the end of each bar
+6.  Use `theme_minimal()`
+7.  Remove the y-axis text with `axis.text.y` within `theme()`
+8.  Use `xlab`, `ylab`, and `labs` to add the x-axis label and the title/subtitle

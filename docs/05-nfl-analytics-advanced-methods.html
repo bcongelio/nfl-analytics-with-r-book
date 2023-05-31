@@ -238,7 +238,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -270,7 +270,13 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <li><a href="#creating-an-xgboost-model-for-rushing-yards-over-expected" id="toc-creating-an-xgboost-model-for-rushing-yards-over-expected" class="nav-link" data-scroll-target="#creating-an-xgboost-model-for-rushing-yards-over-expected"><span class="toc-section-number">6.3.2</span>  Creating an XGBoost Model for Rushing Yards over Expected</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">6.4</span>  Exercises</a></li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">6.4</span>  Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="toc-section-number">6.4.1</span>  Exercise #1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="toc-section-number">6.4.2</span>  Exercise #2</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -430,8 +436,8 @@ Reading &amp; Understanding Regression Results
 <p>Information about these residual values are included first in our <code>summary(results_2022)</code> output and provide insight into the distribution of the model’s residual errors.</p>
 <table class="table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 77%">
+<col style="width: 7%">
+<col style="width: 92%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -3465,6 +3471,24 @@ Note
 </div>
 </section></section></section></section><section id="exercises" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">6.4</span> Exercises</h2>
+<section id="exercise-1" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">6.4.1</span> Exercise #1</h3>
+<p>First, run the code below to create the data frame titled <code>fieldgoal_regression</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### QUESTION #1</span></span>
+<span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fieldgoal_regression</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">play_type</span> <span class="op">==</span> <span class="st">"field_goal"</span> <span class="op">&amp;</span> <span class="va">field_goal_result</span> <span class="op">!=</span> <span class="st">"blocked"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">play_type</span>, <span class="va">field_goal_result</span>, <span class="va">kick_distance</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>field_goal_result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span></span>
+<span>    <span class="va">field_goal_result</span> <span class="op">==</span> <span class="st">"made"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using the data, construct a generalized linear model (<code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>) with the <code>family</code> set to <code>binomial</code>. Use <code>field_goal_result</code> as the target variable and <code>kick_distance</code> as the predictor. View the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
+</section><section id="exercise-2" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">6.4.2</span> Exercise #2</h3>
+<p>Reproduce the above model into a data frame called <code>fieldgoal_regression_2</code> and include information pertaining to the field playing surface, the temperature, and the wind. Use <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> to exclude those plays with missing information. After, rerun the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> model and view the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -3478,7 +3502,7 @@ Mock, Thomas. 2020. <span>“Intro to Tidyodels with nflscrapR Play-by-Play.”<
 Wikipedia. 2023. <span>“R Package.”</span> <a href="https://en.wikipedia.org/wiki/R_package">https://en.wikipedia.org/wiki/R_package</a>.
 </div>
 </div>
-</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1"><p>At the time of writing this book, this was an ongoing issue. Most missing headshots in the data are those belonging to rookies. The issue is a result of an issue with how the the data is collected and a change to the API that provides access to the information.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Thanks to Tej Seth for briefly chatting with me over Twitter regarding the history of both Michael’s RYOE model and his own.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

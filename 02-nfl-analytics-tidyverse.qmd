@@ -845,3 +845,57 @@ You can see in the output that our two data sets correctly merged on the `team` 
 2.  While the `team_nick` column was dropped, the other team identifiers (`team_abbr` and `team_name`) were kept intact, as they were not used in the matching process. As well, `team_color` and `team_color2` are now correctly match with each quarterback's team.
 
 ## Exercises
+
+Create a data frame titled `pbp` that contains the play-by-play information for the 2022 regular season by running the following code:
+
+```{r chap-1-exercise-1, eval = FALSE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+```
+
+After, using the data in `pbp`, complete the following:
+
+### **Exercise #1**
+
+1.  Use `filter()` to select only Patrick Mahomes and all passes that resulted in interceptions.
+2.  Add a `summarize()` to determine the average air yards (`air_yards`) for his combined interceptions.
+
+### **Exercise #2**
+
+1.  In a data frame titled `wide_receivers`, find the average yards after catch (`yards_after_catch`) and average yards after catch EPA (`yac_epa`) for the top-10 receivers in total receiving yards. In doing so, you will need to use `group_by()` on `receiver`.
+
+### **Exercise #3**
+
+1.  In a data frame titled `qb_hits`, find the total number of times each defensive unit (`defteam`) recorded a QB hit (`qb_hit`).
+
+### **Exercise #4**
+
+1.  After running the following code, add a column titled `difference` using that `mutate()` verb that calculates the difference between each quarterback's `total_completions` and `total_incompletions`.
+
+    ```{r question-4-ch-2, eval = FALSE, echo = TRUE, output = FALSE}
+
+    cmp_inc <- pbp %>%
+      filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1, !is.na(down)) %>%
+      group_by(passer) %>%
+      summarize(total_completions = sum(complete_pass == 1, na.rm = TRUE),
+                total_incompletions = sum(incomplete_pass == 1, na.rm = TRUE)) %>%
+      filter(total_completions >= 180)
+    ```
+
+### **Exercise #5**
+
+1.  After running the following code, use the `left_join()` function to merge the two data frames together into a single data frame titled `rb_success_combined`.
+
+    ```{r question-5-ch1-ch2, eval = FALSE, echo = TRUE, output = FALSE}
+
+    roster_information <- nflreadr::load_rosters(2022) %>%
+      select(full_name, gsis_id, headshot_url)
+
+    rb_success <- pbp %>%
+      group_by(rusher_player_id) %>%
+      filter(!is.na(rusher) & !is.na(success)) %>%
+      summarize(total_success = sum(success, na.rm = TRUE)) %>%
+      arrange(-total_success) %>%
+      slice(1:10)
+    ```

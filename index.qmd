@@ -188,9 +188,7 @@ Because of this, and regardless of which chapter you begin with, I believe that 
 
 -   **Chapter 4** moves readers from data cleaning and manipulation to an introduction to data visualization using `ggplot2`. As well, chapter 4 provides further instruction on `nflverse` functions such as `clean_player_names()`, `clean_team_abbrs()`, and `clean_homeaway()`. As well, to prep for data visualization, readers will be introduced to the `teams_colors_logos` and `load_rosters` functions as well as the `nflplotR` package, which provides "functions and geoms to help visualization of NFL related analysis" [@carl2022]. Readers will produce multiple types of visualizations, including `geom_bar`, `geom_point`, `geom_density`, and more. As well, readers will learn to use `facet_wrap` and `facet_grid` to display data over multiple seasons. For visualizations that include team logos or player headshots, instruction will cover both how to do the coding manually using `teams_colors_logos` or `load_rosters` and to use the `nflplotr` package to avoid the need to use `left_join` to merge `teams_colors_logos` to your dataframe.
 
--   **Chapter 5** introduces advanced methods in R using `nflverse` data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to `tidymodels`, a "collection of packages for modeling and machine learning using `tidyverse` principles" [@silge]. As an example, readers will first be introduced to [Tej Seth's](https://twitter.com/tejfbanalytics) Rushing Yards Over Expected model ([GitHub](https://github.com/tejseth/RYOE), [ShinyApp](https://mfbanalytics.shinyapps.io/RYOE/)). The model will serve as a learning tool to help readers understand the relationship between `nflfastR` data and machine learning (in Tej's case, an `xgboost` model). Afterward, specific attention is given to binary classification, multiclass classification, and regression computer learning models. At the conclusion of the chapter, readers will be provided exercises to allow them to develop their own supervised and unsupervised machine learning models.
-
--   **Chapter 6** introduces data from sources outside of the `nflverse`, including premium statistics from Pro Football Focus and Sports Info Solutions. Readers will learned to use various functions, such as `clean_team_names`, in order to prepare the data to merge with data from the `nflverse`. As well, this chapter will introduce readers to working with player tracking data. To do so, data will be provided from the [NFL's Big Data Bowl](https://operations.nfl.com/gameday/analytics/big-data-bowl/). To highlight the work being completed using player tracking, this chapter will discuss the Big Data Bowl entries of [Matt Ploenzke](https://twitter.com/MPloenzke) ([*The Importance of Ball Carrier Downfield Acceleration and Unblocked Tackler Distance and Spacing*](https://operations.nfl.com/media/4204/bdb_ploenzke.pdf)) and the team of Kellin Rumsey & Brandon DeFlon ([*The Battle Between Blocker and Defender Is Often Decided by Leverage*](https://operations.nfl.com/media/4209/bdb_rumsey_deflon.pdf)).
+-   **Chapter 5** introduces advanced methods in R using `nflverse` data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to `tidymodels`, a "collection of packages for modeling and machine learning using `tidyverse` principles" [@silge]. In this chapter, readers will be guides through the process of building advanced models using NFL data, beginning with simple linear regressions. After, the chapter moves on to cover other types of regression models before covering example of k-means clustering and XGBoost model creation.
 
 ## About The Author {.unnumbered}
 
@@ -234,7 +232,6 @@ This book was written using RStudio's [Visual Editor for R Markdown](https://rst
 pkgs <- c(
   "dplyr",
   "ggplot2",
-  "gt",
   "nflfastR",
   "nflreadr",
   "nflverse",
@@ -243,12 +240,31 @@ pkgs <- c(
   "tidyverse",
   "webshot",
   "tidymodels",
-  "lightGBM",
   "bonsai",
   "ggpmisc",
   "ggimage",
   "doParallel",
-  "arrow"
+  "arrow",
+  "vroom",
+  "extrafont",
+  "ggimage",
+  "ggtext",
+  "ggrepel",
+  "ggfx",
+  "ggridges",
+  "geomtextpath",
+  "cropcircles",
+  "magick",
+  "glue",
+  "gtExtras",
+  "caret",
+  "nnet",
+  "lightgbm",
+  "ggcorrplot",
+  "reshape2",
+  "RColorBrewer",
+  "factoextra",
+  "cowplot"
 ) %>% sort()
 
 pkgs <- sessioninfo::package_info(pkgs, dependencies = FALSE)

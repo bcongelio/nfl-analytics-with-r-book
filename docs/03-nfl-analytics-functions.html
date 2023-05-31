@@ -219,7 +219,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,16 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <li><a href="#the-load_contracts-function" id="toc-the-load_contracts-function" class="nav-link" data-scroll-target="#the-load_contracts-function"><span class="toc-section-number">4.5.12</span>  The <code>load_contracts()</code> Function</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">4.6</span>  Exercises</a></li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">4.6</span>  Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="toc-section-number">4.6.1</span>  <strong>Exercise #1</strong></a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="toc-section-number">4.6.2</span>  Exercise #2</a></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="toc-section-number">4.6.3</span>  Exercise #3</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="toc-section-number">4.6.4</span>  Exercise #4</a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="toc-section-number">4.6.5</span>  Exercise #5</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -1554,8 +1563,8 @@ Tip
 <p>The <code>load_participation()</code> function allows us to create a dataframe of player participation data dating back to 2016 with an option to infuse that information into the existing <code>nflreadr</code> play-by-play data. The resulting dataframe, when not including play-by-play data, includes information pertaining to: the individial game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.</p>
 <p>Despite the <code>load_participation()</code> function being one of the newest editions to the <code>nflreadr</code> package, it is already being used to create contextual analysis regarding a team’s use of its players out out formations. For example, <a href="https://twitter.com/josephjefe">Joseph Hefner</a> uses the data to create tables (built with the <code>gt</code> packages) that calculates not only each player’s rate of usage out of different personnel packages, but how the team’s EPA per play and pass rate fluncuate with each. In the spirit of R’s open-source nature, he also created a <a href="https://josephjefe.shinyapps.io/formations_app/">Team Formation ShinyApp</a> that allows anybody to explore the data and output the results in .png format.</p>
 <p></p>
-<div id="tweet-70467"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-70467").innerHTML = tweet["html"];</script><p>To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
+<div id="tweet-31130"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-31130").innerHTML = tweet["html"];</script><p>To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
 <div class="cell">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -1993,7 +2002,7 @@ Tip
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player_display_name</span><span class="op">)</span>,</span>
-<span>                  family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                  family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Average Time to Throw"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Average Completed Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2025,7 +2034,7 @@ Tip
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player_display_name</span><span class="op">)</span>, family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player_display_name</span><span class="op">)</span>, family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Expected Rush Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Actual Rush Yards"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2125,7 +2134,7 @@ Important
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player</span><span class="op">)</span>,</span>
-<span>                  family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                  family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Bad Throws"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Drops"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**QB Bad Throws vs. WR Drops**"</span>,</span>
@@ -2178,7 +2187,7 @@ Important
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player</span><span class="op">)</span>,</span>
-<span>                  family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                  family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Yards Before Contact"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Yards After Contact"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Running Backs: Yards Before and After Contact**"</span>,</span>
@@ -2210,7 +2219,7 @@ Important
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player</span><span class="op">)</span>,</span>
-<span>                  family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                  family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Yards At Point of Catch"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Yards After Catch"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Yards at Point of Catch vs. Yards After Catch"</span>,</span>
@@ -2330,7 +2339,7 @@ Important
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Cash Paid (in millions)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Mean DAKOTA Composite"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text_repel</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">player</span><span class="op">)</span>,</span>
-<span>                  family <span class="op">=</span> <span class="st">"Roboto Condensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                  family <span class="op">=</span> <span class="st">"Roboto Codensed"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cash Paid vs. Mean DAKOTA Composite"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"2022 Regular Season"</span>,</span>
@@ -2345,9 +2354,36 @@ Important
 <p>Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).</p>
 </section></section><section id="exercises" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">4.6</span> Exercises</h2>
+<section id="exercise-1" class="level3" data-number="4.6.1"><h3 data-number="4.6.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">4.6.1</span> <strong>Exercise #1</strong>
+</h3>
+<ol type="1">
+<li>Load data from the 2010 to 2022 regular seasons into a data frame titled <code>pbp</code>.</li>
+<li>In a data frame titled <code>rushing_success</code>, determine how many rushing attempts each offensive team had on 1st down.</li>
+<li>Determine how many of those attempts resulted in a positive EPA (<code>success</code>).</li>
+<li>Calculate the percentage of the results into a column titled <code>success_pct</code>.</li>
+<li>Arrange the results in descending order by <code>success_pct</code>.</li>
+</ol></section><section id="exercise-2" class="level3" data-number="4.6.2"><h3 data-number="4.6.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">4.6.2</span> Exercise #2</h3>
+<p>Load data from the 2022 regular season into a data frame titled <code>pbp_2022</code>.</p>
+<ol type="1">
+<li>In a data frame titled <code>qb_short_third</code>, determine how many 3rd down passing attempts each QB had.</li>
+<li>Determine the number of times the QB’s air yards was less than the required yards to go.</li>
+<li>In a column titled <code>ay_percent</code>, calculate the percentage of these results.</li>
+<li>Filter the results to those QBs with 100 or more attempts.</li>
+<li>Arrange the results in descending order by <code>ay_percent</code>.</li>
+</ol></section><section id="exercise-3" class="level3" data-number="4.6.3"><h3 data-number="4.6.3" class="anchored" data-anchor-id="exercise-3">
+<span class="header-section-number">4.6.3</span> Exercise #3</h3>
+<p>Tom Brady had a long and storied career, serving as a full-time started in the NFL from 2001 to 2022. The <code>qb_epa</code> metric gives a quarterback credit for EPA up to the point where a receivers lost a fumble after a completed catch. For this question, create data frame titled <code>tom_brady</code> and find Brady’s average <code>qb_epa</code> per season, from 2001 to 2022. After, arrange in descending order by his average QB EPA.</p>
+</section><section id="exercise-4" class="level3" data-number="4.6.4"><h3 data-number="4.6.4" class="anchored" data-anchor-id="exercise-4">
+<span class="header-section-number">4.6.4</span> Exercise #4</h3>
+<p>Create a data frame titled <code>made_field_goals</code> and find, between the 2000 and 2022 season, the number of field goal attempts and percentage made on all kicks greater than 40-yards in distance.</p>
+</section><section id="exercise-5" class="level3" data-number="4.6.5"><h3 data-number="4.6.5" class="anchored" data-anchor-id="exercise-5">
+<span class="header-section-number">4.6.5</span> Exercise #5</h3>
+<p>On December 11 of the 2005 season, Pittsburgh’s Jerome Bettis trucked Bears linebacker Brian Urlacher. You can view the play here: <a href="https://www.youtube.com/watch?v=u0mtG-8DWYk">Bettis Trucks Urlacher</a>. Using the <code>load_pbp</code> function, find this specific play (using the video for contextual clues). After, determine how much win probability this individual play added (that is: the differnece between <code>home_wp</code> and <code>home_wp_post</code>.</p>
 
 
-</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1"><p>Matt was in my SPT 313 class during the Spring 2023 semester and asked more questions and showed more willingness to learn coding and analytics than all of my prior classes combined. If he is not yet hired by an NFL team, it is a complete injustice.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

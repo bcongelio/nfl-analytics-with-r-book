@@ -1,18 +1,20 @@
-# NFL Analytics Reference Guide {#sec-appendix-starting}
+# NFL Analytics Quick Reference Guide {#sec-appendix-starting}
 
 ```{r loading-library, include = FALSE}
 
+source("book-functions.R")
+
 library(tidyverse)
 library(nflreadr)
+library(ggtext)
+library(extrafont)
 ```
-
-This is a work in progress. Reviewers given access to the earliest version of this book suggest a "Football 101" section to bring people up to speed on analytics and definitions *of* those analytics. This is going to serve as that reference point, and also include a "quick reference guide" on how to find/calculate the metrics within the `nflverse`. Before are just a couple examples of how I see this section being displayed.
 
 ## Air Yards
 
 Air yards is the measure that the ball travels through the air, from the line of scrimmage, to the exact point where the wide receivers catches, or does not catch, the football. It does not take into consideration the amount of yardage gained after the catch by the wide receiver (which would be *yards after catch*).
 
-For an example, please see the below illustration. In it, the line of scrimmag is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.
+For an example, please see the below illustration. In it, the line of scrimmage is at the 20-yardline. The QB completes a pass that is caught at midfield (the 50-yardline). After catching the football, the wide receiver is able to advance the ball down to the opposing 30-yardline before getting tackled. First and foremost, the quarterback is credited with a total of 50 passing yards on the play, while the wide receiver is credited with the same.
 
 However, because air yards is a better metric to explore a QB's *true* impact on a play, he is credited with 30 air yards while the wide receiver is credited with 20 yards after catch.
 
@@ -44,10 +46,65 @@ air.yards <- data %>%
   select(name, air.yards, avg.ay) %>%
   arrange(-air.yards)
 
-tibble(air.yards)
+air.yards
 ```
 
 In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.
+
+## Air Yards Share
+
+A receiving statistics, air yards share is the measure of a player's share of the team's total air yards in a game/season. This metric can be found using `load_player_stats()`.
+
+```{r air-yards-share, eval = TRUE, echo = TRUE, output = TRUE}
+
+nfl_stats <- nflreadr::load_player_stats()
+
+total_ay_share <- nfl_stats %>%
+  filter(position == "WR") %>%
+  group_by(player_name) %>%
+  summarize(
+    total_rec = sum(receptions, na.rm = TRUE),
+    ay_share = sum(air_yards_share, na.rm = TRUE)) %>%
+  filter(total_rec >= 100) %>%
+  arrange(-ay_share) %>%
+  slice(1:10)
+
+total_ay_share
+```
+
+## Average Cushion
+
+The average cushion measures the distance, in yards, between a WR/TE and the defender lined up against them at the line of scrimmage. This metric is included in the `load_nextgen_stats()` function.
+
+```{r avg-cushion, eval = TRUE, echo = TRUE, output = TRUE}
+
+nextgen_stats <- nflreadr::load_nextgen_stats(stat_type = "receiving")
+
+wr_cushion <- nextgen_stats %>%
+  filter(week == 0 & season == 2022 & receptions >= 100) %>%
+  select(player_display_name, avg_cushion) %>%
+  arrange(-avg_cushion) %>%
+  slice(1:10)
+
+wr_cushion
+```
+
+## Average Separation
+
+Average separation measures the distance (in yards) between the receivers and the nearest defender at the time of catch/incompletion.
+
+```{r avg-separation, eval = TRUE, echo = TRUE, output = TRUE}
+
+nextgen_stats <- nflreadr::load_nextgen_stats(stat_type = "receiving")
+
+wr_separation <- nextgen_stats %>%
+  filter(week == 0 & season == 2022 & receptions >= 100) %>%
+  select(player_display_name, avg_separation) %>%
+  arrange(-avg_separation) %>%
+  slice(1:10)
+
+wr_separation
+```
 
 ## Average Depth of Target
 
@@ -68,7 +125,217 @@ adot <- data %>%
   filter(attempts >= 100) %>%
   arrange(-adot)
 
-tibble(adot)
+adot
 ```
 
-As seen in the results, if we ignore Drew Lock's 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furtherst downfield among QBs with atleast 100 attempts.
+As seen in the results, if we ignore Drew Lock's 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furthest downfield among QBs with at least 100 attempts.
+
+## Completion Percentage Over Expected (CPOE)
+
+At the conclusion fo the 2016 season, Sam Bradford, the quarterback of the Minnesota Vikings, recorded the highest completion percentage in NFL history, connecting on 71.6% of his attempts during the season. However, Bradford achieved this record by averaging just 6.4 yards per attempt. Bradford's record-breaking completion percentage is suddenly less impressive when one realizes that he was rarely attempting downfield passes.
+
+Because of this example, we can conclude that a quarterback's completion percentage may not tell us the whole "story." To adjust a quarterback's completion percentage to include such contextual inputs such as air yards, we can turn to using completion percentage over expected (CPOE). A pre-calculated metric based on historical attempts in similar situations, CPOE take into account multiple variables, including: field position, down, yards to go, total air yards, etc.
+
+The CPOE metric in the `nflverse` was developed by Ben Baldwin with a further explanation of it here: [nflfastR EP, WP, CP, xYAC, and xPass Models](https://www.opensourcefootball.com/posts/2020-09-28-nflfastr-ep-wp-and-cp-models/). The data is included in the `load_pbp()` function of `nflreadR`.
+
+```{r cpoe-example, eval = TRUE, echo = TRUE, output = TRUE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+cpoe_2022 <- pbp %>%
+  group_by(passer) %>%
+  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1, !is.na(down)) %>%
+  summarize(total_attempts = n(),
+            mean_cpoe = mean(cpoe, na.rm = TRUE)) %>%
+  filter(total_attempts >= 300) %>%
+  arrange(-mean_cpoe) %>%
+  slice(1:10)
+
+cpoe_2022
+```
+
+## DAKOTA
+
+A QB's DAKOTA score is the adjusted EPA+CPOE composite that is based on the coefficients which best predicted the adjusted EPA/play in the prior year. The DAKOTA score is available in the `load_player_stats()` function within the `nflverse`.
+
+```{r dakota-dictionary, eval = TRUE, echo = TRUE, output = TRUE}
+
+nfl_stats <- nflreadr::load_player_stats()
+
+mean_dakota <- nfl_stats %>%
+  filter(position == "QB") %>%
+  group_by(player_name) %>%
+  summarize(
+    total_cmp = sum(completions, na.rm = TRUE),
+    mean_dakota = mean(dakota, na.rm = TRUE)) %>%
+  filter(total_cmp >= 250) %>%
+  arrange(-mean_dakota) %>%
+  slice(1:10)
+
+mean_dakota
+```
+
+## Running Back Efficiency
+
+A running back's efficiency is measured by taking the total distance traveled, according to NextGen Stats, per the total of yards gained on the run. A lower number indicates a more North/South type runner, while a higher number indicates a running back that "dances" and runs laterally relevant to the line of scrimmage.
+
+```{r rb-efficiency-dictionary, eval = TRUE, echo = TRUE, output = TRUE}
+
+nextgen_stats <- nflreadr::load_nextgen_stats(stat_type = "rushing")
+
+rb_efficiency <- nextgen_stats %>%
+  filter(week == 0 & rush_attempts >= 300) %>%
+  select(player_display_name, efficiency) %>%
+  arrange(efficiency)
+
+rb_efficiency
+```
+
+## Expected Points Added (EPA)
+
+Expected Points Added is a measure of how well a team/player performed on a single play against relative expectations. At its core, EPA is the difference in *expected points* before and after each play. Because of this, on any given play, a team has the ability to either increase or decrease the *expected points*, with EPA being that specific difference. Importantly, EPA includes various contextual factors into its calculation such as down, distance, position on the field, etc. Then, based on historical data, an estimation of how many points, on average, a team is expected to score on a given situation is provided.
+
+For instance, if the Chiefs are on their own 20-yard line with a 1st and 10, the *expected points* might be 0.5 based on historical data. This is the *expected points* before the play. If Mahomes completes a 10-yard pass, and now it is 1st and 10 on their own 30-yard line, the *expected points* for this new situation may increase to 0.8.
+
+Therefore, the *expected points added* (EPA) of that 10-yard pass would be `0.8 - 0.5 = 0.3 points`. The resulting positive number indicates that the pass was beneficial and increased the team's *expected points*.
+
+The `EP` and `EPA` values are provided for each play in the play-by-play data.
+
+```{r epa-explained, eval = TRUE, echo = TRUE, output = TRUE}
+
+ep_and_epa <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG" & posteam == "KC") %>%
+  filter(!play_type %in% c("kickoff", "no_play")) %>%
+  select(posteam, down, ydstogo, desc, play_type, ep, epa)
+
+ep_and_epa
+```
+
+As well, the `load_player_stats()` function provides calculated `passing_epa`, `rushing_epa`, and `receiving_epa` per player on a weekly basis.
+
+```{r epa-weekly-stats, eval = TRUE, echo = TRUE, output = TRUE}
+
+weekly_epa <- nflreadr::load_player_stats() %>%
+  filter(player_display_name == "Tom Brady") %>%
+  select(player_display_name, week, passing_epa)
+
+weekly_epa
+```
+
+## Expected Yards After Catch Success (xYAC Success)
+
+xYAC Success is the probability that a play results in positive EPA (relative to where the play started) based on where the receiver caught the ball.
+
+```{r xyac-dictions, eval = TRUE, echo = TRUE, output = TRUE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+xyac <- pbp %>%
+  filter(!is.na(xyac_success)) %>%
+  group_by(receiver) %>%
+  summarize(
+    completetions = sum(complete_pass == 1, na.rm = TRUE),
+    mean_xyac = mean(xyac_success, na.rm = TRUE)) %>%
+  filter(completetions >= 100) %>%
+  arrange(-mean_xyac) %>%
+  slice(1:10)
+
+xyac
+```
+
+Considering only those receivers with 100 or more receptions during the 2022 regular season, Stefon Diggs and Travis Kelcoe had the highest expected yards after catch success rate, with the model predicting that just over 82% of their receptions would result with a positive EPA once factoring in yards after catch.
+
+## Expected Yards After Catch Mean Yardage (xYAC Mean Yardage)
+
+Just as above XYAC Success is the probability that the reception results in a positive EPA, xYAC Mean Yardage is the expected yards after catch based on where the ball was caught. We can use this metric to determine how much impact the receiver had after the reception against what the xYAC Mean Yardage model predicted.
+
+```{r xyac-mean-dictionary, eval = TRUE, echo = TRUE, output = TRUE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+xyac_meanyardage <- pbp %>%
+  filter(!is.na(xyac_mean_yardage)) %>%
+  group_by(receiver) %>%
+  mutate(mean_yardage_result = ifelse(yards_after_catch >= xyac_mean_yardage, 1, 0)) %>%
+  summarize(total_receptions = sum(complete_pass == 1, na.rm = TRUE),
+            total_higher = sum(mean_yardage_result, na.rm = TRUE),
+            pct = total_higher / total_receptions) %>%
+  filter(total_receptions >= 100) %>%
+  arrange(-pct) %>%
+  slice(1:10)
+
+xyac_meanyardage
+```
+
+## Pass Over Expected
+
+Pass Over Expected is the probability that a play will be a pass scaled from 0 to 100 and is based on multiple factors, including yard line, score differential, to who is the home team. The numeric value indicates how much over (or under) expectation each offense called a pass play in a given situation.
+
+For example, we can use the metric to determine the pass over expected value for Buffalo, Cincinnati, Kansas City, and Philadelphia on 1st down with between 1 and 10 yards to go.
+
+```{r pass-oe-dictionary, eval = TRUE, echo = TRUE, output = TRUE, fig.align='center', fig.dpi = 400}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+pass_over_expected <- pbp %>%
+  filter(down == 1 & ydstogo <= 10) %>%
+  filter(posteam %in% c("BUF", "CIN", "KC", "PHI")) %>%
+  group_by(posteam, ydstogo) %>%
+  summarize(mean_passoe = mean(pass_oe, na.rm = TRUE))
+
+ggplot(pass_over_expected, aes(x = ydstogo, y = mean_passoe, group = posteam)) +
+  geom_smooth(se = FALSE, aes(color = posteam), size = 2) +
+  nflplotR::scale_color_nfl(type = "primary") +
+  scale_x_continuous(breaks = seq(1,10, 1)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::percent_format(scale = 1)) +
+  nfl_analytics_theme() +
+  xlab("1st Down - Yards To Go") +
+  ylab("Average Pass Over Expected") +
+  labs(title = "**Average Pass Over Expected**",
+       subtitle = "*1st Down: BUF, CIN, KC, PHI*",
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+```
+
+Noticeably, the Chiefs pass well over expected (especially compared to the other three teams) when it is 1st down with six yards to go.
+
+## Success Rate
+
+Prior to the formulation of EP and EPA, success rate was calculated based on the percentage of yardage gained on a play (40% of the necessary yards on 1st down, 60% on 2nd down, and 100% of the yards needed for a 1st down on both 3rd and 4th downs). However, modern success rate is determined simply by whether or not the specific play had an EPA greater than 0. Using success rate allows us to determine, for example, whether an offensive unit is stronger in rushing or passing attempts, as well as serving as a baseline indicator of a team's consistency.
+
+```{r success-rate-dictionary, eval = TRUE, echo = TRUE, output = TRUE}
+
+pbp <- nflreadr::load_pbp(2022) %>%
+  filter(season_type == "REG")
+
+success_rate <- pbp %>%
+  filter(play_type %in% c("pass", "run")) %>%
+  group_by(posteam, play_type) %>%
+  summarize(mean_success = mean(success, na.rm = TRUE)) %>%
+  filter(posteam %in% c("BAL", "CIN", "CLE", "PIT"))
+
+success_rate
+```
+
+As seen in the output of `success_rate`, the teams in the AFC North were generally evenly matched. The Ravens had more success running the ball (.48 to .42) while the Bengals found more success in the air (.49 to .43). The Browns' success rate on passing and rushing attempts were nearly equal (.43 to .44).
+
+## Time to Line of Scrimmage
+
+Measured by NextGen Stats, this is a calculation (to the 1/10th of a second), regarding how long it take the running back to cross the line of scrimmage.
+
+```{r avg-los, eval = TRUE, echo = TRUE, output = TRUE}
+
+nextgen_stats <- nflreadr::load_nextgen_stats(stat_type = "rushing")
+
+avg_los <- nextgen_stats %>%
+  filter(week == 0 & season == 2022 & rush_attempts >= 200) %>%
+  select(player_display_name, avg_time_to_los) %>%
+  arrange(avg_time_to_los) %>%
+  slice(1:10)
+
+avg_los
+```

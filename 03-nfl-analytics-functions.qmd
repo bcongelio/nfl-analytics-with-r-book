@@ -1046,7 +1046,7 @@ ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw, y = avg_completed_air
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   geom_text_repel(aes(label = player_display_name),
-                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Average Time to Throw") +
   ylab("Average Completed Air Yards") +
@@ -1077,7 +1077,7 @@ ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards, y = actual_rush_yar
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
-  geom_text_repel(aes(label = player_display_name), family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+  geom_text_repel(aes(label = player_display_name), family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Expected Rush Yards") +
   ylab("Actual Rush Yards") +
@@ -1161,7 +1161,7 @@ ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   xlab("Bad Throws") +
   ylab("Drops") +
   labs(title = "**QB Bad Throws vs. WR Drops**",
@@ -1205,7 +1205,7 @@ ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   xlab("Yards Before Contact") +
   ylab("Yards After Contact") +
   labs(title = "**Running Backs: Yards Before and After Contact**",
@@ -1239,7 +1239,7 @@ ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   xlab("Yards At Point of Catch") +
   ylab("Yards After Catch") +
   labs(title = "**Yards at Point of Catch vs. Yards After Catch",
@@ -1359,7 +1359,7 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
   xlab("Cash Paid (in millions)") +
   ylab("Mean DAKOTA Composite") +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Condensed", fontface = "bold", size = 3.5) +
+                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   labs(title = "Cash Paid vs. Mean DAKOTA Composite",
        subtitle = "2022 Regular Season",
@@ -1369,3 +1369,33 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
 Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).
 
 ## Exercises
+
+### **Exercise #1**
+
+1.  Load data from the 2010 to 2022 regular seasons into a data frame titled `pbp`.
+2.  In a data frame titled `rushing_success`, determine how many rushing attempts each offensive team had on 1st down.
+3.  Determine how many of those attempts resulted in a positive EPA (`success`).
+4.  Calculate the percentage of the results into a column titled `success_pct`.
+5.  Arrange the results in descending order by `success_pct`.
+
+### Exercise #2
+
+Load data from the 2022 regular season into a data frame titled `pbp_2022`.
+
+1.  In a data frame titled `qb_short_third`, determine how many 3rd down passing attempts each QB had.
+2.  Determine the number of times the QB's air yards was less than the required yards to go.
+3.  In a column titled `ay_percent`, calculate the percentage of these results.
+4.  Filter the results to those QBs with 100 or more attempts.
+5.  Arrange the results in descending order by `ay_percent`.
+
+### Exercise #3
+
+Tom Brady had a long and storied career, serving as a full-time started in the NFL from 2001 to 2022. The `qb_epa` metric gives a quarterback credit for EPA up to the point where a receivers lost a fumble after a completed catch. For this question, create data frame titled `tom_brady` and find Brady's average `qb_epa` per season, from 2001 to 2022. After, arrange in descending order by his average QB EPA.
+
+### Exercise #4
+
+Create a data frame titled `made_field_goals` and find, between the 2000 and 2022 season, the number of field goal attempts and percentage made on all kicks greater than 40-yards in distance.
+
+### Exercise #5
+
+On December 11 of the 2005 season, Pittsburgh's Jerome Bettis trucked Bears linebacker Brian Urlacher. You can view the play here: [Bettis Trucks Urlacher](https://www.youtube.com/watch?v=u0mtG-8DWYk). Using the `load_pbp` function, find this specific play (using the video for contextual clues). After, determine how much win probability this individual play added (that is: the differnece between `home_wp` and `home_wp_post`.

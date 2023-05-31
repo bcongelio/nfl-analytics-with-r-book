@@ -238,7 +238,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Reference Guide</span></a>
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,7 +285,16 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   <li><a href="#merging-datasets-with-dplyr-and-mutating-joins" id="toc-merging-datasets-with-dplyr-and-mutating-joins" class="nav-link" data-scroll-target="#merging-datasets-with-dplyr-and-mutating-joins"><span class="toc-section-number">3.6.5</span>  Merging Datasets with <code>dplyr</code> and Mutating Joins</a></li>
   </ul>
 </li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">3.7</span>  Exercises</a></li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">3.7</span>  Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="toc-section-number">3.7.1</span>  <strong>Exercise #1</strong></a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="toc-section-number">3.7.2</span>  <strong>Exercise #2</strong></a></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="toc-section-number">3.7.3</span>  <strong>Exercise #3</strong></a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="toc-section-number">3.7.4</span>  <strong>Exercise #4</strong></a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="toc-section-number">3.7.5</span>  <strong>Exercise #5</strong></a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -1429,6 +1438,62 @@ Tip
 <li>While the <code>team_nick</code> column was dropped, the other team identifiers (<code>team_abbr</code> and <code>team_name</code>) were kept intact, as they were not used in the matching process. As well, <code>team_color</code> and <code>team_color2</code> are now correctly match with each quarterback’s team.</li>
 </ol></section></section><section id="exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">3.7</span> Exercises</h2>
+<p>Create a data frame titled <code>pbp</code> that contains the play-by-play information for the 2022 regular season by running the following code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After, using the data in <code>pbp</code>, complete the following:</p>
+<section id="exercise-1" class="level3" data-number="3.7.1"><h3 data-number="3.7.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">3.7.1</span> <strong>Exercise #1</strong>
+</h3>
+<ol type="1">
+<li>Use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to select only Patrick Mahomes and all passes that resulted in interceptions.</li>
+<li>Add a <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> to determine the average air yards (<code>air_yards</code>) for his combined interceptions.</li>
+</ol></section><section id="exercise-2" class="level3" data-number="3.7.2"><h3 data-number="3.7.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">3.7.2</span> <strong>Exercise #2</strong>
+</h3>
+<ol type="1">
+<li>In a data frame titled <code>wide_receivers</code>, find the average yards after catch (<code>yards_after_catch</code>) and average yards after catch EPA (<code>yac_epa</code>) for the top-10 receivers in total receiving yards. In doing so, you will need to use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> on <code>receiver</code>.</li>
+</ol></section><section id="exercise-3" class="level3" data-number="3.7.3"><h3 data-number="3.7.3" class="anchored" data-anchor-id="exercise-3">
+<span class="header-section-number">3.7.3</span> <strong>Exercise #3</strong>
+</h3>
+<ol type="1">
+<li>In a data frame titled <code>qb_hits</code>, find the total number of times each defensive unit (<code>defteam</code>) recorded a QB hit (<code>qb_hit</code>).</li>
+</ol></section><section id="exercise-4" class="level3" data-number="3.7.4"><h3 data-number="3.7.4" class="anchored" data-anchor-id="exercise-4">
+<span class="header-section-number">3.7.4</span> <strong>Exercise #4</strong>
+</h3>
+<ol type="1">
+<li>
+<p>After running the following code, add a column titled <code>difference</code> using that <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb that calculates the difference between each quarterback’s <code>total_completions</code> and <code>total_incompletions</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cmp_inc</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">interception</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            total_incompletions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">total_completions</span> <span class="op">&gt;=</span> <span class="fl">180</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+</ol></section><section id="exercise-5" class="level3" data-number="3.7.5"><h3 data-number="3.7.5" class="anchored" data-anchor-id="exercise-5">
+<span class="header-section-number">3.7.5</span> <strong>Exercise #5</strong>
+</h3>
+<ol type="1">
+<li>
+<p>After running the following code, use the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> function to merge the two data frames together into a single data frame titled <code>rb_success_combined</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roster_information</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">full_name</span>, <span class="va">gsis_id</span>, <span class="va">headshot_url</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rb_success</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rusher_player_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rusher</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">success</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_success <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">success</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">total_success</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -1436,7 +1501,7 @@ Tip
 Wickham, Hadley. 2022. <span>“Tidyverse Packages.”</span> <a href="https://www.tidyverse.org/packages/">https://www.tidyverse.org/packages/</a>.
 </div>
 </div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
