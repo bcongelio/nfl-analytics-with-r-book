@@ -1,0 +1,53 @@
+As one last visual enhancement, we will use the gt_color_box() function from gtExtras to replace the values in mean_cpoe with colorboxes that are similar to those used in data visualizations on Pro Football Focus.
+
+```{r adding-color-boxes, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE") %>%
+  cols_move_to_start(
+    columns = headshot) %>%
+  cols_align(align = "center", columns = c("passer", "total_attempts")) %>%
+  gt_color_box(mean_cpoe, domain = 7:11,
+               palette = "ggsci::blue_material", accuracy = 0.01)
+```
+
+It is important to include the `accuracy = 0.01` within the `gt_color_box()`, otherwise the output of the table includes just whole numbers. At this point, the table is complete all for adding a caption at the bottom and using one of the formatted themes from `gtExtras` (I am partial to `gt_theme_538`).
+
+```{r caption-and-theme, eval = TRUE, echo = TRUE, output = TRUE}
+
+pure_cpoe %>%
+  gt(rowname_col = "passer") %>%
+  cols_hide(team_logo_wikipedia) %>%
+  tab_header(
+    title = md("**Average CPOE in Pure Passing Situations**"),
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+  tab_stubhead(label = "Quarterback") %>%
+  gt_img_rows(headshot, height = 25) %>%
+  cols_label(
+    passer = "Quarterback",
+    headshot = "",
+    season = "Season",
+    total_attempts = "Attempts",
+    mean_cpoe = "Mean CPOE") %>%
+  cols_move_to_start(
+    columns = headshot) %>%
+  cols_align(align = "center", columns = c("passer", "total_attempts")) %>%
+  gt_color_box(mean_cpoe, domain = 7:11,
+               palette = "ggsci::blue_material", accuracy = 0.01) %>%
+  tab_source_note(
+    source_note = md("*An Introduction to NFL Analytics with R*<br>
+                     **Brad J. Congelio**")) %>%
+  gtExtras::gt_theme_538()
+```

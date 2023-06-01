@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Bradley J. Congelio">
 <title>An Introduction to NFL Analytics with R</title>
@@ -15,9 +15,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -44,48 +45,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -99,8 +71,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -134,7 +105,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
 
@@ -147,131 +119,150 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">An Introduction to NFL Analytics with R</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
-    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+    <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
-            <i class="bi bi-bi-twitter pe-1"></i>
-          Twitter
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
-            <i class="bi bi-bi-facebook pe-1"></i>
-          Facebook
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
-            <i class="bi bi-bi-linkedin pe-1"></i>
-          LinkedIn
-          </a>
-        </li>
-    </ul>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+</div>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a>
+  <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></a>
+  <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></a>
+  <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Analytics</span></a>
+  <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Analytics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Statistical Modeling with NFL Data</span></a>
+  <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Statistical Modeling with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></a>
+  <a href="./a1-nfl-analytics-dictionary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></a>
+  <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></span></a>
   </div>
 </li>
       </ul>
 </li>
     </ul>
 </div>
-</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
 <li>
-<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a>
+<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
-<li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for"><span class="toc-section-number">1.0.1</span>  Who This Book Is For</a></li>
-  <li><a href="#overview-of-chapters" id="toc-overview-of-chapters" class="nav-link" data-scroll-target="#overview-of-chapters"><span class="toc-section-number">1.1</span>  Overview of Chapters</a></li>
+<li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for"><span class="header-section-number">1.0.1</span> Who This Book Is For</a></li>
+  <li><a href="#overview-of-chapters" id="toc-overview-of-chapters" class="nav-link" data-scroll-target="#overview-of-chapters"><span class="header-section-number">1.1</span> Overview of Chapters</a></li>
   <li>
 <a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About The Author</a>
   <ul class="collapse">
-<li><a href="#why-a-book-instead-of-working-in-analytics" id="toc-why-a-book-instead-of-working-in-analytics" class="nav-link" data-scroll-target="#why-a-book-instead-of-working-in-analytics"><span class="toc-section-number">1.1.1</span>  Why A Book Instead of Working in Analytics?</a></li>
+<li><a href="#why-a-book-instead-of-working-in-analytics" id="toc-why-a-book-instead-of-working-in-analytics" class="nav-link" data-scroll-target="#why-a-book-instead-of-working-in-analytics"><span class="header-section-number">1.1.1</span> Why A Book Instead of Working in Analytics?</a></li>
   </ul>
 </li>
   <li><a href="#technical-details" id="toc-technical-details" class="nav-link" data-scroll-target="#technical-details">Technical Details</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license"><span class="toc-section-number">1.2</span>  License</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license"><span class="header-section-number">1.2</span> License</a></li>
   </ul>
 </li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title d-none d-lg-block">An Introduction to NFL Analytics with R</h1>
+<h1 class="title">An Introduction to NFL Analytics with R</h1>
 </div>
 
 
@@ -290,45 +281,17 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Please note:</strong> this book is currently under contract with <a href="https://www.routledge.com/go/crc-press">CRC Press</a> and is in the writing process. <em>Chapters that are completed are to be considered a rough draft</em>. Other chapters, while listed in the table of contents, have yet to be worked on. The finished manuscript is scheduled for submission to CRC Press in very early 2023. The complete, open-source version will be “official” and live at that point, with the hard copy of the book coming soon after.</p>
-</div>
-</div>
-<center>
-Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with R</em>.</strong>
-</center>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/big-ben-intro.jpg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<p>As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
-<ul>
-<li><p><em>Introduction to NFL Analytics with R</em> is currently under contract with CRC Press. A hard copy of the book will be available for pre-order on Amazon and other locations in early 2023.</p></li>
-<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
-<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.</p></li>
-<li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
-<li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
-</ul>
-<section id="introduction" class="level1" data-number="1"><h1 data-number="1">
+</header><section id="introduction" class="level1" data-number="1"><h1 data-number="1">
 <span class="header-section-number">1</span> Introduction</h1>
 <p>On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of <code>nflfastR</code>, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).</p>
 <p></p>
-<div id="tweet-30376"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494","author_name":"Computer Cowboy","author_url":"https:\/\/twitter.com\/benbbaldwin","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EINTRODUCING: \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E, an R package for scraping NFL data faster ⚡\u003Cbr\u003E\u003Cbr\u003E\uD83C\uDFC8 Play-by-play of all NFL games going back to 2000\u003Cbr\u003E\uD83C\uDFC8 Includes Completion Probability and CPOE going back to 2006\u003Cbr\u003E\uD83C\uDFC8 Fast functions for scraping team rosters and highlight videos\u003Ca href=\"https:\/\/t.co\/sgrq8GdoWJ\"\u003Ehttps:\/\/t.co\/sgrq8GdoWJ\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/fqbyE1pPHE\"\u003Epic.twitter.com\/fqbyE1pPHE\u003C\/a\u003E\u003C\/p\u003E&mdash; Computer Cowboy (@benbbaldwin) \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494?ref_src=twsrc%5Etfw\"\u003EApril 27, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-30376").innerHTML = tweet["html"];</script><p>Thanks to the work of multiple people (<a href="https://twitter.com/mrcaseb">@mrcaseB</a>, <a href="https://twitter.com/benbbaldwin">@benbbaldwin</a>, <a href="https://twitter.com/_TanHo">@TanHo</a>, <a href="https://twitter.com/LeeSharpeNFL">@LeeSharpeNFL</a>, and <a href="https://twitter.com/thomas_mock">@thomas_mock</a> … to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.</p>
+<div id="tweet-40266"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494","author_name":"Computer Cowboy","author_url":"https:\/\/twitter.com\/benbbaldwin","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EINTRODUCING: \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E, an R package for scraping NFL data faster ⚡\u003Cbr\u003E\u003Cbr\u003E\uD83C\uDFC8 Play-by-play of all NFL games going back to 2000\u003Cbr\u003E\uD83C\uDFC8 Includes Completion Probability and CPOE going back to 2006\u003Cbr\u003E\uD83C\uDFC8 Fast functions for scraping team rosters and highlight videos\u003Ca href=\"https:\/\/t.co\/sgrq8GdoWJ\"\u003Ehttps:\/\/t.co\/sgrq8GdoWJ\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/fqbyE1pPHE\"\u003Epic.twitter.com\/fqbyE1pPHE\u003C\/a\u003E\u003C\/p\u003E&mdash; Computer Cowboy (@benbbaldwin) \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494?ref_src=twsrc%5Etfw\"\u003EApril 27, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-40266").innerHTML = tweet["html"];</script><p>Thanks to the work of multiple people (<a href="https://twitter.com/mrcaseb">@mrcaseB</a>, <a href="https://twitter.com/benbbaldwin">@benbbaldwin</a>, <a href="https://twitter.com/_TanHo">@TanHo</a>, <a href="https://twitter.com/LeeSharpeNFL">@LeeSharpeNFL</a>, and <a href="https://twitter.com/thomas_mock">@thomas_mock</a> … to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.</p>
 <p>That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the <code>nflverse</code>, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.</p>
 <p>The <code>nflverse</code> as we know it today was initially birthed from the <code>nflscrapR</code> project, which was started by the Carnegie Mellon University student and profess duo of <a href="https://twitter.com/bklynmaks?lang=en">Maksim Horowitz</a> and <a href="https://twitter.com/stat_sam">Sam Ventura</a>. After Horowitz graduated - and got hired by the Atlanta Hawks - the <code>nflscrapR</code> package was taken over by fellow CMU student Ron Yorko (who would go on to receive his Ph.D.&nbsp;from the Statistics and Data Science program). The trio’s work on <code>nflscrapR</code> ultimately led to a peer-reviewed paper titled “<a href="https://arxiv.org/pdf/1802.00998.pdf">nflWAR: A Reproducible Method for Offensive Player Evaluation in Football.</a>” Ultimately, the <code>nflscrapR</code> project came to an end when the specific .json feed used to gather NFL data changed. At this point, Ben Baldwin and Sebastian Carl had already built upon the <code>nflscrapR</code> project’s foundations to create <code>nflfastR</code>. Ron officially marked the end of the <code>nflscrapR</code> era and the beginning of the <code>nflfastR</code> era with a tweet on September 14, 2020:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p></p>
-<div id="tweet-53547"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193","author_name":"nflscrapR","author_url":"https:\/\/twitter.com\/nflscrapR","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EPlease use \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E from here on out - and send all of your questions and issues to \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin?ref_src=twsrc%5Etfw\"\u003E@benbbaldwin\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/mrcaseb?ref_src=twsrc%5Etfw\"\u003E@mrcaseb\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/8GVD0fi4Uy\"\u003Epic.twitter.com\/8GVD0fi4Uy\u003C\/a\u003E\u003C\/p\u003E&mdash; nflscrapR (@nflscrapR) \u003Ca href=\"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193?ref_src=twsrc%5Etfw\"\u003ESeptember 14, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-53547").innerHTML = tweet["html"];</script><p>As a reply to his first tweet about the <code>nflfastR</code> project, Ben explained that he created the original function to scrape NFL data for the creation of his <a href="https://rbsdm.com/stats/stats/">NFL analytics website</a>. Thankfully, he and Seb did not keep the creation to themselves and released <code>nflfastR</code> to the public. Because of the “open source” nature of R and R packages, a laundry list of companion packages quickly developed alongside <code>nflfastR</code>. The original <code>nflfastR</code> package is now part of the larger <code>nflverse</code> of packages that drive the NFL analytics community on Twitter and beyond.</p>
+<div id="tweet-61554"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193","author_name":"nflscrapR","author_url":"https:\/\/twitter.com\/nflscrapR","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EPlease use \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E from here on out - and send all of your questions and issues to \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin?ref_src=twsrc%5Etfw\"\u003E@benbbaldwin\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/mrcaseb?ref_src=twsrc%5Etfw\"\u003E@mrcaseb\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/8GVD0fi4Uy\"\u003Epic.twitter.com\/8GVD0fi4Uy\u003C\/a\u003E\u003C\/p\u003E&mdash; nflscrapR (@nflscrapR) \u003Ca href=\"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193?ref_src=twsrc%5Etfw\"\u003ESeptember 14, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-61554").innerHTML = tweet["html"];</script><p>As a reply to his first tweet about the <code>nflfastR</code> project, Ben explained that he created the original function to scrape NFL data for the creation of his <a href="https://rbsdm.com/stats/stats/">NFL analytics website</a>. Thankfully, he and Seb did not keep the creation to themselves and released <code>nflfastR</code> to the public. Because of the “open source” nature of R and R packages, a laundry list of companion packages quickly developed alongside <code>nflfastR</code>. The original <code>nflfastR</code> package is now part of the larger <code>nflverse</code> of packages that drive the NFL analytics community on Twitter and beyond.</p>
 <p>The creation of the <code>nflverse</code> allowed for anybody interested in NFL analytics to easily access data, manipulate it to their liking, and release their visualizations and/or metrics to the wider public. In fact, it is now a regular occurrence for somebody to advance their R programming ability because of the <code>nflverse</code> and then go on to win the Big Data Bowl. As of the 2022 version of the Big Data Bowl, over “30 participants have been hired to work in data and analytics roles in sports, including 22 that were hired in football” <span class="citation" data-cites="bigdatabowl-ws">(<a href="references.html#ref-bigdatabowl-ws" role="doc-biblioref"><span>“Big Data Bowl: The Annual Analytics Contest Explores Statistical Innovations in Football,”</span> n.d.</a>)</span>. Most recently, the <a href="https://www.boltsfromtheblue.com/2021/7/9/22570490/chargers-news-nfl-big-data-bowl">Chargers hired 2020 participate Alex Stern</a> and the <a href="https://twitter.com/sethwalder/status/1532721476209627136">Chiefs hired Marc Richards</a>, a member of the winning 2021 team, as a Football Research Analyst.</p>
 <p>Kevin Clark, in a 2018 article for <a href="https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution"><em>The Ringer</em></a>, explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is “happening in front of you all the time.” The use of analytics in the NFL did, however, predate Clark’s article. In 2014, Eagles head coach Doug Pederson explained that all decisions made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. Leading this early adoption of analytics, and reporting directly to team Vice President Howie Roseman, were Joe Douglas and Alec Halaby, “a 31-year-old Harvard grad with a job description” that had an emphasis on “integrating traditional and analytical methods in football decision-making.” The result? A “blending of old-school scouting and newer approaches” that were often only seen in other leagues, such as the NBA and MLB <span class="citation" data-cites="rosenthal2018">(<a href="references.html#ref-rosenthal2018" role="doc-biblioref">Rosenthal 2018</a>)</span>. Pederson believed in and trusted the team’s approach to analytics so much that a direct line of communication was created between the two during games, with the analytics department providing the head coach with math-based recommendations for any scenario Pederson requested <span class="citation" data-cites="awbrey2020">(<a href="references.html#ref-awbrey2020" role="doc-biblioref">Awbrey 2020</a>)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically “altered baseball’s DNA” <span class="citation" data-cites="heifetz2019">Heifetz (<a href="references.html#ref-heifetz2019" role="doc-biblioref">2019</a>)</span>]. Moreover, as explained in Seth Partnow’s outstanding <a href="https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=1656245879&amp;sr=8-4"><em>The Midrange Theory: Basketball’s Evolution in the Age of Analytics</em></a>, the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket (for a high-percentage shot) or to take the 3-pointer, as the possible additional point is statistically worth more despite the lower success probability as opposed a 2-point midrange shot) as well as the traditional, “old-school” center position.</p>
@@ -342,9 +305,8 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/4th-down-attempts.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">4th Down Attempts: 2000 - 2021</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/4th-down-attempts.png" class="img-fluid figure-img" width="1942"></p>
+<figcaption class="figure-caption">4th Down Attempts: 2000 - 2021</figcaption></figure>
 </div>
 </div>
 </div>
@@ -353,9 +315,8 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/baldwin-graph-goforit.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Credit: Ben Baldwin</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/baldwin-graph-goforit.png" class="img-fluid figure-img" width="7200"></p>
+<figcaption class="figure-caption">Credit: Ben Baldwin</figcaption></figure>
 </div>
 </div>
 </div>
@@ -363,9 +324,8 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/tomlin-go-for-it.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Credit: Ben Baldwin</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/tomlin-go-for-it.png" class="img-fluid figure-img" width="7200"></p>
+<figcaption class="figure-caption">Credit: Ben Baldwin</figcaption></figure>
 </div>
 </div>
 </div>
@@ -427,9 +387,8 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/adjusteddefense.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Adjusted Defensive Impact</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/adjusteddefense.png" class="img-fluid figure-img" width="560"></p>
+<figcaption class="figure-caption">Adjusted Defensive Impact</figcaption></figure>
 </div>
 </div>
 </div>
@@ -445,7 +404,13 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 </ol>
 <p>It is also important to note that it is not expected for you to be an expert in statistics, coding, or data modeling in order to find this book useful. In fact, I self-taught myself the R programming language after discovering its potential usefulness in my personal academic research. I only “became more serious” about advancing my understanding of the language’s nuances, and more advanced methods, after discovering the <code>nflscrapR</code> package and using it as my learning tool for the deep dive into R. My decision to pursue an academic certificate in the language was driven by the creation of my Sport Analytics course, as the certificate provided the “academic training” proof that was necessary to move the course through the University’s curriculum committee. Nonetheless, because of this self-taught journey - and despite being an academic myself - I find that I largely avoid the use of “complicated jargon” that is so evident in most formal writing.</p>
 <p>Because of this, and regardless of which chapter you begin with, I believe that this book achieves its main goal: to provide a gentle introduction to doing NFL analytics with R.</p>
-</section><section id="overview-of-chapters" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="overview-of-chapters">
+<p>As this book is also published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
+<ul>
+<li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
+<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises will include the R files that contain the answers to each exercise.</p></li>
+<li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
+<li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
+</ul></section><section id="overview-of-chapters" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="overview-of-chapters">
 <span class="header-section-number">1.1</span> Overview of Chapters</h2>
 <ul>
 <li><p><strong>Chapter 1</strong> provides an overview of the <code>nflverse</code> with specific attention paid to the difference between using <code>nflfastR</code> versus <code>nflreadr</code>. Serving as the first dive into analytics, the chapter showcases how to use <code>nflreadr</code> to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once.</p></li>
@@ -477,182 +442,185 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <p>This book was written using RStudio’s <a href="https://rstudio.github.io/visual-markdown-editing/">Visual Editor for R Markdown</a>. It was published using the <code>Quarto</code> publishing system built on <code>Pandoc</code>. As well, the following packages were used in this book:</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
 <caption>Packages Used In This Book</caption>
- <thead><tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> package </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> version </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> source </th>
-  </tr></thead>
+<thead><tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">package</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">version</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">source</th>
+</tr></thead>
 <tbody>
-<tr>
-<td style="text-align:left;"> arrow </td>
-   <td style="text-align:left;"> 10.0.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> bonsai </td>
-   <td style="text-align:left;"> 0.2.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> caret </td>
-   <td style="text-align:left;"> 6.0-94 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> cowplot </td>
-   <td style="text-align:left;"> 1.1.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> cropcircles </td>
-   <td style="text-align:left;"> 0.2.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> doParallel </td>
-   <td style="text-align:left;"> 1.0.17 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> dplyr </td>
-   <td style="text-align:left;"> 1.1.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> extrafont </td>
-   <td style="text-align:left;"> 0.19 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> factoextra </td>
-   <td style="text-align:left;"> 1.0.7 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> geomtextpath </td>
-   <td style="text-align:left;"> 0.1.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggcorrplot </td>
-   <td style="text-align:left;"> 0.1.4 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggfx </td>
-   <td style="text-align:left;"> 1.0.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggimage </td>
-   <td style="text-align:left;"> 0.3.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggplot2 </td>
-   <td style="text-align:left;"> 3.4.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggpmisc </td>
-   <td style="text-align:left;"> 0.5.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggrepel </td>
-   <td style="text-align:left;"> 0.9.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggridges </td>
-   <td style="text-align:left;"> 0.5.4 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> ggtext </td>
-   <td style="text-align:left;"> 0.1.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> glue </td>
-   <td style="text-align:left;"> 1.6.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> gtExtras </td>
-   <td style="text-align:left;"> 0.4.5 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> lightgbm </td>
-   <td style="text-align:left;"> 3.3.5 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> magick </td>
-   <td style="text-align:left;"> 2.7.3 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> nflfastR </td>
-   <td style="text-align:left;"> 4.5.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> nflreadr </td>
-   <td style="text-align:left;"> 1.3.2 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> nflverse </td>
-   <td style="text-align:left;"> 1.0.2 </td>
-   <td style="text-align:left;"> https://nflverse.r-universe.dev (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> nnet </td>
-   <td style="text-align:left;"> 7.3-16 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> RColorBrewer </td>
-   <td style="text-align:left;"> 1.1-3 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> reshape2 </td>
-   <td style="text-align:left;"> 1.4.4 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.1) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> scales </td>
-   <td style="text-align:left;"> 1.2.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> tidymodels </td>
-   <td style="text-align:left;"> 1.0.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> tidyverse </td>
-   <td style="text-align:left;"> 2.0.0 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> vroom </td>
-   <td style="text-align:left;"> 1.6.1 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
-<tr>
-<td style="text-align:left;"> webshot </td>
-   <td style="text-align:left;"> 0.5.4 </td>
-   <td style="text-align:left;"> CRAN (R 4.1.3) </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">arrow</td>
+<td style="text-align: left;">10.0.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bonsai</td>
+<td style="text-align: left;">0.2.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">caret</td>
+<td style="text-align: left;">6.0-94</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cowplot</td>
+<td style="text-align: left;">1.1.1</td>
+<td style="text-align: left;">CRAN (R 4.1.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cropcircles</td>
+<td style="text-align: left;">0.2.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">doParallel</td>
+<td style="text-align: left;">1.0.17</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dplyr</td>
+<td style="text-align: left;">1.1.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">extrafont</td>
+<td style="text-align: left;">0.19</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">factoextra</td>
+<td style="text-align: left;">1.0.7</td>
+<td style="text-align: left;">CRAN (R 4.1.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geomtextpath</td>
+<td style="text-align: left;">0.1.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ggcorrplot</td>
+<td style="text-align: left;">0.1.4</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ggfx</td>
+<td style="text-align: left;">1.0.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ggimage</td>
+<td style="text-align: left;">0.3.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ggplot2</td>
+<td style="text-align: left;">3.4.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ggpmisc</td>
+<td style="text-align: left;">0.5.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ggrepel</td>
+<td style="text-align: left;">0.9.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ggridges</td>
+<td style="text-align: left;">0.5.4</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ggtext</td>
+<td style="text-align: left;">0.1.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glue</td>
+<td style="text-align: left;">1.6.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gtExtras</td>
+<td style="text-align: left;">0.4.5</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lightgbm</td>
+<td style="text-align: left;">3.3.5</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">magick</td>
+<td style="text-align: left;">2.7.3</td>
+<td style="text-align: left;">CRAN (R 4.1.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nflfastR</td>
+<td style="text-align: left;">4.5.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nflreadr</td>
+<td style="text-align: left;">1.3.2</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nflverse</td>
+<td style="text-align: left;">1.0.2</td>
+<td style="text-align: left;">https://nflverse.r-universe.dev (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nnet</td>
+<td style="text-align: left;">7.3-16</td>
+<td style="text-align: left;">CRAN (R 4.1.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RColorBrewer</td>
+<td style="text-align: left;">1.1-3</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">reshape2</td>
+<td style="text-align: left;">1.4.4</td>
+<td style="text-align: left;">CRAN (R 4.1.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scales</td>
+<td style="text-align: left;">1.2.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tidymodels</td>
+<td style="text-align: left;">1.0.0</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tidyverse</td>
+<td style="text-align: left;">2.0.0</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vroom</td>
+<td style="text-align: left;">1.6.1</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">webshot</td>
+<td style="text-align: left;">0.5.4</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
 </tbody>
 </table>
+</div>
+
+
 </div>
 </div>
 <p>Finally, please note that this book uses the <code>dplyr</code> pipe operator (<code>%&gt;%</code>) as opposed to the new, built-in pipe operator released with version 4.1 of R (<code>|&gt;</code>). It is likely that you can work through the exercises and examples in this book by using either operator. I maintain my use of the <code>dplyr</code> pipe operator for no other reason than personal preference.</p>
@@ -661,35 +629,35 @@ Welcome to the online home of<br><strong><em>Introduction to NFL Analytics with 
 <p>The online version of this book is published with the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.</a></p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-awbrey2020" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-awbrey2020" class="csl-entry" role="listitem">
 Awbrey, Jake. 2020. <span>“The Future of NFL Analytics.”</span> <a href="https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics">https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics</a>.
 </div>
-<div id="ref-bechtold2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-bechtold2021" class="csl-entry" role="listitem">
 Bechtold, Taylor. 2021. <span>“How the Analytics Movement Has Changed the NFL and Where It Has Fallen Short.”</span> <a href="https://theanalyst.com/na/2021/04/evolution-of-the-analytics-movement-in-the-nfl/">https://theanalyst.com/na/2021/04/evolution-of-the-analytics-movement-in-the-nfl/</a>.
 </div>
-<div id="ref-bigdatabowl-ws" class="csl-entry" role="doc-biblioentry">
+<div id="ref-bigdatabowl-ws" class="csl-entry" role="listitem">
 <span>“Big Data Bowl: The Annual Analytics Contest Explores Statistical Innovations in Football.”</span> n.d. <a href="https://operations.nfl.com/gameday/analytics/big-data-bowl/">https://operations.nfl.com/gameday/analytics/big-data-bowl/</a>.
 </div>
-<div id="ref-bushnell2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-bushnell2021" class="csl-entry" role="listitem">
 Bushnell, Henry. 2021. <span>“NFL Teams Are Taking 4th-down Risks More Than Ever - but Still Not Often Enough.”</span> <a href="https://sports.yahoo.com/nfl-teams-are-taking-4th-down-risks-more-than-ever-but-still-not-often-enough-163650973.html">https://sports.yahoo.com/nfl-teams-are-taking-4th-down-risks-more-than-ever-but-still-not-often-enough-163650973.html</a>.
 </div>
-<div id="ref-carl2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-carl2022" class="csl-entry" role="listitem">
 Carl, Sebastian. 2022. <span>“nflplotR.”</span> <a href="https://nflplotr.nflverse.com/">https://nflplotr.nflverse.com/</a>.
 </div>
-<div id="ref-fortier2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-fortier2020" class="csl-entry" role="listitem">
 Fortier, Sam. 2020. <span>“The NFL’s Analytics Movement Has Finally Reached the Sport’s Mainstream.”</span> <a href="https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/">https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/</a>.
 </div>
-<div id="ref-heifetz2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-heifetz2019" class="csl-entry" role="listitem">
 Heifetz, Danney. 2019. <span>“We Salute You, Founding Father of the NFL’s Analytics Movement.”</span> <a href="https://www.theringer.com/nfl-preview/2019/8/15/20806241/nfl-analytics-pro-football-focus">https://www.theringer.com/nfl-preview/2019/8/15/20806241/nfl-analytics-pro-football-focus</a>.
 </div>
-<div id="ref-kozora2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-kozora2015" class="csl-entry" role="listitem">
 Kozora, Alex. 2015. <span>“Tomlin Prefers "Feel over Analytics".”</span> <a href="http://steelersdepot.com/2015/09/tomlin-prefers-feel-over-analytics/">http://steelersdepot.com/2015/09/tomlin-prefers-feel-over-analytics/</a>.
 </div>
-<div id="ref-rosenthal2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-rosenthal2018" class="csl-entry" role="listitem">
 Rosenthal, Gregg. 2018. <span>“Super Bowl LII: How the 2017 Philadelphia Eagles Were Built.”</span> <a href="https://www.nfl.com/news/super-bowl-lii-how-the-2017-philadelphia-eagles-were-built-0ap3000000912753">https://www.nfl.com/news/super-bowl-lii-how-the-2017-philadelphia-eagles-were-built-0ap3000000912753</a>.
 </div>
-<div id="ref-silge" class="csl-entry" role="doc-biblioentry">
+<div id="ref-silge" class="csl-entry" role="listitem">
 Silge, Julia. n.d. <span>“Tidymodels.”</span> <a href="https://tidymodels.org">https://tidymodels.org</a>.
 </div>
 </div>
@@ -724,9 +692,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -791,6 +773,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -840,6 +908,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

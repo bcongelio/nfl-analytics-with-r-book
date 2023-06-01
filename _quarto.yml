@@ -38,6 +38,5 @@ format:
   pdf:
     documentclass: krantz
     keep-tex: true
-    output-file: pdf-book
 
 

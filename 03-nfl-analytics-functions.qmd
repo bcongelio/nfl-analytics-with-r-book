@@ -11,7 +11,6 @@ library(extrafont)
 library(ggimage)
 library(ggtext)
 library(ggrepel)
-extrafont::loadfonts(quiet = TRUE)
 ```
 
 As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current version of the `nflverse` is comprised of five separate R packages:
@@ -257,7 +256,7 @@ best_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
 best_adjusted_yards
 ```
 
-To get the answer, we've created code that follows along with our prior examples. However, after using `filter()` to limit the number of attempts each quarterback must have, we use `ungroup()` to remove the previous grouping between `season` and `player_name` and then create use `group_by()` again on just the `season` information in the data. After, we use `filter()` to select just the highest adjusted yards per attempt for each individual season. As a result, we can see that Mahomes only led the NFL in this specific metric in the 2018 season. In fact, between the 2018 and 2022 seasons, Ryan Tannehill had the highest adjusted yards per attempt with 10.2 (but notice he had just 286 passing attempts).
+To get the answer, we've created code that follows along with our prior examples. However, after using `filter()` to limit the number of attempts each quarterback must have, we use `ungroup()` to remove the previous grouping between `season` and `player_name` and then use `group_by()` again on just the `season` information in the data. After, we use `filter()` to select just the highest adjusted yards per attempt for each individual season. As a result, we can see that Mahomes only led the NFL in this specific metric in the 2018 season. In fact, between the 2018 and 2022 seasons, Ryan Tannehill had the highest adjusted yards per attempt with 10.2 (but notice he had just 286 passing attempts).
 
 As mentioned, the `load_player_stats()` information is provided on a week-by-week basis. In our above example, we are aggregating all regular season weeks into a season-long metric. Given the structure of the data, we can take a similar approach but to determine the leaders on a week-by-week basis. To showcase this, we can determine the leader in rushing EPA for every week during the 2022 regular season.
 
@@ -352,7 +351,7 @@ pbp.data <- nflreadr::load_pbp(2022)
 ls(pbp.data)
 ```
 
-The amount of information contained in the `nflverse` play-by-play data can be overwhelming. Luckily, the `nflfastR` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflfastR Field Descriptions](https://www.nflfastr.com/articles/field_descriptions.html).
+The amount of information contained in the `nflverse` play-by-play data can be overwhelming. Luckily, the `nflreadr` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflreadr Field Descriptions](https://nflreadr.nflverse.com/articles/dictionary_pbp.html).
 
 We can recreate our examination of 2018 adjusted pass yards per attempt to just those passes on 3rd down with 10 or less yards to go by running the following code:
 
@@ -452,7 +451,7 @@ passer_grouping
 passer_player_grouping
 ```
 
-When grouping by `passer`, we get a total attempts of 673 for Ben Roethlisberger. That number increases to 675 when grouping by `passer_player_name`. Again, this is because the `passer` variable is created by the `nflverse` and automatically removes spikes, scrambles, and sacks while `passer_player_name` includes all three.
+When grouping by `passer`, we get a total attempts of 672 for Ben Roethlisberger. That number increases to 675 when grouping by `passer_player_name`. Again, this is because the `passer` variable is created by the `nflverse` and automatically removes spikes, scrambles, and sacks while `passer_player_name` includes all three.
 
 We can run the following code to determine where the difference of three passing attempts is coming from between `passer` and `passer_player_name`.
 
@@ -505,7 +504,7 @@ One item to consider, however, is the concept of "garbage time." Are the above r
 
 #### QB Aggressiveness: Filtering for "Garbage Time?"
 
-To examine the impact of "garbage time" statistics, we add provide an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.
+To examine the impact of "garbage time" statistics, we can add an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.
 
 Let's add the "garbage time" filter to the code we've already prepared:
 
@@ -531,7 +530,7 @@ aggressiveness_garbage
 
 We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense's win probability (the `wp` variable) was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.
 
-The decision on range of the win probablity numbers is very much a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for the win probability cutoff point. However, Sebastian Carl - one of the creators of the `nflverse` explained in the package's Discord:
+The decision on range of the win probability numbers is very much a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for the win probability cutoff point. However, Sebastian Carl - one of the creators of the `nflverse` explained in the package's Discord:
 
 > Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80%"garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
 
@@ -572,7 +571,7 @@ Josh Allen, Dak Prescott, and Tua Tagovailoa were all outstanding on 3rd down du
 
 ### Measuring Impact of Offensive Line
 
-Brian Burke - prior to moving to ESPN - used to host his own blog where he showcased his analytics work. Way back in November of 2014, he wrote a post that detailed his process in determining how to value an offensive line's performance over the course of an NFL season.
+Brian Burke - prior to moving to ESPN - used to host his own blog where he showcased his analytics work. In November of 2014, he wrote a post that detailed his process in determining how to value an offensive line's performance over the course of an NFL season.
 
 The process of making such a valuation is understandably difficult as, as Burke pointed out, an offensive line's performance on the field is often characterized by the overall absence of stats. The less sacks, short yardage plays, tackles for loss, and quarterback scrambles - for example - the better. But how can the performance of an offensive line be quantified based on statistics that are absent?
 
@@ -669,7 +668,7 @@ ay_five_years <- nflreadr::load_pbp(2017:2022)
 
 To retrieve multiple seasons of data, a colon `:` is placed between the years that you want. When you run the code, `nflreadr` will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season).
 
-Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021's air yards per attempt leaders using `load_player_stats()`. In this case, however, we are including an additional filter to gather those passing attempts that resulted *only* in complete passes:
+Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021's air yards per attempt leaders using `load_player_stats()`. In this case, however, we are including an additional `filter()` to gather those passing attempts that resulted *only* in complete passes:
 
 ```{r avg-ay-5-results, echo = TRUE}
 
@@ -697,17 +696,17 @@ The `nflreadr` package comes with a multitude of "under the hood" functions desi
 ls("package:nflreadr")
 ```
 
-Going forward in this chapter, we will be exploring specific use cases for the functions provided by `nflreadr` - but not all of them. For example, the `dictionary_` functions can more easily be used directly on the `nflreadr` website where the package's maintainers keep a copy of each. Many, like the dictionary for play-by-play data, includes a search feature to allow you to quickly find how the variables you are looking for is provided in the column name. Others, like the `clear_cache()` function is used only when you want to wipe any memoized data stored by `nflreadr` - often needed if you are troubleshooting a pesky error message - `join_coalesce()` which is an experimental function that is only used internally to help build player IDs into the data. The `load_pbp()` and `load_player_stats()` function will also not be covered here, as the first portion of this chapter explored the use of both in great detail. We will briefly discuss the use of `load_players()` and `load_rosters()` but a more detailed discussion of each is provided in Chapter 4: Data Visualization with NFL Analytics. The remaining functions will be presented in the order provided on the [`nflreadr` function reference website.](https://nflreadr.nflverse.com/reference/index.html)
+Going forward in this chapter, we will be exploring specific use cases for the functions provided by `nflreadr` - but not all of them. For example, the `dictionary_` functions can more easily be used directly on the `nflreadr` website where the package's maintainers keep a copy of each. Many, like the dictionary for play-by-play data, includes a search feature to allow you to quickly find how the variables you are looking for is provided in the column name. Others, like the `clear_cache()` function is used only when you want to wipe any memoized data stored by `nflreadr` - often needed if you are troubleshooting a pesky error message - or `join_coalesce()` which is an experimental function that is only used internally to help build player IDs into the data. The `load_pbp()` and `load_player_stats()` function will also not be covered here, as the first portion of this chapter explored the use of both in great detail. We will briefly discuss the use of `load_players()` and `load_rosters()` but a more detailed discussion of each is provided in Chapter 4: Data Visualization with NFL Analytics. The remaining functions will be presented in the order provided on the [`nflreadr` function reference website.](https://nflreadr.nflverse.com/reference/index.html)
 
 ### The `load_participation()` Function
 
-The `load_participation()` function allows us to create a dataframe of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting dataframe, when not including play-by-play data, includes information pertaining to: the individial game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
+The `load_participation()` function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
 
-Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe) uses the data to create tables (built with the `gt` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluncuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/) that allows anybody to explore the data and output the results in .png format.
+Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe) uses the data to create tables (built with the `gt` and `gtExtras` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluctuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/) that allows anybody to explore the data and output the results in .png format.
 
 {{< tweet josephjefe 1621217561437409280 >}}
 
-To build a dataframe of 2022 participation data, that includes complete play-by-play, you must pass both the `season` and `include_pbp` argument with the `load_participation()` function.
+To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the `season` and `include_pbp` argument with the `load_participation()` function.
 
 ```{r loading-2022-participation, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -716,14 +715,14 @@ participation <- nflreadr::load_participation(season = 2022, include_pbp = TRUE)
 participation
 ```
 
-Rather than exploring the data at the league-level, let's take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the `load_participation()` function, is not fully prepped for immediate analysis as the `players_on_play`, `offense_players`, and `defense_players` information (which contains the unique player indentification numbers) are separated by a delimiter (in this case, a semicolon) in what are called "concatenated strings" or "delimited strings." While this is a compact way to store the values in the core data frame, it does require us to clean the information through the "splitting" or "tokenizing" process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the `separate_rows()` function in `tidyr`.
+Rather than exploring the data at the league-level, let's take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the `load_participation()` function, is not fully prepped for immediate analysis as the `players_on_play`, `offense_players`, and `defense_players` information (which contains the unique player identification numbers) are separated by a delimiter (in this case, a semicolon) in what are called "concatenated strings" or "delimited strings." While this is a compact way to store the values in the core data frame, it does require us to clean the information through the "splitting" or "tokenizing" process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the `separate_rows()` function in `tidyr`.
 
 ::: callout-tip
 If you use `load_participation()` but set `include_pbp = FALSE` it is important to remember that the `posteam` variable that is part of the play-by-play data will not exist. Instead, the offensive team is indicated by the `possession_team` column.
 
 If you gather the participation data *with* play-by-play information, you can use either `possession_team` or `posteam` for any filtering.
 
-The same is not true when looking at defensive participation data. A defensive team variable is not provided without included the play-by-play in the data. Once set to `TRUE`, the defensive team is housed under the typical `defteam` column.
+The same is not true when looking at defensive participation data. A defensive team variable is not provided without including the play-by-play in the data. Once set to `TRUE`, the defensive team is housed under the typical `defteam` column.
 :::
 
 ```{r prepping-participation-data, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE}
@@ -743,7 +742,7 @@ We are doing quite a few things in the above example:
 
 1.  **Those rows where the is an 'NA' value for `offense_formation`** **are removed.** The participation data includes information for kickoffs, extra points, field goals, punts, QB kneels, no plays, and more. It is possible to remove items using `play_type == "run" | play_type == "pass"` but such an approach, if done with the Steelers, results in one fake punt being included in the data (as the `play_type` was listed as "run"). If you wish to include plays such as fake punts, you do so by filtering for only specific play types.
 2.  **Only those rows that includes 'PIT' as the `posteam`** **are included.**
-3.  **The `separate_rows()`** **function from `tidyr`** **is used to conduct the splitting of the concatenated players identifiers in the `offense_players`** **column**. The `separate_rows()` function needs just to arguments to complete the process - the column name and the delimiter (provided in the argument as `sep =`).
+3.  **The `separate_rows()`** **function from `tidyr`** **is used to conduct the splitting of the concatenated players identifiers in the `offense_players`** **column**. The `separate_rows()` function needs just two arguments to complete the process - the column name and the delimiter (provided in the argument as `sep =`).
 4.  **The newly split data is then grouped by `offense_personnel`** **and `offense_players`** **in order to calculate the number of times each specific ID was associated with personnel package**. The resulting data frame lists the offense formation type for each player that participated in it, along with the player's respective participation count.
 
 As is, the `load_participation()` data does not include any way to further identify players outside of the unique players IDs. Because of this, it is necessary to use the `load_rosters()` function to include this information (this process is included below in the `load_rosters()` section).
@@ -752,16 +751,16 @@ As is, the `load_participation()` data does not include any way to further ident
 
 The `load_rosters()` function houses a multitude of useful tools for use in the `nflverse`. With player information dating back to 1920, `load_rosters()` will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.
 
-Importantly, `load_rosters()` also provides the unique identifier for each player over nine different sources: the `gsis_id` (which is the core ID used in `nflverse` data), `sleeper_id`, `espn_id`, `yahoo_id`, `rotowire_id`, `pff_id`, `fantasy_data_id`, `sportradar_id`, and `pfr_id`. The different IDs become extremely useful when using data collected from outside the `nflverse`, or when combining data from two outside sources, matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in `load_rosters()` data.
+Importantly, `load_rosters()` also provides the unique identifier for each player over nine different sources: the `gsis_id` (which is the core ID used in `nflverse` data), `sleeper_id`, `espn_id`, `yahoo_id`, `rotowire_id`, `pff_id`, `fantasy_data_id`, `sportradar_id`, and `pfr_id`. The different IDs become extremely useful when using data collected from outside the `nflverse`, or when combining data from two outside sources, as matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in `load_rosters()` data.
 
-Let's return to our `participation_split` data frame that we built prior in this chapter while working with the `load_participation()` function. The the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.
+Let's return to our `participation_split` data frame that we just built while working with the `load_participation()` function. While the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.
 
 ```{r loading-rosters-for-partic, eval = TRUE, echo = TRUE, output = FALSE}
 
 rosters <- nflreadr::load_rosters(2022)
 ```
 
-The only argument you must provide the `load_rosters()` function is the years in which you want to collect roster information (in this specific case, 2022). While we know we only want the Steelers' roster, it is not suggested to use `filter()` to gather any specific team at this point. Case in point: do so with this example will result in the `gsis_id` *00-0036326* having an "NA" value for a name, despite having over 380 snaps in the 1 RB, 1TE, 3 WR offensive formation. The player associated with that `gsis_id` is Chase Claypool, who the Steelers traded to the Bears on November 1 of 2022. Because of this, no player name will be associated with that specific `gsis_id` on the Steelers' roster (with the end result being a missing value).
+The only argument you must provide the `load_rosters()` function is the years in which you want to collect roster information (in this specific case, 2022). While we know we only want the Steelers' roster, it is not suggested to use `filter()` to gather any specific team at this point. Case in point: doing so with this example will result in the `gsis_id` *00-0036326* having an "NA" value for a name, despite having over 380 snaps in the 1 RB, 1TE, 3 WR offensive formation. The player associated with that `gsis_id` is Chase Claypool, who the Steelers traded to the Bears on November 1 of 2022. Because of this, no player name will be associated with that specific `gsis_id` on the Steelers' roster (with the end result being a missing value).
 
 ::: callout-note
 You may notice that the resulting data frame, titled `pit_roster`, has 80 players on the roster despite NFL teams only being permitted to have 53 active players at a time.
@@ -853,7 +852,7 @@ nfl_officials
 
 To calculate the total number of penalties flagged by each crew, we must first bring in the play-by-play from the 2022 season. After, we will use `filter()` to gather only those plays where a flag was thrown, and then `select()` the relevant columns, and finally `summarize()` by the `old_game_id` to get the total penalties called and the total penalty yards as a result of those penalties.
 
-After, we conducted another `left_join()` to bring in the specific penalty information into our `nfl_officials` data frame.
+After, we conduct another `left_join()` to bring in the specific penalty information into our `nfl_officials` data frame.
 
 ```{r penalties-from-pbp, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -874,7 +873,7 @@ nfl_officials <- nfl_officials %>%
 
 ```
 
-With the data now combined, we can `group_by()` each game's unique `game_id` and then use `summarize()` to sum the penalties called and the penalty yardage. After descending by the total number of penalties, we can see that Referee Carl Cheffers, and his crew, called the most penalties during the 2022 NFL season with 223 and, unsurprisingly, also had the highest amount of penalty yards with 1,916.
+With the data now combined, we can `group_by()` each game's unique `game_id` and then use `summarize()` to sum the penalties called and the penalty yardage. After arranging the results in descending order by the total number of penalties, we can see that Referee Carl Cheffers, and his crew, called the most penalties during the 2022 NFL season with 223 and, unsurprisingly, also had the highest amount of penalty yards with 1,916.
 
 ```{r summarizing-referee-information, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -1046,7 +1045,7 @@ ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw, y = avg_completed_air
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   geom_text_repel(aes(label = player_display_name),
-                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+                  family = "Overpass", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Average Time to Throw") +
   ylab("Average Completed Air Yards") +
@@ -1077,7 +1076,7 @@ ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards, y = actual_rush_yar
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
-  geom_text_repel(aes(label = player_display_name), family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+  geom_text_repel(aes(label = player_display_name), family = "Overpass", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Expected Rush Yards") +
   ylab("Actual Rush Yards") +
@@ -1161,7 +1160,7 @@ ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+                  family = "Overpass", fontface = "bold", size = 3.5) +
   xlab("Bad Throws") +
   ylab("Drops") +
   labs(title = "**QB Bad Throws vs. WR Drops**",
@@ -1205,7 +1204,7 @@ ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+                  family = "Overpass", fontface = "bold", size = 3.5) +
   xlab("Yards Before Contact") +
   ylab("Yards After Contact") +
   labs(title = "**Running Backs: Yards Before and After Contact**",
@@ -1239,7 +1238,7 @@ ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+                  family = "Overpass", fontface = "bold", size = 3.5) +
   xlab("Yards At Point of Catch") +
   ylab("Yards After Catch") +
   labs(title = "**Yards at Point of Catch vs. Yards After Catch",
@@ -1359,7 +1358,7 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
   xlab("Cash Paid (in millions)") +
   ylab("Mean DAKOTA Composite") +
   geom_text_repel(aes(label = player),
-                  family = "Roboto Codensed", fontface = "bold", size = 3.5) +
+                  family = "Overpass", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   labs(title = "Cash Paid vs. Mean DAKOTA Composite",
        subtitle = "2022 Regular Season",
@@ -1370,7 +1369,7 @@ Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are am
 
 ## Exercises
 
-### **Exercise #1**
+### **Exercise 1**
 
 1.  Load data from the 2010 to 2022 regular seasons into a data frame titled `pbp`.
 2.  In a data frame titled `rushing_success`, determine how many rushing attempts each offensive team had on 1st down.
@@ -1378,7 +1377,7 @@ Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are am
 4.  Calculate the percentage of the results into a column titled `success_pct`.
 5.  Arrange the results in descending order by `success_pct`.
 
-### Exercise #2
+### Exercise 2
 
 Load data from the 2022 regular season into a data frame titled `pbp_2022`.
 
@@ -1388,14 +1387,14 @@ Load data from the 2022 regular season into a data frame titled `pbp_2022`.
 4.  Filter the results to those QBs with 100 or more attempts.
 5.  Arrange the results in descending order by `ay_percent`.
 
-### Exercise #3
+### Exercise 3
 
 Tom Brady had a long and storied career, serving as a full-time started in the NFL from 2001 to 2022. The `qb_epa` metric gives a quarterback credit for EPA up to the point where a receivers lost a fumble after a completed catch. For this question, create data frame titled `tom_brady` and find Brady's average `qb_epa` per season, from 2001 to 2022. After, arrange in descending order by his average QB EPA.
 
-### Exercise #4
+### Exercise 4
 
 Create a data frame titled `made_field_goals` and find, between the 2000 and 2022 season, the number of field goal attempts and percentage made on all kicks greater than 40-yards in distance.
 
-### Exercise #5
+### Exercise 5
 
 On December 11 of the 2005 season, Pittsburgh's Jerome Bettis trucked Bears linebacker Brian Urlacher. You can view the play here: [Bettis Trucks Urlacher](https://www.youtube.com/watch?v=u0mtG-8DWYk). Using the `load_pbp` function, find this specific play (using the video for contextual clues). After, determine how much win probability this individual play added (that is: the differnece between `home_wp` and `home_wp_post`.

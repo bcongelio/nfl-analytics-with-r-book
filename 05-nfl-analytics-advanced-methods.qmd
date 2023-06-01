@@ -25,7 +25,6 @@ library(factoextra)
 library(cowplot)
 library(gghighlight)
 library(ggrepel)
-extrafont::loadfonts(quiet = TRUE)
 options(digits = 3)
 ```
 
@@ -175,7 +174,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|:------------------:|:--------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -463,15 +462,13 @@ The model's Coefficients of our multiple linear regression shows `NA` values for
 regression_corr <- cor(multiple_lm_data[, c("total_yards", "rz_eff", "rz_td_eff",
                                             "rz_fg_eff", "total_to", "def_td", "spec_tds")])
 
-### melting the regression_corr to prep for ggplot
 melted_regression_corr <- melt(regression_corr)
 
-## plotting
 ggplot(data = melted_regression_corr, aes(x = Var1, y = Var2, fill = value)) +
   geom_tile() +
   scale_fill_distiller(palette = "PuBu", direction = -1, limits = c(-1, +1)) +
   geom_text(aes(x = Var1, y = Var2, label = round(value, 2)), color = "black",
-            fontface = "bold", family = "Roboto Condensed", size = 5) +
+            fontface = "bold", family = "Overpass", size = 5) +
   labs(title = "Multicollinearity Correlation Matrix",
        subtitle = "Multiple Linear Regression: 2022 Data",
        caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
@@ -591,7 +588,7 @@ A **multinomial regression model** is an extension of the binary model in that i
 
 An **ordinal regression model** is used when the dependent variables not only have ordered categories, but the structure and/or order of these categories house meaningful information. Ordinal regression could be used, for example, to possibly predict the severity of a player's injury. The ordered and meaningful categories of the dependent variable can coincide with the severity of the injury itself (mild, moderate, severe, season-ending) while the predictor variables include several other types of categories (the type of contact, the playing surface, what position the player played, how late into the season it occurred, whether the team is coming off a bye week, etc.).
 
-#### Logistic Regression #1: Binary Classification
+#### Logistic Regression 1: Binary Classification
 
 A binary regression model is used when the dependent variable is in binary format (that is, `1` for "yes" or `0` for "no). This binary represents two - and only two - possible outcomes such as a a team converting on third down or not or if a team won or lost the game. Constructing binary regression models allows use to predict the likelihood of the dependent event occurring based on the provided set of predictor variables.
 
@@ -677,7 +674,6 @@ The process of splitting the data into a training and testing set involves three
 mvp_model_data <- qb_mvp_stats %>%
   ungroup()
 
-### splitting using rsample ... might need to manually split by season
 mvp_model_split <- rsample::initial_split(mvp_model_data, strata = mvp)
 mvp_model_train <- rsample::training(mvp_model_split)
 mvp_model_test <- rsample::testing(mvp_model_split)
@@ -799,7 +795,7 @@ new_mvp_predictions <- predict(mvp_model, newdata = new_mvp_data, type = "respon
 new_mvp_predictions
 ```
 
-According to our fully trained and tested model, fictional quarterback #2 has almost a 76% probability of winning the MVP when compared to the two other opposing quarterbacks.
+According to our fully trained and tested model, fictional quarterback 2 has almost over a 90% probability of winning the MVP when compared to the two other opposing quarterbacks.
 
 Finally, we use use the `broom` package to transform the model's information into a tidyverse-friendly data frame allowing us to visualize the information using `ggplot`.
 
@@ -824,7 +820,7 @@ A negative `Estimate` for a `Predictive Variable` means that as that statistics 
 
 Why, then, does a worse performance in `cmp_rank` provide a quarterback an increased chance in becoming MVP? Several issues could be causing this, including statistical noise, a variable that is highly correlated with `cmp_rank`, or a general non-linear relationship between `cmp_rank` and the response variable. If we were to continue working on this model, a good first step would using the `filter()` function to remove those quarterbacks with a limited number of attempts during the season.
 
-#### Logistic Regression #2: Multinomial Regression with `tidymodels`
+#### Logistic Regression 2: Multinomial Regression with `tidymodels`
 
 In our previous example building a binomial regression model, there were only two exactly outcomes: `0` and `1` for whether the specific quarterback was named that season's MVP. A multinomial regression is an extension of the binomial model, but is used when there are multiple categories of outcomes rather than just two. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. Using the softmax function to ensure that the probabilities for each dependent variable total 1, the main assumptions of th model are:
 
@@ -1116,7 +1112,7 @@ When the tuning process is complete, we can use the `show_best()` function to re
 
 show_best(multinom_play_tune, metric = "roc_auc")
 
-`# A tibble: 5 x 8
+`
      penalty mixture .metric .estimator  mean     n  std_err .config               
        <dbl>   <dbl> <chr>   <chr>      <dbl> <int>    <dbl> <chr>                 
 1 0.000001       0.2 roc_auc hand_till  0.668    10 0.000537 Preprocessor1_Model021
@@ -1220,13 +1216,13 @@ ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .l
   xlab("1 - Specificity") +
   ylab("Sensitivity") +
   annotate("text", x = .50, y = .47, label = "At or Below Is No Better Than A Coin Flip", angle = 45,
-           size = 5, family = "Roboto Condensed", fontface = "bold") +
+           size = 5, family = "Overpass", fontface = "bold") +
   annotate("text", x = .46, y = .64, label = "Good", angle = 45,
-           size = 5, family = "Roboto Condensed", fontface = "bold") +
+           size = 5, family = "Overpass", fontface = "bold") +
   annotate("text", x = .40, y = .74, label = "Better", angle = 45,
-           size = 5, family = "Roboto Condensed", fontface = "bold") +
+           size = 5, family = "Overpass", fontface = "bold") +
   annotate("text", x = .23, y = .97, label = "Best", angle = 45,
-           size = 5, family = "Roboto Condensed", fontface = "bold") +
+           size = 5, family = "Overpass", fontface = "bold") +
   labs(color = "Play Type",
        title = "**Offensive Play Prediction Model**",
        subtitle = "*2000-2022 | Regular Season*",
@@ -1704,7 +1700,6 @@ rushing_data_join <- rushing_data_join %>%
   mutate(across(ol:wr, as.factor)) %>%
   select(-ol, -offense_personnel)
 
-### doing some as above but for defense personnel
 rushing_data_join <- rushing_data_join %>%
   mutate(dl = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sDL)") %>% as.numeric(),
          lb = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric(),
@@ -1931,7 +1926,7 @@ ggplot(data = for_plot, aes(x = yards, y = exp_yards)) +
                   box.padding = 1.7,
                   segment.curvature = -0.1,
                   segment.ncp = 3, segment.angle = 20,
-                  family = "Roboto Condensed", size = 4, fontface = "bold")
+                  family = "Overpass", size = 4, fontface = "bold")
 ```
 
 The graph shows the "line of best fit" between `Actual Rushing Yards` and `Expected Rushing Yards`. Those running backs that outperformed the models expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards over this period of time while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model's expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook's 5,656 actual yards and 5,342 expected yards).
@@ -1974,7 +1969,7 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
                   aes(label = rusher),
                   box.padding = 1.5, nudge_y = 1, nudge_x = 2,
                   segment.curvature = -0.1, segment.ncp = 3, segment.angle = 20,
-                  family = "Roboto Condensed", size = 3.5, fontface = "bold") +
+                  family = "Overpass", size = 3.5, fontface = "bold") +
   labs(title = "**Rushing Yards over Expected Leader Per Season**",
        subtitle = "*2016 - 2022 | Model: LightGBM*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
@@ -1982,7 +1977,7 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
   ylab("Expected Rushing Yards") +
   facet_wrap(~ season, scales = "free") +
   nfl_analytics_theme() +
-  theme(strip.text = element_text(face = "bold", family = "Roboto Condensed", size = 12),
+  theme(strip.text = element_text(face = "bold", family = "Overpass", size = 12),
         strip.background = element_rect(fill = "#F6F6F6"))
 ```
 
@@ -2019,9 +2014,9 @@ ggplot() +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 10),
                      labels = scales::comma_format()) +
   annotate(geom = "text", label = "Cumulative Actual Yards", x = 200, y = 1050,
-           angle = 38, family = "Roboto Condensed", size = 5) +
+           angle = 38, family = "Overpass", size = 5) +
   annotate(geom = "text", label = "Cumulative Expected Yards", x = 200, y = 700,
-           angle = 35, family = "Roboto Condensed", size = 5) +
+           angle = 35, family = "Overpass", size = 5) +
   annotation_custom(grid::rasterGrob(j_taylor_image, 
                                width = unit(1,"npc"), 
                                height = unit(1,"npc")),
@@ -2036,13 +2031,12 @@ ggplot() +
 
 ## Exercises
 
-### Exercise #1
+### Exercise 1
 
 First, run the code below to create the data frame titled `fieldgoal_regression`
 
 ```{r ch-5-ex-1, eval = FALSE, echo = TRUE, output = FALSE}
 
-### QUESTION #1
 pbp <- nflreadr::load_pbp(2015:2022) %>%
   filter(season_type == "REG")
 
@@ -2055,6 +2049,6 @@ fieldgoal_regression <- pbp %>%
 
 Using the data, construct a generalized linear model (`glm()`) with the `family` set to `binomial`. Use `field_goal_result` as the target variable and `kick_distance` as the predictor. View the results using `summary()`.
 
-### Exercise #2
+### Exercise 2
 
 Reproduce the above model into a data frame called `fieldgoal_regression_2` and include information pertaining to the field playing surface, the temperature, and the wind. Use `na.omit()` to exclude those plays with missing information. After, rerun the `glm()` model and view the results using `summary()`.
