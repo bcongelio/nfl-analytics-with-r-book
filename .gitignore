@@ -6,4 +6,4 @@
 *_cache/
 /.quarto/
 rsconnect
-*.pdf
+**/*.pdf
