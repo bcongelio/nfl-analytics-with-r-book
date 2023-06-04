@@ -4,13 +4,19 @@
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
-library(nflverse)
+library(nflreadr)
+library(nflplotR)
 library(vroom)
 library(extrafont)
 library(ggimage)
 library(ggtext)
 library(ggrepel)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 As mentioned in the Preface of this book, the `nflverse` has drastically expanded since the inception of `nflfastR` in April of 2020. In total, the current version of the `nflverse` is comprised of five separate R packages:
@@ -55,7 +61,8 @@ As well, switching the `stat_type` to "kicking" provides the following informati
 
 ```{r load_player_stats-kicking, echo = TRUE}
 
-kicking.stats <- nflreadr::load_player_stats(2021, stat_type = "kicking")
+kicking.stats <- nflreadr::load_player_stats(2021,
+                                             stat_type = "kicking")
 
 ls(kicking.stats)
 ```
@@ -173,7 +180,9 @@ mahomes_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
   filter(player_name == "P.Mahomes" & season_type == "REG") %>%
   group_by(season) %>%
   summarize(
-    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts))
+    adj_yards_attempt = (sum(passing_yards) + 20 *
+                           sum(passing_tds) - 45 *
+                           sum(interceptions)) / sum(attempts))
 
 mahomes_adjusted_yards
 ```
@@ -186,7 +195,9 @@ all_qbs_adjusted <- nflreadr::load_player_stats(seasons = 2018) %>%
   filter(season_type == "REG" & position == "QB") %>%
   group_by(player_name) %>%
   summarize(
-    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+    adj_yards_attempt = (sum(passing_yards) + 20 *
+                           sum(passing_tds) - 45 *
+                           sum(interceptions)) / sum(attempts)) %>%
   arrange(-adj_yards_attempt)
 
 all_qbs_adjusted
@@ -199,12 +210,15 @@ You will often discover artificially-inflated statistics like above when the pla
 
 ```{r qbs-adjusted-w-attempts, eval = TRUE, echo = TRUE, output = TRUE}
 
-all_qbs_adjusted_with_attempts <- nflreadr::load_player_stats(seasons = 2018) %>%
+all_qbs_adjusted_with_attempts <-
+  nflreadr::load_player_stats(seasons = 2018) %>%
   filter(season_type == "REG" & position == "QB") %>%
   group_by(player_name) %>%
   summarize(
     pass_attempts = sum(attempts),
-    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+    adj_yards_attempt = (sum(passing_yards) + 20 *
+                           sum(passing_tds) - 45 *
+                           sum(interceptions)) / sum(attempts)) %>%
   arrange(-adj_yards_attempt)
 
 all_qbs_adjusted_with_attempts
@@ -222,12 +236,15 @@ To remove those players with inflated statistics resulting from a lack of attemp
 
 ```{r all-qbs-attempts-100, eval = TRUE, echo = TRUE, output = FALSE}
 
-all_qbs_attempts_100 <- nflreadr::load_player_stats(seasons = 2018) %>%
+all_qbs_attempts_100 <-
+  nflreadr::load_player_stats(seasons = 2018) %>%
   filter(season_type == "REG" & position == "QB") %>%
   group_by(player_name) %>%
   summarize(
     pass_attempts = sum(attempts),
-    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+    adj_yards_attempt = (sum(passing_yards) + 20 *
+                           sum(passing_tds) - 45 *
+                           sum(interceptions)) / sum(attempts)) %>%
   filter(pass_attempts >= 100) %>%
   arrange(-adj_yards_attempt)
 
@@ -241,12 +258,15 @@ To find the answer, we can make slight adjustments to our existing code.
 
 ```{r best-adjusted-yards, eval = TRUE, echo = TRUE, output = TRUE}
 
-best_adjusted_yards <- nflreadr::load_player_stats(seasons = 2018:2022) %>%
+best_adjusted_yards <-
+  nflreadr::load_player_stats(seasons = 2018:2022) %>%
   filter(season_type == "REG" & position == "QB") %>%
   group_by(season, player_name) %>%
   summarize(
     pass_attempts = sum(attempts),
-    adj_yards_attempt = (sum(passing_yards) + 20 * sum(passing_tds) - 45 * sum(interceptions)) / sum(attempts)) %>%
+    adj_yards_attempt = (sum(passing_yards) + 20 *
+                           sum(passing_tds) - 45 *
+                           sum(interceptions)) / sum(attempts)) %>%
   filter(pass_attempts >= 100) %>%
   ungroup() %>%
   group_by(season) %>%
@@ -260,7 +280,7 @@ To get the answer, we've created code that follows along with our prior examples
 
 As mentioned, the `load_player_stats()` information is provided on a week-by-week basis. In our above example, we are aggregating all regular season weeks into a season-long metric. Given the structure of the data, we can take a similar approach but to determine the leaders on a week-by-week basis. To showcase this, we can determine the leader in rushing EPA for every week during the 2022 regular season.
 
-```{r rushing-epa-leaders, eval = TRUE, echo = TRUE, output = TRUE}
+```{r rushing-epa-leaders, eval = TRUE, echo = TRUE, output = FALSE}
 
 rushing_epa_leader <- nflreadr::load_player_stats(season = 2022) %>%
   filter(season_type == "REG" & position == "RB") %>%
@@ -273,6 +293,9 @@ rushing_epa_leader <- nflreadr::load_player_stats(season = 2022) %>%
   ungroup() %>%
   group_by(week) %>%
   filter(rush_epa == max(rush_epa))
+```
+
+```{r showing-rushing-epa-leader, eval = TRUE, echo = FALSE, output = TRUE}
 
 rushing_epa_leader
 ```
@@ -321,7 +344,8 @@ D.J. Moore led the NFL in the 2022 season with a 13.9 Weighted Opportunity Ratin
 
 ```{r wopr-plus-fantasy}
 
-receivers_wopr_ff_context <- nflreadr::load_player_stats(seasons = 2022) %>%
+receivers_wopr_ff_context <-
+  nflreadr::load_player_stats(seasons = 2022) %>%
   filter(season_type == "REG" & position == "WR") %>%
   group_by(player_name) %>%
   summarize(
@@ -363,7 +387,8 @@ pbp <- nflreadr::load_pbp(2018) %>%
 adjusted_yards <- pbp %>%
   group_by(passer_player_name) %>%
   filter(down == 3 & ydstogo <= 10) %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & 
+  filter(complete_pass == 1 | incomplete_pass == 1 |
+           interception == 1 & 
            !is.na(down)) %>%
   summarize(
     total_attempts = n(),
@@ -392,7 +417,9 @@ pbp <- nflreadr::load_pbp(2018) %>%
   filter(season_type == "REG")
 
 pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(complete_pass == 1 | incomplete_pass == 1 |
+           interception == 1 &
+           !is.na(down)) %>%
   filter(passer_player_name == "P.Mahomes") %>%
   summarize(total_attempts = n())
   
@@ -434,14 +461,18 @@ The following, with the first method using `group_by(passer)` and the second usi
 ```{r passer-vs-passer-player-name, eval = TRUE, echo = TRUE, output = TRUE}
 
 passer_grouping <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 & !is.na(down)) %>%
   group_by(passer) %>%
   summarize(total_attempts = n()) %>%
   arrange(-total_attempts) %>%
   slice(1:5)
 
 passer_player_grouping <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 & !is.na(down)) %>%
   group_by(passer_player_name) %>%
   summarize(total_attempts = n()) %>%
   arrange(-total_attempts) %>%
@@ -458,7 +489,9 @@ We can run the following code to determine where the difference of three passing
 ```{r locating-attempt-difference, eval = TRUE, echo = TRUE, output = TRUE}
 
 roethlisberger_difference <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 & !is.na(down)) %>%
   group_by(passer_player_name) %>%
   summarize(total_attempts = n(),
             spikes = sum(qb_spike == 1),
@@ -480,8 +513,10 @@ To continue working with `load_pbp()` data, let's create a metric that examines 
 pbp <- nflreadr::load_pbp(2022)
 
 aggressiveness <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 
-         & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 &
+           !is.na(down)) %>%
   filter(down == 3 & ydstogo >= 5 & ydstogo <= 10) %>%
   group_by(passer) %>%
   summarize(
@@ -511,8 +546,10 @@ Let's add the "garbage time" filter to the code we've already prepared:
 ```{r qb-aggressiveness-garage-time, eval = TRUE, echo = TRUE, output = TRUE}
 
 aggressiveness_garbage <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 
-         & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 &
+           !is.na(down)) %>%
   filter(down == 3 & ydstogo >= 5 & ydstogo <= 10) %>%
   filter(wp > .05 & wp < .95 & half_seconds_remaining > 120) %>%
   group_by(passer) %>%
@@ -554,7 +591,10 @@ pbp <- nflreadr::load_pbp(2022) %>%
   filter(season_type == "REG")
 
 qb_ay_by_down <- pbp %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1 & !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1 &
+           !is.na(down)) %>%
   filter(down <= 3) %>%
   group_by(passer, down) %>%
   summarize(
@@ -598,11 +638,17 @@ pitt_plays <- pbp %>%
   filter(posteam == "PIT") %>%
   group_by(week) %>%
   summarize(
-    total_plays = sum(play_type == "run" | play_type == "pass", na.rm = TRUE))
+    total_plays = sum(play_type == "run" |
+                        play_type == "pass", na.rm = TRUE))
 
 pitt_line_value <- pbp %>%
-  filter(sack == 1 | tackled_for_loss == 1 | yards_gained <= 2
-         | qb_scramble == 1 | qb_hit == 1 | qbh_inc == 1 | qb_int == 1) %>%
+  filter(sack == 1 |
+           tackled_for_loss == 1 |
+           yards_gained <= 2 |
+           qb_scramble == 1 |
+           qb_hit == 1 |
+           qbh_inc == 1 |
+           qb_int == 1) %>%
   filter(posteam == "PIT") %>%
   group_by(posteam, week) %>%
   left_join(pitt_plays, by = c("week" = "week")) %>%
@@ -623,9 +669,15 @@ nfl_plays <- pbp %>%
 
 nfl_line_value <- pbp %>%
   filter(posteam != "PIT") %>%
-  filter(sack == 1 | tackled_for_loss == 1 | yards_gained <= 2
-         | qb_scramble == 1 | qb_hit == 1 | qbh_inc == 1 | qb_int == 1) %>%
-  left_join(nfl_plays, by = c("posteam" = "posteam", "week" = "week")) %>%
+  filter(sack == 1 |
+           tackled_for_loss == 1 |
+           yards_gained <= 2 |
+           qb_scramble == 1 |
+           qb_hit == 1 |
+           qbh_inc == 1 |
+           qb_int == 1) %>%
+  left_join(nfl_plays,
+            by = c("posteam" = "posteam", "week" = "week")) %>%
   group_by(week) %>%
   mutate(nfl_weekly_plays = sum(unique(total_plays))) %>%
   summarize(nfl_sum_wpa = sum(wpa, na.rm = TRUE),
@@ -710,7 +762,8 @@ To build a data frame of 2022 participation data, that includes complete play-by
 
 ```{r loading-2022-participation, eval = TRUE, echo = TRUE, output = TRUE}
 
-participation <- nflreadr::load_participation(season = 2022, include_pbp = TRUE)
+participation <-
+  nflreadr::load_participation(season = 2022, include_pbp = TRUE)
 
 participation
 ```
@@ -788,7 +841,8 @@ The `load_rosters()` data is capable of providing data for multiple seasons at o
 
 ```{r roster-multi-year-merge, eval = FALSE, echo = TRUE, output = FALSE}
 
-participation_multi_years <- load_participation(season = 2018:2022, include_pbp = TRUE)
+participation_multi_years <-
+  load_participation(season = 2018:2022, include_pbp = TRUE)
 
 participation_2018_2022 <- participation_multi_years %>%
   filter(!is.na(offense_formation)) %>%
@@ -801,7 +855,8 @@ rosters_2018_2022 <- nflreadr::load_rosters(2018:2022) %>%
   select(season, gsis_id, full_name)
 
 participation_2018_2022 <- participation_2018_2022 %>%
-  left_join(rosters_2018_2022, by = c("season", "offense_players" = "gsis_id"))
+  left_join(rosters_2018_2022,
+            by = c("season", "offense_players" = "gsis_id"))
 
 ```
 :::
@@ -860,8 +915,10 @@ penalty_pbp <- nflreadr::load_pbp(seasons = 2022)
 
 penalties <- penalty_pbp %>%
   filter(penalty == 1) %>%
-  select(game_id, old_game_id, season, play_id, desc, home_team, away_team,
-         posteam, defteam, week, penalty_team, penalty_type, penalty, penalty_player_id,
+  select(game_id, old_game_id, season, play_id,
+         desc, home_team, away_team,
+         posteam, defteam, week, penalty_team,
+         penalty_type, penalty, penalty_player_id,
          penalty_player_name, penalty_yards) %>%
   group_by(old_game_id) %>%
   summarize(total_called = sum(penalty == 1, na.rm = TRUE),
@@ -869,7 +926,8 @@ penalties <- penalty_pbp %>%
 
 nfl_officials <- nfl_officials %>%
   left_join(penalties, by = c("game_id" = "old_game_id")) %>%
-  select(game_id, official_name, position, crew_id, total_called, total_yards)
+  select(game_id, official_name, position,
+         crew_id, total_called, total_yards)
 
 ```
 
@@ -943,7 +1001,7 @@ rb_picks <- rb_picks %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r running-back-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r running-back-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = rb_picks, aes(x = rush_yards, y = pick)) +
   geom_point(color = rb_picks$team_color, size = rb_picks$rush_atts / 500) +
@@ -978,8 +1036,10 @@ rosters <- nflreadr::load_rosters(2000:2022) %>%
   select(gsis_id, pfr_id) %>%
   distinct(gsis_id, .keep_all = TRUE)
 
-player_stats <- nflreadr::load_player_stats(seasons = TRUE, stat_type = "offense") %>%
-  filter(position == "RB" & !is.na(player_name) & season_type == "REG") %>%
+player_stats <- nflreadr::load_player_stats(seasons = TRUE,
+                                            stat_type = "offense") %>%
+  filter(position == "RB" & !is.na(player_name) &
+           season_type == "REG") %>%
   group_by(player_name, player_id) %>%
   summarize(total_yards = sum(rushing_yards, na.rm = TRUE),
             team = last(recent_team))
@@ -998,11 +1058,14 @@ player_stats <- player_stats %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r running-back-40-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r running-back-40-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ggplot(data = player_stats, aes(x = forty, y = total_yards)) +
   geom_point(color = player_stats$team_color, size = 3.5) +
-  geom_smooth(method = lm, se = FALSE, color = "black", linetype = "dashed", size = 0.8) +
+  geom_smooth(method = lm, se = FALSE,
+              color = "black",
+              linetype = "dashed",
+              size = 0.8) +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
@@ -1024,17 +1087,20 @@ To illustrate what can be done with the `load_nextgen_stats()` function, we will
 
 ```{r ngs-passing-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-ngs_data_passing <- nflreadr::load_nextgen_stats(seasons = 2022, stat_type = "passing") %>%
+ngs_data_passing <- nflreadr::load_nextgen_stats(seasons = 2022,
+                                                 stat_type = "passing") %>%
   filter(week == 0) %>%
-  select(player_display_name, team_abbr, avg_time_to_throw, avg_completed_air_yards)
+  select(player_display_name, team_abbr,
+         avg_time_to_throw, avg_completed_air_yards)
 
 ngs_data_passing <- ngs_data_passing %>%
   left_join(teams, b = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-passing-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r ngs-passing-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
-ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw, y = avg_completed_air_yards)) +
+ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw,
+                                    y = avg_completed_air_yards)) +
   geom_hline(yintercept = mean(ngs_data_passing$avg_completed_air_yards),
              color = "black", size = 0.8, linetype = "dashed") +
   geom_vline(xintercept = mean(ngs_data_passing$avg_time_to_throw),
@@ -1045,7 +1111,7 @@ ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw, y = avg_completed_air
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   geom_text_repel(aes(label = player_display_name),
-                  family = "Overpass", fontface = "bold", size = 3.5) +
+                  family = "Roboto", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Average Time to Throw") +
   ylab("Average Completed Air Yards") +
@@ -1058,25 +1124,33 @@ The resulting plot shows that Dak Prescott, Jalen Hurts, and Ryan Tannehill had 
 
 ```{r nga-rushing-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-ngs_data_rushing <- nflreadr::load_nextgen_stats(seasons = 2022, stat_type = "rushing") %>%
+ngs_data_rushing <- nflreadr::load_nextgen_stats(seasons = 2022,
+                                                 stat_type = "rushing") %>%
   filter(week == 0) %>%
-  select(player_display_name, team_abbr, expected_rush_yards, rush_yards_over_expected) %>%
+  select(player_display_name, team_abbr, expected_rush_yards,
+         rush_yards_over_expected) %>%
   mutate(actual_rush_yards = expected_rush_yards + rush_yards_over_expected)
 
 ngs_data_rushing <- ngs_data_rushing %>%
   left_join(teams, by = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-rushing-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r ngs-rushing-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
-ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards, y = actual_rush_yards)) +
-  geom_smooth(method = lm, se = FALSE, color = "black", size = 0.8, linetype = "dashed") +
+ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards,
+                                    y = actual_rush_yards)) +
+  geom_smooth(method = lm, se = FALSE,
+              color = "black",
+              size = 0.8,
+              linetype = "dashed") +
   geom_point(size = 3.5, color = ngs_data_rushing$team_color) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
-  geom_text_repel(aes(label = player_display_name), family = "Overpass", fontface = "bold", size = 3.5) +
+  geom_text_repel(aes(label = player_display_name),
+                  family = "Roboto",
+                  fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   xlab("Expected Rush Yards") +
   ylab("Actual Rush Yards") +
@@ -1110,10 +1184,13 @@ espn_qbr <- espn_qbr %>%
   left_join(teams, by = c("team_abb" = "team_abbr"))
 ```
 
-```{r qbr-adjusted-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r qbr-adjusted-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
-  geom_smooth(method = lm, se = FALSE, color = "black", linetype = "dashed", size = 0.8) +
+  geom_smooth(method = lm, se = FALSE,
+              color = "black",
+              linetype = "dashed",
+              size = 0.8) +
   geom_point(color = espn_qbr$team_color, size = 3.5) +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
@@ -1137,7 +1214,8 @@ When working with data from `load_pfr_advstats()`, it is important to remember t
 
 ```{r pfr-stats-qb, eval = TRUE, echo = TRUE, output = FALSE}
 
-pfr_stats_pass <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "pass",
+pfr_stats_pass <- nflreadr::load_pfr_advstats(seasons = 2022,
+                                              stat_type = "pass",
                                               summary_level = "season") %>%
   select(player, pass_attempts, team, drops, bad_throws) %>%
   filter(pass_attempts >= 400)
@@ -1148,7 +1226,7 @@ pfr_stats_pass <- pfr_stats_pass %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r qb-pfr-stats-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r qb-pfr-stats-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   geom_hline(yintercept = mean(pfr_stats_pass$drops),
@@ -1160,7 +1238,7 @@ ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Overpass", fontface = "bold", size = 3.5) +
+                  family = "Roboto", fontface = "bold", size = 3.5) +
   xlab("Bad Throws") +
   ylab("Drops") +
   labs(title = "**QB Bad Throws vs. WR Drops**",
@@ -1178,7 +1256,8 @@ Because the list of running backs with more than 200 attempts includes Christian
 
 ```{r pfr-rush-stats, eval = TRUE, echo = TRUE, output = FALSE}
 
-pfr_stats_rush <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "rush",
+pfr_stats_rush <- nflreadr::load_pfr_advstats(seasons = 2022,
+                                              stat_type = "rush",
                                               summary_level = "season") %>%
   select(player, tm, att, ybc, yac) %>%
   filter(att >= 200) %>%
@@ -1204,7 +1283,7 @@ ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Overpass", fontface = "bold", size = 3.5) +
+                  family = "Roboto", fontface = "bold", size = 3.5) +
   xlab("Yards Before Contact") +
   ylab("Yards After Contact") +
   labs(title = "**Running Backs: Yards Before and After Contact**",
@@ -1225,7 +1304,7 @@ pfr_stats_rec <- pfr_stats_rec %>%
   left_join(teams, by = c("tm" = "team_abbr"))
 ```
 
-```{r pfr-rec-stats-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r pfr-rec-stats-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   geom_hline(yintercept = mean(pfr_stats_rec$yac),
@@ -1238,7 +1317,7 @@ ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
   geom_text_repel(aes(label = player),
-                  family = "Overpass", fontface = "bold", size = 3.5) +
+                  family = "Roboto", fontface = "bold", size = 3.5) +
   xlab("Yards At Point of Catch") +
   ylab("Yards After Catch") +
   labs(title = "**Yards at Point of Catch vs. Yards After Catch",
@@ -1252,7 +1331,8 @@ Given the structure of the data collected from `load_pfr_advstats()`, the inform
 
 ```{r blitze-sacks-code, eval = TRUE, echo = TRUE, output = FALSE}
 
-pfr_stats_def <- nflreadr::load_pfr_advstats(seasons = 2022, stat_type = "def",
+pfr_stats_def <- nflreadr::load_pfr_advstats(seasons = 2022,
+                                             stat_type = "def",
                                              summary_level = "season") %>%
   filter(!tm %in% c("2TM", "3TM")) %>%
   select(tm, bltz, sk) %>%
@@ -1264,7 +1344,7 @@ pfr_stats_def <- pfr_stats_def %>%
   left_join(teams, by = c("tm" = "team_abbr"))
 ```
 
-```{r blitz-sacks-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r blitz-sacks-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ggplot(data = pfr_stats_def, aes(x = total_blitz, y = total_sack)) +
   geom_hline(yintercept = mean(pfr_stats_def$total_sack),
@@ -1344,9 +1424,10 @@ nfl_contracts_unnested <- nfl_contracts_unnested %>%
   distinct(player, year, .keep_all = TRUE)
 ```
 
-```{r cash-paid-dakota-plot, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r cash-paid-dakota-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
-ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
+ggplot(data = nfl_contracts_unnested,
+       aes(x = cash_paid, y = mean_dakota)) +
   geom_hline(yintercept = mean(nfl_contracts_unnested$mean_dakota),
              color = "black", linetype = "dashed", size = 0.8) +
   geom_vline(xintercept = mean(nfl_contracts_unnested$cash_paid),
@@ -1358,7 +1439,7 @@ ggplot(data = nfl_contracts_unnested, aes(x = cash_paid, y = mean_dakota)) +
   xlab("Cash Paid (in millions)") +
   ylab("Mean DAKOTA Composite") +
   geom_text_repel(aes(label = player),
-                  family = "Overpass", fontface = "bold", size = 3.5) +
+                  family = "Roboto", fontface = "bold", size = 3.5) +
   nfl_analytics_theme() +
   labs(title = "Cash Paid vs. Mean DAKOTA Composite",
        subtitle = "2022 Regular Season",

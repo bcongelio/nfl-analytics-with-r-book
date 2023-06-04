@@ -197,7 +197,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Analytics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -285,13 +285,13 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span class="header-section-number">1</span> Introduction</h1>
 <p>On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of <code>nflfastR</code>, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).</p>
 <p></p>
-<div id="tweet-40266"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494","author_name":"Computer Cowboy","author_url":"https:\/\/twitter.com\/benbbaldwin","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EINTRODUCING: \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E, an R package for scraping NFL data faster ⚡\u003Cbr\u003E\u003Cbr\u003E\uD83C\uDFC8 Play-by-play of all NFL games going back to 2000\u003Cbr\u003E\uD83C\uDFC8 Includes Completion Probability and CPOE going back to 2006\u003Cbr\u003E\uD83C\uDFC8 Fast functions for scraping team rosters and highlight videos\u003Ca href=\"https:\/\/t.co\/sgrq8GdoWJ\"\u003Ehttps:\/\/t.co\/sgrq8GdoWJ\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/fqbyE1pPHE\"\u003Epic.twitter.com\/fqbyE1pPHE\u003C\/a\u003E\u003C\/p\u003E&mdash; Computer Cowboy (@benbbaldwin) \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494?ref_src=twsrc%5Etfw\"\u003EApril 27, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-40266").innerHTML = tweet["html"];</script><p>Thanks to the work of multiple people (<a href="https://twitter.com/mrcaseb">@mrcaseB</a>, <a href="https://twitter.com/benbbaldwin">@benbbaldwin</a>, <a href="https://twitter.com/_TanHo">@TanHo</a>, <a href="https://twitter.com/LeeSharpeNFL">@LeeSharpeNFL</a>, and <a href="https://twitter.com/thomas_mock">@thomas_mock</a> … to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.</p>
+<div id="tweet-69886"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494","author_name":"Computer Cowboy","author_url":"https:\/\/twitter.com\/benbbaldwin","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EINTRODUCING: \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E, an R package for scraping NFL data faster ⚡\u003Cbr\u003E\u003Cbr\u003E\uD83C\uDFC8 Play-by-play of all NFL games going back to 2000\u003Cbr\u003E\uD83C\uDFC8 Includes Completion Probability and CPOE going back to 2006\u003Cbr\u003E\uD83C\uDFC8 Fast functions for scraping team rosters and highlight videos\u003Ca href=\"https:\/\/t.co\/sgrq8GdoWJ\"\u003Ehttps:\/\/t.co\/sgrq8GdoWJ\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/fqbyE1pPHE\"\u003Epic.twitter.com\/fqbyE1pPHE\u003C\/a\u003E\u003C\/p\u003E&mdash; Computer Cowboy (@benbbaldwin) \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin\/status\/1254846456390975494?ref_src=twsrc%5Etfw\"\u003EApril 27, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-69886").innerHTML = tweet["html"];</script><p>Thanks to the work of multiple people (<a href="https://twitter.com/mrcaseb">@mrcaseB</a>, <a href="https://twitter.com/benbbaldwin">@benbbaldwin</a>, <a href="https://twitter.com/_TanHo">@TanHo</a>, <a href="https://twitter.com/LeeSharpeNFL">@LeeSharpeNFL</a>, and <a href="https://twitter.com/thomas_mock">@thomas_mock</a> … to just name a few), the process of getting started with advanced analytics using NFL data is now easier than ever.</p>
 <p>That said, and without getting too far into the weeds of the history behind it all, the above-mentioned people are responsible in some shape or form for the current status of the <code>nflverse</code>, which is a superb collection of data and R-based packages that allows anybody the ability to access deeply robust NFL data as far back as the 1999 season.</p>
-<p>The <code>nflverse</code> as we know it today was initially birthed from the <code>nflscrapR</code> project, which was started by the Carnegie Mellon University student and profess duo of <a href="https://twitter.com/bklynmaks?lang=en">Maksim Horowitz</a> and <a href="https://twitter.com/stat_sam">Sam Ventura</a>. After Horowitz graduated - and got hired by the Atlanta Hawks - the <code>nflscrapR</code> package was taken over by fellow CMU student Ron Yorko (who would go on to receive his Ph.D.&nbsp;from the Statistics and Data Science program). The trio’s work on <code>nflscrapR</code> ultimately led to a peer-reviewed paper titled “<a href="https://arxiv.org/pdf/1802.00998.pdf">nflWAR: A Reproducible Method for Offensive Player Evaluation in Football.</a>” Ultimately, the <code>nflscrapR</code> project came to an end when the specific .json feed used to gather NFL data changed. At this point, Ben Baldwin and Sebastian Carl had already built upon the <code>nflscrapR</code> project’s foundations to create <code>nflfastR</code>. Ron officially marked the end of the <code>nflscrapR</code> era and the beginning of the <code>nflfastR</code> era with a tweet on September 14, 2020:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The <code>nflverse</code> as we know it today was initially birthed from the <code>nflscrapR</code> project, which was started by the Carnegie Mellon University student and profess duo of <a href="https://twitter.com/bklynmaks?lang=en">Maksim Horowitz</a> and <a href="https://twitter.com/stat_sam">Sam Ventura</a>. After Horowitz graduated - and got hired by the Atlanta Hawks - the <code>nflscrapR</code> package was taken over by fellow CMU student Ron Yurko (who would go on to receive his Ph.D.&nbsp;from the Statistics and Data Science program). The trio’s work on <code>nflscrapR</code> ultimately led to a peer-reviewed paper titled “<a href="https://arxiv.org/pdf/1802.00998.pdf">nflWAR: A Reproducible Method for Offensive Player Evaluation in Football.</a>” Ultimately, the <code>nflscrapR</code> project came to an end when the specific .json feed used to gather NFL data changed. At this point, Ben Baldwin and Sebastian Carl had already built upon the <code>nflscrapR</code> project’s foundations to create <code>nflfastR</code>. Ron officially marked the end of the <code>nflscrapR</code> era and the beginning of the <code>nflfastR</code> era with a tweet on September 14, 2020:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p></p>
-<div id="tweet-61554"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193","author_name":"nflscrapR","author_url":"https:\/\/twitter.com\/nflscrapR","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EPlease use \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E from here on out - and send all of your questions and issues to \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin?ref_src=twsrc%5Etfw\"\u003E@benbbaldwin\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/mrcaseb?ref_src=twsrc%5Etfw\"\u003E@mrcaseb\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/8GVD0fi4Uy\"\u003Epic.twitter.com\/8GVD0fi4Uy\u003C\/a\u003E\u003C\/p\u003E&mdash; nflscrapR (@nflscrapR) \u003Ca href=\"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193?ref_src=twsrc%5Etfw\"\u003ESeptember 14, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-61554").innerHTML = tweet["html"];</script><p>As a reply to his first tweet about the <code>nflfastR</code> project, Ben explained that he created the original function to scrape NFL data for the creation of his <a href="https://rbsdm.com/stats/stats/">NFL analytics website</a>. Thankfully, he and Seb did not keep the creation to themselves and released <code>nflfastR</code> to the public. Because of the “open source” nature of R and R packages, a laundry list of companion packages quickly developed alongside <code>nflfastR</code>. The original <code>nflfastR</code> package is now part of the larger <code>nflverse</code> of packages that drive the NFL analytics community on Twitter and beyond.</p>
+<div id="tweet-58097"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193","author_name":"nflscrapR","author_url":"https:\/\/twitter.com\/nflscrapR","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EPlease use \u003Ca href=\"https:\/\/twitter.com\/nflfastR?ref_src=twsrc%5Etfw\"\u003E@nflfastR\u003C\/a\u003E from here on out - and send all of your questions and issues to \u003Ca href=\"https:\/\/twitter.com\/benbbaldwin?ref_src=twsrc%5Etfw\"\u003E@benbbaldwin\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/mrcaseb?ref_src=twsrc%5Etfw\"\u003E@mrcaseb\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/8GVD0fi4Uy\"\u003Epic.twitter.com\/8GVD0fi4Uy\u003C\/a\u003E\u003C\/p\u003E&mdash; nflscrapR (@nflscrapR) \u003Ca href=\"https:\/\/twitter.com\/nflscrapR\/status\/1305586160262152193?ref_src=twsrc%5Etfw\"\u003ESeptember 14, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-58097").innerHTML = tweet["html"];</script><p>As a reply to his first tweet about the <code>nflfastR</code> project, Ben explained that he created the original function to scrape NFL data for the creation of his <a href="https://rbsdm.com/stats/stats/">NFL analytics website</a>. Thankfully, he and Seb did not keep the creation to themselves and released <code>nflfastR</code> to the public. Because of the “open source” nature of R and R packages, a laundry list of companion packages quickly developed alongside <code>nflfastR</code>. The original <code>nflfastR</code> package is now part of the larger <code>nflverse</code> of packages that drive the NFL analytics community on Twitter and beyond.</p>
 <p>The creation of the <code>nflverse</code> allowed for anybody interested in NFL analytics to easily access data, manipulate it to their liking, and release their visualizations and/or metrics to the wider public. In fact, it is now a regular occurrence for somebody to advance their R programming ability because of the <code>nflverse</code> and then go on to win the Big Data Bowl. As of the 2022 version of the Big Data Bowl, over “30 participants have been hired to work in data and analytics roles in sports, including 22 that were hired in football” <span class="citation" data-cites="bigdatabowl-ws">(<a href="references.html#ref-bigdatabowl-ws" role="doc-biblioref"><span>“Big Data Bowl: The Annual Analytics Contest Explores Statistical Innovations in Football,”</span> n.d.</a>)</span>. Most recently, the <a href="https://www.boltsfromtheblue.com/2021/7/9/22570490/chargers-news-nfl-big-data-bowl">Chargers hired 2020 participate Alex Stern</a> and the <a href="https://twitter.com/sethwalder/status/1532721476209627136">Chiefs hired Marc Richards</a>, a member of the winning 2021 team, as a Football Research Analyst.</p>
 <p>Kevin Clark, in a 2018 article for <a href="https://www.theringer.com/nfl/2018/12/19/18148153/nfl-analytics-revolution"><em>The Ringer</em></a>, explained that despite not being as obvious as the sabermetrics movement in baseball, the analytics movement in the NFL is “happening in front of you all the time.” The use of analytics in the NFL did, however, predate Clark’s article. In 2014, Eagles head coach Doug Pederson explained that all decisions made by the organization - from game planning to draft strategy - were to be informed by hard data and analytics. Leading this early adoption of analytics, and reporting directly to team Vice President Howie Roseman, were Joe Douglas and Alec Halaby, “a 31-year-old Harvard grad with a job description” that had an emphasis on “integrating traditional and analytical methods in football decision-making.” The result? A “blending of old-school scouting and newer approaches” that were often only seen in other leagues, such as the NBA and MLB <span class="citation" data-cites="rosenthal2018">(<a href="references.html#ref-rosenthal2018" role="doc-biblioref">Rosenthal 2018</a>)</span>. Pederson believed in and trusted the team’s approach to analytics so much that a direct line of communication was created between the two during games, with the analytics department providing the head coach with math-based recommendations for any scenario Pederson requested <span class="citation" data-cites="awbrey2020">(<a href="references.html#ref-awbrey2020" role="doc-biblioref">Awbrey 2020</a>)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>In just under five years time since the publishing of that article, it has become hard to ignore the analytic movement within the NFL. Yet, there is still so much growth to happen in the marriage between the NFL and advanced metrics. For example, there is no denying that the sabermetrics movement drastically “altered baseball’s DNA” <span class="citation" data-cites="heifetz2019">Heifetz (<a href="references.html#ref-heifetz2019" role="doc-biblioref">2019</a>)</span>]. Moreover, as explained in Seth Partnow’s outstanding <a href="https://www.amazon.com/Midrange-Theory-Basketballs-Evolution-Analytics/dp/1637270968/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=1656245879&amp;sr=8-4"><em>The Midrange Theory: Basketball’s Evolution in the Age of Analytics</em></a>, the analytics movement in the NBA essentially killed the midrange shot (briefly: it is more beneficial to try to work the ball in directly under the basket (for a high-percentage shot) or to take the 3-pointer, as the possible additional point is statistically worth more despite the lower success probability as opposed a 2-point midrange shot) as well as the traditional, “old-school” center position.</p>
@@ -305,7 +305,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/4th-down-attempts.png" class="img-fluid figure-img" width="1942"></p>
+<figure class="figure"><p><img src="images/4th-down-attempts.png" class="img-fluid figure-img" width="932"></p>
 <figcaption class="figure-caption">4th Down Attempts: 2000 - 2021</figcaption></figure>
 </div>
 </div>
@@ -315,7 +315,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/baldwin-graph-goforit.png" class="img-fluid figure-img" width="7200"></p>
+<figure class="figure"><p><img src="images/baldwin-graph-goforit.png" class="img-fluid figure-img" width="3456"></p>
 <figcaption class="figure-caption">Credit: Ben Baldwin</figcaption></figure>
 </div>
 </div>
@@ -324,7 +324,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/tomlin-go-for-it.png" class="img-fluid figure-img" width="7200"></p>
+<figure class="figure"><p><img src="images/tomlin-go-for-it.png" class="img-fluid figure-img" width="3456"></p>
 <figcaption class="figure-caption">Credit: Ben Baldwin</figcaption></figure>
 </div>
 </div>
@@ -340,7 +340,6 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## selecting just information I want and then renaming</span></span>
 <span><span class="va">pass.data</span> <span class="op">&lt;-</span> <span class="va">pass_rush_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">Player</span>, <span class="va">Team</span>, <span class="va">Games</span>, <span class="va">`Pass Snaps`</span>, <span class="va">`Pass Rushes`</span>,</span>
 <span>         <span class="va">`Solo Sacks`</span>, <span class="va">`Ast. Sacks`</span>, <span class="va">`Comb. Sacks`</span>, </span>
@@ -357,23 +356,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span>         hurries <span class="op">=</span> <span class="va">Hurries</span>,</span>
 <span>         hits <span class="op">=</span> <span class="va">Hits</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## creating a new column to get percentages of snaps where player rushed</span></span>
 <span><span class="va">pass.data</span><span class="op">$</span><span class="va">rush.percent</span> <span class="op">&lt;-</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.rushes</span> <span class="op">/</span> <span class="va">pass.data</span><span class="op">$</span><span class="va">total.snaps</span></span>
 <span></span>
-<span><span class="co">## getting weights to add to the equation</span></span>
-<span><span class="co">## for example, a solo sack is "more impressive" than an assisted sack. </span></span>
-<span><span class="co">## to account for this, we will take the sum of combined sacks (995) and divide </span></span>
-<span><span class="co">## by the sum of solo sacks (892) which is (0.9). Therefore, a weight of 0.9 will</span></span>
-<span><span class="co">## be placed on solo sacks.</span></span>
-<span></span>
-<span><span class="co">## as well, a negative weight will be applied to unblocked sacks. Using the total</span></span>
-<span><span class="co">## of solo sacks (892) and dividing by the sum of unblocked sacks (128) gives us a</span></span>
-<span><span class="co">## NEGATIVE weight of 0.14 to be applied to unblocked sacks</span></span>
-<span></span>
-<span><span class="co">## further, a weight must be applied to those players who played less than a complete season.</span></span>
-<span><span class="co">## the weight here works out to be 0.0058.</span></span>
-<span></span>
-<span><span class="co">## summarizing information</span></span>
 <span><span class="va">calculated.impact</span> <span class="op">&lt;-</span> <span class="va">pass.data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span></span>
@@ -381,13 +365,16 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span>    adjusted.solo <span class="op">=</span> <span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span>,</span>
 <span>    adjusted.unblocked <span class="op">=</span> <span class="va">unblocked.sacks</span> <span class="op">/</span> <span class="op">-</span><span class="fl">0.14</span>,</span>
 <span>    adjusted.rush.percent <span class="op">=</span> <span class="fl">0.81</span> <span class="op">-</span> <span class="va">rush.percent</span>,</span>
-<span>    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    combined.impact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">adjusted.games</span> <span class="op">+</span> </span>
+<span>                            <span class="op">(</span><span class="va">solo.sacks</span> <span class="op">*</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                            <span class="op">(</span><span class="va">unblocked.sacks</span> <span class="op">*</span> <span class="op">-</span><span class="fl">0.14</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>                            <span class="va">adjusted.rush.percent</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The end result? Taking into account the above adjusted defensive impact, TJ Watt was absolutely dominant during the 2021 season:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/adjusteddefense.png" class="img-fluid figure-img" width="560"></p>
+<figure class="figure"><p><img src="images/adjusteddefense.png" class="img-fluid figure-img" width="269"></p>
 <figcaption class="figure-caption">Adjusted Defensive Impact</figcaption></figure>
 </div>
 </div>
@@ -404,10 +391,11 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </ol>
 <p>It is also important to note that it is not expected for you to be an expert in statistics, coding, or data modeling in order to find this book useful. In fact, I self-taught myself the R programming language after discovering its potential usefulness in my personal academic research. I only “became more serious” about advancing my understanding of the language’s nuances, and more advanced methods, after discovering the <code>nflscrapR</code> package and using it as my learning tool for the deep dive into R. My decision to pursue an academic certificate in the language was driven by the creation of my Sport Analytics course, as the certificate provided the “academic training” proof that was necessary to move the course through the University’s curriculum committee. Nonetheless, because of this self-taught journey - and despite being an academic myself - I find that I largely avoid the use of “complicated jargon” that is so evident in most formal writing.</p>
 <p>Because of this, and regardless of which chapter you begin with, I believe that this book achieves its main goal: to provide a gentle introduction to doing NFL analytics with R.</p>
-<p>As this book is also published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
+<p>As this book is published online, it allows me to continue real-time development of it. Because of this, make note of the following:</p>
 <ul>
+<li><p><em>Introduction to NFL Analytics with R</em> is published through CRC Press.</p></li>
 <li><p>Please feel free to contribute to the book by filing an issue or making a pull request at the book’s GitHub repository: <a href="https://github.com/bcongelio/nfl-analytics-with-r-book"><em>Introduction to NFL Analytics with R</em> Github Repository</a></p></li>
-<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises will include the R files that contain the answers to each exercise.</p></li>
+<li><p>The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the <code>nflverse</code> to collect the data yourself. In either case, the book’s github repository for the exercises (link to the specific directory coming soon) will include the R files that contain the answers to each exercise.</p></li>
 <li><p>Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.</p></li>
 <li><p>Are you an instructor hoping to create or grow your Sport Analytics course? Future plans for this book include the creation of Instructor Materials to include an example syllabus plus structured lesson plans, exercises, assignments, quizzes, and exams. As well, templates for lectures will be included in PowerPoint form so you may edit to fit your specific needs.</p></li>
 </ul></section><section id="overview-of-chapters" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="overview-of-chapters">
@@ -416,8 +404,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li><p><strong>Chapter 1</strong> provides an overview of the <code>nflverse</code> with specific attention paid to the difference between using <code>nflfastR</code> versus <code>nflreadr</code>. Serving as the first dive into analytics, the chapter showcases how to use <code>nflreadr</code> to retrieve both compiled weekly NFL stats and the deeply robust play-by-play statistics. In both cases, exercises are provided. Readers will do their first coding by, first, using the weekly stats to determine the 2021 leaders in air yards per attempt. Second, readers will use the play-by-play statistics from the 2021 season to create a brand new metric (QB aggressiveness on 3rd down pass attempts). Afterward, readers will learn how to retrieve multiple seasons of data at once.</p></li>
 <li><p><strong>Chapter 2</strong> covers the process of downloading both R and RStudio, as well as the necessary packages to do NFL analytics. As one of the most important chapters in the book (especially for those new to the R programming language), readers take a deep dive into wrangling NFL data with the <code>tidyverse</code> package. To begin, readers will learn about the <code>dplyr</code> pipe (<code>%&gt;%</code>) and use, in exercises, the six most important verbs in the <code>dplyr</code> language: <code>filer()</code>, <code>select()</code>, <code>arrange()</code>, <code>summarize()</code>, <code>mutate()</code>, and <code>group_by()</code>. At the conclusion of the chapter, multiple exercises are provided to allow readers to practice using the <code>dplyr</code> verbs, relational operators within the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function and creating “new stats” by using the <code>summarize()</code> function. Moreover, readers will determine the relationship between the <code>dplyr</code> language and important variables within the <code>nflverse</code> data such as <code>player_name</code> and <code>player_id</code>, which is important for correct manipulation and cleaning of data.</p></li>
 <li><p><strong>Chapter 3</strong> examines the numerous and, often, bewildering amount of functions “underneath the hood” of the packages that makes up the <code>nflverse</code>. For example, <code>load_pbp()</code> and <code>load_player_stats()</code> are included in both <code>nflfastR</code> and <code>nflreadr</code>. However, <code>load_nextgen_stats()</code>, <code>load_pfr_stats()</code>, and <code>load_contracts()</code> are all part of just <code>nflreadr</code>. Because of this complexity, readers will learn how to efficiently operate within the <code>nflverse</code>. Moreover, chapter 3 provides dozens of examples and exercises related to all of the various functions included. For example, readers will learn to use <code>load_nextgen_stats()</code> to determine which running backs get to the line of scrimmage the quickest and will use <code>load_pfr_stats()</code> to explore advanced defensive metrics across multiple seasons.</p></li>
-<li><p><strong>Chapter 4</strong> moves readers from data cleaning and manipulation to an introduction to data visualization using <code>ggplot2</code>. As well, chapter 4 provides further instruction on <code>nflverse</code> functions such as <code>clean_player_names()</code>, <code>clean_team_abbrs()</code>, and <code>clean_homeaway()</code>. As well, to prep for data visualization, readers will be introduced to the <code>teams_colors_logos</code> and <code>load_rosters</code> functions as well as the <code>nflplotR</code> package, which provides “functions and geoms to help visualization of NFL related analysis” <span class="citation" data-cites="carl2022">(<a href="references.html#ref-carl2022" role="doc-biblioref">Carl 2022</a>)</span>. Readers will produce multiple types of visualizations, including <code>geom_bar</code>, <code>geom_point</code>, <code>geom_density</code>, and more. As well, readers will learn to use <code>facet_wrap</code> and <code>facet_grid</code> to display data over multiple seasons. For visualizations that include team logos or player headshots, instruction will cover both how to do the coding manually using <code>teams_colors_logos</code> or <code>load_rosters</code> and to use the <code>nflplotr</code> package to avoid the need to use <code>left_join</code> to merge <code>teams_colors_logos</code> to your dataframe.</p></li>
-<li><p><strong>Chapter 5</strong> introduces advanced methods in R using <code>nflverse</code> data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to <code>tidymodels</code>, a “collection of packages for modeling and machine learning using <code>tidyverse</code> principles” <span class="citation" data-cites="silge">(<a href="references.html#ref-silge" role="doc-biblioref">Silge, n.d.</a>)</span>. In this chapter, readers will be guides through the process of building advanced models using NFL data, beginning with simple linear regressions. After, the chapter moves on to cover other types of regression models before covering example of k-means clustering and XGBoost model creation.</p></li>
+<li><p><strong>Chapter 4</strong> moves readers from data cleaning and manipulation to an introduction to data visualization using <code>ggplot2</code>. As well, chapter 4 provides further instruction on <code>nflverse</code> functions such as <code>clean_player_names()</code>, <code>clean_team_abbrs()</code>, and <code>clean_homeaway()</code>. As well, to prep for data visualization, readers will be introduced to the <code>teams_colors_logos</code> and <code>load_rosters</code> functions as well as the <code>nflplotR</code> package, which provides “functions and geoms to help visualization of NFL related analysis” <span class="citation" data-cites="carl2022">(<a href="references.html#ref-carl2022" role="doc-biblioref">Carl 2022</a>)</span>. Readers will produce multiple types of visualizations, including <code>geom_bar</code>, <code>geom_point</code>, <code>geom_density</code>, and more. As well, readers will learn to use <code>facet_wrap</code> and <code>facet_grid</code> to display data over multiple seasons. For visualizations that include team logos or player headshots, instruction will cover both how to do the coding manually using <code>teams_colors_logos</code> or <code>load_rosters</code> and to use the <code>nflplotr</code> package to avoid the need to use <code>left_join</code> to merge <code>teams_colors_logos</code> to your data frame. At the conclusion of the chapter, readers will be introduced to the <code>gt</code> and <code>gtExtras</code> packages for creating sleek tables as well as be walked through the creation of their first Shiny App.</p></li>
+<li><p><strong>Chapter 5</strong> introduces advanced methods in R using <code>nflverse</code> data, with a specific focus on modeling and machine learning. To streamline the process of learning, readers will be introduced to <code>tidymodels</code>, a “collection of packages for modeling and machine learning using <code>tidyverse</code> principles” <span class="citation" data-cites="silge">(<a href="references.html#ref-silge" role="doc-biblioref">Silge, n.d.</a>)</span>. Readers will first be introduced to the modeling process by creating and running a simple linear regression model. After, regressions are built upon with multiple linear regressions, binary regressions, and binomial regression. Readers will then begin working with more advanced methods of machine learning, such as k-means clustering and building an XGBoost model.</p></li>
 </ul></section><section id="about-the-author" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="about-the-author">About The Author</h2>
 <p>I (Bradley Congelio) am currently an Assistant Professor in the College of Business at <a href="https://www.kutztown.edu/">Kutztown University of Pennsylvania</a>. Aside from my core area of instruction, I also instruct the very popular Sport Analytics (SPT 313) course.</p>
 <p>I earned my Ph.D.&nbsp;from the University of Western Ontario and received a specialized certificate in R for Data Analytics from the University of California, San Diego in 2021. I am a proud undergraduate alumni of <a href="https://westliberty.edu/">West Liberty University</a> and am a strong advocate of a broad-based liberal arts education.</p>
@@ -547,71 +535,76 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">gt</td>
+<td style="text-align: left;">0.8.0</td>
+<td style="text-align: left;">CRAN (R 4.1.3)</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">gtExtras</td>
 <td style="text-align: left;">0.4.5</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">lightgbm</td>
 <td style="text-align: left;">3.3.5</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">magick</td>
 <td style="text-align: left;">2.7.3</td>
 <td style="text-align: left;">CRAN (R 4.1.1)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">nflfastR</td>
 <td style="text-align: left;">4.5.1</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">nflreadr</td>
 <td style="text-align: left;">1.3.2</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">nflverse</td>
 <td style="text-align: left;">1.0.2</td>
 <td style="text-align: left;">https://nflverse.r-universe.dev (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">nnet</td>
 <td style="text-align: left;">7.3-16</td>
 <td style="text-align: left;">CRAN (R 4.1.1)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">RColorBrewer</td>
 <td style="text-align: left;">1.1-3</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">reshape2</td>
 <td style="text-align: left;">1.4.4</td>
 <td style="text-align: left;">CRAN (R 4.1.1)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">scales</td>
 <td style="text-align: left;">1.2.1</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">tidymodels</td>
 <td style="text-align: left;">1.0.0</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">tidyverse</td>
 <td style="text-align: left;">2.0.0</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">vroom</td>
 <td style="text-align: left;">1.6.1</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">webshot</td>
 <td style="text-align: left;">0.5.4</td>
 <td style="text-align: left;">CRAN (R 4.1.3)</td>

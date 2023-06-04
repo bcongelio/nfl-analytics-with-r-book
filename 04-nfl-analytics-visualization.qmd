@@ -1,12 +1,16 @@
-# Data Visualization with NFL Analytics
+# Data Visualization with NFL Data
 
 ```{r setup-ch4, include = FALSE}
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
 library(vroom)
-library(nflverse)
+library(nflreadr)
+library(nflplotR)
 library(extrafont)
 library(ggrepel)
 library(ggimage)
@@ -19,6 +23,8 @@ library(magick)
 library(glue)
 library(gt)
 library(gtExtras)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
@@ -35,9 +41,7 @@ Speaking specifically to NFL analytics, when doing visualizations we must be con
 
 Because of this, any data viz I create never fails to include "directables" within the plot. These "directables" may be arrows that indicate which trend on the plot are "good" or they can be text within a scatterplot that explains what each quadrant means. Or, for example, I sometimes include a textual explanation of the "equation" used to develop a metric as seen below:
 
-```{r aggressiveness-equation-plot, echo = FALSE}
-knitr::include_graphics(rep("images/finished-aggressiveness.png"))
-```
+![](images/finished-aggressiveness.png){fig-align="center" width="440"}
 
 The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since "aggressiveness" is not a typical, day-to-day metric discussed by NFL fans, I included a "directable" within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how "aggressiveness" was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow's 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggressive QBs in the line based on the same metric.
 
@@ -78,9 +82,10 @@ ggplot(data = 'dataset_name', aes(x = 'x_axsis', y = 'y_axis')) +
 
 To showcase this, let's use data from Sports Info Solutions that pertains quarterback statistic when using play action versus when not using play action. To start, collect the data using the `vroom` function.
 
-```{r gathering-play-action-dat, eval = TRUE, echo = TRUE, output = FALSE}
+```{r gathering-play-action-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-play_action_data <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv")
+play_action_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv")
 ```
 
 To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds` with the `yds` variable being place on the x-axis and the `pa_yds` variable being placed on the y-axis.
@@ -311,9 +316,9 @@ While it is a good first attempt at adding the names, many of them are awkwardly
 
 [^04-nfl-analytics-visualization-1]: As listed on the `ggrepel` website: <https://ggrepel.slowkow.com/articles/examples.html>
 
-Of the above options, the our current issue with name and point spacing can be resolved by including a numeric value to the `box.padding`. Moreover, we can control the look and style of the text (such as size, font family, font face, etc.) in much the same way. To make these changes, we can set the `box.padding` to 0.45, set the size of the text to 3 using `size` as well as switch the font to 'Overpass' using `family`, and - finally - make it bold using `fontface`.
+Of the above options, the our current issue with name and point spacing can be resolved by including a numeric value to the `box.padding`. Moreover, we can control the look and style of the text (such as size, font family, font face, etc.) in much the same way. To make these changes, we can set the `box.padding` to 0.45, set the size of the text to 3 using `size` as well as switch the font to 'Roboto' using `family`, and - finally - make it bold using `fontface`.
 
-```{r add-ggrepel-options, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r add-ggrepel-options, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -323,7 +328,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold")
 ```
 
@@ -375,7 +380,7 @@ Please know that `ggplot` will throw an error if you try to apply a continuous s
 
 In the case of our current plot, we now know we will be using the `scales_x_continuous` and `scale_y_continuous` functions as both contain continuous (numeric) data. To make the changes, we can turn to the `scales` package and its `pretty_breaks` function to change the number of "breaks" (or ticks) on each axis. By placing `n = 6` within the `pretty_breaks` argument, we are requesting a total of six axis ticks on both the x- and y-axis.
 
-```{r add-breaks-with-scales, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r add-breaks-with-scales, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -385,7 +390,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6))
@@ -395,7 +400,7 @@ Despite our request to build the plot with six ticks on each axis, you will see 
 
 With the number of axis ticks corrected, we can turn our attention to getting the labels of the axis ticks into correct numeric format. Within the same `scale_x_continuous` or `scale_y_continuous` arguments, we will use the `labels` function, combined with another tool from the `scales` package to make the adjustments.
 
-```{r add-commas-to-values, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r add-commas-to-values, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -405,7 +410,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -443,7 +448,7 @@ With much of the heavy lifting for our visualization now complete, we can move o
 
 Much like our last section, we can work on changing the title of each axis and adding a title, subtitle, and caption for the plot within one section, as all this is added and/or changed by using `labs()`.
 
-```{r using-labs-for-title-caption-sub, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r using-labs-for-title-caption-sub, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point(shape = 21,
@@ -453,7 +458,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -494,7 +499,7 @@ Within the new `labs()`, we are placing a total of five items: `x` (allowing us 
 
 Adding mean (or average) lines to both the x-axis and y-axis allows us to visualize where each quarterback falls within one of four sections (according to the amount of passing yards in both situations). Adding the lines is done by add two additional geoms to the existing plot (in this case `geom_hline` and `geom_vline`).
 
-```{r add-avg-lines-incorrectly, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r add-avg-lines-incorrectly, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
    geom_point(shape = 21,
@@ -504,7 +509,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -531,7 +536,7 @@ As we've seen so far in the process, each layer of a plot is added by including 
 
 Because of the important layering issue highlighted above, it is visually necessary for us to move the `geom_hline` and `geom_vline` to the beginning of the `ggplot` code so both are layered underneath everything else in the plot (`geom_point` and `geom_text_repel` in this case). As well, we can apply the `alpha` option to each to slightly decrease each line's transparency.
 
-```{r correctly-adding-avg-lines, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r correctly-adding-avg-lines, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_hline(yintercept = mean(play_action_data$pa_yds), 
@@ -551,7 +556,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -572,7 +577,7 @@ By moving the average lines to the top of our `ggplot` code, both are now layere
 Even though we were not able to use `nflplotR` to handle the colors in this plot because the data lacked a corresponding `team_abbr` variable, we can still use `nflplotR` to add our mean lines - and I actually recommend doing so, as it requires less lines of code (thus less typing). See below for an example.
 :::
 
-```{r mean-lines-with-nflplotr, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r mean-lines-with-nflplotr, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -587,7 +592,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -745,7 +750,7 @@ Be creative and do not be afraid to experiment with all the options available to
 
 Let's start by removing the ticks on both the x- and y-axis. To do so, we will add the `theme()` argument at the end of your prior `ggplot` code and then start building out each and every change we want to make from the above list of options.
 
-```{r using-theme-to-remove-ticks, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r using-theme-to-remove-ticks, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
                   size = 0.8,
@@ -759,7 +764,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -776,7 +781,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 
 Within the `theme()` argument, as mentioned, we simply take the specific element we wish to change (from the above list of possibilities from the `ggplot2` website) and then provide the instruction on what to do. In this case, since we wish to completely remove the `axis.ticks` from the entire plot, we can provide `element_blank()` which removes them. We can continue making changes to the plot's elements by adding all of these preferences to out `theme()`.
 
-```{r adding-theme-elements-to-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r adding-theme-elements-to-plot, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -791,7 +796,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -804,25 +809,25 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
   theme(
     axis.ticks = element_blank(),
-    axis.title = element_text(family = "Overpass",
+    axis.title = element_text(family = "Roboto",
                               size = 10, 
                               color = "black"),
-    axis.text = element_text(family = "Overpass",
+    axis.text = element_text(family = "Roboto",
                              face = "bold",
                              size = 10,
                              color = "black"),
     plot.title.position = "plot",
-    plot.title = element_text(family = "Overpass",
+    plot.title = element_text(family = "Roboto",
                               size = 16,
                               face = "bold",
                               color = "#E31837",
                               vjust = .02,
                               hjust = 0.5),
-    plot.subtitle = element_text(family = "Overpass",
+    plot.subtitle = element_text(family = "Roboto",
                                  size = 12,
                                  color = "black",
                                  hjust = 0.5),
-    plot.caption = element_text(family = "Overpass",
+    plot.caption = element_text(family = "Roboto",
                                 size = 8,
                                 face = "italic",
                                 color = "black"),
@@ -873,7 +878,7 @@ As mentioned, I have a distinctive "brand and look" for the data visualizations 
 nfl_analytics_theme <- function(..., base_size = 12) {
   
     theme(
-      text = element_text(family = "Overpass", size = base_size),
+      text = element_text(family = "Roboto", size = base_size),
       axis.ticks = element_blank(),
       axis.title = element_text(color = "black",
                                 face = "bold"),
@@ -900,11 +905,11 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 
 You may notice that the elements in the above theme creation are quite similar to the ones we passed into our previous plot. And that is true, and the results will be nearly 99.9% identical. After wrapping our `theme()` inside a function, indicated by the opening and closing curly brackets `{ }`, we can provide our desired theme element appearances as we would within a regular `ggplot2` code block.
 
-However, in the above theme function, we have streamlined the basis a bit by indicating a `base_size` of all the text, when means all text output will be in size 12 font unless specifically indicated in the element (for example, we have the `plot.title` set to have a `size` of 16). As well, the same process was done for font (Overpass) so there was not a need to type it repeatedly into every element.
+However, in the above theme function, we have streamlined the basis a bit by indicating a `base_size` of all the text, when means all text output will be in size 12 font unless specifically indicated in the element (for example, we have the `plot.title` set to have a `size` of 16). As well, the same process was done for font (Roboto) so there was not a need to type it repeatedly into every element.
 
 Based on the above example, you are free to create as detailed a theme function as you desire. The beauty of creating your own theme like above is you will no longer need to edit each portion of the every plot element. Rather, you can simply call in your theme after you run it and it resides in under the "Functions" in your RStudio environment.
 
-```{r showcasing-use-of-theme, output = TRUE, fig.align='center', fig.dpi = 400 }
+```{r showcasing-use-of-theme, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400 }
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -919,7 +924,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -937,7 +942,7 @@ As you can see, we just consolidated 28 lines of code into a **single line of co
 
 Unfortunately, you will notice that the resulting plot does not output with the title ("Cumulative Passing Yards") in Kansas City red like in our original. This is because, in our `nfl_analytics_theme()` function, the `color` for `axis.title()` is set to `"black"`. Thankfully, we can make this small edit within our `ggplot` code to switch the title back to Kansas City red, highlighting the idea that - despite the theme being built into a function - we still have the ability to make necessary edits on the fly without including all 28 lines of code. With the `nfl_analytics_theme()` active, we can still add additional `theme` elements as needed to make modifications, as seen below.
 
-```{r theme-code-with-modification, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r theme-code-with-modification, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -952,7 +957,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_text_repel(aes(label = player),
                   box.padding = 0.45,
                   size = 3,
-                  family = "Overpass",
+                  family = "Roboto",
                   fontface = "bold") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_comma()) +
@@ -973,9 +978,8 @@ To explore the process of placing team logos into a plot, let's stick with our p
 
 ```{r gathering-team-play-action, eval = TRUE, echo = TRUE, output = FALSE}
 
-team_playaction <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv")
-
-team_playaction
+team_playaction <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv")
 ```
 
 The resulting `team_playaction` data contains nearly identical information to the previous QB-level data. However, there is a slight change in how Sports Info Solutions charts passing yards on the team level. You will notice a column for both `net_yds` and `gross_yds`. When charting passing attempts in football, a player's individual passing yards are aggregated under **gross yards** with all lost yardage resulting from a sack being included. On the other hand, team passing yards are always presented in **net yards** and any lost yardage from sacks are not included. Case in point, the `gross_yds` number in our `team_playaction` data is greater than the `net_yds` for all 32 NFL teams. In any case, we will build our data visualization using `net_yds`.
@@ -1005,7 +1009,7 @@ team_playaction
 
 With the data now containing the correct information, we can build a basic version of our data visualization using the same `geom_point` as above, and continue to configure the information on both the x- and y-axis, to verify that everything is working correctly before switching out `geom_point` for `geom_image` in order to bring the team logos into the plot.
 
-```{r building-initial-team-pa, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r building-initial-team-pa, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
   geom_hline(yintercept = mean(team_playaction$pa_net_yds), 
@@ -1035,7 +1039,7 @@ The resulting plot, constructed in nearly an identical manner to our above examp
 Before proceeding with this next step, be sure that you have the `ggimage` package installed and loaded.
 :::
 
-```{r adding-logos-without-aspect, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r adding-logos-without-aspect, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
   geom_hline(yintercept = mean(team_playaction$pa_net_yds), 
@@ -1075,7 +1079,7 @@ As well, the 16/9 aspect ratio is sometimes referred to as 1.78:1, which means t
 
 We can make the quick adjustment in our prior code to provide the correct aspect ratio for each of our team logos:
 
-```{r placing-logos-with-correct-asp, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r placing-logos-with-correct-asp, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
   geom_hline(yintercept = mean(team_playaction$pa_net_yds), 
@@ -1107,7 +1111,8 @@ Like all other `geom_` types, the basic foundation of a line graph can be create
 
 ```{r reading_in_eagles_fourth, eval = TRUE, echo = TRUE, output = FALSE}
 
-eagles_fourth_downs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
+eagles_fourth_downs <-
+  vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
 ```
 
 The data frames includes information regarding the `season`, the `total` fourth downs in each season, the number of fourth-down attempts in `total_go`, and the conversion percentage in `go_pct`. As well, the data has already been joined with information from `nflreadr::load_teams()` to include colors and logos.
@@ -1150,7 +1155,7 @@ The order in which we apply all three `geom_` types is important because, as pre
 
 To complete the visualization, we can attached our custom `nfl_analytics_theme()` and then use `xlab`, `ylab`, and `labs` to edit the titles of the each axis and to include a title, subtitle, and caption.
 
-```{r finished_eagles_line, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r finished_eagles_line, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
   geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
@@ -1177,14 +1182,17 @@ The `combined_fourth_data` data frame created by running the below code includes
 
 ```{r reading_combined_line_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-combined_fourth_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
+combined_fourth_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
 ```
 
 The addition of a second `geom_line()` to the plot - one that belongs to the Eagles and one that belongs to averaged number for all other NFL teams - requires a few new additions to our previous code. First, in the `ggplot()` call, we've added `group = posteam`. Because the data is structured so that `PHI` and `NFL` are both observations in the `posteam` column, the use of `group = posteam` instructs `ggplot()` to "split" that information into two and to create a `geom_line()` for each. Second, we've added `scale_color_manual` to the code and manually assigned the appropriate hex code colors to each like (`#004C54` for the Eagles and `#013369` for the rest of the NFL).
 
-```{r finished_two_line, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r finished_two_line, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(combined_fourth_data, aes(x = season, y = go_pct, group = posteam)) +
+ggplot(combined_fourth_data, aes(x = season,
+                                 y = go_pct,
+                                 group = posteam)) +
   geom_line(size = 2, aes(color = posteam)) +
   scale_color_manual(values = c("#013369", "#004C54")) +
   geom_point(size = 5, color = "#f7f7f7") +
@@ -1210,7 +1218,8 @@ A `geom_area()` plot is similar to a `geom_line()` plot in that it is also often
 
 ```{r reading_mahomes_epa_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-mahomes_epa <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv")
+mahomes_epa <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv")
 ```
 
 The basics of the completed plot can be output by placing `week` on the x-axis and `mean_qb_epa` on the y-axis and then using `geom_area()`. Also included in the `geom_area()` are two arguments (`fill` and `alpha`). The hex color for the Kansas City Chiefs' secondary color is provided to "fill" in the area and then the `alpha` is set to 0.4 to make it slightly transparent.
@@ -1244,7 +1253,7 @@ ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
 
 With the logos of each opponent added, we can turn to the finishing touches including adding our custom theme, changing the title of each axis, and adding a title. We also need to make edits to the scale of each axis, again using `seq()` to include all 18 weeks on the x-axis.
 
-```{r mahomes_epa_finished, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r mahomes_epa_finished, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
   geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
@@ -1269,11 +1278,10 @@ To begin creating our `geom_col` plot, we will use `vroom` to gather the necessa
 
 Because this is *not* a metric that is constructed against a continuous variable (such as `season` in the `geom_line()` examples), we turn to using `geom_col()`.
 
-```{r geom_col_data, eval = TRUE, echo = TRUE, output = TRUE}
+```{r geom_col_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-qb_thirddown_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv")
-
-qb_thirddown_data
+qb_thirddown_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv")
 ```
 
 To start, we will place `passer_id` on the x-axis and `qb_agg_pct` on the y-axis. However, to make sure the columns are plotted in descending order, we use the `reorder()` function to reorder `passer_id` in descending order by the `qb_agg_pct` variable.
@@ -1288,18 +1296,22 @@ The resulting plot is a solid foundation and just needs aesthetic adjustments an
 
 ```{r geom_col_adding_color, output = TRUE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2)
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
+                                     y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color,
+           color = qb_thirddown_data$team_color2)
 ```
 
 Next we can make adjustments to each axis. Using `scale_y_continuous`, we will set the number of breaks with `pretty_breaks()` and then use `percent_format()` to adjust the scale into whole numbers with the accompanying percentage sign. The `expand()` argument is used is set to `c(0,0)` to get rid of the "dead space" between the bottom of each column and the y-axis.
 
 We can also provide the `xlab()`, `ylab()`, and include our custom `nfl_analytics_theme()` to the plot.
 
-```{r geom_col_cleaning_scales, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r geom_col_cleaning_scales, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
+                                     y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color,
+           color = qb_thirddown_data$team_color2) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
                      expand = c(0,0)) +
@@ -1312,13 +1324,17 @@ We will provide two ways to identify which column belong to which quarterback: b
 
 To place the player name on each column, we will use the `geom_text()` function wrapped inside the `with_outer_glow()` function (which is part of the `ggfx` package). The `with_outer_glow()` function allows us to apply a drop shadow effect to the text, making sure that it is easy to read on the colored background of each column. The `geom_text` function accepts the arguments relating to the `angle`, horizontal adjustment `hjust`, `color`, font family, font face, and size of the text. The `with_outer_glow` function is used to apply the `sigma` (how dark or light to make the shadow/glow), `expand` (how far to spread out the glow/shadow), and `color`.
 
-```{r geom_col_adding_names, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r geom_col_adding_names, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
+                                     y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color,
+           color = qb_thirddown_data$team_color2) +
+  with_outer_glow(geom_text(aes(label = passer),
+                            position = position_stack(vjust = .98),
                             angle = 90, hjust = .98, color = "white",
-                            family = "Overpass", fontface = "bold", size = 8),
+                            family = "Roboto",
+                            fontface = "bold", size = 8),
                   sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
@@ -1330,13 +1346,20 @@ ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb
 
 To add player headshot to the bottom of each column, we use the `element_nfl_headshot` function from the `nflplotR` package. Inside the `theme()` option, we use `element_nfl_headshot()` to replace the `axis_text.x()`. It is important to remember to use `passer_id` on the x-axis (rather than `passer_name` or something similar). The `nflplotR` package uses the `passer_id` to automatically pull the correct headshot for each player. Without including `passer_id` in the x-axis, the resulting headshots will be the "blank" NFL picture.
 
-```{r geom_col_adding_headshots, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r geom_col_adding_headshots, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
-                            angle = 90, hjust = .98, color = "white",
-                            family = "Overpass", fontface = "bold", size = 8),
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
+                                     y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color,
+           color = qb_thirddown_data$team_color2) +
+  with_outer_glow(geom_text(aes(label = passer),
+                            position = position_stack(vjust = .98),
+                            angle = 90,
+                            hjust = .98,
+                            color = "white",
+                            family = "Roboto",
+                            fontface = "bold",
+                            size = 8),
                   sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
@@ -1349,13 +1372,20 @@ ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb
 
 To complete the plot, we can add the `title`, `subtitle`, and `caption` using the `labs` function.
 
-```{r geom_col_final, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r geom_col_final, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct), y = qb_agg_pct)) +
-  geom_col(fill = qb_thirddown_data$team_color, color = qb_thirddown_data$team_color2) +
-  with_outer_glow(geom_text(aes(label = passer), position = position_stack(vjust = .98),
-                            angle = 90, hjust = .98, color = "white",
-                            family = "Overpass", fontface = "bold", size = 8),
+ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
+                                     y = qb_agg_pct)) +
+  geom_col(fill = qb_thirddown_data$team_color,
+           color = qb_thirddown_data$team_color2) +
+  with_outer_glow(geom_text(aes(label = passer),
+                            position = position_stack(vjust = .98),
+                            angle = 90,
+                            hjust = .98,
+                            color = "white",
+                            family = "Roboto",
+                            fontface = "bold",
+                            size = 8),
                   sigma = 6, expand = 1, color = "black") +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::percent_format(),
@@ -1378,22 +1408,27 @@ The `geom_col()` plot is incredibly versatile, allowing you to create multiple t
 
 ```{r epa-per-play-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-epa_per_play <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv")
+epa_per_play <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv")
 ```
 
-The `ggplot()` code required to output the visulization is quite similar to our above `geom_col()` plot for QB aggressiveness. There are several distinct differences, however.
+The `ggplot()` code required to output the visualization is quite similar to our above `geom_col()` plot for QB aggressiveness. There are several distinct differences, however.
 
 1.  We've included a `fill = if_else()` argument in `geom_col()`. If a team has a positive EPA per play, the column for that team will be blue. If the team has a negative EPA per play, the column will be red.
 2.  The use of `scale_fill_identity()` is used because the data has already been scaled (by EPA per play) and already represents aesthetic values that are native to `ggplot2()`.
 3.  `scale_y_discrete` is used because the y-axis is team names rather than a continuous variables. Moreover,`expand = c(.05, 0))` is included to make sure that the Chiefs and Texans logos are not clipped during the processing of the plot.
 
-```{r epa_per_play_plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r epa_per_play_plot, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = epa_per_play, aes(x = epa_per_play, y = reorder(posteam, epa_per_play))) +
-  geom_col(aes(fill = if_else(epa_per_play >= 0, "#2c7bb6", "#d7181c")), width = 0.2) +
+ggplot(data = epa_per_play, aes(x = epa_per_play,
+                                y = reorder(posteam, epa_per_play))) +
+  geom_col(aes(fill = if_else(epa_per_play >= 0,
+                              "#2c7bb6", "#d7181c")),
+           width = 0.2) +
   geom_vline(xintercept = 0, color = "black") +
   scale_fill_identity() +
-  geom_image(aes(image = team_logo_wikipedia), asp = 16/9, size = .035) +
+  geom_image(aes(image = team_logo_wikipedia),
+             asp = 16/9, size = .035) +
   xlab("EPA Per Play") +
   ylab("") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
@@ -1413,14 +1448,17 @@ We can create a `geom_box()` plot to examine the distribution of air yards for e
 
 ```{r reading_airyards_plot_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-playoff_airyards_plot <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv")
+playoff_airyards_plot <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv")
 ```
 
 The `geom_boxplot()` function includes one more argument - `color`. In this case, we have set the argument to `black`. We will also include the `geom_jitter()` function, which will plot each pass underneath the box plot. This is not a requirement for a box plot, but does add an additional level of aesthetics and detail to the final plot. Last, we use the `element_nfl_logo` function to place the respective team logo under each box plot.
 
-```{r finished_boxplot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r finished_boxplot, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = playoff_airyards_plot, aes(x = posteam, y = air_yards, fill = posteam)) +
+ggplot(data = playoff_airyards_plot, aes(x = posteam,
+                                         y = air_yards,
+                                         fill = posteam)) +
   geom_jitter(color = playoff_airyards_plot$team_color, alpha = 0.09) +
   geom_boxplot(color = "black") +
   nflplotR::scale_fill_nfl() +
@@ -1444,14 +1482,15 @@ We can take the same idea used in the `geom_boxplot()` graph to reformat it to b
 
 ```{r reading_in_ridges_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-playoff_airyards_ridges_plot <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv")
+playoff_airyards_ridges_plot <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv")
 ```
 
 Before creating the plot, we will create a function titled `meansd` that will assist in including lines within the `geom_ridges()` to show the mean and standard deviation for each team.
 
 The `meansd` function is included in the `geom_density_ridges()` arguments. We do wish to show `quantile_lines`, so we provide `meansd` to the `quantile_fun` argument and then set the `color` of the quantile lines.
 
-```{r finished_geom_ridges, output = TRUE, fig.align='center', warning = FALSE, fig.dpi = 400}
+```{r finished_geom_ridges, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 ### creating function to add SD, mean, and mean + sd
 meansd <- function(x, ...) {
@@ -1461,8 +1500,13 @@ meansd <- function(x, ...) {
 }
 
 ### plotting the data
-ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,y = reorder(posteam, -air_yards), fill = posteam)) +
-  geom_density_ridges(quantile_lines = T, quantile_fun = meansd, color = "#d0d0d0") +
+ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,
+                                                y = reorder(posteam,
+                                                            -air_yards),
+                                                fill = posteam)) +
+  geom_density_ridges(quantile_lines = T,
+                      quantile_fun = meansd,
+                      color = "#d0d0d0") +
   nflplotR::scale_fill_nfl() +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   nfl_analytics_theme() +
@@ -1478,17 +1522,21 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,y = reorder(postea
 
 ```{r reading_in_violin_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-yards_gained_compared <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv")
+yards_gained_compared <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv")
 ```
 
-```{r violin_plot_completed, output = TRUE, fig.align='center', warning= FALSE, fig.dpi = 400}
+```{r violin_plot_completed, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
 
 custom_labeller <- function(variable, value){
   new_labels <- c("1st Down", "2nd Down", "3rd Down")
   return(new_labels[value])
 }
 
-ggplot(data = yards_gained_compared, aes(x = posteam, y = yards_gained, group = posteam, fill = posteam)) +
+ggplot(data = yards_gained_compared, aes(x = posteam,
+                                         y = yards_gained,
+                                         group = posteam,
+                                         fill = posteam)) +
   geom_violin() +
   stat_summary(fun.y = mean, fun.ymin = mean, fun.ymax = mean,
                geom = "crossbar",
@@ -1503,7 +1551,7 @@ ggplot(data = yards_gained_compared, aes(x = posteam, y = yards_gained, group = 
        caption = "**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*") +
   theme(axis.text.x = nflplotR::element_nfl_logo(size = 1.5),
         legend.position = "none",
-        strip.text = element_text(family = "Overpass", face = "bold"),
+        strip.text = element_text(family = "Roboto", face = "bold"),
         strip.background = element_rect(fill = "#f7f7f7")) +
   nfl_analytics_theme()
 ```
@@ -1512,7 +1560,8 @@ ggplot(data = yards_gained_compared, aes(x = posteam, y = yards_gained, group = 
 
 ```{r reading_in_histogram_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-def_yards_allowed <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv")
+def_yards_allowed <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv")
 ```
 
 ```{r histogram_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
@@ -1543,7 +1592,8 @@ To showcase the process, let's create a data frame titled `complete_wr_airyards`
 
 ```{r reading_headshot_csv, eval = FALSE, echo = TRUE, output = FALSE}
 
-complete_wr_airyards <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
+complete_wr_airyards <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
 
 ```
 
@@ -1574,10 +1624,12 @@ border <- function(im) {
   
   img <- image_blank(width = ii_min, height = ii_min, color = "none")
   drawing <- image_draw(img)
-  symbols(ii_min/2, ii_min/2, circles = ii_min/2.2, bg = "white", inches = FALSE, add = TRUE)
+  symbols(ii_min/2, ii_min/2, circles = ii_min/2.2,
+          bg = "white", inches = FALSE, add = TRUE)
   dev.off()
   
-  x = image_composite(image_scale(drawing, "x430"), image_scale(im, "x400"), offset = "+15+15")
+  x = image_composite(image_scale(drawing, "x430"),
+                      image_scale(im, "x400"), offset = "+15+15")
   
   x
 }
@@ -1609,11 +1661,14 @@ plot_image_label<-function(image,
   
   ### now taking the text an adding it into a ggplot with the circle
   ggplot() +
-    geom_image(aes(x=0, y=0, image = image), asp=2.4/2.1, size=.7, image_fun=border) +
+    geom_image(aes(x=0, y=0, image = image), asp=2.4/2.1,
+               size=.7, image_fun=border) +
     scale_x_continuous(limits = c(-1.2, 1.2))+
     scale_y_continuous(limits=c(ymin, ymax))+
-    geom_textpath(data = data, aes(x,y,label = toupper(label)), linecolor=NA, color=font_color,
-                  size = 16,  fontface="bold", vjust = vjust, hjust=hjust, family = "Overpass")+
+    geom_textpath(data = data, aes(x,y,label = toupper(label)),
+                  linecolor=NA, color=font_color,
+                  size = 16,  fontface="bold",
+                  vjust = vjust, hjust=hjust, family = "Roboto")+
     coord_equal()+
     theme_void()
 }
@@ -1642,7 +1697,8 @@ for(i in 1:nrow(crop_circles_data)) {
                           top_bottom = "top",
                           hjust = hjust)
   
-  ggsave(filename = glue("./images/circle_headshots/{path}"), plot=plot, height=3.95, width=4.5)
+  ggsave(filename = glue("./images/circle_headshots/{path}"),
+         plot=plot, height=3.95, width=4.5)
 }
 ```
 
@@ -1663,12 +1719,14 @@ We can now take our new cropped headshots and bring them into a visualization cr
 complete_wr_ay <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
 ```
 
-```{r finished_kernel_density, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r finished_kernel_density, output = TRUE, warning = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
   geom_density(alpha = .4) +
   nflplotR::scale_fill_nfl() +
-  geom_image(data = complete_wr_ay, aes(x = 40, y = 0.04, image = image), size = 0.5) +
+  geom_image(data = complete_wr_ay, aes(x = 40, y = 0.04,
+                                        image = image),
+             size = 0.5) +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   facet_wrap(~ receiver_id) +
@@ -1690,7 +1748,8 @@ To provide a walk through of this process, let's read in prepared data that exam
 
 ```{r reading-in-pure-cpoe, eval = TRUE, echo = TRUE, output = FALSE}
 
-pure_cpoe <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pure_cpoe.csv")
+pure_cpoe <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pure_cpoe.csv")
 ```
 
 As mentioned, we can quickly take the data and turn it into a `gt` table by piping it directly into the package's core function.
@@ -1714,7 +1773,7 @@ pure_cpoe %>%
 
 Adding the title and subtitle to the top of the table may not help much, as the two long-form URLs are stretching out the table and making it difficult to see the changes that are being made. Rather than including both the player's picture and the team logo, let's remove `team_logo_wikipedia` from being used by `gt` with the `cols_hide()` function and then place the player pictures into table by using `gt_img_rows()` from the `gtExtras` package.
 
-```{r remove-wiki-add-photo, eval = TRUE, echo = TRUE, output = TRUE}
+```{r remove-wiki-add-photo, eval = FALSE, echo = TRUE, output = FALSE}
 
 pure_cpoe %>%
   gt() %>%
@@ -1725,9 +1784,13 @@ pure_cpoe %>%
   gt_img_rows(headshot, height = 25)
 ```
 
+```{r show_gt_table_1, echo = FALSE}
+knitr::include_graphics(rep("images/gt_table_1.png"))
+```
+
 That is considerably better. But it can be even better. For example, the column labels are still in the format from the `pure_cpoe` data frame with underscores and issues with capitalized letters. Let's make these grammatical corrections using `cols_label()`. As well, let's move the `passer` column to the far left and use the `tab_stubhead()` function, allowing us to position the names to the left of the column labels and with a vertical line separating them from the other data being presented. This also requires placing `rowname_col = "passer"` into the call to the `gt()` package.
 
-```{r add-stub-head-label, eval = TRUE, echo = TRUE, output = TRUE}
+```{r add-stub-head-label, eval = FALSE, echo = TRUE, output = FALSE}
 
 pure_cpoe %>%
   gt(rowname_col = "passer") %>%
@@ -1745,9 +1808,13 @@ pure_cpoe %>%
     mean_cpoe = "Mean CPOE")
 ```
 
+```{r show_gt_table_2, echo = FALSE}
+knitr::include_graphics(rep("images/gt_table_2.png"))
+```
+
 We are almost there. But, it looks strange to have the player's picture so far removed from their name. Let's place the `headshot` column as the first column and, while we are at it, use the `cols_align()` function to center align the `passer` and `total_attempts` columns.
 
-```{r moving-images-and-align, eval = TRUE, echo = TRUE, output = TRUE}
+```{r moving-images-and-align, eval = FALSE, echo = TRUE, output = FALSE}
 
 pure_cpoe %>%
   gt(rowname_col = "passer") %>%
@@ -1768,9 +1835,13 @@ pure_cpoe %>%
   cols_align(align = "center", columns = c("passer", "total_attempts"))
 ```
 
+```{r show_gt_table_3, echo = FALSE}
+knitr::include_graphics(rep("images/gt_table_3.png"))
+```
+
 As one last visual enhancement, we will use the gt_color_box() function from gtExtras to replace the values in mean_cpoe with colorboxes that are similar to those used in data visualizations on Pro Football Focus.
 
-```{r adding-color-boxes, eval = TRUE, echo = TRUE, output = TRUE}
+```{r adding-color-boxes, eval = FALSE, echo = TRUE, output = FALSE}
 
 pure_cpoe %>%
   gt(rowname_col = "passer") %>%
@@ -1793,9 +1864,13 @@ pure_cpoe %>%
                palette = "ggsci::blue_material", accuracy = 0.01)
 ```
 
+```{r show_gt_table_4, echo = FALSE}
+knitr::include_graphics(rep("images/gt_table_4.png"))
+```
+
 It is important to include the `accuracy = 0.01` within the `gt_color_box()`, otherwise the output of the table includes just whole numbers. At this point, the table is complete all for adding a caption at the bottom and using one of the formatted themes from `gtExtras` (I am partial to `gt_theme_538`).
 
-```{r caption-and-theme, eval = TRUE, echo = TRUE, output = TRUE}
+```{r caption-and-theme, eval = FALSE, echo = TRUE, output = FALSE}
 
 pure_cpoe %>%
   gt(rowname_col = "passer") %>%
@@ -1822,6 +1897,10 @@ pure_cpoe %>%
   gtExtras::gt_theme_538()
 ```
 
+```{r show_gt_table_5, echo = FALSE}
+knitr::include_graphics(rep("images/gt_table_5.png"))
+```
+
 ## Creating a Shiny App
 
 With a solid understanding of the data visualization process, we can now turn our attention to take a completed data frame and transitioning it into a Shiny App, resulting in an interactive application for users to explore your data and findings.
@@ -1830,7 +1909,8 @@ To do this, we will be utilize a data frame that you will see again in Chapter 5
 
 ```{r reading-in-shiny-app-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-ryoe_shiny <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+ryoe_shiny <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
 ```
 
 The resulting `ryoe_shiny` data frame contains information regarding `actual_yards`, `season`, `down`, `ydstogo`, `red_zone`, `rusher`, `rusher_player_id`, `posteam`, `defteam`, `exp_yards`. As you will soon see, despite being in the data frame, will will not use all of the variables while also adding some in the backend of the Shiny App. To that end, the Shiny App we will be producing will allow users to select one or more seasons to see each running back's total rushing yards, total expected yards, and the difference between the two (where a positive number indicates the running back gained more yards than the XGBoost model predicted). Users will be able to select specific downs and yards to go, as well as indicate if they want to see the information pertaining to only those rushing attempts in the red zone. We will also build in the capability for the Shiny App to automatically update and format a `ggplot` scatterplot to visualize the information.
@@ -1857,7 +1937,8 @@ library(tidyverse)
 library(gt)
 library(vroom)
 
-ryoe_shiny <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+ryoe_shiny <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
 
 ryoe_shiny <- ryoe_shiny %>%
   filter(ydstogo <= 10)
@@ -1871,7 +1952,9 @@ ryoe_shiny <- ryoe_shiny %>%
 nfl_analytics_theme <- function(..., base_size = 12) {
   
   theme(
-    text = element_text(family = "Overpass", size = base_size, color = "black"),
+    text = element_text(family = "Roboto",
+                        size = base_size,
+                        color = "black"),
     axis.ticks = element_blank(),
     axis.title = element_text(face = "bold"),
     axis.text = element_text(face = "bold"),
@@ -1901,11 +1984,17 @@ ui <- fluidPage(
   titlePanel("NFL Analytics with R: RYOE Shiny App"),
   sidebarLayout(fluid = TRUE,
     sidebarPanel(
-      selectInput("season", "Season:", choices = unique(ryoe_shiny$season), selected = NULL, multiple = TRUE),
-      sliderInput("down", "Down:", min = min(ryoe_shiny$down),
-                  max = max(ryoe_shiny$down), value = range(ryoe_shiny$down)),
-      sliderInput("ydstogo", "Yards to Go:", min = min(ryoe_shiny$ydstogo),
-                  max = 10, value = range(ryoe_shiny$ydstogo)),
+      selectInput("season", "Season:",
+                  choices = unique(ryoe_shiny$season),
+                  selected = NULL, multiple = TRUE),
+      sliderInput("down", "Down:",
+                  min = min(ryoe_shiny$down),
+                  max = max(ryoe_shiny$down),
+                  value = range(ryoe_shiny$down)),
+      sliderInput("ydstogo", "Yards to Go:",
+                  min = min(ryoe_shiny$ydstogo),
+                  max = 10,
+                  value = range(ryoe_shiny$ydstogo)),
       checkboxInput("red_zone", "Red Zone:", value = FALSE)),
     mainPanel(
       tableOutput("myTable"),
@@ -1992,18 +2081,24 @@ To create the output table, we use the `renderTable()` function, another reactiv
       ) %>%
       top_n(10, wt = total_actual_yards)
     
-    ggplot(data = top10, aes(x = total_actual_yards, y = total_expected_yards)) +
-      stat_poly_line(method = "lm", se = FALSE, linetype = "dashed", color = "black") +
-      stat_poly_eq(mapping = use_label(c("R2", "P")), p.digits = 2, label.x = .20, label.y = 3) +
+    ggplot(data = top10, aes(x = total_actual_yards,
+                             y = total_expected_yards)) +
+      stat_poly_line(method = "lm", se = FALSE,
+                     linetype = "dashed",
+                     color = "black") +
+      stat_poly_eq(mapping = use_label(c("R2", "P")),
+                   p.digits = 2,
+                   label.x = .20,
+                   label.y = 3) +
       geom_point(color = top10$team_color, size = 3.5) +
       geom_text_repel(data = top10, aes(label = rusher)) +
       labs(
         x = "Total Actual Yards", 
         y = "Total Expected Yards", 
-        title = paste("Actual Rushing Yards vs. Expected for Season(s):", selectedSeasons()),
+        title = paste("Actual Rushing Yards vs. Expected for Season(s):",
+                      selectedSeasons()),
         subtitle = "Model: *LightGBM* in **tidymodels**",
-        caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**"
-      ) +
+        caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**") +
       nfl_analytics_theme()
   }, width = 500)
 }

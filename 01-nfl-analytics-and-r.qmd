@@ -4,17 +4,23 @@
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
-library(nflverse)
+library(nflreadr)
+library(nflplotR)
 library(extrafont)
 library(ggtext)
 library(vroom)
 library(cowplot)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 ## Introduction
 
-It might seem odd to begin an introductory book with coding and visualization in Chapter 1, while placing information about learning the basics of the `tidyverse` in a later chapter. But there is good reason why this pedagogical approach is used in this book. As explained by Hadley Wickham and Garrett Grolemund in their outstanding book [*R for Data Science*](https://r4ds.had.co.nz/index.html)*,* the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement about and integration into a topic increases the likelihood of following up and learning the "boring" material.
+It might seem odd to begin an introductory book with coding and visualization in Chapter 1, while placing information about learning the basics of the `tidyverse` in a later chapter. But there is good reason for this pedagogical approach being utilized in this book. As explained by Hadley Wickham and Garrett Grolemund in their outstanding book [*R for Data Science*](https://r4ds.had.co.nz/index.html)*,* the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement about and integration into a topic increases the likelihood of following up and learning the "boring" material.
 
 Because of this, I follow the approach of Wickham and Grolemund and provide data that is already, for the most part, "tidied" and ready to be used. We will however, in later chapters, pull raw data directly from it source (such as `nflreadr`, Pro Football Reference, and Sports Info Solutions) that requires manipulation and cleaning before any significant analysis can begin.
 
@@ -33,13 +39,13 @@ This is why the process of investigative inquiry is ingrained, as much as possib
 
 ## The Investigate Inquiry Outline
 
-1.  **Identify the problem or question**. The first step in any investigative inquiry is to clearly define the problem or question that you are trying to answer. Many times, fans have questions about their individuals favorite team and/or players. For example, the 2022 Los Angeles Rams - the defending Super Bowl Champions - were eliminated from playoff contention with three weeks remaining in the season. With the early exit, the Rams tied the 1999 Denver Broncos for the earliest elimination from playoff contention for any prior Super Bowl Champion. The Rams' early elimination can be explained by the high number of injuries during the season, including Matthew Stafford, Cooper Kupp, and Aaron Donald. However, another factor that was routinely discussed during the season, was the inability to keep offensive linemen healthy. In this specific example, in terms of *identifying the problem or question*, a potential problem or question to explore is: how many unique combinations of offensive linemen did the 2022 LA Rams use and where does it rank in NFL history? Have other teams in recent history faced the same amount of offensive line turnover yet still make the playoffs? As you can see, there are a number of different avenues in which the *problem or question* surrounding the Rams' offensive line injury issues can be explored.
+1.  **Identify the problem or question**. The first step in any investigative inquiry is to clearly define the problem or question that you are trying to answer. Many times, fans have questions about their individuals favorite team and/or players. For example, the 2022 Los Angeles Rams - the defending Super Bowl Champions - were eliminated from playoff contention with three weeks remaining in the season. With the early exit, the Rams tied the 1999 Denver Broncos for the earliest elimination from playoff contention for any prior Super Bowl Champion. The Rams' early elimination can be explained by the high number of injuries during the season, including Matthew Stafford, Cooper Kupp, and Aaron Donald. However, another factor that was routinely discussed during the season, was the team's inability to keep offensive linemen healthy. In this specific example, in terms of *identifying the problem or question*, a potential problem or question to explore is: how many unique combinations of offensive linemen did the 2022 LA Rams use and what sort of impact did this have on the team's playmaking ability? Have other teams in recent history faced the same amount of offensive line turnover yet still make the playoffs? As you can see, there are a number of different avenues in which the *problem or question* surrounding the Rams' offensive line injury issues can be explored.
 
 2.  **Gather data**. With a question or problem determined, we now turn to the process of finding and gathering the necessary data to find answers. Unfortunately, data is not always going to be available to answer your investigate inquiry. For example, the NFL's tracking data is only released in partial form during the annual Big Data Bowl. In the event that your question or problem requires data that is not available, you must loop back to Step 1 and reconfigure your question to match available data. In the case of the 2022 LA Rams' offensive line, access to data that can answer the question is available through two cores avenues: the `load_participation` and `load_snap_counts` functions within the `nflverse` family of packages.
 
 3.  **Clean and prepare the data**. It is not often that the data you obtain to answer your question will be perfectly prepared for immediate analysis. As will be explored below, the data collected to explore the Rams' offensive line combinations required both (1.) a critical thought process on how to best solve oddities in the data while still producing reliable information and (2.) cleaning and preparation to make the changes as a result of that critical thinking process. As you progress through the many examples and exercises in this book, you will often be presented with prepared data sets that require you to determine the best approach to data manipulation through this critical thinking and cleaning/preparation process.
 
-4.  **Analyze the data**. After problem solving to ensure the data is as reliable and consistent as possible, we can turn to analyzing the data. In this case, since we are concerned with unique combinations of offensive linemen, we can quickly get results by using the `n_distinct` function within `dplyr`.
+4.  **Analyze the data**. After problem solving to ensure the data is as reliable and consistent as possible, we can turn to analyzing the data. In this case, since we are concerned with unique combinations of offensive linemen, we can quickly get results by using the `n_distinct()` function within `dplyr`.
 
 5.  **Visualize the data**. There are generally two options for visualizing data: plotting with `ggplot` or creating a table with `gt` and the outstanding companion package `gtExtras`. Considering the following can help determine whether to present your findings in chart or table format.
 
@@ -69,9 +75,9 @@ Given that context, just *how* historically bad was the Rams' 2022 offensive lin
 
 ### Unique Offensive Line Combinations: How to Collect The Data?
 
-To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, we turn to two possible options: the `load_participation` and `load_snap_counts` functions within the `nflreadr` package. The `load_participation` function will return, if `include_pbp = TRUE,` a list of every player ID number that was on the field for each play, whereas `load_snap_counts` returns - on a per game basis - the percentage of snaps each player was on the field for.
+To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, we turn to two possible options: the `load_participation()` and `load_snap_counts()` functions within the `nflreadr` package. The `load_participation()` function will return, if `include_pbp = TRUE,` a list of every player ID number that was on the field for each play, whereas `load_snap_counts()` returns - on a per game basis - the percentage of snaps each player was on the field for.
 
-In the end, using `load_snap_counts` creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, up to week 15 of the 2022 season.
+In the end, using `load_snap_counts()` creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation()` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, up to week 15 of the 2022 season.
 
 ```{r using-participation-function, output = FALSE}
 
@@ -97,10 +103,9 @@ oline_participation <- oline_participation %>%
   select(nflverse_game_id, possession_team, 
          offense_personnel, starting_line) %>%
   distinct()
-
 ```
 
-While the output using the `load_participation` function is correct, a quick examination of the `offense_personnel` column causes concern about the viability of this approach to calculate the total number of unique offensive line combinations. A grouping and summing of the `offense_personnel` column highlights the issue.
+While the output using the `load_participation()` function is correct, a quick examination of the `offense_personnel` column causes concern about the viability of this approach to calculate the total number of unique offensive line combinations. A grouping and summing of the `offense_personnel` column highlights the issue.
 
 ```{r offense-personnel-isue, output = TRUE}
 
@@ -121,7 +126,7 @@ In the second case, Dallas' offense personnel on its "first play" from scrimmage
 
 Both of these examples are problematic as a team's "starting offensive line" is considered to be just five players: the left tackle, the left guard, the center, the right guard, and the right tackle. In order to correctly determine the number of combinations used, we need to first determine the five most-commonly used offensive linemen for each team. Because of the off-the-wall situations that can occur in football, building offensive line combinations through personnel groupings in the play-by--play data is tricky, at best.
 
-To avoid these situations, we can turn to the `load_snap_counts` function with the `nflreadr` package to determine the number of unique offensive line combinations. The process to do so occurs over several steps and involves decision-making on our end on how best to accurately represent the five core offensive linemen for each team.
+To avoid these situations, we can turn to the `load_snap_counts()` function with the `nflreadr` package to determine the number of unique offensive line combinations. The process to do so occurs over several steps and involves decision-making on our end on how best to accurately represent the five core offensive linemen for each team.
 
 ```{r oline-combos-snap-counts, output = TRUE}
 
@@ -148,7 +153,7 @@ Because of such situations, we can make the argument that the five offensive lin
 
 Next, let's make the decision to arrange each team's offensive line, by game, in alphabetical order. Since we do not have a reliable way to include *specific* offensive line positions (that is, we have *just* tackle instead of *left* tackle or *right* tackle), we can build our combination numbers strictly based on the five downed linemen, regardless of specific position on the line of scrimmage.
 
-After, we use the `toString` function to place all five names into a single column (`starting_line`) and then filter out the data to include just one `game_id` for the linemen.
+After, we use the `toString()` function to place all five names into a single column (`starting_line`) and then filter out the data to include just one `game_id` for the linemen.
 
 ```{r oline-combos-snap-alphabetical-to-end, output = FALSE}
 
@@ -186,7 +191,7 @@ With the data cleaned and prepared, let's use it to create a `ggplot` graph and 
 
 ### Unique Offensive Line Combinations vs. Win Percentage
 
-To bring in the individual winning percentages, we will use the `get_nfl_standings` function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join`. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs` function in the `nflreadr` package.
+To bring in the individual winning percentages, we will use the `get_nfl_standings()` function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join()`. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs()` function in the `nflreadr` package.
 
 ```{r add-records-to-combos, output = TRUE}
 
@@ -212,7 +217,9 @@ Please note in the below `ggplot` coding that we are using a custom theme, `nfl_
 nfl_analytics_theme <- function(..., base_size = 12) {
   
   theme(
-    text = element_text(family = "Overpass", size = base_size, color = "black"),
+    text = element_text(family = "Roboto",
+                        size = base_size,
+                        color = "black"),
     axis.ticks = element_blank(),
     axis.title = element_text(face = "bold"),
     axis.text = element_text(face = "bold"),
@@ -235,10 +242,12 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 }
 ```
 
-```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
-  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  geom_line(stat = "smooth", method = "lm",
+            size = .7, color = "blue",
+            alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = win_pct),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -261,28 +270,34 @@ To begin exploring that, we can hypothesize that more offensive line combination
 
 Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from `nflverse` data and retrieve the information from the [SIS Data Hub](https://pro.sisdatahub.com/). After downloading the spreadsheet, we can read it into the RStudio environment using `vroom` and then merge the information into the existing `total_combos` data frame by matching on the individual team abbreviations.
 
-```{r pressure-rate, output = TRUE}
+```{r pressure-rate, eval = TRUE, echo = TRUE, output = FALSE}
 
 pressure_rate <- vroom("./example_data/csv/ch1_pressurerate.csv")
 
 total_combos <- total_combos %>%
   left_join(pressure_rate, by = c("team" = "team_abbr"))
+```
 
-pressure_rate
+```{r show-total-combos-df, eval = TRUE, echo = FALSE, output = TRUE}
+
+total_combos
 ```
 
 With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior `ggplot` code to examine any potential relationship.
 
-```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
-  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  geom_line(stat = "smooth", method = "lm",
+            size = .7, color = "blue",
+            alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = pressure_percent),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
   scale_y_reverse(breaks = scales::pretty_breaks(n = 6),
-                     labels = scales::percent_format(scale = 1, accuracy = 0.1)) +
+                     labels = scales::percent_format(scale = 1,
+                                                     accuracy = 0.1)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Pressure Rate (per Dropback)") +
@@ -295,7 +310,7 @@ Again, there does not seem to be any statistical correlation between a team's nu
 
 ### Unique Offensive Line Combinations vs. QB Hits Allowed
 
-To begin, we can collect the QB hit data from `nflreadr` being sure to `group_by` the `posteam` variable in order to calculate the number of QB hits allowed by each team's offensive line. After, we can merge the data into the `total_combos` data frame and produce the plot.
+To begin, we can collect the QB hit data from `nflreadr` being sure to `group_by()` the `posteam` variable in order to calculate the number of QB hits allowed by each team's offensive line. After, we can merge the data into the `total_combos` data frame and produce the plot.
 
 ```{r offensive-line-combos-qb-hits, output = FALSE}
 
@@ -312,10 +327,12 @@ qb_hits_combined <- left_join(
 
 After first filtering out any data that does not include `posteam` information, we can `group_by()` each individual offensive unit and then calculate the total sum of QB hits for each.
 
-```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
-    geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+    geom_line(stat = "smooth", method = "lm",
+              size = .7, color = "blue",
+              alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = total_qb_hits),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -348,15 +365,19 @@ As a result of this, Schatz designed Adjusted Sack Rate which accounts for the n
 
 ```{r asr-data-for-plot, eval = TRUE, echo = TRUE, output = FALSE}
 
-adjusted_sack_rate <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/adjusted_sack_rate.csv")
+adjusted_sack_rate <- 
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/adjusted_sack_rate.csv")
 ```
 
-```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 adjusted_sack_rate %>%
   filter(season == 2022) %>%
   ggplot(aes(x = combos, y = adj_sack_rate)) +
-  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  geom_line(stat = "smooth", method = "lm",
+            size = .7,
+            color = "blue",
+            alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -375,11 +396,14 @@ The graph shows that, in general, those teams with higher numbers of unique offe
 
 Using the `adjusted_sack_rate` data, we can easily visualize the same results over the last three NFL seasons to see if there is any consistency between the offensive line combinations and a team's adjusted sack rate.
 
-```{r asr-facet-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r asr-facet-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 adjusted_sack_rate %>%
   ggplot(aes(x = combos, y = adj_sack_rate)) +
-  geom_line(stat = "smooth", method = "lm", size = .7, color = "blue", alpha = 0.25) +
+  geom_line(stat = "smooth", method = "lm",
+            size = .7,
+            color = "blue",
+            alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -419,18 +443,20 @@ To begin, we can gather the necessary data into a data frame called `fb_outsider
 
 ```{r fb-outsiders-data, eval = TRUE, echo = TRUE, output = TRUE}
 
-fb_outsiders_oline <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/fboutsiders_line_stats.csv")
+fb_outsiders_oline <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/fboutsiders_line_stats.csv")
 
 fb_outsiders_oline
 ```
 
 You can see in the output of the data that `power_rank` and `stuffed_rank` are both in a "ranked format," meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1st while the team with the worst (the Minnesota Vikings) are ranked 32nd. The `adj_line_yards` variable is provided in its unranked, raw format. Because of this, let's first use both `power_rank` and `stuffed_rank` and use the `cowplot` package to view them together, and then construct the plot for `adj_line_yards` separately since it operates on a differing y-axis scale.
 
-```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = power_rank),
-                            color = "black", size = .8) +
+                            color = "black",
+                            size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_reverse(breaks = seq(1, 32, 2)) +
@@ -444,13 +470,14 @@ power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
 stuffed_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = stuffed_rank)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = stuffed_rank),
-                            color = "black", size = .8) +
+                            color = "black",
+                            size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_reverse(breaks = seq(1, 32, 2)) +
   labs(title = "**Unique Offensive Line Combinations vs. Stuffed Rank**",
        subtitle = "*2022 Season  |  FootballOutsiders.com*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")+
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Stuffed Ranking (1 = best, 32 = worst)") +
   nfl_analytics_theme()
@@ -460,7 +487,7 @@ plot_grid(power_rank_plot, stuffed_rank_plot, ncol = 1)
 
 Based on the results, it does not seem that the number of unique offensive line combinations has impact on either power rank or stuffed rank. The Los Angeles Rams and Arizona Cardinals, despite have the two highest unique line combinations, are among the best in the league in the metric. In fact, the opposite seems to be true in that the Minnesota Vikings, with just six unique line combinations during the 2022 season, are last in the league in power ranking. The Rams performed in bit worse when comparing line combinations to stuffed rank, but the Cardinals are still among the best in the league. The Vikings again are at the bottom, only under performed by the Jacksonville Jaguars (who had just three unique combinations throughout the season).
 
-```{r adj-yard-line-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r adj-yard-line-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
@@ -487,12 +514,13 @@ For the last exploration in this topic, we can bring in `Elusive Rating`, which 
 
 ```{r oline-combo-elusive, eval = TRUE, echo = TRUE, output = FALSE}
 
-oline_combo_elusive <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/online_combo_elusive.csv")
+oline_combo_elusive <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/online_combo_elusive.csv")
 ```
 
-Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's Adjusted Line Yards, we can create a new variable that use the team's `elusive_rating` to, in an elementary fashion, add weight to the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, using coefficients from a regression model, etc.), we will conduct a more simple type of feature engineering by first using the `scale` package to standardize the values, resulting in each team receiving what is called a 'z-score' (or the total standard deviations away from the mean). After, we will created the `weighted_aly` metric by subtracting each team's z-score from the existing `adj_line_yards`, and then plot the results.
+Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's Adjusted Line Yards, we can create a new variable that use the team's `elusive_rating` to, in an elementary fashion, add weight to the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, using coefficients from a regression model, etc.), we will conduct a more simple type of feature engineering by first using the `scale()` package to standardize the values, resulting in each team receiving what is called a 'z-score' (or the total standard deviations away from the mean). After, we will created the `weighted_aly` metric by subtracting each team's z-score from the existing `adj_line_yards`, and then plot the results.
 
-```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 oline_combo_elusive <- oline_combo_elusive %>%
   mutate(adjusted_elu = scale(avg_elu),
@@ -510,11 +538,10 @@ ggplot(oline_combo_elusive, aes(x = combos, y = weighted_aly)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   labs(title = "**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**",
        subtitle = "*2022 Season  |  Adjusted with PFF's 'Elusive'*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")+
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Weighted Adjusted Line Yards") +
   nfl_analytics_theme()
-
 ```
 
 Despite having two of the bottom four scores in `elusive_rating` (21.4 and 21.8), the Rams and the Cardinals are in the league's top five for `Weighted Adjusted Line Yard`. This is an indication that each team's offensive line is proficient at run blocking and that any perceived shortcoming in the ground game was the result of a lack of elusive running backs. Conversely, the Washington Commanders unweighted `Adjusted Line Yards` was 4.29 but, when account for the high elusiveness score among the team's running backs, the metric dipped to a league-worst 2.14 weighted adjusted line yards.
@@ -533,12 +560,14 @@ However, the statistics as presented by Sharp do not tell the complete story as 
 
 To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.
 
-```{r explosive-play-calc, eval = TRUE, echo = TRUE, output = FALSE}
+```{r explosive-play-calc, eval = TRUE, echo = TRUE, output = FALSE, error = FALSE}
 
 pbp <- nflreadr::load_pbp(2022)
 
 explosive <- pbp %>%
-  filter(!is.na(posteam) & !is.na(yards_gained) & fixed_drive_result == "Touchdown") %>%
+  filter(!is.na(posteam) &
+           !is.na(yards_gained)
+         & fixed_drive_result == "Touchdown") %>%
   filter(special == 0 & fumble == 0 & interception == 0) %>%
   group_by(posteam, game_id, drive) %>%
   summarize(max_yards = max(yards_gained)) %>%
@@ -555,11 +584,12 @@ explosive <- pbp %>%
 
 After collecting the play-by-play information for the 2022 NFL season, we use `filter()` to gather only those `fixed_drive_result` rows that include `Touchdown` and then remove any play that is a special teams play and includes a fumble or interception. This is done as we only want those touchdowns scored by the offense, not a fumble or interception return for a score. Because of this, the results of total touchdowns is lower than the "official" number from Pro Football Reference, as the site's "Touchdown Log" includes this data.
 
-We then use `group_by()` on `posteam`, `game_id`, and `drive` in order to create the column `max_yards` with `summarize`. The resulting numeric value in `max_yards` represents the largest amount of yards gained on a single play, per drive. The important `explosive_play` metric is returned, in a binary `1` or `0` format, based on whether or not the `max_yards` in each drive was greater than or equal to 20 yards. With this calculation complete, we `ungroup()` the data and then group it only by `posteam` to determine the results. After finding the percent of drives with an explosive play and those without, we can plot the results.
+We then use `group_by()` on `posteam`, `game_id`, and `drive` in order to create the column `max_yards` with `summarize()`. The resulting numeric value in `max_yards` represents the largest amount of yards gained on a single play, per drive. The important `explosive_play` metric is returned, in a binary `1` or `0` format, based on whether or not the `max_yards` in each drive was greater than or equal to 20 yards. With this calculation complete, we `ungroup()` the data and then group it only by `posteam` to determine the results. After finding the percent of drives with an explosive play and those without, we can plot the results.
 
-```{r explosive-play-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r explosive-play-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
 
-ggplot(explosive, aes(y = reorder(posteam, percent_w_exp), x = percent_w_exp)) +
+ggplot(explosive, aes(y = reorder(posteam, percent_w_exp),
+                      x = percent_w_exp)) +
   geom_col(aes(color = posteam, fill = posteam), width = 0.5) +
   nflplotR::scale_color_nfl(type = "secondary") +
   nflplotR::scale_fill_nfl(alpha = 0.5) +

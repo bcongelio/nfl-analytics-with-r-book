@@ -4,10 +4,16 @@
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
 library(nflreadr)
+library(nflplotR)
 library(ggtext)
 library(extrafont)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 ## Air Yards
@@ -145,7 +151,10 @@ pbp <- nflreadr::load_pbp(2022) %>%
 
 cpoe_2022 <- pbp %>%
   group_by(passer) %>%
-  filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1, !is.na(down)) %>%
+  filter(complete_pass == 1 |
+           incomplete_pass == 1 |
+           interception == 1,
+         !is.na(down)) %>%
   summarize(total_attempts = n(),
             mean_cpoe = mean(cpoe, na.rm = TRUE)) %>%
   filter(total_attempts >= 300) %>%
@@ -259,9 +268,12 @@ pbp <- nflreadr::load_pbp(2022) %>%
 xyac_meanyardage <- pbp %>%
   filter(!is.na(xyac_mean_yardage)) %>%
   group_by(receiver) %>%
-  mutate(mean_yardage_result = ifelse(yards_after_catch >= xyac_mean_yardage, 1, 0)) %>%
-  summarize(total_receptions = sum(complete_pass == 1, na.rm = TRUE),
-            total_higher = sum(mean_yardage_result, na.rm = TRUE),
+  mutate(mean_yardage_result = ifelse(yards_after_catch >= xyac_mean_yardage,
+                                      1, 0)) %>%
+  summarize(total_receptions = sum(complete_pass == 1,
+                                   na.rm = TRUE),
+            total_higher = sum(mean_yardage_result,
+                               na.rm = TRUE),
             pct = total_higher / total_receptions) %>%
   filter(total_receptions >= 100) %>%
   arrange(-pct) %>%
@@ -287,7 +299,8 @@ pass_over_expected <- pbp %>%
   group_by(posteam, ydstogo) %>%
   summarize(mean_passoe = mean(pass_oe, na.rm = TRUE))
 
-ggplot(pass_over_expected, aes(x = ydstogo, y = mean_passoe, group = posteam)) +
+ggplot(pass_over_expected, aes(x = ydstogo, y = mean_passoe,
+                               group = posteam)) +
   geom_smooth(se = FALSE, aes(color = posteam), size = 2) +
   nflplotR::scale_color_nfl(type = "primary") +
   scale_x_continuous(breaks = seq(1,10, 1)) +

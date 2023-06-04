@@ -4,9 +4,13 @@
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
 library(vroom)
-library(nflverse)
+library(nflreadr)
+library(nflplotR)
 library(tidymodels)
 library(caret)
 library(nnet)
@@ -26,6 +30,8 @@ library(cowplot)
 library(gghighlight)
 library(ggrepel)
 options(digits = 3)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 ## Introduction to Statistical Modeling with NFL Data
@@ -81,12 +87,13 @@ To put theory into action, **let's build a simple linear regression model that e
 
 ```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-simple_regression_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
+simple_regression_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
 ```
 
 The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let's first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.
 
-```{r simple-linear-lobf, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+```{r simple-linear-lobf, output = TRUE, message = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 regression_2022 <- simple_regression_data %>%
   filter(season == 2022)
@@ -97,7 +104,10 @@ regression_2022 <- regression_2022 %>%
   left_join(teams, by = c("team" = "team_abbr"))
 
   ggplot(regression_2022, aes(x = total_yards, y = total_points)) +
-  geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed", size = .8) +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "black",
+              linetype = "dashed",
+              size = .8) +
   geom_image(aes(image = team_logo_wikipedia), asp = 16/9) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
@@ -118,7 +128,8 @@ To further examine this relationship, we can pass the data into a simple linear 
 
 ```{r lm-model-2022, eval = TRUE, echo = TRUE, output = FALSE}
 
-results_2022 <- lm(total_points ~ total_yards, data = regression_2022)
+results_2022 <- lm(total_points ~ total_yards,
+                   data = regression_2022)
 ```
 
 Using the `lm()` function, the $Y$ variable (the dependent) is `total_yards` and the $X$ variable (the predictor) is entered as `total_yards` with the argument that the `data` is coming from the `regression_2022` dataframe stored in the RStudio environment. We can view the results of the regression model by using the `summary()` function.
@@ -174,7 +185,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:------------------:|:--------------------------------------------------:|
+|:-------------------:|:-------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -233,7 +244,7 @@ Returning to the summary statistics of our analysis of the 2022 season, the resi
 
 However, as mentioned in this chapter's explanation of how to interpret residuals from a model's summary statistics, the widespread and deviation from zero in the results is likely the result of numerous factors outside the model's purview that occur in any one NFL game. To get a better idea of what the residual values represent, we can plot the data and include NFL team logos.
 
-```{r plotting-residual-values, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+```{r plotting-residual-values, output = TRUE, message = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 regression_2022$residuals <- residuals(results_2022)
 
@@ -296,7 +307,8 @@ The results from including the `total_points` and `total_yards` for each NFL tea
 regression_all_seasons <- simple_regression_data %>%
   select(-season)
 
-all_season_results <- lm(total_points ~ total_yards, data = regression_all_seasons)
+all_season_results <- lm(total_points ~ total_yards,
+                         data = regression_all_seasons)
 
 summary(all_season_results)
 ```
@@ -326,14 +338,18 @@ The `W` score for the residual is 1, meaning a very strong indication that the d
 
 teams <- nflreadr::load_teams(current = TRUE)
 
-regression_all_seasons <- left_join(regression_all_seasons, teams, by = c("team" = "team_abbr"))
+regression_all_seasons <- left_join(regression_all_seasons,
+                                    teams, by = c("team" = "team_abbr"))
 
 regression_all_seasons$residuals <- residuals(all_season_results)
 
 ggplot(regression_all_seasons, aes(x = total_yards, y = residuals)) +
-  geom_hline(yintercept = 0, color = "black", linewidth = .7) +
-  stat_fit_residuals(size = 2, color = regression_all_seasons$team_color) +
-  stat_fit_deviations(size = 1, color = regression_all_seasons$team_color, alpha = 0.5) +
+  geom_hline(yintercept = 0,
+             color = "black", linewidth = .7) +
+  stat_fit_residuals(size = 2,
+                     color = regression_all_seasons$team_color) +
+  stat_fit_deviations(size = 1,
+                      color = regression_all_seasons$team_color, alpha = 0.5) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
@@ -379,14 +395,13 @@ To begin building the multiple linear regression model for the 2022 season, we c
 
 ```{r getting-m-lm-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-multiple_lm_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/multiple_lm_data.csv")
+multiple_lm_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/multiple_lm_data.csv")
 
 multiple_lm_data <- multiple_lm_data %>%
   filter(season == 2022)
 
 teams <- multiple_lm_data$team
-
-multiple_lm_data
 ```
 
 The data for our multiple linear regression has the same four columns as the simple linear regression (`season`, `team`, `total_points`, and `total_yards`) but also includes the new predictor variables (`rz_eff`, `rz_td_eff`, `rz_fg_eff`, `def_td`, and `spec_tds`).
@@ -418,12 +433,13 @@ shapiro.test(results_lm_2022)
 
 The results of the Shapiro-Wilk's test (`W = 1` and `p-value = 0.9`) confirm that residuals are indeed evenly distributed. A visualization showcases the model's even distribution of the residuals.
 
-```{r multiple-regression-plot, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+```{r multiple-regression-plot, output = TRUE, message = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
 
 mlm_2022_fitted <- predict(lm_multiple_2022)
 mlm_2022_residuals <- residuals(lm_multiple_2022)
 
-plot_data_2022 <- data.frame(Fitted = mlm_2022_fitted, Residuals = mlm_2022_residuals)
+plot_data_2022 <- data.frame(Fitted = mlm_2022_fitted,
+                             Residuals = mlm_2022_residuals)
 
 plot_data_2022 <- plot_data_2022 %>%
   cbind(teams)
@@ -434,9 +450,12 @@ plot_data_2022 <- plot_data_2022 %>%
   left_join(nfl_teams, by = c("teams" = "team_abbr"))
 
 ggplot(plot_data_2022, aes(x = Fitted, y = Residuals)) +
-  geom_hline(yintercept = 0, color = "black", linewidth = .7) +
-  stat_fit_deviations(size = 1.75, color = plot_data_2022$team_color) +
-  geom_image(aes(image = team_logo_espn), asp = 16/9, size = .0325) +
+  geom_hline(yintercept = 0,
+             color = "black", linewidth = .7) +
+  stat_fit_deviations(size = 1.75,
+                      color = plot_data_2022$team_color) +
+  geom_image(aes(image = team_logo_espn),
+             asp = 16/9, size = .0325) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
@@ -457,18 +476,27 @@ The model's Coefficients of our multiple linear regression shows `NA` values for
 
 **If you are comfortable producing the linear regression with `rz_fg_eff`** **being a dropped predictor, that are no issues with that**. However, we can create a correlation plot that allows is to determine which predictors have high correlation values with others. Examining the issue allows us to determine if `rz_fg_eff` is, indeed, the predictive variable we want the regression to drop or if we'd rather, for example, drop `rz_eff` and keep just the split between touchdowns and field goals.
 
-```{r building-corr-matrix, output = TRUE, message = FALSE, fig.align='center', fig.dpi = 400}
+```{r building-corr-matrix, output = TRUE, message = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
 
-regression_corr <- cor(multiple_lm_data[, c("total_yards", "rz_eff", "rz_td_eff",
-                                            "rz_fg_eff", "total_to", "def_td", "spec_tds")])
+regression_corr <-
+  cor(multiple_lm_data[, c("total_yards",
+                           "rz_eff", "rz_td_eff",
+                           "rz_fg_eff", "total_to",
+                           "def_td", "spec_tds")])
 
 melted_regression_corr <- melt(regression_corr)
 
-ggplot(data = melted_regression_corr, aes(x = Var1, y = Var2, fill = value)) +
+ggplot(data = melted_regression_corr, aes(x = Var1,
+                                          y = Var2,
+                                          fill = value)) +
   geom_tile() +
-  scale_fill_distiller(palette = "PuBu", direction = -1, limits = c(-1, +1)) +
-  geom_text(aes(x = Var1, y = Var2, label = round(value, 2)), color = "black",
-            fontface = "bold", family = "Overpass", size = 5) +
+  scale_fill_distiller(palette = "PuBu",
+                       direction = -1,
+                       limits = c(-1, +1)) +
+  geom_text(aes(x = Var1, y = Var2, label = round(value, 2)),
+            color = "black",
+            fontface = "bold",
+            family = "Roboto", size = 5) +
   labs(title = "Multicollinearity Correlation Matrix",
        subtitle = "Multiple Linear Regression: 2022 Data",
        caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
@@ -495,7 +523,8 @@ lm_multiple_2022_edit <- multiple_lm_data %>%
   select(-rz_td_eff, -rz_fg_eff)
 
 lm_multiple_2022_edit <- lm(total_points ~ total_yards + rz_eff +
-                         total_to + def_td + spec_tds, data = lm_multiple_2022_edit)
+                         total_to + def_td + spec_tds,
+                         data = lm_multiple_2022_edit)
 
 summary(lm_multiple_2022_edit)
 ```
@@ -510,7 +539,8 @@ multiple_lm_data_all <- multiple_lm_data %>%
   select(-rz_td_eff, -rz_fg_eff, -season)
 
 lm_multiple_all <- lm(total_points ~ total_yards + rz_eff +
-                              total_to + def_td + spec_tds, data = multiple_lm_data_all)
+                              total_to + def_td + spec_tds,
+                      data = multiple_lm_data_all)
 
 summary(lm_multiple_all)
 ```
@@ -635,12 +665,14 @@ The data, as collected from `load_player_stats()`, does not contain information 
 
 ```{r load-pfr-mvp-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-pfr_mvp_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pfr_mvp_data.csv")
+pfr_mvp_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pfr_mvp_data.csv")
 
 pfr_mvp_data$mvp <- 1
 
 qb_mvp_stats <- qb_mvp_stats %>%
-  left_join(pfr_mvp_data, by = c("season" = "season", "player_display_name" = "player_name"))
+  left_join(pfr_mvp_data, by = c("season" = "season",
+                                 "player_display_name" = "player_name"))
 
 qb_mvp_stats$mvp[is.na(qb_mvp_stats$mvp)] <- 0
 ```
@@ -706,7 +738,8 @@ To verify that the model is predicting reasonable probabilities, we can calculat
 ```{r predict-probs-mvp, eval = TRUE, echo = TRUE, output = FALSE}
 
 training_probs <- mvp_model_train %>%
-  mutate(pred = predict(mvp_model, mvp_model_train, type = "response")) %>%
+  mutate(pred = predict(mvp_model, mvp_model_train,
+                        type = "response")) %>%
   group_by(season) %>%
   mutate(pred_mvp = as.numeric(pred == max(pred, na.rm = TRUE)),
          mvp_prob = pred / sum(pred))
@@ -716,7 +749,8 @@ With the model now trained, we can take the results of the model and apply it to
 
 ```{r applying-model-to-test, eval = TRUE, echo = TRUE, output = FALSE}
 
-test_predictions <- predict(mvp_model, newdata = mvp_model_test, type = "response")
+test_predictions <- predict(mvp_model,
+                            newdata = mvp_model_test, type = "response")
 
 test_class_predictions <- ifelse(test_predictions > 0.5, 1, 0)
 ```
@@ -790,7 +824,8 @@ new_mvp_data <- data.frame(
   int_rank = c(21, 17, 14),
   epa_rank = c(3, 1, 5))
 
-new_mvp_predictions <- predict(mvp_model, newdata = new_mvp_data, type = "response")
+new_mvp_predictions <- predict(mvp_model,
+                               newdata = new_mvp_data, type = "response")
 
 new_mvp_predictions
 ```
@@ -804,7 +839,8 @@ Finally, we use use the `broom` package to transform the model's information int
 tidy_mvp_model <- broom::tidy(mvp_model) %>%
   filter(term != "(Intercept)")
 
-ggplot(tidy_mvp_model, aes(x = reorder(term, estimate), y = estimate, fill = estimate)) +
+ggplot(tidy_mvp_model, aes(x = reorder(term, estimate),
+                           y = estimate, fill = estimate)) +
   geom_col() +
   coord_flip() +
   labs(x = "Predictive Variables",
@@ -869,7 +905,8 @@ Below, we will take our newly created `model_data_clean` data frame and conduct 
 
 ```{r loading-model-data, eval = TRUE, echo = FALSE, output = FALSE}
 
-model_data <- arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
+model_data <-
+  arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
 ```
 
 ```{r multinomial-data-prep-2, eval = FALSE, echo = TRUE, output = FALSE}
@@ -879,12 +916,16 @@ pbp <- nflreadr::load_pbp(2006:2022) %>%
 
 pbp_prep <- pbp %>%
   select(
-    game_id, game_date, game_seconds_remaining, week, season,
-    play_type, yards_gained, ydstogo, down, yardline_100, qtr, posteam,
-    posteam_score, defteam, defteam_score, score_differential, shotgun,
-    no_huddle, posteam_timeouts_remaining, defteam_timeouts_remaining,
-    wp, penalty, half_seconds_remaining, goal_to_go, td_prob, fixed_drive, run_location, air_yards) %>%
-  filter(play_type %in% c("run", "pass"), penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
+    game_id, game_date, game_seconds_remaining,
+    week, season, play_type, yards_gained,
+    ydstogo, down, yardline_100, qtr, posteam,
+    posteam_score, defteam, defteam_score,
+    score_differential, shotgun, no_huddle,
+    posteam_timeouts_remaining, defteam_timeouts_remaining,
+    wp, penalty, half_seconds_remaining, goal_to_go,
+    td_prob, fixed_drive, run_location, air_yards) %>%
+  filter(play_type %in% c("run", "pass"),
+         penalty == 0, !is.na(down), !is.na(yardline_100)) %>%
   mutate(in_red_zone = if_else(yardline_100 <= 20, 1, 0),
          in_fg_range = if_else(yardline_100 <= 35, 1, 0),
          two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
@@ -912,7 +953,8 @@ model_data <- pbp_prep %>%
     play_type == "run", 0,
     default = 0),
     run_outside = fcase(
-      play_type == "run" & (run_location == "left" | run_location == "right"), 1,
+      play_type == "run" & (run_location == "left" |
+                              run_location == "right"), 1,
       play_type == "run", 0,
       default = 0),
     short_pass = fcase(
@@ -920,7 +962,8 @@ model_data <- pbp_prep %>%
       play_type == "pass", 0,
       default = 0),
     medium_pass = fcase(
-      play_type == "pass" & air_yards > 5 & air_yards <= 10, 1,
+      play_type == "pass" & air_yards > 5 &
+        air_yards <= 10, 1,
       play_type == "pass", 0,
       default = 0),
     long_pass = fcase(
@@ -929,17 +972,25 @@ model_data <- pbp_prep %>%
       default = 0),
     run = if_else(play_type == "run", 1, 0),
     pass = if_else(play_type == "pass", 1, 0),
-    total_runs = if_else(play_type == "run", cumsum(run) - 1, cumsum(run)),
-    total_pass = if_else(play_type == "pass", cumsum(pass) - 1, cumsum(pass)),
+    total_runs = if_else(play_type == "run",
+                         cumsum(run) - 1, cumsum(run)),
+    total_pass = if_else(play_type == "pass",
+                         cumsum(pass) - 1, cumsum(pass)),
     previous_play = if_else(posteam == lag(posteam),
-                            lag(play_type), "First play of drive"),
+                            lag(play_type),
+                            "First play of drive"),
     previous_play = if_else(is.na(previous_play),
-                            replace_na("First play of drive"), previous_play)) %>%
+                            replace_na("First play of drive"),
+                            previous_play)) %>%
   ungroup() %>%
-  mutate(across(c(play_type, season, posteam, defteam, shotgun, down, qtr, no_huddle,
-                 posteam_timeouts_remaining, defteam_timeouts_remaining, in_red_zone,
-                 in_fg_range, previous_play, goal_to_go, two_min_drill), as.factor)) %>%
-  select(-game_id, -game_date, -week, -play_type, -yards_gained, -defteam, -run, -pass,
+  mutate(across(c(play_type, season, posteam, defteam,
+                  shotgun, down, qtr, no_huddle,
+                  posteam_timeouts_remaining,
+                  defteam_timeouts_remaining, in_red_zone,
+                  in_fg_range, previous_play, goal_to_go,
+                  two_min_drill), as.factor)) %>%
+  select(-game_id, -game_date, -week, -play_type,
+         -yards_gained, -defteam, -run, -pass,
          -air_yards, -run_location)
 ```
 
@@ -961,7 +1012,8 @@ model_data <- model_data %>%
     medium_pass == 1 ~ "medium_pass",
     long_pass == 1 ~ "long_pass",
     TRUE ~ NA)) %>%
-  select(-run_outside, -run_inside, -short_pass, -medium_pass, -long_pass) %>%
+  select(-run_outside, -run_inside, -short_pass,
+         -medium_pass, -long_pass) %>%
   mutate(play_call = as.factor(play_call))
 
 model_data_clean <- na.omit(model_data)
@@ -981,12 +1033,14 @@ With the `initial_split()` process completed, the data is divided into a `qb_mvp
 
 set.seed(1984)
 
-multinom_play_split <- rsample::initial_split(model_data_clean, strata = play_call)
+multinom_play_split <- rsample::initial_split(model_data_clean,
+                                              strata = play_call)
 multinom_play_train <- rsample::training(multinom_play_split)
 multinom_play_test <- rsample::testing(multinom_play_split)
 
 set.seed(1958)
-multinom_play_folds <- rsample::vfold_cv(model_data_clean, strata = play_call)
+multinom_play_folds <- rsample::vfold_cv(model_data_clean,
+                                         strata = play_call)
 ```
 
 The `recipes` package within `tidymodels`, first and foremost, is where the formula for the model is passed into the eventful `workflow`. However, it also provides the opportunity for further preprocessing of the data by using the the `step_` function that allows for multitudes of refinement, including imputation, individual transformations, discretization, the creation of dummy variables and encodings, interactions, normalization, multivariate transformations, filters, and row operations. The complete list of possible `step_` functions can be fond on the [reference section of the `recipes` website.](https://recipes.tidymodels.org/reference/index.html) We use several of these `step_` functions below in preparing the `recipes` for our multinomial logisitic regression model.
@@ -1019,10 +1073,14 @@ multinom_play_recipe <-
   recipe(formula = play_call ~ ., data = multinom_play_train) %>%
   update_role(posteam, new_role = "variable_id") %>%
   update_role(season, new_role = "variable_id") %>%
-  step_zv(all_predictors(), -has_role("variable_id")) %>% 
-  step_normalize(all_numeric_predictors(), - has_role("variable_id")) %>%
-  step_dummy(down, qtr, posteam_timeouts_remaining, defteam_timeouts_remaining,
-             in_red_zone, in_fg_range, two_min_drill, previous_play)
+  step_zv(all_predictors(),
+          -has_role("variable_id")) %>% 
+  step_normalize(all_numeric_predictors(),
+                 - has_role("variable_id")) %>%
+  step_dummy(down, qtr, posteam_timeouts_remaining,
+             defteam_timeouts_remaining,
+             in_red_zone, in_fg_range,
+             two_min_drill, previous_play)
 ```
 
 With the recipe for our model created, we can build the model itself and then pass both `multinom_play_recipe` and the below `multinom_play_model` into a combined `workflow()` created within the `tidymodels` framework.
@@ -1055,8 +1113,11 @@ We will use the `crossing` function from the `tidyr` package to manually create 
 
 ```{r creating-multinom-grid, eval = FALSE, echo = TRUE, output = FALSE}
 
-multinom_play_grid <- tidyr::crossing(penalty = 10^seq(-6, -1, length.out = 20),
-                                      mixture = c(0.05, 0.2, 0.4, 0.6, 0.8, 1))
+multinom_play_grid <- tidyr::crossing(penalty = 10^seq(-6, -1,
+                                                       length.out = 20),
+                                      mixture = c(0.05, 0.2,
+                                                  0.4, 0.6,
+                                                  0.8, 1))
 ```
 
 1.  **Penalty** - we are creating a sequence of 20 numbers that are evenly spaced on a log scale between 10\^-6 and 10\^-1. The training process will be conducted with each number in the `penalty` argument. A correctly tuned `penalty` allows us to avoid overfitting.
@@ -1145,7 +1206,8 @@ With the the `finalize_workflow()` fitted to our data, we can now make and colle
 
 ```{r loading-combined-predictions, eval = TRUE, echo = FALSE, output = FALSE}
 
-multinom_all_predictions <- readr::read_rds("./example_data/R/multinom_all_predictions.rds")
+multinom_all_predictions <-
+  readr::read_rds("./example_data/R/multinom_all_predictions.rds")
 ```
 
 ```{r multinom-augmenting, eval = FALSE, echo = TRUE, output = FALSE}
@@ -1163,7 +1225,8 @@ In the first step, we are extracting the final workflow creating in the prior st
 
 ```{r loading-final-results, eval = TRUE, echo = FALSE, output = FALSE}
 
-multinom_final_results <- readr::read_rds("./example_data/R/multinom_final_results.rds")
+multinom_final_results <-
+  readr::read_rds("./example_data/R/multinom_final_results.rds")
 ```
 
 With both sets of predictions combined, we can use the `collect_predictions` function to gather the predictions into a data frame that allows us to further evaluate how the model performed. Additionally, by piping into the `roc_curve()` function, we can calculate the the ROC curve for each class in our data frame (`long_pass`, `short_pass`, etc.). The resulting `predictions_with_auc` data frame includes the true positive and false positive rates for each different play type at various classification thresholds. Including the calculated ROC curve gives us the ability to visualize the model's performance using the area under the curve (AUC).
@@ -1180,14 +1243,16 @@ The area under the curve (AUC) is a single-value of the model's performance. In 
 
 ```{r roc-curve-for-coding, eval = FALSE, echo = TRUE, output = FALSE}
 
-ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .level)) +
+ggplot(data = predictions_with_auc, aes(1 - specificity,
+                                        sensitivity, color = .level)) +
   geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
   geom_path(size = 1.5) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::number_format(accuracy = 0.01)) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::number_format(accuracy = 0.01)) +
-  scale_color_brewer(palette = "Paired", labels = c("Long Pass", "Medium Pass", "Run Inside",
+  scale_color_brewer(palette = "Paired",
+                     labels = c("Long Pass", "Medium Pass", "Run Inside",
                                                     "Run Outside", "Short Pass")) +
   coord_fixed() +
   nfl_analytics_theme() +
@@ -1200,14 +1265,16 @@ ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .l
 
 ```{r roc-curve-for-show, output = TRUE, echo = FALSE, warning = FALSE, fig.align='center', fig.dpi = 400}
 
-ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .level)) +
+ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity,
+                                        color = .level)) +
   geom_abline(slope = 1, color = "black", lty = 23, alpha = 0.8) +
   geom_path(size = 1.5) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::number_format(accuracy = 0.01)) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::number_format(accuracy = 0.01)) +
-  scale_color_brewer(palette = "Paired", labels = c("Long Pass", "Medium Pass", "Run Inside",
+  scale_color_brewer(palette = "Paired",
+                     labels = c("Long Pass", "Medium Pass", "Run Inside",
                                                     "Run Outside", "Short Pass")) +
   coord_fixed() +
   nfl_analytics_theme() +
@@ -1215,14 +1282,15 @@ ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity, color = .l
         legend.key = element_rect("#F7F7F7")) +
   xlab("1 - Specificity") +
   ylab("Sensitivity") +
-  annotate("text", x = .50, y = .47, label = "At or Below Is No Better Than A Coin Flip", angle = 45,
-           size = 5, family = "Overpass", fontface = "bold") +
+  annotate("text", x = .50, y = .47,
+           label = "At or Below Is No Better Than A Coin Flip", angle = 45,
+           size = 5, family = "Roboto", fontface = "bold") +
   annotate("text", x = .46, y = .64, label = "Good", angle = 45,
-           size = 5, family = "Overpass", fontface = "bold") +
+           size = 5, family = "Roboto", fontface = "bold") +
   annotate("text", x = .40, y = .74, label = "Better", angle = 45,
-           size = 5, family = "Overpass", fontface = "bold") +
+           size = 5, family = "Roboto", fontface = "bold") +
   annotate("text", x = .23, y = .97, label = "Best", angle = 45,
-           size = 5, family = "Overpass", fontface = "bold") +
+           size = 5, family = "Roboto", fontface = "bold") +
   labs(color = "Play Type",
        title = "**Offensive Play Prediction Model**",
        subtitle = "*2000-2022 | Regular Season*",
@@ -1260,7 +1328,8 @@ predictions_by_team <- predictions_by_team %>%
 options(digits = 3)
 
 predictions_by_team %>%
-  dplyr::select(season, team_logo_wikipedia, total_plays, total_pred, pred_pct) %>%
+  dplyr::select(season, team_logo_wikipedia,
+                total_plays, total_pred, pred_pct) %>%
   dplyr::arrange(-pred_pct) %>%
   dplyr::slice(1:10) %>%
   gt() %>%
@@ -1319,7 +1388,8 @@ To begin this process, first download the `rushing_kmeans_data`. After, we creat
 
 ```{r download-rushing-kmean, eval = TRUE, echo = TRUE, output = FALSE}
 
-rushing_kmeans_data <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/rushing_kmeans_data.csv")
+rushing_kmeans_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/rushing_kmeans_data.csv")
 ```
 
 ```{r pca-process-1, eval = TRUE, echo = TRUE, output = FALSE, warning = FALSE}
@@ -1381,7 +1451,8 @@ We can product a Scree plot using the `fviz_eig` function.
 
 ```{r pca-scree-plot, eval = TRUE, echo = TRUE, output = TRUE}
 
-fviz_eig(rushers_pca, addlabels = TRUE, ggtheme = nfl_analytics_theme()) +
+fviz_eig(rushers_pca, addlabels = TRUE,
+         ggtheme = nfl_analytics_theme()) +
   xlab("Principal Component") +
   ylab("% of Variance Explained") +
   labs(title = "**PCA Analysis: Scree Plot**")
@@ -1534,20 +1605,23 @@ With the data addition and preparation completed, we can use both the `gt` and `
 ```{r rb-kmean-table, eval = TRUE, echo = TRUE, output = TRUE}
 
 gt_table_data %>%
-  mutate(cluster = fct_relevel(cluster, c("Cluster 1 - Feast or Famine",
-                                          "Cluster 2 - Blue Collar Backs",
-                                          "Cluster 3 - Cautious Carriers"))) %>%
+  mutate(cluster = fct_relevel(cluster,
+                               c("Cluster 1 - Feast or Famine",
+                                 "Cluster 2 - Blue Collar Backs",
+                                 "Cluster 3 - Cautious Carriers"))) %>%
   arrange(cluster, player) %>%
   gt(groupname_col = "cluster") %>%
   tab_spanner(label = "Clustered Running Backs",
-              columns = c("player", "headshot_url", "team_logo_wikipedia")) %>%
+              columns = c("player", "headshot_url",
+                          "team_logo_wikipedia")) %>%
   cols_align(align = "center",
              columns = everything()) %>%
   cols_label(headshot_url = "", team_logo_wikipedia = "Team") %>%
   gt_img_rows(columns = team_logo_wikipedia, height = 25) %>%
   gt_img_rows(columns = headshot_url, height = 25) %>%
   cols_label(player = "Running Back") %>%
-  tab_source_note(source_note = md("**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*")) %>%
+  tab_source_note(source_note =
+                    md("**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*")) %>%
   gtExtras::gt_theme_pff()
 ```
 
@@ -1612,7 +1686,7 @@ pbp <- nflreadr::load_pbp(2016:2022)
 rush_attempts <- pbp %>%
   filter(season_type == "REG") %>%
   filter(rush_attempt == 1, qb_scramble == 0,
-         qb_dropback == 0, is.na(yards_gained))
+         qb_dropback == 0, !is.na(yards_gained))
 
 def_ypc <- rush_attempts %>%
   filter(!is.na(defteam)) %>%
@@ -1623,7 +1697,7 @@ rush_attempts <- rush_attempts %>%
   left_join(def_ypc, by = c("defteam", "season"))
 ```
 
-After gathering the play-by-play data from 2016-2022 and doing a bit of preparation, we conduct our first bit of feature engineering by determining the average yards per carry allowed by each defense by season and then merge the sresult sback into the main `rush_attempts` data frame.
+After gathering the play-by-play data from 2016-2022 and doing a bit of preparation, we conduct our first bit of feature engineering by determining the average yards per carry allowed by each defense by season and then merge the results back into the main `rush_attempts` data frame.
 
 Aside from the typical contextual variables such as down, yards to go, score, time remaining, etc., we can use the `load_participation` function from `nflreadr` to include information regarding what formation both the offense and defense were in, per play, as well as the personnel on the field for each and the total number of defenders in the box.
 
@@ -1656,11 +1730,15 @@ rushing_data_join <- rush_attempts %>%
   mutate(red_zone = if_else(yardline_100 <= 20, 1, 0),
          fg_range = if_else(yardline_100 <= 35, 1, 0),
          two_min_drill = if_else(half_seconds_remaining <= 120, 1, 0)) %>%
-  select(label = yards_gained, season, week, yardline_100, quarter_seconds_remaining,
-         half_seconds_remaining, qtr, down, ydstogo, shotgun, no_huddle,
-         ep, wp, drive_rush_count, game_rush_count, red_zone, fg_range, two_min_drill,
-         offense_formation, offense_personnel, defense_personnel, defenders_in_box,
-         rusher, rush_prob, def_ypc, strat_score, rusher_player_id, posteam, defteam) %>%
+  select(label = yards_gained, season, week, yardline_100,
+         quarter_seconds_remaining, half_seconds_remaining,
+         qtr, down, ydstogo, shotgun, no_huddle,
+         ep, wp, drive_rush_count, game_rush_count,
+         red_zone, fg_range, two_min_drill,
+         offense_formation, offense_personnel,
+         defense_personnel, defenders_in_box,
+         rusher, rush_prob, def_ypc, strat_score,
+         rusher_player_id, posteam, defteam) %>%
   na.omit()
 ```
 
@@ -1674,14 +1752,17 @@ We can continue to add to the data frame using information from the `next_gen_st
 
 ```{r ryoe-nextgen-stats, eval = FALSE, echo = TRUE, output = FALSE}
 
-next_gen_stats <- load_nextgen_stats(seasons = 2016:2022, stat_type = "rushing") %>%
+next_gen_stats <- load_nextgen_stats(seasons = 2016:2022,
+                                     stat_type = "rushing") %>%
   filter(week > 0 & season_type == "REG") %>%
   select(season, week, player_gsis_id,
-         against_eight = percent_attempts_gte_eight_defenders, avg_time_to_los)
+         against_eight = percent_attempts_gte_eight_defenders,
+         avg_time_to_los)
 
 rushing_data_join <- rushing_data_join %>%
-  left_join(next_gen_stats, by = c("season", "week",
-                                   "rusher_player_id" = "player_gsis_id")) %>%
+  left_join(next_gen_stats,
+            by = c("season", "week",
+                   "rusher_player_id" = "player_gsis_id")) %>%
   na.omit()
 ```
 
@@ -1691,19 +1772,26 @@ Last, we will conduct a bit of engineering on both the `offense_personnel` and `
 
 rushing_data_join <- rushing_data_join %>%
   mutate(
-    ol = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sOL)") %>% as.numeric(),
-    rb = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sRB)") %>% as.numeric(),
-    te = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sTE)") %>% as.numeric(),
-    wr = str_extract(offense_personnel, "(?<=\\s|^)\\d+(?=\\sWR)") %>% as.numeric()) %>%
+    ol = str_extract(offense_personnel,
+                     "(?<=\\s|^)\\d+(?=\\sOL)") %>% as.numeric(),
+    rb = str_extract(offense_personnel,
+                     "(?<=\\s|^)\\d+(?=\\sRB)") %>% as.numeric(),
+    te = str_extract(offense_personnel,
+                     "(?<=\\s|^)\\d+(?=\\sTE)") %>% as.numeric(),
+    wr = str_extract(offense_personnel,
+                     "(?<=\\s|^)\\d+(?=\\sWR)") %>% as.numeric()) %>%
   replace_na(list(ol = 5)) %>%
   mutate(extra_ol = if_else(ol > 5, 1, 0)) %>%
   mutate(across(ol:wr, as.factor)) %>%
   select(-ol, -offense_personnel)
 
 rushing_data_join <- rushing_data_join %>%
-  mutate(dl = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sDL)") %>% as.numeric(),
-         lb = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric(),
-         db = str_extract(defense_personnel, "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric()) %>%
+  mutate(dl = str_extract(defense_personnel,
+                          "(?<=\\s|^)\\d+(?=\\sDL)") %>% as.numeric(),
+         lb = str_extract(defense_personnel,
+                          "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric(),
+         db = str_extract(defense_personnel,
+                          "(?<=\\s|^)\\d+(?=\\sLB)") %>% as.numeric()) %>%
   mutate(across(dl:db, as.factor)) %>%
   select(-defense_personnel)
 ```
@@ -1724,7 +1812,8 @@ rushing_data_join <- rushing_data_join %>%
          extra_ol = as.factor(extra_ol))
 
 rushes <- rushing_data_join %>%
-  select(-season, -week, -rusher, -rusher_player_id, -posteam, -defteam) %>%
+  select(-season, -week, -rusher, -rusher_player_id,
+         -posteam, -defteam) %>%
   mutate(across(where(is.character), as.factor))
 ```
 
@@ -1732,7 +1821,7 @@ In the last step of data preparation, we use `filter()` to remove any plays that
 
 ##### Model Creation in `tidymodels`
 
-To begin creating the model, we will follow much the same steps as we did in creating our multinomial regression by following the `tidymodels` framework which needs split data, folds for cross-validation, a recipe, a model specification, a grid for hyperparameter tuning, and a workflow that combines all these elements. Using the `rushes` data frame, we use the `rsample` packages to create an initial split of the data and then produce the model's training and testing datasets from that split. Lastly, we utilize the `vfold_cv()` function to create folds of the training data to pass into the hyperparameter tuning grid.
+To begin creating the model, we will follow much the same steps as we did in creating our multinomial regression by following the `tidymodels` framework which needs split data, folds for cross-validation, a recipe, a model specification, a grid for hyperparameter tuning, and a workflow that combines all these elements. Using the `rushes` data frame, we use the `rsample` packages to create an initial split of the data and then produce the model's training and testing data sets from that split. Lastly, we utilize the `vfold_cv()` function to create folds of the training data to pass into the hyperparameter tuning grid.
 
 ```{r ryoe-splitting-data, eval = FALSE, echo = TRUE, output = FALSE}
 set.seed(1988)
@@ -1848,7 +1937,8 @@ With the tuning process complete and the best hyperparameters selected, we can t
 
 ```{r reading-ryoe-csv, eval = TRUE, echo = FALSE, output = FALSE}
 
-ryoe_projs <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+ryoe_projs <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
 ```
 
 ```{r ryoe-verify-on-testing, eval = FALSE, echo = TRUE, output = FALSE}
@@ -1926,7 +2016,7 @@ ggplot(data = for_plot, aes(x = yards, y = exp_yards)) +
                   box.padding = 1.7,
                   segment.curvature = -0.1,
                   segment.ncp = 3, segment.angle = 20,
-                  family = "Overpass", size = 4, fontface = "bold")
+                  family = "Roboto", size = 4, fontface = "bold")
 ```
 
 The graph shows the "line of best fit" between `Actual Rushing Yards` and `Expected Rushing Yards`. Those running backs that outperformed the models expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards over this period of time while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model's expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook's 5,656 actual yards and 5,342 expected yards).
@@ -1957,19 +2047,26 @@ To plot the leaders per season required just two additions to the current `ryoe_
 ```{r ryoe-season-leaders-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
-  stat_poly_line(method = "lm", se = FALSE, linetype = "dashed", color = "black") +
-  stat_poly_eq(mapping = use_label(c("R2", "P")), p.digits = 2, label.x = .20, label.y = 3) +
-  geom_point(color = diff_per_season$team_color2, size = diff_per_season$rushes / 165) +
-  geom_point(color = diff_per_season$team_color, size = diff_per_season$rushes / 200) +
+  stat_poly_line(method = "lm", se = FALSE,
+                 linetype = "dashed", color = "black") +
+  stat_poly_eq(mapping = use_label(c("R2", "P")),
+               p.digits = 2, label.x = .20, label.y = 3) +
+  geom_point(color = diff_per_season$team_color2,
+             size = diff_per_season$rushes / 165) +
+  geom_point(color = diff_per_season$team_color,
+             size = diff_per_season$rushes / 200) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
-  geom_label_repel(data = subset(diff_per_season, is_max_diff == 1),
+  geom_label_repel(data = subset(diff_per_season,
+                                 is_max_diff == 1),
                   aes(label = rusher),
                   box.padding = 1.5, nudge_y = 1, nudge_x = 2,
-                  segment.curvature = -0.1, segment.ncp = 3, segment.angle = 20,
-                  family = "Overpass", size = 3.5, fontface = "bold") +
+                  segment.curvature = -0.1,
+                  segment.ncp = 3, segment.angle = 20,
+                  family = "Roboto", size = 3.5,
+                  fontface = "bold") +
   labs(title = "**Rushing Yards over Expected Leader Per Season**",
        subtitle = "*2016 - 2022 | Model: LightGBM*",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
@@ -1977,7 +2074,7 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
   ylab("Expected Rushing Yards") +
   facet_wrap(~ season, scales = "free") +
   nfl_analytics_theme() +
-  theme(strip.text = element_text(face = "bold", family = "Overpass", size = 12),
+  theme(strip.text = element_text(face = "bold", family = "Roboto", size = 12),
         strip.background = element_rect(fill = "#F6F6F6"))
 ```
 
@@ -2005,18 +2102,20 @@ Lastly, in order to provide a bit of "eye candy" to the plot, we use the `readPN
 ```{r j-taylor-2021-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot() +
-  geom_line(aes(x = j_taylor_2021$cumulative_rushes, y = j_taylor_2021$cumulative_yards),
+  geom_line(aes(x = j_taylor_2021$cumulative_rushes,
+                y = j_taylor_2021$cumulative_yards),
             color = "#002C5F", size = 1.75) +
-  geom_line(aes(x = j_taylor_2021$cumulative_rushes, y = j_taylor_2021$cumulative_exyards),
+  geom_line(aes(x = j_taylor_2021$cumulative_rushes,
+                y = j_taylor_2021$cumulative_exyards),
             color = "#A2AAAD", size = 1.75) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 12),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 10),
                      labels = scales::comma_format()) +
   annotate(geom = "text", label = "Cumulative Actual Yards", x = 200, y = 1050,
-           angle = 38, family = "Overpass", size = 5) +
+           angle = 38, family = "Roboto", size = 5) +
   annotate(geom = "text", label = "Cumulative Expected Yards", x = 200, y = 700,
-           angle = 35, family = "Overpass", size = 5) +
+           angle = 35, family = "Roboto", size = 5) +
   annotation_custom(grid::rasterGrob(j_taylor_image, 
                                width = unit(1,"npc"), 
                                height = unit(1,"npc")),

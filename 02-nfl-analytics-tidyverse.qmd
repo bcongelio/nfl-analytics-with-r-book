@@ -4,11 +4,17 @@
 
 source("book-functions.R")
 
+knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
+
+library(showtext)
 library(tidyverse)
-library(nflverse)
+library(nflreadr)
+library(nflplotR)
 library(vroom)
 library(extrafont)
 extrafont::loadfonts(quiet = TRUE)
+
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
 ## Downloading R and RStudio
@@ -41,7 +47,7 @@ It is important that you download and successfully install R before proceeding t
 
 When you open RStudio for the first time, you will see the interface laid out as in the picture below (sourced from the [official RStudio documentation from posit](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html)).
 
-![](images/rstudio-panes-with-labels.jpeg){fig-align="center" width="600"}
+![](images/rstudio-panes-with-labels.jpeg){fig-align="center" width="440"}
 
 As you can see, RStudio provides a graphical interface for working with R and is sorted into four main panes, each of which serves a specific purpose.
 
@@ -221,13 +227,15 @@ In the second, you must use quotation marks around the character-based value you
 ```{r correct-incorrect-filter, eval = FALSE, echo = TRUE, output = FALSE}
 
 ne_offense <- pbp %>%
-  filter(posteam == NE) #this is incorrect. Character values must be in quotation marks.
+  filter(posteam == NE) #this is incorrect.
+                        ##Character values must be in quotation marks.
 
 ne_offense <- pbp %>%
   filter(posteam == "NE") #this is correct for character values.
 
 ne_offense <- pbp %>%
-  filter(air_yards >= "5") #this is incorrect. Numeric values do not need quotation marks.
+  filter(air_yards >= "5") #this is incorrect.
+                           #Numeric values do not need quotation marks.
 
 ne_offense <- pbp %>%
   filter(air_yards >= 5) #this is correct for numeric values.
@@ -249,7 +257,8 @@ The resulting data set titled `not_ne_offense` will still include all 372 variab
 ```{r afc-east-filter, eval = TRUE, echo = TRUE, output = TRUE}
 
 afc_east <- pbp %>%
-  filter(posteam == "NE" | posteam == "MIA" | posteam == "NYJ" | posteam == "BUF")
+  filter(posteam == "NE" | posteam == "MIA"
+         | posteam == "NYJ" | posteam == "BUF")
 ```
 
 By using the `|` logical operator, which translates to the word "or", we can string together for separate filters for `posteam` within the play-by-platy data. That said, it probably seems odd to have to include the `posteam` argument four different times, rather than being able to do this:
@@ -288,9 +297,13 @@ We cannot leave the data as is and find the averages outright. We must remove th
 
 To begin, we will use the `vroom` package to read in the data.
 
-```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = TRUE}
+```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-time_in_pocket <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv")
+time_in_pocket <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv")
+```
+
+```{r show-time-in-pocket, eval = TRUE, echo = FALSE, output = TRUE}
 
 time_in_pocket
 ```
@@ -340,7 +353,9 @@ Building the `filter()` based on the above specifications requires the use of bo
 ```{r filter-for-qb-hits, eval = TRUE, echo = TRUE, output = TRUE}
 
 multiple_filters <- pbp %>%
-  filter(down == 2 & play_type == "pass" & qb_hit == 1 & complete_pass == 1 & 
+  filter(down == 2 & play_type == "pass" &
+           qb_hit == 1 &
+           complete_pass == 1 & 
            air_yards >= ydstogo)
 ```
 
@@ -457,7 +472,9 @@ As well, we will provide an additional argument in the first `filter()` verb tha
 ```{r running-back-success-min, eval = TRUE, echo = TRUE, output = TRUE}
 
 running_back_success_min <- pbp %>%
-  filter(play_type == "run" & play == 1 & !is.na(down) & !is.na(rusher)) %>%
+  filter(play_type == "run" & play == 1 &
+           !is.na(down) &
+           !is.na(rusher)) %>%
   group_by(rusher) %>%
   summarize(success_rate = mean(success),
             n_rushes = n()) %>%
@@ -486,7 +503,9 @@ Once the data set is loaded, we can think ahead to what is needed in the `group_
 ```{r calculating-yac-group-example, eval = TRUE, echo = TRUE, output = FALSE}
 
 yac_seasons <- multiple_seasons %>%
-  filter(season_type == "REG" & !is.na(posteam) & !is.na(yards_after_catch)) %>%
+  filter(season_type == "REG" &
+           !is.na(posteam) &
+           !is.na(yards_after_catch)) %>%
   group_by(season, posteam) %>%
   summarize(total_yac = sum(yards_after_catch, na.rm = TRUE))
 ```
@@ -504,7 +523,11 @@ In our `summarize()` section, we are first getting the total number of times eac
 ```{r team-aggressiveness, eval = TRUE, echo = TRUE, output = TRUE}
 
 team_aggressiveness <- pbp %>%
-  filter(play_type == "pass" & down == 3 & ydstogo <= 5 & play == 1 & !is.na(down)) %>%
+  filter(play_type == "pass" &
+           down == 3 &
+           ydstogo <= 5 &
+           play == 1 &
+           !is.na(down)) %>%
   group_by(posteam) %>%
   summarize(total = n(),
             aggressiveness = sum(air_yards >= ydstogo, na.rm = TRUE),
@@ -578,7 +601,8 @@ To start, let's examine data from Sports Info Solutions by reading in the data f
 
 ```{r sis-boom-bust, eval = TRUE, echo = TRUE, output = FALSE}
 
-sis_data <- vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv")
+sis_data <-
+  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv")
 ```
 
 Using `vroom`, we are reading in the `.csv` file into our environment and assigning it the name `sis_data`. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:
@@ -679,8 +703,10 @@ sis_data_stringr <- sis_data %>%
   mutate(boom_percent = str_remove(boom_percent, "%"),
          bust_percent = str_remove(bust_percent, "%"))
 
-sis_data_stringr$boom_percent <- as.numeric(as.character(sis_data_stringr$boom_percent))
-sis_data_stringr$bust_percent <- as.numeric(as.character(sis_data_stringr$bust_percent))
+sis_data_stringr$boom_percent <-
+  as.numeric(as.character(sis_data_stringr$boom_percent))
+sis_data_stringr$bust_percent <-
+  as.numeric(as.character(sis_data_stringr$bust_percent))
 
 sis_data_stringr
 ```
@@ -872,7 +898,9 @@ After, using the data in `pbp`, complete the following:
     ```{r question-4-ch-2, eval = FALSE, echo = TRUE, output = FALSE}
 
     cmp_inc <- pbp %>%
-      filter(complete_pass == 1 | incomplete_pass == 1 | interception == 1, !is.na(down)) %>%
+      filter(complete_pass == 1 |
+               incomplete_pass == 1 |
+               interception == 1, !is.na(down)) %>%
       group_by(passer) %>%
       summarize(total_completions = sum(complete_pass == 1, na.rm = TRUE),
                 total_incompletions = sum(incomplete_pass == 1, na.rm = TRUE)) %>%
