@@ -9,10 +9,6 @@ library(tidyverse)
 font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
-```{r preface-libs, include = FALSE}
-library(memoise)
-```
-
 # Introduction
 
 On April 27, 2020, Ben Baldwin hit send on a Tweet that announced the birth of `nflfastR`, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).

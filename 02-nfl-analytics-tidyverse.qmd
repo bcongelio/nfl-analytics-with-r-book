@@ -299,8 +299,7 @@ To begin, we will use the `vroom` package to read in the data.
 
 ```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-time_in_pocket <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/time_in_pocket.csv")
+time_in_pocket <- vroom("http://nfl-book.bradcongelio.com/qb-tip")
 ```
 
 ```{r show-time-in-pocket, eval = TRUE, echo = FALSE, output = TRUE}
@@ -601,8 +600,7 @@ To start, let's examine data from Sports Info Solutions by reading in the data f
 
 ```{r sis-boom-bust, eval = TRUE, echo = TRUE, output = FALSE}
 
-sis_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/sis_boom_bust.csv")
+sis_data <- vroom("http://nfl-book.bradcongelio.com/sis-bb")
 ```
 
 Using `vroom`, we are reading in the `.csv` file into our environment and assigning it the name `sis_data`. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:

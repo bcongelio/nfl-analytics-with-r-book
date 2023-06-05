@@ -87,8 +87,7 @@ To put theory into action, **let's build a simple linear regression model that e
 
 ```{r load-simple-regression-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-simple_regression_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv")
+simple_regression_data <- vroom("http://nfl-book.bradcongelio.com/simple-reg")
 ```
 
 The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let's first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.
@@ -185,7 +184,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|:--------------:|:------------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -395,8 +394,7 @@ To begin building the multiple linear regression model for the 2022 season, we c
 
 ```{r getting-m-lm-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-multiple_lm_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/multiple_lm_data.csv")
+multiple_lm_data <- vroom("http://nfl-book.bradcongelio.com/multiple-lm")
 
 multiple_lm_data <- multiple_lm_data %>%
   filter(season == 2022)
@@ -665,8 +663,7 @@ The data, as collected from `load_player_stats()`, does not contain information 
 
 ```{r load-pfr-mvp-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-pfr_mvp_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pfr_mvp_data.csv")
+pfr_mvp_data <- vroom("http://nfl-book.bradcongelio.com/pfr-mvp")
 
 pfr_mvp_data$mvp <- 1
 
@@ -905,8 +902,7 @@ Below, we will take our newly created `model_data_clean` data frame and conduct 
 
 ```{r loading-model-data, eval = TRUE, echo = FALSE, output = FALSE}
 
-model_data <-
-  arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
+model_data <- arrow::read_parquet("./example_data/csv/model_data_clean.parquet")
 ```
 
 ```{r multinomial-data-prep-2, eval = FALSE, echo = TRUE, output = FALSE}
@@ -1388,8 +1384,7 @@ To begin this process, first download the `rushing_kmeans_data`. After, we creat
 
 ```{r download-rushing-kmean, eval = TRUE, echo = TRUE, output = FALSE}
 
-rushing_kmeans_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/rushing_kmeans_data.csv")
+rushing_kmeans_data <- vroom("http://nfl-book.bradcongelio.com/kmeans-data")
 ```
 
 ```{r pca-process-1, eval = TRUE, echo = TRUE, output = FALSE, warning = FALSE}

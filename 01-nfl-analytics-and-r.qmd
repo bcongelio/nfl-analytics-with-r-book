@@ -365,8 +365,7 @@ As a result of this, Schatz designed Adjusted Sack Rate which accounts for the n
 
 ```{r asr-data-for-plot, eval = TRUE, echo = TRUE, output = FALSE}
 
-adjusted_sack_rate <- 
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/adjusted_sack_rate.csv")
+adjusted_sack_rate <- vroom("http://nfl-book.bradcongelio.com/adj-sack-rate")
 ```
 
 ```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
@@ -443,8 +442,7 @@ To begin, we can gather the necessary data into a data frame called `fb_outsider
 
 ```{r fb-outsiders-data, eval = TRUE, echo = TRUE, output = TRUE}
 
-fb_outsiders_oline <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/fboutsiders_line_stats.csv")
+fb_outsiders_oline <- vroom("http://nfl-book.bradcongelio.com/fbo_oline")
 
 fb_outsiders_oline
 ```
@@ -514,8 +512,7 @@ For the last exploration in this topic, we can bring in `Elusive Rating`, which 
 
 ```{r oline-combo-elusive, eval = TRUE, echo = TRUE, output = FALSE}
 
-oline_combo_elusive <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/online_combo_elusive.csv")
+oline_combo_elusive <- vroom("http://nfl-book.bradcongelio.com/ol-elusive")
 ```
 
 Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's Adjusted Line Yards, we can create a new variable that use the team's `elusive_rating` to, in an elementary fashion, add weight to the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, using coefficients from a regression model, etc.), we will conduct a more simple type of feature engineering by first using the `scale()` package to standardize the values, resulting in each team receiving what is called a 'z-score' (or the total standard deviations away from the mean). After, we will created the `weighted_aly` metric by subtracting each team's z-score from the existing `adj_line_yards`, and then plot the results.

@@ -84,8 +84,7 @@ To showcase this, let's use data from Sports Info Solutions that pertains quarte
 
 ```{r gathering-play-action-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-play_action_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv")
+play_action_data <- vroom("http://nfl-book.bradcongelio.com/pa-data")
 ```
 
 To provide an easy-to-understand example of building a visualization with `ggplot`, let's use each QB's total yardage when using play action and when not. In this case, our two variable names are `yds` and `pa_yds` with the `yds` variable being place on the x-axis and the `pa_yds` variable being placed on the y-axis.
@@ -303,7 +302,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -978,8 +977,7 @@ To explore the process of placing team logos into a plot, let's stick with our p
 
 ```{r gathering-team-play-action, eval = TRUE, echo = TRUE, output = FALSE}
 
-team_playaction <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv")
+team_playaction <- vroom("http://nfl-book.bradcongelio.com/team-pa")
 ```
 
 The resulting `team_playaction` data contains nearly identical information to the previous QB-level data. However, there is a slight change in how Sports Info Solutions charts passing yards on the team level. You will notice a column for both `net_yds` and `gross_yds`. When charting passing attempts in football, a player's individual passing yards are aggregated under **gross yards** with all lost yardage resulting from a sack being included. On the other hand, team passing yards are always presented in **net yards** and any lost yardage from sacks are not included. Case in point, the `gross_yds` number in our `team_playaction` data is greater than the `net_yds` for all 32 NFL teams. In any case, we will build our data visualization using `net_yds`.
@@ -1111,8 +1109,7 @@ Like all other `geom_` types, the basic foundation of a line graph can be create
 
 ```{r reading_in_eagles_fourth, eval = TRUE, echo = TRUE, output = FALSE}
 
-eagles_fourth_downs <-
-  vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv")
+eagles_fourth_downs <- vroom("http://nfl-book.bradcongelio.com/phi-4th-downs")
 ```
 
 The data frames includes information regarding the `season`, the `total` fourth downs in each season, the number of fourth-down attempts in `total_go`, and the conversion percentage in `go_pct`. As well, the data has already been joined with information from `nflreadr::load_teams()` to include colors and logos.
@@ -1182,8 +1179,7 @@ The `combined_fourth_data` data frame created by running the below code includes
 
 ```{r reading_combined_line_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-combined_fourth_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv")
+combined_fourth_data <- vroom("http://nfl-book.bradcongelio.com/4th-data")
 ```
 
 The addition of a second `geom_line()` to the plot - one that belongs to the Eagles and one that belongs to averaged number for all other NFL teams - requires a few new additions to our previous code. First, in the `ggplot()` call, we've added `group = posteam`. Because the data is structured so that `PHI` and `NFL` are both observations in the `posteam` column, the use of `group = posteam` instructs `ggplot()` to "split" that information into two and to create a `geom_line()` for each. Second, we've added `scale_color_manual` to the code and manually assigned the appropriate hex code colors to each like (`#004C54` for the Eagles and `#013369` for the rest of the NFL).
@@ -1218,8 +1214,7 @@ A `geom_area()` plot is similar to a `geom_line()` plot in that it is also often
 
 ```{r reading_mahomes_epa_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-mahomes_epa <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv")
+mahomes_epa <- vroom("http://nfl-book.bradcongelio.com/mahomes_epa")
 ```
 
 The basics of the completed plot can be output by placing `week` on the x-axis and `mean_qb_epa` on the y-axis and then using `geom_area()`. Also included in the `geom_area()` are two arguments (`fill` and `alpha`). The hex color for the Kansas City Chiefs' secondary color is provided to "fill" in the area and then the `alpha` is set to 0.4 to make it slightly transparent.
@@ -1280,8 +1275,7 @@ Because this is *not* a metric that is constructed against a continuous variable
 
 ```{r geom_col_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-qb_thirddown_data <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv")
+qb_thirddown_data <- vroom("http://nfl-book.bradcongelio.com/qb-3rd-data")
 ```
 
 To start, we will place `passer_id` on the x-axis and `qb_agg_pct` on the y-axis. However, to make sure the columns are plotted in descending order, we use the `reorder()` function to reorder `passer_id` in descending order by the `qb_agg_pct` variable.
@@ -1408,8 +1402,7 @@ The `geom_col()` plot is incredibly versatile, allowing you to create multiple t
 
 ```{r epa-per-play-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-epa_per_play <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv")
+epa_per_play <- vroom("http://nfl-book.bradcongelio.com/epa-per-play")
 ```
 
 The `ggplot()` code required to output the visualization is quite similar to our above `geom_col()` plot for QB aggressiveness. There are several distinct differences, however.
@@ -1448,8 +1441,7 @@ We can create a `geom_box()` plot to examine the distribution of air yards for e
 
 ```{r reading_airyards_plot_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-playoff_airyards_plot <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv")
+playoff_airyards_plot <- vroom("http://nfl-book.bradcongelio.com/playoff-airyards")
 ```
 
 The `geom_boxplot()` function includes one more argument - `color`. In this case, we have set the argument to `black`. We will also include the `geom_jitter()` function, which will plot each pass underneath the box plot. This is not a requirement for a box plot, but does add an additional level of aesthetics and detail to the final plot. Last, we use the `element_nfl_logo` function to place the respective team logo under each box plot.
@@ -1482,8 +1474,7 @@ We can take the same idea used in the `geom_boxplot()` graph to reformat it to b
 
 ```{r reading_in_ridges_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-playoff_airyards_ridges_plot <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv")
+playoff_airyards_ridges_plot <- vroom("http://nfl-book.bradcongelio.com/ay-ridges")
 ```
 
 Before creating the plot, we will create a function titled `meansd` that will assist in including lines within the `geom_ridges()` to show the mean and standard deviation for each team.
@@ -1522,8 +1513,7 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,
 
 ```{r reading_in_violin_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-yards_gained_compared <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv")
+yards_gained_compared <- vroom("http://nfl-book.bradcongelio.com/yards_gained")
 ```
 
 ```{r violin_plot_completed, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
@@ -1560,8 +1550,7 @@ ggplot(data = yards_gained_compared, aes(x = posteam,
 
 ```{r reading_in_histogram_data, eval = TRUE, echo = TRUE, output = FALSE}
 
-def_yards_allowed <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv")
+def_yards_allowed <- vroom("http://nfl-book.bradcongelio.com/def-yards")
 ```
 
 ```{r histogram_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
@@ -1592,8 +1581,7 @@ To showcase the process, let's create a data frame titled `complete_wr_airyards`
 
 ```{r reading_headshot_csv, eval = FALSE, echo = TRUE, output = FALSE}
 
-complete_wr_airyards <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
+complete_wr_airyards <- vroom("http://nfl-book.bradcongelio.com/complete_ay")
 
 ```
 
@@ -1716,7 +1704,7 @@ We can now take our new cropped headshots and bring them into a visualization cr
 
 ```{r reading_in_circle_data, eval = TRUE, echo = FALSE, output = FALSE}
 
-complete_wr_ay <- vroom::vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv")
+complete_wr_ay <- vroom("http://nfl-book.bradcongelio.com/complete_ay")
 ```
 
 ```{r finished_kernel_density, output = TRUE, warning = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
@@ -1748,8 +1736,7 @@ To provide a walk through of this process, let's read in prepared data that exam
 
 ```{r reading-in-pure-cpoe, eval = TRUE, echo = TRUE, output = FALSE}
 
-pure_cpoe <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pure_cpoe.csv")
+pure_cpoe <- vroom("http://nfl-book.bradcongelio.com/pure-cpoe")
 ```
 
 As mentioned, we can quickly take the data and turn it into a `gt` table by piping it directly into the package's core function.
@@ -1909,8 +1896,7 @@ To do this, we will be utilize a data frame that you will see again in Chapter 5
 
 ```{r reading-in-shiny-app-data, eval = TRUE, echo = TRUE, output = FALSE}
 
-ryoe_shiny <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+ryoe_shiny <- vroom("http://nfl-book.bradcongelio.com/ryoe-projs")
 ```
 
 The resulting `ryoe_shiny` data frame contains information regarding `actual_yards`, `season`, `down`, `ydstogo`, `red_zone`, `rusher`, `rusher_player_id`, `posteam`, `defteam`, `exp_yards`. As you will soon see, despite being in the data frame, will will not use all of the variables while also adding some in the backend of the Shiny App. To that end, the Shiny App we will be producing will allow users to select one or more seasons to see each running back's total rushing yards, total expected yards, and the difference between the two (where a positive number indicates the running back gained more yards than the XGBoost model predicted). Users will be able to select specific downs and yards to go, as well as indicate if they want to see the information pertaining to only those rushing attempts in the red zone. We will also build in the capability for the Shiny App to automatically update and format a `ggplot` scatterplot to visualize the information.
@@ -1937,8 +1923,7 @@ library(tidyverse)
 library(gt)
 library(vroom)
 
-ryoe_shiny <-
-  vroom("https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv")
+ryoe_shiny <- vroom("http://nfl-book.bradcongelio.com/ryoe-projs")
 
 ryoe_shiny <- ryoe_shiny %>%
   filter(ydstogo <= 10)

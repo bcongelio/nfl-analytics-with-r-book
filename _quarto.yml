@@ -38,5 +38,3 @@ format:
   pdf:
     documentclass: krantz
     keep-tex: true
-
-

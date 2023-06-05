@@ -334,8 +334,7 @@ Note
 </div>
 <p>To put theory into action, <strong>let’s build a simple linear regression model that explores the relationship between the total yardage earned by a team over the course of a season and the number of points scored</strong>. To begin, gather the prepared information into a data frame titled <code>simple_regression_data</code> by running the code below.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">simple_regression_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/simple_regression_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">simple_regression_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/simple-reg"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let’s first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -440,8 +439,8 @@ Reading &amp; Understanding Regression Results
 <p>Information about these residual values are included first in our <code>summary(results_2022)</code> output and provide insight into the distribution of the model’s residual errors.</p>
 <table class="table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 92%">
+<col style="width: 22%">
+<col style="width: 77%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -670,8 +669,7 @@ Adjusted R-squared:  0.727</code></pre>
 </ol>
 <p>To begin building the multiple linear regression model for the 2022 season, we can read in the data below using <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom::vroom()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_lm_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/multiple_lm_data.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_lm_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/multiple-lm"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">multiple_lm_data</span> <span class="op">&lt;-</span> <span class="va">multiple_lm_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="fl">2022</span><span class="op">)</span></span>
@@ -1017,8 +1015,7 @@ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_
 </div>
 <p>The data, as collected from <code>load_player_stats()</code>, does not contain information pertaining to MVP winners. To include this, we can load a prepared file using data from Pro Football Reference. The data contains two variables: <code>season</code> and <code>player_name</code> wherein the name represents the player that won that season’s MVP. After reading the data in, we can use the <code>mutate</code> function to create a new variable called <code>mvp</code> that is in binary (<code>1</code> representing that the player was the MVP). After, we can merge this data into our <code>qb_mvp_stats</code> data frame. After merging, you will notice that the <code>mvp</code> column has mainly <code>NA</code> values. As we only brought in <code>1</code> in binary, we must set all the <code>NA</code> values to <code>0</code> to indicate that those players did not win the MVP that season.</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_mvp_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pfr_mvp_data.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_mvp_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/pfr-mvp"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pfr_mvp_data</span><span class="op">$</span><span class="va">mvp</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
@@ -2230,8 +2227,7 @@ html {
 </ol>
 <p>To begin this process, first download the <code>rushing_kmeans_data</code>. After, we create a vector of each rusher’s name and unique ID number from the <code>rushing_kmeans_data</code> data frame, as we will want to use the names as the data frame’s row names during the data visualization process and have the player’s ID to merge in further data, if needed (such as headshot URLs). After, we create a data frame titled <code>rushers_pca</code> that is a copy of <code>rushing_kmeans_data</code> but using <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to drop both <code>player</code> and <code>player_id</code>, but then adding each name back into the data frame using the <code>rownames</code> function. Now, rather than each row being associated by an ascending number, each rusher’s name will be the identification method.</p>
 <div class="cell">
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_kmeans_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/rushing_kmeans_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_kmeans_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/kmeans-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rusher_names</span> <span class="op">&lt;-</span> <span class="va">rushing_kmeans_data</span><span class="op">$</span><span class="va">player</span></span>

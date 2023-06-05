@@ -359,8 +359,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </div>
 <p>To showcase this, let’s use data from Sports Info Solutions that pertains quarterback statistic when using play action versus when not using play action. To start, collect the data using the <code>vroom</code> function.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">play_action_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/play_action_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">play_action_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/pa-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To provide an easy-to-understand example of building a visualization with <code>ggplot</code>, let’s use each QB’s total yardage when using play action and when not. In this case, our two variable names are <code>yds</code> and <code>pa_yds</code> with the <code>yds</code> variable being place on the x-axis and the <code>pa_yds</code> variable being placed on the y-axis.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1423,8 +1422,7 @@ increasing max.overlaps</code></pre>
 <span class="header-section-number">5.6</span> Using Team Logos in Plots</h2>
 <p>To explore the process of placing team logos into a plot, let’s stick with our previous example of working with play action passing data but explore it at the team level rather than individual quarterbacks. To gather the data, we can use <code>vroom</code> to read it in from the book’s GitHub.</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">team_playaction</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/team_playaction.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">team_playaction</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/team-pa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The resulting <code>team_playaction</code> data contains nearly identical information to the previous QB-level data. However, there is a slight change in how Sports Info Solutions charts passing yards on the team level. You will notice a column for both <code>net_yds</code> and <code>gross_yds</code>. When charting passing attempts in football, a player’s individual passing yards are aggregated under <strong>gross yards</strong> with all lost yardage resulting from a sack being included. On the other hand, team passing yards are always presented in <strong>net yards</strong> and any lost yardage from sacks are not included. Case in point, the <code>gross_yds</code> number in our <code>team_playaction</code> data is greater than the <code>net_yds</code> for all 32 NFL teams. In any case, we will build our data visualization using <code>net_yds</code>.</p>
 <p>In order to include team logos in the plot, we must first merge in team logo information (again with the understanding that we could use <code>nflplotR</code> if team abbreviations were included in the data). We can collect the team logo information using the <code>load_teams()</code> function within <code>nflreadR</code>. There are three different variations of each team’s logo available in the resulting data: (1.) the logo from ESPN, (2.) the logo from Wikipedia, (3.) a pre-edited version of the logo that is cropped into a square.</p>
@@ -1576,8 +1574,7 @@ Note
 <p>A <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot are useful when you want to display the trends and/or relationships in data over a continuous variable (such as seasons). In that context a <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot can be used to explore player statistics over time (such as passing yards and rushing yards), or to do the same but at the team level, or even comparing one team against another by including two (or more!) lines on one plot.</p>
 <p>Like all other <code>geom_</code> types, the basic foundation of a line graph can be created by, first, calling the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function and then adding <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> after. To begin building our first line graph, let’s read in the below data that contains information regarding the fourth-down attempt percentages by the Philadelphia Eagles into a data frame titled <code>eagles_fourth_downs</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">eagles_fourth_downs</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/eagles_fourth_downs.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">eagles_fourth_downs</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/phi-4th-downs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The data frames includes information regarding the <code>season</code>, the <code>total</code> fourth downs in each season, the number of fourth-down attempts in <code>total_go</code>, and the conversion percentage in <code>go_pct</code>. As well, the data has already been joined with information from <code><a href="https://nflreadr.nflverse.com/reference/load_teams.html">nflreadr::load_teams()</a></code> to include colors and logos.</p>
 <p>Let’s build the foundation of the plot by using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> and placing the <code>season</code> on the x-axis and the <code>go_pct</code> on the y-axis.</p>
@@ -1655,8 +1652,7 @@ i Please use `linewidth` instead.</code></pre>
 <span class="header-section-number">5.7.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</h3>
 <p>The <code>combined_fourth_data</code> data frame created by running the below code includes the same information as before for the Philadelphia Eagles, but also includes the <code>NFL</code> as a <code>posteam</code> for the 2012-2022 seasons along with the total fourth down attempt and conversion rate.</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combined_fourth_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/combined_fourth_data.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combined_fourth_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/4th-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The addition of a second <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> to the plot - one that belongs to the Eagles and one that belongs to averaged number for all other NFL teams - requires a few new additions to our previous code. First, in the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> call, we’ve added <code>group = posteam</code>. Because the data is structured so that <code>PHI</code> and <code>NFL</code> are both observations in the <code>posteam</code> column, the use of <code>group = posteam</code> instructs <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> to “split” that information into two and to create a <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> for each. Second, we’ve added <code>scale_color_manual</code> to the code and manually assigned the appropriate hex code colors to each like (<code>#004C54</code> for the Eagles and <code>#013369</code> for the rest of the NFL).</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -1690,8 +1686,7 @@ i Please use `linewidth` instead.</code></pre>
 <span class="header-section-number">5.8</span> Creating a <code>geom_area</code> Plot</h2>
 <p>A <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> plot is similar to a <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot in that it is also often used to display quantitative data over a continuous variable. The core difference, however, is that the <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> plot provides the ability to fill in the surface area between the x-axis and the line. To showcase this, the <code>mahomes_epa</code> data frame created by running the below code contains Patrick Mahomes’ average EPA for each week of the 2022 regular season, as well as the opponent and the opponent’s team logo.</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_epa</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/mahomes_epa.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_epa</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/mahomes_epa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The basics of the completed plot can be output by placing <code>week</code> on the x-axis and <code>mean_qb_epa</code> on the y-axis and then using <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code>. Also included in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> are two arguments (<code>fill</code> and <code>alpha</code>). The hex color for the Kansas City Chiefs’ secondary color is provided to “fill” in the area and then the <code>alpha</code> is set to 0.4 to make it slightly transparent.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -1768,8 +1763,7 @@ i Please use `linewidth` instead.</code></pre>
 <p>To begin creating our <code>geom_col</code> plot, we will use <code>vroom</code> to gather the necessary data into a data frame titled <code>qb_thirddown_data</code>.&nbsp;The resulting data frame includes the top ten quarterback in “third down aggressiveness.” The metric is calculated by first gathering the total number of 3rd down passing attempts by each quarterback with 10 or less yards to go. A pass attempt is considered “aggressive” if the total air yards is equal to - or greater than - the needed yards to go. Based on this calculation, Tua Tagovailoa was the most aggressive quarterback on 3rd downs during the 2022 regular season.</p>
 <p>Because this is <em>not</em> a metric that is constructed against a continuous variable (such as <code>season</code> in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> examples), we turn to using <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qb_thirddown_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/qb_thirddown_plot.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qb_thirddown_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/qb-3rd-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To start, we will place <code>passer_id</code> on the x-axis and <code>qb_agg_pct</code> on the y-axis. However, to make sure the columns are plotted in descending order, we use the <code><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder()</a></code> function to reorder <code>passer_id</code> in descending order by the <code>qb_agg_pct</code> variable.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -1907,8 +1901,7 @@ i Please use `linewidth` instead.</code></pre>
 <span class="header-section-number">5.9.1</span> An Alternative <code>geom_col</code> Plot</h3>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> plot is incredibly versatile, allowing you to create multiple types of visualizations. For example, we can use the data frame below, <code>epa_per_play</code>, to graph each teams average EPA per play during the 2022 regular season. However, rather than plot it in a standard column format like above, we will plot it in a “left-to-right” design with each team diverging from the 0.00 EPA per Play.</p>
 <div class="cell">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">epa_per_play</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/epa_per_play.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">epa_per_play</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/epa-per-play"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> code required to output the visualization is quite similar to our above <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> plot for QB aggressiveness. There are several distinct differences, however.</p>
 <ol type="1">
@@ -1948,8 +1941,7 @@ i Please use `linewidth` instead.</code></pre>
 <span class="header-section-number">5.10</span> Creating a <code>geom_box</code> Plot</h2>
 <p>We can create a <code>geom_box()</code> plot to examine the distribution of air yards for each playoff team from the 2022 season. A box plot is a suitable way to, as mentioned, view distribution but to also view the “skewness” of a metric by also including the interquartile ranges, averages, and any outliers in the data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_plot</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_plot.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/playoff-airyards"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> function includes one more argument - <code>color</code>. In this case, we have set the argument to <code>black</code>. We will also include the <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> function, which will plot each pass underneath the box plot. This is not a requirement for a box plot, but does add an additional level of aesthetics and detail to the final plot. Last, we use the <code>element_nfl_logo</code> function to place the respective team logo under each box plot.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -1980,8 +1972,7 @@ i Please use `linewidth` instead.</code></pre>
 <span class="header-section-number">5.11</span> Creating a <code>geom_ridges</code> Plot</h2>
 <p>We can take the same idea used in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> graph to reformat it to be used in a <code>geom_ridges()</code> plot, which is another option to represent the distribution of a continuous variable.</p>
 <div class="cell">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_ridges_plot</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/playoff_airyards_ridges_plot.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_ridges_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/ay-ridges"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Before creating the plot, we will create a function titled <code>meansd</code> that will assist in including lines within the <code>geom_ridges()</code> to show the mean and standard deviation for each team.</p>
 <p>The <code>meansd</code> function is included in the <code>geom_density_ridges()</code> arguments. We do wish to show <code>quantile_lines</code>, so we provide <code>meansd</code> to the <code>quantile_fun</code> argument and then set the <code>color</code> of the quantile lines.</p>
@@ -2023,8 +2014,7 @@ i Please use `linewidth` instead.</code></pre>
 </section><section id="creating-a-geom_violin-plot" class="level2" data-number="5.12"><h2 data-number="5.12" class="anchored" data-anchor-id="creating-a-geom_violin-plot">
 <span class="header-section-number">5.12</span> Creating a <code>geom_violin</code> Plot</h2>
 <div class="cell">
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yards_gained_compared</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/yards_gained_compared.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yards_gained_compared</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/yards_gained"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">custom_labeller</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span><span class="op">)</span><span class="op">{</span></span>
@@ -2075,8 +2065,7 @@ i Please use the `fun.max` argument instead.</code></pre>
 </section><section id="creating-a-geom_histogram-plot" class="level2" data-number="5.13"><h2 data-number="5.13" class="anchored" data-anchor-id="creating-a-geom_histogram-plot">
 <span class="header-section-number">5.13</span> Creating a <code>geom_histogram</code> Plot</h2>
 <div class="cell">
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">def_yards_allowed</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/def_yards_allowed.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">def_yards_allowed</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/def-yards"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">def_yards_allowed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yards_allowed</span>, fill <span class="op">=</span> <span class="va">defteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2106,8 +2095,7 @@ i Please use the `fun.max` argument instead.</code></pre>
 <p>To correct this, we can use several different package to create circular croppings of the of the individual headshot images and then wrap the player’s name around the image itself.</p>
 <p>To showcase the process, let’s create a data frame titled <code>complete_wr_airyards</code> with the below code:</p>
 <div class="cell">
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">complete_wr_airyards</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/complete_wr_ay.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">complete_wr_airyards</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/complete_ay"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To begin the process, we create a data frame called <code>crop_circles_data</code> that includes just one observation for each wide receive that includes the <code>receiver_id</code> and <code>headshot_url</code> variables. After, we create a new column in <code>crop_circles_data</code> called <code>circle</code> and then use the <code>circle_crop</code> function from the <code>cropcircles</code> package to automatically crop each player’s headshot into a uniform circle. The resulting image is saved locally on your device. Last, since we no longer need the <code>headshot_url</code> information, we drop that from the <code>crop_circles_data</code> data frame.</p>
 <div class="cell">
@@ -2253,8 +2241,7 @@ Important
 <p>In some instances, you may find that a plot produced by <code>ggplot2</code> is not the best medium in which to display your data. In that case, you may want to turn to use the <code>gt</code> package (and the accompanying add-on from Thomas Mock, <code>gtExtras</code>). Much like <code>ggplot2</code> stands for the “grammar of graphics”, the <code>gt</code> package is short for the “grammar of tables.” Taking a data frame into a <code>gt</code> table is as simple as piping into the <code><a href="https://gt.rstudio.com/reference/gt.html">gt()</a></code> function, but the end result will likely not be visually pleasing. To make the necessary adjustments, you will need to begin making changes to the output by altering the core parts of a <code>gt</code> table: the table header, the stub and stub head, the column labels, the table body, and the table footer.</p>
 <p>To provide a walk through of this process, let’s read in prepared data that examines the top ten average completion percentage over expected for those attempts in a pure passing situation (that is, plays that have a predictive probability of 70% or greater of being a passing attempt).</p>
 <div class="cell">
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pure_cpoe</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/pure_cpoe.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pure_cpoe</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/pure-cpoe"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As mentioned, we can quickly take the data and turn it into a <code>gt</code> table by piping it directly into the package’s core function.</p>
 <div class="cell">
@@ -2262,12 +2249,12 @@ Important
 <span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="pmmfwnzopn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ykvkuqmmsu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pmmfwnzopn .gt_table {
+#ykvkuqmmsu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2292,7 +2279,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_heading {
+#ykvkuqmmsu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2304,12 +2291,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_caption {
+#ykvkuqmmsu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pmmfwnzopn .gt_title {
+#ykvkuqmmsu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2321,7 +2308,7 @@ Important
   border-bottom-width: 0;
 }
 
-#pmmfwnzopn .gt_subtitle {
+#ykvkuqmmsu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2333,13 +2320,13 @@ Important
   border-top-width: 0;
 }
 
-#pmmfwnzopn .gt_bottom_border {
+#ykvkuqmmsu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_col_headings {
+#ykvkuqmmsu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2354,7 +2341,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_col_heading {
+#ykvkuqmmsu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2374,7 +2361,7 @@ Important
   overflow-x: hidden;
 }
 
-#pmmfwnzopn .gt_column_spanner_outer {
+#ykvkuqmmsu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2386,15 +2373,15 @@ Important
   padding-right: 4px;
 }
 
-#pmmfwnzopn .gt_column_spanner_outer:first-child {
+#ykvkuqmmsu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pmmfwnzopn .gt_column_spanner_outer:last-child {
+#ykvkuqmmsu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pmmfwnzopn .gt_column_spanner {
+#ykvkuqmmsu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2406,7 +2393,7 @@ Important
   width: 100%;
 }
 
-#pmmfwnzopn .gt_group_heading {
+#ykvkuqmmsu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2432,7 +2419,7 @@ Important
   text-align: left;
 }
 
-#pmmfwnzopn .gt_empty_group_heading {
+#ykvkuqmmsu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2447,15 +2434,15 @@ Important
   vertical-align: middle;
 }
 
-#pmmfwnzopn .gt_from_md > :first-child {
+#ykvkuqmmsu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pmmfwnzopn .gt_from_md > :last-child {
+#ykvkuqmmsu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pmmfwnzopn .gt_row {
+#ykvkuqmmsu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2474,7 +2461,7 @@ Important
   overflow-x: hidden;
 }
 
-#pmmfwnzopn .gt_stub {
+#ykvkuqmmsu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2487,7 +2474,7 @@ Important
   padding-right: 5px;
 }
 
-#pmmfwnzopn .gt_stub_row_group {
+#ykvkuqmmsu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2501,11 +2488,11 @@ Important
   vertical-align: top;
 }
 
-#pmmfwnzopn .gt_row_group_first td {
+#ykvkuqmmsu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pmmfwnzopn .gt_summary_row {
+#ykvkuqmmsu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2515,16 +2502,16 @@ Important
   padding-right: 5px;
 }
 
-#pmmfwnzopn .gt_first_summary_row {
+#ykvkuqmmsu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_first_summary_row.thick {
+#ykvkuqmmsu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pmmfwnzopn .gt_last_summary_row {
+#ykvkuqmmsu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2534,7 +2521,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_grand_summary_row {
+#ykvkuqmmsu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2544,7 +2531,7 @@ Important
   padding-right: 5px;
 }
 
-#pmmfwnzopn .gt_first_grand_summary_row {
+#ykvkuqmmsu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2554,11 +2541,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_striped {
+#ykvkuqmmsu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pmmfwnzopn .gt_table_body {
+#ykvkuqmmsu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2567,7 +2554,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_footnotes {
+#ykvkuqmmsu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2581,7 +2568,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_footnote {
+#ykvkuqmmsu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2590,7 +2577,7 @@ Important
   padding-right: 5px;
 }
 
-#pmmfwnzopn .gt_sourcenotes {
+#ykvkuqmmsu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2604,7 +2591,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#pmmfwnzopn .gt_sourcenote {
+#ykvkuqmmsu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2612,64 +2599,64 @@ Important
   padding-right: 5px;
 }
 
-#pmmfwnzopn .gt_left {
+#ykvkuqmmsu .gt_left {
   text-align: left;
 }
 
-#pmmfwnzopn .gt_center {
+#ykvkuqmmsu .gt_center {
   text-align: center;
 }
 
-#pmmfwnzopn .gt_right {
+#ykvkuqmmsu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pmmfwnzopn .gt_font_normal {
+#ykvkuqmmsu .gt_font_normal {
   font-weight: normal;
 }
 
-#pmmfwnzopn .gt_font_bold {
+#ykvkuqmmsu .gt_font_bold {
   font-weight: bold;
 }
 
-#pmmfwnzopn .gt_font_italic {
+#ykvkuqmmsu .gt_font_italic {
   font-style: italic;
 }
 
-#pmmfwnzopn .gt_super {
+#ykvkuqmmsu .gt_super {
   font-size: 65%;
 }
 
-#pmmfwnzopn .gt_footnote_marks {
+#ykvkuqmmsu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#pmmfwnzopn .gt_asterisk {
+#ykvkuqmmsu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pmmfwnzopn .gt_indent_1 {
+#ykvkuqmmsu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pmmfwnzopn .gt_indent_2 {
+#ykvkuqmmsu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pmmfwnzopn .gt_indent_3 {
+#ykvkuqmmsu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pmmfwnzopn .gt_indent_4 {
+#ykvkuqmmsu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pmmfwnzopn .gt_indent_5 {
+#ykvkuqmmsu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2777,12 +2764,12 @@ Important
 <span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="kkucexhgiw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="wwcadmdhzb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#kkucexhgiw) .gt_table {
+:where(#wwcadmdhzb) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2807,7 +2794,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_heading {
+:where(#wwcadmdhzb) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2819,12 +2806,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_caption {
+:where(#wwcadmdhzb) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#kkucexhgiw) .gt_title {
+:where(#wwcadmdhzb) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2836,7 +2823,7 @@ Important
   border-bottom-width: 0;
 }
 
-:where(#kkucexhgiw) .gt_subtitle {
+:where(#wwcadmdhzb) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2848,13 +2835,13 @@ Important
   border-top-width: 0;
 }
 
-:where(#kkucexhgiw) .gt_bottom_border {
+:where(#wwcadmdhzb) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_col_headings {
+:where(#wwcadmdhzb) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2869,7 +2856,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_col_heading {
+:where(#wwcadmdhzb) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2889,7 +2876,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#kkucexhgiw) .gt_column_spanner_outer {
+:where(#wwcadmdhzb) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2901,15 +2888,15 @@ Important
   padding-right: 4px;
 }
 
-:where(#kkucexhgiw) .gt_column_spanner_outer:first-child {
+:where(#wwcadmdhzb) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#kkucexhgiw) .gt_column_spanner_outer:last-child {
+:where(#wwcadmdhzb) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#kkucexhgiw) .gt_column_spanner {
+:where(#wwcadmdhzb) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2921,7 +2908,7 @@ Important
   width: 100%;
 }
 
-:where(#kkucexhgiw) .gt_group_heading {
+:where(#wwcadmdhzb) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2947,7 +2934,7 @@ Important
   text-align: left;
 }
 
-:where(#kkucexhgiw) .gt_empty_group_heading {
+:where(#wwcadmdhzb) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2962,15 +2949,15 @@ Important
   vertical-align: middle;
 }
 
-:where(#kkucexhgiw) .gt_from_md > :first-child {
+:where(#wwcadmdhzb) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#kkucexhgiw) .gt_from_md > :last-child {
+:where(#wwcadmdhzb) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#kkucexhgiw) .gt_row {
+:where(#wwcadmdhzb) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2989,7 +2976,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#kkucexhgiw) .gt_stub {
+:where(#wwcadmdhzb) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3002,7 +2989,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#kkucexhgiw) .gt_stub_row_group {
+:where(#wwcadmdhzb) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3016,11 +3003,11 @@ Important
   vertical-align: top;
 }
 
-:where(#kkucexhgiw) .gt_row_group_first td {
+:where(#wwcadmdhzb) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#kkucexhgiw) .gt_summary_row {
+:where(#wwcadmdhzb) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3030,16 +3017,16 @@ Important
   padding-right: 5px;
 }
 
-:where(#kkucexhgiw) .gt_first_summary_row {
+:where(#wwcadmdhzb) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_first_summary_row.thick {
+:where(#wwcadmdhzb) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#kkucexhgiw) .gt_last_summary_row {
+:where(#wwcadmdhzb) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3049,7 +3036,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_grand_summary_row {
+:where(#wwcadmdhzb) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3059,7 +3046,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#kkucexhgiw) .gt_first_grand_summary_row {
+:where(#wwcadmdhzb) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3069,11 +3056,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_striped {
+:where(#wwcadmdhzb) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#kkucexhgiw) .gt_table_body {
+:where(#wwcadmdhzb) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3082,7 +3069,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_footnotes {
+:where(#wwcadmdhzb) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3096,7 +3083,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_footnote {
+:where(#wwcadmdhzb) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3105,7 +3092,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#kkucexhgiw) .gt_sourcenotes {
+:where(#wwcadmdhzb) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3119,7 +3106,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#kkucexhgiw) .gt_sourcenote {
+:where(#wwcadmdhzb) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3127,64 +3114,64 @@ Important
   padding-right: 5px;
 }
 
-:where(#kkucexhgiw) .gt_left {
+:where(#wwcadmdhzb) .gt_left {
   text-align: left;
 }
 
-:where(#kkucexhgiw) .gt_center {
+:where(#wwcadmdhzb) .gt_center {
   text-align: center;
 }
 
-:where(#kkucexhgiw) .gt_right {
+:where(#wwcadmdhzb) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#kkucexhgiw) .gt_font_normal {
+:where(#wwcadmdhzb) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#kkucexhgiw) .gt_font_bold {
+:where(#wwcadmdhzb) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#kkucexhgiw) .gt_font_italic {
+:where(#wwcadmdhzb) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#kkucexhgiw) .gt_super {
+:where(#wwcadmdhzb) .gt_super {
   font-size: 65%;
 }
 
-:where(#kkucexhgiw) .gt_footnote_marks {
+:where(#wwcadmdhzb) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#kkucexhgiw) .gt_asterisk {
+:where(#wwcadmdhzb) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#kkucexhgiw) .gt_indent_1 {
+:where(#wwcadmdhzb) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#kkucexhgiw) .gt_indent_2 {
+:where(#wwcadmdhzb) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#kkucexhgiw) .gt_indent_3 {
+:where(#wwcadmdhzb) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#kkucexhgiw) .gt_indent_4 {
+:where(#wwcadmdhzb) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#kkucexhgiw) .gt_indent_5 {
+:where(#wwcadmdhzb) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3416,8 +3403,7 @@ Important
 <p>With a solid understanding of the data visualization process, we can now turn our attention to take a completed data frame and transitioning it into a Shiny App, resulting in an interactive application for users to explore your data and findings.</p>
 <p>To do this, we will be utilize a data frame that you will see again in Chapter 5 that is created during an XGBoost modeling process. It contains the actual rushing yards and expected rushing yards, based on predictive machine learning, for all running backs from 2016 to 2022. You can read in the data to view it with the following <code>vroom</code> code.</p>
 <div class="cell">
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">vroom</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/ryoe-projs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The resulting <code>ryoe_shiny</code> data frame contains information regarding <code>actual_yards</code>, <code>season</code>, <code>down</code>, <code>ydstogo</code>, <code>red_zone</code>, <code>rusher</code>, <code>rusher_player_id</code>, <code>posteam</code>, <code>defteam</code>, <code>exp_yards</code>. As you will soon see, despite being in the data frame, will will not use all of the variables while also adding some in the backend of the Shiny App. To that end, the Shiny App we will be producing will allow users to select one or more seasons to see each running back’s total rushing yards, total expected yards, and the difference between the two (where a positive number indicates the running back gained more yards than the XGBoost model predicted). Users will be able to select specific downs and yards to go, as well as indicate if they want to see the information pertaining to only those rushing attempts in the red zone. We will also build in the capability for the Shiny App to automatically update and format a <code>ggplot</code> scatterplot to visualize the information.</p>
 <p>You can see the end result and the functioning Shiny App here: <a href="https://bcongelio.shinyapps.io/nfl_r_book_ryoe/">NFL Analytics with R: RYOE Shiny App</a>.</p>
@@ -3440,8 +3426,7 @@ Important
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vroom.r-lib.org">vroom</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/bcongelio/nfl-analytics-with-r-book/origin/example_data/csv/ryoe_projs.csv"</span><span class="op">)</span></span>
+<span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/ryoe-projs"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span> <span class="va">ryoe_shiny</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span></span>
