@@ -1,4 +1,4 @@
-# Statistical Modeling with NFL Data
+# Advanced Model Creation with NFL Data
 
 ```{r setup-ch5, include = FALSE}
 
@@ -92,7 +92,7 @@ simple_regression_data <- vroom("http://nfl-book.bradcongelio.com/simple-reg")
 
 The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let's first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.
 
-```{r simple-linear-lobf, output = TRUE, message = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
+```{r simple-linear-lobf, output = TRUE, message = FALSE, error = FALSE, warning = FALSE, fig.align='center', fig.dpi = 400}
 
 regression_2022 <- simple_regression_data %>%
   filter(season == 2022)
@@ -184,7 +184,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:--------------:|:------------------------------------------------------:|
+|:-----------------:|:---------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -2124,6 +2124,8 @@ ggplot() +
 ```
 
 ## Exercises
+
+The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch5-answers>.
 
 ### Exercise 1
 

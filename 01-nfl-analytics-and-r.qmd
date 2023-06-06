@@ -41,13 +41,13 @@ This is why the process of investigative inquiry is ingrained, as much as possib
 
 1.  **Identify the problem or question**. The first step in any investigative inquiry is to clearly define the problem or question that you are trying to answer. Many times, fans have questions about their individuals favorite team and/or players. For example, the 2022 Los Angeles Rams - the defending Super Bowl Champions - were eliminated from playoff contention with three weeks remaining in the season. With the early exit, the Rams tied the 1999 Denver Broncos for the earliest elimination from playoff contention for any prior Super Bowl Champion. The Rams' early elimination can be explained by the high number of injuries during the season, including Matthew Stafford, Cooper Kupp, and Aaron Donald. However, another factor that was routinely discussed during the season, was the team's inability to keep offensive linemen healthy. In this specific example, in terms of *identifying the problem or question*, a potential problem or question to explore is: how many unique combinations of offensive linemen did the 2022 LA Rams use and what sort of impact did this have on the team's playmaking ability? Have other teams in recent history faced the same amount of offensive line turnover yet still make the playoffs? As you can see, there are a number of different avenues in which the *problem or question* surrounding the Rams' offensive line injury issues can be explored.
 
-2.  **Gather data**. With a question or problem determined, we now turn to the process of finding and gathering the necessary data to find answers. Unfortunately, data is not always going to be available to answer your investigate inquiry. For example, the NFL's tracking data is only released in partial form during the annual Big Data Bowl. In the event that your question or problem requires data that is not available, you must loop back to Step 1 and reconfigure your question to match available data. In the case of the 2022 LA Rams' offensive line, access to data that can answer the question is available through two cores avenues: the `load_participation` and `load_snap_counts` functions within the `nflverse` family of packages.
+2.  **Gather data**. With a question or problem determined, we now turn to the process of finding and gathering the necessary data to find answers. Unfortunately, data is not always going to be available to answer your investigate inquiry. For example, the NFL's tracking data is only released in partial form during the annual Big Data Bowl. In the event that your question or problem requires data that is not available, you must loop back to Step 1 and reconfigure your question to match available data. In the case of the 2022 LA Rams' offensive line, access to data that can answer the question is available through two cores avenues: the `load_participation()` and `load_snap_counts()` functions within the `nflverse` family of packages.
 
 3.  **Clean and prepare the data**. It is not often that the data you obtain to answer your question will be perfectly prepared for immediate analysis. As will be explored below, the data collected to explore the Rams' offensive line combinations required both (1.) a critical thought process on how to best solve oddities in the data while still producing reliable information and (2.) cleaning and preparation to make the changes as a result of that critical thinking process. As you progress through the many examples and exercises in this book, you will often be presented with prepared data sets that require you to determine the best approach to data manipulation through this critical thinking and cleaning/preparation process.
 
 4.  **Analyze the data**. After problem solving to ensure the data is as reliable and consistent as possible, we can turn to analyzing the data. In this case, since we are concerned with unique combinations of offensive linemen, we can quickly get results by using the `n_distinct()` function within `dplyr`.
 
-5.  **Visualize the data**. There are generally two options for visualizing data: plotting with `ggplot` or creating a table with `gt` and the outstanding companion package `gtExtras`. Considering the following can help determine whether to present your findings in chart or table format.
+5.  **Visualize the data**. There are generally two options for visualizing data: plotting with `ggplot()` or creating a table with `gt` and the outstanding companion package `gtExtras`. Considering the following can help determine whether to present your findings in chart or table format.
 
     -   **The type of data you are working with**. If you have a large amount of numerical data that needs to be compared or analyzed, a table may be the most effective way to present this information. On the other hand, if you want to highlight trends or patterns in your data, a chart can help illustrate the information in a more clear manner.
 
@@ -77,7 +77,7 @@ Given that context, just *how* historically bad was the Rams' 2022 offensive lin
 
 To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, we turn to two possible options: the `load_participation()` and `load_snap_counts()` functions within the `nflreadr` package. The `load_participation()` function will return, if `include_pbp = TRUE,` a list of every player ID number that was on the field for each play, whereas `load_snap_counts()` returns - on a per game basis - the percentage of snaps each player was on the field for.
 
-In the end, using `load_snap_counts()` creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation()` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, up to week 15 of the 2022 season.
+In the end, using `load_snap_counts()` creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation()` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, of the 2022 season.
 
 ```{r using-participation-function, output = FALSE}
 
@@ -193,7 +193,7 @@ With the data cleaned and prepared, let's use it to create a `ggplot` graph and 
 
 To bring in the individual winning percentages, we will use the `get_nfl_standings()` function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join()`. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs()` function in the `nflreadr` package.
 
-```{r add-records-to-combos, output = TRUE}
+```{r add-records-to-combos, output = TRUE, message = FALSE}
 
 records <- espnscrapeR::get_nfl_standings(season = 2022) %>%
   select(team_abb, win_pct)
@@ -209,7 +209,7 @@ total_combos
 After collecting team records and merging them into the offensive line combination data, we can use `ggplot` to visualize the data. Individual team logos are used in place of the typical `geom_point` by using the `nflplotR` package.
 
 ::: callout-important
-Please note in the below `ggplot` coding that we are using a custom theme, `nfl_analytics_theme()`. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`. Be sure to install and run the `ggtext` package as the theme uses the package's `element_markdown()` function.
+Please note in the below `ggplot()` coding that we are using a custom theme, `nfl_analytics_theme()`. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`. Be sure to install and run the `ggtext` package as the theme uses the package's `element_markdown()` function.
 :::
 
 ```{r example-theme, eval = FALSE, echo = TRUE, output = FALSE}
@@ -242,7 +242,7 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 }
 ```
 
-```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_line(stat = "smooth", method = "lm",
@@ -285,7 +285,7 @@ total_combos
 
 With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior `ggplot` code to examine any potential relationship.
 
-```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r plot-pressure-rate, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   geom_line(stat = "smooth", method = "lm",
@@ -327,7 +327,7 @@ qb_hits_combined <- left_join(
 
 After first filtering out any data that does not include `posteam` information, we can `group_by()` each individual offensive unit and then calculate the total sum of QB hits for each.
 
-```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r plot-combos-qb-hits, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
     geom_line(stat = "smooth", method = "lm",
@@ -368,7 +368,7 @@ As a result of this, Schatz designed Adjusted Sack Rate which accounts for the n
 adjusted_sack_rate <- vroom("http://nfl-book.bradcongelio.com/adj-sack-rate")
 ```
 
-```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r asr-2022-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 adjusted_sack_rate %>%
   filter(season == 2022) %>%
@@ -395,7 +395,7 @@ The graph shows that, in general, those teams with higher numbers of unique offe
 
 Using the `adjusted_sack_rate` data, we can easily visualize the same results over the last three NFL seasons to see if there is any consistency between the offensive line combinations and a team's adjusted sack rate.
 
-```{r asr-facet-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r asr-facet-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 adjusted_sack_rate %>%
   ggplot(aes(x = combos, y = adj_sack_rate)) +
@@ -440,7 +440,7 @@ To continue this exploration, let's pivot away from exploring the impact of offe
 
 To begin, we can gather the necessary data into a data frame called `fb_outsiders_oline`.
 
-```{r fb-outsiders-data, eval = TRUE, echo = TRUE, output = TRUE}
+```{r fb-outsiders-data, eval = TRUE, echo = TRUE, output = TRUE, message = FALSE}
 
 fb_outsiders_oline <- vroom("http://nfl-book.bradcongelio.com/fbo_oline")
 
@@ -449,7 +449,7 @@ fb_outsiders_oline
 
 You can see in the output of the data that `power_rank` and `stuffed_rank` are both in a "ranked format," meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1st while the team with the worst (the Minnesota Vikings) are ranked 32nd. The `adj_line_yards` variable is provided in its unranked, raw format. Because of this, let's first use both `power_rank` and `stuffed_rank` and use the `cowplot` package to view them together, and then construct the plot for `adj_line_yards` separately since it operates on a differing y-axis scale.
 
-```{r power-and-stuff-cowplot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r power-and-stuff-cowplot, output = FALSE, fig.align='center', fig.dpi = 400, error = FALSE}
 
 power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = power_rank),
@@ -483,9 +483,14 @@ stuffed_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = stuffed_rank
 plot_grid(power_rank_plot, stuffed_rank_plot, ncol = 1)
 ```
 
+```{r finished-cow-plot, echo = FALSE}
+knitr::include_graphics("images/cow_plot_finished.png",
+                        dpi = 400)
+```
+
 Based on the results, it does not seem that the number of unique offensive line combinations has impact on either power rank or stuffed rank. The Los Angeles Rams and Arizona Cardinals, despite have the two highest unique line combinations, are among the best in the league in the metric. In fact, the opposite seems to be true in that the Minnesota Vikings, with just six unique line combinations during the 2022 season, are last in the league in power ranking. The Rams performed in bit worse when comparing line combinations to stuffed rank, but the Cardinals are still among the best in the league. The Vikings again are at the bottom, only under performed by the Jacksonville Jaguars (who had just three unique combinations throughout the season).
 
-```{r adj-yard-line-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r adj-yard-line-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
@@ -517,7 +522,7 @@ oline_combo_elusive <- vroom("http://nfl-book.bradcongelio.com/ol-elusive")
 
 Because we want to determine if the elusiveness of a team's stable of running backs directly impacts the offensive line's Adjusted Line Yards, we can create a new variable that use the team's `elusive_rating` to, in an elementary fashion, add weight to the `adj_line_yards`. While there are numerous approaches to doing so (such as ranking, categorical weighting, logarithmic weighting, using coefficients from a regression model, etc.), we will conduct a more simple type of feature engineering by first using the `scale()` package to standardize the values, resulting in each team receiving what is called a 'z-score' (or the total standard deviations away from the mean). After, we will created the `weighted_aly` metric by subtracting each team's z-score from the existing `adj_line_yards`, and then plot the results.
 
-```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r plotting-weighted-elusive, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
 
 oline_combo_elusive <- oline_combo_elusive %>%
   mutate(adjusted_elu = scale(avg_elu),
@@ -553,7 +558,7 @@ In November of 2022, Warren Sharp - of [Sharp Football Analysis](https://www.sha
 
 Heading into their week 9 bye week, the Steelers' longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.
 
-However, the statistics as presented by Sharp do not tell the complete story as it isolates the entirety of a touchdown drive to a single play. While the team's longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.
+However, the statistic as presented by Sharp does not tell the complete story as it isolates the entirety of a touchdown drive to a single play. While the team's longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.
 
 To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.
 

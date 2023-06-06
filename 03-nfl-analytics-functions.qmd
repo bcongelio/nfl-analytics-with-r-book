@@ -1058,7 +1058,7 @@ player_stats <- player_stats %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r running-back-40-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r running-back-40-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
 
 ggplot(data = player_stats, aes(x = forty, y = total_yards)) +
   geom_point(color = player_stats$team_color, size = 3.5) +
@@ -1097,7 +1097,7 @@ ngs_data_passing <- ngs_data_passing %>%
   left_join(teams, b = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-passing-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r ngs-passing-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
 
 ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw,
                                     y = avg_completed_air_yards)) +
@@ -1135,7 +1135,7 @@ ngs_data_rushing <- ngs_data_rushing %>%
   left_join(teams, by = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-rushing-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r ngs-rushing-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
 
 ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards,
                                     y = actual_rush_yards)) +
@@ -1184,7 +1184,7 @@ espn_qbr <- espn_qbr %>%
   left_join(teams, by = c("team_abb" = "team_abbr"))
 ```
 
-```{r qbr-adjusted-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r qbr-adjusted-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
 
 ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
   geom_smooth(method = lm, se = FALSE,
@@ -1449,6 +1449,8 @@ ggplot(data = nfl_contracts_unnested,
 Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).
 
 ## Exercises
+
+The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch3-answers>.
 
 ### **Exercise 1**
 

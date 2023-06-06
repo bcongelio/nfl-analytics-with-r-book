@@ -4,7 +4,9 @@ project:
 
 book:
   title: "An Introduction to NFL Analytics with R"
-  author: "Bradley J. Congelio"
+  author:
+    name: Bradley J. Congelio
+    orcid: 0009-0000-0652-4145
   site-url: https://bradcongelio.com/nfl-analytics-with-r-book
   repo-url: https://github.com/bcongelio/nfl-analytics-with-r-book
   repo-branch: origin
@@ -35,6 +37,10 @@ format:
   html:
     theme: cosmo
     code-link: true
+    code-overflow: wrap
+    fig-align: center
+    fig-cap-location: bottom
+    fig-responsive: true
   pdf:
     documentclass: krantz
     keep-tex: true

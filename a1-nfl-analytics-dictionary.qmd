@@ -288,7 +288,7 @@ Pass Over Expected is the probability that a play will be a pass scaled from 0 t
 
 For example, we can use the metric to determine the pass over expected value for Buffalo, Cincinnati, Kansas City, and Philadelphia on 1st down with between 1 and 10 yards to go.
 
-```{r pass-oe-dictionary, eval = TRUE, echo = TRUE, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r pass-oe-dictionary, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE, error = FALSE, message = FALSE, fig.align='center', fig.dpi = 400}
 
 pbp <- nflreadr::load_pbp(2022) %>%
   filter(season_type == "REG")

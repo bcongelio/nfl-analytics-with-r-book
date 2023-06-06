@@ -139,12 +139,12 @@ The given example involves multiple iterations of the `tidyverse` paradigm. At t
 
 1.  We first create a data set, denoted by `pbp`, by utilizing the `load_pbp` function from the `nflreadr` package. To talk through this, you can say "`pbp`is an copy of `nflreadr::load_pbp(2022)`." While R purists may laugh at teaching the `tidyverse` in such language, it does indeed work. Going forward, the assignment operator (`<-`) simply implies that "*something is*." In this case, our `pbp` data frame *is* the container for the play-by-play data we are collecting from `nflreadr`.
 2.  We then move into our first pipe operator (`%>%`). Again, R language purist will likely develop a eye twitch upon reading this, but I explain to my students that the pipe operator serves as a *"... and then"* command. In terms of the "talk it out" method above, the flow would be: "`pbp` is a copy of `nflreadr::load_pbp(2022)` and then ..."
-3.  After the pipe operator (or the first "and then ..." command), we move into our first `dplyr` verb. In this case, we are using the `filter` verb to select just the Philadelphia Eagles as the offensive team and just offensive plays that are rush attempts. With another pipe operator, we are including a second "*... and then"* command.
+3.  After the pipe operator (or the first "and then ..." command), we move into our first `dplyr` verb. In this case, we are using the `filter()` verb to select just the Philadelphia Eagles as the offensive team and just offensive plays that are rush attempts. With another pipe operator, we are including a second "*... and then"* command.
 4.  To finish the example, we are grouping by each individual rusher on the Eagles "*and then"* summarize the average success rate for each rusher.
 
 **To put it together, "talking it out" from beginning to end results in:**
 
-"First, create a data set called `pbp` that is a copy of `nflreadr::load_pbp(2022)` *and then* `filter` for all instances where the `posteam` is `PHI` and `rush == 1` *and then* `group_by` each individual rusher, *and then* summarize the average success rate for each rusher into a new column titled `success_rate`."
+"First, create a data set called `pbp` that is a copy of `nflreadr::load_pbp(2022)` *and then* `filter()` for all instances where the `posteam` is `PHI` and `rush == 1` *and then* `group_by()` each individual rusher, *and then* summarize the average success rate for each rusher into a new column titled `success_rate`."
 
 To showcase this visually, the "talking through" method is inputted into the example code below:
 
@@ -160,7 +160,7 @@ pbp <- "is" nflreadr::load_pbp(2022) %>% "... and then"
 
 Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, `dplyr` is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to use and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four `dplyr` verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.
 
-1.  `filter`: the `filter()` verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter()` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
+1.  `filter()`: the `filter()` verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter()` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
 2.  `group_by()`: the `group_by()` verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.
 3.  `summarize()`: the `summarize()` verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by()` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
 4.  `mutate()`: the `mutate()` verbs allows you to create new variables within your data while also preserving existing ones.
@@ -543,7 +543,7 @@ The Las Vegas Raiders, based on our definitions, are the most aggressive passing
 
 In the our example above working with the `summarize()` verb, our output includes only the information contained in our `group_by()` and then whatever information we provided in the `summarize()` (such as `total`, `aggressiveness`, and `percentage`).
 
-What if, however, you wanted to create new variables and then `summarize()` those? That is where the `mutate` verb is used.
+What if, however, you wanted to create new variables and then `summarize()` those? That is where the `mutate()` verb is used.
 
 As an example, let's explore individual quarterback's average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both `passer` and `air_yards` in the `group_by` verb.
 
@@ -554,7 +554,7 @@ airyards_cpoe <- pbp %>%
   summarize(avg_cpoe = mean(cpoe, na.rm = TRUE))
 ```
 
-Your output is going to include the `avg_cpoe` for each quarterback at each and every distance of `air_yards`. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with `ggplot`. To correct this issue, we must use the `mutate()` verb.
+Your output is going to include the `avg_cpoe` for each quarterback at each and every distance of `air_yards`. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with `ggplot()`. To correct this issue, we must use the `mutate()` verb.
 
 Rather than `summarize()` the completion percentage over expected for each distance of `air_yards`, we can use the `mutate()` verb to bundle together a grouping of distances. In the below example, we are using the `mutate()` verb to create a new variable titled `ay_distance` using the `case_when()` verb.
 
@@ -596,7 +596,7 @@ In this example, we are going to compare the `Boom%` and the `Bust%` for each qu
 
 ### Importing and Conducting Exploratory Data Analysis
 
-To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `Vroom` package.
+To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `vroom` package.
 
 ```{r sis-boom-bust, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -655,14 +655,14 @@ sis_data_missing
 
 By using `filter_all()` across all of our variables (`any_vars`), we can filter for any missing value, indicated by including `is.na` in the `filter()`. The output shows each row within the data set that includes at least one missing value. In this case, we only have one row with missing data, with values for `player`, `team`, and `boom_percent` all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.
 
-Instead, we will return to our original data set (`sis_data`) and use the `na.omit` function to drop any row that includes missing data:
+Instead, we will return to our original data set (`sis_data`) and use the `na.omit()` function to drop any row that includes missing data:
 
 ```{r dropping-missing-data, eval = TRUE, echo = TRUE, output = TRUE}
 
 sis_data <- na.omit(sis_data)
 ```
 
-In the above code, we are simply "recreating" our existing dataset but using `na.omit` to drop rows that include `NA` values. Once complete, we can move onto the next step of the data preparation/cleaning process.
+In the above code, we are simply "recreating" our existing dataset but using `na.omit()` to drop rows that include `NA` values. Once complete, we can move onto the next step of the data preparation/cleaning process.
 
 ### Changing Variable Types
 
@@ -691,9 +691,9 @@ In the below example, we are creating an "example" data frame titled `sis_data_s
 
 We first indicate that we are going to `mutate()` our already existing columns (both `boom_percent` and `bust_percent`). After, we use an `=` sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.
 
-We then use the `str_remove` function from the `stringr` package to locate the `%` sign in each value and remove it.
+We then use the `str_remove()` function from the `stringr` package to locate the `%` sign in each value and remove it.
 
-Afterwards, we dive into base R (that is, not `tidyverse` structure) and use the `as.numeric` function to change both of the boom and bust columns to the correct data type (using the `$` sign to notate that we are working on just one specific column in the data.
+Afterwards, we dive into base R (that is, not `tidyverse` structure) and use the `as.numeric()` function to change both of the boom and bust columns to the correct data type (using the `$` sign to notate that we are working on just one specific column in the data.
 
 ```{r stringr-example-variables, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -741,7 +741,7 @@ mutate(new_column_name = user_supplied_argument(existing_column_name))
 
 The `mutate()` verb is highly flexible, allowing us to create a new column based on a wide-range of functions and arguments, including mathematical operations, logical operations, string operation, and many more - including applying functions from other packages.
 
-Importantly, the `mutate()` verb allows us to create new variables **without changing the original data set**. While the `summarize()` verb can also create new columns based on various functions and argument, it also distills the dat aset down to just the columns created within the `summarize()` function (plus any column including in the `group_by()`). Conversely, the `mutate()` verb creates the new column and adds it on to the current iteration of the data set.
+Importantly, the `mutate()` verb allows us to create new variables **without changing the original data set**. While the `summarize()` verb can also create new columns based on various functions and argument, it also distills the data set down to just the columns created within the `summarize()` function (plus any column including in the `group_by()`). Conversely, the `mutate()` verb creates the new column and adds it on to the current iteration of the data set.
 
 To showcase this, let's create a new column in our `sis_data` that calculate the difference between a quarterback's `boom_percent` and `bust_percent`. This is also a great time to limit the quarterbacks we include based on the number of attempts for each. Not doing so results in oddities in the data, such as Christian McCaffrey (a running back) having a 100-percent boom percentage on one passing attempt. To avoid such occurrences, let's add the `filter()` verb prior to our `mutate()` and limit the data to just those quarterbacks with at least 200 passing attempts:
 
@@ -865,6 +865,8 @@ You can see in the output that our two data sets correctly merged on the `team` 
 2.  While the `team_nick` column was dropped, the other team identifiers (`team_abbr` and `team_name`) were kept intact, as they were not used in the matching process. As well, `team_color` and `team_color2` are now correctly matched with each quarterback's team.
 
 ## Exercises
+
+The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch2-answers>.
 
 Create a data frame titled `pbp` that contains the play-by-play information for the 2022 regular season by running the following code:
 

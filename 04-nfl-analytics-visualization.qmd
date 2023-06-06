@@ -97,7 +97,7 @@ The x-axis is the horizontal axis that runs left-to-right.
 The y-axis is the vertical axis that runs top-to-bottom.
 :::
 
-```{r example-pa-action-plot, output = TRUE, fig.align='center', fig.dpi = 300}
+```{r example-pa-action-plot, output = TRUE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_point()
@@ -465,9 +465,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
 ```
 
 Within the new `labs()`, we are placing a total of five items: `x` (allowing us to name the x-axis outside the confines of what it is called in the beginning `aes()` call, `y` (allowing us to name the y-axis), `title` (allowing us to add a title to the top of the plot), `subtitle` (allowing us to add a subtitle below the title and provide more contextual information), and `caption` (allowing us to provide information about where the graph come from and who designed it). We will explore ways to change the font, size, color, and more of these items when we move on to the last item of our "to do list."
@@ -516,9 +516,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
   geom_hline(yintercept = mean(play_action_data$pa_yds), linewidth = .8, color = "black", linetype = "dashed") +
   geom_vline(xintercept = mean(play_action_data$yds), linewidth = .8, color = "black", linetype = "dashed")
 ```
@@ -563,9 +563,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
 ```
 
 By moving the average lines to the top of our `ggplot` code, both are now layered under the other two `geom_` and are not visually impacting the final plot.
@@ -576,7 +576,7 @@ By moving the average lines to the top of our `ggplot` code, both are now layere
 Even though we were not able to use `nflplotR` to handle the colors in this plot because the data lacked a corresponding `team_abbr` variable, we can still use `nflplotR` to add our mean lines - and I actually recommend doing so, as it requires less lines of code (thus less typing). See below for an example.
 :::
 
-```{r mean-lines-with-nflplotr, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
+```{r mean-lines-with-nflplotr, output = TRUE, error = FALSE, message = FALSE, warning = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -599,9 +599,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
 ```
 
 By using the `geom_mean_lines()` function within `nflplotR`, we can construct both of the lines together rather than needing to provide a `geom_hline()` and a `geom_vline()` argument. Because of this, we can also provide the size, width, and type of our line just once (rather than repeating it again like we had to in the former method).
@@ -771,9 +771,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
   theme(
     axis.ticks = element_blank())
 ```
@@ -803,9 +803,9 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
                      labels = scales::label_comma()) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
-       title = "**Cumulative Passing Yards**",
-       subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       title = "Cumulative Passing Yards",
+       subtitle = "Non-Play Action vs. Play Action",
+       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
   theme(
     axis.ticks = element_blank(),
     axis.title = element_text(family = "Roboto",
@@ -908,7 +908,7 @@ However, in the above theme function, we have streamlined the basis a bit by ind
 
 Based on the above example, you are free to create as detailed a theme function as you desire. The beauty of creating your own theme like above is you will no longer need to edit each portion of the every plot element. Rather, you can simply call in your theme after you run it and it resides in under the "Functions" in your RStudio environment.
 
-```{r showcasing-use-of-theme, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400 }
+```{r showcasing-use-of-theme, output = TRUE, error = FALSE, warning = FALSE, message = FALSE,  fig.align='center', fig.dpi = 400 }
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -941,7 +941,7 @@ As you can see, we just consolidated 28 lines of code into a **single line of co
 
 Unfortunately, you will notice that the resulting plot does not output with the title ("Cumulative Passing Yards") in Kansas City red like in our original. This is because, in our `nfl_analytics_theme()` function, the `color` for `axis.title()` is set to `"black"`. Thankfully, we can make this small edit within our `ggplot` code to switch the title back to Kansas City red, highlighting the idea that - despite the theme being built into a function - we still have the ability to make necessary edits on the fly without including all 28 lines of code. With the `nfl_analytics_theme()` active, we can still add additional `theme` elements as needed to make modifications, as seen below.
 
-```{r theme-code-with-modification, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
+```{r theme-code-with-modification, output = TRUE, error = FALSE, warning = FALSE, message = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
@@ -1137,7 +1137,7 @@ Please note that difference in how the `breaks` on each scale was handled. Becau
 
 Next, we can add more `geom_` types to highlight the general percentage for each season on the x-axis. We will add one `geom_point()` to to indicate the percentage for each season. And then, for aesthetic purposes, we will add a *second* `geom_point()` that is larger than the original, with a color that matches the eventual background, to give the visual impression that the line doesn't quite "reach" the point. Lastly, because we are dealing with aesthetic issues like size and color, we will increase the size of the `geom_line()` and also add the Eagles' secondary team color to it.
 
-```{r eagles-line-3, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r eagles-line-3, output = TRUE, fig.align='center', warning = FALSE, message = FALSE, error = FALSE, fig.dpi = 400}
 
 ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
   geom_line(size = 2, color = eagles_fourth_downs$team_color2) +
@@ -1248,7 +1248,7 @@ ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
 
 With the logos of each opponent added, we can turn to the finishing touches including adding our custom theme, changing the title of each axis, and adding a title. We also need to make edits to the scale of each axis, again using `seq()` to include all 18 weeks on the x-axis.
 
-```{r mahomes_epa_finished, output = TRUE, error = FALSE, fig.align='center', fig.dpi = 400}
+```{r mahomes_epa_finished, output = TRUE, error = FALSE, fig.align='center', warning = FALSE, message = FALSE, fig.dpi = 400}
 
 ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
   geom_smooth(se = FALSE, color = "black", linetype = "dashed") +
@@ -1516,7 +1516,7 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,
 yards_gained_compared <- vroom("http://nfl-book.bradcongelio.com/yards_gained")
 ```
 
-```{r violin_plot_completed, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r violin_plot_completed, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
 
 custom_labeller <- function(variable, value){
   new_labels <- c("1st Down", "2nd Down", "3rd Down")
@@ -1570,6 +1570,19 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
        subtitle = "**2022 NFL Regular Season**",
        caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
 ```
+
+## Saving Your `ggplot2` Creations
+
+The most convenient way to save your finished plot is with the `ggsave()` function, which will save the last plot created. The function accepts a multitude of different arguments, including `filename`, `device`, `path`, `scale`, `width`, `height`, and `dpi`.
+
+In most cases, you will be able to save your plot using just the `filename` and `dpi` arguments, like below the below example:
+
+```{r example-gg-save, eval = FALSE, echo = TRUE, output = FALSE}
+
+ggsave("this-is-your-filename.png", dpi = 400)
+```
+
+In the above example, the plot will be outputted in `.png` format into your current working directory (you can see where the plot will be saved by using `getwd()`). The image `dpi` - or "dots per inch" - ultimately controls the plot's resolution. A higher number will allow you to increase the size the image, but will also increase the size of the file itself. I find that using a `dpi` between 300 and 400 is suitable for nearly all plots.
 
 ## Advanced Headshots Method
 
@@ -1707,7 +1720,7 @@ We can now take our new cropped headshots and bring them into a visualization cr
 complete_wr_ay <- vroom("http://nfl-book.bradcongelio.com/complete_ay")
 ```
 
-```{r finished_kernel_density, output = TRUE, warning = FALSE, error = FALSE, fig.align='center', fig.dpi = 400}
+```{r finished_kernel_density, output = TRUE, warning = FALSE, error = FALSE, message = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
   geom_density(alpha = .4) +
@@ -2092,6 +2105,8 @@ To create the output table, we use the `renderTable()` function, another reactiv
 As you build the `Shiny` app, you can check the validity of your coding by clicking the `Run App` button in the upper-right part of the coding screen. If everything is correct, the application will run within your local system. If there are issues, the information will be provided in the 'Console' area of RStudio. Once you are content with functioning and style of the application, you can publish it and host it, for free, on [ShinyApps.io](https://www.shinyapps.io/).
 
 ## Exercises
+
+The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch4-answers>.
 
 ### Exercise 1
 
