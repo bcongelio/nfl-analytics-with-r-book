@@ -466,8 +466,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
+       subtitle = "Non-Play Action vs. Play Action")
 ```
 
 Within the new `labs()`, we are placing a total of five items: `x` (allowing us to name the x-axis outside the confines of what it is called in the beginning `aes()` call, `y` (allowing us to name the y-axis), `title` (allowing us to add a title to the top of the plot), `subtitle` (allowing us to add a subtitle below the title and provide more contextual information), and `caption` (allowing us to provide information about where the graph come from and who designed it). We will explore ways to change the font, size, color, and more of these items when we move on to the last item of our "to do list."
@@ -517,10 +516,13 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
-  geom_hline(yintercept = mean(play_action_data$pa_yds), linewidth = .8, color = "black", linetype = "dashed") +
-  geom_vline(xintercept = mean(play_action_data$yds), linewidth = .8, color = "black", linetype = "dashed")
+       subtitle = "Non-Play Action vs. Play Action") +
+  geom_hline(yintercept = mean(play_action_data$pa_yds),
+             linewidth = .8, color = "black",
+             linetype = "dashed") +
+  geom_vline(xintercept = mean(play_action_data$yds),
+             linewidth = .8, color = "black",
+             linetype = "dashed")
 ```
 
 In the above output, we used `geom_hline` and `geom_vline` to draw a dashed line at the average for both `pa_yds` at the `yintercept` and `yds` at the `xintercept`. Because of this, we can see that - for example - Marcus Mariota is above average for play action yards, but below average for non-play action yards. Additionally, Matthew Stafford, Baker Mayfield, Kyler Murray, and many others are all below average in both metrics while Jared Goff, Justin Herbert, Patrick Mahomes, and others are well above average in both.
@@ -564,8 +566,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
+       subtitle = "Non-Play Action vs. Play Action")
 ```
 
 By moving the average lines to the top of our `ggplot` code, both are now layered under the other two `geom_` and are not visually impacting the final plot.
@@ -600,8 +601,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio")
+       subtitle = "Non-Play Action vs. Play Action")
 ```
 
 By using the `geom_mean_lines()` function within `nflplotR`, we can construct both of the lines together rather than needing to provide a `geom_hline()` and a `geom_vline()` argument. Because of this, we can also provide the size, width, and type of our line just once (rather than repeating it again like we had to in the former method).
@@ -772,8 +772,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
+       subtitle = "Non-Play Action vs. Play Action") +
   theme(
     axis.ticks = element_blank())
 ```
@@ -804,8 +803,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
   labs(x = "Non-Play Action Yards",
        y = "Play Action Yards",
        title = "Cumulative Passing Yards",
-       subtitle = "Non-Play Action vs. Play Action",
-       caption = "An Introduction to NFL Analytics with R, Brad J. Congelio") +
+       subtitle = "Non-Play Action vs. Play Action") +
   theme(
     axis.ticks = element_blank(),
     axis.title = element_text(family = "Roboto",
@@ -933,7 +931,8 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
        y = "Play Action Yards",
        title = "**Cumulative Passing Yards**",
        subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   nfl_analytics_theme()
 ```
 
@@ -966,7 +965,8 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
        y = "Play Action Yards",
        title = "**Cumulative Passing Yards**",
        subtitle = "*Non-Play Action vs. Play Action*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   nfl_analytics_theme() +
   theme(plot.title = element_markdown(color = "#E31837"))
 ```
@@ -1025,7 +1025,8 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
        subtitle = "*2022 NFL Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1055,7 +1056,8 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
        subtitle = "*2022 NFL Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1095,7 +1097,8 @@ ggplot(data = team_playaction, aes(x = net_yds, y = pa_net_yds)) +
                      labels = scales::label_comma()) +
   labs(title = "**Net Passing Yards Without Play Action vs. With Play Action**",
        subtitle = "*2022 NFL Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**",
        x = "Net Yards Without Play Action",
        y = "Net Yards With Play Action") +
   nfl_analytics_theme()
@@ -1166,7 +1169,8 @@ ggplot(eagles_fourth_downs, aes(x = season, y = go_pct)) +
   ylab("Go For It Percentage") +
   labs(title = "**Philadelphia Eagles: Fourth-Down Attempt Percentage**",
        subtitle = "*2012 - 2022: Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The resulting visualization shows cases how often the Philadelphia Eagles went for it on fourth down between 2012 and 2022. The upward trend , especially starting in 2019, generally follows an established trend among NFL head coaches. Given that, how does the Eagles' trend compare to the rest of the NFL?
@@ -1203,7 +1207,8 @@ ggplot(combined_fourth_data, aes(x = season,
   ylab("Go For It Percentage") +
   labs(title = "**Philadelphia Eagles vs. NFL: Fourth-Down Attempt Percentage**",
        subtitle = "*2012 - 2022: Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The resulting visualization does a very good job at showing the upward trend in head coaches going for it on fourth down and that the Eagles are consistently more aggressive in such situations than the rest of the NFL.
@@ -1262,7 +1267,8 @@ ggplot(data = mahomes_epa, aes(x = week, y = mean_qb_epa)) +
   ylab("Average QB EPA") +
   labs(title = "**Patrick Mahomes: Mean QB EPA per Week**",
        subtitle = "*2022 Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The finished visualization indicates that Mahomes' had his highest average EPA in week 1 against the Arizona Cardinals (at roughly 0.8) before dropping considerably for week two through six. However, after a spike in week 7 against the 49ers, the `geom_smooth()` shows a continued downward trend for the remainder of the season, including four poor performances (by Mahomes' standard, anyways) against the Broncos, Seahawks, and Raiders to end the season.
@@ -1390,7 +1396,8 @@ ggplot(data = qb_thirddown_data, aes(x = reorder(passer_id, -qb_agg_pct),
   nfl_analytics_theme() +
   labs(title = "**QB Aggressiveness on Third Down**",
        subtitle = "*Numbers of Times Air Yards >= Yards To Go*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 
 ```
 
@@ -1430,7 +1437,8 @@ ggplot(data = epa_per_play, aes(x = epa_per_play,
   theme(axis.text.y = element_blank()) +
   labs(title = "**Expected Points Added per Play**",
        subtitle = "*2022 Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 It should not be a surprise that the Chiefs outperform - by a large margin - the rest of the NFL. The Texans and Colts, on the other hand, averaged -0.15 expected points added per play during the 2022 regular season.
@@ -1460,7 +1468,8 @@ ggplot(data = playoff_airyards_plot, aes(x = posteam,
   xlab("") +
   labs(title = "**Distribution of Regular Season Air Yards**",
        subtitle = "*2022 NFL Playoff Teams*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   theme(axis.text.x = element_nfl_logo(size = 1.25))
 ```
 
@@ -1505,7 +1514,8 @@ ggplot(data = playoff_airyards_ridges_plot, aes(x = air_yards,
   ylab("") +
   labs(title = "**Distribution of Regular Season Air Yards**",
        subtitle = "*2022 NFL Playoff Teams*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   theme(axis.text.y = element_nfl_logo(size = 1.25))
 ```
 
@@ -1538,7 +1548,8 @@ ggplot(data = yards_gained_compared, aes(x = posteam,
   xlab("") +
   labs(title = "*Averaged Yards Gained per Down*",
        subtitle = "**KC Chiefs vs. NFL: 2022 Regular Season**",
-       caption = "**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   theme(axis.text.x = nflplotR::element_nfl_logo(size = 1.5),
         legend.position = "none",
         strip.text = element_text(family = "Roboto", face = "bold"),
@@ -1553,7 +1564,7 @@ ggplot(data = yards_gained_compared, aes(x = posteam,
 def_yards_allowed <- vroom("http://nfl-book.bradcongelio.com/def-yards")
 ```
 
-```{r histogram_plot_completed, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r histogram_plot_completed, output = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
   geom_histogram(binwidth = 50) +
@@ -1568,8 +1579,11 @@ ggplot(data = def_yards_allowed, aes(x = yards_allowed, fill = defteam)) +
   ylab("Total Count") +
   labs(title = "*Histogram of Defensive Yards Allowed*",
        subtitle = "**2022 NFL Regular Season**",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
+
+![](images/completed_def_histogram.png){fig-align="center" width="5.25in"}
 
 ## Saving Your `ggplot2` Creations
 
@@ -1737,8 +1751,9 @@ ggplot(complete_wr_ay, aes(x = air_yards, fill = posteam)) +
   xlab("Air Yards") +
   ylab("Density") +
   labs(title = "**Top Ten WRs in Total Air Yards**",
-       subtitle = "*Density Plot of How They Were Earned - 2022 Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       subtitle = "*Density Plot of How They Were Earned*",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 ## Creating Tables with `gt` and `gtExtras`
@@ -1780,7 +1795,8 @@ pure_cpoe %>%
   cols_hide(team_logo_wikipedia) %>%
   tab_header(
     title = md("**Average CPOE in Pure Passing Situations**"),
-    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70%
+                  Chance of Pass Attempt*")) %>%
   gt_img_rows(headshot, height = 25)
 ```
 
@@ -1797,7 +1813,8 @@ pure_cpoe %>%
   cols_hide(team_logo_wikipedia) %>%
   tab_header(
     title = md("**Average CPOE in Pure Passing Situations**"),
-    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70%
+                  Chance of Pass Attempt*")) %>%
   tab_stubhead(label = "Quarterback") %>%
   gt_img_rows(headshot, height = 25) %>%
   cols_label(
@@ -1821,7 +1838,8 @@ pure_cpoe %>%
   cols_hide(team_logo_wikipedia) %>%
   tab_header(
     title = md("**Average CPOE in Pure Passing Situations**"),
-    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70%
+                  Chance of Pass Attempt*")) %>%
   tab_stubhead(label = "Quarterback") %>%
   gtExtras::gt_img_rows(headshot, height = 25) %>%
   cols_label(
@@ -1848,7 +1866,8 @@ pure_cpoe %>%
   cols_hide(team_logo_wikipedia) %>%
   tab_header(
     title = md("**Average CPOE in Pure Passing Situations**"),
-    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70%
+                  Chance of Pass Attempt*")) %>%
   tab_stubhead(label = "Quarterback") %>%
   gt_img_rows(headshot, height = 25) %>%
   cols_label(
@@ -1877,7 +1896,8 @@ pure_cpoe %>%
   cols_hide(team_logo_wikipedia) %>%
   tab_header(
     title = md("**Average CPOE in Pure Passing Situations**"),
-    subtitle = md("*2010-2022  |  Pure Passing is >= 70% Chance of Pass Attempt*")) %>%
+    subtitle = md("*2010-2022  |  Pure Passing is >= 70%
+                  Chance of Pass Attempt*")) %>%
   tab_stubhead(label = "Quarterback") %>%
   gt_img_rows(headshot, height = 25) %>%
   cols_label(
@@ -2095,8 +2115,7 @@ To create the output table, we use the `renderTable()` function, another reactiv
         y = "Total Expected Yards", 
         title = paste("Actual Rushing Yards vs. Expected for Season(s):",
                       selectedSeasons()),
-        subtitle = "Model: *LightGBM* in **tidymodels**",
-        caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**") +
+        subtitle = "Model: *LightGBM* in **tidymodels**") +
       nfl_analytics_theme()
   }, width = 500)
 }

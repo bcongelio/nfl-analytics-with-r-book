@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics with R - 2&nbsp; An Introduction to NFL Analytics and the R Programming Language</title>
+<title>Introduction to NFL Analytics with R - 1&nbsp; An Introduction to NFL Analytics and the R Programming Language</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,13 +108,7 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
-</script>
+}</script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -123,7 +117,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-nfl-analytics-and-r.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-nfl-analytics-and-r.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -134,7 +128,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">An Introduction to NFL Analytics with R</a> 
+      <a href="./">Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -173,43 +167,37 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -243,26 +231,26 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
-  <li><a href="#the-investigate-inquiry-outline" id="toc-the-investigate-inquiry-outline" class="nav-link" data-scroll-target="#the-investigate-inquiry-outline"><span class="header-section-number">2.2</span> The Investigate Inquiry Outline</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
+  <li><a href="#the-investigate-inquiry-outline" id="toc-the-investigate-inquiry-outline" class="nav-link" data-scroll-target="#the-investigate-inquiry-outline"><span class="header-section-number">1.2</span> The Investigate Inquiry Outline</a></li>
   <li>
-<a href="#investigating-the-rams-2022-offensive-line" id="toc-investigating-the-rams-2022-offensive-line" class="nav-link" data-scroll-target="#investigating-the-rams-2022-offensive-line"><span class="header-section-number">2.3</span> Investigating the Rams’ 2022 Offensive Line</a>
+<a href="#investigating-the-rams-2022-offensive-line" id="toc-investigating-the-rams-2022-offensive-line" class="nav-link" data-scroll-target="#investigating-the-rams-2022-offensive-line"><span class="header-section-number">1.3</span> Investigating the Rams’ 2022 Offensive Line</a>
   <ul class="collapse">
-<li><a href="#unique-offensive-line-combinations-how-to-collect-the-data" id="toc-unique-offensive-line-combinations-how-to-collect-the-data" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-how-to-collect-the-data"><span class="header-section-number">2.3.1</span> Unique Offensive Line Combinations: How to Collect The Data?</a></li>
-  <li><a href="#unique-offensive-line-combinations-vs.-win-percentage" id="toc-unique-offensive-line-combinations-vs.-win-percentage" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-win-percentage"><span class="header-section-number">2.3.2</span> Unique Offensive Line Combinations vs.&nbsp;Win Percentage</a></li>
-  <li><a href="#unique-offensive-line-combinations-vs.-pressure-rate" id="toc-unique-offensive-line-combinations-vs.-pressure-rate" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-pressure-rate"><span class="header-section-number">2.3.3</span> Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</a></li>
-  <li><a href="#unique-offensive-line-combinations-vs.-qb-hits-allowed" id="toc-unique-offensive-line-combinations-vs.-qb-hits-allowed" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-qb-hits-allowed"><span class="header-section-number">2.3.4</span> Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</a></li>
-  <li><a href="#unique-offensive-line-combinations-vs.-adjusted-sack-rate" id="toc-unique-offensive-line-combinations-vs.-adjusted-sack-rate" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-adjusted-sack-rate"><span class="header-section-number">2.3.5</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Sack Rate</a></li>
-  <li><a href="#unique-offensive-line-combinations-vs.-adjusted-line-yards" id="toc-unique-offensive-line-combinations-vs.-adjusted-line-yards" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-adjusted-line-yards"><span class="header-section-number">2.3.6</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Line Yards</a></li>
+<li><a href="#unique-offensive-line-combinations-how-to-collect-the-data" id="toc-unique-offensive-line-combinations-how-to-collect-the-data" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-how-to-collect-the-data"><span class="header-section-number">1.3.1</span> Unique Offensive Line Combinations: How to Collect The Data?</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-win-percentage" id="toc-unique-offensive-line-combinations-vs.-win-percentage" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-win-percentage"><span class="header-section-number">1.3.2</span> Unique Offensive Line Combinations vs.&nbsp;Win Percentage</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-pressure-rate" id="toc-unique-offensive-line-combinations-vs.-pressure-rate" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-pressure-rate"><span class="header-section-number">1.3.3</span> Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-qb-hits-allowed" id="toc-unique-offensive-line-combinations-vs.-qb-hits-allowed" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-qb-hits-allowed"><span class="header-section-number">1.3.4</span> Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-adjusted-sack-rate" id="toc-unique-offensive-line-combinations-vs.-adjusted-sack-rate" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-adjusted-sack-rate"><span class="header-section-number">1.3.5</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Sack Rate</a></li>
+  <li><a href="#unique-offensive-line-combinations-vs.-adjusted-line-yards" id="toc-unique-offensive-line-combinations-vs.-adjusted-line-yards" class="nav-link" data-scroll-target="#unique-offensive-line-combinations-vs.-adjusted-line-yards"><span class="header-section-number">1.3.6</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Line Yards</a></li>
   </ul>
 </li>
-  <li><a href="#exploring-explosive-plays-per-touchdown-drive" id="toc-exploring-explosive-plays-per-touchdown-drive" class="nav-link" data-scroll-target="#exploring-explosive-plays-per-touchdown-drive"><span class="header-section-number">2.4</span> Exploring Explosive Plays per Touchdown Drive</a></li>
+  <li><a href="#exploring-explosive-plays-per-touchdown-drive" id="toc-exploring-explosive-plays-per-touchdown-drive" class="nav-link" data-scroll-target="#exploring-explosive-plays-per-touchdown-drive"><span class="header-section-number">1.4</span> Exploring Explosive Plays per Touchdown Drive</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span>
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span>
 </h1>
 </div>
 
@@ -276,8 +264,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><section id="introduction" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="introduction">
-<span class="header-section-number">2.1</span> Introduction</h2>
+</header><section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1.1</span> Introduction</h2>
 <p>It might seem odd to begin an introductory book with coding and visualization in Chapter 1, while placing information about learning the basics of the <code>tidyverse</code> in a later chapter. But there is good reason for this pedagogical approach being utilized in this book. As explained by Hadley Wickham and Garrett Grolemund in their outstanding book <a href="https://r4ds.had.co.nz/index.html"><em>R for Data Science</em></a><em>,</em> the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement about and integration into a topic increases the likelihood of following up and learning the “boring” material.</p>
 <p>Because of this, I follow the approach of Wickham and Grolemund and provide data that is already, for the most part, “tidied” and ready to be used. We will however, in later chapters, pull raw data directly from it source (such as <code>nflreadr</code>, Pro Football Reference, and Sports Info Solutions) that requires manipulation and cleaning before any significant analysis can begin.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -298,8 +286,8 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <p>Moreover, as briefly outlined in the Preface, we move through the process of learning NFL analytics via a close relationship with investigative inquiry. In this instance, we will define the process of investigative inquiry as one that seeks both knowledge and information about a problem/question through data-based research. To that end, we will routinely use the process throughout this book to uncover insights, patterns, and trends relating to both players and teams that serve to help us answer the problem/question we are examining.</p>
 <p>While it can - and should - be entertaining to develop visualization and models around arbitrarily picked statistics and metrics, it is important to remember that the end goal of the process is to glean useful insights that, ultimately, can be shared with the public. Much like the work done by a data analyst for a Fortune 500 company, the work you produce as a result of this book should do two things: (1.) provide deeper insight and knowledge about NFL teams and players and (2.) effectively communicate a story.</p>
 <p>This is why the process of investigative inquiry is ingrained, as much as possible, into every example provided in the coming chapters. In doing so, the standard outline for completing an investigate inquiry is modified to fit the needs of this book - specifically, the addition of communicating your findings to the public at the end.</p>
-</section><section id="the-investigate-inquiry-outline" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="the-investigate-inquiry-outline">
-<span class="header-section-number">2.2</span> The Investigate Inquiry Outline</h2>
+</section><section id="the-investigate-inquiry-outline" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="the-investigate-inquiry-outline">
+<span class="header-section-number">1.2</span> The Investigate Inquiry Outline</h2>
 <ol type="1">
 <li><p><strong>Identify the problem or question</strong>. The first step in any investigative inquiry is to clearly define the problem or question that you are trying to answer. Many times, fans have questions about their individuals favorite team and/or players. For example, the 2022 Los Angeles Rams - the defending Super Bowl Champions - were eliminated from playoff contention with three weeks remaining in the season. With the early exit, the Rams tied the 1999 Denver Broncos for the earliest elimination from playoff contention for any prior Super Bowl Champion. The Rams’ early elimination can be explained by the high number of injuries during the season, including Matthew Stafford, Cooper Kupp, and Aaron Donald. However, another factor that was routinely discussed during the season, was the team’s inability to keep offensive linemen healthy. In this specific example, in terms of <em>identifying the problem or question</em>, a potential problem or question to explore is: how many unique combinations of offensive linemen did the 2022 LA Rams use and what sort of impact did this have on the team’s playmaking ability? Have other teams in recent history faced the same amount of offensive line turnover yet still make the playoffs? As you can see, there are a number of different avenues in which the <em>problem or question</em> surrounding the Rams’ offensive line injury issues can be explored.</p></li>
 <li><p><strong>Gather data</strong>. With a question or problem determined, we now turn to the process of finding and gathering the necessary data to find answers. Unfortunately, data is not always going to be available to answer your investigate inquiry. For example, the NFL’s tracking data is only released in partial form during the annual Big Data Bowl. In the event that your question or problem requires data that is not available, you must loop back to Step 1 and reconfigure your question to match available data. In the case of the 2022 LA Rams’ offensive line, access to data that can answer the question is available through two cores avenues: the <code>load_participation()</code> and <code>load_snap_counts()</code> functions within the <code>nflverse</code> family of packages.</p></li>
@@ -316,16 +304,16 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <li><p><strong>Interpret and communicate the results</strong>. Lastly, it is time to communicate your results to the public. Whether this be through Twitter, a team blog, or a message board, there are numerous items to consider when preparing to build your story/narrative for sharing. This will be covered further in Chapter 4 as well.</p></li>
 </ol>
 <p>With a clear direction via the investigative inquiry process, we can turn to taking a deeper dive into the LA Rams’ 2022 offensive linemen issue.</p>
-</section><section id="investigating-the-rams-2022-offensive-line" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="investigating-the-rams-2022-offensive-line">
-<span class="header-section-number">2.3</span> Investigating the Rams’ 2022 Offensive Line</h2>
+</section><section id="investigating-the-rams-2022-offensive-line" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="investigating-the-rams-2022-offensive-line">
+<span class="header-section-number">1.3</span> Investigating the Rams’ 2022 Offensive Line</h2>
 <p>The “Super Bowl hangover” is real.</p>
 <p>At least for the loser of the big game.</p>
 <p>Since the AFL and NFL merged in 1970, a total of 15 of the 51 losers of the Super Bowl went on to miss the playoffs the following season, while 13 failed to even achieve a winning record. Teams coming off a Super Bowl victory have generally fared better, with the winners putting together a .500 record or better 45 out of 51 times.</p>
 <p>Of those six teams to not achieve a .500 record after winning the Super Bowl, only a few have been as downright terrible as the 2022 Los Angeles Rams.</p>
-<p>As explained by Mike Ehrmann, the Rams’ poor Super Bowl defense is “what happens when a laundry list of things go wildly wrong at the same time” <span class="citation" data-cites="kirschner2022">(<a href="references.html#ref-kirschner2022" role="doc-biblioref">Kirschner 2022</a>)</span>. As outlined above in our investigative inquiry outline, one of the core items on the Rams’ laundry list of bad luck was the absurd amount of offensive linemen ending up on the injured list. This, combined with losing Andrew Whitworth to retirement after the Super Bowl, led to quarterback Matthew Stafford being sacked on 8.6-percent of his dropback attempts (a rate that nearly doubled from the previous season).</p>
+<p>As explained by Mike Ehrmann, the Rams’ poor Super Bowl defense is “what happens when a laundry list of things go wildly wrong at the same time” <span class="citation" data-cites="kirschner2022">(<a href="#ref-kirschner2022" role="doc-biblioref">Kirschner 2022</a>)</span>. As outlined above in our investigative inquiry outline, one of the core items on the Rams’ laundry list of bad luck was the absurd amount of offensive linemen ending up on the injured list. This, combined with losing Andrew Whitworth to retirement after the Super Bowl, led to quarterback Matthew Stafford being sacked on 8.6-percent of his dropback attempts (a rate that nearly doubled from the previous season).</p>
 <p>Given that context, just <em>how</em> historically bad was the Rams’ 2022 offensive line turnover? We can being diving into the data to find our results and build our story.</p>
-<section id="unique-offensive-line-combinations-how-to-collect-the-data" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="unique-offensive-line-combinations-how-to-collect-the-data">
-<span class="header-section-number">2.3.1</span> Unique Offensive Line Combinations: How to Collect The Data?</h3>
+<section id="unique-offensive-line-combinations-how-to-collect-the-data" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="unique-offensive-line-combinations-how-to-collect-the-data">
+<span class="header-section-number">1.3.1</span> Unique Offensive Line Combinations: How to Collect The Data?</h3>
 <p>To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, we turn to two possible options: the <code>load_participation()</code> and <code>load_snap_counts()</code> functions within the <code>nflreadr</code> package. The <code>load_participation()</code> function will return, if <code>include_pbp = TRUE,</code> a list of every player ID number that was on the field for each play, whereas <code>load_snap_counts()</code> returns - on a per game basis - the percentage of snaps each player was on the field for.</p>
 <p>In the end, using <code>load_snap_counts()</code> creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The <code>load_participation()</code> function results in several oddities in the data (not with the collection of it by the <code>nflverse</code> maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, of the 2022 season.</p>
 <div class="cell">
@@ -479,8 +467,8 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 </div>
 <p>Despite much of the media focus being on the Rams’ poor performance, given their title of defending Super Bowl Champions, the Arizona Cardinals had nearly as many unique offensive line combinations at the conclusion of the season.</p>
 <p>With the data cleaned and prepared, let’s use it to create a <code>ggplot</code> graph and compare the relationship between a team’s number of unique offensive lines against its winning percentage. To complete this, we first need to join the winning percentages to our existing <code>total_combos</code> data frame.</p>
-</section><section id="unique-offensive-line-combinations-vs.-win-percentage" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-win-percentage">
-<span class="header-section-number">2.3.2</span> Unique Offensive Line Combinations vs.&nbsp;Win Percentage</h3>
+</section><section id="unique-offensive-line-combinations-vs.-win-percentage" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-win-percentage">
+<span class="header-section-number">1.3.2</span> Unique Offensive Line Combinations vs.&nbsp;Win Percentage</h3>
 <p>To bring in the individual winning percentages, we will use the <code>get_nfl_standings()</code> function from <code>espnscrapeR</code> and then combine the two sets of data on team abbreviations via a <code>left_join()</code>. Unfortunately, the team abbreviation returned from <code>espnscrapeR</code> does not match up with those used in the <code>nflverse</code> for both the Los Angeles Rams and the Washington Commanders (LAR vs.&nbsp;LA and WSH vs.&nbsp;WAS). As evidenced in the below code, correcting this issue is simple with the <code>clean_team_abbrs()</code> function in the <code>nflreadr</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">records</span> <span class="op">&lt;-</span> <span class="fu">espnscrapeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/espnscrapeR/man/get_nfl_standings.html">get_nfl_standings</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -556,24 +544,21 @@ Important
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">total_combos</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">win_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"smooth"</span>, method <span class="op">=</span> <span class="st">"lm"</span>,</span>
-<span>            size <span class="op">=</span> <span class="fl">.7</span>, color <span class="op">=</span> <span class="st">"blue"</span>,</span>
+<span>            linewidth <span class="op">=</span> <span class="fl">.7</span>, color <span class="op">=</span> <span class="st">"blue"</span>,</span>
 <span>            alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_lines.html">geom_mean_lines</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>v_var <span class="op">=</span> <span class="va">combos</span>, h_var <span class="op">=</span> <span class="va">win_pct</span><span class="op">)</span>,</span>
 <span>                            color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_number</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Win Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Win Percentage**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Through Week #15*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics With R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-i Please use `linewidth` instead.</code></pre>
-</div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -590,11 +575,11 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 </div>
 <p>As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a metric that correlates more strongly with a team’s number of offensive line combinations?</p>
 <p>To begin exploring that, we can hypothesize that more offensive line combinations leads to more quarterback pressures as the various member of the offensive line never have time to properly “gel.”</p>
-</section><section id="unique-offensive-line-combinations-vs.-pressure-rate" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-pressure-rate">
-<span class="header-section-number">2.3.3</span> Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</h3>
+</section><section id="unique-offensive-line-combinations-vs.-pressure-rate" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-pressure-rate">
+<span class="header-section-number">1.3.3</span> Unique Offensive Line Combinations vs.&nbsp;Pressure Rate</h3>
 <p>Rather than calculate the data ourselves (which is the total number dropbacks divided by the total number of pressures), we can turn away from <code>nflverse</code> data and retrieve the information from the <a href="https://pro.sisdatahub.com/">SIS Data Hub</a>. After downloading the spreadsheet, we can read it into the RStudio environment using <code>vroom</code> and then merge the information into the existing <code>total_combos</code> data frame by matching on the individual team abbreviations.</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"./example_data/csv/ch1_pressurerate.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"./example_data/csv/ch1_pressurerate.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">total_combos</span> <span class="op">&lt;-</span> <span class="va">total_combos</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">pressure_rate</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -619,7 +604,7 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 </div>
 <p>With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior <code>ggplot</code> code to examine any potential relationship.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">total_combos</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">pressure_percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">total_combos</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">pressure_percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"smooth"</span>, method <span class="op">=</span> <span class="st">"lm"</span>,</span>
 <span>            size <span class="op">=</span> <span class="fl">.7</span>, color <span class="op">=</span> <span class="st">"blue"</span>,</span>
 <span>            alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
@@ -633,9 +618,14 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Pressure Rate (per Dropback)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Unique Offensive Line Combinations vs. Pressure Rate"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Pressure Rate**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+i Please use `linewidth` instead.</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -647,8 +637,8 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 </div>
 </div>
 <p>Again, there does not seem to be any statistical correlation between a team’s number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between a the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from <code>nflreadr</code> to collect total QB hits.</p>
-</section><section id="unique-offensive-line-combinations-vs.-qb-hits-allowed" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-qb-hits-allowed">
-<span class="header-section-number">2.3.4</span> Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</h3>
+</section><section id="unique-offensive-line-combinations-vs.-qb-hits-allowed" class="level3" data-number="1.3.4"><h3 data-number="1.3.4" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-qb-hits-allowed">
+<span class="header-section-number">1.3.4</span> Unique Offensive Line Combinations vs.&nbsp;QB Hits Allowed</h3>
 <p>To begin, we can collect the QB hit data from <code>nflreadr</code> being sure to <code>group_by()</code> the <code>posteam</code> variable in order to calculate the number of QB hits allowed by each team’s offensive line. After, we can merge the data into the <code>total_combos</code> data frame and produce the plot.</p>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
@@ -677,7 +667,8 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total QB Hits Allowed"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Unique Offensive Line Combinations vs. QB Hits Allowed"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"2022 Season"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFl Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -689,8 +680,8 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 </div>
 </div>
 <p>There is again very little, if any, correlation between a team’s unique number of offensive line combinations and the number of times its quarterback is hit on passing attempts.</p>
-</section><section id="unique-offensive-line-combinations-vs.-adjusted-sack-rate" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-adjusted-sack-rate">
-<span class="header-section-number">2.3.5</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Sack Rate</h3>
+</section><section id="unique-offensive-line-combinations-vs.-adjusted-sack-rate" class="level3" data-number="1.3.5"><h3 data-number="1.3.5" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-adjusted-sack-rate">
+<span class="header-section-number">1.3.5</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Sack Rate</h3>
 <p>In the previous examples, both pressure rate and QB hits are unadjusted metrics, meaning the results are not manipulated to account for context within the data. To add an example of a metric that <em>is</em> adjusted to our list of examples, we will use Adjusted Sack Rate from <a href="https://www.footballoutsiders.com/">Football Outsiders</a>. Aaron Schatz, in an article introducing the measurements in December of 2003, explained his findings that the league-wide sack rate varied based on both the down and yards to go.</p>
 <table class="table">
 <caption>2003 NFL Sack Rate - Aaron Schatz (FootballOutsiders.com)</caption>
@@ -757,9 +748,11 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Adjusted Sack Rate"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Adjusted Sack Rate**"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Adjusted Sack Rate**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -788,9 +781,11 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 <span>                  labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Adjusted Sack Rate"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Adjusted Sack Rate**"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Adjusted Sack Rate**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2020 - 2022 Seasons*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">season</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -810,8 +805,8 @@ i Please use the `linewidth` aesthetic instead.</code></pre>
 <p>It should be noted that the same contextual explanation does not hold true for Buffalo. In the 2020 season, Josh Allen released the ball, on average, 3.04 seconds after the snap which is plenty of time for the opposing defense to generate pressure and record sacks. Because of this, if we were to add statistical weight using average time to throw, the Buffalo Bills would remain an outlier in this specific season while both the Steelers and Colts would likely regress closer to the mean for those teams with higher numbers of offensive line combinations.</p>
 <p>While pressure rate and QB hits did not prove to impacted by a team’s number of line combinations, there is a broad relationship (though not strong enough to begin using the term “correlation”) between the number of combinations and adjusted sack rate.</p>
 <p>To continue this exploration, let’s pivot away from exploring the impact of offensive line combinations on the quarterback and examine any potential correlation with the running game and run blocking, while using metrics that are adjusted, as the additional context and weighting seemed to be helpful in finding relationships. We can gather statistics provided by <a href="https://www.footballoutsiders.com/">Football Outsiders</a> concerning the performance of offensive lines.</p>
-</section><section id="unique-offensive-line-combinations-vs.-adjusted-line-yards" class="level3" data-number="2.3.6"><h3 data-number="2.3.6" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-adjusted-line-yards">
-<span class="header-section-number">2.3.6</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Line Yards</h3>
+</section><section id="unique-offensive-line-combinations-vs.-adjusted-line-yards" class="level3" data-number="1.3.6"><h3 data-number="1.3.6" class="anchored" data-anchor-id="unique-offensive-line-combinations-vs.-adjusted-line-yards">
+<span class="header-section-number">1.3.6</span> Unique Offensive Line Combinations vs.&nbsp;Adjusted Line Yards</h3>
 <ol type="1">
 <li>
 <strong>Adjusted Line Yards</strong> - derived by Football Outsiders with a regression analysis, this metric takes the total of a team’s total rushing attempts and assigns a quantitative value to the offensive line’s impact. Any run that ends with a loss of yards results in 120% of the value being placed on the offensive line, while a 0-4 yard rush is 100%, a 5-10 yard rush is 50%, and anything over 11 yards is a 0% value. As explained by Football Outsiders, if a running back breaks free for a 50-yard gain, just how much of that is the offensive line responsible for? Adjusted Line Yards produces a numeric value as the answer to that question.</li>
@@ -853,41 +848,44 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </div>
 <p>You can see in the output of the data that <code>power_rank</code> and <code>stuffed_rank</code> are both in a “ranked format,” meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1st while the team with the worst (the Minnesota Vikings) are ranked 32nd. The <code>adj_line_yards</code> variable is provided in its unranked, raw format. Because of this, let’s first use both <code>power_rank</code> and <code>stuffed_rank</code> and use the <code>cowplot</code> package to view them together, and then construct the plot for <code>adj_line_yards</code> separately since it operates on a differing y-axis scale.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">power_rank_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">fb_outsiders_oline</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">power_rank</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_lines.html">geom_mean_lines</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>v_var <span class="op">=</span> <span class="va">combos</span>, h_var <span class="op">=</span> <span class="va">power_rank</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">power_rank_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">fb_outsiders_oline</span>,</span>
+<span>                          <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">power_rank</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_lines.html">geom_mean_lines</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>v_var <span class="op">=</span> <span class="va">combos</span>,</span>
+<span>                                h_var <span class="op">=</span> <span class="va">power_rank</span><span class="op">)</span>,</span>
 <span>                            color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>                            size <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">32</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Power Ranking**"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  FootballOutsiders.com*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Power Ranking**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  FootballOutsiders.com*"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Power Ranking (1 = best, 32 = worst)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">stuffed_rank_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">fb_outsiders_oline</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">stuffed_rank</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">stuffed_rank_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">fb_outsiders_oline</span>,</span>
+<span>                            <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">combos</span>, y <span class="op">=</span> <span class="va">stuffed_rank</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">0.8</span>, alpha <span class="op">=</span> <span class="fl">.08</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_lines.html">geom_mean_lines</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>v_var <span class="op">=</span> <span class="va">combos</span>, h_var <span class="op">=</span> <span class="va">stuffed_rank</span><span class="op">)</span>,</span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_lines.html">geom_mean_lines</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>v_var <span class="op">=</span> <span class="va">combos</span>,</span>
+<span>                                h_var <span class="op">=</span> <span class="va">stuffed_rank</span><span class="op">)</span>,</span>
 <span>                            color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>                            size <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">32</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Stuffed Rank**"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  FootballOutsiders.com*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Stuffed Rank**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  FootballOutsiders.com*"</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Stuffed Ranking (1 = best, 32 = worst)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">plot_grid</span><span class="op">(</span><span class="va">power_rank_plot</span>, <span class="va">stuffed_rank_plot</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="images/cow_plot_finished.png" class="img-fluid" width="734"></p>
-</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/cow_plot_finished.png" class="img-fluid figure-img" style="width:4in"></p>
+</figure>
 </div>
 <p>Based on the results, it does not seem that the number of unique offensive line combinations has impact on either power rank or stuffed rank. The Los Angeles Rams and Arizona Cardinals, despite have the two highest unique line combinations, are among the best in the league in the metric. In fact, the opposite seems to be true in that the Minnesota Vikings, with just six unique line combinations during the 2022 season, are last in the league in power ranking. The Rams performed in bit worse when comparing line combinations to stuffed rank, but the Cardinals are still among the best in the league. The Vikings again are at the bottom, only under performed by the Jacksonville Jaguars (who had just three unique combinations throughout the season).</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -898,9 +896,11 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Adjusted Line Yards**"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Adjusted Line Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  FootballOutsiders.com*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Adjusted Line Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -937,9 +937,11 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/geom_nfl_logos.html">geom_nfl_logos</a></span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>team_abbr <span class="op">=</span> <span class="va">team</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.065</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_reverse</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Unique Offensive Line Combinations vs.</span></span>
+<span><span class="st">       Weighted Adjusted Line Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season  |  Adjusted with PFF's 'Elusive'*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span><span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"# of Unique Offensive Line Combinations"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Weighted Adjusted Line Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -955,12 +957,12 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </div>
 <p>Despite having two of the bottom four scores in <code>elusive_rating</code> (21.4 and 21.8), the Rams and the Cardinals are in the league’s top five for <code>Weighted Adjusted Line Yard</code>. This is an indication that each team’s offensive line is proficient at run blocking and that any perceived shortcoming in the ground game was the result of a lack of elusive running backs. Conversely, the Washington Commanders unweighted <code>Adjusted Line Yards</code> was 4.29 but, when account for the high elusiveness score among the team’s running backs, the metric dipped to a league-worst 2.14 weighted adjusted line yards.</p>
 <p>While there is certainly more examination that could be conducted, these preliminary results seem to indicate that a higher number of unique offensive line combinations has little impact on both the passing and rushing games, with the exception of a general relationship with the number of combinations and a team’s adjusted sack rate. Even then, there are caveats within the data that force us to consider further ways to contextualize the data such as a quarterback’s average time to release.</p>
-</section></section><section id="exploring-explosive-plays-per-touchdown-drive" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="exploring-explosive-plays-per-touchdown-drive">
-<span class="header-section-number">2.4</span> Exploring Explosive Plays per Touchdown Drive</h2>
+</section></section><section id="exploring-explosive-plays-per-touchdown-drive" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="exploring-explosive-plays-per-touchdown-drive">
+<span class="header-section-number">1.4</span> Exploring Explosive Plays per Touchdown Drive</h2>
 <p>In November of 2022, Warren Sharp - of <a href="https://www.sharpfootballanalysis.com/">Sharp Football Analysis</a> - tweeted perhaps the most ridiculous statistic of the 2022 NFL season.</p>
 <p></p>
-<div id="tweet-91666"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-91666").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
+<div id="tweet-68730"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-68730").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
 <p>However, the statistic as presented by Sharp does not tell the complete story as it isolates the entirety of a touchdown drive to a single play. While the team’s longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.</p>
 <p>To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.</p>
 <div class="cell">
@@ -996,9 +998,11 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
 <span>                     breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>                     label <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Which Team Has The Highest % of Explosive Plays per TD Drive?**"</span>,</span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Which Team Has The Highest % of</span></span>
+<span><span class="st">       Explosive Plays per TD Drive?**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Percent of TD Drives with an Explosive Play (20+ Yards)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1011,7 +1015,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <p>The Carolina Panthers had a play that gained 20 or more yards on nearly 82% of their touchdown drives, while the Indianapolis Colts had a league-worst 52% of touchdown drives including an explosive plays. Notably, the Steelers are the near bottom as well with result of just under 61%. Given the statistic in Sharp’s tweet, we can make an assumption that Pittsburgh (as well as other the other teams with lower percentages) methodically “marched down” the field on the way to scoring touchdowns while teams such as the Panthers and Cleveland Browns heavily relied on at least one big “homerun” play per touchdown drive in order to move the ball</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-kirschner2022" class="csl-entry" role="listitem">
 Kirschner, Alex. 2022. <span>“The Rams’ Super Bowl Afterparty Turned into a Historic Hangover.”</span> <a href="https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/">https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/</a>.
 </div>
@@ -1250,24 +1254,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./02-nfl-analytics-tidyverse.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
-  </div>
-</footer>
+
 
 
 <script src="https://platform.twitter.com/widgets.js"></script>

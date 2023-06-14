@@ -92,7 +92,7 @@ simple_regression_data <- vroom("http://nfl-book.bradcongelio.com/simple-reg")
 
 The data contained the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let's first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.
 
-```{r simple-linear-lobf, output = TRUE, message = FALSE, error = FALSE, warning = FALSE, fig.align='center', fig.dpi = 400}
+```{r simple-linear-lobf, output = TRUE, fig.align='center', fig.dpi = 400}
 
 regression_2022 <- simple_regression_data %>%
   filter(season == 2022)
@@ -102,7 +102,7 @@ teams <- nflreadr::load_teams(current = TRUE)
 regression_2022 <- regression_2022 %>%
   left_join(teams, by = c("team" = "team_abbr"))
 
-  ggplot(regression_2022, aes(x = total_yards, y = total_points)) +
+ggplot(regression_2022, aes(x = total_yards, y = total_points)) +
   geom_smooth(method = "lm", se = FALSE,
               color = "black",
               linetype = "dashed",
@@ -112,8 +112,7 @@ regression_2022 <- regression_2022 %>%
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   labs(title = "**Line of Best Fit: 2022 Season**",
-       subtitle = "*Y = total_yards ~ total_points*",
-       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+       subtitle = "*Y = total_yards ~ total_points*") +
   xlab("Total Yards") +
   ylab("Total Points") +
   nfl_analytics_theme()
@@ -167,7 +166,8 @@ ggplot(example_perfect_fit, aes(x = x, y = y)) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
   labs(title = "A Perfect Regression Model",
        subtitle = "Every Point Falls on the Line",
-       caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Our Predictor Variable") +
   ylab("Our Response Variable") +
   nfl_analytics_theme()
@@ -184,7 +184,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                                           |
-|:-----------------:|:---------------------------------------------------:|
+|:-----------:|:---------------------------------------------------------:|
 |   Summary Distribution    |                                                                                                                                                                          Meaning                                                                                                                                                                          |
 |  The `Min` Distribution   |           The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.**            |
 |   The `1Q` Distribution   |                             The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                              |
@@ -257,7 +257,8 @@ ggplot(regression_2022, aes(x = total_yards, y = residuals)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   labs(title = "**Total Yards & Residual Values**",
        subtitle = "*Y = total_points ~ total_yards*",
-       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Total Yards") +
   ylab("Residual of Total Points") +
   nfl_analytics_theme() +
@@ -354,7 +355,8 @@ ggplot(regression_all_seasons, aes(x = total_yards, y = residuals)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   labs(title = "**Total Yards & Residual Values: 2012-2022**",
        subtitle = "*Y = total_points ~ total_yards*",
-       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Total Yards") +
   ylab("Residual of Total Points") +
   nfl_analytics_theme() +
@@ -457,8 +459,7 @@ ggplot(plot_data_2022, aes(x = Fitted, y = Residuals)) +
   scale_x_continuous(breaks = scales::pretty_breaks(),
                      labels = scales::comma_format()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
-  labs(title = "**Multiple Linear Regression Model: 2022**",
-       caption = "*An Introduction to NFL Analytic with R*<br>Brad J. Congelio") +
+  labs(title = "**Multiple Linear Regression Model: 2022**") +
   xlab("Fitted Values") +
   ylab("Residual Values") +
   nfl_analytics_theme() +
@@ -497,7 +498,8 @@ ggplot(data = melted_regression_corr, aes(x = Var1,
             family = "Roboto", size = 5) +
   labs(title = "Multicollinearity Correlation Matrix",
        subtitle = "Multiple Linear Regression: 2022 Data",
-       caption = "**An Introduction to NFL Analytics with R**<br>Brad J. Congelio") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   nfl_analytics_theme() +
   labs(fill = "Correlation \n Measure", x = "", y = "") +
   theme(legend.background = element_rect(fill = "#F7F7F7"),
@@ -844,7 +846,8 @@ ggplot(tidy_mvp_model, aes(x = reorder(term, estimate),
        y = "Estimate",
        title = "**Probability of a QB Being NFL MVP**",
        subtitle = "*GLM Model | F1-Score: 99.4%*",
-       caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   theme(legend.position = "none") +
   nfl_analytics_theme()
 ```
@@ -1290,7 +1293,8 @@ ggplot(data = predictions_with_auc, aes(1 - specificity, sensitivity,
   labs(color = "Play Type",
        title = "**Offensive Play Prediction Model**",
        subtitle = "*2000-2022 | Regular Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 This visualization is a Receiver Operating Characteristic (ROC) curve, which is created by plotting the `True Positive Rate` against the `False Positive Rate` for each of the different play types in the data frame. The "arching" of the `run_outside` line towards the 0.80 mark indicates that the model is doing a commendable job at recognizing the patterns that result in the `run_outside` class against the others. The model had slightly more difficulty in distinguishing the other play types (`long_pass`, `medium_pass`, `run_inside`, and `short_pass`) from one another. But, each is still solidly above the line of no-discrimination (shown as the dashed, diagonal line in the plot) where the model's performance would be no better than random guesses.
@@ -1597,7 +1601,7 @@ First, we use the `load_rosters` and `load_teams` function from `nflreadr` to br
 
 With the data addition and preparation completed, we can use both the `gt` and `gtExtras` package to create the table.
 
-```{r rb-kmean-table, eval = TRUE, echo = TRUE, output = TRUE}
+```{r rb-kmean-table, eval = TRUE, echo = TRUE, output = FALSE}
 
 gt_table_data %>%
   mutate(cluster = fct_relevel(cluster,
@@ -1619,6 +1623,8 @@ gt_table_data %>%
                     md("**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*")) %>%
   gtExtras::gt_theme_pff()
 ```
+
+![](images/rushers_tables.png){fig-align="center" width="6in"}
 
 ### Creating an XGBoost Model for Rushing Yards over Expected
 
@@ -2002,7 +2008,8 @@ ggplot(data = for_plot, aes(x = yards, y = exp_yards)) +
                      labels = scales::comma_format()) +
   labs(title = "**Actual Rushing Yards vs. Expected Rushing Yards**",
        subtitle = "*2016 - 2022 | Model: LightGBM*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Actual Rushing Yards") +
   ylab("Expected Rushing Yards") +
   nfl_analytics_theme() +
@@ -2039,7 +2046,7 @@ diff_per_season <- diff_per_season %>%
 
 To plot the leaders per season required just two additions to the current `ryoe_projs` data frame. We first use `summarize()` to gather each running back's rushes, team, actual yards, and expected rushing yards per season and then created the `yards_diff` column which is simply the difference between the player's `yards` and `exp_yards`. In order to label just the leader's name in the plot for each season, we use `mutate()` to create the `is_max_diff` column where a rusher is provided a numeric `1` if their `yards_diff` was the highest positive value for the season.
 
-```{r ryoe-season-leaders-plot, output = TRUE, fig.align='center', fig.dpi = 400}
+```{r ryoe-season-leaders-plot, output = FALSE, fig.align='center', fig.dpi = 400}
 
 ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
   stat_poly_line(method = "lm", se = FALSE,
@@ -2064,7 +2071,8 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
                   fontface = "bold") +
   labs(title = "**Rushing Yards over Expected Leader Per Season**",
        subtitle = "*2016 - 2022 | Model: LightGBM*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Actual Rushing Yards") +
   ylab("Expected Rushing Yards") +
   facet_wrap(~ season, scales = "free") +
@@ -2072,6 +2080,8 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
   theme(strip.text = element_text(face = "bold", family = "Roboto", size = 12),
         strip.background = element_rect(fill = "#F6F6F6"))
 ```
+
+![](images/ryoe_per_season.png){fig-align="center" width="6in"}
 
 Last, given the success of Jonathan Taylor's 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against the his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.
 
@@ -2108,16 +2118,19 @@ ggplot() +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 10),
                      labels = scales::comma_format()) +
   annotate(geom = "text", label = "Cumulative Actual Yards", x = 200, y = 1050,
-           angle = 38, family = "Roboto", size = 5) +
+           angle = 30, family = "Roboto", size = 5) +
   annotate(geom = "text", label = "Cumulative Expected Yards", x = 200, y = 700,
-           angle = 35, family = "Roboto", size = 5) +
+           angle = 30, family = "Roboto", size = 5) +
   annotation_custom(grid::rasterGrob(j_taylor_image, 
                                width = unit(1,"npc"), 
                                height = unit(1,"npc")),
                     175, 375, 0, 1000) +
-  labs(title = "**Jonathan Taylor: 2021 Cumulative Actual Yards vs. Expected Yards**",
-       subtitle = "*Model: **LightGBM** Using ***boost_trees()*** in ***tidymodels****",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  labs(title = "**Jonathan Taylor: 2021 Cumulative Actual Yards
+       vs. Expected Yards**",
+       subtitle = "*Model: **LightGBM** Using ***boost_trees()***
+       in ***tidymodels****",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Cumulative Rushes in 2021 Season") +
   ylab("Cumulative Actual Yards and Expected Yards") +
   nfl_analytics_theme()

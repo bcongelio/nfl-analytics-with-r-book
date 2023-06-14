@@ -19,9 +19,9 @@ font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.
 
 ## Downloading R and RStudio
 
-Prior to downloading R and RStudio, it is important to explain the difference between the two, as they are separate pieces of our analytics puzzle that are used for differing purposes. R is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer's command line, it is also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.
+Prior to downloading R and RStudio, it is important to explain the difference between the two, as they are separate pieces of our analytics puzzle that are used for differing purposes. R\index{R programming language} is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer's command line, it is also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.
 
-RStudio is free to download and use and provides a user-friendly interface for writing R code, organizing projects and files, and working with both big and small data. Regularly updated by the [Posit team](https://posit.co/), RStudio includes many features that are specifically designed to making working with R easier, including syntax highlighting, code suggestions, robust debugging tools, and a built-in package manager.
+RStudio\index{RStudio} is free to download and use and provides a user-friendly interface for writing R code, organizing projects and files, and working with both big and small data. Regularly updated by the [Posit team](https://posit.co/), RStudio includes many features that are specifically designed to making working with R easier, including syntax highlighting, code suggestions, robust debugging tools, and a built-in package manager.
 
 ::: callout-important
 It is important that you download and successfully install R before proceeding to install RStudio on your computer.
@@ -29,7 +29,7 @@ It is important that you download and successfully install R before proceeding t
 
 ### Downloading R
 
-1.  To download R, visit the official R website at <https://www.r-project.org/>
+1.  To download R\index{R programming language!download}, visit the official R website at <https://www.r-project.org/>
 2.  Click on the 'CRAN' link at the top of the page, directly underneath the word 'Download.' This will bring you to the Comprehensive R Archive Network.
 3.  Each mirror that hosts a copy of R is sorted by country. Select a mirror that is geographically close to you.
 4.  Click on the version of R that is appropriate for your operating system (Linux, macOS, or Windows).
@@ -110,20 +110,20 @@ The core principle of the `tidyverse` is "tidy data," which is the development t
 
 Installing and loading the `tidyverse` results eight of the core packages automatically being loaded and ready to use:
 
-1.  **dplyr:** "dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges."
-2.  **tidyr:** "tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable."
-3.  **readr:** "readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes."
-4.  **purrr:** "purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive."
-5.  **tibble**: "tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code."
-6.  **stringr:** "stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations."
-7.  **forcats:** "forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values."
-8.  **ggplot2:** "ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details" [@tidyverse].
+1.  **dplyr**\index{dplyr}**:** "dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges."
+2.  **tidyr**\index{tidyr}**:** "tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable."
+3.  **readr**\index{readr}**:** "readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes."
+4.  **purrr**\index{purrr}**:** "purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive."
+5.  **tibble**\index{tibble}: "tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code."
+6.  **stringr**\index{stringr}**:** "stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations."
+7.  **forcats**\index{forcats}**:** "forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values."
+8.  **ggplot2**\index{ggplot2}**:** "ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details" [@tidyverse].
 
 Aside from the core eight packages, the `tidyverse` will also install a multiple of other packages such as `rvest` (for web scraping), `readxl` (for reading Excel sheets in the RStudio environment), `lubridate` (a very powerful tool for working with times and dates), and `magrittr` (the package that provides the pipe `%>%`). As well, prior versions of the `tidyverse` utilized the `modelr` package. Modeling is now handled in the `tidyverse` by the `tidymodels` package.
 
 ## The Flow of the `tidyverse`
 
-The underlying design of coding in the `tidyverse`, aside from the `dplyr` verbs, are both the assignment statement (`<-`) and the pipe (`%>%`). Please note, as mentioned in the book's Preface, that I still use the pipe (`%>%`) that is part of the `magrittr` package and not the native pipe operator (`|>`) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.
+The underlying design of coding in the `tidyverse`, aside from the `dplyr`\index{dplyr} verbs, are both the assignment statement (`<-`) and the pipe (`%>%`). Please note, as mentioned in the book's Preface, that I still use the pipe (`%>%`) that is part of the `magrittr` package and not the native pipe operator (`|>`) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.
 
 As I explain to my Sports Analytics students, the language and flow of the `tidyverse` can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in's and out's of the `tidyverse` in the below section, let's first dissect an example of the `tidyverse` workflow.
 
@@ -414,7 +414,7 @@ By filtering out any row that does not include the `down` for a given play, we c
 
 ### NFL Data and the `group_by()` verb
 
-As mentioned above, the `group_by()` verb allows you to group data by one or more specific variables in order to retrieve, among other actions, summary statistics. To showcase how `group_by()` is used within the `nflverse` data, let's first gather the 2022 regular season statistics and then use the `summarize()` verb to get the average success rate on rushing plays.
+As mentioned above, the `group_by()`\index{dplyr!Verbs!group_by()} verb allows you to group data by one or more specific variables in order to retrieve, among other actions, summary statistics. To showcase how `group_by()` is used within the `nflverse` data, let's first gather the 2022 regular season statistics and then use the `summarize()` verb to get the average success rate on rushing plays.
 
 As well, we immediately make use of the `filter()` function to sort the data : (1.) we first instruct to `filter()` the data to include just those instances where the `play_type` equals `run`, (2.) we then say it must also be `play == 1`, meaning there was no penalty or other interruption that "cancelled out" the play, and (3.) we lastly pass the argument that the `down` cannot be missing by using `!is.na` as a missing down is indicative of a two-point conversion attempt.
 
@@ -584,9 +584,9 @@ airyards_cpoe_mutate %>%
 
 ## Core Skills for Tidy Data
 
-With your new understanding of the `tidyverse` flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by [Sports Info Solutions](https://www.sportsinfosolutions.com/). Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).
+With your new understanding of the `tidyverse` flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by [Sports Info Solutions](https://www.sportsinfosolutions.com/)\index{Sports Info Solutions)}. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).
 
-In this example, we are going to compare the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in `ggplot`, we will:
+In this example, we are going to compare the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA)\index{Expected Points Added} of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in `ggplot`, we will:
 
 1.  Import and examine the data.
 2.  Deal with missing values in the data.
@@ -635,7 +635,7 @@ sis_data <- sis_data %>%
 sis_data
 ```
 
-In the above code, we are using the `clean_names()` function within the `janitor` package to automatically rework the column names into a `tidy` format. After, we use the `select()` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
+In the above code, we are using the `clean_names()` function within the `janitor`package to automatically rework the column names into a `tidy` format. After, we use the `select()` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
 
 ### Dealing with Missing Data
 
@@ -902,8 +902,10 @@ After, using the data in `pbp`, complete the following:
                incomplete_pass == 1 |
                interception == 1, !is.na(down)) %>%
       group_by(passer) %>%
-      summarize(total_completions = sum(complete_pass == 1, na.rm = TRUE),
-                total_incompletions = sum(incomplete_pass == 1, na.rm = TRUE)) %>%
+      summarize(total_completions = sum(complete_pass == 1,
+                                        na.rm = TRUE),
+                total_incompletions = sum(incomplete_pass == 1,
+                                          na.rm = TRUE)) %>%
       filter(total_completions >= 180)
     ```
 

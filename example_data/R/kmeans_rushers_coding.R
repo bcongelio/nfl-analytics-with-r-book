@@ -2,6 +2,11 @@
 ### conducting a pca prior to k-means to reduce dimensionality
 #########################
 
+library(factoextra)
+library(tidyverse)
+library(gt)
+library(gtExtras)
+
 ### saving names and ids
 rusher_names <- rushing_kmeans_data$player
 rusher_ids <- rushing_kmeans_data$player_id
@@ -123,11 +128,16 @@ gt_table_data <- gt_table_data %>%
     cluster == 2 ~ "Cluster 2 - Blue Collar Backs",
     cluster == 3 ~ "Cluster 3 - Cautious Carriers"))
 
-gt_table_data %>%
+library(gt)
+library(gtExtras)
+
+sorted_and_arranged_table <- gt_table_data %>%
   mutate(cluster = fct_relevel(cluster, c("Cluster 1 - Feast or Famine",
                                           "Cluster 2 - Blue Collar Backs",
                                           "Cluster 3 - Cautious Carriers"))) %>%
-  arrange(cluster, player) %>%
+  arrange(cluster, player)
+
+complete_kmeans_table <- sorted_and_arranged_table %>%
   gt(groupname_col = "cluster") %>%
   tab_spanner(label = "Clustered Running Backs",
               columns = c("player", "headshot_url", "team_logo_wikipedia")) %>%
@@ -139,4 +149,6 @@ gt_table_data %>%
   cols_label(player = "Running Back") %>%
   tab_source_note(source_note = md("**An Introduction to NFL Analytics with R**<br>*Brad J. Congelio*")) %>%
   gtExtras::gt_theme_pff()
+
+gtsave_extra(complete_kmeans_table, filename = "rushers_tables.png")
 

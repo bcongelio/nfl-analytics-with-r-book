@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "An Introduction to NFL Analytics with R"
+  title: "Introduction to NFL Analytics with R"
   author:
     name: Bradley J. Congelio
     orcid: 0009-0000-0652-4145
@@ -13,6 +13,7 @@ book:
   sharing: [twitter, facebook, linkedin]
   publisher: "CRC Press"
   publisher-place: "Boca Raton, FL."
+  
   chapters:
     - index.qmd
     - 01-nfl-analytics-and-r.qmd
@@ -20,18 +21,19 @@ book:
     - 03-nfl-analytics-functions.qmd
     - 04-nfl-analytics-visualization.qmd
     - 05-nfl-analytics-advanced-methods.qmd
-    - references.qmd
-  appendices: 
+  appendices:
     - a1-nfl-analytics-dictionary.qmd
     - a2-nfl-further-reading.qmd
-  google-analytics: "G-0ZLEFZL898"
-  search: true
-  page-footer: 
-    left: |
-      NFL Analytics with R was written by Bradley J. Congelio.
-    right: |
-      This book was built with <a href = "https://quarto.org/">Quarto</a>
+
+google-analytics: "G-0ZLEFZL898"
+search: true
+page-footer: 
+  left: |
+    NFL Analytics with R was written by Bradley J. Congelio.
+  right: |
+    This book was built with <a href = "https://quarto.org/">Quarto</a>
 bibliography: citations.bib
+
 
 format:
   html:
@@ -44,3 +46,12 @@ format:
   pdf:
     documentclass: krantz
     keep-tex: true
+    include-in-header:
+      text: |
+        \usepackage{makeidx}
+        \makeindex
+    include-after-body:
+      text: |
+        \printindex
+    fig-align: center
+    fig-cap-location: bottom

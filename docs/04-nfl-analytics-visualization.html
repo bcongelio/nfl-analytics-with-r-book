@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics with R - 5&nbsp; Data Visualization with NFL Data</title>
+<title>Introduction to NFL Analytics with R - 4&nbsp; Data Visualization with NFL Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,13 +108,7 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
-</script>
+}</script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -123,7 +117,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-nfl-analytics-visualization.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-nfl-analytics-visualization.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -134,7 +128,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">An Introduction to NFL Analytics with R</a> 
+      <a href="./">Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -173,43 +167,37 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -243,56 +231,56 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#data-viz-must-understand-the-audience" id="toc-data-viz-must-understand-the-audience" class="nav-link active" data-scroll-target="#data-viz-must-understand-the-audience"><span class="header-section-number">5.1</span> Data Viz Must Understand the Audience</a></li>
-  <li><a href="#setting-up-for-data-viz" id="toc-setting-up-for-data-viz" class="nav-link" data-scroll-target="#setting-up-for-data-viz"><span class="header-section-number">5.2</span> Setting Up for Data Viz</a></li>
-  <li><a href="#the-basics-of-using-ggplot2" id="toc-the-basics-of-using-ggplot2" class="nav-link" data-scroll-target="#the-basics-of-using-ggplot2"><span class="header-section-number">5.3</span> The Basics of Using <code>ggplot2</code></a></li>
+<li><a href="#data-viz-must-understand-the-audience" id="toc-data-viz-must-understand-the-audience" class="nav-link active" data-scroll-target="#data-viz-must-understand-the-audience"><span class="header-section-number">4.1</span> Data Viz Must Understand the Audience</a></li>
+  <li><a href="#setting-up-for-data-viz" id="toc-setting-up-for-data-viz" class="nav-link" data-scroll-target="#setting-up-for-data-viz"><span class="header-section-number">4.2</span> Setting Up for Data Viz</a></li>
+  <li><a href="#the-basics-of-using-ggplot2" id="toc-the-basics-of-using-ggplot2" class="nav-link" data-scroll-target="#the-basics-of-using-ggplot2"><span class="header-section-number">4.3</span> The Basics of Using <code>ggplot2</code></a></li>
   <li>
-<a href="#building-a-data-viz-a-step-by-step-process" id="toc-building-a-data-viz-a-step-by-step-process" class="nav-link" data-scroll-target="#building-a-data-viz-a-step-by-step-process"><span class="header-section-number">5.4</span> Building A Data Viz: A Step-by-Step Process</a>
+<a href="#building-a-data-viz-a-step-by-step-process" id="toc-building-a-data-viz-a-step-by-step-process" class="nav-link" data-scroll-target="#building-a-data-viz-a-step-by-step-process"><span class="header-section-number">4.4</span> Building A Data Viz: A Step-by-Step Process</a>
   <ul class="collapse">
-<li><a href="#adding-team-colors-to-each-point" id="toc-adding-team-colors-to-each-point" class="nav-link" data-scroll-target="#adding-team-colors-to-each-point"><span class="header-section-number">5.4.1</span> Adding Team Colors to Each Point</a></li>
-  <li><a href="#increasing-the-size-of-each-point" id="toc-increasing-the-size-of-each-point" class="nav-link" data-scroll-target="#increasing-the-size-of-each-point"><span class="header-section-number">5.4.2</span> Increasing The Size of Each Point</a></li>
-  <li><a href="#adding-player-names-to-each-point" id="toc-adding-player-names-to-each-point" class="nav-link" data-scroll-target="#adding-player-names-to-each-point"><span class="header-section-number">5.4.3</span> Adding Player Names to Each Point</a></li>
-  <li><a href="#editing-axis-ticks-and-values" id="toc-editing-axis-ticks-and-values" class="nav-link" data-scroll-target="#editing-axis-ticks-and-values"><span class="header-section-number">5.4.4</span> Editing Axis Ticks and Values</a></li>
-  <li><a href="#changing-axis-titles-and-adding-title-subtitle-and-caption" id="toc-changing-axis-titles-and-adding-title-subtitle-and-caption" class="nav-link" data-scroll-target="#changing-axis-titles-and-adding-title-subtitle-and-caption"><span class="header-section-number">5.4.5</span> Changing Axis Titles and Adding Title, Subtitle, and Caption</a></li>
-  <li><a href="#adding-mean-lines-to-both-x-axis-and-y-axis" id="toc-adding-mean-lines-to-both-x-axis-and-y-axis" class="nav-link" data-scroll-target="#adding-mean-lines-to-both-x-axis-and-y-axis"><span class="header-section-number">5.4.6</span> Adding Mean Lines to Both x-axis and y-axis</a></li>
-  <li><a href="#making-changes-to-theme-elements" id="toc-making-changes-to-theme-elements" class="nav-link" data-scroll-target="#making-changes-to-theme-elements"><span class="header-section-number">5.4.7</span> Making Changes to Theme Elements</a></li>
+<li><a href="#adding-team-colors-to-each-point" id="toc-adding-team-colors-to-each-point" class="nav-link" data-scroll-target="#adding-team-colors-to-each-point"><span class="header-section-number">4.4.1</span> Adding Team Colors to Each Point</a></li>
+  <li><a href="#increasing-the-size-of-each-point" id="toc-increasing-the-size-of-each-point" class="nav-link" data-scroll-target="#increasing-the-size-of-each-point"><span class="header-section-number">4.4.2</span> Increasing The Size of Each Point</a></li>
+  <li><a href="#adding-player-names-to-each-point" id="toc-adding-player-names-to-each-point" class="nav-link" data-scroll-target="#adding-player-names-to-each-point"><span class="header-section-number">4.4.3</span> Adding Player Names to Each Point</a></li>
+  <li><a href="#editing-axis-ticks-and-values" id="toc-editing-axis-ticks-and-values" class="nav-link" data-scroll-target="#editing-axis-ticks-and-values"><span class="header-section-number">4.4.4</span> Editing Axis Ticks and Values</a></li>
+  <li><a href="#changing-axis-titles-and-adding-title-subtitle-and-caption" id="toc-changing-axis-titles-and-adding-title-subtitle-and-caption" class="nav-link" data-scroll-target="#changing-axis-titles-and-adding-title-subtitle-and-caption"><span class="header-section-number">4.4.5</span> Changing Axis Titles and Adding Title, Subtitle, and Caption</a></li>
+  <li><a href="#adding-mean-lines-to-both-x-axis-and-y-axis" id="toc-adding-mean-lines-to-both-x-axis-and-y-axis" class="nav-link" data-scroll-target="#adding-mean-lines-to-both-x-axis-and-y-axis"><span class="header-section-number">4.4.6</span> Adding Mean Lines to Both x-axis and y-axis</a></li>
+  <li><a href="#making-changes-to-theme-elements" id="toc-making-changes-to-theme-elements" class="nav-link" data-scroll-target="#making-changes-to-theme-elements"><span class="header-section-number">4.4.7</span> Making Changes to Theme Elements</a></li>
   </ul>
 </li>
-  <li><a href="#creating-your-own-ggplot2-theme" id="toc-creating-your-own-ggplot2-theme" class="nav-link" data-scroll-target="#creating-your-own-ggplot2-theme"><span class="header-section-number">5.5</span> Creating Your Own <code>ggplot2</code> Theme</a></li>
-  <li><a href="#using-team-logos-in-plots" id="toc-using-team-logos-in-plots" class="nav-link" data-scroll-target="#using-team-logos-in-plots"><span class="header-section-number">5.6</span> Using Team Logos in Plots</a></li>
+  <li><a href="#creating-your-own-ggplot2-theme" id="toc-creating-your-own-ggplot2-theme" class="nav-link" data-scroll-target="#creating-your-own-ggplot2-theme"><span class="header-section-number">4.5</span> Creating Your Own <code>ggplot2</code> Theme</a></li>
+  <li><a href="#using-team-logos-in-plots" id="toc-using-team-logos-in-plots" class="nav-link" data-scroll-target="#using-team-logos-in-plots"><span class="header-section-number">4.6</span> Using Team Logos in Plots</a></li>
   <li>
-<a href="#creating-a-geom_line-plot" id="toc-creating-a-geom_line-plot" class="nav-link" data-scroll-target="#creating-a-geom_line-plot"><span class="header-section-number">5.7</span> Creating a <code>geom_line</code> Plot</a>
+<a href="#creating-a-geom_line-plot" id="toc-creating-a-geom_line-plot" class="nav-link" data-scroll-target="#creating-a-geom_line-plot"><span class="header-section-number">4.7</span> Creating a <code>geom_line</code> Plot</a>
   <ul class="collapse">
-<li><a href="#adding-secondary-geom_line-for-nfl-averages" id="toc-adding-secondary-geom_line-for-nfl-averages" class="nav-link" data-scroll-target="#adding-secondary-geom_line-for-nfl-averages"><span class="header-section-number">5.7.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</a></li>
+<li><a href="#adding-secondary-geom_line-for-nfl-averages" id="toc-adding-secondary-geom_line-for-nfl-averages" class="nav-link" data-scroll-target="#adding-secondary-geom_line-for-nfl-averages"><span class="header-section-number">4.7.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</a></li>
   </ul>
 </li>
-  <li><a href="#creating-a-geom_area-plot" id="toc-creating-a-geom_area-plot" class="nav-link" data-scroll-target="#creating-a-geom_area-plot"><span class="header-section-number">5.8</span> Creating a <code>geom_area</code> Plot</a></li>
+  <li><a href="#creating-a-geom_area-plot" id="toc-creating-a-geom_area-plot" class="nav-link" data-scroll-target="#creating-a-geom_area-plot"><span class="header-section-number">4.8</span> Creating a <code>geom_area</code> Plot</a></li>
   <li>
-<a href="#creating-a-geom_col-plot" id="toc-creating-a-geom_col-plot" class="nav-link" data-scroll-target="#creating-a-geom_col-plot"><span class="header-section-number">5.9</span> Creating a <code>geom_col</code> Plot</a>
+<a href="#creating-a-geom_col-plot" id="toc-creating-a-geom_col-plot" class="nav-link" data-scroll-target="#creating-a-geom_col-plot"><span class="header-section-number">4.9</span> Creating a <code>geom_col</code> Plot</a>
   <ul class="collapse">
-<li><a href="#an-alternative-geom_col-plot" id="toc-an-alternative-geom_col-plot" class="nav-link" data-scroll-target="#an-alternative-geom_col-plot"><span class="header-section-number">5.9.1</span> An Alternative <code>geom_col</code> Plot</a></li>
+<li><a href="#an-alternative-geom_col-plot" id="toc-an-alternative-geom_col-plot" class="nav-link" data-scroll-target="#an-alternative-geom_col-plot"><span class="header-section-number">4.9.1</span> An Alternative <code>geom_col</code> Plot</a></li>
   </ul>
 </li>
-  <li><a href="#creating-a-geom_box-plot" id="toc-creating-a-geom_box-plot" class="nav-link" data-scroll-target="#creating-a-geom_box-plot"><span class="header-section-number">5.10</span> Creating a <code>geom_box</code> Plot</a></li>
-  <li><a href="#creating-a-geom_ridges-plot" id="toc-creating-a-geom_ridges-plot" class="nav-link" data-scroll-target="#creating-a-geom_ridges-plot"><span class="header-section-number">5.11</span> Creating a <code>geom_ridges</code> Plot</a></li>
-  <li><a href="#creating-a-geom_violin-plot" id="toc-creating-a-geom_violin-plot" class="nav-link" data-scroll-target="#creating-a-geom_violin-plot"><span class="header-section-number">5.12</span> Creating a <code>geom_violin</code> Plot</a></li>
-  <li><a href="#creating-a-geom_histogram-plot" id="toc-creating-a-geom_histogram-plot" class="nav-link" data-scroll-target="#creating-a-geom_histogram-plot"><span class="header-section-number">5.13</span> Creating a <code>geom_histogram</code> Plot</a></li>
-  <li><a href="#saving-your-ggplot2-creations" id="toc-saving-your-ggplot2-creations" class="nav-link" data-scroll-target="#saving-your-ggplot2-creations"><span class="header-section-number">5.14</span> Saving Your <code>ggplot2</code> Creations</a></li>
-  <li><a href="#advanced-headshots-method" id="toc-advanced-headshots-method" class="nav-link" data-scroll-target="#advanced-headshots-method"><span class="header-section-number">5.15</span> Advanced Headshots Method</a></li>
-  <li><a href="#creating-tables-with-gt-and-gtextras" id="toc-creating-tables-with-gt-and-gtextras" class="nav-link" data-scroll-target="#creating-tables-with-gt-and-gtextras"><span class="header-section-number">5.16</span> Creating Tables with <code>gt</code> and <code>gtExtras</code></a></li>
+  <li><a href="#creating-a-geom_box-plot" id="toc-creating-a-geom_box-plot" class="nav-link" data-scroll-target="#creating-a-geom_box-plot"><span class="header-section-number">4.10</span> Creating a <code>geom_box</code> Plot</a></li>
+  <li><a href="#creating-a-geom_ridges-plot" id="toc-creating-a-geom_ridges-plot" class="nav-link" data-scroll-target="#creating-a-geom_ridges-plot"><span class="header-section-number">4.11</span> Creating a <code>geom_ridges</code> Plot</a></li>
+  <li><a href="#creating-a-geom_violin-plot" id="toc-creating-a-geom_violin-plot" class="nav-link" data-scroll-target="#creating-a-geom_violin-plot"><span class="header-section-number">4.12</span> Creating a <code>geom_violin</code> Plot</a></li>
+  <li><a href="#creating-a-geom_histogram-plot" id="toc-creating-a-geom_histogram-plot" class="nav-link" data-scroll-target="#creating-a-geom_histogram-plot"><span class="header-section-number">4.13</span> Creating a <code>geom_histogram</code> Plot</a></li>
+  <li><a href="#saving-your-ggplot2-creations" id="toc-saving-your-ggplot2-creations" class="nav-link" data-scroll-target="#saving-your-ggplot2-creations"><span class="header-section-number">4.14</span> Saving Your <code>ggplot2</code> Creations</a></li>
+  <li><a href="#advanced-headshots-method" id="toc-advanced-headshots-method" class="nav-link" data-scroll-target="#advanced-headshots-method"><span class="header-section-number">4.15</span> Advanced Headshots Method</a></li>
+  <li><a href="#creating-tables-with-gt-and-gtextras" id="toc-creating-tables-with-gt-and-gtextras" class="nav-link" data-scroll-target="#creating-tables-with-gt-and-gtextras"><span class="header-section-number">4.16</span> Creating Tables with <code>gt</code> and <code>gtExtras</code></a></li>
   <li>
-<a href="#creating-a-shiny-app" id="toc-creating-a-shiny-app" class="nav-link" data-scroll-target="#creating-a-shiny-app"><span class="header-section-number">5.17</span> Creating a Shiny App</a>
+<a href="#creating-a-shiny-app" id="toc-creating-a-shiny-app" class="nav-link" data-scroll-target="#creating-a-shiny-app"><span class="header-section-number">4.17</span> Creating a Shiny App</a>
   <ul class="collapse">
-<li><a href="#requirements-for-a-shiny-app" id="toc-requirements-for-a-shiny-app" class="nav-link" data-scroll-target="#requirements-for-a-shiny-app"><span class="header-section-number">5.17.1</span> Requirements for a Shiny App</a></li>
-  <li><a href="#building-our-ui.r-file" id="toc-building-our-ui.r-file" class="nav-link" data-scroll-target="#building-our-ui.r-file"><span class="header-section-number">5.17.2</span> Building our <code>ui.R</code> File</a></li>
-  <li><a href="#building-our-server.r-file" id="toc-building-our-server.r-file" class="nav-link" data-scroll-target="#building-our-server.r-file"><span class="header-section-number">5.17.3</span> Building our <code>server.R</code> File</a></li>
+<li><a href="#requirements-for-a-shiny-app" id="toc-requirements-for-a-shiny-app" class="nav-link" data-scroll-target="#requirements-for-a-shiny-app"><span class="header-section-number">4.17.1</span> Requirements for a Shiny App</a></li>
+  <li><a href="#building-our-ui.r-file" id="toc-building-our-ui.r-file" class="nav-link" data-scroll-target="#building-our-ui.r-file"><span class="header-section-number">4.17.2</span> Building our <code>ui.R</code> File</a></li>
+  <li><a href="#building-our-server.r-file" id="toc-building-our-server.r-file" class="nav-link" data-scroll-target="#building-our-server.r-file"><span class="header-section-number">4.17.3</span> Building our <code>server.R</code> File</a></li>
   </ul>
 </li>
   <li>
-<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.18</span> Exercises</a>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.18</span> Exercises</a>
   <ul class="collapse">
-<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">5.18.1</span> Exercise 1</a></li>
-  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">5.18.2</span> Exercise 2</a></li>
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">4.18.1</span> Exercise 1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">4.18.2</span> Exercise 2</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -300,7 +288,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span>
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span>
 </h1>
 </div>
 
@@ -315,10 +303,10 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   
 
 </header><p>Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.</p>
-<p>Jim Stikeleather, writing for the <em>Harvard Business Review</em>, outlined three key elements that make a successful data visualization (albeit, leaving <em>us</em> to decide the definition of what a “successful” data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: it understands the audience, it sets up a clear framework, and it tells a story <span class="citation" data-cites="stikeleather2013">(<a href="references.html#ref-stikeleather2013" role="doc-biblioref">Stikeleather 2013</a>)</span>.</p>
+<p>Jim Stikeleather, writing for the <em>Harvard Business Review</em>, outlined three key elements that make a successful data visualization (albeit, leaving <em>us</em> to decide the definition of what a “successful” data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: it understands the audience, it sets up a clear framework, and it tells a story <span class="citation" data-cites="stikeleather2013">(<a href="#ref-stikeleather2013" role="doc-biblioref">Stikeleather 2013</a>)</span>.</p>
 <p>To illustrate the importance of these three elements, let’s take a look at example visualizations using NFL data to further contextualize each one.</p>
-<section id="data-viz-must-understand-the-audience" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="data-viz-must-understand-the-audience">
-<span class="header-section-number">5.1</span> Data Viz Must Understand the Audience</h2>
+<section id="data-viz-must-understand-the-audience" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="data-viz-must-understand-the-audience">
+<span class="header-section-number">4.1</span> Data Viz Must Understand the Audience</h2>
 <p>As explained by Stikeleather, the core purpose of a data visualization is to take “great quantities of information” and then convey that information in such a way that it is “easily assimilated by the consumers of the information.” In other words, the process of data visualization should allow for a great quantity of data to be distilled into an easily consumable (and understandable!) format.</p>
 <p>Speaking specifically to NFL analytics, when doing visualizations we must be conscious about whether or not the intended audience will understand the terminology and concepts we use in the plot. For example, most all NFL fans understand the “non-advanced” statistics in the sport. But, when plots start using metrics such as EPA or completion percentage over expected, for example, the audience looking at the plot may very well have little understanding of what is being conveyed.</p>
 <p>Because of this, any data viz I create never fails to include “directables” within the plot. These “directables” may be arrows that indicate which trend on the plot are “good” or they can be text within a scatterplot that explains what each quadrant means. Or, for example, I sometimes include a textual explanation of the “equation” used to develop a metric as seen below:</p>
@@ -327,8 +315,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 </figure>
 </div>
 <p>The above plot explores which QBs, from the 2020 season, were most aggressive on 3rd down with between 5 to 10 yards to go. Since “aggressiveness” is not a typical, day-to-day metric discussed by NFL fans, I included a “directable” within the subtitle of the plot that explained that the plot, first, was examining just 3rd down pass attempts within a specific yard range. And, second, I made the decision to include how “aggressiveness” was calculated by including the simple equation within the subtitle as well. Doing so allows even the most casual of NFL fans to easily understand what the plot is showing - in this case, that Joe Burrow’s 3rd down pass attempts with between 5 to 10 yards to go made it to the line of gain, or more, on 68% of his attempts. On the other hand, Drew Lock and Drew Brees were the least aggressive QBs in the line based on the same metric.</p>
-</section><section id="setting-up-for-data-viz" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="setting-up-for-data-viz">
-<span class="header-section-number">5.2</span> Setting Up for Data Viz</h2>
+</section><section id="setting-up-for-data-viz" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="setting-up-for-data-viz">
+<span class="header-section-number">4.2</span> Setting Up for Data Viz</h2>
 <p>While most of your journey through NFL analytics in this book required you to use the <code>tidyverse</code> and a handful of other packages, the process of creating compelling and meaningful data visualizations will require you to utilize multitudes of other packages. Of course, the most important is <code>ggplot2</code> which is already installed via the <code>tidyverse</code>. However, in order to recreate the visualizations included in this chapter, it is required that you install other R packages. To install the necessary packages, you can run the following code in RStudio:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"extrafont"</span>,</span>
@@ -344,8 +332,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <span>                   <span class="st">"gt"</span>,</span>
 <span>                   <span class="st">"gtExtras"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="the-basics-of-using-ggplot2" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="the-basics-of-using-ggplot2">
-<span class="header-section-number">5.3</span> The Basics of Using <code>ggplot2</code>
+</section><section id="the-basics-of-using-ggplot2" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="the-basics-of-using-ggplot2">
+<span class="header-section-number">4.3</span> The Basics of Using <code>ggplot2</code>
 </h2>
 <p>The basics of any <code>ggplot</code> visualization involves three basic calls to information in a data set as well as stipulation which type of geom you would like to use:</p>
 <ol type="1">
@@ -388,8 +376,8 @@ Tip
 </div>
 </div>
 </div>
-</section><section id="building-a-data-viz-a-step-by-step-process" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="building-a-data-viz-a-step-by-step-process">
-<span class="header-section-number">5.4</span> Building A Data Viz: A Step-by-Step Process</h2>
+</section><section id="building-a-data-viz-a-step-by-step-process" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="building-a-data-viz-a-step-by-step-process">
+<span class="header-section-number">4.4</span> Building A Data Viz: A Step-by-Step Process</h2>
 <p>The outputted scatter plot is an excellent starting point for a more finely detailed visualization. While we are able to see the relationship between non-play action passing yards and those attempts that included play action, we are unable to discern which specific point is which quarterback - among other issues. To provide more detail and to “prettify” the plot, let’s discuss doing the following:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -415,8 +403,8 @@ Note
 </ol>
 </div>
 </div>
-<section id="adding-team-colors-to-each-point" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="adding-team-colors-to-each-point">
-<span class="header-section-number">5.4.1</span> Adding Team Colors to Each Point</h3>
+<section id="adding-team-colors-to-each-point" class="level3" data-number="4.4.1"><h3 data-number="4.4.1" class="anchored" data-anchor-id="adding-team-colors-to-each-point">
+<span class="header-section-number">4.4.1</span> Adding Team Colors to Each Point</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -548,8 +536,8 @@ Note
 </ol>
 </div>
 </div>
-</section><section id="increasing-the-size-of-each-point" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="increasing-the-size-of-each-point">
-<span class="header-section-number">5.4.2</span> Increasing The Size of Each Point</h3>
+</section><section id="increasing-the-size-of-each-point" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="increasing-the-size-of-each-point">
+<span class="header-section-number">4.4.2</span> Increasing The Size of Each Point</h3>
 <p>Determining when and how to resize the individual points in a scatterplot is a multifaceted decision. To that end, there is no hard and fast rule for doing so as it depends on both the specific goals and context of the visualization. There are, however, some general guidelines to keep in mind:</p>
 <ol type="1">
 <li>Data density: if you have a lot of data points within your plot, making the points smaller may help to reduce issues of overlapping/overplotting. Not only is this more aesthetically pleasing, but it can also help in making it easier to see patterns.</li>
@@ -624,8 +612,8 @@ Note
 </ol>
 </div>
 </div>
-</section><section id="adding-player-names-to-each-point" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="adding-player-names-to-each-point">
-<span class="header-section-number">5.4.3</span> Adding Player Names to Each Point</h3>
+</section><section id="adding-player-names-to-each-point" class="level3" data-number="4.4.3"><h3 data-number="4.4.3" class="anchored" data-anchor-id="adding-player-names-to-each-point">
+<span class="header-section-number">4.4.3</span> Adding Player Names to Each Point</h3>
 <p>While the our current plot includes team-specific colors for the points, we are still not able to discern - for the most part - which player belongs to which point. To rectify this, we will turn to using the <code>ggrepel</code> package, which is designed to improve the readability of text labels on plots by automatically repelling overlapping labels, if any. <code>ggrepel</code> operates out of two main functions: <code>geom_text_repel</code> and <code>geom_label_repel</code>. Both provide the same end result, with the core different being <code>geom_label_repel</code> adding a customized label under each player’s name.</p>
 <p>We can do a bare minimum addition of the player names by adding one additional line of code using <code>geom_text_repel</code>, wrapping it in an <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> call, and specifying which variable in the <code>play_action_data</code> is the <code>label</code> we would like to display.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
@@ -733,8 +721,8 @@ Note
 </ol>
 </div>
 </div>
-</section><section id="editing-axis-ticks-and-values" class="level3" data-number="5.4.4"><h3 data-number="5.4.4" class="anchored" data-anchor-id="editing-axis-ticks-and-values">
-<span class="header-section-number">5.4.4</span> Editing Axis Ticks and Values</h3>
+</section><section id="editing-axis-ticks-and-values" class="level3" data-number="4.4.4"><h3 data-number="4.4.4" class="anchored" data-anchor-id="editing-axis-ticks-and-values">
+<span class="header-section-number">4.4.4</span> Editing Axis Ticks and Values</h3>
 <p>Because steps 4 and 5 from the above “to do list” can be accomplished with the same package, we will lump both together and complete them at once.</p>
 <p>Let’s first examine the idea of increasing the number of ticks on each axis. The “axis ticks” refer to the specific spots on each axis wherein a numeric data point resides. With our current visualization, we currently have “1000, 2000, 3000” on the x-axis and “400, 800, 1200, 1600” on the y-axis.</p>
 <p>We may want to increase the number of axis ticks in this visualization as it can provide a more detailed view of the data being presented. Typically, increasing the number of tickets will show more granularity in the data and make it easier to interpret the values represented by each point. In this specific case, we can look at the cluster of points represented by Andy Dalton, Mac Jones, and Matt Ryan. Given the current structure of the axis ticks, we can guess that Matt Ryan has roughly 2,500 yards on non-play action passing attempts. Given we know Matt Ryan’s amount, we can make guesses that Andy Dalton may be around 2,300 and Mac Jones somewhere between the two.</p>
@@ -827,8 +815,8 @@ Note
 </ol>
 </div>
 </div>
-</section><section id="changing-axis-titles-and-adding-title-subtitle-and-caption" class="level3" data-number="5.4.5"><h3 data-number="5.4.5" class="anchored" data-anchor-id="changing-axis-titles-and-adding-title-subtitle-and-caption">
-<span class="header-section-number">5.4.5</span> Changing Axis Titles and Adding Title, Subtitle, and Caption</h3>
+</section><section id="changing-axis-titles-and-adding-title-subtitle-and-caption" class="level3" data-number="4.4.5"><h3 data-number="4.4.5" class="anchored" data-anchor-id="changing-axis-titles-and-adding-title-subtitle-and-caption">
+<span class="header-section-number">4.4.5</span> Changing Axis Titles and Adding Title, Subtitle, and Caption</h3>
 <p>Much like our last section, we can work on changing the title of each axis and adding a title, subtitle, and caption for the plot within one section, as all this is added and/or changed by using <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code>.</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">play_action_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yds</span>, y <span class="op">=</span> <span class="va">pa_yds</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -848,8 +836,7 @@ Note
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/using-labs-for-title-caption-sub-1.png" class="img-fluid figure-img" width="672"></p>
@@ -882,8 +869,8 @@ Note
 </ol>
 </div>
 </div>
-</section><section id="adding-mean-lines-to-both-x-axis-and-y-axis" class="level3" data-number="5.4.6"><h3 data-number="5.4.6" class="anchored" data-anchor-id="adding-mean-lines-to-both-x-axis-and-y-axis">
-<span class="header-section-number">5.4.6</span> Adding Mean Lines to Both x-axis and y-axis</h3>
+</section><section id="adding-mean-lines-to-both-x-axis-and-y-axis" class="level3" data-number="4.4.6"><h3 data-number="4.4.6" class="anchored" data-anchor-id="adding-mean-lines-to-both-x-axis-and-y-axis">
+<span class="header-section-number">4.4.6</span> Adding Mean Lines to Both x-axis and y-axis</h3>
 <p>Adding mean (or average) lines to both the x-axis and y-axis allows us to visualize where each quarterback falls within one of four sections (according to the amount of passing yards in both situations). Adding the lines is done by add two additional geoms to the existing plot (in this case <code>geom_hline</code> and <code>geom_vline</code>).</p>
 <div class="cell" data-layout-align="center" data-fig.dpi="400">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">play_action_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yds</span>, y <span class="op">=</span> <span class="va">pa_yds</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -903,10 +890,13 @@ Note
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">play_action_data</span><span class="op">$</span><span class="va">pa_yds</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">.8</span>, color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">play_action_data</span><span class="op">$</span><span class="va">yds</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">.8</span>, color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">play_action_data</span><span class="op">$</span><span class="va">pa_yds</span><span class="op">)</span>,</span>
+<span>             linewidth <span class="op">=</span> <span class="fl">.8</span>, color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>             linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">play_action_data</span><span class="op">$</span><span class="va">yds</span><span class="op">)</span>,</span>
+<span>             linewidth <span class="op">=</span> <span class="fl">.8</span>, color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>             linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/add-avg-lines-incorrectly-1.png" class="img-fluid figure-img" width="672"></p>
@@ -959,8 +949,7 @@ Important
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/correctly-adding-avg-lines-1.png" class="img-fluid figure-img" width="672"></p>
@@ -969,8 +958,8 @@ Important
 </div>
 </div>
 <p>By moving the average lines to the top of our <code>ggplot</code> code, both are now layered under the other two <code>geom_</code> and are not visually impacting the final plot.</p>
-<section id="adding-mean-lines-with-nflplotr" class="level4" data-number="5.4.6.1"><h4 data-number="5.4.6.1" class="anchored" data-anchor-id="adding-mean-lines-with-nflplotr">
-<span class="header-section-number">5.4.6.1</span> Adding Mean Lines with <code>nflplotR</code>
+<section id="adding-mean-lines-with-nflplotr" class="level4" data-number="4.4.6.1"><h4 data-number="4.4.6.1" class="anchored" data-anchor-id="adding-mean-lines-with-nflplotr">
+<span class="header-section-number">4.4.6.1</span> Adding Mean Lines with <code>nflplotR</code>
 </h4>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1008,8 +997,7 @@ Tip
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using the `size` aesthetic with geom_segment was deprecated in ggplot2 3.4.0.
 i Please use the `linewidth` aesthetic instead.</code></pre>
@@ -1047,8 +1035,8 @@ Note
 </ol>
 </div>
 </div>
-</section></section><section id="making-changes-to-theme-elements" class="level3" data-number="5.4.7"><h3 data-number="5.4.7" class="anchored" data-anchor-id="making-changes-to-theme-elements">
-<span class="header-section-number">5.4.7</span> Making Changes to Theme Elements</h3>
+</section></section><section id="making-changes-to-theme-elements" class="level3" data-number="4.4.7"><h3 data-number="4.4.7" class="anchored" data-anchor-id="making-changes-to-theme-elements">
+<span class="header-section-number">4.4.7</span> Making Changes to Theme Elements</h3>
 <p>There is a laundry list of options to be explored when it comes to editing your plot’s theme elements to make it look exactly as you want. Currently, according to the <code>ggplot2</code> website, the following is a comprehensive list of elements that you can tinker with.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  line,</span>
@@ -1190,8 +1178,7 @@ Tip
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>    axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1225,8 +1212,7 @@ Tip
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Non-Play Action Yards"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Cumulative Passing Yards"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"An Introduction to NFL Analytics with R, Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Non-Play Action vs. Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>    axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Roboto"</span>,</span>
@@ -1308,8 +1294,8 @@ Tip
 </div>
 </div>
 <p>After removing the panel’s minor grid lines (again, a personal preference of mine), we also change the color of the panel’s major grid lines, then change the color of the plot’s background (both using <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect()</a></code>). The end result is a aesthetically pleasing data visualization.</p>
-</section></section><section id="creating-your-own-ggplot2-theme" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="creating-your-own-ggplot2-theme">
-<span class="header-section-number">5.5</span> Creating Your Own <code>ggplot2</code> Theme</h2>
+</section></section><section id="creating-your-own-ggplot2-theme" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="creating-your-own-ggplot2-theme">
+<span class="header-section-number">4.5</span> Creating Your Own <code>ggplot2</code> Theme</h2>
 <p>As mentioned, I have a distinctive “brand and look” for the data visualizations I create that make use of the same design elements and choices. Rather than copy and paste those into each and every <code>ggplot</code> piece of code I write, I’ve opted to consolidate all the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> element changes into my own <code>nfl_analytics_theme()</code> function. In much the same way, I’ve created a “quick and easy” theme for use in this book. To get started, running the following chunk of code will create a function titled <code>nfl_analytics_theme</code> and place it into your RStudio environment.</p>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_analytics_theme</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">base_size</span> <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1366,7 +1352,8 @@ Tip
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"**Cumulative Passing Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Non-Play Action vs. Play Action*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: ggrepel: 2 unlabeled data points (too many overlaps). Consider
@@ -1405,7 +1392,8 @@ increasing max.overlaps</code></pre>
 <span>       y <span class="op">=</span> <span class="st">"Play Action Yards"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"**Cumulative Passing Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Non-Play Action vs. Play Action*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_markdown</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#E31837"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1419,8 +1407,8 @@ increasing max.overlaps</code></pre>
 </div>
 </div>
 </div>
-</section><section id="using-team-logos-in-plots" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="using-team-logos-in-plots">
-<span class="header-section-number">5.6</span> Using Team Logos in Plots</h2>
+</section><section id="using-team-logos-in-plots" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="using-team-logos-in-plots">
+<span class="header-section-number">4.6</span> Using Team Logos in Plots</h2>
 <p>To explore the process of placing team logos into a plot, let’s stick with our previous example of working with play action passing data but explore it at the team level rather than individual quarterbacks. To gather the data, we can use <code>vroom</code> to read it in from the book’s GitHub.</p>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">team_playaction</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/team-pa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1470,7 +1458,8 @@ Note
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_comma</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Net Passing Yards Without Play Action vs. With Play Action**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Net Yards Without Play Action"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Net Yards With Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1512,7 +1501,8 @@ Important
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_comma</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Net Passing Yards Without Play Action vs. With Play Action**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Net Yards Without Play Action"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Net Yards With Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1559,7 +1549,8 @@ Note
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_comma</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Net Passing Yards Without Play Action vs. With Play Action**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Net Yards Without Play Action"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Net Yards With Play Action"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1570,8 +1561,8 @@ Note
 </div>
 </div>
 </div>
-</section><section id="creating-a-geom_line-plot" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="creating-a-geom_line-plot">
-<span class="header-section-number">5.7</span> Creating a <code>geom_line</code> Plot</h2>
+</section><section id="creating-a-geom_line-plot" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="creating-a-geom_line-plot">
+<span class="header-section-number">4.7</span> Creating a <code>geom_line</code> Plot</h2>
 <p>A <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot are useful when you want to display the trends and/or relationships in data over a continuous variable (such as seasons). In that context a <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot can be used to explore player statistics over time (such as passing yards and rushing yards), or to do the same but at the team level, or even comparing one team against another by including two (or more!) lines on one plot.</p>
 <p>Like all other <code>geom_</code> types, the basic foundation of a line graph can be created by, first, calling the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function and then adding <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> after. To begin building our first line graph, let’s read in the below data that contains information regarding the fourth-down attempt percentages by the Philadelphia Eagles into a data frame titled <code>eagles_fourth_downs</code>.</p>
 <div class="cell">
@@ -1639,7 +1630,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Go For It Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Philadelphia Eagles: Fourth-Down Attempt Percentage**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2012 - 2022: Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/finished_eagles_line-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1649,8 +1641,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 <p>The resulting visualization shows cases how often the Philadelphia Eagles went for it on fourth down between 2012 and 2022. The upward trend , especially starting in 2019, generally follows an established trend among NFL head coaches. Given that, how does the Eagles’ trend compare to the rest of the NFL?</p>
 <p>We can visualize this by adding a second <code>geom_line</code> that shows the averaged <code>go_pct</code> for the other 31 NFL teams.</p>
-<section id="adding-secondary-geom_line-for-nfl-averages" class="level3" data-number="5.7.1"><h3 data-number="5.7.1" class="anchored" data-anchor-id="adding-secondary-geom_line-for-nfl-averages">
-<span class="header-section-number">5.7.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</h3>
+<section id="adding-secondary-geom_line-for-nfl-averages" class="level3" data-number="4.7.1"><h3 data-number="4.7.1" class="anchored" data-anchor-id="adding-secondary-geom_line-for-nfl-averages">
+<span class="header-section-number">4.7.1</span> Adding Secondary <code>geom_line</code> For NFL Averages</h3>
 <p>The <code>combined_fourth_data</code> data frame created by running the below code includes the same information as before for the Philadelphia Eagles, but also includes the <code>NFL</code> as a <code>posteam</code> for the 2012-2022 seasons along with the total fourth down attempt and conversion rate.</p>
 <div class="cell">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combined_fourth_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/4th-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1674,7 +1666,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Go For It Percentage"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Philadelphia Eagles vs. NFL: Fourth-Down Attempt Percentage**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2012 - 2022: Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/finished_two_line-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1683,8 +1676,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 </div>
 <p>The resulting visualization does a very good job at showing the upward trend in head coaches going for it on fourth down and that the Eagles are consistently more aggressive in such situations than the rest of the NFL.</p>
-</section></section><section id="creating-a-geom_area-plot" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="creating-a-geom_area-plot">
-<span class="header-section-number">5.8</span> Creating a <code>geom_area</code> Plot</h2>
+</section></section><section id="creating-a-geom_area-plot" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="creating-a-geom_area-plot">
+<span class="header-section-number">4.8</span> Creating a <code>geom_area</code> Plot</h2>
 <p>A <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> plot is similar to a <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> plot in that it is also often used to display quantitative data over a continuous variable. The core difference, however, is that the <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> plot provides the ability to fill in the surface area between the x-axis and the line. To showcase this, the <code>mahomes_epa</code> data frame created by running the below code contains Patrick Mahomes’ average EPA for each week of the 2022 regular season, as well as the opponent and the opponent’s team logo.</p>
 <div class="cell">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_epa</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/mahomes_epa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1747,7 +1740,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Average QB EPA"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Patrick Mahomes: Mean QB EPA per Week**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
@@ -1759,8 +1753,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 </div>
 <p>The finished visualization indicates that Mahomes’ had his highest average EPA in week 1 against the Arizona Cardinals (at roughly 0.8) before dropping considerably for week two through six. However, after a spike in week 7 against the 49ers, the <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> shows a continued downward trend for the remainder of the season, including four poor performances (by Mahomes’ standard, anyways) against the Broncos, Seahawks, and Raiders to end the season.</p>
-</section><section id="creating-a-geom_col-plot" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="creating-a-geom_col-plot">
-<span class="header-section-number">5.9</span> Creating a <code>geom_col</code> Plot</h2>
+</section><section id="creating-a-geom_col-plot" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="creating-a-geom_col-plot">
+<span class="header-section-number">4.9</span> Creating a <code>geom_col</code> Plot</h2>
 <p>To begin creating our <code>geom_col</code> plot, we will use <code>vroom</code> to gather the necessary data into a data frame titled <code>qb_thirddown_data</code>.&nbsp;The resulting data frame includes the top ten quarterback in “third down aggressiveness.” The metric is calculated by first gathering the total number of 3rd down passing attempts by each quarterback with 10 or less yards to go. A pass attempt is considered “aggressive” if the total air yards is equal to - or greater than - the needed yards to go. Based on this calculation, Tua Tagovailoa was the most aggressive quarterback on 3rd downs during the 2022 regular season.</p>
 <p>Because this is <em>not</em> a metric that is constructed against a continuous variable (such as <code>season</code> in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> examples), we turn to using <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code>.</p>
 <div class="cell">
@@ -1889,7 +1883,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**QB Aggressiveness on Third Down**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Numbers of Times Air Yards &gt;= Yards To Go*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/geom_col_final-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1898,8 +1893,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 </div>
 <p>As highlighted in the resulting plot, Tagovailoa was the only QB in the league to go above 60% in aggressiveness (Derek Carr was an even 60%). In this case, our domain knowledge of the NFL is important as we will recall that Tua was out for portions of the 2022 regular season as a result of concussions. His aggressive percentage could be slightly inflated because of the fewer games compared to the other quarterbacks.</p>
-<section id="an-alternative-geom_col-plot" class="level3" data-number="5.9.1"><h3 data-number="5.9.1" class="anchored" data-anchor-id="an-alternative-geom_col-plot">
-<span class="header-section-number">5.9.1</span> An Alternative <code>geom_col</code> Plot</h3>
+<section id="an-alternative-geom_col-plot" class="level3" data-number="4.9.1"><h3 data-number="4.9.1" class="anchored" data-anchor-id="an-alternative-geom_col-plot">
+<span class="header-section-number">4.9.1</span> An Alternative <code>geom_col</code> Plot</h3>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> plot is incredibly versatile, allowing you to create multiple types of visualizations. For example, we can use the data frame below, <code>epa_per_play</code>, to graph each teams average EPA per play during the 2022 regular season. However, rather than plot it in a standard column format like above, we will plot it in a “left-to-right” design with each team diverging from the 0.00 EPA per Play.</p>
 <div class="cell">
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">epa_per_play</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/epa-per-play"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1929,7 +1924,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Expected Points Added per Play**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/epa_per_play_plot-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1938,8 +1934,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 </div>
 <p>It should not be a surprise that the Chiefs outperform - by a large margin - the rest of the NFL. The Texans and Colts, on the other hand, averaged -0.15 expected points added per play during the 2022 regular season.</p>
-</section></section><section id="creating-a-geom_box-plot" class="level2" data-number="5.10"><h2 data-number="5.10" class="anchored" data-anchor-id="creating-a-geom_box-plot">
-<span class="header-section-number">5.10</span> Creating a <code>geom_box</code> Plot</h2>
+</section></section><section id="creating-a-geom_box-plot" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="creating-a-geom_box-plot">
+<span class="header-section-number">4.10</span> Creating a <code>geom_box</code> Plot</h2>
 <p>We can create a <code>geom_box()</code> plot to examine the distribution of air yards for each playoff team from the 2022 season. A box plot is a suitable way to, as mentioned, view distribution but to also view the “skewness” of a metric by also including the interquartile ranges, averages, and any outliers in the data.</p>
 <div class="cell">
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/playoff-airyards"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1958,7 +1954,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Distribution of Regular Season Air Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Playoff Teams*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_nfl_logo</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1969,8 +1966,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 <p>In the visualization, each box plot represent the interquartile range (IQR) of air yards distribution for each team. The black line represents the median average, while the area below the black line is the lower quartile (Q1), or the 25th percentile, while the area above is the upper quartile (Q3), or the 75th percentile. The “whisker” coming from both ends of the box plot represent the minimum and maximum amounts (where the minimum is <code>Q1 - 1.5 * IQR</code> and the maximum is <code>Q3 + 1.5 * IQR</code>). The black dots above the whiskers indicate outliers.</p>
 <p>Based on the results, the Miami Dolphins had the highest median air yards of the 2022 playoff teams while the New York Giants had the smallest spread (indicated by the 25th and 75th percentiles being closest to the median).</p>
-</section><section id="creating-a-geom_ridges-plot" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="creating-a-geom_ridges-plot">
-<span class="header-section-number">5.11</span> Creating a <code>geom_ridges</code> Plot</h2>
+</section><section id="creating-a-geom_ridges-plot" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="creating-a-geom_ridges-plot">
+<span class="header-section-number">4.11</span> Creating a <code>geom_ridges</code> Plot</h2>
 <p>We can take the same idea used in the <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> graph to reformat it to be used in a <code>geom_ridges()</code> plot, which is another option to represent the distribution of a continuous variable.</p>
 <div class="cell">
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">playoff_airyards_ridges_plot</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/ay-ridges"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2000,7 +1997,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Distribution of Regular Season Air Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2022 NFL Playoff Teams*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu">element_nfl_logo</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Picking joint bandwidth of 1.93</code></pre>
@@ -2012,8 +2010,8 @@ i Please use `linewidth` instead.</code></pre>
 </div>
 </div>
 </div>
-</section><section id="creating-a-geom_violin-plot" class="level2" data-number="5.12"><h2 data-number="5.12" class="anchored" data-anchor-id="creating-a-geom_violin-plot">
-<span class="header-section-number">5.12</span> Creating a <code>geom_violin</code> Plot</h2>
+</section><section id="creating-a-geom_violin-plot" class="level2" data-number="4.12"><h2 data-number="4.12" class="anchored" data-anchor-id="creating-a-geom_violin-plot">
+<span class="header-section-number">4.12</span> Creating a <code>geom_violin</code> Plot</h2>
 <div class="cell">
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yards_gained_compared</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/yards_gained"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2038,7 +2036,8 @@ i Please use `linewidth` instead.</code></pre>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"*Averaged Yards Gained per Down*"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"**KC Chiefs vs. NFL: 2022 Regular Season**"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"**An Introduction to NFL Analytics with R**&lt;br&gt;*Brad J. Congelio*"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/element.html">element_nfl_logo</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
 <span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>        strip.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Roboto"</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
@@ -2063,8 +2062,8 @@ i Please use the `fun.max` argument instead.</code></pre>
 </div>
 </div>
 </div>
-</section><section id="creating-a-geom_histogram-plot" class="level2" data-number="5.13"><h2 data-number="5.13" class="anchored" data-anchor-id="creating-a-geom_histogram-plot">
-<span class="header-section-number">5.13</span> Creating a <code>geom_histogram</code> Plot</h2>
+</section><section id="creating-a-geom_histogram-plot" class="level2" data-number="4.13"><h2 data-number="4.13" class="anchored" data-anchor-id="creating-a-geom_histogram-plot">
+<span class="header-section-number">4.13</span> Creating a <code>geom_histogram</code> Plot</h2>
 <div class="cell">
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">def_yards_allowed</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/def-yards"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2082,24 +2081,23 @@ i Please use the `fun.max` argument instead.</code></pre>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total Count"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"*Histogram of Defensive Yards Allowed*"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"**2022 NFL Regular Season**"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/histogram_plot_completed-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="images/completed_def_histogram.png" class="img-fluid figure-img" style="width:5.25in"></p>
 </figure>
 </div>
-</div>
-</div>
-</section><section id="saving-your-ggplot2-creations" class="level2" data-number="5.14"><h2 data-number="5.14" class="anchored" data-anchor-id="saving-your-ggplot2-creations">
-<span class="header-section-number">5.14</span> Saving Your <code>ggplot2</code> Creations</h2>
+</section><section id="saving-your-ggplot2-creations" class="level2" data-number="4.14"><h2 data-number="4.14" class="anchored" data-anchor-id="saving-your-ggplot2-creations">
+<span class="header-section-number">4.14</span> Saving Your <code>ggplot2</code> Creations</h2>
 <p>The most convenient way to save your finished plot is with the <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code> function, which will save the last plot created. The function accepts a multitude of different arguments, including <code>filename</code>, <code>device</code>, <code>path</code>, <code>scale</code>, <code>width</code>, <code>height</code>, and <code>dpi</code>.</p>
 <p>In most cases, you will be able to save your plot using just the <code>filename</code> and <code>dpi</code> arguments, like below the below example:</p>
 <div class="cell">
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"this-is-your-filename.png"</span>, dpi <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the above example, the plot will be outputted in <code>.png</code> format into your current working directory (you can see where the plot will be saved by using <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code>). The image <code>dpi</code> - or “dots per inch” - ultimately controls the plot’s resolution. A higher number will allow you to increase the size the image, but will also increase the size of the file itself. I find that using a <code>dpi</code> between 300 and 400 is suitable for nearly all plots.</p>
-</section><section id="advanced-headshots-method" class="level2" data-number="5.15"><h2 data-number="5.15" class="anchored" data-anchor-id="advanced-headshots-method">
-<span class="header-section-number">5.15</span> Advanced Headshots Method</h2>
+</section><section id="advanced-headshots-method" class="level2" data-number="4.15"><h2 data-number="4.15" class="anchored" data-anchor-id="advanced-headshots-method">
+<span class="header-section-number">4.15</span> Advanced Headshots Method</h2>
 <p>The ability to include player headshots onto plots is an outstanding addition to the NFL analytics universe. However, the headshots themselves quite often have “harsh” aesthetics in that the image is cut off at the shoulders and, as a result, can result in plots where the shoulders just seem to “fall off” into the abyss of the plot itself.</p>
 <p>To correct this, we can use several different package to create circular croppings of the of the individual headshot images and then wrap the player’s name around the image itself.</p>
 <p>To showcase the process, let’s create a data frame titled <code>complete_wr_airyards</code> with the below code:</p>
@@ -2232,8 +2230,9 @@ Important
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Density"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Top Ten WRs in Total Air Yards**"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"*Density Plot of How They Were Earned - 2022 Regular Season*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Density Plot of How They Were Earned*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1 rows containing non-finite values (`stat_density()`).</code></pre>
 </div>
@@ -2244,8 +2243,8 @@ Important
 </div>
 </div>
 </div>
-</section><section id="creating-tables-with-gt-and-gtextras" class="level2" data-number="5.16"><h2 data-number="5.16" class="anchored" data-anchor-id="creating-tables-with-gt-and-gtextras">
-<span class="header-section-number">5.16</span> Creating Tables with <code>gt</code> and <code>gtExtras</code>
+</section><section id="creating-tables-with-gt-and-gtextras" class="level2" data-number="4.16"><h2 data-number="4.16" class="anchored" data-anchor-id="creating-tables-with-gt-and-gtextras">
+<span class="header-section-number">4.16</span> Creating Tables with <code>gt</code> and <code>gtExtras</code>
 </h2>
 <p>In some instances, you may find that a plot produced by <code>ggplot2</code> is not the best medium in which to display your data. In that case, you may want to turn to use the <code>gt</code> package (and the accompanying add-on from Thomas Mock, <code>gtExtras</code>). Much like <code>ggplot2</code> stands for the “grammar of graphics”, the <code>gt</code> package is short for the “grammar of tables.” Taking a data frame into a <code>gt</code> table is as simple as piping into the <code><a href="https://gt.rstudio.com/reference/gt.html">gt()</a></code> function, but the end result will likely not be visually pleasing. To make the necessary adjustments, you will need to begin making changes to the output by altering the core parts of a <code>gt</code> table: the table header, the stub and stub head, the column labels, the table body, and the table footer.</p>
 <p>To provide a walk through of this process, let’s read in prepared data that examines the top ten average completion percentage over expected for those attempts in a pure passing situation (that is, plays that have a predictive probability of 70% or greater of being a passing attempt).</p>
@@ -2258,12 +2257,12 @@ Important
 <span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="owcggftunq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mxlfstgmcx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#owcggftunq .gt_table {
+#mxlfstgmcx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2288,7 +2287,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-#owcggftunq .gt_heading {
+#mxlfstgmcx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2300,12 +2299,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#owcggftunq .gt_caption {
+#mxlfstgmcx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#owcggftunq .gt_title {
+#mxlfstgmcx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2317,7 +2316,7 @@ Important
   border-bottom-width: 0;
 }
 
-#owcggftunq .gt_subtitle {
+#mxlfstgmcx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2329,13 +2328,13 @@ Important
   border-top-width: 0;
 }
 
-#owcggftunq .gt_bottom_border {
+#mxlfstgmcx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#owcggftunq .gt_col_headings {
+#mxlfstgmcx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2350,7 +2349,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#owcggftunq .gt_col_heading {
+#mxlfstgmcx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2370,7 +2369,7 @@ Important
   overflow-x: hidden;
 }
 
-#owcggftunq .gt_column_spanner_outer {
+#mxlfstgmcx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2382,15 +2381,15 @@ Important
   padding-right: 4px;
 }
 
-#owcggftunq .gt_column_spanner_outer:first-child {
+#mxlfstgmcx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#owcggftunq .gt_column_spanner_outer:last-child {
+#mxlfstgmcx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#owcggftunq .gt_column_spanner {
+#mxlfstgmcx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2402,7 +2401,7 @@ Important
   width: 100%;
 }
 
-#owcggftunq .gt_group_heading {
+#mxlfstgmcx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2428,7 +2427,7 @@ Important
   text-align: left;
 }
 
-#owcggftunq .gt_empty_group_heading {
+#mxlfstgmcx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2443,15 +2442,15 @@ Important
   vertical-align: middle;
 }
 
-#owcggftunq .gt_from_md > :first-child {
+#mxlfstgmcx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#owcggftunq .gt_from_md > :last-child {
+#mxlfstgmcx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#owcggftunq .gt_row {
+#mxlfstgmcx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2470,7 +2469,7 @@ Important
   overflow-x: hidden;
 }
 
-#owcggftunq .gt_stub {
+#mxlfstgmcx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2483,7 +2482,7 @@ Important
   padding-right: 5px;
 }
 
-#owcggftunq .gt_stub_row_group {
+#mxlfstgmcx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2497,11 +2496,11 @@ Important
   vertical-align: top;
 }
 
-#owcggftunq .gt_row_group_first td {
+#mxlfstgmcx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#owcggftunq .gt_summary_row {
+#mxlfstgmcx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2511,16 +2510,16 @@ Important
   padding-right: 5px;
 }
 
-#owcggftunq .gt_first_summary_row {
+#mxlfstgmcx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#owcggftunq .gt_first_summary_row.thick {
+#mxlfstgmcx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#owcggftunq .gt_last_summary_row {
+#mxlfstgmcx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2530,7 +2529,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#owcggftunq .gt_grand_summary_row {
+#mxlfstgmcx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2540,7 +2539,7 @@ Important
   padding-right: 5px;
 }
 
-#owcggftunq .gt_first_grand_summary_row {
+#mxlfstgmcx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2550,11 +2549,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-#owcggftunq .gt_striped {
+#mxlfstgmcx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#owcggftunq .gt_table_body {
+#mxlfstgmcx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2563,7 +2562,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#owcggftunq .gt_footnotes {
+#mxlfstgmcx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2577,7 +2576,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#owcggftunq .gt_footnote {
+#mxlfstgmcx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2586,7 +2585,7 @@ Important
   padding-right: 5px;
 }
 
-#owcggftunq .gt_sourcenotes {
+#mxlfstgmcx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2600,7 +2599,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#owcggftunq .gt_sourcenote {
+#mxlfstgmcx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2608,64 +2607,64 @@ Important
   padding-right: 5px;
 }
 
-#owcggftunq .gt_left {
+#mxlfstgmcx .gt_left {
   text-align: left;
 }
 
-#owcggftunq .gt_center {
+#mxlfstgmcx .gt_center {
   text-align: center;
 }
 
-#owcggftunq .gt_right {
+#mxlfstgmcx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#owcggftunq .gt_font_normal {
+#mxlfstgmcx .gt_font_normal {
   font-weight: normal;
 }
 
-#owcggftunq .gt_font_bold {
+#mxlfstgmcx .gt_font_bold {
   font-weight: bold;
 }
 
-#owcggftunq .gt_font_italic {
+#mxlfstgmcx .gt_font_italic {
   font-style: italic;
 }
 
-#owcggftunq .gt_super {
+#mxlfstgmcx .gt_super {
   font-size: 65%;
 }
 
-#owcggftunq .gt_footnote_marks {
+#mxlfstgmcx .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#owcggftunq .gt_asterisk {
+#mxlfstgmcx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#owcggftunq .gt_indent_1 {
+#mxlfstgmcx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#owcggftunq .gt_indent_2 {
+#mxlfstgmcx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#owcggftunq .gt_indent_3 {
+#mxlfstgmcx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#owcggftunq .gt_indent_4 {
+#mxlfstgmcx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#owcggftunq .gt_indent_5 {
+#mxlfstgmcx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2773,12 +2772,12 @@ Important
 <span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="fpgubnxtyj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bifaysssqw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#fpgubnxtyj) .gt_table {
+:where(#bifaysssqw) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2803,7 +2802,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_heading {
+:where(#bifaysssqw) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2815,12 +2814,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_caption {
+:where(#bifaysssqw) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#fpgubnxtyj) .gt_title {
+:where(#bifaysssqw) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2832,7 +2831,7 @@ Important
   border-bottom-width: 0;
 }
 
-:where(#fpgubnxtyj) .gt_subtitle {
+:where(#bifaysssqw) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2844,13 +2843,13 @@ Important
   border-top-width: 0;
 }
 
-:where(#fpgubnxtyj) .gt_bottom_border {
+:where(#bifaysssqw) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_col_headings {
+:where(#bifaysssqw) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2865,7 +2864,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_col_heading {
+:where(#bifaysssqw) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2885,7 +2884,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#fpgubnxtyj) .gt_column_spanner_outer {
+:where(#bifaysssqw) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2897,15 +2896,15 @@ Important
   padding-right: 4px;
 }
 
-:where(#fpgubnxtyj) .gt_column_spanner_outer:first-child {
+:where(#bifaysssqw) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#fpgubnxtyj) .gt_column_spanner_outer:last-child {
+:where(#bifaysssqw) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#fpgubnxtyj) .gt_column_spanner {
+:where(#bifaysssqw) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2917,7 +2916,7 @@ Important
   width: 100%;
 }
 
-:where(#fpgubnxtyj) .gt_group_heading {
+:where(#bifaysssqw) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2943,7 +2942,7 @@ Important
   text-align: left;
 }
 
-:where(#fpgubnxtyj) .gt_empty_group_heading {
+:where(#bifaysssqw) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2958,15 +2957,15 @@ Important
   vertical-align: middle;
 }
 
-:where(#fpgubnxtyj) .gt_from_md > :first-child {
+:where(#bifaysssqw) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#fpgubnxtyj) .gt_from_md > :last-child {
+:where(#bifaysssqw) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#fpgubnxtyj) .gt_row {
+:where(#bifaysssqw) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2985,7 +2984,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#fpgubnxtyj) .gt_stub {
+:where(#bifaysssqw) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2998,7 +2997,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_stub_row_group {
+:where(#bifaysssqw) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3012,11 +3011,11 @@ Important
   vertical-align: top;
 }
 
-:where(#fpgubnxtyj) .gt_row_group_first td {
+:where(#bifaysssqw) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#fpgubnxtyj) .gt_summary_row {
+:where(#bifaysssqw) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3026,16 +3025,16 @@ Important
   padding-right: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_first_summary_row {
+:where(#bifaysssqw) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_first_summary_row.thick {
+:where(#bifaysssqw) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#fpgubnxtyj) .gt_last_summary_row {
+:where(#bifaysssqw) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3045,7 +3044,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_grand_summary_row {
+:where(#bifaysssqw) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3055,7 +3054,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_first_grand_summary_row {
+:where(#bifaysssqw) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3065,11 +3064,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_striped {
+:where(#bifaysssqw) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#fpgubnxtyj) .gt_table_body {
+:where(#bifaysssqw) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3078,7 +3077,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_footnotes {
+:where(#bifaysssqw) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3092,7 +3091,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_footnote {
+:where(#bifaysssqw) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3101,7 +3100,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_sourcenotes {
+:where(#bifaysssqw) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3115,7 +3114,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#fpgubnxtyj) .gt_sourcenote {
+:where(#bifaysssqw) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3123,64 +3122,64 @@ Important
   padding-right: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_left {
+:where(#bifaysssqw) .gt_left {
   text-align: left;
 }
 
-:where(#fpgubnxtyj) .gt_center {
+:where(#bifaysssqw) .gt_center {
   text-align: center;
 }
 
-:where(#fpgubnxtyj) .gt_right {
+:where(#bifaysssqw) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#fpgubnxtyj) .gt_font_normal {
+:where(#bifaysssqw) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#fpgubnxtyj) .gt_font_bold {
+:where(#bifaysssqw) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#fpgubnxtyj) .gt_font_italic {
+:where(#bifaysssqw) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#fpgubnxtyj) .gt_super {
+:where(#bifaysssqw) .gt_super {
   font-size: 65%;
 }
 
-:where(#fpgubnxtyj) .gt_footnote_marks {
+:where(#bifaysssqw) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#fpgubnxtyj) .gt_asterisk {
+:where(#bifaysssqw) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#fpgubnxtyj) .gt_indent_1 {
+:where(#bifaysssqw) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#fpgubnxtyj) .gt_indent_2 {
+:where(#bifaysssqw) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#fpgubnxtyj) .gt_indent_3 {
+:where(#bifaysssqw) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#fpgubnxtyj) .gt_indent_4 {
+:where(#bifaysssqw) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#fpgubnxtyj) .gt_indent_5 {
+:where(#bifaysssqw) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3294,7 +3293,8 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="va">team_logo_wikipedia</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"**Average CPOE in Pure Passing Situations**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70%</span></span>
+<span><span class="st">                  Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gt_img_rows</span><span class="op">(</span><span class="va">headshot</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -3309,7 +3309,8 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="va">team_logo_wikipedia</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"**Average CPOE in Pure Passing Situations**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70%</span></span>
+<span><span class="st">                  Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_stubhead</span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Quarterback"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gt_img_rows</span><span class="op">(</span><span class="va">headshot</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">cols_label</span><span class="op">(</span></span>
@@ -3331,7 +3332,8 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="va">team_logo_wikipedia</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"**Average CPOE in Pure Passing Situations**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70%</span></span>
+<span><span class="st">                  Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_stubhead</span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Quarterback"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_img_rows.html">gt_img_rows</a></span><span class="op">(</span><span class="va">headshot</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">cols_label</span><span class="op">(</span></span>
@@ -3356,7 +3358,8 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="va">team_logo_wikipedia</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"**Average CPOE in Pure Passing Situations**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70%</span></span>
+<span><span class="st">                  Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_stubhead</span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Quarterback"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gt_img_rows</span><span class="op">(</span><span class="va">headshot</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">cols_label</span><span class="op">(</span></span>
@@ -3383,7 +3386,8 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="va">team_logo_wikipedia</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_header</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"**Average CPOE in Pure Passing Situations**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70%</span></span>
+<span><span class="st">                  Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tab_stubhead</span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Quarterback"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gt_img_rows</span><span class="op">(</span><span class="va">headshot</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">cols_label</span><span class="op">(</span></span>
@@ -3407,8 +3411,8 @@ Important
 <p><img src="images/gt_table_5.png" class="img-fluid" width="992"></p>
 </div>
 </div>
-</section><section id="creating-a-shiny-app" class="level2" data-number="5.17"><h2 data-number="5.17" class="anchored" data-anchor-id="creating-a-shiny-app">
-<span class="header-section-number">5.17</span> Creating a Shiny App</h2>
+</section><section id="creating-a-shiny-app" class="level2" data-number="4.17"><h2 data-number="4.17" class="anchored" data-anchor-id="creating-a-shiny-app">
+<span class="header-section-number">4.17</span> Creating a Shiny App</h2>
 <p>With a solid understanding of the data visualization process, we can now turn our attention to take a completed data frame and transitioning it into a Shiny App, resulting in an interactive application for users to explore your data and findings.</p>
 <p>To do this, we will be utilize a data frame that you will see again in Chapter 5 that is created during an XGBoost modeling process. It contains the actual rushing yards and expected rushing yards, based on predictive machine learning, for all running backs from 2016 to 2022. You can read in the data to view it with the following <code>vroom</code> code.</p>
 <div class="cell">
@@ -3416,8 +3420,8 @@ Important
 </div>
 <p>The resulting <code>ryoe_shiny</code> data frame contains information regarding <code>actual_yards</code>, <code>season</code>, <code>down</code>, <code>ydstogo</code>, <code>red_zone</code>, <code>rusher</code>, <code>rusher_player_id</code>, <code>posteam</code>, <code>defteam</code>, <code>exp_yards</code>. As you will soon see, despite being in the data frame, will will not use all of the variables while also adding some in the backend of the Shiny App. To that end, the Shiny App we will be producing will allow users to select one or more seasons to see each running back’s total rushing yards, total expected yards, and the difference between the two (where a positive number indicates the running back gained more yards than the XGBoost model predicted). Users will be able to select specific downs and yards to go, as well as indicate if they want to see the information pertaining to only those rushing attempts in the red zone. We will also build in the capability for the Shiny App to automatically update and format a <code>ggplot</code> scatterplot to visualize the information.</p>
 <p>You can see the end result and the functioning Shiny App here: <a href="https://bcongelio.shinyapps.io/nfl_r_book_ryoe/">NFL Analytics with R: RYOE Shiny App</a>.</p>
-<section id="requirements-for-a-shiny-app" class="level3" data-number="5.17.1"><h3 data-number="5.17.1" class="anchored" data-anchor-id="requirements-for-a-shiny-app">
-<span class="header-section-number">5.17.1</span> Requirements for a Shiny App</h3>
+<section id="requirements-for-a-shiny-app" class="level3" data-number="4.17.1"><h3 data-number="4.17.1" class="anchored" data-anchor-id="requirements-for-a-shiny-app">
+<span class="header-section-number">4.17.1</span> Requirements for a Shiny App</h3>
 <p>First, it is important to know that a Shiny App cannot be built within a typical R script. Rather, you must select “Shiny Web App” from File -&gt; New File inside RStudio. You will then be prompted to indicate the folder in which you would like to save the files and whether or not you want a combined file or a separate <code>ui.R</code> and <code>server.R</code>. A single file containing both is acceptable for a simple Shiny App but more complex designs will require separate files to maintain organization.</p>
 <ol type="1">
 <li>
@@ -3426,8 +3430,8 @@ Important
 <strong>Server Function (<code>server.R</code></strong>) - the <code>server.R</code> file contains the information needed to build and modify the outputs in response to user input, as well as where you construct the inner-workings of the Shiny App (like data manipulation). Each <code>server.R</code> file will contain a <code>function(input, output)</code> where the <code>input</code> is an object that contains the requests from the user input and <code>output</code> is the required items to be rendered.</li>
 </ol>
 <p>Both the <code>ui.R</code> and <code>server.R</code> are ultimately passed into the <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp()</a></code> function that outputs the final product.</p>
-</section><section id="building-our-ui.r-file" class="level3" data-number="5.17.2"><h3 data-number="5.17.2" class="anchored" data-anchor-id="building-our-ui.r-file">
-<span class="header-section-number">5.17.2</span> Building our <code>ui.R</code> File</h3>
+</section><section id="building-our-ui.r-file" class="level3" data-number="4.17.2"><h3 data-number="4.17.2" class="anchored" data-anchor-id="building-our-ui.r-file">
+<span class="header-section-number">4.17.2</span> Building our <code>ui.R</code> File</h3>
 <p>Both the <code>ui.R</code> and <code>server.R</code> files will start with similar information: reading in the data, any necessary preparation, and - in our case - including the custom <code>nfl_analytics_theme()</code> to be passed into the <code>ggplot</code> output.</p>
 <div class="cell">
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
@@ -3503,8 +3507,8 @@ Important
 <li>Finally, the <code>checkboxInput</code> is permits users to either select/deselect the <code>Red Zone</code> argument to view the data when the offense is either in or outside of the opposing red zone.</li>
 </ol>
 <p>The <code><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel()</a></code> options takes information that is constructed within the <code>server.R</code> file (specifically, in this case, a table with results and the including scatterplot of the data) and displays it beside the user input area. We are also instructing the plot is to have a width of 500px with the totality of the <code><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel()</a></code> having, itself, a width of 6.</p>
-</section><section id="building-our-server.r-file" class="level3" data-number="5.17.3"><h3 data-number="5.17.3" class="anchored" data-anchor-id="building-our-server.r-file">
-<span class="header-section-number">5.17.3</span> Building our <code>server.R</code> File</h3>
+</section><section id="building-our-server.r-file" class="level3" data-number="4.17.3"><h3 data-number="4.17.3" class="anchored" data-anchor-id="building-our-server.r-file">
+<span class="header-section-number">4.17.3</span> Building our <code>server.R</code> File</h3>
 <p>The <code>server.R</code> file begins with three different arguments.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
@@ -3578,18 +3582,17 @@ Important
 <span id="cb93-24"><a href="#cb93-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Total Expected Yards"</span>, </span>
 <span id="cb93-25"><a href="#cb93-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Actual Rushing Yards vs. Expected for Season(s):"</span>,</span>
 <span id="cb93-26"><a href="#cb93-26" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">selectedSeasons</span>()),</span>
-<span id="cb93-27"><a href="#cb93-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Model: *LightGBM* in **tidymodels**"</span>,</span>
-<span id="cb93-28"><a href="#cb93-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"*An Introduction to NFL Analytics With R*&lt;br&gt;**Brad J. Congelio**"</span>) <span class="sc">+</span></span>
-<span id="cb93-29"><a href="#cb93-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nfl_analytics_theme</span>()</span>
-<span id="cb93-30"><a href="#cb93-30" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">width =</span> <span class="dv">500</span>)</span>
-<span id="cb93-31"><a href="#cb93-31" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb93-27"><a href="#cb93-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Model: *LightGBM* in **tidymodels**"</span>) <span class="sc">+</span></span>
+<span id="cb93-28"><a href="#cb93-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nfl_analytics_theme</span>()</span>
+<span id="cb93-29"><a href="#cb93-29" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">width =</span> <span class="dv">500</span>)</span>
+<span id="cb93-30"><a href="#cb93-30" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As you build the <code>Shiny</code> app, you can check the validity of your coding by clicking the <code>Run App</code> button in the upper-right part of the coding screen. If everything is correct, the application will run within your local system. If there are issues, the information will be provided in the ‘Console’ area of RStudio. Once you are content with functioning and style of the application, you can publish it and host it, for free, on <a href="https://www.shinyapps.io/">ShinyApps.io</a>.</p>
-</section></section><section id="exercises" class="level2" data-number="5.18"><h2 data-number="5.18" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">5.18</span> Exercises</h2>
+</section></section><section id="exercises" class="level2" data-number="4.18"><h2 data-number="4.18" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">4.18</span> Exercises</h2>
 <p>The answers for the following answers can be found here: <a href="http://nfl-book.bradcongelio.com/ch4-answers" class="uri">http://nfl-book.bradcongelio.com/ch4-answers</a>.</p>
-<section id="exercise-1" class="level3" data-number="5.18.1"><h3 data-number="5.18.1" class="anchored" data-anchor-id="exercise-1">
-<span class="header-section-number">5.18.1</span> Exercise 1</h3>
+<section id="exercise-1" class="level3" data-number="4.18.1"><h3 data-number="4.18.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">4.18.1</span> Exercise 1</h3>
 <p>To begin, run the following code to create the data frame titled <code>rb_third_down</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -3620,8 +3623,8 @@ Important
 <li>Use the <code>nflplotR</code> package, edit the <code>axis.text.x</code> within the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> option to add the player headshots</li>
 <li>Add <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal()</a></code> to the plot</li>
 <li>Use <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> to include a title and subtitle</li>
-</ol></section><section id="exercise-2" class="level3" data-number="5.18.2"><h3 data-number="5.18.2" class="anchored" data-anchor-id="exercise-2">
-<span class="header-section-number">5.18.2</span> Exercise 2</h3>
+</ol></section><section id="exercise-2" class="level3" data-number="4.18.2"><h3 data-number="4.18.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">4.18.2</span> Exercise 2</h3>
 <p>Run the code below to create the <code>offensive_epa</code> data frame, then follow the instructions below to complete the exercise.</p>
 <div class="cell">
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -3647,7 +3650,7 @@ Important
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-stikeleather2013" class="csl-entry" role="listitem">
 Stikeleather, Jim. 2013. <span>“The Three Elements of Successful Data Visualizations.”</span> <a href="https://hbr.org/2013/04/the-three-elements-of-successf">https://hbr.org/2013/04/the-three-elements-of-successf</a>.
 </div>
@@ -3889,24 +3892,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./03-nfl-analytics-functions.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./05-nfl-analytics-advanced-methods.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
-  </div>
-</footer>
+
 
 
 </body></html>

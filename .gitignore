@@ -7,3 +7,10 @@
 /.quarto/
 rsconnect
 **/*.pdf
+**/*.aux
+**/*.idx
+**/*.ilg
+**/*.ind
+**/*.log
+**/*.tex
+**/*.toc

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics with R - 6&nbsp; Advanced Model Creation with NFL Data</title>
+<title>Introduction to NFL Analytics with R - 5&nbsp; Advanced Model Creation with NFL Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +79,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./a1-nfl-analytics-dictionary.html" rel="next">
 <link href="./04-nfl-analytics-visualization.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -108,13 +108,7 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
-</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -123,7 +117,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-nfl-analytics-advanced-methods.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-nfl-analytics-advanced-methods.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -134,7 +128,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">An Introduction to NFL Analytics with R</a> 
+      <a href="./">Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -173,43 +167,37 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -243,27 +231,27 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#introduction-to-statistical-modeling-with-nfl-data" id="toc-introduction-to-statistical-modeling-with-nfl-data" class="nav-link active" data-scroll-target="#introduction-to-statistical-modeling-with-nfl-data"><span class="header-section-number">6.1</span> Introduction to Statistical Modeling with NFL Data</a></li>
+<li><a href="#introduction-to-statistical-modeling-with-nfl-data" id="toc-introduction-to-statistical-modeling-with-nfl-data" class="nav-link active" data-scroll-target="#introduction-to-statistical-modeling-with-nfl-data"><span class="header-section-number">5.1</span> Introduction to Statistical Modeling with NFL Data</a></li>
   <li>
-<a href="#regression-models-with-nfl-data" id="toc-regression-models-with-nfl-data" class="nav-link" data-scroll-target="#regression-models-with-nfl-data"><span class="header-section-number">6.2</span> Regression Models with NFL Data</a>
+<a href="#regression-models-with-nfl-data" id="toc-regression-models-with-nfl-data" class="nav-link" data-scroll-target="#regression-models-with-nfl-data"><span class="header-section-number">5.2</span> Regression Models with NFL Data</a>
   <ul class="collapse">
-<li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">6.2.1</span> Simple Linear Regression</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">6.2.2</span> Multiple Linear Regression</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">6.2.3</span> Logistic Regression</a></li>
+<li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">5.2.1</span> Simple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">5.2.2</span> Multiple Linear Regression</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">5.2.3</span> Logistic Regression</a></li>
   </ul>
 </li>
   <li>
-<a href="#advanced-model-creation-with-nfl-data" id="toc-advanced-model-creation-with-nfl-data" class="nav-link" data-scroll-target="#advanced-model-creation-with-nfl-data"><span class="header-section-number">6.3</span> Advanced Model Creation with NFL Data</a>
+<a href="#advanced-model-creation-with-nfl-data" id="toc-advanced-model-creation-with-nfl-data" class="nav-link" data-scroll-target="#advanced-model-creation-with-nfl-data"><span class="header-section-number">5.3</span> Advanced Model Creation with NFL Data</a>
   <ul class="collapse">
-<li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">6.3.1</span> K-means Clustering</a></li>
-  <li><a href="#creating-an-xgboost-model-for-rushing-yards-over-expected" id="toc-creating-an-xgboost-model-for-rushing-yards-over-expected" class="nav-link" data-scroll-target="#creating-an-xgboost-model-for-rushing-yards-over-expected"><span class="header-section-number">6.3.2</span> Creating an XGBoost Model for Rushing Yards over Expected</a></li>
+<li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">5.3.1</span> K-means Clustering</a></li>
+  <li><a href="#creating-an-xgboost-model-for-rushing-yards-over-expected" id="toc-creating-an-xgboost-model-for-rushing-yards-over-expected" class="nav-link" data-scroll-target="#creating-an-xgboost-model-for-rushing-yards-over-expected"><span class="header-section-number">5.3.2</span> Creating an XGBoost Model for Rushing Yards over Expected</a></li>
   </ul>
 </li>
   <li>
-<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.4</span> Exercises</a>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.4</span> Exercises</a>
   <ul class="collapse">
-<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">6.4.1</span> Exercise 1</a></li>
-  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">6.4.2</span> Exercise 2</a></li>
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">5.4.1</span> Exercise 1</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">5.4.2</span> Exercise 2</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -271,7 +259,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span>
 </h1>
 </div>
 
@@ -285,18 +273,18 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><section id="introduction-to-statistical-modeling-with-nfl-data" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="introduction-to-statistical-modeling-with-nfl-data">
-<span class="header-section-number">6.1</span> Introduction to Statistical Modeling with NFL Data</h2>
-<p>The process of conducting statistical modeling with NFL data is difficult to cover in a single chapter of a book, as the topic realistically deserves an entire book as the field of modeling and machine learning is vast and complex, and continues to grow as a result of access to new data and the releases of packages (as of November 2020, over 16,000 packages are available in the R ecosystem).<span class="citation" data-cites="Wikipedia">(<a href="references.html#ref-Wikipedia" role="doc-biblioref">Wikipedia 2023</a>)</span> The list of options for conducting statistical analysis and machine learning is vast, with the more widely-used ones including <code>caret</code> (combined functions for creating predictive models), <code>mgcv</code> (for generalized additive models), <code>lme4</code> (for linear mixed effects models), <code>randomForest</code> (for creating random forests models), <code>torch</code> (for image recognition, time series forecasting, and audio processing), and <code>glmnet</code> (for lasso and elastic-net regression methods). A newer addition to the modeling and machine learning ecosystem is <code>tidymodels</code>, which is a collection of various packages that operate cohesively using <code>tidyverse</code> principles.</p>
+</header><section id="introduction-to-statistical-modeling-with-nfl-data" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="introduction-to-statistical-modeling-with-nfl-data">
+<span class="header-section-number">5.1</span> Introduction to Statistical Modeling with NFL Data</h2>
+<p>The process of conducting statistical modeling with NFL data is difficult to cover in a single chapter of a book, as the topic realistically deserves an entire book as the field of modeling and machine learning is vast and complex, and continues to grow as a result of access to new data and the releases of packages (as of November 2020, over 16,000 packages are available in the R ecosystem).<span class="citation" data-cites="Wikipedia">(<a href="#ref-Wikipedia" role="doc-biblioref">Wikipedia 2023</a>)</span> The list of options for conducting statistical analysis and machine learning is vast, with the more widely-used ones including <code>caret</code> (combined functions for creating predictive models), <code>mgcv</code> (for generalized additive models), <code>lme4</code> (for linear mixed effects models), <code>randomForest</code> (for creating random forests models), <code>torch</code> (for image recognition, time series forecasting, and audio processing), and <code>glmnet</code> (for lasso and elastic-net regression methods). A newer addition to the modeling and machine learning ecosystem is <code>tidymodels</code>, which is a collection of various packages that operate cohesively using <code>tidyverse</code> principles.</p>
 <p>While it is not possible for this chapter to cover every aspect of modeling and machine learning, its goal is to provide the necessary foundation in both to provide you with the necessary skills, understanding, and knowledge to independently explore and analyze NFL data using different methodologies and tools. The techniques covered in this chapter, from creating a simple linear regression to a predictive XGBoost model, are building blocks to all further analysis and machine learning you will conduct. In doing so, you will learn how to use built-in options such as <code>stats</code> to more technical packages such as <code>tidymodels</code>.</p>
 <p>To that end, by mastering these introductory concepts and techniques, you not only learn the process and coding needed to create models or do machine learning, but you will begin developing an analytical mindset which will allow you to understand why one statistical approach is not correct for your data and which one is, how to interpret the results of your model, and - when necessary - how to correct issues and problems in the process as they arise. The fundamentals provided in this chapter, I believe, serve as a actionable stepping stone for a futher journey into the modeling and machine learning in the R programming language, with or without the use of NFL data.</p>
-</section><section id="regression-models-with-nfl-data" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="regression-models-with-nfl-data">
-<span class="header-section-number">6.2</span> Regression Models with NFL Data</h2>
+</section><section id="regression-models-with-nfl-data" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="regression-models-with-nfl-data">
+<span class="header-section-number">5.2</span> Regression Models with NFL Data</h2>
 <p>Regression models are the bedrock of many more advanced machine learning techniques. For example, the “decision tree” process that is conducted in random forests models and XGBoost, for example, are created based on the split in variable relationships and neural networks are, at their core, just a intricate web of regression-like calculations. Because of this, regression models are an outstanding starting point for not only learning the basics of modeling and machine learning in R, but an important step in comprehending more advanced modeling techniques.</p>
 <p>As you will see, a regression model is simply a mathematical determination of the relationship between two or more variables (the response and dependent variables). In the context of the NFL, a team’s average points per game would be a response variable while those metrics that <em>cause</em> the average points per game are the predictor variables (average passing and rushing yards, turnovers, defensive yards allowed, etc.). The results of regression models allow us to determine which predictor variables have the largest impact on the response variable. Are passing yards a more predictive variable to averaged points per game than rushing yards? A regression model is capable of answering that question.</p>
 <p>This section starts with exploring simple linear regression and then extends this knowledge to creating both multiple linear and logistic regression models which deal, respectively, with multiple predictors and categorical dependent variables. After, we will focus on creating binary and multinomial regression models.</p>
-<section id="simple-linear-regression" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="simple-linear-regression">
-<span class="header-section-number">6.2.1</span> Simple Linear Regression</h3>
+<section id="simple-linear-regression" class="level3" data-number="5.2.1"><h3 data-number="5.2.1" class="anchored" data-anchor-id="simple-linear-regression">
+<span class="header-section-number">5.2.1</span> Simple Linear Regression</h3>
 <p>A linear regression is a fundamental statistical technique that is used to explore the relationship between two variables - the dependent variable (also called the “response variable”) and the independent variables (also called the “predictor variables”). By using a simple linear regression, we can model the relationship between the two variables as a linear equation that best fits the observed data points.</p>
 <p>A simple linear regression aims to fit a straight line through all the observed data points in such a way that the total squared distance between the actual observations and the values predicted by the model are minimal. This line is often referred to as either the “line of best fit” or the “regression line” and it represents the interaction between the dependent and independent variables. Mathematically, the equation for a simple linear regression is as follows:</p>
 <p><span class="math display">\[
@@ -346,7 +334,7 @@ Note
 <span><span class="va">regression_2022</span> <span class="op">&lt;-</span> <span class="va">regression_2022</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">regression_2022</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">total_yards</span>, y <span class="op">=</span> <span class="va">total_points</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">regression_2022</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">total_yards</span>, y <span class="op">=</span> <span class="va">total_points</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>              color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>              linetype <span class="op">=</span> <span class="st">"dashed"</span>,</span>
@@ -356,8 +344,7 @@ Note
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Line of Best Fit: 2022 Season**"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"*Y = total_yards ~ total_points*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytic with R*&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Y = total_yards ~ total_points*"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Total Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total Points"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -439,8 +426,8 @@ Reading &amp; Understanding Regression Results
 <p>Information about these residual values are included first in our <code>summary(results_2022)</code> output and provide insight into the distribution of the model’s residual errors.</p>
 <table class="table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
+<col style="width: 18%">
+<col style="width: 81%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -523,7 +510,8 @@ Reading &amp; Understanding Regression Results
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Total Yards &amp; Residual Values**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Y = total_points ~ total_yards*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytic with R*&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Total Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Residual of Total Points"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -627,7 +615,8 @@ W = 1, p-value = 0.8</code></pre>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Total Yards &amp; Residual Values: 2012-2022**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*Y = total_points ~ total_yards*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytic with R*&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Total Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Residual of Total Points"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -649,8 +638,8 @@ Multiple R-squared:  0.736
 Adjusted R-squared:  0.727</code></pre>
 <p>The regression using just the 2022 data results in a slightly better multiple and adjusted R2 score compared to using data from the last twenty seasons of the NFL. While this does indicate that the model based on the single season is better at defining the relationship between a team’s <code>total_yards</code> and <code>total_points</code> it is essential to remember that there is different underlying patterns in the data as a result of the changing culture in the NFL and, ultimately, the epp and flow of team performance as a result of high levels of parity in the league.</p>
 <p>In order to account for this “epp and flow” in both team performance and the changing culture/rules of the NFL, we need to turn to a multiple linear regression in include these additional factors as it is a model that is capable of better accounting for the nuances of NFL data.</p>
-</section><section id="multiple-linear-regression" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="multiple-linear-regression">
-<span class="header-section-number">6.2.2</span> Multiple Linear Regression</h3>
+</section><section id="multiple-linear-regression" class="level3" data-number="5.2.2"><h3 data-number="5.2.2" class="anchored" data-anchor-id="multiple-linear-regression">
+<span class="header-section-number">5.2.2</span> Multiple Linear Regression</h3>
 <p>A multiple linear regression is extremely similar to a simple linear regression (both in design and implementation in RStudio). The main difference is that a multiple linear regression allows for us to include additional predictor variables by using the <code>+</code> sign in the model’s formula. The inclusion of these additional predictive variables, in theory, allow the model to compute more complex relationships in NFL data and improve on the model’s final performance.</p>
 <p>We will again create our first multiple regression linear regression with data from just the 2022 regular season that includes the same predictor (<code>total_yards</code>) and response variable (<code>total_points</code>). For additional predictors, we must consider what circumstances may lead a team to have high <code>total_yards</code> but an amount of <code>total_points</code> that would fall below the model’s predicted value. We will include the following as additional predictors:</p>
 <ol type="1">
@@ -761,8 +750,7 @@ W = 1, p-value = 0.9</code></pre>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Multiple Linear Regression Model: 2022**"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytic with R*&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Multiple Linear Regression Model: 2022**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Fitted Values"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Residual Values"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -810,7 +798,8 @@ Important
 <span>            family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Multicollinearity Correlation Matrix"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"Multiple Linear Regression: 2022 Data"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"**An Introduction to NFL Analytics with R**&lt;br&gt;Brad J. Congelio"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Correlation \n Measure"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>legend.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#F7F7F7"</span><span class="op">)</span>,</span>
@@ -957,8 +946,8 @@ Important
 <p>The model determined, based on the new predictor variables provided, that this hypothetical team will score a total of 563 points, which is the second-highest cumulative amount scored by a team dating back to the 2012 season (the 2013 Denver Broncos scored 606 total points). In this situation, the hypothetical team has nearly double the turnovers as the 2013 Bronco (41 turnovers to 21). It is reasonable that providing this hypothetical team a lower number of turnovers would result in it becoming the highest scoring team since 2012.</p>
 </div>
 </div>
-</section><section id="logistic-regression" class="level3" data-number="6.2.3"><h3 data-number="6.2.3" class="anchored" data-anchor-id="logistic-regression">
-<span class="header-section-number">6.2.3</span> Logistic Regression</h3>
+</section><section id="logistic-regression" class="level3" data-number="5.2.3"><h3 data-number="5.2.3" class="anchored" data-anchor-id="logistic-regression">
+<span class="header-section-number">5.2.3</span> Logistic Regression</h3>
 <p>Logistic regressions are particularity useful when modeling the relationship between a categorical dependent variable and a given set of predictor variables. While linear models, as covered in the last section, handles data with a continuous dependent variable, logistic regressions are used when the response variable is categorical (whether a team successfully converted a third down, whether a pass was completed, whether a running back fumbled on the play, etc.). In each example, there are only two possible outcomes: “yes” or “no”.</p>
 <p>Moreover, a logistic regression model does not model the relationship between the predictors and the response variables in a linear fashion. Instead, logistic regressions use seek to mutate the predictors into a values between 0 and 1. Specifically, the formula for a logistic regression is as follows:</p>
 <p><span class="math display">\[
@@ -979,8 +968,8 @@ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_
 <p><strong>Binary regression models</strong> are used when the dependent variable (the outcome) has just two outcomes (typically presented in binary format - <code>1</code> or <code>0</code>). Using the logistic function, a binary regression model determines the probability of the dependent event occurring given the predictor variables. As highlighted below, a binary regression model can be used to predict the probability that a QB is named MVP at the conclusion of the season. The response variable is a binary (<code>1</code> indicating that the player was named MVP and <code>0</code> indicating that the player did not win MVP). Various passing statistics can serve as the predictor variables.</p>
 <p>A <strong>multinomial regression model</strong> is an extension of the binary model in that it allows for the dependent variable to have more than two unordered categories. For example, a multinomial regression model would be used to predict the type of play a team is going to run (run or pass) based on the predictor variables (down and distance, time remaining, score differential, etc.).</p>
 <p>An <strong>ordinal regression model</strong> is used when the dependent variables not only have ordered categories, but the structure and/or order of these categories house meaningful information. Ordinal regression could be used, for example, to possibly predict the severity of a player’s injury. The ordered and meaningful categories of the dependent variable can coincide with the severity of the injury itself (mild, moderate, severe, season-ending) while the predictor variables include several other types of categories (the type of contact, the playing surface, what position the player played, how late into the season it occurred, whether the team is coming off a bye week, etc.).</p>
-<section id="logistic-regression-1-binary-classification" class="level4" data-number="6.2.3.1"><h4 data-number="6.2.3.1" class="anchored" data-anchor-id="logistic-regression-1-binary-classification">
-<span class="header-section-number">6.2.3.1</span> Logistic Regression 1: Binary Classification</h4>
+<section id="logistic-regression-1-binary-classification" class="level4" data-number="5.2.3.1"><h4 data-number="5.2.3.1" class="anchored" data-anchor-id="logistic-regression-1-binary-classification">
+<span class="header-section-number">5.2.3.1</span> Logistic Regression 1: Binary Classification</h4>
 <p>A binary regression model is used when the dependent variable is in binary format (that is, <code>1</code> for “yes” or <code>0</code> for “no). This binary represents two - and only two - possible outcomes such as a a team converting on third down or not or if a team won or lost the game. Constructing binary regression models allows use to predict the likelihood of the dependent event occurring based on the provided set of predictor variables.</p>
 <p>We will build a binary regression model to predict the probability that an NFL QB will win the MVP at the conclusion of the season.</p>
 <p>Let’s first create a dataframe, called <code>qb_mvp</code>, that contains the statistics for quarterbacks that we intuitively believe impact the likelihood of a QB being named MVP.</p>
@@ -1206,7 +1195,8 @@ Important
 <span>       y <span class="op">=</span> <span class="st">"Estimate"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"**Probability of a QB Being NFL MVP**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*GLM Model | F1-Score: 99.4%*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics With R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1218,8 +1208,8 @@ Important
 </div>
 <p>A negative <code>Estimate</code> for a <code>Predictive Variable</code> means that as that statistics increases (a player has a worse rank among his peers), the probable odds of that quarterback being awarded the Most Value Players decreases. For example, in our model, the <code>epa_rank</code> predictor has an <code>Estimate</code> of approximately -0.8 which means for each drop in rank, a quarterback’s chance of being named MVP decreases by -0.8. Within the model, <code>int_rank</code>, <code>att_rank</code>, <code>yds_rank</code>, <code>tds_ranks</code>, and <code>epa_rank</code> align with our domain knowledge intuition: as quarterbacks perform worse in these areas, their chance of being MVP decreases.</p>
 <p>Why, then, does a worse performance in <code>cmp_rank</code> provide a quarterback an increased chance in becoming MVP? Several issues could be causing this, including statistical noise, a variable that is highly correlated with <code>cmp_rank</code>, or a general non-linear relationship between <code>cmp_rank</code> and the response variable. If we were to continue working on this model, a good first step would using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to remove those quarterbacks with a limited number of attempts during the season.</p>
-</section><section id="logistic-regression-2-multinomial-regression-with-tidymodels" class="level4" data-number="6.2.3.2"><h4 data-number="6.2.3.2" class="anchored" data-anchor-id="logistic-regression-2-multinomial-regression-with-tidymodels">
-<span class="header-section-number">6.2.3.2</span> Logistic Regression 2: Multinomial Regression with <code>tidymodels</code>
+</section><section id="logistic-regression-2-multinomial-regression-with-tidymodels" class="level4" data-number="5.2.3.2"><h4 data-number="5.2.3.2" class="anchored" data-anchor-id="logistic-regression-2-multinomial-regression-with-tidymodels">
+<span class="header-section-number">5.2.3.2</span> Logistic Regression 2: Multinomial Regression with <code>tidymodels</code>
 </h4>
 <p>In our previous example building a binomial regression model, there were only two exactly outcomes: <code>0</code> and <code>1</code> for whether the specific quarterback was named that season’s MVP. A multinomial regression is an extension of the binomial model, but is used when there are multiple categories of outcomes rather than just two. The model itself ultimately determines the probability of each dependent variable based on the given set of predictive values. Using the softmax function to ensure that the probabilities for each dependent variable total 1, the main assumptions of th model are:</p>
 <ol type="1">
@@ -1248,7 +1238,7 @@ P(Y_{i} = k | X_{i}) = \frac{e^{(\beta_{k0} + \beta_{k1}X_{i1} + \beta_{k2}X_{i2
 <li>medium pass (passes with air yards between 6-10 yards)</li>
 <li>long passes (passes with air yards of 11+ yards)</li>
 </ol>
-<p>The construction of a multinomial regression will allow us to find the probability of each play type based on factors in the game. Such a model speaks directly to coach play-calling tendencies given the situations. To begin, we will gather data from the 2010-2022 NFL regular season. After loading the data, we will select the predictor variables and then conduct some featured engineering (which is, in this case, inspired by a presentation given by Thomas Mock on how to use <code>tidymodels</code> to predict a run or pass using binary regression)<span class="citation" data-cites="thomas_mock">(<a href="references.html#ref-thomas_mock" role="doc-biblioref">Mock 2020</a>)</span>.</p>
+<p>The construction of a multinomial regression will allow us to find the probability of each play type based on factors in the game. Such a model speaks directly to coach play-calling tendencies given the situations. To begin, we will gather data from the 2010-2022 NFL regular season. After loading the data, we will select the predictor variables and then conduct some featured engineering (which is, in this case, inspired by a presentation given by Thomas Mock on how to use <code>tidymodels</code> to predict a run or pass using binary regression)<span class="citation" data-cites="thomas_mock">(<a href="#ref-thomas_mock" role="doc-biblioref">Mock 2020</a>)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2191,10 +2181,10 @@ html {
 </div>
 </div>
 </div>
-</section></section></section><section id="advanced-model-creation-with-nfl-data" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="advanced-model-creation-with-nfl-data">
-<span class="header-section-number">6.3</span> Advanced Model Creation with NFL Data</h2>
-<section id="k-means-clustering" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="k-means-clustering">
-<span class="header-section-number">6.3.1</span> K-means Clustering</h3>
+</section></section></section><section id="advanced-model-creation-with-nfl-data" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="advanced-model-creation-with-nfl-data">
+<span class="header-section-number">5.3</span> Advanced Model Creation with NFL Data</h2>
+<section id="k-means-clustering" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="k-means-clustering">
+<span class="header-section-number">5.3.1</span> K-means Clustering</h3>
 <p>The K-means technique, originally titled as “bagging predictors,” was originally formulated by Hugo Steinhaus, a Polish mathematician, in 1956 and was introduced in his paper <em>“</em>Sur la Division des Corps Materielsen Parties.” The modern and refined version of the algorithm that is widely-used today was developed a year later by Stuart Lloyd, an electrical engineer employed at Bell Labs. The process was dubbed with the <em>K-means</em> moniker in 1967.</p>
 <p>In short, K-means is an unsupervised machine learning algorithm that is used for the clustering process. The algorithm aims to find similarities between data points and then group, or cluster, them into the same class (wherein “K” is the defined number of clusters for the data to be grouped into). The assumption that underpins the K-means process is that a closer data point to the center of the cluster is more related than a data point that is at a further distance, with this measure of closeness typically determined through the use of Euclidean distance.</p>
 <p>The K-means process is used in a wide range of applications, including in business to segment customers into different groups based on their purchase history or used to help develop markets for advertising and promotional efforts. In this example, we will be conducting the process on running backs from the 2022 NFL season (with at least 50 rushing attempts) over various different metrics collected from both Sports Info Solutions and Pro Football Focus, including:</p>
@@ -2209,8 +2199,8 @@ html {
 </ol>
 <p>Before jumping into the K-means process, a principal component analysis (PCA) is conducted on the data frame. It is common practice to do so, as the PCA process reduces the dimensionality in the data resulting in noise reduction. The PCA process takes our provided data frame and converts it into linearly correlated set of values called principal components. The first principal component produced (PC1) has accounts for the largest amount of variance in the data, while PC2 accounts for the next largest amount with the continued results being cumulative in nature. That is, if PC1 accounts for 25% of the variance in the data and PC2 accounts for 15%, the cumulative variance explained between the two principal components is 40%.</p>
 <p>The results of conducting a PCA and a K-means on the running backs data is a division of the players into groups, where those players in the same group have similar attributes based on the variables we have collected from SIS and PFF. This clustering process allows us to produce a quantitative and data-driven way to both understand and compare running back attributes and tendencies from the 2022 season.</p>
-<section id="principal-component-analysis" class="level4" data-number="6.3.1.1"><h4 data-number="6.3.1.1" class="anchored" data-anchor-id="principal-component-analysis">
-<span class="header-section-number">6.3.1.1</span> Principal Component Analysis</h4>
+<section id="principal-component-analysis" class="level4" data-number="5.3.1.1"><h4 data-number="5.3.1.1" class="anchored" data-anchor-id="principal-component-analysis">
+<span class="header-section-number">5.3.1.1</span> Principal Component Analysis</h4>
 <p>The Principal Component Analysis process is a common part of data preprocessing prior to conducting the k-means analysis, allowing us to achieve several results with the data.</p>
 <ol type="1">
 <li>
@@ -2285,8 +2275,8 @@ Note
 </div>
 <p>The resulting plot contains a few unique pieces of information regarding the principle component analysis. The information on each axis provides a numeric value regarding how much variance each principle component account for. In this case, <code>PC1</code> captured 35.8% of the variance while <code>PC2</code> captured 24.6%. Between both, a cumulative total of 60.4% of the variance was explained.</p>
 <p>Each point on the plot, represented by the rusher’s name, is a single sample in the reduced-dimensionality space created with the PCA process. The positioning of each rusher is determined his values from the principal components, where each value is a weighted averaged of the original variable for each sample. In other words, the placement of each runner is dependent on their traits and attributes. The arrows and associated variable labels are also representative of the reduced-dimensionality space with the direction and length of each arrow being determine by the contribution tot he variable for each principal component.</p>
-</section><section id="determining-the-amount-of-k" class="level4" data-number="6.3.1.2"><h4 data-number="6.3.1.2" class="anchored" data-anchor-id="determining-the-amount-of-k">
-<span class="header-section-number">6.3.1.2</span> Determining the Amount of K</h4>
+</section><section id="determining-the-amount-of-k" class="level4" data-number="5.3.1.2"><h4 data-number="5.3.1.2" class="anchored" data-anchor-id="determining-the-amount-of-k">
+<span class="header-section-number">5.3.1.2</span> Determining the Amount of K</h4>
 <p>In our biplot, we determined that <code>PC1</code> and <code>PC2</code> accounted for 60.4% of the variance in the data. The total number of principal components we select, based on cumulative variance explained, will be the number of clusters the running backs are grouped into during the K-means process. To get a better understanding of the amount being explained, we can use the <code>get_eigenvalue</code> function from <code>factoextra</code>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">get_eigenvalue</span><span class="op">(</span><span class="va">rushers_pca</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2328,8 +2318,8 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 </div>
 <p>The results mirror the information we gathered from <code>Rotation</code> when we first explored the results of <code>rusher_pca</code>. However, the plots include the expected average contribution of each variable as represented by the dashed line. For each principal component, a variable that ha a contribution higher than this average contribution is considered to be important in explaining the variance within that component.</p>
 <p>With the PCA completed and knowing that four components account for an acceptable amount of variance in the data, the K-means process can be conducted.</p>
-</section><section id="conducting-the-k-means-process" class="level4" data-number="6.3.1.3"><h4 data-number="6.3.1.3" class="anchored" data-anchor-id="conducting-the-k-means-process">
-<span class="header-section-number">6.3.1.3</span> Conducting the K-means Process</h4>
+</section><section id="conducting-the-k-means-process" class="level4" data-number="5.3.1.3"><h4 data-number="5.3.1.3" class="anchored" data-anchor-id="conducting-the-k-means-process">
+<span class="header-section-number">5.3.1.3</span> Conducting the K-means Process</h4>
 <p>As a result of the PCA process, we know we will be grouping the running back into four distinctive clusters, so we will create a value in our environment called <code>k</code> and set it to <code>4</code>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2488,600 +2478,15 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span>  <span class="fu">tab_source_note</span><span class="op">(</span>source_note <span class="op">=</span></span>
 <span>                    <span class="fu">md</span><span class="op">(</span><span class="st">"**An Introduction to NFL Analytics with R**&lt;br&gt;*Brad J. Congelio*"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_pff.html">gt_theme_pff</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div id="dkfkpqzfhp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-html {
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
-
-#dkfkpqzfhp .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 3px;
-  border-top-color: rgba(255, 255, 255, 0);
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_heading {
-  background-color: #FFFFFF;
-  text-align: left;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#dkfkpqzfhp .gt_title {
-  color: #333333;
-  font-size: 30px;
-  font-weight: bold;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#dkfkpqzfhp .gt_subtitle {
-  color: #333333;
-  font-size: 16px;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#dkfkpqzfhp .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 3px;
-  border-top-color: rgba(255, 255, 255, 0);
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-bottom-color: rgba(255, 255, 255, 0);
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 80%;
-  font-weight: bolder;
-  text-transform: uppercase;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 6px;
-  padding-bottom: 7px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#dkfkpqzfhp .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 80%;
-  font-weight: bolder;
-  text-transform: uppercase;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#dkfkpqzfhp .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#dkfkpqzfhp .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#dkfkpqzfhp .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-bottom-color: rgba(255, 255, 255, 0);
-  vertical-align: bottom;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#dkfkpqzfhp .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 80%;
-  font-weight: bolder;
-  text-transform: uppercase;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#dkfkpqzfhp .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 80%;
-  font-weight: bolder;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#dkfkpqzfhp .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#dkfkpqzfhp .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#dkfkpqzfhp .gt_row {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: rgba(255, 255, 255, 0);
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#dkfkpqzfhp .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 80%;
-  font-weight: bolder;
-  text-transform: uppercase;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dkfkpqzfhp .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#dkfkpqzfhp .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#dkfkpqzfhp .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dkfkpqzfhp .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#dkfkpqzfhp .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dkfkpqzfhp .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_striped {
-  background-color: #F5F5F5;
-}
-
-#dkfkpqzfhp .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dkfkpqzfhp .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dkfkpqzfhp .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dkfkpqzfhp .gt_left {
-  text-align: left;
-}
-
-#dkfkpqzfhp .gt_center {
-  text-align: center;
-}
-
-#dkfkpqzfhp .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#dkfkpqzfhp .gt_font_normal {
-  font-weight: normal;
-}
-
-#dkfkpqzfhp .gt_font_bold {
-  font-weight: bold;
-}
-
-#dkfkpqzfhp .gt_font_italic {
-  font-style: italic;
-}
-
-#dkfkpqzfhp .gt_super {
-  font-size: 65%;
-}
-
-#dkfkpqzfhp .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 75%;
-  vertical-align: 0.4em;
-}
-
-#dkfkpqzfhp .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#dkfkpqzfhp .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#dkfkpqzfhp .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#dkfkpqzfhp .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#dkfkpqzfhp .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#dkfkpqzfhp .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead class="gt_col_headings">
-<tr class="header">
-<th colspan="3" id="Clustered Running Backs" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><span class="gt_column_spanner">Clustered Running Backs</span></th>
-</tr>
-<tr class="odd">
-<th id="Running Back" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">Running Back</th>
-<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col"></th>
-<th id="Team" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="background-color: #585D63; color: #FFFFFF; font-size: 10px; font-weight: bold; border-bottom-width: 2.5px; border-bottom-style: solid; border-bottom-color: #585d63" scope="col">Team</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd gt_group_heading_row">
-<td colspan="3" id="Cluster 1 - Feast or Famine" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">Cluster 1 - Feast or Famine</td>
-</tr>
-<tr class="even gt_row_group_first">
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  player">Aaron Jones</td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/oo8yixhsahh4gznox7th" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Green_Bay_Packers_logo.svg/100px-Green_Bay_Packers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  player">Christian McCaffrey</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/navqer4chxxut5povzzw" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/San_Francisco_49ers_logo.svg/100px-San_Francisco_49ers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  player">Josh Jacobs</td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/sagoqkubeaz5yht01ow7" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/48/Las_Vegas_Raiders_logo.svg/100px-Las_Vegas_Raiders_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  player">Nick Chubb</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/a8ib0haur75wrhqrbtyo" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d9/Cleveland_Browns_logo.svg/100px-Cleveland_Browns_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  player">Raheem Mostert</td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/g6j057yduej7p98lk1br" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Miami_Dolphins_logo.svg/100px-Miami_Dolphins_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  player">Rhamondre Stevenson</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/ro2fqabc4qndtnxykvm7" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/New_England_Patriots_logo.svg/100px-New_England_Patriots_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  player">Tony Pollard</td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/rvesbybzmlucxce3hkwf" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Dallas_Cowboys.svg/100px-Dallas_Cowboys.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  player">Travis Etienne</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/d8xhoicgjybtyvttcxhu" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 1 - Feast or Famine  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/74/Jacksonville_Jaguars_logo.svg/100px-Jacksonville_Jaguars_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even gt_group_heading_row">
-<td colspan="3" id="Cluster 2 - Blue Collar Backs" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">Cluster 2 - Blue Collar Backs</td>
-</tr>
-<tr class="odd gt_row_group_first">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">A.J. Dillon</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/w270owegdowada3phhr2" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Green_Bay_Packers_logo.svg/100px-Green_Bay_Packers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  player">D'Onta Foreman</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/kvowcl8ebdanhiuiwcrp" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Carolina_Panthers_logo.svg/100px-Carolina_Panthers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">Devin Singletary</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/d9ifpvw57zivczxlpxdh" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/77/Buffalo_Bills_logo.svg/189px-Buffalo_Bills_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  player">Ezekiel Elliott</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/eazag7iwciy9ari8hoju" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Dallas_Cowboys.svg/100px-Dallas_Cowboys.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">Jamaal Williams</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/hl8dsrs7awapodhiwvgn" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Detroit_Lions_logo.svg/100px-Detroit_Lions_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  player">James Conner</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/taqsrcjxasdwhdmhallf" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Arizona_Cardinals_logo.svg/179px-Arizona_Cardinals_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">Jeff Wilson Jr.</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/rq7a1zluwjhoxrsuhpgi" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Miami_Dolphins_logo.svg/100px-Miami_Dolphins_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  player">Joe Mixon</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/rd210pq6ch22vpoygtfn" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Cincinnati_Bengals_logo.svg/100px-Cincinnati_Bengals_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">Latavius Murray</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/e0c55kmyf6le5v6jmmrm" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Denver_Broncos_logo.svg/100px-Denver_Broncos_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  player">Miles Sanders</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/byt89vdiisuyc8of2kcn" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/Philadelphia_Eagles_logo.svg/100px-Philadelphia_Eagles_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  player">Saquon Barkley</td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/o8tlhps5u1tvnaaxlpjk" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 2 - Blue Collar Backs  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/New_York_Giants_logo.svg/100px-New_York_Giants_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even gt_group_heading_row">
-<td colspan="3" id="Cluster 3 - Cautious Carriers" class="gt_group_heading" data-quarto-table-cell-role="th" scope="colgroup">Cluster 3 - Cautious Carriers</td>
-</tr>
-<tr class="odd gt_row_group_first">
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  player">Alvin Kamara</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/uulstglrpmhqsvqyr5v3" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/New_Orleans_Saints_logo.svg/98px-New_Orleans_Saints_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  player">Austin Ekeler</td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/tl0nhc7kyf4aumbyzs5b" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/72/NFL_Chargers_logo.svg/100px-NFL_Chargers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  player">Cam Akers</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/mxqasyvni1bgyvxxhx4i" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/Los_Angeles_Rams_logo.svg/100px-Los_Angeles_Rams_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  player">Dalvin Cook</td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/gfwvqolvz9vegp1amhf3" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/48/Minnesota_Vikings_logo.svg/98px-Minnesota_Vikings_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  player">David Montgomery</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/sqahircgbz406rjbglpe" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chicago_Bears_logo.svg/100px-Chicago_Bears_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  player">Derrick Henry</td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/lvdvmkqltz7zz7fjtopr" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://github.com/nflverse/nflverse-pbp/raw/master/titans.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  player">Jonathan Taylor</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/vts6mscfg5le5zugxbtj" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Indianapolis_Colts_logo.svg/100px-Indianapolis_Colts_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  player">Leonard Fournette</td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/atxppoc7zqcjnbnk0awz" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/Tampa_Bay_Buccaneers_logo.svg/100px-Tampa_Bay_Buccaneers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  player">Najee Harris</td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  headshot_url"><img src="https://static.www.nfl.com/image/private/f_auto,q_auto/league/lj0qlwa2pvyrihyiriox" class="img-fluid" style="height:25px;"></td>
-<td class="gt_row gt_center gt_striped" headers="Cluster 3 - Cautious Carriers  team_logo_wikipedia"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Pittsburgh_Steelers_logo.svg/100px-Pittsburgh_Steelers_logo.svg.png" class="img-fluid" style="height:25px;"></td>
-</tr>
-</tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
-<td colspan="3" class="gt_sourcenote">
-<strong>An Introduction to NFL Analytics with R</strong><br><em>Brad J. Congelio</em>
-</td>
-</tr></tfoot>
-</table>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/rushers_tables.png" class="img-fluid figure-img" style="width:6in"></p>
+</figure>
 </div>
-</div>
-</section></section><section id="creating-an-xgboost-model-for-rushing-yards-over-expected" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="creating-an-xgboost-model-for-rushing-yards-over-expected">
-<span class="header-section-number">6.3.2</span> Creating an XGBoost Model for Rushing Yards over Expected</h3>
+</section></section><section id="creating-an-xgboost-model-for-rushing-yards-over-expected" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="creating-an-xgboost-model-for-rushing-yards-over-expected">
+<span class="header-section-number">5.3.2</span> Creating an XGBoost Model for Rushing Yards over Expected</h3>
 <p>Back in January of 2021, Tej Seth posted an article to the <a href="https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/">Michigan Football Analytics Society blog</a> that outlined his vision for creating a “public expected rushing yards model.” The structure of his model, as explained by Tej, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowl, who previously used the college football equivalent of open-source data (<a href="https://cfbfastr.sportsdataverse.org/"><code>cfbfastR</code></a>) to create an RYOE model for the collegiate game.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In Tej’s case, his approach to created an NFL-centric RYOE model culminated with the creation of his <a href="https://mfbanalytics.shinyapps.io/RYOE/">RYOE Shiny App</a> that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.</p>
-<p>Despite a slightly intimidating title, rushing yards over expected is a fantastic entry point into exploring model creation and analysis in NFL analytics - in fact, the growing number of “over expected” metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greerre, the owner of <a href="https://www.nfeloapp.com/">nfeloapp.com</a> - a website that provides “data-driven analytics, picks, and predictions for the NFL” - explains that over expected metrics are a increasingly popular avenue in which analysts can “paint a more accurate picture of performance by adjusting familiar statistics like ‘completion percentage’ or ‘yards per rush’ for conflating factors like degree of difficulty or game text” <span class="citation" data-cites="nfelo">(<a href="references.html#ref-nfelo" role="doc-biblioref">Greerre 2022</a>)</span>.</p>
+<p>Despite a slightly intimidating title, rushing yards over expected is a fantastic entry point into exploring model creation and analysis in NFL analytics - in fact, the growing number of “over expected” metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greerre, the owner of <a href="https://www.nfeloapp.com/">nfeloapp.com</a> - a website that provides “data-driven analytics, picks, and predictions for the NFL” - explains that over expected metrics are a increasingly popular avenue in which analysts can “paint a more accurate picture of performance by adjusting familiar statistics like ‘completion percentage’ or ‘yards per rush’ for conflating factors like degree of difficulty or game text” <span class="citation" data-cites="nfelo">(<a href="#ref-nfelo" role="doc-biblioref">Greerre 2022</a>)</span>.</p>
 <p>Some of these metrics, like completion percentage over expected (CPOE), are widely accepted. Specifically, CPOE calculates how likely any quarterback’s pass is going to be complete or incomplete compared to other passing attempts. It is considered “widely accepted” because the metric itself is considered “stable” in that the r-squared value retains a strong correlation for individual quarterbacks across several seasons. In fact, as Greerre points out, the r-squared value for CPOE for just one season is 0.226 which is extremely strong based on NFL analytics standards.</p>
 <p>On the other hand, RYOE - based on Greerre’s analysis - maintains an r-squared value below 0.15 until a running back’s fourth season, wherein the average improves to 0.263 (an otherwise stable value). But that does not mean that RYOE is not a metric worth further exploration. The effectiveness of any one metric to account for factors such as degree of difficulty or game text largely relies on our ability to provide adequate feature engineering - specifically, how much relevant data the machine learning model can ingest to begin making predictions.</p>
 <p>Because of that, significant machine learning models have been built with information provided by the NFL’s Big Data Bowl as it is the one chance that the public receives to feature engineer with the NFL’s tracking data (wherein a player’s position, speed, direction, etc. is tracked and recorded every 1/10th of a second). Unfortunately, only small windows of data exist from the Big Data Bowl releases and, as a result, we are often required to find creative ways to provide further context to each play/player for the machine learning model.</p>
@@ -3112,16 +2517,16 @@ Important
 </div>
 <p>Just like the model we will be building in this chapter, Tej constructed his model via eXtreme Gradient Boosting.</p>
 <p>Which may lead to a very obvious question if you are new to machine learning: <strong>what exactly <em>is</em> eXtreme Gradient Boosting?</strong></p>
-<section id="extreme-gradient-boosting-explained" class="level4" data-number="6.3.2.1"><h4 data-number="6.3.2.1" class="anchored" data-anchor-id="extreme-gradient-boosting-explained">
-<span class="header-section-number">6.3.2.1</span> eXtreme Gradient Boosting Explained</h4>
+<section id="extreme-gradient-boosting-explained" class="level4" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="extreme-gradient-boosting-explained">
+<span class="header-section-number">5.3.2.1</span> eXtreme Gradient Boosting Explained</h4>
 <p>eXtreme Gradient Boosting is a powerful machine learning technique that is particularly good at solving supervised machine learning problems, such as classification (categorizing data into classes, for example) and regression (predicting numerical values).</p>
 <p>eXtreme Gradient Boosting can be thought of as an “expert team” that combines the knowledge and skills of multiple “individual experts” to make better decisions or predictions. Each of these “experts” in this context is what we call a decision tree, which is a flowchart structure used for making decisions based on a series of question about the data.</p>
 <p>Once provided data, XGBoost seeks to iteratively build a collection of “bad” decision trees and then build an ensemble of these poor ones into a more accurate and robust model. The term “gradient” comes from the fact that the algorithm uses the gradient (or the slope) of the loss function (a measure of how well the model fits the data) to guide the learning process.</p>
-</section><section id="xtreme-gradient-boosting-with-tidymodels" class="level4" data-number="6.3.2.2"><h4 data-number="6.3.2.2" class="anchored" data-anchor-id="xtreme-gradient-boosting-with-tidymodels">
-<span class="header-section-number">6.3.2.2</span> Xtreme Gradient Boosting with Tidymodels</h4>
+</section><section id="xtreme-gradient-boosting-with-tidymodels" class="level4" data-number="5.3.2.2"><h4 data-number="5.3.2.2" class="anchored" data-anchor-id="xtreme-gradient-boosting-with-tidymodels">
+<span class="header-section-number">5.3.2.2</span> Xtreme Gradient Boosting with Tidymodels</h4>
 <p>As always, the first step in the modeling process is gathering the data and conducting the necessary feature engineering. In the case of our XGBoost model, we will gather play-by-play data from the 2016-2022 season and begin the work of creating additional metrics from the information contained in the data.</p>
-<section id="data-preparation-and-feature-engineering" class="level5" data-number="6.3.2.2.1"><h5 data-number="6.3.2.2.1" class="anchored" data-anchor-id="data-preparation-and-feature-engineering">
-<span class="header-section-number">6.3.2.2.1</span> Data Preparation and Feature Engineering</h5>
+<section id="data-preparation-and-feature-engineering" class="level5" data-number="5.3.2.2.1"><h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="data-preparation-and-feature-engineering">
+<span class="header-section-number">5.3.2.2.1</span> Data Preparation and Feature Engineering</h5>
 <div class="cell">
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2016</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
@@ -3243,8 +2648,8 @@ Important
 <span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.character</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the last step of data preparation, we use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to remove any plays that took place in overtime, turn the created binary variables into factors using <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> and then created a data frame called <code>rushes</code> to use in our model that excludes identifying information and turns any remaining character variables into factors as well.</p>
-</section><section id="model-creation-in-tidymodels" class="level5" data-number="6.3.2.2.2"><h5 data-number="6.3.2.2.2" class="anchored" data-anchor-id="model-creation-in-tidymodels">
-<span class="header-section-number">6.3.2.2.2</span> Model Creation in <code>tidymodels</code>
+</section><section id="model-creation-in-tidymodels" class="level5" data-number="5.3.2.2.2"><h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="model-creation-in-tidymodels">
+<span class="header-section-number">5.3.2.2.2</span> Model Creation in <code>tidymodels</code>
 </h5>
 <p>To begin creating the model, we will follow much the same steps as we did in creating our multinomial regression by following the <code>tidymodels</code> framework which needs split data, folds for cross-validation, a recipe, a model specification, a grid for hyperparameter tuning, and a workflow that combines all these elements. Using the <code>rushes</code> data frame, we use the <code>rsample</code> packages to create an initial split of the data and then produce the model’s training and testing data sets from that split. Lastly, we utilize the <code>vfold_cv()</code> function to create folds of the training data to pass into the hyperparameter tuning grid.</p>
 <div class="cell">
@@ -3415,7 +2820,8 @@ Note
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Actual Rushing Yards vs. Expected Rushing Yards**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2016 - 2022 | Model: LightGBM*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Actual Rushing Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Expected Rushing Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -3476,19 +2882,18 @@ Note
 <span>                  fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Rushing Yards over Expected Leader Per Season**"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"*2016 - 2022 | Model: LightGBM*"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Actual Rushing Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Expected Rushing Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">season</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>, family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
 <span>        strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#F6F6F6"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+</div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/ryoe-season-leaders-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="images/ryoe_per_season.png" class="img-fluid figure-img" style="width:6in"></p>
 </figure>
-</div>
-</div>
 </div>
 <p>Last, given the success of Jonathan Taylor’s 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against the his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.</p>
 <div class="cell">
@@ -3519,16 +2924,19 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, label <span class="op">=</span> <span class="st">"Cumulative Actual Yards"</span>, x <span class="op">=</span> <span class="fl">200</span>, y <span class="op">=</span> <span class="fl">1050</span>,</span>
-<span>           angle <span class="op">=</span> <span class="fl">38</span>, family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>           angle <span class="op">=</span> <span class="fl">30</span>, family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, label <span class="op">=</span> <span class="st">"Cumulative Expected Yards"</span>, x <span class="op">=</span> <span class="fl">200</span>, y <span class="op">=</span> <span class="fl">700</span>,</span>
-<span>           angle <span class="op">=</span> <span class="fl">35</span>, family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>           angle <span class="op">=</span> <span class="fl">30</span>, family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotation_custom.html">annotation_custom</a></span><span class="op">(</span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html">rasterGrob</a></span><span class="op">(</span><span class="va">j_taylor_image</span>, </span>
 <span>                               width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>,<span class="st">"npc"</span><span class="op">)</span>, </span>
 <span>                               height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>,<span class="st">"npc"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                    <span class="fl">175</span>, <span class="fl">375</span>, <span class="fl">0</span>, <span class="fl">1000</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Jonathan Taylor: 2021 Cumulative Actual Yards vs. Expected Yards**"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"*Model: **LightGBM** Using ***boost_trees()*** in ***tidymodels****"</span>,</span>
-<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;**Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Jonathan Taylor: 2021 Cumulative Actual Yards</span></span>
+<span><span class="st">       vs. Expected Yards**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Model: **LightGBM** Using ***boost_trees()***</span></span>
+<span><span class="st">       in ***tidymodels****"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
+<span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Cumulative Rushes in 2021 Season"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Cumulative Actual Yards and Expected Yards"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3539,11 +2947,11 @@ Note
 </div>
 </div>
 </div>
-</section></section></section></section><section id="exercises" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">6.4</span> Exercises</h2>
+</section></section></section></section><section id="exercises" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">5.4</span> Exercises</h2>
 <p>The answers for the following answers can be found here: <a href="http://nfl-book.bradcongelio.com/ch5-answers" class="uri">http://nfl-book.bradcongelio.com/ch5-answers</a>.</p>
-<section id="exercise-1" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="exercise-1">
-<span class="header-section-number">6.4.1</span> Exercise 1</h3>
+<section id="exercise-1" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">5.4.1</span> Exercise 1</h3>
 <p>First, run the code below to create the data frame titled <code>fieldgoal_regression</code></p>
 <div class="cell">
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -3556,12 +2964,12 @@ Note
 <span>    <span class="va">field_goal_result</span> <span class="op">==</span> <span class="st">"made"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Using the data, construct a generalized linear model (<code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>) with the <code>family</code> set to <code>binomial</code>. Use <code>field_goal_result</code> as the target variable and <code>kick_distance</code> as the predictor. View the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
-</section><section id="exercise-2" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="exercise-2">
-<span class="header-section-number">6.4.2</span> Exercise 2</h3>
+</section><section id="exercise-2" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">5.4.2</span> Exercise 2</h3>
 <p>Reproduce the above model into a data frame called <code>fieldgoal_regression_2</code> and include information pertaining to the field playing surface, the temperature, and the wind. Use <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> to exclude those plays with missing information. After, rerun the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> model and view the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-nfelo" class="csl-entry" role="listitem">
 Greerre, Robby. 2022. <span>“Over Expected Metrics Explained – What Are CPOE, RYOE, and YACOE.”</span> <a href="https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/">https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/</a>.
 </div>
@@ -3810,24 +3218,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./04-nfl-analytics-visualization.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./a1-nfl-analytics-dictionary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
-  </div>
-</footer>
+
 
 
 </body></html>

@@ -18,7 +18,6 @@ style_data <- function(dat, n_rows = NULL, caption = NULL) {
 
 ### creating theme used in ggplot
 nfl_analytics_theme <- function(..., base_size = 12) {
-  
   theme(
     text = element_text(family = "Roboto", size = base_size, color = "black"),
     axis.ticks = element_blank(),

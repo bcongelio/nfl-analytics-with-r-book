@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>An Introduction to NFL Analytics with R - 3&nbsp; Wrangling NFL Data in the tidyverse</title>
+<title>Introduction to NFL Analytics with R - 2&nbsp; Wrangling NFL Data in the tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,13 +108,7 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0ZLEFZL898"></script><script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
-</script>
+}</script>
 </head>
 <body class="nav-sidebar floating">
 
@@ -123,7 +117,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-nfl-analytics-tidyverse.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the `tidyverse`</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-nfl-analytics-tidyverse.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the `tidyverse`</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -134,7 +128,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">An Introduction to NFL Analytics with R</a> 
+      <a href="./">Introduction to NFL Analytics with R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -173,43 +167,37 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-nfl-analytics-and-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-nfl-analytics-tidyverse.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-nfl-analytics-functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-nfl-analytics-visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-nfl-analytics-advanced-methods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -244,44 +232,44 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"><span class="header-section-number">3.1</span> Downloading R and RStudio</a>
+<a href="#downloading-r-and-rstudio" id="toc-downloading-r-and-rstudio" class="nav-link active" data-scroll-target="#downloading-r-and-rstudio"><span class="header-section-number">2.1</span> Downloading R and RStudio</a>
   <ul class="collapse">
-<li><a href="#downloading-r" id="toc-downloading-r" class="nav-link" data-scroll-target="#downloading-r"><span class="header-section-number">3.1.1</span> Downloading R</a></li>
-  <li><a href="#downloading-rstudio" id="toc-downloading-rstudio" class="nav-link" data-scroll-target="#downloading-rstudio"><span class="header-section-number">3.1.2</span> Downloading RStudio</a></li>
-  <li><a href="#the-layout-of-rstudio" id="toc-the-layout-of-rstudio" class="nav-link" data-scroll-target="#the-layout-of-rstudio"><span class="header-section-number">3.1.3</span> The Layout of RStudio</a></li>
-  <li><a href="#running-code-in-rstudio" id="toc-running-code-in-rstudio" class="nav-link" data-scroll-target="#running-code-in-rstudio"><span class="header-section-number">3.1.4</span> Running Code in RStudio</a></li>
+<li><a href="#downloading-r" id="toc-downloading-r" class="nav-link" data-scroll-target="#downloading-r"><span class="header-section-number">2.1.1</span> Downloading R</a></li>
+  <li><a href="#downloading-rstudio" id="toc-downloading-rstudio" class="nav-link" data-scroll-target="#downloading-rstudio"><span class="header-section-number">2.1.2</span> Downloading RStudio</a></li>
+  <li><a href="#the-layout-of-rstudio" id="toc-the-layout-of-rstudio" class="nav-link" data-scroll-target="#the-layout-of-rstudio"><span class="header-section-number">2.1.3</span> The Layout of RStudio</a></li>
+  <li><a href="#running-code-in-rstudio" id="toc-running-code-in-rstudio" class="nav-link" data-scroll-target="#running-code-in-rstudio"><span class="header-section-number">2.1.4</span> Running Code in RStudio</a></li>
   </ul>
 </li>
-  <li><a href="#installing-and-loading-necessary-packages" id="toc-installing-and-loading-necessary-packages" class="nav-link" data-scroll-target="#installing-and-loading-necessary-packages"><span class="header-section-number">3.2</span> Installing and Loading Necessary Packages</a></li>
-  <li><a href="#the-tidyverse-and-its-verbs" id="toc-the-tidyverse-and-its-verbs" class="nav-link" data-scroll-target="#the-tidyverse-and-its-verbs"><span class="header-section-number">3.3</span> The <code>tidyverse</code> and Its Verbs</a></li>
-  <li><a href="#the-flow-of-the-tidyverse" id="toc-the-flow-of-the-tidyverse" class="nav-link" data-scroll-target="#the-flow-of-the-tidyverse"><span class="header-section-number">3.4</span> The Flow of the <code>tidyverse</code></a></li>
+  <li><a href="#installing-and-loading-necessary-packages" id="toc-installing-and-loading-necessary-packages" class="nav-link" data-scroll-target="#installing-and-loading-necessary-packages"><span class="header-section-number">2.2</span> Installing and Loading Necessary Packages</a></li>
+  <li><a href="#the-tidyverse-and-its-verbs" id="toc-the-tidyverse-and-its-verbs" class="nav-link" data-scroll-target="#the-tidyverse-and-its-verbs"><span class="header-section-number">2.3</span> The <code>tidyverse</code> and Its Verbs</a></li>
+  <li><a href="#the-flow-of-the-tidyverse" id="toc-the-flow-of-the-tidyverse" class="nav-link" data-scroll-target="#the-flow-of-the-tidyverse"><span class="header-section-number">2.4</span> The Flow of the <code>tidyverse</code></a></li>
   <li>
-<a href="#working-with-nfl-data-and-the-dplyr-verbs" id="toc-working-with-nfl-data-and-the-dplyr-verbs" class="nav-link" data-scroll-target="#working-with-nfl-data-and-the-dplyr-verbs"><span class="header-section-number">3.5</span> Working With NFL Data and the <code>dplyr</code> Verbs</a>
+<a href="#working-with-nfl-data-and-the-dplyr-verbs" id="toc-working-with-nfl-data-and-the-dplyr-verbs" class="nav-link" data-scroll-target="#working-with-nfl-data-and-the-dplyr-verbs"><span class="header-section-number">2.5</span> Working With NFL Data and the <code>dplyr</code> Verbs</a>
   <ul class="collapse">
-<li><a href="#nfl-data-and-the-filter-verb" id="toc-nfl-data-and-the-filter-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-filter-verb"><span class="header-section-number">3.5.1</span> NFL Data and the <code>filter()</code> verb</a></li>
-  <li><a href="#nfl-data-and-the-group_by-verb" id="toc-nfl-data-and-the-group_by-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-group_by-verb"><span class="header-section-number">3.5.2</span> NFL Data and the <code>group_by()</code> verb</a></li>
-  <li><a href="#nfl-data-and-the-summarize-verb" id="toc-nfl-data-and-the-summarize-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-summarize-verb"><span class="header-section-number">3.5.3</span> NFL Data and the <code>summarize()</code> verb</a></li>
-  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="header-section-number">3.5.4</span> NFL Data and the <code>mutate()</code> verb</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#core-skills-for-tidy-data" id="toc-core-skills-for-tidy-data" class="nav-link" data-scroll-target="#core-skills-for-tidy-data"><span class="header-section-number">3.6</span> Core Skills for Tidy Data</a>
-  <ul class="collapse">
-<li><a href="#importing-and-conducting-exploratory-data-analysis" id="toc-importing-and-conducting-exploratory-data-analysis" class="nav-link" data-scroll-target="#importing-and-conducting-exploratory-data-analysis"><span class="header-section-number">3.6.1</span> Importing and Conducting Exploratory Data Analysis</a></li>
-  <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="header-section-number">3.6.2</span> Dealing with Missing Data</a></li>
-  <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="header-section-number">3.6.3</span> Changing Variable Types</a></li>
-  <li><a href="#correct-and-create-new-variables-using-mutate" id="toc-correct-and-create-new-variables-using-mutate" class="nav-link" data-scroll-target="#correct-and-create-new-variables-using-mutate"><span class="header-section-number">3.6.4</span> Correct and Create New Variables Using <code>mutate</code></a></li>
-  <li><a href="#merging-datasets-with-dplyr-and-mutating-joins" id="toc-merging-datasets-with-dplyr-and-mutating-joins" class="nav-link" data-scroll-target="#merging-datasets-with-dplyr-and-mutating-joins"><span class="header-section-number">3.6.5</span> Merging Datasets with <code>dplyr</code> and Mutating Joins</a></li>
+<li><a href="#nfl-data-and-the-filter-verb" id="toc-nfl-data-and-the-filter-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-filter-verb"><span class="header-section-number">2.5.1</span> NFL Data and the <code>filter()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-group_by-verb" id="toc-nfl-data-and-the-group_by-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-group_by-verb"><span class="header-section-number">2.5.2</span> NFL Data and the <code>group_by()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-summarize-verb" id="toc-nfl-data-and-the-summarize-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-summarize-verb"><span class="header-section-number">2.5.3</span> NFL Data and the <code>summarize()</code> verb</a></li>
+  <li><a href="#nfl-data-and-the-mutate-verb" id="toc-nfl-data-and-the-mutate-verb" class="nav-link" data-scroll-target="#nfl-data-and-the-mutate-verb"><span class="header-section-number">2.5.4</span> NFL Data and the <code>mutate()</code> verb</a></li>
   </ul>
 </li>
   <li>
-<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.7</span> Exercises</a>
+<a href="#core-skills-for-tidy-data" id="toc-core-skills-for-tidy-data" class="nav-link" data-scroll-target="#core-skills-for-tidy-data"><span class="header-section-number">2.6</span> Core Skills for Tidy Data</a>
   <ul class="collapse">
-<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">3.7.1</span> <strong>Exercise 1</strong></a></li>
-  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">3.7.2</span> <strong>Exercise 2</strong></a></li>
-  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">3.7.3</span> <strong>Exercise 3</strong></a></li>
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">3.7.4</span> <strong>Exercise 4</strong></a></li>
-  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">3.7.5</span> <strong>Exercise 5</strong></a></li>
+<li><a href="#importing-and-conducting-exploratory-data-analysis" id="toc-importing-and-conducting-exploratory-data-analysis" class="nav-link" data-scroll-target="#importing-and-conducting-exploratory-data-analysis"><span class="header-section-number">2.6.1</span> Importing and Conducting Exploratory Data Analysis</a></li>
+  <li><a href="#dealing-with-missing-data" id="toc-dealing-with-missing-data" class="nav-link" data-scroll-target="#dealing-with-missing-data"><span class="header-section-number">2.6.2</span> Dealing with Missing Data</a></li>
+  <li><a href="#changing-variable-types" id="toc-changing-variable-types" class="nav-link" data-scroll-target="#changing-variable-types"><span class="header-section-number">2.6.3</span> Changing Variable Types</a></li>
+  <li><a href="#correct-and-create-new-variables-using-mutate" id="toc-correct-and-create-new-variables-using-mutate" class="nav-link" data-scroll-target="#correct-and-create-new-variables-using-mutate"><span class="header-section-number">2.6.4</span> Correct and Create New Variables Using <code>mutate</code></a></li>
+  <li><a href="#merging-datasets-with-dplyr-and-mutating-joins" id="toc-merging-datasets-with-dplyr-and-mutating-joins" class="nav-link" data-scroll-target="#merging-datasets-with-dplyr-and-mutating-joins"><span class="header-section-number">2.6.5</span> Merging Datasets with <code>dplyr</code> and Mutating Joins</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.7</span> Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">2.7.1</span> <strong>Exercise 1</strong></a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">2.7.2</span> <strong>Exercise 2</strong></a></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">2.7.3</span> <strong>Exercise 3</strong></a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">2.7.4</span> <strong>Exercise 4</strong></a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">2.7.5</span> <strong>Exercise 5</strong></a></li>
   </ul>
 </li>
   </ul></nav>
@@ -289,7 +277,7 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wrangling NFL Data in the <code>tidyverse</code></span>
 </h1>
 </div>
 
@@ -303,8 +291,8 @@ gtag('config', 'G-0ZLEFZL898', { 'anonymize_ip': true});
   </div>
   
 
-</header><section id="downloading-r-and-rstudio" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="downloading-r-and-rstudio">
-<span class="header-section-number">3.1</span> Downloading R and RStudio</h2>
+</header><section id="downloading-r-and-rstudio" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="downloading-r-and-rstudio">
+<span class="header-section-number">2.1</span> Downloading R and RStudio</h2>
 <p>Prior to downloading R and RStudio, it is important to explain the difference between the two, as they are separate pieces of our analytics puzzle that are used for differing purposes. R is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer’s command line, it is also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.</p>
 <p>RStudio is free to download and use and provides a user-friendly interface for writing R code, organizing projects and files, and working with both big and small data. Regularly updated by the <a href="https://posit.co/">Posit team</a>, RStudio includes many features that are specifically designed to making working with R easier, including syntax highlighting, code suggestions, robust debugging tools, and a built-in package manager.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -320,8 +308,8 @@ Important
 <p>It is important that you download and successfully install R before proceeding to install RStudio on your computer.</p>
 </div>
 </div>
-<section id="downloading-r" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="downloading-r">
-<span class="header-section-number">3.1.1</span> Downloading R</h3>
+<section id="downloading-r" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="downloading-r">
+<span class="header-section-number">2.1.1</span> Downloading R</h3>
 <ol type="1">
 <li>To download R, visit the official R website at <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>
 </li>
@@ -330,16 +318,16 @@ Important
 <li>Click on the version of R that is appropriate for your operating system (Linux, macOS, or Windows).</li>
 <li>Select the ‘base’ option to download an updated version of R to your computer.</li>
 <li>Open the downloaded file and follow the provided installation instructions.</li>
-</ol></section><section id="downloading-rstudio" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="downloading-rstudio">
-<span class="header-section-number">3.1.2</span> Downloading RStudio</h3>
+</ol></section><section id="downloading-rstudio" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="downloading-rstudio">
+<span class="header-section-number">2.1.2</span> Downloading RStudio</h3>
 <ol type="1">
 <li>To download RStudio, visit the official RStudio website at <a href="https://posit.co" class="uri">https://posit.co</a>
 </li>
 <li>Click on the ‘Download RStudio’ button in the top-right of the page.</li>
 <li>Scroll down and select ‘Download’ within the ‘RStudio Desktop - Free’ box.</li>
 <li>Open the downloaded file and follow the provided installation instructions.</li>
-</ol></section><section id="the-layout-of-rstudio" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="the-layout-of-rstudio">
-<span class="header-section-number">3.1.3</span> The Layout of RStudio</h3>
+</ol></section><section id="the-layout-of-rstudio" class="level3" data-number="2.1.3"><h3 data-number="2.1.3" class="anchored" data-anchor-id="the-layout-of-rstudio">
+<span class="header-section-number">2.1.3</span> The Layout of RStudio</h3>
 <p>When you open RStudio for the first time, you will see the interface laid out as in the picture below (sourced from the <a href="https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html">official RStudio documentation from posit</a>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/rstudio-panes-with-labels.jpeg" class="img-fluid figure-img" width="440"></p>
@@ -355,8 +343,8 @@ Important
 <strong>Environment and history pane</strong>: this pane, in the upper-right, displays information about the current R environment and command history. Perhaps more important, it displays the information of all the R-created objects currently stored in your computer’s memory including data sets, vectors, lists, etc.</li>
 <li>
 <strong>Files, plots, packages, and help pane</strong>: in the bottom-right, this pane provides access to numerous RStudio tools and resources including the ability to browse and navigate through the files and folders on your computer and view the output of plots and graphics. As well, the ‘Packages’ tab gives you the ability to manage any R packages that you have installed on your system and to view each packages’ help documentation.</li>
-</ol></section><section id="running-code-in-rstudio" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="running-code-in-rstudio">
-<span class="header-section-number">3.1.4</span> Running Code in RStudio</h3>
+</ol></section><section id="running-code-in-rstudio" class="level3" data-number="2.1.4"><h3 data-number="2.1.4" class="anchored" data-anchor-id="running-code-in-rstudio">
+<span class="header-section-number">2.1.4</span> Running Code in RStudio</h3>
 <p>To begin writing code in RStudio you first need to open a new R script. To do so, select ‘File -&gt; New File -&gt; R Script.’ A new script tab, titled <code>Untitled 1</code> will open in your RStudio’s source pane. To run a line of code - or multiple lines of code - you can do one of two options:</p>
 <ol type="1">
 <li>Place your cursor directly at the end of the last line of code, or highlight all the code you wish to run, and press ‘Ctrl + Enter’ (Windows) or ‘Command + Enter’ (Mac).</li>
@@ -386,8 +374,8 @@ Tip
 <p>In any case, when you see the <code>+</code> in the console, simply use your mouse to click within the console and hit your keyboard’s escape key. Doing so exits the prompt and resets the console to include the <code>&gt;</code> symbol.</p>
 </div>
 </div>
-</section></section><section id="installing-and-loading-necessary-packages" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="installing-and-loading-necessary-packages">
-<span class="header-section-number">3.2</span> Installing and Loading Necessary Packages</h2>
+</section></section><section id="installing-and-loading-necessary-packages" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="installing-and-loading-necessary-packages">
+<span class="header-section-number">2.2</span> Installing and Loading Necessary Packages</h2>
 <p>Installing and loading packages is an important part of working with RStudio, as they provide additional functionality that allow you to more efficiently conduct data analysis and/or modeling. Several packages are widely used through this book, including the ever-important <code>tidyverse</code>, the <code>nflverse</code> family of packages to retrieve NFL statistics and data, and many others such as <code>tidymodels</code> when we tackle building and testing advanced models in Chapter 5.</p>
 <p>To begin, let’s install both <code>tidyverse</code> and <code>nflverse</code>. In your source pane, you can install a package by using the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> function. To complete the code, you simply supply the package name within quotation marks.</p>
 <div class="cell">
@@ -399,32 +387,32 @@ Tip
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nflverse.nflverse.com/">nflverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="the-tidyverse-and-its-verbs" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="the-tidyverse-and-its-verbs">
-<span class="header-section-number">3.3</span> The <code>tidyverse</code> and Its Verbs</h2>
+</section><section id="the-tidyverse-and-its-verbs" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="the-tidyverse-and-its-verbs">
+<span class="header-section-number">2.3</span> The <code>tidyverse</code> and Its Verbs</h2>
 <p>The <code>tidyverse</code>, now installed and loaded within RStudio, is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at Posit, and a varied team of contributors. The goal of the <code>tidyverse</code> is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.</p>
 <p>The core principle of the <code>tidyverse</code> is “tidy data,” which is the development team’s belief in creating a standard way of organizing data sets. To that end, a “tidy” data set is one that is comprised of observations (rows) and variables (columns) with each variable being a distinct piece of information and each observation being a unit of analysis.</p>
 <p>Installing and loading the <code>tidyverse</code> results eight of the core packages automatically being loaded and ready to use:</p>
 <ol type="1">
 <li>
-<strong>dplyr:</strong> “dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.”</li>
+<strong>dplyr</strong><strong>:</strong> “dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.”</li>
 <li>
-<strong>tidyr:</strong> “tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable.”</li>
+<strong>tidyr</strong><strong>:</strong> “tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable.”</li>
 <li>
-<strong>readr:</strong> “readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.”</li>
+<strong>readr</strong><strong>:</strong> “readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.”</li>
 <li>
-<strong>purrr:</strong> “purrr enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive.”</li>
+<strong>purrr</strong><strong>:</strong> “purrr enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive.”</li>
 <li>
 <strong>tibble</strong>: “tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code.”</li>
 <li>
-<strong>stringr:</strong> “stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations.”</li>
+<strong>stringr</strong><strong>:</strong> “stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations.”</li>
 <li>
-<strong>forcats:</strong> “forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values.”</li>
+<strong>forcats</strong><strong>:</strong> “forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values.”</li>
 <li>
-<strong>ggplot2:</strong> “ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details” <span class="citation" data-cites="tidyverse">(<a href="references.html#ref-tidyverse" role="doc-biblioref">Wickham 2022</a>)</span>.</li>
+<strong>ggplot2</strong><strong>:</strong> “ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details” <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham 2022</a>)</span>.</li>
 </ol>
 <p>Aside from the core eight packages, the <code>tidyverse</code> will also install a multiple of other packages such as <code>rvest</code> (for web scraping), <code>readxl</code> (for reading Excel sheets in the RStudio environment), <code>lubridate</code> (a very powerful tool for working with times and dates), and <code>magrittr</code> (the package that provides the pipe <code>%&gt;%</code>). As well, prior versions of the <code>tidyverse</code> utilized the <code>modelr</code> package. Modeling is now handled in the <code>tidyverse</code> by the <code>tidymodels</code> package.</p>
-</section><section id="the-flow-of-the-tidyverse" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="the-flow-of-the-tidyverse">
-<span class="header-section-number">3.4</span> The Flow of the <code>tidyverse</code>
+</section><section id="the-flow-of-the-tidyverse" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="the-flow-of-the-tidyverse">
+<span class="header-section-number">2.4</span> The Flow of the <code>tidyverse</code>
 </h2>
 <p>The underlying design of coding in the <code>tidyverse</code>, aside from the <code>dplyr</code> verbs, are both the assignment statement (<code>&lt;-</code>) and the pipe (<code>%&gt;%</code>). Please note, as mentioned in the book’s Preface, that I still use the pipe (<code>%&gt;%</code>) that is part of the <code>magrittr</code> package and not the native pipe operator (<code>|&gt;</code>) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.</p>
 <p>As I explain to my Sports Analytics students, the language and flow of the <code>tidyverse</code> can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in’s and out’s of the <code>tidyverse</code> in the below section, let’s first dissect an example of the <code>tidyverse</code> workflow.</p>
@@ -450,8 +438,8 @@ Tip
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rusher) <span class="sc">%&gt;%</span> <span class="st">"... and then"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">success_rate =</span> <span class="fu">mean</span>(success))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="working-with-nfl-data-and-the-dplyr-verbs" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="working-with-nfl-data-and-the-dplyr-verbs">
-<span class="header-section-number">3.5</span> Working With NFL Data and the <code>dplyr</code> Verbs</h2>
+</section><section id="working-with-nfl-data-and-the-dplyr-verbs" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="working-with-nfl-data-and-the-dplyr-verbs">
+<span class="header-section-number">2.5</span> Working With NFL Data and the <code>dplyr</code> Verbs</h2>
 <p>Of the packages nestled within the <code>tidyverse</code>, <code>dplyr</code> is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, <code>dplyr</code> is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to use and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four <code>dplyr</code> verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.</p>
 <ol type="1">
 <li>
@@ -463,8 +451,8 @@ Tip
 <li>
 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>: the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verbs allows you to create new variables within your data while also preserving existing ones.</li>
 </ol>
-<section id="nfl-data-and-the-filter-verb" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="nfl-data-and-the-filter-verb">
-<span class="header-section-number">3.5.1</span> NFL Data and the <code>filter()</code> verb</h3>
+<section id="nfl-data-and-the-filter-verb" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="nfl-data-and-the-filter-verb">
+<span class="header-section-number">2.5.1</span> NFL Data and the <code>filter()</code> verb</h3>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb allows you to extract specific rows from your dataset based on one, or multiple, supplied conditions. The conditions are supplied to the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> verb by using logical operators, listed in the below table, that ultimately evaluate to either <code>TRUE</code> or <code>FALSE</code> in each row of the dataset. The <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> process returns a data set that includes only those rows that meet the specified conditions.</p>
 <center>
 <table class="table">
@@ -829,8 +817,8 @@ Tip
 </div>
 </div>
 <p>By filtering out any row that does not include the <code>down</code> for a given play, we correctly calculated the total amount of scrimmage yards - 184,332 - for the 2022 NFL regular season.</p>
-</section><section id="nfl-data-and-the-group_by-verb" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="nfl-data-and-the-group_by-verb">
-<span class="header-section-number">3.5.2</span> NFL Data and the <code>group_by()</code> verb</h3>
+</section><section id="nfl-data-and-the-group_by-verb" class="level3" data-number="2.5.2"><h3 data-number="2.5.2" class="anchored" data-anchor-id="nfl-data-and-the-group_by-verb">
+<span class="header-section-number">2.5.2</span> NFL Data and the <code>group_by()</code> verb</h3>
 <p>As mentioned above, the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb allows you to group data by one or more specific variables in order to retrieve, among other actions, summary statistics. To showcase how <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> is used within the <code>nflverse</code> data, let’s first gather the 2022 regular season statistics and then use the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb to get the average success rate on rushing plays.</p>
 <p>As well, we immediately make use of the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function to sort the data : (1.) we first instruct to <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> the data to include just those instances where the <code>play_type</code> equals <code>run</code>, (2.) we then say it must also be <code>play == 1</code>, meaning there was no penalty or other interruption that “cancelled out” the play, and (3.) we lastly pass the argument that the <code>down</code> cannot be missing by using <code>!is.na</code> as a missing down is indicative of a two-point conversion attempt.</p>
 <div class="cell">
@@ -958,8 +946,8 @@ Caution
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">season</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_yac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">yards_after_catch</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="nfl-data-and-the-summarize-verb" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="nfl-data-and-the-summarize-verb">
-<span class="header-section-number">3.5.3</span> NFL Data and the <code>summarize()</code> verb</h3>
+</section><section id="nfl-data-and-the-summarize-verb" class="level3" data-number="2.5.3"><h3 data-number="2.5.3" class="anchored" data-anchor-id="nfl-data-and-the-summarize-verb">
+<span class="header-section-number">2.5.3</span> NFL Data and the <code>summarize()</code> verb</h3>
 <p>As we’ve seen, the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function can be used to find summary statistics based whichever option we pass to it via the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb. However, it can also be used to create new metrics built off data included in the <code>nflverse</code> play-by-play data.</p>
 <p>Let’s examine which teams were the most aggressive on 3rd and short passing attempts during the 2022 season. Of course, determining our definition of both what “short” is on 3rd down and “aggressive” is quite subjective. For the purposes of this example, however, let’s assume that 3rd and short is considered 3rd down with five or less yards to go and that “aggressive” is a quarterback’s air yards being to, at minimum, the first-down marker.</p>
 <p>Must like our above examples working with rushing success rate, we begin constructing the metric with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> argument. In this case, we are filtering for just pass plays, we want the down to equal 3, the yards to go to be equal to or less than 5, we want it to be an official play, and we do not want it to be missing the down information. After the initial <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> process, we include the <code>posteam</code> variable within our <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> verb.</p>
@@ -996,8 +984,8 @@ Caution
 </div>
 </div>
 <p>The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 83% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants were the least aggressive team during the 2022 regular season, at 49.1%.</p>
-</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
-<span class="header-section-number">3.5.4</span> NFL Data and the <code>mutate()</code> verb</h3>
+</section><section id="nfl-data-and-the-mutate-verb" class="level3" data-number="2.5.4"><h3 data-number="2.5.4" class="anchored" data-anchor-id="nfl-data-and-the-mutate-verb">
+<span class="header-section-number">2.5.4</span> NFL Data and the <code>mutate()</code> verb</h3>
 <p>In the our example above working with the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb, our output includes only the information contained in our <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and then whatever information we provided in the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> (such as <code>total</code>, <code>aggressiveness</code>, and <code>percentage</code>).</p>
 <p>What if, however, you wanted to create new variables and then <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> those? That is where the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb is used.</p>
 <p>As an example, let’s explore individual quarterback’s average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both <code>passer</code> and <code>air_yards</code> in the <code>group_by</code> verb.</p>
@@ -1044,8 +1032,8 @@ Caution
 # ... with 72 more rows</code></pre>
 </div>
 </div>
-</section></section><section id="core-skills-for-tidy-data" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="core-skills-for-tidy-data">
-<span class="header-section-number">3.6</span> Core Skills for Tidy Data</h2>
+</section></section><section id="core-skills-for-tidy-data" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="core-skills-for-tidy-data">
+<span class="header-section-number">2.6</span> Core Skills for Tidy Data</h2>
 <p>With your new understanding of the <code>tidyverse</code> flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by <a href="https://www.sportsinfosolutions.com/">Sports Info Solutions</a>. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).</p>
 <p>In this example, we are going to compare the <code>Boom%</code> and the <code>Bust%</code> for each quarterback in the data, wherein the <code>Boom%</code> correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA) of at least 1 and <code>Bust%</code> is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in <code>ggplot</code>, we will:</p>
 <ol type="1">
@@ -1055,8 +1043,8 @@ Caution
 <li>Using the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb to correct and create new metrics within the data.</li>
 <li>Merging the data with a secondary dataset.</li>
 </ol>
-<section id="importing-and-conducting-exploratory-data-analysis" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="importing-and-conducting-exploratory-data-analysis">
-<span class="header-section-number">3.6.1</span> Importing and Conducting Exploratory Data Analysis</h3>
+<section id="importing-and-conducting-exploratory-data-analysis" class="level3" data-number="2.6.1"><h3 data-number="2.6.1" class="anchored" data-anchor-id="importing-and-conducting-exploratory-data-analysis">
+<span class="header-section-number">2.6.1</span> Importing and Conducting Exploratory Data Analysis</h3>
 <p>To start, let’s examine data from Sports Info Solutions by reading in the data from this book’s Git repository using the <code>vroom</code> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/sis-bb"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1121,9 +1109,9 @@ Caution
 # ... with 97 more rows</code></pre>
 </div>
 </div>
-<p>In the above code, we are using the <code>clean_names()</code> function within the <code>janitor</code> package to automatically rework the column names into a <code>tidy</code> format. After, we use the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> verb to keep only five of the included columns of data (<code>player</code>, <code>team</code>, <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code>). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.</p>
-</section><section id="dealing-with-missing-data" class="level3" data-number="3.6.2"><h3 data-number="3.6.2" class="anchored" data-anchor-id="dealing-with-missing-data">
-<span class="header-section-number">3.6.2</span> Dealing with Missing Data</h3>
+<p>In the above code, we are using the <code>clean_names()</code> function within the <code>janitor</code>package to automatically rework the column names into a <code>tidy</code> format. After, we use the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> verb to keep only five of the included columns of data (<code>player</code>, <code>team</code>, <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code>). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.</p>
+</section><section id="dealing-with-missing-data" class="level3" data-number="2.6.2"><h3 data-number="2.6.2" class="anchored" data-anchor-id="dealing-with-missing-data">
+<span class="header-section-number">2.6.2</span> Dealing with Missing Data</h3>
 <p>Dealing with missing data is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by <code>NA</code> values and there are several different approaches to handling the missing data in an effective manner.</p>
 <p>A data set can present missing data for a variety of reasons, including participant non-responses (such in social science research), measurement error, or simple data processing issues. The process of handling missing data is ultimately the result of the end goal of the analysis. In some case, conducting a imputation (such as replacing all <code>NA</code> values with the mean of all existing data) is used. In other cases, a more complex method can be utilized such as using the <code>mice</code> package, which can impute missing data based on several different machine learning approaches (predictive mean matching, logistic regression, Bayesian polytomous regression, proportional odds model, etc.). Ultimately, the choice of method for handling missing data depends on the attributes of the data set, your research question, and your domain knowledge of what the data represents.</p>
 <p>To begin exploring missing values in our <code>sis_data</code> dataset, we can run the following code:</p>
@@ -1145,8 +1133,8 @@ Caution
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">sis_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the above code, we are simply “recreating” our existing dataset but using <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> to drop rows that include <code>NA</code> values. Once complete, we can move onto the next step of the data preparation/cleaning process.</p>
-</section><section id="changing-variable-types" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="changing-variable-types">
-<span class="header-section-number">3.6.3</span> Changing Variable Types</h3>
+</section><section id="changing-variable-types" class="level3" data-number="2.6.3"><h3 data-number="2.6.3" class="anchored" data-anchor-id="changing-variable-types">
+<span class="header-section-number">2.6.3</span> Changing Variable Types</h3>
 <p>As discovered in the exploratory data analysis process, we know that four columns (<code>player</code>, <code>team</code>, <code>boom_percent</code>, and <code>bust_percent</code>) are listed as a <code>character</code> data type while each quarterback’s number of attempts (<code>att</code>) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.</p>
 <p>Moreover, the values in each <code>boom_percent</code> and <code>bust_percent</code> include a percentage sign at the tail-end.</p>
 <p>Because of this, we have two issues we need to correct:</p>
@@ -1172,8 +1160,8 @@ Note
 <p>As mentioned, there are typically multiple ways to get to the same endpoint in the R programming language. Showcasing both methods below simply provides you more options in your toolkit for tidying data.</p>
 </div>
 </div>
-<section id="method-1-using-stringr-and-changing-variables" class="level4" data-number="3.6.3.1"><h4 data-number="3.6.3.1" class="anchored" data-anchor-id="method-1-using-stringr-and-changing-variables">
-<span class="header-section-number">3.6.3.1</span> Method #1: Using <code>stringr</code> and Changing Variables</h4>
+<section id="method-1-using-stringr-and-changing-variables" class="level4" data-number="2.6.3.1"><h4 data-number="2.6.3.1" class="anchored" data-anchor-id="method-1-using-stringr-and-changing-variables">
+<span class="header-section-number">2.6.3.1</span> Method #1: Using <code>stringr</code> and Changing Variables</h4>
 <p>In the below example, we are creating an “example” data frame titled <code>sis_data_stringr</code> from our current iteration of SIS data and then pipe into the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb (covered in more depth in the below <code>Creating New Variables</code> section). It is within this <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb that we can drop the percentage sign.</p>
 <p>We first indicate that we are going to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> our already existing columns (both <code>boom_percent</code> and <code>bust_percent</code>). After, we use an <code>=</code> sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.</p>
 <p>We then use the <code><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove()</a></code> function from the <code>stringr</code> package to locate the <code>%</code> sign in each value and remove it.</p>
@@ -1207,8 +1195,8 @@ Note
 </div>
 </div>
 <p>Our output shows that <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code> are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.</p>
-</section><section id="method-2-using-the-parse_number-function-in-readr" class="level4" data-number="3.6.3.2"><h4 data-number="3.6.3.2" class="anchored" data-anchor-id="method-2-using-the-parse_number-function-in-readr">
-<span class="header-section-number">3.6.3.2</span> Method #2: Using the <code>parse_number</code> Function in <code>readr</code>
+</section><section id="method-2-using-the-parse_number-function-in-readr" class="level4" data-number="2.6.3.2"><h4 data-number="2.6.3.2" class="anchored" data-anchor-id="method-2-using-the-parse_number-function-in-readr">
+<span class="header-section-number">2.6.3.2</span> Method #2: Using the <code>parse_number</code> Function in <code>readr</code>
 </h4>
 <p>While the above example using <code>stringr</code> and base R is suitable for our needs, we can use the <code>readr</code> package - and its <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> function - to achieve the same results in a less verbose manner.</p>
 <div class="cell">
@@ -1236,8 +1224,8 @@ Note
 </div>
 <p>The above example, using <code>readr</code>, is quite similar to the first version that used <code>stringr</code> in that we are using the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb to edit our existing <code>boom_percent</code> and <code>bust_percent</code> columns. In this case, however, we are replacing our <code>stringer</code> argument with the <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> function from the <code>readr</code> package. When finished, you can see in the output that not only are both boom and bust correctly listed as numeric, but the <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> function automatically recognized and dropped the tailing percentage sign.</p>
 <p>While both examples get us to the same endpoint, using the <code>readr</code> package allows us to get there with less work.</p>
-</section></section><section id="correct-and-create-new-variables-using-mutate" class="level3" data-number="3.6.4"><h3 data-number="3.6.4" class="anchored" data-anchor-id="correct-and-create-new-variables-using-mutate">
-<span class="header-section-number">3.6.4</span> Correct and Create New Variables Using <code>mutate</code>
+</section></section><section id="correct-and-create-new-variables-using-mutate" class="level3" data-number="2.6.4"><h3 data-number="2.6.4" class="anchored" data-anchor-id="correct-and-create-new-variables-using-mutate">
+<span class="header-section-number">2.6.4</span> Correct and Create New Variables Using <code>mutate</code>
 </h3>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our data set. To that end, the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb applies a user-supplied argument to each row of the data set to create the new metric. Additionally, the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb - when combined with the <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield’s teams).</p>
 <p>The syntax of the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb follows the <code>tidyverse</code> flow like many of the other <code>dplyr</code> verbs:</p>
@@ -1318,8 +1306,8 @@ Note
 </div>
 </div>
 <p>With that, our <code>sis_data</code> data set is nearly complete and ready for visualization. Before doing so, though, we can use the <code>load_teams</code> function within <code>nflreadr</code> to combine the appropriate team colors to each quarterback in the data, allowing us to customize the appearance of the data visualization.</p>
-</section><section id="merging-datasets-with-dplyr-and-mutating-joins" class="level3" data-number="3.6.5"><h3 data-number="3.6.5" class="anchored" data-anchor-id="merging-datasets-with-dplyr-and-mutating-joins">
-<span class="header-section-number">3.6.5</span> Merging Datasets with <code>dplyr</code> and Mutating Joins</h3>
+</section><section id="merging-datasets-with-dplyr-and-mutating-joins" class="level3" data-number="2.6.5"><h3 data-number="2.6.5" class="anchored" data-anchor-id="merging-datasets-with-dplyr-and-mutating-joins">
+<span class="header-section-number">2.6.5</span> Merging Datasets with <code>dplyr</code> and Mutating Joins</h3>
 <p>Mutating joins are a manipulation technique that allows us to add, modify, or remove columns in a data set based on a shared variable or a set of variables. The process is done by matching rows in the data sets based on an matching identifier between the two. Once completed, the matching data from the second data set is added to the first or, conversely, the data within the first dataset is modified as needed to include the incoming data from the second data set.</p>
 <p>There are four common mutating joins in the <code>dplyr</code> package:</p>
 <ol type="1">
@@ -1355,7 +1343,7 @@ Note
 <pre><code>-- nflverse team graphics ------------------------------------------------------</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>i Data updated: 2023-06-06 13:31:52 EDT</code></pre>
+<pre><code>i Data updated: 2023-06-14 16:57:29 EDT</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 32 x 5
@@ -1397,7 +1385,7 @@ Note
 <pre><code>-- nflverse team graphics ------------------------------------------------------</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>i Data updated: 2023-06-06 13:31:52 EDT</code></pre>
+<pre><code>i Data updated: 2023-06-14 16:57:29 EDT</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 x 5
@@ -1449,8 +1437,8 @@ Tip
 <ol type="1">
 <li>The <code>team_nick</code> column from our <code>teams</code> data set is not included in our merged <code>sis_data</code>, as it is dropped after matching/merging with the <code>team</code> information from our original data set.</li>
 <li>While the <code>team_nick</code> column was dropped, the other team identifiers (<code>team_abbr</code> and <code>team_name</code>) were kept intact, as they were not used in the matching process. As well, <code>team_color</code> and <code>team_color2</code> are now correctly matched with each quarterback’s team.</li>
-</ol></section></section><section id="exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="exercises">
-<span class="header-section-number">3.7</span> Exercises</h2>
+</ol></section></section><section id="exercises" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">2.7</span> Exercises</h2>
 <p>The answers for the following answers can be found here: <a href="http://nfl-book.bradcongelio.com/ch2-answers" class="uri">http://nfl-book.bradcongelio.com/ch2-answers</a>.</p>
 <p>Create a data frame titled <code>pbp</code> that contains the play-by-play information for the 2022 regular season by running the following code:</p>
 <div class="cell">
@@ -1458,24 +1446,24 @@ Tip
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After, using the data in <code>pbp</code>, complete the following:</p>
-<section id="exercise-1" class="level3" data-number="3.7.1"><h3 data-number="3.7.1" class="anchored" data-anchor-id="exercise-1">
-<span class="header-section-number">3.7.1</span> <strong>Exercise 1</strong>
+<section id="exercise-1" class="level3" data-number="2.7.1"><h3 data-number="2.7.1" class="anchored" data-anchor-id="exercise-1">
+<span class="header-section-number">2.7.1</span> <strong>Exercise 1</strong>
 </h3>
 <ol type="1">
 <li>Use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to select only Patrick Mahomes and all passes that resulted in interceptions.</li>
 <li>Add a <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> to determine the average air yards (<code>air_yards</code>) for his combined interceptions.</li>
-</ol></section><section id="exercise-2" class="level3" data-number="3.7.2"><h3 data-number="3.7.2" class="anchored" data-anchor-id="exercise-2">
-<span class="header-section-number">3.7.2</span> <strong>Exercise 2</strong>
+</ol></section><section id="exercise-2" class="level3" data-number="2.7.2"><h3 data-number="2.7.2" class="anchored" data-anchor-id="exercise-2">
+<span class="header-section-number">2.7.2</span> <strong>Exercise 2</strong>
 </h3>
 <ol type="1">
 <li>In a data frame titled <code>wide_receivers</code>, find the average yards after catch (<code>yards_after_catch</code>) and average yards after catch EPA (<code>yac_epa</code>) for the top-10 receivers in total receiving yards. In doing so, you will need to use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> on <code>receiver</code>.</li>
-</ol></section><section id="exercise-3" class="level3" data-number="3.7.3"><h3 data-number="3.7.3" class="anchored" data-anchor-id="exercise-3">
-<span class="header-section-number">3.7.3</span> <strong>Exercise 3</strong>
+</ol></section><section id="exercise-3" class="level3" data-number="2.7.3"><h3 data-number="2.7.3" class="anchored" data-anchor-id="exercise-3">
+<span class="header-section-number">2.7.3</span> <strong>Exercise 3</strong>
 </h3>
 <ol type="1">
 <li>In a data frame titled <code>qb_hits</code>, find the total number of times each defensive unit (<code>defteam</code>) recorded a QB hit (<code>qb_hit</code>).</li>
-</ol></section><section id="exercise-4" class="level3" data-number="3.7.4"><h3 data-number="3.7.4" class="anchored" data-anchor-id="exercise-4">
-<span class="header-section-number">3.7.4</span> <strong>Exercise 4</strong>
+</ol></section><section id="exercise-4" class="level3" data-number="2.7.4"><h3 data-number="2.7.4" class="anchored" data-anchor-id="exercise-4">
+<span class="header-section-number">2.7.4</span> <strong>Exercise 4</strong>
 </h3>
 <ol type="1">
 <li>
@@ -1486,13 +1474,15 @@ Tip
 <span>           <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
 <span>           <span class="va">interception</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>            total_incompletions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>total_completions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>                                    na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            total_incompletions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>                                      na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">total_completions</span> <span class="op">&gt;=</span> <span class="fl">180</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
-</ol></section><section id="exercise-5" class="level3" data-number="3.7.5"><h3 data-number="3.7.5" class="anchored" data-anchor-id="exercise-5">
-<span class="header-section-number">3.7.5</span> <strong>Exercise 5</strong>
+</ol></section><section id="exercise-5" class="level3" data-number="2.7.5"><h3 data-number="2.7.5" class="anchored" data-anchor-id="exercise-5">
+<span class="header-section-number">2.7.5</span> <strong>Exercise 5</strong>
 </h3>
 <ol type="1">
 <li>
@@ -1512,7 +1502,7 @@ Tip
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-tidyverse" class="csl-entry" role="listitem">
 Wickham, Hadley. 2022. <span>“Tidyverse Packages.”</span> <a href="https://www.tidyverse.org/packages/">https://www.tidyverse.org/packages/</a>.
 </div>
@@ -1751,24 +1741,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./01-nfl-analytics-and-r.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An Introduction to NFL Analytics and the R Programming Language</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-nfl-analytics-functions.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NFL Analytics with the <code>nflverse</code> Family of Packages</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">NFL Analytics with R was written by Bradley J. Congelio.</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
-  </div>
-</footer>
+
 
 
 </body></html>

@@ -157,8 +157,6 @@
 \usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage{caption}
-\usepackage{fvextra}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
@@ -251,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, interior hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, enhanced, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, interior hidden, breakable, sharp corners, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -274,45 +272,48 @@ Thanks to the work of multiple people
 \href{https://twitter.com/benbbaldwin}{@benbbaldwin},
 \href{https://twitter.com/_TanHo}{@TanHo},
 \href{https://twitter.com/LeeSharpeNFL}{@LeeSharpeNFL}, and
-\href{https://twitter.com/thomas_mock}{@thomas\_mock} \ldots{} to just
-name a few), the process of getting started with advanced analytics
-using NFL data is now easier than ever.
+\href{https://twitter.com/thomas_mock}{@thomas\_mock} \ldots{} to name
+just a few), the process of getting started with analytics using NFL
+data is now easier than ever.
 
-That said, and without getting too far into the weeds of the history
-behind it all, the above-mentioned people are responsible in some shape
-or form for the current status of the \texttt{nflverse}, which is a
-superb collection of data and R-based packages that allows anybody the
-ability to access deeply robust NFL data as far back as the 1999 season.
+That said, and without getting too far into the weeds of the history,
+the above-mentioned people are responsible in some shape or form for the
+current status of the \texttt{nflverse}, which is a superb collection of
+data and R-based packages that allows anybody the ability to access
+deeply robust NFL data as far back as the 1999 season.
 
 The \texttt{nflverse} as we know it today was initially birthed from the
 \texttt{nflscrapR} project, which was started by the Carnegie Mellon
-University student and profess duo of
+University student and professor duo of
 \href{https://twitter.com/bklynmaks?lang=en}{Maksim Horowitz} and
 \href{https://twitter.com/stat_sam}{Sam Ventura}. After Horowitz
 graduated - and got hired by the Atlanta Hawks - the \texttt{nflscrapR}
 package was taken over by fellow CMU student Ron Yurko (who would go on
-to receive his Ph.D.~from the Statistics and Data Science program). The
-trio's work on \texttt{nflscrapR} ultimately led to a peer-reviewed
-paper titled ``\href{https://arxiv.org/pdf/1802.00998.pdf}{nflWAR: A
-Reproducible Method for Offensive Player Evaluation in Football.}''
-Ultimately, the \texttt{nflscrapR} project came to an end when the
-specific .json feed used to gather NFL data changed. At this point, Ben
-Baldwin and Sebastian Carl had already built upon the \texttt{nflscrapR}
-project's foundations to create \texttt{nflfastR}. Ron officially marked
-the end of the \texttt{nflscrapR} era and the beginning of the
-\texttt{nflfastR} era with a tweet on September 14, 2020:\footnote{Thanks
-  to Ben Baldwin for chatting with me on Discord and providing this
-  brief understanding of the backstory.}
+to receive his Ph.D.~from the Statistics and Data Science program and,
+at the time of this book's writing, is an Assistant Teaching Professor
+in the Department of Statistics and Data Science at CMU). The trio's
+work on \texttt{nflscrapR} led to a peer-reviewed paper titled
+``\href{https://arxiv.org/pdf/1802.00998.pdf}{nflWAR: A Reproducible
+Method for Offensive Player Evaluation in Football.}'' Ultimately, the
+\texttt{nflscrapR} project came to an end when the specific .json feed
+used to gather NFL data changed. At this point, Ben Baldwin and
+Sebastian Carl had already built upon the \texttt{nflscrapR} project's
+foundations to create \texttt{nflfastR}. Yurko officially marked the end
+of the \texttt{nflscrapR} era and the beginning of the \texttt{nflfastR}
+era with a tweet on September 14, 2020:\footnote{Thanks to Ben Baldwin
+  for chatting with me on Discord and providing this brief understanding
+  of the backstory.}
 
-As a reply to his first tweet about the \texttt{nflfastR} project, Ben
-explained that he created the original function to scrape NFL data for
-the creation of his \href{https://rbsdm.com/stats/stats/}{NFL analytics
-website}. Thankfully, he and Seb did not keep the creation to themselves
-and released \texttt{nflfastR} to the public. Because of the ``open
-source'' nature of R and R packages, a laundry list of companion
-packages quickly developed alongside \texttt{nflfastR}. The original
-\texttt{nflfastR} package is now part of the larger \texttt{nflverse} of
-packages that drive the NFL analytics community on Twitter and beyond.
+As a reply to his first tweet about the \texttt{nflfastR} project,
+Baldwin explained that he created the original function to scrape NFL
+data for the creation of his \href{https://rbsdm.com/stats/stats/}{NFL
+analytics website}. Thankfully, he and Carol did not keep the creation
+to themselves and released \texttt{nflfastR} to the public. Because of
+the ``open source'' nature of R and R packages, a laundry list of
+companion packages quickly developed alongside \texttt{nflfastR}. The
+original \texttt{nflfastR} package is now part of the larger
+\texttt{nflverse} of packages that drive the NFL analytics community on
+Twitter and beyond.
 
 The creation of the \texttt{nflverse} allowed for anybody interested in
 NFL analytics to easily access data, manipulate it to their liking, and
@@ -337,8 +338,8 @@ sabermetrics movement in baseball, the analytics movement in the NFL is
 ``happening in front of you all the time.'' The use of analytics in the
 NFL did, however, predate Clark's article. In 2014, Eagles head coach
 Doug Pederson explained that all decisions made by the organization -
-from game planning to draft strategy - were to be informed by hard data
-and analytics. Leading this early adoption of analytics, and reporting
+from game planning to draft strategy - are informed by hard data and
+analytics. Leading this early adoption of analytics, and reporting
 directly to team Vice President Howie Roseman, were Joe Douglas and Alec
 Halaby, ``a 31-year-old Harvard grad with a job description'' that had
 an emphasis on ``integrating traditional and analytical methods in
@@ -365,8 +366,7 @@ analytics movement in the NBA essentially killed the midrange shot
 (briefly: it is more beneficial to try to work the ball in directly
 under the basket (for a high-percentage shot) or to take the 3-pointer,
 as the possible additional point is statistically worth more despite the
-lower success probability as opposed a 2-point midrange shot) as well as
-the traditional, ``old-school'' center position.
+lower success probability as opposed a 2-point midrange shot).
 
 Compared to both the NBA and MLB, the NFL is playing catch up in
 analytics driving changes equivalent to the death of the midrange shot
@@ -417,11 +417,11 @@ aggressive on 4th down, going for it 26 times during the season and
 converting on 17 of those for a conversion percentage of 65.4\%. A quick
 examination and visualization of data highlights the absolutely
 staggering increase in 4th aggressiveness among NFL head coaches from
-2017-2021:
+2000-2021:
 
 \begin{figure}
 
-{\centering \includegraphics[width=9.71in,height=\textheight]{images/4th-down-attempts.png}
+{\centering \includegraphics[width=5.25in,height=\textheight]{images/4th-down-attempts.png}
 
 }
 
@@ -430,26 +430,27 @@ staggering increase in 4th aggressiveness among NFL head coaches from
 \end{figure}
 
 There has been a 96.3\% increase in the number of 4th down attempts from
-just 2017 to 2021. In fact, the numbers may actually be higher as I was
+just 2000 to 2021. In fact, the numbers may actually be higher as I was
 quite conservative in building the above plot by only considering those
 4th down attempts that took place when the offensive team had between a
 5-to-95\% winning probability and those prior to the two-minute warning
 of either half. Even with those conservative limitations, the increase
 is staggering. The numbers, however, support this aggression. During
-week one of both the 2020 and 2021 season, \emph{not} going for it on
+week one of both the 2020 and 2021 seasons, \emph{not} going for it on
 4th down ``cost teams a cumulative 170 percentage points of win
 probability'' (Bushnell 2021).
 
 Ben Baldwin, using the \texttt{nfl4th} package that is part of the
-\texttt{nflverse}, tracked the shift in NFL coaching mentality regarding
-4th down decisions by comparing 2014's ``go for it percentage'' against
-the same for 2020. When compared to the 2014 season, NFL coaches are now
-much more in agreement with analytics on when to ``go for it'' on 4th
-down in relation to the expected gain in win probability.
+\texttt{nflverse}, tracked this shift in NFL coaching mentality
+regarding 4th down decisions by comparing 2014's ``go for it
+percentage'' against the same for 2020. When compared to the 2014
+season, NFL coaches are now much more in agreement with analytics on
+when to ``go for it'' on 4th down in relation to the expected gain in
+win probability.
 
 \begin{figure}
 
-{\centering \includegraphics[width=36in,height=\textheight]{images/baldwin-graph-goforit.png}
+{\centering \includegraphics[width=5.25in,height=\textheight]{images/baldwin-graph-goforit.png}
 
 }
 
@@ -469,7 +470,7 @@ teams buying into analytics and those who do not:
 
 \begin{figure}
 
-{\centering \includegraphics[width=36in,height=\textheight]{images/tomlin-go-for-it.png}
+{\centering \includegraphics[width=5.25in,height=\textheight]{images/tomlin-go-for-it.png}
 
 }
 
@@ -507,7 +508,7 @@ advantage will ``leave no rock unturned'' is the driving force behind
 this book. For all intents and purposes, the age of analytics in the NFL
 is still in its infancy. Turning back, again, to the 2017 season, the
 Eagles' management praised and credited the team's analytics department
-as part of the reason they were able to win Super Bowl LII. Doing so
+as part of the reason they were able to win Super Bowl LII. Doing so,
 Danney Heifetz argues, ``changed the language of football.'' The NFL, he
 explains, is a ``copycat league'' and, as witnessed with the increase in
 4th down aggressiveness since 2017, teams immediately began to carbon
@@ -635,8 +636,8 @@ If you are part of the former group, you can likely skip chapter 2 as it
 is a primer on installing R and learning the language of the
 \texttt{tidyverse}. On the other hand, if you are part of the latter
 group, you should skip ahead to chapter 2 before even looking at chapter
-1, which serves as an introduction to the \texttt{nflverse} with
-examples. That said, this book can serve multiple audiences:
+1, which serves as an introduction to NFL analytics with examples. That
+said, this book can serve multiple audiences:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -681,19 +682,25 @@ understanding of the language's nuances, and more advanced methods,
 after discovering the \texttt{nflscrapR} package and using it as my
 learning tool for the deep dive into R. My decision to pursue an
 academic certificate in the language was driven by the creation of my
-Sport Analytics course, as the certificate provided the ``academic
-training'' proof that was necessary to move the course through the
+Sport Analytics course, as the certificate provided the proof of
+``academic training'' that was necessary to move the course through the
 University's curriculum committee. Nonetheless, because of this
 self-taught journey - and despite being an academic myself - I find that
 I largely avoid the use of ``complicated jargon'' that is so evident in
-most formal writing.
+most formal writing. A core goal of this book was to write it in an
+accessible format, providing the information and step-by-step
+instructions in a more informal format than readers of similar books may
+be accustomed to. Learning a coding language can be difficult enough, so
+I do not see the need for readers to also decipher overly-complicated
+prose. This book is not written from atop the ivory tower, and for that
+I will not apologize.
 
 Because of this, and regardless of which chapter you begin with, I
 believe that this book achieves its main goal: to provide a gentle
 introduction to doing NFL analytics with R.
 
 As this book is published online, it allows me to continue real-time
-development of it. Because of this, make note of the following:
+development of it, so please make note of the following:
 
 \begin{itemize}
 \item
@@ -708,9 +715,10 @@ development of it. Because of this, make note of the following:
   The majority of the chapters conclude with exercises. In some cases,
   prepared data will be provided with a link to download the file. In
   other cases, you are expected to use the \texttt{nflverse} to collect
-  the data yourself. In either case, the book's github repository for
-  the exercises (link to the specific directory coming soon) will
-  include the R files that contain the answers to each exercise.
+  the data yourself. In either case, the answers to the exercises are
+  include in the book's Git repository:
+  \href{http://nfl-book.bradcongelio.com/ex-answers}{Answers to Chapter
+  Exercises}.
 \item
   Soon there will be a YouTube series to go along with the written
   version of this book. In brief, the videos will include my going over
@@ -730,18 +738,17 @@ development of it. Because of this, make note of the following:
 
 \begin{itemize}
 \item
-  \textbf{Chapter 1} provides an overview of the \texttt{nflverse} with
-  specific attention paid to the difference between using
-  \texttt{nflfastR} versus \texttt{nflreadr}. Serving as the first dive
-  into analytics, the chapter showcases how to use \texttt{nflreadr} to
-  retrieve both compiled weekly NFL stats and the deeply robust
-  play-by-play statistics. In both cases, exercises are provided.
-  Readers will do their first coding by, first, using the weekly stats
-  to determine the 2021 leaders in air yards per attempt. Second,
-  readers will use the play-by-play statistics from the 2021 season to
-  create a brand new metric (QB aggressiveness on 3rd down pass
-  attempts). Afterward, readers will learn how to retrieve multiple
-  seasons of data at once.
+  \textbf{Chapter 1} introduces the process of investigate inquiry, and
+  how it can be used to formulate a question to be answered through the
+  use of data and R. Specifically, the chapter provides a broad overview
+  of what is possible with analytics and NFL data by exploring the
+  impact of having a high number of unique offensive line combinations
+  had on the 2022 Los Angeles Rams. The process of data collection,
+  manipulation, preparation, and visualization are introduced to seek
+  the answer regarding how changes in an offensive line can impact
+  various attributes of an offense. The chapter concludes with another
+  working example, allowing readers to explore which teams from the 2022
+  season most required an explosive play per drive to score a touchdown.
 \item
   \textbf{Chapter 2} covers the process of downloading both R and
   RStudio, as well as the necessary packages to do NFL analytics. As one
@@ -770,12 +777,8 @@ development of it. Because of this, make note of the following:
   \texttt{load\_pfr\_stats()}, and \texttt{load\_contracts()} are all
   part of just \texttt{nflreadr}. Because of this complexity, readers
   will learn how to efficiently operate within the \texttt{nflverse}.
-  Moreover, chapter 3 provides dozens of examples and exercises related
-  to all of the various functions included. For example, readers will
-  learn to use \texttt{load\_nextgen\_stats()} to determine which
-  running backs get to the line of scrimmage the quickest and will use
-  \texttt{load\_pfr\_stats()} to explore advanced defensive metrics
-  across multiple seasons.
+  Moreover, chapter 3 provides a plethora of examples and exercises
+  related to all of the various functions included.
 \item
   \textbf{Chapter 4} moves readers from data cleaning and manipulation
   to an introduction to data visualization using \texttt{ggplot2}. As
@@ -820,8 +823,8 @@ development of it. Because of this, make note of the following:
 
 I (Bradley Congelio) am currently an Assistant Professor in the College
 of Business at \href{https://www.kutztown.edu/}{Kutztown University of
-Pennsylvania}. Aside from my core area of instruction, I also instruct
-the very popular Sport Analytics (SPT 313) course.
+Pennsylvania}. Aside from my core area of instruction, I also teach the
+very popular Sport Analytics (SPT 313) course.
 
 I earned my Ph.D.~from the University of Western Ontario and received a
 specialized certificate in R for Data Analytics from the University of
@@ -998,7 +1001,7 @@ pipe operator released with version 4.1 of R
 (\texttt{\textbar{}\textgreater{}}). It is likely that you can work
 through the exercises and examples in this book by using either
 operator. I maintain my use of the \texttt{dplyr} pipe operator for no
-other reason than personal preference.
+other reason than a personal (and problematic) dislike of change.
 
 \hypertarget{license}{%
 \section{License}\label{license}}
@@ -1035,7 +1038,7 @@ it source (such as \texttt{nflreadr}, Pro Football Reference, and Sports
 Info Solutions) that requires manipulation and cleaning before any
 significant analysis can begin.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 I am assuming, while you may not have a full grasp of the
 \texttt{tidyverse} yet, \textbf{that you do currently have base R and
@@ -1115,8 +1118,8 @@ Outline}\label{the-investigate-inquiry-outline}}
   available, you must loop back to Step 1 and reconfigure your question
   to match available data. In the case of the 2022 LA Rams' offensive
   line, access to data that can answer the question is available through
-  two cores avenues: the \texttt{load\_participation} and
-  \texttt{load\_snap\_counts} functions within the \texttt{nflverse}
+  two cores avenues: the \texttt{load\_participation()} and
+  \texttt{load\_snap\_counts()} functions within the \texttt{nflverse}
   family of packages.
 \item
   \textbf{Clean and prepare the data}. It is not often that the data you
@@ -1138,7 +1141,7 @@ Outline}\label{the-investigate-inquiry-outline}}
   \texttt{n\_distinct()} function within \texttt{dplyr}.
 \item
   \textbf{Visualize the data}. There are generally two options for
-  visualizing data: plotting with \texttt{ggplot} or creating a table
+  visualizing data: plotting with \texttt{ggplot()} or creating a table
   with \texttt{gt} and the outstanding companion package
   \texttt{gtExtras}. Considering the following can help determine
   whether to present your findings in chart or table format.
@@ -1231,8 +1234,8 @@ offensive line combinations. The \texttt{load\_participation()} function
 results in several oddities in the data (not with the collection of it
 by the \texttt{nflverse} maintainers, but with individual NFL team
 strategies and formations). To highlight this, the following code
-selects the first offensive play for each team, in each game, up to week
-15 of the 2022 season.
+selects the first offensive play for each team, in each game, of the
+2022 season.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1559,9 +1562,9 @@ combination data, we can use \texttt{ggplot} to visualize the data.
 Individual team logos are used in place of the typical
 \texttt{geom\_point} by using the \texttt{nflplotR} package.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
-Please note in the below \texttt{ggplot} coding that we are using a
+Please note in the below \texttt{ggplot()} coding that we are using a
 custom theme, \texttt{nfl\_analytics\_theme()}. If you wish to replicate
 the below visualization using the theme, run the below code to place the
 theme into your RStudio environment allowing you to call it within
@@ -1605,27 +1608,23 @@ as the theme uses the package's \texttt{element\_markdown()} function.
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ total\_combos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ combos, }\AttributeTok{y =}\NormalTok{ win\_pct)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{stat =} \StringTok{"smooth"}\NormalTok{, }\AttributeTok{method =} \StringTok{"lm"}\NormalTok{,}
-            \AttributeTok{size =}\NormalTok{ .}\DecValTok{7}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{,}
+            \AttributeTok{linewidth =}\NormalTok{ .}\DecValTok{7}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{,}
             \AttributeTok{alpha =} \FloatTok{0.25}\NormalTok{) }\SpecialCharTok{+}
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_mean\_lines}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{v\_var =}\NormalTok{ combos, }\AttributeTok{h\_var =}\NormalTok{ win\_pct),}
                             \AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ .}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_nfl\_logos}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{team\_abbr =}\NormalTok{ team), }\AttributeTok{width =} \FloatTok{0.065}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_reverse}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{12}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{6}\NormalTok{),}
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_number}\NormalTok{(}\AttributeTok{accuracy =} \FloatTok{0.001}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Win Percentage"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Win Percentage**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Through Week \#15*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics With R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-i Please use `linewidth` instead.
-\end{verbatim}
 
 \begin{verbatim}
 `geom_smooth()` using formula = 'y ~ x'
@@ -1714,11 +1713,17 @@ combination data, we can make slight adjustments to our prior
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Pressure Rate (per Dropback)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Unique Offensive Line Combinations vs. Pressure Rate"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"2022 Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Pressure Rate**"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"*2022 Season*"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+i Please use `linewidth` instead.
+\end{verbatim}
 
 \begin{verbatim}
 `geom_smooth()` using formula = 'y ~ x'
@@ -1786,7 +1791,8 @@ for each.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total QB Hits Allowed"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Unique Offensive Line Combinations vs. QB Hits Allowed"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFl Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1851,8 +1857,7 @@ combinations.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{adjusted\_sack\_rate }\OtherTok{\textless{}{-}} 
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/adjusted\_sack\_rate.csv"}\NormalTok{)}
+\NormalTok{adjusted\_sack\_rate }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/adj{-}sack{-}rate"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1873,9 +1878,11 @@ combinations.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{percent\_format}\NormalTok{(}\AttributeTok{scale =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Adjusted Sack Rate"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Adjusted Sack Rate**"}\NormalTok{,}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Adjusted Sack Rate**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -1921,9 +1928,11 @@ adjusted sack rate.
                   \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{percent\_format}\NormalTok{(}\AttributeTok{scale =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Adjusted Sack Rate"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Adjusted Sack Rate**"}\NormalTok{,}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Adjusted Sack Rate**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2020 {-} 2022 Seasons*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{season, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
@@ -2025,8 +2034,7 @@ To begin, we can gather the necessary data into a data frame called
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fb\_outsiders\_oline }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/fboutsiders\_line\_stats.csv"}\NormalTok{)}
+\NormalTok{fb\_outsiders\_oline }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/fbo\_oline"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2077,31 +2085,35 @@ differing y-axis scale.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{power\_rank\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(fb\_outsiders\_oline, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ combos, }\AttributeTok{y =}\NormalTok{ power\_rank)) }\SpecialCharTok{+}
-\NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_mean\_lines}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{v\_var =}\NormalTok{ combos, }\AttributeTok{h\_var =}\NormalTok{ power\_rank),}
+\NormalTok{power\_rank\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(fb\_outsiders\_oline,}
+                          \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ combos, }\AttributeTok{y =}\NormalTok{ power\_rank)) }\SpecialCharTok{+}
+\NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_mean\_lines}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{v\_var =}\NormalTok{ combos,}
+                                \AttributeTok{h\_var =}\NormalTok{ power\_rank),}
                             \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
                             \AttributeTok{size =}\NormalTok{ .}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_nfl\_logos}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{team\_abbr =}\NormalTok{ team), }\AttributeTok{width =} \FloatTok{0.065}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_reverse}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_reverse}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Power Ranking**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  FootballOutsiders.com*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Power Ranking**"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  FootballOutsiders.com*"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Power Ranking (1 = best, 32 = worst)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
 
-\NormalTok{stuffed\_rank\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(fb\_outsiders\_oline, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ combos, }\AttributeTok{y =}\NormalTok{ stuffed\_rank)) }\SpecialCharTok{+}
+\NormalTok{stuffed\_rank\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(fb\_outsiders\_oline,}
+                            \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ combos, }\AttributeTok{y =}\NormalTok{ stuffed\_rank)) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{08}\NormalTok{) }\SpecialCharTok{+}
-\NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_mean\_lines}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{v\_var =}\NormalTok{ combos, }\AttributeTok{h\_var =}\NormalTok{ stuffed\_rank),}
+\NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_mean\_lines}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{v\_var =}\NormalTok{ combos,}
+                                \AttributeTok{h\_var =}\NormalTok{ stuffed\_rank),}
                             \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
                             \AttributeTok{size =}\NormalTok{ .}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_nfl\_logos}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{team\_abbr =}\NormalTok{ team), }\AttributeTok{width =} \FloatTok{0.065}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_reverse}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_reverse}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Stuffed Rank**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  FootballOutsiders.com*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Stuffed Rank**"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  FootballOutsiders.com*"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Stuffed Ranking (1 = best, 32 = worst)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -2110,62 +2122,9 @@ differing y-axis scale.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
+\begin{figure}
 
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-\end{verbatim}
-
-\begin{verbatim}
-`geom_smooth()` using formula = 'y ~ x'
-\end{verbatim}
-
-\begin{verbatim}
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-
-Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
-family 'Roboto' not found in PostScript font database
-\end{verbatim}
-
-\begin{figure}[H]
-
-{\centering \includegraphics{01-nfl-analytics-and-r_files/figure-pdf/power-and-stuff-cowplot-1.pdf}
+{\centering \includegraphics[width=4in,height=\textheight]{images/cow_plot_finished.png}
 
 }
 
@@ -2192,9 +2151,11 @@ unique combinations throughout the season).
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_nfl\_logos}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{team\_abbr =}\NormalTok{ team), }\AttributeTok{width =} \FloatTok{0.065}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_reverse}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Adjusted Line Yards**"}\NormalTok{,}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Adjusted Line Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  FootballOutsiders.com*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Adjusted Line Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -2243,8 +2204,7 @@ from PFF.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{oline\_combo\_elusive }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/online\_combo\_elusive.csv"}\NormalTok{)}
+\NormalTok{oline\_combo\_elusive }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/ol{-}elusive"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2278,9 +2238,11 @@ subtracting each team's z-score from the existing
 \NormalTok{  nflplotR}\SpecialCharTok{::}\FunctionTok{geom\_nfl\_logos}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{team\_abbr =}\NormalTok{ team), }\AttributeTok{width =} \FloatTok{0.065}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_reverse}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**"}\NormalTok{,}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Unique Offensive Line Combinations vs.}
+\StringTok{       Weighted Adjusted Line Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Season  |  Adjusted with PFF\textquotesingle{}s \textquotesingle{}Elusive\textquotesingle{}*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"\# of Unique Offensive Line Combinations"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Weighted Adjusted Line Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -2331,7 +2293,7 @@ in a touchdown was just eight yards, or less than what is required for a
 season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2
 contest against the New England Patriots.
 
-However, the statistics as presented by Sharp do not tell the complete
+However, the statistic as presented by Sharp does not tell the complete
 story as it isolates the entirety of a touchdown drive to a single play.
 While the team's longest touchdown scoring play was just eight yards,
 this does not mean that there was a lack of explosive, high-yardage
@@ -2398,9 +2360,11 @@ those without, we can plot the results.
   \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{),}
                      \AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{),}
                      \AttributeTok{label =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{percent\_format}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Which Team Has The Highest \% of Explosive Plays per TD Drive?**"}\NormalTok{,}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Which Team Has The Highest \% of}
+\StringTok{       Explosive Plays per TD Drive?**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Percent of TD Drives with an Explosive Play (20+ Yards)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{)}
 \end{Highlighting}
@@ -2454,7 +2418,7 @@ that are specifically designed to making working with R easier,
 including syntax highlighting, code suggestions, robust debugging tools,
 and a built-in package manager.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important that you download and successfully install R before
 proceeding to install RStudio on your computer.
@@ -2598,7 +2562,7 @@ problem, the output in your console should appear like below:
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important to notice the \texttt{\textgreater{}} after the output
 in the console. That indicates that the coding process has completely
@@ -2795,10 +2759,10 @@ using the above example of code:
 \item
   After the pipe operator (or the first ``and then \ldots{}'' command),
   we move into our first \texttt{dplyr} verb. In this case, we are using
-  the \texttt{filter} verb to select just the Philadelphia Eagles as the
-  offensive team and just offensive plays that are rush attempts. With
-  another pipe operator, we are including a second ``\emph{\ldots{} and
-  then''} command.
+  the \texttt{filter()} verb to select just the Philadelphia Eagles as
+  the offensive team and just offensive plays that are rush attempts.
+  With another pipe operator, we are including a second ``\emph{\ldots{}
+  and then''} command.
 \item
   To finish the example, we are grouping by each individual rusher on
   the Eagles ``\emph{and then''} summarize the average success rate for
@@ -2809,11 +2773,11 @@ using the above example of code:
 results in:}
 
 ``First, create a data set called \texttt{pbp} that is a copy of
-\texttt{nflreadr::load\_pbp(2022)} \emph{and then} \texttt{filter} for
+\texttt{nflreadr::load\_pbp(2022)} \emph{and then} \texttt{filter()} for
 all instances where the \texttt{posteam} is \texttt{PHI} and
-\texttt{rush\ ==\ 1} \emph{and then} \texttt{group\_by} each individual
-rusher, \emph{and then} summarize the average success rate for each
-rusher into a new column titled \texttt{success\_rate}.''
+\texttt{rush\ ==\ 1} \emph{and then} \texttt{group\_by()} each
+individual rusher, \emph{and then} summarize the average success rate
+for each rusher into a new column titled \texttt{success\_rate}.''
 
 To showcase this visually, the ``talking through'' method is inputted
 into the example code below:
@@ -2846,13 +2810,13 @@ verbs, as well as others, follow below.
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \texttt{filter}: the \texttt{filter()} verb allows you to subset data
-  based on certain criteria. For example, you can use \texttt{filter()}
-  to keep only those rows in a data set where a certain variable meets a
-  certain conditions (ie., more than 100 completed passes). Moreover,
-  the \texttt{filter()} verb can be used in conjunction with logical
-  operators such as \texttt{\&} and \texttt{\textbar{}} to create more
-  complex criteria.
+  \texttt{filter()}: the \texttt{filter()} verb allows you to subset
+  data based on certain criteria. For example, you can use
+  \texttt{filter()} to keep only those rows in a data set where a
+  certain variable meets a certain conditions (ie., more than 100
+  completed passes). Moreover, the \texttt{filter()} verb can be used in
+  conjunction with logical operators such as \texttt{\&} and
+  \texttt{\textbar{}} to create more complex criteria.
 \item
   \texttt{group\_by()}: the \texttt{group\_by()} verb allows you to
   group a data set by one or more variables. It is a useful tool when
@@ -2910,7 +2874,7 @@ In order to work through specific examples of the above logical
 operators, we will use 2022 play-by-play data from \texttt{nflreadr}. To
 begin, let's read in the data:
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Please note that a more detailed overview of reading in
 \texttt{nflreadr} data is provided in Chapter 3. For the purposes of
@@ -3163,8 +3127,7 @@ To begin, we will use the \texttt{vroom} package to read in the data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{time\_in\_pocket }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/time\_in\_pocket.csv"}\NormalTok{)}
+\NormalTok{time\_in\_pocket }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/qb{-}tip"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3287,7 +3250,7 @@ rows that fit the following specifications:
   to the yards to go.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 Compiling the above \texttt{filter()} requires knowledge of the variable
 names within \texttt{nflreadr} play-by-play data. This is covered in
@@ -3627,7 +3590,7 @@ seasons. Let's explore this by determining each team's yards after catch
 between 2010 and 2022. To start, we will retrieve all NFL play-by-play
 data from those seasons.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-caution-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, toprule=.15mm, opacitybacktitle=0.6]
 
 Loading in multiple seasons of play-by-play data can be taxing on your
 computer's memory. RStudio's memory usage monitor, located in
@@ -3746,7 +3709,7 @@ output includes only the information contained in our
 and \texttt{percentage}).
 
 What if, however, you wanted to create new variables and then
-\texttt{summarize()} those? That is where the \texttt{mutate} verb is
+\texttt{summarize()} those? That is where the \texttt{mutate()} verb is
 used.
 
 As an example, let's explore individual quarterback's average completion
@@ -3765,7 +3728,7 @@ can attempt to do this simply by including both \texttt{passer} and
 Your output is going to include the \texttt{avg\_cpoe} for each
 quarterback at each and every distance of \texttt{air\_yards}. Not only
 is it difficult to find meaning in, but it would prove to be difficult -
-if not impossible - to visualize with \texttt{ggplot}. To correct this
+if not impossible - to visualize with \texttt{ggplot()}. To correct this
 issue, we must use the \texttt{mutate()} verb.
 
 Rather than \texttt{summarize()} the completion percentage over expected
@@ -3864,13 +3827,12 @@ we will:
 Analysis}\label{importing-and-conducting-exploratory-data-analysis}}
 
 To start, let's examine data from Sports Info Solutions by reading in
-the data from this book's Git repository using the \texttt{Vroom}
+the data from this book's Git repository using the \texttt{vroom}
 package.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sis\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/sis\_boom\_bust.csv"}\NormalTok{)}
+\NormalTok{sis\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/sis{-}bb"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4052,7 +4014,7 @@ place of the missing data as we have no ability to accurately determine
 who the player is.
 
 Instead, we will return to our original data set (\texttt{sis\_data})
-and use the \texttt{na.omit} function to drop any row that includes
+and use the \texttt{na.omit()} function to drop any row that includes
 missing data:
 
 \begin{Shaded}
@@ -4062,7 +4024,7 @@ missing data:
 \end{Shaded}
 
 In the above code, we are simply ``recreating'' our existing dataset but
-using \texttt{na.omit} to drop rows that include \texttt{NA} values.
+using \texttt{na.omit()} to drop rows that include \texttt{NA} values.
 Once complete, we can move onto the next step of the data
 preparation/cleaning process.
 
@@ -4100,7 +4062,7 @@ package before switching the columns from \texttt{character} to
 \texttt{numeric} using an approach rooted in base R. After, we will use
 a much easier method to do both at one time.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important to note here that I do not necessarily endorse using the
 first method below to change variable types and to drop the percentage
@@ -4134,11 +4096,12 @@ existing columns (both \texttt{boom\_percent} and
 that the following string is the argument to create or, in our case,
 edit the existing values in the column.
 
-We then use the \texttt{str\_remove} function from the \texttt{stringr}
-package to locate the \texttt{\%} sign in each value and remove it.
+We then use the \texttt{str\_remove()} function from the
+\texttt{stringr} package to locate the \texttt{\%} sign in each value
+and remove it.
 
 Afterwards, we dive into base R (that is, not \texttt{tidyverse}
-structure) and use the \texttt{as.numeric} function to change both of
+structure) and use the \texttt{as.numeric()} function to change both of
 the boom and bust columns to the correct data type (using the
 \texttt{\$} sign to notate that we are working on just one specific
 column in the data.
@@ -4260,7 +4223,7 @@ more - including applying functions from other packages.
 Importantly, the \texttt{mutate()} verb allows us to create new
 variables \textbf{without changing the original data set}. While the
 \texttt{summarize()} verb can also create new columns based on various
-functions and argument, it also distills the dat aset down to just the
+functions and argument, it also distills the data set down to just the
 columns created within the \texttt{summarize()} function (plus any
 column including in the \texttt{group\_by()}). Conversely, the
 \texttt{mutate()} verb creates the new column and adds it on to the
@@ -4448,7 +4411,7 @@ To start, we can use the \texttt{load\_teams()} function in
 \texttt{select()} to keep just the information we needed for the merging
 process:
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Please note that a much deeper dive into the \texttt{nflverse} functions
 is included in Chapter 3, including a more detailed approach to working
@@ -4472,7 +4435,7 @@ process.
 \end{verbatim}
 
 \begin{verbatim}
-i Data updated: 2023-06-04 12:23:30 EDT
+i Data updated: 2023-06-06 18:19:00 EDT
 \end{verbatim}
 
 \begin{verbatim}
@@ -4547,7 +4510,7 @@ the first row of data from each:
 \end{verbatim}
 
 \begin{verbatim}
-i Data updated: 2023-06-04 12:23:30 EDT
+i Data updated: 2023-06-06 18:19:00 EDT
 \end{verbatim}
 
 \begin{verbatim}
@@ -4564,7 +4527,7 @@ Knowing that, we can conduct the \texttt{left\_join} using \texttt{team}
 for \texttt{variable\_1} from the above example syntax and
 \texttt{team\_nick} for \texttt{variable\_2}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 Notice that the columns containing the corresponding data do not have
 the same name (\texttt{team} vs.~\texttt{team\_nick}).
@@ -4625,6 +4588,9 @@ what happens doing the joining process, please note these two items:
 
 \hypertarget{exercises}{%
 \section{Exercises}\label{exercises}}
+
+The answers for the following answers can be found here:
+\url{http://nfl-book.bradcongelio.com/ch2-answers}.
 
 Create a data frame titled \texttt{pbp} that contains the play-by-play
 information for the 2022 regular season by running the following code:
@@ -4700,8 +4666,10 @@ After, using the data in \texttt{pbp}, complete the following:
 \NormalTok{           incomplete\_pass }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{|}
 \NormalTok{           interception }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(down)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(passer) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{total\_completions =} \FunctionTok{sum}\NormalTok{(complete\_pass }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-            \AttributeTok{total\_incompletions =} \FunctionTok{sum}\NormalTok{(incomplete\_pass }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{total\_completions =} \FunctionTok{sum}\NormalTok{(complete\_pass }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,}
+                                    \AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{total\_incompletions =} \FunctionTok{sum}\NormalTok{(incomplete\_pass }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,}
+                                      \AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(total\_completions }\SpecialCharTok{\textgreater{}=} \DecValTok{180}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4945,7 +4913,7 @@ to be helpful in any sort of Twitter football discourse. When working
 with \texttt{load\_player\_stats()}, it is important that you know the
 variable names that are useful to the research you are doing.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 The relevant passing statistics housed in \texttt{load\_player\_stats()}
 includes:
@@ -5147,7 +5115,7 @@ test.'' Why? It is unlikely that an adjusted yards per pass attempt of
 a season worth of data. The results for Kyle Allen and Matt Barkley are
 questionable, as well.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 You will often discover artificially-inflated statistics like above when
 the players have limited number of pass attempts/rushing
@@ -5977,7 +5945,7 @@ Mahomes finished a whole yard behind Aaron Rodgers when exploring the
 same metric on 3rd down with 10 or less yards to go (and was tied for
 second place with Russel Wilson).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 Why is it necessary to use such a long list of specifications in the
 \texttt{filter()} function in order to match the official QB statistics
@@ -6778,7 +6746,7 @@ code, we are going to place the unique identifiers into separate rows,
 based on formation, by utilizing the \texttt{separate\_rows()} function
 in \texttt{tidyr}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 If you use \texttt{load\_participation()} but set
 \texttt{include\_pbp\ =\ FALSE} it is important to remember that the
@@ -6929,7 +6897,7 @@ Because of this, no player name will be associated with that specific
 \texttt{gsis\_id} on the Steelers' roster (with the end result being a
 missing value).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 You may notice that the resulting data frame, titled
 \texttt{pit\_roster}, has 80 players on the roster despite NFL teams
@@ -6987,7 +6955,7 @@ and \texttt{gsis\_id} from the roster information.
 # ... with 147 more rows
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 The \texttt{load\_rosters()} data is capable of providing data for
 multiple seasons at once. Through each season, a player's
@@ -7233,7 +7201,7 @@ Patriots with the following code:
 \end{verbatim}
 
 \begin{verbatim}
-i Data updated: 2023-06-04 12:23:55 EDT
+i Data updated: 2023-06-06 18:19:22 EDT
 \end{verbatim}
 
 \begin{verbatim}
@@ -7273,7 +7241,7 @@ Patriots sending Drew Bledsoe to the Buffalo Bills.
 \end{verbatim}
 
 \begin{verbatim}
-i Data updated: 2023-06-04 12:23:55 EDT
+i Data updated: 2023-06-06 18:19:23 EDT
 \end{verbatim}
 
 \begin{verbatim}
@@ -7305,7 +7273,7 @@ determine all trades that involved a top ten pick switching hands.
 \end{verbatim}
 
 \begin{verbatim}
-i Data updated: 2023-06-04 12:23:55 EDT
+i Data updated: 2023-06-06 18:19:23 EDT
 \end{verbatim}
 
 \begin{verbatim}
@@ -7373,7 +7341,8 @@ back compared to their draft position.
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Career Rushing Yards vs. Pick Number**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"1980 to 2022"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7466,7 +7435,8 @@ yard accumulated during his career.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Career Rushing Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Forty{-}Yard Dash Time vs. Career Rushing Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2000 to 2022"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7545,7 +7515,8 @@ highlight which running backs had more actual rushing yards than the NGS
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Average Completed Air Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Avgerage Time to Throw vs. Average Air Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7608,7 +7579,8 @@ ball longer than the rest of the league (on average).
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Actual Rush Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Expected Rush Yards vs. Actual Rush Yards"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7700,7 +7672,8 @@ defensive strength on the total.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"QBR {-} Unadjusted"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"QBR: Adjusted vs. Adjusted Scores"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"Based on ESPN\textquotesingle{}s Model: 2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7738,7 +7711,7 @@ dropped pass without the pass being considered ``bad'' is the fault of
 the wide receiver, while a dropped pass that \emph{is} charted as
 ``bad'' falls on the quarterback.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 When working with data from \texttt{load\_pfr\_advstats()}, it is
 important to remember that you must use the
@@ -7780,7 +7753,8 @@ abbreviations used within the \texttt{nflverse}.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Drops"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**QB Bad Throws vs. WR Drops**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7804,7 +7778,7 @@ By using the rushing data provided by \texttt{load\_pfr\_advstats()}, we
 can examine how ``hard'' it is to tackle a running back by examining the
 relationship between their yards before contact and yards after contact.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 Because the list of running backs with more than 200 attempts includes
 Christian McCaffrey, it is necessary to use the \texttt{case\_when()}
@@ -7850,7 +7824,8 @@ since \texttt{2TMS} is not a recognized team abbreviation.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Yards After Contact"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Running Backs: Yards Before and After Contact**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7896,7 +7871,8 @@ the most yardage after catching the ball.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Yards After Catch"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Yards at Point of Catch vs. Yards After Catch"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFl Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7954,7 +7930,8 @@ of sacks those blitzes produce.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Sacks"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Total Blitzes vs. Total Sacks**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8093,7 +8070,8 @@ quarterback's DAKOTA composite based on the year.
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Cash Paid vs. Mean DAKOTA Composite"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"2022 Regular Season"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8122,6 +8100,9 @@ than those in the upper-right) but come with a team-friendly contract
 
 \hypertarget{exercises-1}{%
 \section{Exercises}\label{exercises-1}}
+
+The answers for the following answers can be found here:
+\url{http://nfl-book.bradcongelio.com/ch3-answers}.
 
 \hypertarget{exercise-1-1}{%
 \subsection{\texorpdfstring{\textbf{Exercise
@@ -8338,8 +8319,7 @@ function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{play\_action\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/play\_action\_data.csv"}\NormalTok{)}
+\NormalTok{play\_action\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/pa{-}data"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8350,7 +8330,7 @@ action and when not. In this case, our two variable names are
 place on the x-axis and the \texttt{pa\_yds} variable being placed on
 the y-axis.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important to remember which axis is which as you begin to learn
 using \texttt{ggplot}:
@@ -8387,7 +8367,7 @@ play action, we are unable to discern which specific point is which
 quarterback - among other issues. To provide more detail and to
 ``prettify'' the plot, let's discuss doing the following:
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Our data visualization ``to do list'':
 
@@ -8421,7 +8401,7 @@ Our data visualization ``to do list'':
 \subsection{Adding Team Colors to Each
 Point}\label{adding-team-colors-to-each-point}}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Much like anything in the R language, there are multiple ways to go
 about add team colors (and logos, player headshots, etc.) to
@@ -8450,7 +8430,7 @@ example, will be included in the data). We will also use the
 we know we will need (\texttt{team\_abbr}, \texttt{team\_nick},
 \texttt{team\_color}, and \texttt{team\_color2}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 We are only including the \texttt{team\_abbr} variable in this example
 because we are going to create the plot both with and without the use of
@@ -8501,7 +8481,7 @@ to each point by including the \texttt{color} argument within our
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 You may notice that we used the the \texttt{\$} special operator to
 extract the \texttt{team\_color} information within our
@@ -8614,7 +8594,7 @@ the primary and secondary color associated with each team.
 With team colors correctly associated with each point, we can turn back
 to our ``to do list'' to see what part of the job is next.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Our data visualization ``to do list'':
 
@@ -8684,7 +8664,7 @@ action passes. Moreover, we \emph{could}~create a new column that add
 both attempt numbers to get a QB's cumulative total but that does not
 have a distinct correlation to the data on either axis.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-caution-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, toprule=.15mm, opacitybacktitle=0.6]
 
 For the sake of educational purposes, we can alter the size of each
 specific point to correlate to the total number of play action attempts
@@ -8746,7 +8726,7 @@ into the visualization.
 With the size of each point adequately adjusted, we can move on to the
 next part of our data visualization ``to do list.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Our data visualization ``to do list'':
 
@@ -8825,8 +8805,8 @@ awkwardly close to the respective point. Luckily, the \texttt{ggrepel}
 package provides plenty of built-in customization options:
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4077}}
-  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5923}}@{}}
+  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4167}}
+  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5833}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\centering
 \texttt{ggrepel} Option\footnote{As listed on the \texttt{ggrepel}
@@ -8895,7 +8875,7 @@ While the graph could hypothetically ``standalone'' as is - minus a need
 for a title - we can still do work on it to make it more presentable.
 Let's return to our data visualization ``to do list.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Our data visualization ``to do list'':
 
@@ -8958,7 +8938,7 @@ selecting an appropriate amount of ticks.
 However, before implementing these changes, we need to segue into a
 discussion on continuous and discrete data.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 When implementing changes to either the x- or y-axis in \texttt{ggplot},
 you will be working with either continuous or discrete data, and using
@@ -9078,7 +9058,7 @@ to easily add a comma into numbers that are in the thousands.
 With much of the heavy lifting for our visualization now complete, we
 can move on to the final steps in our ``to do list.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{Our data visualization ``to do list'':}
 
@@ -9133,14 +9113,13 @@ section, as all this is added and/or changed by using \texttt{labs()}.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Warning: ggrepel: 17 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 13 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9163,7 +9142,7 @@ graph come from and who designed it). We will explore ways to change the
 font, size, color, and more of these items when we move on to the last
 item of our ``to do list.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{Our data visualization ``to do list'':}
 
@@ -9220,16 +9199,19 @@ this case \texttt{geom\_hline} and \texttt{geom\_vline}).
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FunctionTok{mean}\NormalTok{(play\_action\_data}\SpecialCharTok{$}\NormalTok{pa\_yds), }\AttributeTok{linewidth =}\NormalTok{ .}\DecValTok{8}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{mean}\NormalTok{(play\_action\_data}\SpecialCharTok{$}\NormalTok{yds), }\AttributeTok{linewidth =}\NormalTok{ .}\DecValTok{8}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FunctionTok{mean}\NormalTok{(play\_action\_data}\SpecialCharTok{$}\NormalTok{pa\_yds),}
+             \AttributeTok{linewidth =}\NormalTok{ .}\DecValTok{8}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+             \AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{mean}\NormalTok{(play\_action\_data}\SpecialCharTok{$}\NormalTok{yds),}
+             \AttributeTok{linewidth =}\NormalTok{ .}\DecValTok{8}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+             \AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Warning: ggrepel: 17 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 13 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9258,7 +9240,7 @@ plot, you will see that the dashed line runs \textbf{on top} of the
 names and dots in the plot. This is because \texttt{ggplot} follows a
 very specific ordering of layering.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 In \texttt{ggplot}, it is important to remember that items in a plot are
 layered in the order in which they are added to the plot. This process
@@ -9309,14 +9291,13 @@ decrease each line's transparency.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Warning: ggrepel: 17 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 13 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9336,7 +9317,7 @@ impacting the final plot.
 \subsubsection{\texorpdfstring{Adding Mean Lines with
 \texttt{nflplotR}}{Adding Mean Lines with nflplotR}}\label{adding-mean-lines-with-nflplotr}}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 Even though we were not able to use \texttt{nflplotR} to handle the
 colors in this plot because the data lacked a corresponding
@@ -9369,9 +9350,8 @@ lines of code (thus less typing). See below for an example.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9381,7 +9361,7 @@ i Please use the `linewidth` aesthetic instead.
 \end{verbatim}
 
 \begin{verbatim}
-Warning: ggrepel: 17 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 13 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9403,7 +9383,7 @@ it again like we had to in the former method).
 We can now move onto the final item on our data visualization ``to do
 list.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{Our data visualization ``to do list'':}
 
@@ -9549,7 +9529,7 @@ prefer to design all of my data visualizations without the ``axis
 ticks'' (those small lines sticking out from the plot just above, or
 beside, each yardage number).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 Please note the keywords in the above paragraph: ``\textbf{I prefer.''}
 
@@ -9596,16 +9576,15 @@ we want to make from the above list of options.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}
     \AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Warning: ggrepel: 17 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 13 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9649,9 +9628,8 @@ changes to the plot's elements by adding all of these preferences to out
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Non{-}Play Action Yards"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
-       \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{title =} \StringTok{"Cumulative Passing Yards"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Non{-}Play Action vs. Play Action"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}
     \AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{(),}
     \AttributeTok{axis.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{,}
@@ -9685,7 +9663,7 @@ changes to the plot's elements by adding all of these preferences to out
 \end{Shaded}
 
 \begin{verbatim}
-Warning: ggrepel: 19 unlabeled data points (too many overlaps). Consider
+Warning: ggrepel: 15 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 \end{verbatim}
 
@@ -9704,7 +9682,7 @@ remove the axis tick marks, but then switched to using
 \texttt{theme()}. Both are one of four theme elements that can be
 modified in the above fashion.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{The Four Theme Elements You Can Edit}
 
@@ -9761,7 +9739,7 @@ either line or background elements, we switch from
 using \texttt{element\_blank()} to completely remove the panel's minor
 grid lines).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{In a plot, which are the minor grid lines and which are the
 major?}
@@ -9876,7 +9854,8 @@ it resides in under the ``Functions'' in your RStudio environment.
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
        \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -9935,7 +9914,8 @@ without including all 28 lines of code. With the
        \AttributeTok{y =} \StringTok{"Play Action Yards"}\NormalTok{,}
        \AttributeTok{title =} \StringTok{"**Cumulative Passing Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Non{-}Play Action vs. Play Action*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_markdown}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#E31837"}\NormalTok{))}
 \end{Highlighting}
@@ -9965,8 +9945,7 @@ GitHub.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{team\_playaction }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/team\_playaction.csv"}\NormalTok{)}
+\NormalTok{team\_playaction }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/team{-}pa"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9992,7 +9971,7 @@ of each team's logo available in the resulting data: (1.) the logo from
 ESPN, (2.) the logo from Wikipedia, (3.) a pre-edited version of the
 logo that is cropped into a square.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{There are slight differences in disk space, pixels, and utility
 in the provided ESPN, Wikipedia, and squared versions of the logos.}
@@ -10062,7 +10041,8 @@ correctly before switching out \texttt{geom\_point} for
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Net Passing Yards Without Play Action vs. With Play Action**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 NFL Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{,}
        \AttributeTok{x =} \StringTok{"Net Yards Without Play Action"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Net Yards With Play Action"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -10081,7 +10061,7 @@ The resulting plot, constructed in nearly an identical manner to our
 above example, looks correct and we are ready to swap out
 \texttt{geom\_point} for team logos.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 Before proceeding with this next step, be sure that you have the
 \texttt{ggimage} package installed and loaded.
@@ -10106,7 +10086,8 @@ Before proceeding with this next step, be sure that you have the
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Net Passing Yards Without Play Action vs. With Play Action**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 NFL Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{,}
        \AttributeTok{x =} \StringTok{"Net Yards Without Play Action"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Net Yards With Play Action"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -10134,7 +10115,7 @@ look at.
 That is because we failed to provide an aspect ratio for the team logos.
 In this case, we need to add \texttt{asp\ =\ 16/9}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Why are we including a specific aspect ratio of 16/9 for each team logo?
 Good question.
@@ -10174,7 +10155,8 @@ correct aspect ratio for each of our team logos:
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{label\_comma}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Net Passing Yards Without Play Action vs. With Play Action**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 NFL Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{,}
        \AttributeTok{x =} \StringTok{"Net Yards Without Play Action"}\NormalTok{,}
        \AttributeTok{y =} \StringTok{"Net Yards With Play Action"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -10209,8 +10191,7 @@ into a data frame titled \texttt{eagles\_fourth\_downs}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{eagles\_fourth\_downs }\OtherTok{\textless{}{-}}
-\NormalTok{  vroom}\SpecialCharTok{::}\FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/eagles\_fourth\_downs.csv"}\NormalTok{)}
+\NormalTok{eagles\_fourth\_downs }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/phi{-}4th{-}downs"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10338,7 +10319,8 @@ to include a title, subtitle, and caption.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Go For It Percentage"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Philadelphia Eagles: Fourth{-}Down Attempt Percentage**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2012 {-} 2022: Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10371,8 +10353,7 @@ conversion rate.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{combined\_fourth\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/combined\_fourth\_data.csv"}\NormalTok{)}
+\NormalTok{combined\_fourth\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/4th{-}data"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10408,7 +10389,8 @@ Eagles and \texttt{\#013369} for the rest of the NFL).
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Go For It Percentage"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Philadelphia Eagles vs. NFL: Fourth{-}Down Attempt Percentage**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2012 {-} 2022: Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10440,8 +10422,7 @@ season, as well as the opponent and the opponent's team logo.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mahomes\_epa }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/mahomes\_epa.csv"}\NormalTok{)}
+\NormalTok{mahomes\_epa }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/mahomes\_epa"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10542,7 +10523,8 @@ x-axis.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Average QB EPA"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Patrick Mahomes: Mean QB EPA per Week**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10587,8 +10569,7 @@ continuous variable (such as \texttt{season} in the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{qb\_thirddown\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/qb\_thirddown\_plot.csv"}\NormalTok{)}
+\NormalTok{qb\_thirddown\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/qb{-}3rd{-}data"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10787,7 +10768,8 @@ and \texttt{caption} using the \texttt{labs} function.
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**QB Aggressiveness on Third Down**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Numbers of Times Air Yards \textgreater{}= Yards To Go*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10820,8 +10802,7 @@ Play.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{epa\_per\_play }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/epa\_per\_play.csv"}\NormalTok{)}
+\NormalTok{epa\_per\_play }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/epa{-}per{-}play"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10868,7 +10849,8 @@ There are several distinct differences, however.
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Expected Points Added per Play**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10897,8 +10879,7 @@ averages, and any outliers in the data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{playoff\_airyards\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/playoff\_airyards\_plot.csv"}\NormalTok{)}
+\NormalTok{playoff\_airyards\_plot }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/playoff{-}airyards"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10925,7 +10906,8 @@ under each box plot.
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Distribution of Regular Season Air Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 NFL Playoff Teams*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_nfl\_logo}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.25}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -10963,8 +10945,7 @@ another option to represent the distribution of a continuous variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{playoff\_airyards\_ridges\_plot }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/playoff\_airyards\_ridges\_plot.csv"}\NormalTok{)}
+\NormalTok{playoff\_airyards\_ridges\_plot }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/ay{-}ridges"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11003,7 +10984,8 @@ quantile lines.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Distribution of Regular Season Air Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2022 NFL Playoff Teams*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_nfl\_logo}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.25}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -11026,8 +11008,7 @@ Plot}{Creating a geom\_violin Plot}}\label{creating-a-geom_violin-plot}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{yards\_gained\_compared }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/yards\_gained\_compared.csv"}\NormalTok{)}
+\NormalTok{yards\_gained\_compared }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/yards\_gained"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11053,7 +11034,8 @@ Plot}{Creating a geom\_violin Plot}}\label{creating-a-geom_violin-plot}}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"*Averaged Yards Gained per Down*"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"**KC Chiefs vs. NFL: 2022 Regular Season**"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"**An Introduction to NFL Analytics with R**\textless{}br\textgreater{}*Brad J. Congelio*"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =}\NormalTok{ nflplotR}\SpecialCharTok{::}\FunctionTok{element\_nfl\_logo}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{),}
         \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
         \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
@@ -11091,8 +11073,7 @@ Plot}{Creating a geom\_histogram Plot}}\label{creating-a-geom_histogram-plot}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{def\_yards\_allowed }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/def\_yards\_allowed.csv"}\NormalTok{)}
+\NormalTok{def\_yards\_allowed }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/def{-}yards"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11111,17 +11092,46 @@ Plot}{Creating a geom\_histogram Plot}}\label{creating-a-geom_histogram-plot}}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"*Histogram of Defensive Yards Allowed*"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"**2022 NFL Regular Season**"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics{04-nfl-analytics-visualization_files/figure-pdf/histogram_plot_completed-1.pdf}
+{\centering \includegraphics[width=5.25in,height=\textheight]{images/completed_def_histogram.png}
 
 }
 
 \end{figure}
+
+\hypertarget{saving-your-ggplot2-creations}{%
+\section{\texorpdfstring{Saving Your \texttt{ggplot2}
+Creations}{Saving Your ggplot2 Creations}}\label{saving-your-ggplot2-creations}}
+
+The most convenient way to save your finished plot is with the
+\texttt{ggsave()} function, which will save the last plot created. The
+function accepts a multitude of different arguments, including
+\texttt{filename}, \texttt{device}, \texttt{path}, \texttt{scale},
+\texttt{width}, \texttt{height}, and \texttt{dpi}.
+
+In most cases, you will be able to save your plot using just the
+\texttt{filename} and \texttt{dpi} arguments, like below the below
+example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"this{-}is{-}your{-}filename.png"}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{400}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In the above example, the plot will be outputted in \texttt{.png} format
+into your current working directory (you can see where the plot will be
+saved by using \texttt{getwd()}). The image \texttt{dpi} - or ``dots per
+inch'' - ultimately controls the plot's resolution. A higher number will
+allow you to increase the size the image, but will also increase the
+size of the file itself. I find that using a \texttt{dpi} between 300
+and 400 is suitable for nearly all plots.
 
 \hypertarget{advanced-headshots-method}{%
 \section{Advanced Headshots Method}\label{advanced-headshots-method}}
@@ -11141,8 +11151,7 @@ To showcase the process, let's create a data frame titled
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{complete\_wr\_airyards }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/complete\_wr\_ay.csv"}\NormalTok{)}
+\NormalTok{complete\_wr\_airyards }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/complete\_ay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11275,7 +11284,7 @@ images and save them into a new images folder on our computer.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 If RStudio happens to stop outputting \texttt{ggplot()} visualizations
 at this point, please run \texttt{dev.off()}.
@@ -11309,8 +11318,9 @@ visualization created with \texttt{ggplot()}.
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Air Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Density"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Top Ten WRs in Total Air Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Density Plot of How They Were Earned {-} 2022 Regular Season*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{subtitle =} \StringTok{"*Density Plot of How They Were Earned*"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11350,8 +11360,7 @@ a predictive probability of 70\% or greater of being a passing attempt).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pure\_cpoe }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/pure\_cpoe.csv"}\NormalTok{)}
+\NormalTok{pure\_cpoe }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/pure{-}cpoe"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11437,7 +11446,8 @@ package.
   \FunctionTok{cols\_hide}\NormalTok{(team\_logo\_wikipedia) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_header}\NormalTok{(}
     \AttributeTok{title =} \FunctionTok{md}\NormalTok{(}\StringTok{"**Average CPOE in Pure Passing Situations**"}\NormalTok{),}
-    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\% Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\%}
+\StringTok{                  Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{gt\_img\_rows}\NormalTok{(headshot, }\AttributeTok{height =} \DecValTok{25}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -11462,7 +11472,8 @@ package.
   \FunctionTok{cols\_hide}\NormalTok{(team\_logo\_wikipedia) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_header}\NormalTok{(}
     \AttributeTok{title =} \FunctionTok{md}\NormalTok{(}\StringTok{"**Average CPOE in Pure Passing Situations**"}\NormalTok{),}
-    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\% Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\%}
+\StringTok{                  Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_stubhead}\NormalTok{(}\AttributeTok{label =} \StringTok{"Quarterback"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{gt\_img\_rows}\NormalTok{(headshot, }\AttributeTok{height =} \DecValTok{25}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{cols\_label}\NormalTok{(}
@@ -11489,7 +11500,8 @@ as the first column and, while we are at it, use the
   \FunctionTok{cols\_hide}\NormalTok{(team\_logo\_wikipedia) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_header}\NormalTok{(}
     \AttributeTok{title =} \FunctionTok{md}\NormalTok{(}\StringTok{"**Average CPOE in Pure Passing Situations**"}\NormalTok{),}
-    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\% Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\%}
+\StringTok{                  Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_stubhead}\NormalTok{(}\AttributeTok{label =} \StringTok{"Quarterback"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  gtExtras}\SpecialCharTok{::}\FunctionTok{gt\_img\_rows}\NormalTok{(headshot, }\AttributeTok{height =} \DecValTok{25}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{cols\_label}\NormalTok{(}
@@ -11518,7 +11530,8 @@ Football Focus.
   \FunctionTok{cols\_hide}\NormalTok{(team\_logo\_wikipedia) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_header}\NormalTok{(}
     \AttributeTok{title =} \FunctionTok{md}\NormalTok{(}\StringTok{"**Average CPOE in Pure Passing Situations**"}\NormalTok{),}
-    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\% Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\%}
+\StringTok{                  Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_stubhead}\NormalTok{(}\AttributeTok{label =} \StringTok{"Quarterback"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{gt\_img\_rows}\NormalTok{(headshot, }\AttributeTok{height =} \DecValTok{25}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{cols\_label}\NormalTok{(}
@@ -11550,7 +11563,8 @@ a caption at the bottom and using one of the formatted themes from
   \FunctionTok{cols\_hide}\NormalTok{(team\_logo\_wikipedia) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_header}\NormalTok{(}
     \AttributeTok{title =} \FunctionTok{md}\NormalTok{(}\StringTok{"**Average CPOE in Pure Passing Situations**"}\NormalTok{),}
-    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\% Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \AttributeTok{subtitle =} \FunctionTok{md}\NormalTok{(}\StringTok{"*2010{-}2022  |  Pure Passing is \textgreater{}= 70\%}
+\StringTok{                  Chance of Pass Attempt*"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{tab\_stubhead}\NormalTok{(}\AttributeTok{label =} \StringTok{"Quarterback"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{gt\_img\_rows}\NormalTok{(headshot, }\AttributeTok{height =} \DecValTok{25}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{cols\_label}\NormalTok{(}
@@ -11590,8 +11604,7 @@ code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ryoe\_shiny }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/ryoe\_projs.csv"}\NormalTok{)}
+\NormalTok{ryoe\_shiny }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/ryoe{-}projs"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -11672,8 +11685,7 @@ be passed into the \texttt{ggplot} output.
 \FunctionTok{library}\NormalTok{(gt)}
 \FunctionTok{library}\NormalTok{(vroom)}
 
-\NormalTok{ryoe\_shiny }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/ryoe\_projs.csv"}\NormalTok{)}
+\NormalTok{ryoe\_shiny }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/ryoe{-}projs"}\NormalTok{)}
 
 \NormalTok{ryoe\_shiny }\OtherTok{\textless{}{-}}\NormalTok{ ryoe\_shiny }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(ydstogo }\SpecialCharTok{\textless{}=} \DecValTok{10}\NormalTok{)}
@@ -11930,8 +11942,7 @@ visualization in \texttt{ggplot()}.
         \AttributeTok{y =} \StringTok{"Total Expected Yards"}\NormalTok{, }
         \AttributeTok{title =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Actual Rushing Yards vs. Expected for Season(s):"}\NormalTok{,}
                       \FunctionTok{selectedSeasons}\NormalTok{()),}
-        \AttributeTok{subtitle =} \StringTok{"Model: *LightGBM* in **tidymodels**"}\NormalTok{,}
-        \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics With R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+        \AttributeTok{subtitle =} \StringTok{"Model: *LightGBM* in **tidymodels**"}\NormalTok{) }\SpecialCharTok{+}
       \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
 \NormalTok{  \}, }\AttributeTok{width =} \DecValTok{500}\NormalTok{)}
 \ErrorTok{\}}
@@ -11948,6 +11959,9 @@ it, for free, on \href{https://www.shinyapps.io/}{ShinyApps.io}.
 
 \hypertarget{exercises-2}{%
 \section{Exercises}\label{exercises-2}}
+
+The answers for the following answers can be found here:
+\url{http://nfl-book.bradcongelio.com/ch4-answers}.
 
 \hypertarget{exercise-1-2}{%
 \subsection{Exercise 1}\label{exercise-1-2}}
@@ -12054,9 +12068,9 @@ then follow the instructions below to complete the exercise.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{statistical-modeling-with-nfl-data}{%
-\chapter{Statistical Modeling with NFL
-Data}\label{statistical-modeling-with-nfl-data}}
+\hypertarget{advanced-model-creation-with-nfl-data}{%
+\chapter{Advanced Model Creation with NFL
+Data}\label{advanced-model-creation-with-nfl-data}}
 
 \hypertarget{introduction-to-statistical-modeling-with-nfl-data}{%
 \section{Introduction to Statistical Modeling with NFL
@@ -12188,7 +12202,7 @@ points in the NFL if it is not also gaining yardage. We can view this
 relationship by building a simple linear regression model in R using the
 \texttt{lm()} function.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 The \texttt{lm()} function is a built-in RStudio tool as part of the
 \texttt{stats} package and stand for ``linear model.'' It is used, as
@@ -12227,8 +12241,7 @@ below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{simple\_regression\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/simple\_regression\_data.csv"}\NormalTok{)}
+\NormalTok{simple\_regression\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/simple{-}reg"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12258,8 +12271,7 @@ relationship between the two variables.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Line of Best Fit: 2022 Season**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Y = total\_yards \textasciitilde{} total\_points*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytic with R*\textless{}br\textgreater{}Brad J. Congelio"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{subtitle =} \StringTok{"*Y = total\_yards \textasciitilde{} total\_points*"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Total Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Points"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -12348,7 +12360,7 @@ Multiple R-squared:  0.736, Adjusted R-squared:  0.727
 F-statistic: 83.5 on 1 and 30 DF,  p-value: 3.6e-10
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Reading \& Understanding Regression Results}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Reading \& Understanding Regression Results}, toprule=.15mm, opacitybacktitle=0.6]
 
 You have now run and output the summary statistics for your first linear
 regression model that explore the relationship between an NFL team's
@@ -12406,8 +12418,8 @@ Information about these residual values are included first in our
 distribution of the model's residual errors.
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.0722}}
-  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.9278}}@{}}
+  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3194}}
+  >{\centering\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6806}}@{}}
 \toprule\noalign{}
 \endhead
 \bottomrule\noalign{}
@@ -12578,7 +12590,8 @@ data and include NFL team logos.
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Total Yards \& Residual Values**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Y = total\_points \textasciitilde{} total\_yards*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytic with R*\textless{}br\textgreater{}Brad J. Congelio"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Total Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Residual of Total Points"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
@@ -12698,7 +12711,7 @@ including 20-seasons worth of \texttt{total\_yards} and
 theory, allows for a reduced impact of any outliers and an improve
 generalizability.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 Working with 10+ years of play-by-play data can be problematic in that
 them model, using just \texttt{total\_yards} and \texttt{total\_points},
@@ -12736,7 +12749,7 @@ results in a deviation between \texttt{1Q} and \texttt{3Q} (-22.33 and
 new model still indicate longtail cases on both ends of the regression
 line much like the 2022 model found.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 To further examine the residual values, we can use a
 \textbf{Shapiro-Wilk Test} to test the whether results are normally
@@ -12803,7 +12816,8 @@ hypothesis and again conclude that the data is in a normal distribution.
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Total Yards \& Residual Values: 2012{-}2022**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*Y = total\_points \textasciitilde{} total\_yards*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytic with R*\textless{}br\textgreater{}Brad J. Congelio"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Total Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Residual of Total Points"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
@@ -12898,8 +12912,7 @@ season, we can read in the data below using \texttt{vroom::vroom()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{multiple\_lm\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/multiple\_lm\_data.csv"}\NormalTok{)}
+\NormalTok{multiple\_lm\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/multiple{-}lm"}\NormalTok{)}
 
 \NormalTok{multiple\_lm\_data }\OtherTok{\textless{}{-}}\NormalTok{ multiple\_lm\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(season }\SpecialCharTok{==} \DecValTok{2022}\NormalTok{)}
@@ -12914,7 +12927,7 @@ the simple linear regression (\texttt{season}, \texttt{team},
 new predictor variables (\texttt{rz\_eff}, \texttt{rz\_td\_eff},
 \texttt{rz\_fg\_eff}, \texttt{def\_td}, and \texttt{spec\_tds}).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-caution-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution}, toprule=.15mm, opacitybacktitle=0.6]
 
 Please note that, of the predictor and response variables, all of the
 values are in whole number format except for \texttt{rz\_eff},
@@ -13022,8 +13035,7 @@ the residuals.
   \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(),}
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Multiple Linear Regression Model: 2022**"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytic with R*\textless{}br\textgreater{}Brad J. Congelio"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Multiple Linear Regression Model: 2022**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Fitted Values"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Residual Values"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
@@ -13048,7 +13060,7 @@ linear regression indicates a significant issue with the data. Within
 the \texttt{Coefficients}, it is explained that one of the items is
 ``not defined because of singularities.''
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 ``Singularities'' occur in the data as a result of the dreaded
 multicollinearity between two or more predictors. The involved
@@ -13099,7 +13111,8 @@ and keep just the split between touchdowns and field goals.
             \AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Multicollinearity Correlation Matrix"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"Multiple Linear Regression: 2022 Data"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"**An Introduction to NFL Analytics with R**\textless{}br\textgreater{}Brad J. Congelio"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{fill =} \StringTok{"Correlation }\SpecialCharTok{\textbackslash{}n}\StringTok{ Measure"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =} \StringTok{""}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#F7F7F7"}\NormalTok{),}
@@ -13267,7 +13280,7 @@ worth further exploration.
   \texttt{total\_points} dependent variable.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13300,7 +13313,7 @@ worth further exploration.
   model.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 The final step of our multiple linear regression model is feeding it new
 data to make predictions on.
@@ -13543,8 +13556,7 @@ that season.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pfr\_mvp\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/pfr\_mvp\_data.csv"}\NormalTok{)}
+\NormalTok{pfr\_mvp\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/pfr{-}mvp"}\NormalTok{)}
 
 \NormalTok{pfr\_mvp\_data}\SpecialCharTok{$}\NormalTok{mvp }\OtherTok{\textless{}{-}} \DecValTok{1}
 
@@ -13560,7 +13572,7 @@ The above results in a data frame with 723 observations with 6
 predictive variables used to determine the probability of the QB being
 named MVP. We can now turn to the construction of the regression model.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 If you have not already done so, please install \texttt{tidymodels} and
 load it.
@@ -13580,7 +13592,7 @@ While we will not be building the binary model with the
 resamples and classes for analysis - to split our
 \texttt{qb\_mvp\_stats} data into both a training and testing set.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 Like many of the models to follow in this chapter, it is important to
 have both a training and testing set of data when performing a binary
@@ -13743,7 +13755,7 @@ accuracy.
 [1] "Accuracy: 0.98"
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 A model with that predicts with 97\% accuracy seems great, right?
 
@@ -13898,7 +13910,8 @@ visualize the information using \texttt{ggplot}.
        \AttributeTok{y =} \StringTok{"Estimate"}\NormalTok{,}
        \AttributeTok{title =} \StringTok{"**Probability of a QB Being NFL MVP**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*GLM Model | F1{-}Score: 99.4\%*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics With R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
 \end{Highlighting}
@@ -14016,7 +14029,7 @@ conduct some featured engineering (which is, in this case, inspired by a
 presentation given by Thomas Mock on how to use \texttt{tidymodels} to
 predict a run or pass using binary regression)(Mock 2020).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 \textbf{An Introduction to the \texttt{tidymodels} package.}
 
@@ -14107,7 +14120,7 @@ metrics in the data (\texttt{in\_red\_zone}, \texttt{in\_fg\_range}, and
 \texttt{two\_min\_drill}) and use \texttt{if\_else()} to turn all three
 into a \texttt{1}/\texttt{0} binary.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-warning-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, toprule=.15mm, opacitybacktitle=0.6]
 
 Before running the next bit of code, \textbf{be sure that your installed
 version of \texttt{dplyr}} \textbf{is 1.1.1 or newer}.
@@ -14307,7 +14320,7 @@ section of the \texttt{recipes} website.} We use several of these
 \texttt{step\_} functions below in preparing the \texttt{recipes} for
 our multinomial logisitic regression model.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-tip-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, toprule=.15mm, opacitybacktitle=0.6]
 
 When building your recipe in the \texttt{tidymodels} framework, there is
 a general suggested order that your steps should be in to avoid issues
@@ -14456,7 +14469,7 @@ There are three important items provided to
   tuning process for both \texttt{penalty} and \texttt{mixture}.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 You will notice that we've included \texttt{family\ =\ "multinomial"} in
 the construction of our model's engine, which makes since as the model
@@ -14530,7 +14543,7 @@ model.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-warning-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, toprule=.15mm, opacitybacktitle=0.6]
 
 The process of using the \texttt{paralell} package is included in the
 above code.
@@ -14574,7 +14587,7 @@ model completes the tuning process, be sure to run
 \texttt{doParallel::stopImplicitCluster()} to stop your computer from
 parallel processing.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 If conducting the tuning process in a parallel processing environment,
 there will be not verbose output in the console regardless of how you
@@ -14728,7 +14741,7 @@ the curve (AUC).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 The area under the curve (AUC) is a single-value of the model's
 performance. In this case, we are calculating it for each play type
@@ -14883,9 +14896,9 @@ Season &  & \# of Plays & \# Predicted & Percent Predicted \\
 \bottomrule
 \end{longtable*}
 
-\hypertarget{advanced-model-creation-with-nfl-data}{%
+\hypertarget{advanced-model-creation-with-nfl-data-1}{%
 \section{Advanced Model Creation with NFL
-Data}\label{advanced-model-creation-with-nfl-data}}
+Data}\label{advanced-model-creation-with-nfl-data-1}}
 
 \hypertarget{k-means-clustering}{%
 \subsection{K-means Clustering}\label{k-means-clustering}}
@@ -15022,8 +15035,7 @@ identification method.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rushing\_kmeans\_data }\OtherTok{\textless{}{-}}
-  \FunctionTok{vroom}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/bcongelio/nfl{-}analytics{-}with{-}r{-}book/origin/example\_data/csv/rushing\_kmeans\_data.csv"}\NormalTok{)}
+\NormalTok{rushing\_kmeans\_data }\OtherTok{\textless{}{-}} \FunctionTok{vroom}\NormalTok{(}\StringTok{"http://nfl{-}book.bradcongelio.com/kmeans{-}data"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -15077,7 +15089,7 @@ favoring those running backs that are regularly gaining short yardage on
 the ground and getting first downs, but not producing much EPA (based on
 the high contribution from \texttt{bust\_percent}).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important to note that a negative sign does that indicate
 ``negative influence,'' or a a lack of. Rather, a negative sign means
@@ -15513,59 +15525,13 @@ With the data addition and preparation completed, we can use both the
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-Warning: HTML tags found, and they will be removed.
-* Set `options(gt.html_tag_check = FALSE)` to disable this check.
-\end{verbatim}
+\begin{figure}
 
-\setlength{\LTpost}{0mm}
-\begin{longtable*}{ccc}
-\toprule
-\multicolumn{3}{c}{Clustered Running Backs} \\ 
-\cmidrule(lr){1-3}
-Running Back &  & Team \\ 
-\midrule
-\multicolumn{3}{l}{Cluster 1 - Feast or Famine} \\ 
-\midrule
-Aaron Jones & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/oo8yixhsahh4gznox7th" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Green\_Bay\_Packers\_logo.svg/100px-Green\_Bay\_Packers\_logo.svg.png" style="height:25px;"> \\ 
-Christian McCaffrey & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/navqer4chxxut5povzzw" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/San\_Francisco\_49ers\_logo.svg/100px-San\_Francisco\_49ers\_logo.svg.png" style="height:25px;"> \\ 
-Josh Jacobs & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/sagoqkubeaz5yht01ow7" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/48/Las\_Vegas\_Raiders\_logo.svg/100px-Las\_Vegas\_Raiders\_logo.svg.png" style="height:25px;"> \\ 
-Nick Chubb & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/a8ib0haur75wrhqrbtyo" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d9/Cleveland\_Browns\_logo.svg/100px-Cleveland\_Browns\_logo.svg.png" style="height:25px;"> \\ 
-Raheem Mostert & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/g6j057yduej7p98lk1br" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Miami\_Dolphins\_logo.svg/100px-Miami\_Dolphins\_logo.svg.png" style="height:25px;"> \\ 
-Rhamondre Stevenson & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/ro2fqabc4qndtnxykvm7" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/New\_England\_Patriots\_logo.svg/100px-New\_England\_Patriots\_logo.svg.png" style="height:25px;"> \\ 
-Tony Pollard & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/rvesbybzmlucxce3hkwf" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Dallas\_Cowboys.svg/100px-Dallas\_Cowboys.svg.png" style="height:25px;"> \\ 
-Travis Etienne & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/d8xhoicgjybtyvttcxhu" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/74/Jacksonville\_Jaguars\_logo.svg/100px-Jacksonville\_Jaguars\_logo.svg.png" style="height:25px;"> \\ 
-\midrule
-\multicolumn{3}{l}{Cluster 2 - Blue Collar Backs} \\ 
-\midrule
-A.J. Dillon & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/w270owegdowada3phhr2" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Green\_Bay\_Packers\_logo.svg/100px-Green\_Bay\_Packers\_logo.svg.png" style="height:25px;"> \\ 
-D'Onta Foreman & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/kvowcl8ebdanhiuiwcrp" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Carolina\_Panthers\_logo.svg/100px-Carolina\_Panthers\_logo.svg.png" style="height:25px;"> \\ 
-Devin Singletary & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/d9ifpvw57zivczxlpxdh" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/77/Buffalo\_Bills\_logo.svg/189px-Buffalo\_Bills\_logo.svg.png" style="height:25px;"> \\ 
-Ezekiel Elliott & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/eazag7iwciy9ari8hoju" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Dallas\_Cowboys.svg/100px-Dallas\_Cowboys.svg.png" style="height:25px;"> \\ 
-Jamaal Williams & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/hl8dsrs7awapodhiwvgn" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Detroit\_Lions\_logo.svg/100px-Detroit\_Lions\_logo.svg.png" style="height:25px;"> \\ 
-James Conner & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/taqsrcjxasdwhdmhallf" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Arizona\_Cardinals\_logo.svg/179px-Arizona\_Cardinals\_logo.svg.png" style="height:25px;"> \\ 
-Jeff Wilson Jr. & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/rq7a1zluwjhoxrsuhpgi" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Miami\_Dolphins\_logo.svg/100px-Miami\_Dolphins\_logo.svg.png" style="height:25px;"> \\ 
-Joe Mixon & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/rd210pq6ch22vpoygtfn" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Cincinnati\_Bengals\_logo.svg/100px-Cincinnati\_Bengals\_logo.svg.png" style="height:25px;"> \\ 
-Latavius Murray & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/e0c55kmyf6le5v6jmmrm" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Denver\_Broncos\_logo.svg/100px-Denver\_Broncos\_logo.svg.png" style="height:25px;"> \\ 
-Miles Sanders & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/byt89vdiisuyc8of2kcn" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/Philadelphia\_Eagles\_logo.svg/100px-Philadelphia\_Eagles\_logo.svg.png" style="height:25px;"> \\ 
-Saquon Barkley & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/o8tlhps5u1tvnaaxlpjk" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/New\_York\_Giants\_logo.svg/100px-New\_York\_Giants\_logo.svg.png" style="height:25px;"> \\ 
-\midrule
-\multicolumn{3}{l}{Cluster 3 - Cautious Carriers} \\ 
-\midrule
-Alvin Kamara & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/uulstglrpmhqsvqyr5v3" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/New\_Orleans\_Saints\_logo.svg/98px-New\_Orleans\_Saints\_logo.svg.png" style="height:25px;"> \\ 
-Austin Ekeler & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/tl0nhc7kyf4aumbyzs5b" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/72/NFL\_Chargers\_logo.svg/100px-NFL\_Chargers\_logo.svg.png" style="height:25px;"> \\ 
-Cam Akers & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/mxqasyvni1bgyvxxhx4i" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/Los\_Angeles\_Rams\_logo.svg/100px-Los\_Angeles\_Rams\_logo.svg.png" style="height:25px;"> \\ 
-Dalvin Cook & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/gfwvqolvz9vegp1amhf3" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/48/Minnesota\_Vikings\_logo.svg/98px-Minnesota\_Vikings\_logo.svg.png" style="height:25px;"> \\ 
-David Montgomery & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/sqahircgbz406rjbglpe" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chicago\_Bears\_logo.svg/100px-Chicago\_Bears\_logo.svg.png" style="height:25px;"> \\ 
-Derrick Henry & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/lvdvmkqltz7zz7fjtopr" style="height:25px;"> & <img src="https://github.com/nflverse/nflverse-pbp/raw/master/titans.png" style="height:25px;"> \\ 
-Jonathan Taylor & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/vts6mscfg5le5zugxbtj" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Indianapolis\_Colts\_logo.svg/100px-Indianapolis\_Colts\_logo.svg.png" style="height:25px;"> \\ 
-Leonard Fournette & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/atxppoc7zqcjnbnk0awz" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/Tampa\_Bay\_Buccaneers\_logo.svg/100px-Tampa\_Bay\_Buccaneers\_logo.svg.png" style="height:25px;"> \\ 
-Najee Harris & <img src="https://static.www.nfl.com/image/private/f\_auto,q\_auto/league/lj0qlwa2pvyrihyiriox" style="height:25px;"> & <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Pittsburgh\_Steelers\_logo.svg/100px-Pittsburgh\_Steelers\_logo.svg.png" style="height:25px;"> \\ 
-\bottomrule
-\end{longtable*}
-\begin{minipage}{\linewidth}
-\textbf{An Introduction to NFL Analytics with R}\emph{Brad J. Congelio}\\
-\end{minipage}
+{\centering \includegraphics[width=6in,height=\textheight]{images/rushers_tables.png}
+
+}
+
+\end{figure}
 
 \hypertarget{creating-an-xgboost-model-for-rushing-yards-over-expected}{%
 \subsection{Creating an XGBoost Model for Rushing Yards over
@@ -15654,7 +15620,7 @@ possible features to feed into the model, we can dive into his
 \href{https://github.com/tejseth/RYOE/blob/main/ryoe-2.R}{publicly
 available code}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-important-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, toprule=.15mm, opacitybacktitle=0.6]
 
 It is important to immediately point out that Tej built his RYOE model
 using the \texttt{xgboost} package whereas we will begin constructing
@@ -15992,7 +15958,7 @@ there are six engines that can drive a \texttt{boost\_tree()} model:
 using the default \texttt{xgboost} engine, we are opting to run the
 model using \texttt{lightgbm}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, toprule=.15mm, opacitybacktitle=0.6, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, titlerule=0mm, arc=.35mm, opacityback=0, colframe=quarto-callout-note-color-frame, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, leftrule=.75mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, left=2mm, opacityback=0, bottomrule=.15mm, arc=.35mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toprule=.15mm, opacitybacktitle=0.6]
 
 Why are we using \texttt{lightgbm} instead of \texttt{xgboost} as the
 engine for the model?
@@ -16223,7 +16189,8 @@ color information from \texttt{nflreadr} and then visualize the data.
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Actual Rushing Yards vs. Expected Rushing Yards**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2016 {-} 2022 | Model: LightGBM*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Actual Rushing Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Expected Rushing Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{() }\SpecialCharTok{+}
@@ -16322,7 +16289,8 @@ positive value for the season.
                   \AttributeTok{fontface =} \StringTok{"bold"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Rushing Yards over Expected Leader Per Season**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*2016 {-} 2022 | Model: LightGBM*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Actual Rushing Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Expected Rushing Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ season, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
@@ -16332,9 +16300,9 @@ positive value for the season.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics{05-nfl-analytics-advanced-methods_files/figure-pdf/ryoe-season-leaders-plot-1.pdf}
+{\centering \includegraphics[width=6in,height=\textheight]{images/ryoe_per_season.png}
 
 }
 
@@ -16390,16 +16358,19 @@ the plot.
   \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{pretty\_breaks}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{),}
                      \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{()) }\SpecialCharTok{+}
   \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{label =} \StringTok{"Cumulative Actual Yards"}\NormalTok{, }\AttributeTok{x =} \DecValTok{200}\NormalTok{, }\AttributeTok{y =} \DecValTok{1050}\NormalTok{,}
-           \AttributeTok{angle =} \DecValTok{38}\NormalTok{, }\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+           \AttributeTok{angle =} \DecValTok{30}\NormalTok{, }\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{label =} \StringTok{"Cumulative Expected Yards"}\NormalTok{, }\AttributeTok{x =} \DecValTok{200}\NormalTok{, }\AttributeTok{y =} \DecValTok{700}\NormalTok{,}
-           \AttributeTok{angle =} \DecValTok{35}\NormalTok{, }\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+           \AttributeTok{angle =} \DecValTok{30}\NormalTok{, }\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{annotation\_custom}\NormalTok{(grid}\SpecialCharTok{::}\FunctionTok{rasterGrob}\NormalTok{(j\_taylor\_image, }
                                \AttributeTok{width =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{,}\StringTok{"npc"}\NormalTok{), }
                                \AttributeTok{height =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{,}\StringTok{"npc"}\NormalTok{)),}
                     \DecValTok{175}\NormalTok{, }\DecValTok{375}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1000}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Jonathan Taylor: 2021 Cumulative Actual Yards vs. Expected Yards**"}\NormalTok{,}
-       \AttributeTok{subtitle =} \StringTok{"*Model: **LightGBM** Using ***boost\_trees()*** in ***tidymodels****"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Jonathan Taylor: 2021 Cumulative Actual Yards}
+\StringTok{       vs. Expected Yards**"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"*Model: **LightGBM** Using ***boost\_trees()***}
+\StringTok{       in ***tidymodels****"}\NormalTok{,}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Cumulative Rushes in 2021 Season"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Cumulative Actual Yards and Expected Yards"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{nfl\_analytics\_theme}\NormalTok{()}
@@ -16416,6 +16387,9 @@ the plot.
 
 \hypertarget{exercises-3}{%
 \section{Exercises}\label{exercises-3}}
+
+The answers for the following answers can be found here:
+\url{http://nfl-book.bradcongelio.com/ch5-answers}.
 
 \hypertarget{exercise-1-3}{%
 \subsection{Exercise 1}\label{exercise-1-3}}
@@ -17194,7 +17168,8 @@ with between 1 and 10 yards to go.
   \FunctionTok{ylab}\NormalTok{(}\StringTok{"Average Pass Over Expected"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"**Average Pass Over Expected**"}\NormalTok{,}
        \AttributeTok{subtitle =} \StringTok{"*1st Down: BUF, CIN, KC, PHI*"}\NormalTok{,}
-       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}**Brad J. Congelio**"}\NormalTok{)}
+       \AttributeTok{caption =} \StringTok{"*An Introduction to NFL Analytics with R*\textless{}br\textgreater{}}
+\StringTok{       **Brad J. Congelio**"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

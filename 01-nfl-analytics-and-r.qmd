@@ -242,24 +242,25 @@ nfl_analytics_theme <- function(..., base_size = 12) {
 }
 ```
 
-```{r plot-combos, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE, warning = FALSE, message = FALSE}
+```{r plot-combos, output = TRUE, fig.align='center', message = FALSE, warning = FALSE, error = FALSE, fig.dpi = 400}
 
 ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_line(stat = "smooth", method = "lm",
-            size = .7, color = "blue",
+            linewidth = .7, color = "blue",
             alpha = 0.25) +
   nflplotR::geom_mean_lines(aes(v_var = combos, h_var = win_pct),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
+  nfl_analytics_theme() +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6),
                      labels = scales::label_number(accuracy = 0.001)) +
-  nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Win Percentage") +
   labs(title = "**Unique Offensive Line Combinations vs. Win Percentage**",
        subtitle = "*Through Week #15*",
-       caption = "*An Introduction to NFL Analytics With R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 As can be seen in the resulting graph - which shows little, if any, statistical correlation - there are still teams with worse records than the Rams and Cardinals that have fewer unique offensive line combinations (the Houston Texans and the Chicago Bears, for example). Perhaps there is a metric that correlates more strongly with a team's number of offensive line combinations?
@@ -301,9 +302,10 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   nfl_analytics_theme() +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Pressure Rate (per Dropback)") +
-  labs(title = "Unique Offensive Line Combinations vs. Pressure Rate",
-       subtitle = "2022 Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+  labs(title = "**Unique Offensive Line Combinations vs. Pressure Rate**",
+       subtitle = "*2022 Season*",
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 Again, there does not seem to be any statistical correlation between a team's number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between a the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from `nflreadr` to collect total QB hits.
@@ -343,7 +345,8 @@ ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
   ylab("Total QB Hits Allowed") +
   labs(title = "Unique Offensive Line Combinations vs. QB Hits Allowed",
        subtitle = "2022 Season",
-       caption = "*An Introduction to NFl Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 There is again very little, if any, correlation between a team's unique number of offensive line combinations and the number of times its quarterback is hit on passing attempts.
@@ -385,9 +388,11 @@ adjusted_sack_rate %>%
                      labels = scales::percent_format(scale = 1)) +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Adjusted Sack Rate") +
-  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Sack Rate**",
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Adjusted Sack Rate**",
        subtitle = "*2022 Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   nfl_analytics_theme()
 ```
 
@@ -411,9 +416,11 @@ adjusted_sack_rate %>%
                   labels = scales::percent_format(scale = 1)) +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Adjusted Sack Rate") +
-  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Sack Rate**",
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Adjusted Sack Rate**",
        subtitle = "*2020 - 2022 Seasons*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   nfl_analytics_theme() +
   facet_wrap(~season, nrow = 2)
 ```
@@ -451,31 +458,35 @@ You can see in the output of the data that `power_rank` and `stuffed_rank` are b
 
 ```{r power-and-stuff-cowplot, output = FALSE, fig.align='center', fig.dpi = 400, error = FALSE}
 
-power_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = power_rank)) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = power_rank),
+power_rank_plot <- ggplot(fb_outsiders_oline,
+                          aes(x = combos, y = power_rank)) +
+  nflplotR::geom_mean_lines(aes(v_var = combos,
+                                h_var = power_rank),
                             color = "black",
                             size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_reverse(breaks = seq(1, 32, 2)) +
-  labs(title = "**Unique Offensive Line Combinations vs. Power Ranking**",
-       subtitle = "*2022 Season  |  FootballOutsiders.com*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Power Ranking**",
+       subtitle = "*2022 Season  |  FootballOutsiders.com*") +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Power Ranking (1 = best, 32 = worst)") +
   nfl_analytics_theme()
 
-stuffed_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = stuffed_rank)) +
+stuffed_rank_plot <- ggplot(fb_outsiders_oline,
+                            aes(x = combos, y = stuffed_rank)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = stuffed_rank),
+  nflplotR::geom_mean_lines(aes(v_var = combos,
+                                h_var = stuffed_rank),
                             color = "black",
                             size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_reverse(breaks = seq(1, 32, 2)) +
-  labs(title = "**Unique Offensive Line Combinations vs. Stuffed Rank**",
-       subtitle = "*2022 Season  |  FootballOutsiders.com*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")+
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Stuffed Rank**",
+       subtitle = "*2022 Season  |  FootballOutsiders.com*")+
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Stuffed Ranking (1 = best, 32 = worst)") +
   nfl_analytics_theme()
@@ -483,10 +494,7 @@ stuffed_rank_plot <- ggplot(fb_outsiders_oline, aes(x = combos, y = stuffed_rank
 plot_grid(power_rank_plot, stuffed_rank_plot, ncol = 1)
 ```
 
-```{r finished-cow-plot, echo = FALSE}
-knitr::include_graphics("images/cow_plot_finished.png",
-                        dpi = 400)
-```
+![](images/cow_plot_finished.png){fig-align="center" width="4in"}
 
 Based on the results, it does not seem that the number of unique offensive line combinations has impact on either power rank or stuffed rank. The Los Angeles Rams and Arizona Cardinals, despite have the two highest unique line combinations, are among the best in the league in the metric. In fact, the opposite seems to be true in that the Minnesota Vikings, with just six unique line combinations during the 2022 season, are last in the league in power ranking. The Rams performed in bit worse when comparing line combinations to stuffed rank, but the Cardinals are still among the best in the league. The Vikings again are at the bottom, only under performed by the Jacksonville Jaguars (who had just three unique combinations throughout the season).
 
@@ -499,9 +507,11 @@ ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
-  labs(title = "**Unique Offensive Line Combinations vs. Adjusted Line Yards**",
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Adjusted Line Yards**",
        subtitle = "*2022 Season  |  FootballOutsiders.com*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Adjusted Line Yards") +
   nfl_analytics_theme()
@@ -538,9 +548,11 @@ ggplot(oline_combo_elusive, aes(x = combos, y = weighted_aly)) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
   scale_y_continuous(breaks = scales::pretty_breaks()) +
-  labs(title = "**Unique Offensive Line Combinations vs. Weighted Adjusted Line Yards**",
+  labs(title = "**Unique Offensive Line Combinations vs.
+       Weighted Adjusted Line Yards**",
        subtitle = "*2022 Season  |  Adjusted with PFF's 'Elusive'*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")+
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")+
   xlab("# of Unique Offensive Line Combinations") +
   ylab("Weighted Adjusted Line Yards") +
   nfl_analytics_theme()
@@ -600,9 +612,11 @@ ggplot(explosive, aes(y = reorder(posteam, percent_w_exp),
   scale_x_continuous(expand = c(0,0),
                      breaks = scales::pretty_breaks(n = 5),
                      label = scales::percent_format()) +
-  labs(title = "**Which Team Has The Highest % of Explosive Plays per TD Drive?**",
+  labs(title = "**Which Team Has The Highest % of
+       Explosive Plays per TD Drive?**",
        subtitle = "*2022 Season*",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**") +
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**") +
   xlab("Percent of TD Drives with an Explosive Play (20+ Yards)") +
   ylab("")
 ```

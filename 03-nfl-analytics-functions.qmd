@@ -1014,7 +1014,8 @@ ggplot(data = rb_picks, aes(x = rush_yards, y = pick)) +
   nfl_analytics_theme() +
   labs(title = "**Career Rushing Yards vs. Pick Number**",
        subtitle = "1980 to 2022",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 
 ```
 
@@ -1074,7 +1075,8 @@ ggplot(data = player_stats, aes(x = forty, y = total_yards)) +
   ylab("Career Rushing Yards") +
   labs(title = "**Forty-Yard Dash Time vs. Career Rushing Yards**",
        subtitle = "2000 to 2022",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The visualization indicates that there is little, if any, direct correlation between a running back's 40-yard dash time and his career total rushing yards. There are likely other factors that contribute to total rushing yards, such as a running back's agility and vision and - perhaps most important - the quality of the offensive line over the duration of the running back's career.
@@ -1117,7 +1119,8 @@ ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw,
   ylab("Average Completed Air Yards") +
   labs(title = "**Avgerage Time to Throw vs. Average Air Yards**",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The resulting plot shows that Dak Prescott, Jalen Hurts, and Ryan Tannehill had an average completed air yard above the NFL average despite getting rid of the ball quicker than most other quarterbacks in the league. Conversely, Patrick Mahomes, Daniel Jones, and Justin Herbert has under average completed air yards despite holding on to the ball longer than the rest of the league (on average).
@@ -1156,7 +1159,8 @@ ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards,
   ylab("Actual Rush Yards") +
   labs(title = "Expected Rush Yards vs. Actual Rush Yards",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 After plotting the rushing data from Next Gen Stats, we can see that Nick Chubb was well above the expected yardage metric while Ezekiel Elliott, Alvin Kamara, Najee Harris, and Dalvin Cook all had actual rushing yards that fell below what was expected by the model.
@@ -1199,7 +1203,8 @@ ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
   ylab("QBR - Unadjusted") +
   labs(title = "QBR: Adjusted vs. Adjusted Scores",
        subtitle = "Based on ESPN's Model: 2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 ### The `load_pfr_advstats()` Function
@@ -1243,7 +1248,8 @@ ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   ylab("Drops") +
   labs(title = "**QB Bad Throws vs. WR Drops**",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 Quarterbacks such as Patrick Mahomes, Josh Allen, and Tom Brady had some of the highest drop numbers in the league but were also charted as having the highest number of bad throws, as well. This indicates that - without additional context - the wide receivers may not be as much at fault for the drops compared to the wide receivers that dropped passes from Daniel Jones and Russell Wilson, both of whom had a lower number of bad throws.
@@ -1288,7 +1294,8 @@ ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
   ylab("Yards After Contact") +
   labs(title = "**Running Backs: Yards Before and After Contact**",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 In the same vein as the running back statistics, we can use `load_pfr_advstats()` to explore which wide receivers gained the most yardage after catching the ball.
@@ -1322,7 +1329,8 @@ ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   ylab("Yards After Catch") +
   labs(title = "**Yards at Point of Catch vs. Yards After Catch",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFl Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 Given the outstanding season that Justin Jefferson had in 2022, it is unsurprising to see him in the upper-right quadrant of the plot. Of his 1,809 receiving yards in the season, just under 1,200 of them came through air yards while he gained just over an additional 600 yards on the ground after the catch. On the other hand, D.K. Metcalf and Diontae Johnson were more often than not tackled almost immediately after catching the football.
@@ -1359,7 +1367,8 @@ ggplot(data = pfr_stats_def, aes(x = total_blitz, y = total_sack)) +
   ylab("Total Sacks") +
   labs(title = "**Total Blitzes vs. Total Sacks**",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 The Philadelphia Eagles were absolutely dominate during the 2022 regular season when it came to turning blitzes into sacks. On the other hand, the Arizona Cardinals, New York Giants, and Pittsburgh Steelers produced high amounts of pressure with blitzes but were not able to convert them into sacks as a consistent basis.
@@ -1443,7 +1452,8 @@ ggplot(data = nfl_contracts_unnested,
   nfl_analytics_theme() +
   labs(title = "Cash Paid vs. Mean DAKOTA Composite",
        subtitle = "2022 Regular Season",
-       caption = "*An Introduction to NFL Analytics with R*<br>**Brad J. Congelio**")
+       caption = "*An Introduction to NFL Analytics with R*<br>
+       **Brad J. Congelio**")
 ```
 
 Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).
