@@ -4,6 +4,7 @@ project:
 
 book:
   title: "Introduction to NFL Analytics with R"
+  reader-mode: true
   author:
     name: Bradley J. Congelio
     orcid: 0009-0000-0652-4145
@@ -13,6 +14,7 @@ book:
   sharing: [twitter, facebook, linkedin]
   publisher: "CRC Press"
   publisher-place: "Boca Raton, FL."
+  repo-actions: [edit, issue]
   
   chapters:
     - index.qmd
@@ -37,12 +39,15 @@ bibliography: citations.bib
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - nfl-analytics.scss
     code-link: true
     code-overflow: wrap
     fig-align: center
     fig-cap-location: bottom
     fig-responsive: true
+    author-meta: "Bradley Congelio"
   pdf:
     documentclass: krantz
     keep-tex: true

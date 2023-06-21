@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Bradley Congelio">
 <title>Introduction to NFL Analytics with R - 3&nbsp; NFL Analytics with the nflverse Family of Packages</title>
 <style>
 code{white-space: pre-wrap;}
@@ -110,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Introduction to NFL Analytics with R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
@@ -135,6 +136,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </li>
       </ul>
 </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -254,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">3.6.5</span> Exercise 5</a></li>
   </ul>
 </li>
-  </ul></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/03-nfl-analytics-functions.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -457,13 +463,11 @@ Tip
 <span><span class="va">mahomes_pfr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 x 16
-  complet~1 attem~2 cmp_pct yards touch~3 td_pct inter~4 int_pct first~5 yards~6
-      &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1       435     648   0.671  5250      41   6.33      12    1.85     272    8.10
-# ... with 6 more variables: adj_yards_attempt &lt;dbl&gt;, yards_completions &lt;dbl&gt;,
-#   yards_game &lt;dbl&gt;, sacks &lt;dbl&gt;, sack_yards &lt;dbl&gt;, sack_pct &lt;dbl&gt;, and
-#   abbreviated variable names 1: completions, 2: attempts, 3: touchdowns,
-#   4: interceptions, 5: first_down, 6: yards_attempt</code></pre>
+  completions attempts cmp_pct yards touchdowns td_pct interceptions
+        &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+1         435      648   0.671  5250         41   6.33            12
+# i 9 more variables: int_pct &lt;dbl&gt;, first_down &lt;dbl&gt;,
+#   yards_attempt &lt;dbl&gt;, adj_yards_attempt &lt;dbl&gt;, ...</code></pre>
 </div>
 </div>
 <p>What if we wanted to find Mahomes’ adjusted yards gained per pass attempt for every one of his seasons between 2018 and 2022? It is as simple as gathering all the data from years (<code>seasons = 2018:2022</code>), using the same <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> from above, and then using <code>group_by()</code> on the <code>season</code> variable.</p>
@@ -514,7 +518,7 @@ Tip
  8 D.Brees                    9.01
  9 R.Wilson                   8.98
 10 R.Fitzpatrick              8.80
-# ... with 63 more rows</code></pre>
+# i 63 more rows</code></pre>
 </div>
 </div>
 <p>Mahomes, with an adjusted yards per pass attempt of 9.58, finishes in sixth place in the 2018 season behind C. Henne (9.67), K. Allen (9.87), and then three others that have results between 10 and 20. This is a situation where I tell my students the results do not pass the “eye test.” Why? It is unlikely that an adjusted yards per pass attempt of 21 and 13.3 for Nate Sudfeld and Garrett Gilbert, respectively, are from a season worth of data. The results for Kyle Allen and Matt Barkley are questionable, as well.</p>
@@ -556,7 +560,7 @@ Important
  8 D.Brees                 489              9.01
  9 R.Wilson                427              8.98
 10 R.Fitzpatrick           246              8.80
-# ... with 63 more rows</code></pre>
+# i 63 more rows</code></pre>
 </div>
 </div>
 <p>The results are even worse than initially thought. There are a total of six players with an inflated adjusted yards per pass attempt:</p>
@@ -706,7 +710,7 @@ Important
  8 D.Johnson         11.2
  9 D.London          10.9
 10 D.Metcalf         10.7
-# ... with 215 more rows</code></pre>
+# i 215 more rows</code></pre>
 </div>
 </div>
 <p>D.J. Moore led the NFL in the 2022 season with a 13.9 Weighted Opportunity Rating, followed closely by Davante Adams with 13.4. However, before deciding that D.J. Moore is worth the number one pick in your upcoming fantasy football draft, it is worth exploring if there is a relationship between a high Weight Opportunity Rating and a player’s total fantasy points. To do so, we can take our above code that was used to gather each player’s <code>WOPR</code> over the course of the season and add <code>total_ff = sum(fantasy_points)</code> and also calculate a new metric called “Fantasy Points per Weighted Opportunity” which is simply the total of a player’s points divided by the <code>wopr</code>.</p>
@@ -736,7 +740,7 @@ Important
  8 D.Johnson         11.2     94.7        8.48
  9 D.London          10.9    107.         9.77
 10 D.Metcalf         10.7    137.        12.7 
-# ... with 215 more rows</code></pre>
+# i 215 more rows</code></pre>
 </div>
 </div>
 <p>There are several insights evident in the results. Of the top <code>wopr</code> earners in the 2022 season. only Diontae Johnson scored fewer fantasy points than D.J. Moore (94.7 to 136). Given the relationship between <code>total_wopr</code> and <code>total_ff</code>, a lower <code>ff_per_wopr</code> is indicative of less stellar play. In this case, Moore maintained a large amount of both the team’s <code>target_share</code> and <code>air_yards_share</code>, but was not able to translate that into a higher amount of fantasy points (as evidenced by a lower <code>ff_per_wopr</code> score). On the other hand, Justin Jefferson’s <code>ff_per_wopr</code> score of 20.3 argues that he used his amount of <code>target_share</code> and <code>air_yards_share</code> to increase the amount of fantasy points he produced.</p>
@@ -1158,7 +1162,7 @@ Important
  8 D.Brees                        97      7.99
  9 D.Prescott                    104      7.87
 10 J.Flacco                       74      7.84
-# ... with 22 more rows</code></pre>
+# i 22 more rows</code></pre>
 </div>
 </div>
 <p>Because the <code>load_pbp()</code> data is not pre-aggregated, we must do a bit of the work ourselves before we are able to achieve our answer. To start, we load the 2018 play-by-play data into a data frame titled <code>pbp</code> but using the <code>load_pbp()</code> function with the <code>season</code> argument set to “2018.” As well, we use the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to make sure the data gathered into our <code>pbp</code> data frame is only the regular season statistics. Once the play-by-play is loaded, we create a data frame off of it titled <code>adjusted_yards</code> wherein we use <code>group_by()</code> to calculate the metric for each individual quarterback, then ensure that we are collecting the play-by-play data for only those plays that took place on 3rd down with ten or less yards to go.</p>
@@ -1535,7 +1539,7 @@ Tip
  8 00-0034855 B.Mayfield         1386      8889    6.41
  9 00-0029701 R.Tannehill        1261      8043    6.38
 10 00-0026498 M.Stafford         1874     11763    6.28
-# ... with 18 more rows</code></pre>
+# i 18 more rows</code></pre>
 </div>
 </div>
 <p>Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis Winston has the highest average air yards per complete pass at 8.17.</p>
@@ -1586,8 +1590,8 @@ Tip
 <p>The <code>load_participation()</code> function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing <code>nflreadr</code> play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.</p>
 <p>Despite the <code>load_participation()</code> function being one of the newest editions to the <code>nflreadr</code> package, it is already being used to create contextual analysis regarding a team’s use of its players out out formations. For example, <a href="https://twitter.com/josephjefe">Joseph Hefner</a> uses the data to create tables (built with the <code>gt</code> and <code>gtExtras</code> packages) that calculates not only each player’s rate of usage out of different personnel packages, but how the team’s EPA per play and pass rate fluctuate with each. In the spirit of R’s open-source nature, he also created a <a href="https://josephjefe.shinyapps.io/formations_app/">Team Formation ShinyApp</a> that allows anybody to explore the data and output the results in .png format.</p>
 <p></p>
-<div id="tweet-92564"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-92564").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
+<div id="tweet-61742"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-61742").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
 <div class="cell">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -1595,25 +1599,20 @@ Tip
 <span><span class="va">participation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49,969 x 383
-   nflverse_ga~1 play_id posse~2 offen~3 offen~4 defen~5 defen~6 numbe~7 playe~8
-   &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;  
- 1 2022_01_BAL_~       1 ""      &lt;NA&gt;    &lt;NA&gt;         NA &lt;NA&gt;         NA ""     
- 2 2022_01_BAL_~      43 "BAL"   &lt;NA&gt;    &lt;NA&gt;         NA &lt;NA&gt;         NA "47969~
- 3 2022_01_BAL_~      68 "NYJ"   SINGLE~ 1 RB, ~       7 3 DL, ~      NA "53536~
- 4 2022_01_BAL_~      89 "NYJ"   SHOTGUN 1 RB, ~       6 3 DL, ~       4 "53536~
- 5 2022_01_BAL_~     115 "NYJ"   SINGLE~ 1 RB, ~       7 3 DL, ~      NA "53536~
- 6 2022_01_BAL_~     136 "NYJ"   SHOTGUN 1 RB, ~       7 3 DL, ~       4 "53536~
- 7 2022_01_BAL_~     172 "NYJ"   &lt;NA&gt;    &lt;NA&gt;         NA &lt;NA&gt;         NA "53059~
- 8 2022_01_BAL_~     202 "BAL"   SINGLE~ 2 RB, ~       7 4 DL, ~       3 "44929~
- 9 2022_01_BAL_~     230 "BAL"   SHOTGUN 2 RB, ~       6 4 DL, ~       3 "44929~
-10 2022_01_BAL_~     254 "BAL"   EMPTY   1 RB, ~       5 4 DL, ~      NA "44929~
-# ... with 49,959 more rows, 374 more variables: offense_players &lt;chr&gt;,
-#   defense_players &lt;chr&gt;, n_offense &lt;int&gt;, n_defense &lt;int&gt;, old_game_id &lt;chr&gt;,
-#   home_team &lt;chr&gt;, away_team &lt;chr&gt;, season_type &lt;chr&gt;, week &lt;int&gt;,
-#   posteam &lt;chr&gt;, posteam_type &lt;chr&gt;, defteam &lt;chr&gt;, side_of_field &lt;chr&gt;,
-#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
-#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
-#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;, ...</code></pre>
+   nflverse_game_id play_id possession_team offense_formation
+   &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;            
+ 1 2022_01_BAL_NYJ        1 ""              &lt;NA&gt;             
+ 2 2022_01_BAL_NYJ       43 "BAL"           &lt;NA&gt;             
+ 3 2022_01_BAL_NYJ       68 "NYJ"           SINGLEBACK       
+ 4 2022_01_BAL_NYJ       89 "NYJ"           SHOTGUN          
+ 5 2022_01_BAL_NYJ      115 "NYJ"           SINGLEBACK       
+ 6 2022_01_BAL_NYJ      136 "NYJ"           SHOTGUN          
+ 7 2022_01_BAL_NYJ      172 "NYJ"           &lt;NA&gt;             
+ 8 2022_01_BAL_NYJ      202 "BAL"           SINGLEBACK       
+ 9 2022_01_BAL_NYJ      230 "BAL"           SHOTGUN          
+10 2022_01_BAL_NYJ      254 "BAL"           EMPTY            
+# i 49,959 more rows
+# i 379 more variables: offense_personnel &lt;chr&gt;, ...</code></pre>
 </div>
 </div>
 <p>Rather than exploring the data at the league-level, let’s take a micro-approach to the participation data and examine the the 2022 Pittsburgh Steelers. It is important to note that the participation data, as gathered using the <code>load_participation()</code> function, is not fully prepped for immediate analysis as the <code>players_on_play</code>, <code>offense_players</code>, and <code>defense_players</code> information (which contains the unique player identification numbers) are separated by a delimiter (in this case, a semicolon) in what are called “concatenated strings” or “delimited strings.” While this is a compact way to store the values in the core data frame, it does require us to clean the information through the “splitting” or “tokenizing” process. As you will see in the below code, we are going to place the unique identifiers into separate rows, based on formation, by utilizing the <code>separate_rows()</code> function in <code>tidyr</code>.</p>
@@ -1656,7 +1655,7 @@ Tip
  8 1 RB, 1 TE, 3 WR  00-0035216        745
  9 1 RB, 1 TE, 3 WR  00-0035217         25
 10 1 RB, 1 TE, 3 WR  00-0035222        258
-# ... with 147 more rows</code></pre>
+# i 147 more rows</code></pre>
 </div>
 </div>
 <p>We are doing quite a few things in the above example:</p>
@@ -1720,7 +1719,7 @@ Note
  8 1 RB, 1 TE, 3 WR  00-0035216        745 Diontae Johnson  
  9 1 RB, 1 TE, 3 WR  00-0035217         25 Benny Snell      
 10 1 RB, 1 TE, 3 WR  00-0035222        258 Zach Gentry      
-# ... with 147 more rows</code></pre>
+# i 147 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1783,21 +1782,20 @@ Tip
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,065 x 10
-   game_id  game_~1 offic~2 posit~3 jerse~4 offic~5 season seaso~6  week crew_id
-   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;   &lt;int&gt;   &lt;int&gt;
- 1 2022090~ 58838   Nathan~ Field ~      42 174       2022 REG         1       1
- 2 2022090~ 58838   Matt E~ Back J~      96 178       2022 REG         1       1
- 3 2022090~ 58838   Mike C~ Down J~      63 168       2022 REG         1       1
- 4 2022090~ 58838   Eugene~ Side J~     103 108       2022 REG         1       1
- 5 2022090~ 58838   Jeff S~ Line J~      45 23        2022 REG         1       1
- 6 2022090~ 58838   Carl C~ Referee      51 3         2022 REG         1       1
- 7 2022090~ 58838   Brando~ Umpire        0 201       2022 REG         1       1
- 8 2022091~ 58839   Mike M~ Umpire        0 206       2022 REG         1       2
- 9 2022091~ 58839   John J~ Field ~     117 86        2022 REG         1       2
-10 2022091~ 58839   Danny ~ Down J~     113 172       2022 REG         1       2
-# ... with 2,055 more rows, and abbreviated variable names 1: game_key,
-#   2: official_name, 3: position, 4: jersey_number, 5: official_id,
-#   6: season_type</code></pre>
+   game_id   game_key official_name position jersey_number official_id
+   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;      
+ 1 20220908~ 58838    Nathan Jones  Field J~            42 174        
+ 2 20220908~ 58838    Matt Edwards  Back Ju~            96 178        
+ 3 20220908~ 58838    Mike Carr     Down Ju~            63 168        
+ 4 20220908~ 58838    Eugene Hall   Side Ju~           103 108        
+ 5 20220908~ 58838    Jeff Seeman   Line Ju~            45 23         
+ 6 20220908~ 58838    Carl Cheffers Referee             51 3          
+ 7 20220908~ 58838    Brandon Cruse Umpire               0 201        
+ 8 20220911~ 58839    Mike Morton   Umpire               0 206        
+ 9 20220911~ 58839    John Jenkins  Field J~           117 86         
+10 20220911~ 58839    Danny Short   Down Ju~           113 172        
+# i 2,055 more rows
+# i 4 more variables: season &lt;int&gt;, season_type &lt;chr&gt;, ...</code></pre>
 </div>
 </div>
 <p>To calculate the total number of penalties flagged by each crew, we must first bring in the play-by-play from the 2022 season. After, we will use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to gather only those plays where a flag was thrown, and then <code>select()</code> the relevant columns, and finally <code>summarize()</code> by the <code>old_game_id</code> to get the total penalties called and the total penalty yards as a result of those penalties.</p>
@@ -1860,20 +1858,20 @@ Tip
 <span><span class="va">ne_trades</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 506 x 11
-   trade_id season trade_date gave  received pick_season pick_~1 pick_~2 condi~3
-      &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1      704   2002 2002-03-11 GB    NE              2002       4     126       0
- 2      704   2002 2002-03-11 NE    GB                NA      NA      NA      NA
- 3      716   2002 2002-04-20 NE    WAS             2002       1      32       0
- 4      716   2002 2002-04-20 NE    WAS             2002       3      96       0
- 5      716   2002 2002-04-20 NE    WAS             2002       7     234       0
- 6      716   2002 2002-04-20 WAS   NE              2002       1      21       0
- 7      725   2002 2002-04-21 DEN   NE              2002       4     117       0
- 8      725   2002 2002-04-21 NE    DEN             2002       4     131       0
- 9      725   2002 2002-04-21 NE    DEN             2002       5     144       0
-10      727   2002 2002-04-21 DAL   NE              2002       7     237       0
-# ... with 496 more rows, 2 more variables: pfr_id &lt;chr&gt;, pfr_name &lt;chr&gt;, and
-#   abbreviated variable names 1: pick_round, 2: pick_number, 3: conditional</code></pre>
+   trade_id season trade_date gave  received pick_season pick_round
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+ 1      704   2002 2002-03-11 GB    NE              2002          4
+ 2      704   2002 2002-03-11 NE    GB                NA         NA
+ 3      716   2002 2002-04-20 NE    WAS             2002          1
+ 4      716   2002 2002-04-20 NE    WAS             2002          3
+ 5      716   2002 2002-04-20 NE    WAS             2002          7
+ 6      716   2002 2002-04-20 WAS   NE              2002          1
+ 7      725   2002 2002-04-21 DEN   NE              2002          4
+ 8      725   2002 2002-04-21 NE    DEN             2002          4
+ 9      725   2002 2002-04-21 NE    DEN             2002          5
+10      727   2002 2002-04-21 DAL   NE              2002          7
+# i 496 more rows
+# i 4 more variables: pick_number &lt;dbl&gt;, conditional &lt;dbl&gt;, ...</code></pre>
 </div>
 </div>
 <p>If you want to view a trade that involves a specific player, you can do the same as above but <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> for a specific player. As an example, we do search for the trade that resulted in the New England Patriots sending Drew Bledsoe to the Buffalo Bills.</p>
@@ -1884,13 +1882,12 @@ Tip
 <span><span class="va">bledsoe_trade</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 x 11
-  trade~1 season trade_date gave  recei~2 pick_~3 pick_~4 pick_~5 condi~6 pfr_id
-    &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; 
-1     728   2002 2002-04-22 BUF   NE         2003       1      14       0 HaynM~
-2     728   2002 2002-04-22 NE    BUF          NA      NA      NA      NA BledD~
-# ... with 1 more variable: pfr_name &lt;chr&gt;, and abbreviated variable names
-#   1: trade_id, 2: received, 3: pick_season, 4: pick_round, 5: pick_number,
-#   6: conditional</code></pre>
+  trade_id season trade_date gave  received pick_season pick_round
+     &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+1      728   2002 2002-04-22 BUF   NE              2003          1
+2      728   2002 2002-04-22 NE    BUF               NA         NA
+# i 4 more variables: pick_number &lt;dbl&gt;, conditional &lt;dbl&gt;,
+#   pfr_id &lt;chr&gt;, pfr_name &lt;chr&gt;</code></pre>
 </div>
 </div>
 <p>Since the <code>load_trades()</code> function also includes NFL Draft round and pick numbers (if included in a trade), we can also - for example - determine all trades that involved a top ten pick switching hands.</p>
@@ -1901,20 +1898,20 @@ Tip
 <span><span class="va">top_ten_picks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 57 x 11
-   trade_id season trade_date gave  received pick_season pick_~1 pick_~2 condi~3
-      &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1      711   2002 2002-04-20 DAL   KC              2002       1       6       0
- 2      711   2002 2002-04-20 KC    DAL             2002       1       8       0
- 3      661   2003 2003-04-26 CHI   NYJ             2003       1       4       0
- 4      662   2003 2003-04-26 ARI   NO              2003       1       6       0
- 5       16   2004 2004-04-24 CLE   DET             2004       1       7       0
- 6       16   2004 2004-04-24 DET   CLE             2004       1       6       0
- 7       64   2005 2005-03-03 OAK   MIN             2005       1       7       0
- 8      189   2007 2007-03-22 ATL   HOU             2007       1      10       0
- 9      189   2007 2007-03-22 HOU   ATL             2007       1       8       0
-10      197   2007 2007-04-28 SF    NE              2008       1       7       0
-# ... with 47 more rows, 2 more variables: pfr_id &lt;chr&gt;, pfr_name &lt;chr&gt;, and
-#   abbreviated variable names 1: pick_round, 2: pick_number, 3: conditional</code></pre>
+   trade_id season trade_date gave  received pick_season pick_round
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+ 1      711   2002 2002-04-20 DAL   KC              2002          1
+ 2      711   2002 2002-04-20 KC    DAL             2002          1
+ 3      661   2003 2003-04-26 CHI   NYJ             2003          1
+ 4      662   2003 2003-04-26 ARI   NO              2003          1
+ 5       16   2004 2004-04-24 CLE   DET             2004          1
+ 6       16   2004 2004-04-24 DET   CLE             2004          1
+ 7       64   2005 2005-03-03 OAK   MIN             2005          1
+ 8      189   2007 2007-03-22 ATL   HOU             2007          1
+ 9      189   2007 2007-03-22 HOU   ATL             2007          1
+10      197   2007 2007-04-28 SF    NE              2008          1
+# i 47 more rows
+# i 4 more variables: pick_number &lt;dbl&gt;, conditional &lt;dbl&gt;, ...</code></pre>
 </div>
 </div>
 </section><section id="the-load_draft_picks-function" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="the-load_draft_picks-function">

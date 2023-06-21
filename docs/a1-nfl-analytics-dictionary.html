@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Bradley Congelio">
 <title>Introduction to NFL Analytics with R - Appendix A — NFL Analytics Quick Reference Guide</title>
 <style>
 code{white-space: pre-wrap;}
@@ -110,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Introduction to NFL Analytics with R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
@@ -135,6 +136,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </li>
       </ul>
 </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -226,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pass-over-expected" id="toc-pass-over-expected" class="nav-link" data-scroll-target="#pass-over-expected"><span class="header-section-number">A.12</span> Pass Over Expected</a></li>
   <li><a href="#success-rate" id="toc-success-rate" class="nav-link" data-scroll-target="#success-rate"><span class="header-section-number">A.13</span> Success Rate</a></li>
   <li><a href="#time-to-line-of-scrimmage" id="toc-time-to-line-of-scrimmage" class="nav-link" data-scroll-target="#time-to-line-of-scrimmage"><span class="header-section-number">A.14</span> Time to Line of Scrimmage</a></li>
-  </ul></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/a1-nfl-analytics-dictionary.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -290,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8 D.Prescott      4612   288.
  9 K.Cousins       4575   286.
 10 J.Burrow        4225   264.
-# ... with 32 more rows</code></pre>
+# i 32 more rows</code></pre>
 </div>
 </div>
 <p>In the above example, we can see that Tom Brady led the NFL during the 2021 regular season with a comined total of 5,821 air yards which works out to an average of 342 air yards per game.</p>
@@ -413,7 +419,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8 00-0031503 J.Winston       161      1340  8.32
  9 00-0034857 J.Allen         646      5295  8.20
 10 00-0029604 K.Cousins       561      4575  8.16
-# ... with 32 more rows</code></pre>
+# i 32 more rows</code></pre>
 </div>
 </div>
 <p>As seen in the results, if we ignore Drew Lock’s 10.1 ADOT on just 111 attempts during the 2021 regular season, Russell Wilson attempted to push the ball, on average, furthest downfield among QBs with at least 100 attempts.</p>
@@ -533,19 +539,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">ep_and_epa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,252 x 7
-   posteam  down ydstogo desc                               play_~1    ep    epa
-   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                              &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 KC          1      10 (15:00) (Shotgun) 25-C.Edwards-He~ run     0.931  0.841
- 2 KC          2       1 (14:27) (Shotgun) 15-P.Mahomes sc~ run     1.77  -0.263
- 3 KC          1      10 (13:52) 25-C.Edwards-Helaire up t~ run     1.51   0.454
- 4 KC          2       3 (13:15) (Shotgun) 25-C.Edwards-He~ run     1.96   1.37 
- 5 KC          1      10 (12:36) (Shotgun) 15-P.Mahomes pa~ pass    3.34  -0.573
- 6 KC          2      10 (12:30) (Shotgun) 15-P.Mahomes pa~ pass    2.76   1.32 
- 7 KC          1      10 (11:54) 15-P.Mahomes pass short r~ pass    4.09  -0.178
- 8 KC          2       7 (11:11) (Shotgun) 25-C.Edwards-He~ run     3.91  -0.634
- 9 KC          3       7 (10:28) (Shotgun) 15-P.Mahomes pa~ pass    3.28   2.03 
-10 KC          1       9 (9:47) (Shotgun) 15-P.Mahomes pas~ pass    5.30  -0.565
-# ... with 1,242 more rows, and abbreviated variable name 1: play_type</code></pre>
+   posteam  down ydstogo desc                   play_type    ep    epa
+   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+ 1 KC          1      10 (15:00) (Shotgun) 25-~ run       0.931  0.841
+ 2 KC          2       1 (14:27) (Shotgun) 15-~ run       1.77  -0.263
+ 3 KC          1      10 (13:52) 25-C.Edwards-~ run       1.51   0.454
+ 4 KC          2       3 (13:15) (Shotgun) 25-~ run       1.96   1.37 
+ 5 KC          1      10 (12:36) (Shotgun) 15-~ pass      3.34  -0.573
+ 6 KC          2      10 (12:30) (Shotgun) 15-~ pass      2.76   1.32 
+ 7 KC          1      10 (11:54) 15-P.Mahomes ~ pass      4.09  -0.178
+ 8 KC          2       7 (11:11) (Shotgun) 25-~ run       3.91  -0.634
+ 9 KC          3       7 (10:28) (Shotgun) 15-~ pass      3.28   2.03 
+10 KC          1       9 (9:47) (Shotgun) 15-P~ pass      5.30  -0.565
+# i 1,242 more rows</code></pre>
 </div>
 </div>
 <p>As well, the <code>load_player_stats()</code> function provides calculated <code>passing_epa</code>, <code>rushing_epa</code>, and <code>receiving_epa</code> per player on a weekly basis.</p>

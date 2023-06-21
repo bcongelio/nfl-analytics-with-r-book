@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Bradley Congelio">
 <title>Introduction to NFL Analytics with R - 2&nbsp; Wrangling NFL Data in the tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
@@ -129,7 +130,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Introduction to NFL Analytics with R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
@@ -154,6 +155,11 @@ div.csl-indent {
           </li>
       </ul>
 </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -272,7 +278,7 @@ div.csl-indent {
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">2.7.5</span> <strong>Exercise 5</strong></a></li>
   </ul>
 </li>
-  </ul></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/02-nfl-analytics-tidyverse.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -552,25 +558,20 @@ Note
 <span><span class="va">ne_offense</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,323 x 372
-   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
-     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
- 1      44 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 2      59 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 3      83 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 4     109 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 5     130 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 6     154 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 7     175 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 8     196 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
- 9     236 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
-10     571 2022_0~ 202209~ MIA     NE      REG         1 NE      away    MIA    
-# ... with 1,313 more rows, 362 more variables: side_of_field &lt;chr&gt;,
-#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
-#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
-#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
-#   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
-#   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
-#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...</code></pre>
+   play_id game_id   old_game_id home_team away_team season_type  week
+     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;int&gt;
+ 1      44 2022_01_~ 2022091106  MIA       NE        REG             1
+ 2      59 2022_01_~ 2022091106  MIA       NE        REG             1
+ 3      83 2022_01_~ 2022091106  MIA       NE        REG             1
+ 4     109 2022_01_~ 2022091106  MIA       NE        REG             1
+ 5     130 2022_01_~ 2022091106  MIA       NE        REG             1
+ 6     154 2022_01_~ 2022091106  MIA       NE        REG             1
+ 7     175 2022_01_~ 2022091106  MIA       NE        REG             1
+ 8     196 2022_01_~ 2022091106  MIA       NE        REG             1
+ 9     236 2022_01_~ 2022091106  MIA       NE        REG             1
+10     571 2022_01_~ 2022091106  MIA       NE        REG             1
+# i 1,313 more rows
+# i 365 more variables: posteam &lt;chr&gt;, posteam_type &lt;chr&gt;, ...</code></pre>
 </div>
 </div>
 <p>The output shows that the <code>posteam</code> variable contains only <code>NE</code>, which is the abbreviation for the New England Patriots in the <code>nflreadr</code> play-by-play data. In the code that produced <code>ne_offense</code>, <strong>it is important to notice that:</strong></p>
@@ -620,25 +621,20 @@ Note
 <span><span class="va">afc_east</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5,625 x 372
-   play_id game_id old_g~1 home_~2 away_~3 seaso~4  week posteam poste~5 defteam
-     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
- 1      43 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 2      68 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 3      89 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 4     115 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 5     136 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 6     172 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 7     391 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 8     412 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
- 9     436 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
-10     469 2022_0~ 202209~ NYJ     BAL     REG         1 NYJ     home    BAL    
-# ... with 5,615 more rows, 362 more variables: side_of_field &lt;chr&gt;,
-#   yardline_100 &lt;dbl&gt;, game_date &lt;chr&gt;, quarter_seconds_remaining &lt;dbl&gt;,
-#   half_seconds_remaining &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;,
-#   game_half &lt;chr&gt;, quarter_end &lt;dbl&gt;, drive &lt;dbl&gt;, sp &lt;dbl&gt;, qtr &lt;dbl&gt;,
-#   down &lt;dbl&gt;, goal_to_go &lt;dbl&gt;, time &lt;chr&gt;, yrdln &lt;chr&gt;, ydstogo &lt;dbl&gt;,
-#   ydsnet &lt;dbl&gt;, desc &lt;chr&gt;, play_type &lt;chr&gt;, yards_gained &lt;dbl&gt;,
-#   shotgun &lt;dbl&gt;, no_huddle &lt;dbl&gt;, qb_dropback &lt;dbl&gt;, qb_kneel &lt;dbl&gt;, ...</code></pre>
+   play_id game_id   old_game_id home_team away_team season_type  week
+     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;int&gt;
+ 1      43 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 2      68 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 3      89 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 4     115 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 5     136 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 6     172 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 7     391 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 8     412 2022_01_~ 2022091107  NYJ       BAL       REG             1
+ 9     436 2022_01_~ 2022091107  NYJ       BAL       REG             1
+10     469 2022_01_~ 2022091107  NYJ       BAL       REG             1
+# i 5,615 more rows
+# i 365 more variables: posteam &lt;chr&gt;, posteam_type &lt;chr&gt;, ...</code></pre>
 </div>
 </div>
 <p>The above approach is a simplified version of first creating a vector of the team abbreviations and then passing that into the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> argument. For example, we can create the following vector that appears in the “Values” area of your RStudio environment, and then use that to retrieve the same results in did in the above code:</p>
@@ -662,19 +658,19 @@ Note
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 x 5
-   player          position team_name player_game_count avg_time_to_throw
-   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
- 1 Patrick Mahomes QB       KC                       20              2.85
- 2 Tom Brady       QB       TB                       18              2.31
- 3 Justin Herbert  QB       LAC                      18              2.75
- 4 Joe Burrow      QB       CIN                      19              2.51
- 5 Josh Allen      QB       BUF                      18              2.92
- 6 Kirk Cousins    QB       MIN                      18              2.7 
- 7 Trevor Lawrence QB       JAX                      19              2.51
- 8 Geno Smith      QB       SEA                      18              2.79
- 9 Daniel Jones    QB       NYG                      18              3.03
-10 Jalen Hurts     QB       PHI                      18              2.86
-# ... with 20 more rows</code></pre>
+   player       position team_name player_game_count avg_time_to_throw
+   &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Patrick Mah~ QB       KC                       20              2.85
+ 2 Tom Brady    QB       TB                       18              2.31
+ 3 Justin Herb~ QB       LAC                      18              2.75
+ 4 Joe Burrow   QB       CIN                      19              2.51
+ 5 Josh Allen   QB       BUF                      18              2.92
+ 6 Kirk Cousins QB       MIN                      18              2.7 
+ 7 Trevor Lawr~ QB       JAX                      19              2.51
+ 8 Geno Smith   QB       SEA                      18              2.79
+ 9 Daniel Jones QB       NYG                      18              3.03
+10 Jalen Hurts  QB       PHI                      18              2.86
+# i 20 more rows</code></pre>
 </div>
 </div>
 <p>The structure and organization of the data is quite similar to the data sets we worked with in our above examples, despite coming from a different source (PFF vs.&nbsp;<code>nflreadr</code>). Our <code>time_in_pocket</code> data includes a quarterback’s name on each row with his corresponding <code>team</code>, <code>player_game_count</code>, and <code>avg_time_to_throw</code>. Again, we are seeking to compare the average time to release - combined - for the AFC North against the rest of the NFL. In order to avoid skewing the results by “baking in data” (that is, not removing AFC North teams prior to finding the NFL average), we can use the <code>!</code> logical operator to remove all four teams at once (as oppose to structuring the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to include four separate <code>team_name !=</code> for all four different AFC North teams.</p>
@@ -685,19 +681,19 @@ Note
 <span><span class="va">time_in_pocket_no_afcn</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26 x 5
-   player          position team_name player_game_count avg_time_to_throw
-   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
- 1 Patrick Mahomes QB       KC                       20              2.85
- 2 Tom Brady       QB       TB                       18              2.31
- 3 Justin Herbert  QB       LAC                      18              2.75
- 4 Josh Allen      QB       BUF                      18              2.92
- 5 Kirk Cousins    QB       MIN                      18              2.7 
- 6 Trevor Lawrence QB       JAX                      19              2.51
- 7 Geno Smith      QB       SEA                      18              2.79
- 8 Daniel Jones    QB       NYG                      18              3.03
- 9 Jalen Hurts     QB       PHI                      18              2.86
-10 Jared Goff      QB       DET                      17              2.7 
-# ... with 16 more rows</code></pre>
+   player       position team_name player_game_count avg_time_to_throw
+   &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Patrick Mah~ QB       KC                       20              2.85
+ 2 Tom Brady    QB       TB                       18              2.31
+ 3 Justin Herb~ QB       LAC                      18              2.75
+ 4 Josh Allen   QB       BUF                      18              2.92
+ 5 Kirk Cousins QB       MIN                      18              2.7 
+ 6 Trevor Lawr~ QB       JAX                      19              2.51
+ 7 Geno Smith   QB       SEA                      18              2.79
+ 8 Daniel Jones QB       NYG                      18              3.03
+ 9 Jalen Hurts  QB       PHI                      18              2.86
+10 Jared Goff   QB       DET                      17              2.7 
+# i 16 more rows</code></pre>
 </div>
 </div>
 <p>With Pittsburgh, Baltimore, Cincinnati, and Cleveland removed from the data set, we can - for the sake of completing the analysis - take our new <code>time_in_pocket_afcn</code> data set and find the league-wide average for <code>avg_time_to_throw</code>.</p>
@@ -1026,7 +1022,7 @@ Caution
  8 B.Perkins  Medium         0.266
  9 B.Purdy    Medium         9.72 
 10 B.Rypien   Medium        18.0  
-# ... with 72 more rows</code></pre>
+# i 72 more rows</code></pre>
 </div>
 </div>
 </section></section><section id="core-skills-for-tidy-data" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="core-skills-for-tidy-data">
@@ -1057,21 +1053,20 @@ Caution
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sis_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 107 x 14
-   Season Player      Team    Att Point~1 PE Pe~2 Point~3 PAA P~4    EPA Posit~5
-    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
- 1   2022 Patrick Ma~ Chie~   648    180.   0.267   101.    0.149 119.   52.70% 
- 2   2022 Justin Her~ Char~   699    138.   0.187    54.2   0.074  -8.11 46.30% 
- 3   2022 Trevor Law~ Jagu~   584    123.   0.202    48.0   0.079  32.8  48.90% 
- 4   2022 Jared Goff  Lions   587    121.   0.199    48.4   0.079  64.7  49.00% 
- 5   2022 Jalen Hurts Eagl~   460    106.   0.213    48.1   0.097  10.9  45.80% 
- 6   2022 &lt;NA&gt;        &lt;NA&gt;    439    104.   0.12     41.2   0.087   8.92 45.70% 
- 7   2022 Kirk Cousi~ Viki~   643    104.   0.151    24.0   0.035 -12.7  45.70% 
- 8   2022 Tua Tagova~ Dolp~   400    102.   0.243    44.9   0.107  66.2  50.40% 
- 9   2022 Joe Burrow  Beng~   606    102.   0.158    25.7   0.04   19.4  49.50% 
-10   2022 Josh Allen  Bills   567    100.   0.167    29.4   0.049  47.9  50.30% 
-# ... with 97 more rows, 4 more variables: PAR &lt;dbl&gt;, WAR &lt;dbl&gt;, `Boom%` &lt;chr&gt;,
-#   `Bust%` &lt;chr&gt;, and abbreviated variable names 1: `Points Earned`,
-#   2: `PE Per Play`, 3: `Points Above Avg`, 4: `PAA Per Play`, 5: `Positive%`</code></pre>
+   Season Player          Team       Att `Points Earned` `PE Per Play`
+    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1   2022 Patrick Mahomes Chiefs     648            180.         0.267
+ 2   2022 Justin Herbert  Chargers   699            138.         0.187
+ 3   2022 Trevor Lawrence Jaguars    584            123.         0.202
+ 4   2022 Jared Goff      Lions      587            121.         0.199
+ 5   2022 Jalen Hurts     Eagles     460            106.         0.213
+ 6   2022 &lt;NA&gt;            &lt;NA&gt;       439            104.         0.12 
+ 7   2022 Kirk Cousins    Vikings    643            104.         0.151
+ 8   2022 Tua Tagovailoa  Dolphins   400            102.         0.243
+ 9   2022 Joe Burrow      Bengals    606            102.         0.158
+10   2022 Josh Allen      Bills      567            100.         0.167
+# i 97 more rows
+# i 8 more variables: `Points Above Avg` &lt;dbl&gt;, ...</code></pre>
 </div>
 </div>
 <p>The results immediately bring to light several issues in the data:</p>
@@ -1103,7 +1098,7 @@ Caution
  8 Tua Tagovailoa  Dolphins   400 28.50%       15.70%      
  9 Joe Burrow      Bengals    606 23.60%       14.80%      
 10 Josh Allen      Bills      567 23.20%       12.70%      
-# ... with 97 more rows</code></pre>
+# i 97 more rows</code></pre>
 </div>
 </div>
 <p>In the above code, we are using the <code>clean_names()</code> function within the <code>janitor</code> package to automatically rework the column names into a <code>tidy</code> format. After, we use the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> verb to keep only five of the included columns of data (<code>player</code>, <code>team</code>, <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code>). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.</p>
@@ -1188,7 +1183,7 @@ Note
  8 Joe Burrow      Bengals    606         23.6         14.8
  9 Josh Allen      Bills      567         23.2         12.7
 10 Geno Smith      Seahawks   572         20.6         17.6
-# ... with 96 more rows</code></pre>
+# i 96 more rows</code></pre>
 </div>
 </div>
 <p>Our output shows that <code>att</code>, <code>boom_percent</code>, and <code>bust_percent</code> are now all three numeric and, moreover, the tailing percentage sign in each boom and bust value is now removed. At this point, the data is prepped and properly structured for the visualization process.</p>
@@ -1216,7 +1211,7 @@ Note
  8 Joe Burrow      Bengals    606         23.6         14.8
  9 Josh Allen      Bills      567         23.2         12.7
 10 Geno Smith      Seahawks   572         20.6         17.6
-# ... with 96 more rows</code></pre>
+# i 96 more rows</code></pre>
 </div>
 </div>
 <p>The above example, using <code>readr</code>, is quite similar to the first version that used <code>stringr</code> in that we are using the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb to edit our existing <code>boom_percent</code> and <code>bust_percent</code> columns. In this case, however, we are replacing our <code>stringer</code> argument with the <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> function from the <code>readr</code> package. When finished, you can see in the output that not only are both boom and bust correctly listed as numeric, but the <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> function automatically recognized and dropped the tailing percentage sign.</p>
@@ -1252,7 +1247,7 @@ Note
  8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
  9 Josh Allen      Bills      567         23.2         12.7      10.5 
 10 Geno Smith      Seahawks   572         20.6         17.6       3   
-# ... with 23 more rows</code></pre>
+# i 23 more rows</code></pre>
 </div>
 </div>
 <p>In the above example, by using the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> verb, we created a new column in our existing <code>sis_data</code> data set that calculates the difference between a quarterback’s <code>boom_percent</code> and <code>bust_percent</code>. Importantly, as mentioned, this is done while keeping the rest of the dataset in place unlike using the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> verb.</p>
@@ -1299,7 +1294,7 @@ Note
  8 Joe Burrow      Bengals    606         23.6         14.8       8.8 
  9 Josh Allen      Bills      567         23.2         12.7      10.5 
 10 Geno Smith      Seahawks   572         20.6         17.6       3   
-# ... with 23 more rows</code></pre>
+# i 23 more rows</code></pre>
 </div>
 </div>
 <p>With that, our <code>sis_data</code> data set is nearly complete and ready for visualization. Before doing so, though, we can use the <code>load_teams</code> function within <code>nflreadr</code> to combine the appropriate team colors to each quarterback in the data, allowing us to customize the appearance of the data visualization.</p>
@@ -1350,7 +1345,7 @@ Note
  8 CLE       Browns    Cleveland Browns   #FF3C00    #311D00    
  9 DAL       Cowboys   Dallas Cowboys     #002244    #B0B7BC    
 10 DEN       Broncos   Denver Broncos     #002244    #FB4F14    
-# ... with 22 more rows</code></pre>
+# i 22 more rows</code></pre>
 </div>
 </div>
 <p>For educational purposes, we use the above code to bring in each NFL’s team abbreviation, nickname, and full name. Along with identifying information for each team, we also have selected <code>team_color</code> and <code>team_color2</code> (which correspond to each team’s primary and secondary colors).</p>
@@ -1401,21 +1396,20 @@ Tip
 <span><span class="va">sis_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 33 x 10
-   player    team    att boom_~1 bust_~2 diffe~3 team_~4 team_~5 team_~6 team_~7
-   &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
- 1 Patrick ~ Chie~   648    25.1    12.5   12.6  KC      Kansas~ #E31837 #FFB612
- 2 Justin H~ Char~   699    21.2    15.9    5.3  LAC     Los An~ #007BC7 #ffc20e
- 3 Trevor L~ Jagu~   584    23.7    15.2    8.5  JAX     Jackso~ #006778 #000000
- 4 Jared Go~ Lions   587    23.6    13.3   10.3  DET     Detroi~ #0076B6 #B0B7BC
- 5 Jalen Hu~ Eagl~   460    23.5    16.1    7.4  PHI     Philad~ #004C54 #A5ACAF
- 6 Kirk Cou~ Viki~   643    21.3    17.4    3.90 MIN     Minnes~ #4F2683 #FFC62F
- 7 Tua Tago~ Dolp~   400    28.5    15.7   12.8  MIA     Miami ~ #008E97 #F58220
- 8 Joe Burr~ Beng~   606    23.6    14.8    8.8  CIN     Cincin~ #FB4F14 #000000
- 9 Josh All~ Bills   567    23.2    12.7   10.5  BUF     Buffal~ #00338D #C60C30
-10 Geno Smi~ Seah~   572    20.6    17.6    3    SEA     Seattl~ #002244 #69be28
-# ... with 23 more rows, and abbreviated variable names 1: boom_percent,
-#   2: bust_percent, 3: difference, 4: team_abbr, 5: team_name, 6: team_color,
-#   7: team_color2</code></pre>
+   player   team    att boom_percent bust_percent difference team_abbr
+   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;    
+ 1 Patrick~ Chie~   648         25.1         12.5      12.6  KC       
+ 2 Justin ~ Char~   699         21.2         15.9       5.3  LAC      
+ 3 Trevor ~ Jagu~   584         23.7         15.2       8.5  JAX      
+ 4 Jared G~ Lions   587         23.6         13.3      10.3  DET      
+ 5 Jalen H~ Eagl~   460         23.5         16.1       7.4  PHI      
+ 6 Kirk Co~ Viki~   643         21.3         17.4       3.90 MIN      
+ 7 Tua Tag~ Dolp~   400         28.5         15.7      12.8  MIA      
+ 8 Joe Bur~ Beng~   606         23.6         14.8       8.8  CIN      
+ 9 Josh Al~ Bills   567         23.2         12.7      10.5  BUF      
+10 Geno Sm~ Seah~   572         20.6         17.6       3    SEA      
+# i 23 more rows
+# i 3 more variables: team_name &lt;chr&gt;, team_color &lt;chr&gt;, ...</code></pre>
 </div>
 </div>
 <p>You can see in the output that our two data sets correctly merged on the <code>team</code> and <code>team_nick</code> columns. Moreover, to illustrate what happens doing the joining process, please note these two items:</p>

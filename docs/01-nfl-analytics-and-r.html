@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Bradley Congelio">
 <title>Introduction to NFL Analytics with R - 1&nbsp; An Introduction to NFL Analytics and the R Programming Language</title>
 <style>
 code{white-space: pre-wrap;}
@@ -129,7 +130,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Introduction to NFL Analytics with R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/bcongelio/nfl-analytics-with-r-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
@@ -154,6 +155,11 @@ div.csl-indent {
           </li>
       </ul>
 </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -245,7 +251,7 @@ div.csl-indent {
   </ul>
 </li>
   <li><a href="#exploring-explosive-plays-per-touchdown-drive" id="toc-exploring-explosive-plays-per-touchdown-drive" class="nav-link" data-scroll-target="#exploring-explosive-plays-per-touchdown-drive"><span class="header-section-number">1.4</span> Exploring Explosive Plays per Touchdown Drive</a></li>
-  </ul></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/01-nfl-analytics-and-r.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -368,19 +374,19 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 560 x 4
 # Groups:   nflverse_game_id, possession_team [557]
-   nflverse_game_id possession_team offense_personnel starting_line             
-   &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;             &lt;chr&gt;                     
- 1 2022_01_BAL_NYJ  NYJ             1 RB, 2 TE, 2 WR  George Fant, Alijah Vera-~
- 2 2022_01_BAL_NYJ  BAL             2 RB, 1 TE, 2 WR  Ben Powers, Morgan Moses,~
- 3 2022_01_BUF_LA   BUF             1 RB, 1 TE, 3 WR  Ryan Bates, Dion Dawkins,~
- 4 2022_01_BUF_LA   LA              1 RB, 1 TE, 3 WR  Rob Havenstein, Brian All~
- 5 2022_01_CLE_CAR  CAR             1 RB, 1 TE, 3 WR  Ikem Ekwonu, Taylor Moton~
- 6 2022_01_CLE_CAR  CLE             1 RB, 1 TE, 3 WR  Jedrick Wills, James Huds~
- 7 2022_01_DEN_SEA  SEA             1 RB, 2 TE, 2 WR  Phil Haynes, Abraham Luca~
- 8 2022_01_DEN_SEA  DEN             1 RB, 2 TE, 2 WR  Garett Bolles, Lloyd Cush~
- 9 2022_01_GB_MIN   MIN             1 RB, 1 TE, 3 WR  Christian Darrisaw, Ezra ~
-10 2022_01_GB_MIN   GB              1 RB, 2 TE, 2 WR  Royce Newman, Jake Hanson~
-# ... with 550 more rows</code></pre>
+   nflverse_game_id possession_team offense_personnel starting_line   
+   &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;             &lt;chr&gt;           
+ 1 2022_01_BAL_NYJ  NYJ             1 RB, 2 TE, 2 WR  George Fant, Al~
+ 2 2022_01_BAL_NYJ  BAL             2 RB, 1 TE, 2 WR  Ben Powers, Mor~
+ 3 2022_01_BUF_LA   BUF             1 RB, 1 TE, 3 WR  Ryan Bates, Dio~
+ 4 2022_01_BUF_LA   LA              1 RB, 1 TE, 3 WR  Rob Havenstein,~
+ 5 2022_01_CLE_CAR  CAR             1 RB, 1 TE, 3 WR  Ikem Ekwonu, Ta~
+ 6 2022_01_CLE_CAR  CLE             1 RB, 1 TE, 3 WR  Jedrick Wills, ~
+ 7 2022_01_DEN_SEA  SEA             1 RB, 2 TE, 2 WR  Phil Haynes, Ab~
+ 8 2022_01_DEN_SEA  DEN             1 RB, 2 TE, 2 WR  Garett Bolles, ~
+ 9 2022_01_GB_MIN   MIN             1 RB, 1 TE, 3 WR  Christian Darri~
+10 2022_01_GB_MIN   GB              1 RB, 2 TE, 2 WR  Royce Newman, J~
+# i 550 more rows</code></pre>
 </div>
 </div>
 <p>Of concern are rows 10 through 14. In 15 different cases, a team ran its first play of the game with six offensive linemen. And, in one case, the resulting data indicates that the Dallas Cowboys ran their first play in week 5 against the LA Rams with seven offensive linemen, one punter, one long snapper, and a kicker.</p>
@@ -422,7 +428,7 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
  8 2022_01_BAL_NYJ     1 Alijah Vera-Tucker G        NYJ          1   
  9 2022_01_BAL_NYJ     1 George Fant        T        NYJ          1   
 10 2022_01_BAL_NYJ     1 Connor McGovern    C        NYJ          1   
-# ... with 2,830 more rows</code></pre>
+# i 2,830 more rows</code></pre>
 </div>
 </div>
 <p>First, we obtain snap count data from the 2022 season and write it into a data frame titled <code>oline_snap_counts</code>. After, we select just the necessary columns and then filter out the <code>position</code> information to include only tackles, guards, and centers. After grouping each individual offensive line by <code>game_id</code> and his respective <code>team</code>, we arrange each player’s snap count in descending order using <code>offense_pct</code>.</p>
@@ -447,19 +453,19 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 568 x 4
 # Groups:   game_id, week, team [568]
-   game_id          week team  starting_line                                    
-   &lt;chr&gt;           &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                                            
- 1 2022_01_BAL_NYJ     1 BAL   Ben Powers, Kevin Zeitler, Morgan Moses, Patrick~
- 2 2022_01_BAL_NYJ     1 NYJ   Alijah Vera-Tucker, Connor McGovern, George Fant~
- 3 2022_01_BUF_LA      1 BUF   Dion Dawkins, Mitch Morse, Rodger Saffold, Ryan ~
- 4 2022_01_BUF_LA      1 LA    Brian Allen, Coleman Shelton, David Edwards, Jos~
- 5 2022_01_CLE_CAR     1 CAR   Austin Corbett, Brady Christensen, Ikem Ekwonu, ~
- 6 2022_01_CLE_CAR     1 CLE   Ethan Pocic, James Hudson, Jedrick Wills Jr., Jo~
- 7 2022_01_DEN_SEA     1 DEN   Cameron Fleming, Dalton Risner, Garett Bolles, G~
- 8 2022_01_DEN_SEA     1 SEA   Abraham Lucas, Austin Blythe, Charles Cross, Gab~
- 9 2022_01_GB_MIN      1 GB    Jake Hanson, Jon Runyan, Josh Myers, Royce Newma~
-10 2022_01_GB_MIN      1 MIN   Brian O'Neill, Christian Darrisaw, Ed Ingram, Ez~
-# ... with 558 more rows</code></pre>
+   game_id          week team  starting_line                          
+   &lt;chr&gt;           &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                                  
+ 1 2022_01_BAL_NYJ     1 BAL   Ben Powers, Kevin Zeitler, Morgan Mose~
+ 2 2022_01_BAL_NYJ     1 NYJ   Alijah Vera-Tucker, Connor McGovern, G~
+ 3 2022_01_BUF_LA      1 BUF   Dion Dawkins, Mitch Morse, Rodger Saff~
+ 4 2022_01_BUF_LA      1 LA    Brian Allen, Coleman Shelton, David Ed~
+ 5 2022_01_CLE_CAR     1 CAR   Austin Corbett, Brady Christensen, Ike~
+ 6 2022_01_CLE_CAR     1 CLE   Ethan Pocic, James Hudson, Jedrick Wil~
+ 7 2022_01_DEN_SEA     1 DEN   Cameron Fleming, Dalton Risner, Garett~
+ 8 2022_01_DEN_SEA     1 SEA   Abraham Lucas, Austin Blythe, Charles ~
+ 9 2022_01_GB_MIN      1 GB    Jake Hanson, Jon Runyan, Josh Myers, R~
+10 2022_01_GB_MIN      1 MIN   Brian O'Neill, Christian Darrisaw, Ed ~
+# i 558 more rows</code></pre>
 </div>
 </div>
 <p>With the data cleaned and prepared, we are now able to take our first look at the results. In the code below, we are grouping by all 32 NFL team and then summarizing the total number of unique offensive line combinations used during the 2022 regular season.</p>
@@ -498,7 +504,7 @@ To download/install RStudio: <a href="https://posit.co/download/rstudio-desktop/
  8 GB         8   0.471
  9 TB         8   0.471
 10 BUF        7   0.812
-# ... with 22 more rows</code></pre>
+# i 22 more rows</code></pre>
 </div>
 </div>
 <p>After collecting team records and merging them into the offensive line combination data, we can use <code>ggplot</code> to visualize the data. Individual team logos are used in place of the typical <code>geom_point</code> by using the <code>nflplotR</code> package.</p>
@@ -594,7 +600,7 @@ Important
  8 GB         8   0.471   2022             25.4
  9 TB         8   0.471   2022             19.6
 10 BUF        7   0.812   2022             31.8
-# ... with 22 more rows</code></pre>
+# i 22 more rows</code></pre>
 </div>
 </div>
 <p>With the pressure rate now merged with our unique offensive line combination data, we can make slight adjustments to our prior <code>ggplot</code> code to examine any potential relationship.</p>
@@ -814,7 +820,7 @@ Important
  8 MIA        7           4.61         30           14
  9 CAR        3           4.56         14           11
 10 PIT        2           4.54          1            4
-# ... with 22 more rows</code></pre>
+# i 22 more rows</code></pre>
 </div>
 </div>
 <p>You can see in the output of the data that <code>power_rank</code> and <code>stuffed_rank</code> are both in a “ranked format,” meaning the team with the best power success score (the Pittsburgh Steelers) are ranked 1st while the team with the worst (the Minnesota Vikings) are ranked 32nd. The <code>adj_line_yards</code> variable is provided in its unranked, raw format. Because of this, let’s first use both <code>power_rank</code> and <code>stuffed_rank</code> and use the <code>cowplot</code> package to view them together, and then construct the plot for <code>adj_line_yards</code> separately since it operates on a differing y-axis scale.</p>
@@ -928,8 +934,8 @@ Important
 <span class="header-section-number">1.4</span> Exploring Explosive Plays per Touchdown Drive</h2>
 <p>In November of 2022, Warren Sharp - of <a href="https://www.sharpfootballanalysis.com/">Sharp Football Analysis</a> - tweeted perhaps the most ridiculous statistic of the 2022 NFL season.</p>
 <p></p>
-<div id="tweet-14742"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-14742").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
+<div id="tweet-66527"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-66527").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
 <p>However, the statistic as presented by Sharp does not tell the complete story as it isolates the entirety of a touchdown drive to a single play. While the team’s longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.</p>
 <p>To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.</p>
 <div class="cell">
