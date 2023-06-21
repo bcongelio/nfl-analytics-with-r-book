@@ -4,8 +4,6 @@
 
 source("book-functions.R")
 
-knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
-
 library(showtext)
 library(tidyverse)
 library(nflreadr)
@@ -27,7 +25,7 @@ As mentioned in the Preface of this book, the `nflverse` has drastically expande
 4.  `nflreadr`
 5.  `nflplotR`
 
-Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understandable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories." The data that *is* the `nflverse` is stored across five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.
+Installing the `nflverse` as a package in R will automatically install all five packages. However, the core focus of this book will be on `nflreadr`. It is understandable if you are confused by that, since the Preface of this book introduced the `nflfastR` package. The `nflreadr` package, as explained by its author ([Tan Ho](https://tanho.ca/)), is a "minimal package for downloading data from `nflverse` repositories." The data that *is* the `nflverse` is stored across five different GitHub repositories. Using `nflreadr` allows for easy access to any of these data sources. For lack of a better term, `nflreadr` acts as a shortcut of sorts while also operating with less dependencies.\index{nflreadr!difference from nflfastR}
 
 As you will see in this chapter, using `nflreadr::` while coding provides nearly identical functions to those available when using `nflfastR::`. In fact, `nflfastR::`, in many instances, now calls, "under the hood," the equivalent function in `nflreadr::`. Because of the coalescing between the two, many of the new functions being developed are available only when using `nflreadr::`. For example, `nflreadr::` allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.
 
@@ -35,7 +33,7 @@ While `nflfastR` did initially serve as the foundation of the "amateur NFL analy
 
 The below diagram visualizes the relationship between `nflfastR` and `nflreadr`.
 
-```{r nflverse-comparison, echo = FALSE, out.width = "100%"}
+```{r nflverse-comparison, echo = FALSE, fig.cap="Comparison of nflreadr and nflfastR"}
 
 knitr::include_graphics(rep("images/updated-diagram.png"))
 ```
@@ -44,9 +42,9 @@ The purpose of this chapter is to explore `nflreadr` data in an introductory fas
 
 ## `nflreadr`: An Introduction to the Data
 
-The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: weekly player stats and the more detailed play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.
+The most important part of the `nflverse` is, of course, the data. To begin, we will examine the core data that underpins the `nflverse`: weekly player stats and the more detailed play-by--play data. Using `nflreadr`, the end user is able to collect weekly top-level stats via the `load_player_stats()` function or the much more robust play-by-play numbers by using the `load_pbp()` function.\index{nflreadr!introduction to}
 
-As you may imagine, there is a **very important distinction between the `load_player_stats()`** **and `load_pbp()`**. As mentioned, `load_player_stats()` will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, `load_pbp()` will provide over 350 metrics for every single play of every single game dating back to 1999.
+As you may imagine, there is a **very important distinction between the `load_player_stats()`** **and `load_pbp()`**.\index{nflreadr!load\_player\_stats() vs. load\_pbp()} As mentioned, `load_player_stats()` will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, `load_pbp()` will provide over 350 metrics for every single play of every single game dating back to 1999.
 
 The `load_player_stats()` function includes the following offensive information:
 
@@ -73,14 +71,14 @@ As an example, let's say you need to get Patrick Mahomes' total passing yard and
 
 ### Getting Player Stats via `load_player_stats()`
 
-We can generate a data frame titled `mahomes_pyards` but running the following code:
+We can generate a data frame titled `mahomes_pyards` but running the following code:\index{nflreadr!load\_player\_stats()!introduction to}
 
 ```{r loading-mahomes-stats, eval = TRUE, echo = TRUE, output = FALSE}
 
 mahomes_pyards <- nflreadr::load_player_stats(seasons = 2022)
 ```
 
-In the above example, we specified that the returned data be from the 2022 season. It needs to be noted that running `load_play_stats()` (without a specific season) will return the newest season in the data. Moreover, separating two seasons with a colon (`:`) will provide multiple seasons of data. In our working example, the `mahomes_pyards` data frame contains statistics for every player from every week of the 2022 season.
+In the above example, we specified that the returned data be from the 2022 season. It needs to be noted that running `load_player_stats()` (without a specific season) will return the newest season in the data. Moreover, separating two seasons with a colon (`:`) will provide multiple seasons of data.\index{nflreadr!load\_player\_stats()!multiple seasons} In our working example, the `mahomes_pyards` data frame contains statistics for every player from every week of the 2022 season.
 
 It is important to note that the structure of the data returned by `load_player_stats()` includes passing yards, rushing yards, receiving yards, etc. for each player. As a result, the data returns - for example - the week-by-week statistics for rushing and receiving for Peyton Manning, not just his passing numbers. Because of this, we can calculate Peyton's rushing statistics from 2000 to 2022.
 
@@ -94,7 +92,7 @@ It is important to note that the structure of the data returned by `load_player_
 Knowing that Peyton's average rushing EPA from 2000 to the end of his career was -0.740 is not going to win you final Jeopardy nor is it going to be helpful in any sort of Twitter football discourse. When working with `load_player_stats()`, it is important that you know the variable names that are useful to the research you are doing.
 
 ::: callout-tip
-The relevant passing statistics housed in `load_player_stats()` includes:
+The relevant passing statistics housed in `load_player_stats()` includes:\index{nflreadr!load\_player\_stats()!passing data}
 
 ```{r player-stats-passing, eval = TRUE, echo = FALSE, output = TRUE}
 
@@ -107,7 +105,7 @@ passing_columns <- load_player_stats() %>%
 colnames(passing_columns)
 ```
 
-The columns relevant to rushing statistics in `load_player_stats()` are:
+The columns relevant to rushing statistics in `load_player_stats()` are:\index{nflreadr!load\_player\_stats()!rushing data}
 
 ```{r player-stats-rushing, eval = TRUE, echo = FALSE, output = TRUE}
 
@@ -118,7 +116,7 @@ rushing_columns <- load_player_stats() %>%
 colnames(rushing_columns)
 ```
 
-Lastly, the columns for receiving statistics in `load_player_stats()` include:
+Lastly, the columns for receiving statistics in `load_player_stats()` include:\index{nflreadr!load\_player\_stats()!receiving data}
 
 ```{r player-stats-receiving, eval = TRUE, echo = FALSE, output = TRUE}
 
@@ -145,7 +143,7 @@ mahomes_pyards
 
 The above code returns a result of 5,250 passing yards which is an exact match from the data provided by [Pro Football Reference.](https://www.pro-football-reference.com/players/M/MahoPa00.htm) In the above example, we used the `filter()` function on the `player_name` column in the data. You will get the same result if you replace that with `player_display_name == "Patrick Mahomes"`. While there is no difference in how the data is collected, there will be a difference if you were to visualize the data frame and wished to display the player names along with their respective statistics. In most cases, in order to maintain a clean design, using the `player_name` option is best as it allows you to plot just the player's first initial and last name.
 
-We can build upon the passing yards example to replicate the vast majority of statistics found in the["Passing" data table for Mahomes from Pro Football Reference](https://www.pro-football-reference.com/players/M/MahoPa00.htm#passing).
+We can build upon the passing yards example to replicate the vast majority of statistics found in the["Passing" data table for Mahomes from Pro Football Reference](https://www.pro-football-reference.com/players/M/MahoPa00.htm#passing).\index{nflreadr!load\_player\_stats()!replicating PFR stats}
 
 ```{r mahomes-replicate-pfr, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -206,7 +204,7 @@ all_qbs_adjusted
 Mahomes, with an adjusted yards per pass attempt of 9.58, finishes in sixth place in the 2018 season behind C. Henne (9.67), K. Allen (9.87), and then three others that have results between 10 and 20. This is a situation where I tell my students the results do not pass the "eye test." Why? It is unlikely that an adjusted yards per pass attempt of 21 and 13.3 for Nate Sudfeld and Garrett Gilbert, respectively, are from a season worth of data. The results for Kyle Allen and Matt Barkley are questionable, as well.
 
 ::: callout-important
-You will often discover artificially-inflated statistics like above when the players have limited number of pass attempts/rushing attempts/receptions/etc. compared to the other players on the list. To confirm this, we can add `pass_attempts = sum(attempts)` to the above code to compare the number of attempts Sudfeld and Gilbert had compared to the rest of the list.
+You will often discover artificially-inflated statistics like above when the players have limited number of pass attempts/rushing attempts/receptions/etc. compared to the other players on the list.\index{nflreadr!load\_player\_stats()!handling inflated statistics} To confirm this, we can add `pass_attempts = sum(attempts)` to the above code to compare the number of attempts Sudfeld and Gilbert had compared to the rest of the list.
 
 ```{r qbs-adjusted-w-attempts, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -365,9 +363,9 @@ Unfortunately, the `load_player_stats()` function does not provide ability to di
 
 ## Using `load_pbp()` to Add Context to Statistics
 
-Using the `load_pbp()` function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.
+Using the `load_pbp()`\index{nflreadr!load\_pbp()!introduction to} function is preferable when you are looking to add context to a player's statistics, as the `load_player_stats()` function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.
 
-The `load_pbp()` function provides over 350 various metrics, as listed below:
+The `load_pbp()` function provides over 350 various metrics, as listed below:\index{nflreadr!load\_pbp()!avaliable variables}
 
 ```{r pbp-data-ls, echo = TRUE}
 
@@ -375,7 +373,7 @@ pbp.data <- nflreadr::load_pbp(2022)
 ls(pbp.data)
 ```
 
-The amount of information contained in the `nflverse` play-by-play data can be overwhelming. Luckily, the `nflreadr` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflreadr Field Descriptions](https://nflreadr.nflverse.com/articles/dictionary_pbp.html).
+The amount of information contained in the `nflverse` play-by-play data can be overwhelming. Luckily, the `nflreadr` website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: [nflreadr Field Descriptions](https://nflreadr.nflverse.com/articles/dictionary_pbp.html).\index{nflreadr!load\_pbp()!variable descriptions}
 
 We can recreate our examination of 2018 adjusted pass yards per attempt to just those passes on 3rd down with 10 or less yards to go by running the following code:
 
@@ -402,14 +400,14 @@ adjusted_yards
 
 Because the `load_pbp()` data is not pre-aggregated, we must do a bit of the work ourselves before we are able to achieve our answer. To start, we load the 2018 play-by-play data into a data frame titled `pbp` but using the `load_pbp()` function with the `season` argument set to "2018." As well, we use the `filter()` function to make sure the data gathered into our `pbp` data frame is only the regular season statistics. Once the play-by-play is loaded, we create a data frame off of it titled `adjusted_yards` wherein we use `group_by()` to calculate the metric for each individual quarterback, then ensure that we are collecting the play-by-play data for only those plays that took place on 3rd down with ten or less yards to go.
 
-We then use a second `filter()` to gather those plays where `complete_pass == 1` *or* `incomplete_pass == 1` *or* `interception == 1` *and* the `down` is not missing (which usually indicates a 2-point conversion attempt). As a result, each quarterback has an exact match to the number of complete passes, attempts, and interceptions as found in the official statistics of the season.
+We then use a second `filter()` to gather those plays where `complete_pass == 1` *or* `incomplete_pass == 1` *or* `interception == 1` *and* the `down` is not missing (which usually indicates a 2-point conversion attempt). As a result, each quarterback has an exact match to the number of complete passes, attempts, and interceptions as found in the official statistics of the season.\index{nflreadr!load\_pbp()!match official statistics}
 
 Despite leading the league in adjusted pass yard per attempt in 2018, Mahomes finished a whole yard behind Aaron Rodgers when exploring the same metric on 3rd down with 10 or less yards to go (and was tied for second place with Russel Wilson).
 
 ::: callout-tip
 Why is it necessary to use such a long list of specifications in the `filter()` function in order to match the official QB statistics found elsewhere?
 
-That is a good question, especially since there are other variables within the play-by-play data that would seemingly return the correct results (such as `pass == 1` or `play_type == "pass"`. We can view the differences in all three methods by doing the following.
+That is a good question, especially since there are other variables within the play-by-play data that would seemingly return the correct results (such as `pass == 1` or `play_type == "pass"`. We can view the differences in all three methods by doing the following.\index{nflreadr!load\_pbp()!differences in approaches}
 
 ```{r passing-number-differences, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -454,7 +452,7 @@ By using `filter()` to remove any play that included a QB spike, a QB scramble, 
 
 ***What about the use of `passer` vs. `passer_player_name`?***
 
-It is also important to remember that you will receive differing numbers based on your use of `passer` and `passer_player_name`. The `passer` variable is created internally by the `nflverse` system and is used to "mimic" the statistics without spikes, scrambles, or sacks in the data. The `passer_player_name` variable comes from the official statistics and inherently includes this information.
+It is also important to remember that you will receive differing numbers based on your use of `passer` and `passer_player_name`.\index{nflreadr!load\_pbp()!passer vs. passer\_player\_name} The `passer` variable is created internally by the `nflverse` system and is used to "mimic" the statistics without spikes, scrambles, or sacks in the data. The `passer_player_name` variable comes from the official statistics and inherently includes this information.
 
 The following, with the first method using `group_by(passer)` and the second using `group_by(passer_player_name)` returns differing results.
 
@@ -539,7 +537,7 @@ One item to consider, however, is the concept of "garbage time." Are the above r
 
 #### QB Aggressiveness: Filtering for "Garbage Time?"
 
-To examine the impact of "garbage time" statistics, we can add an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.
+To examine the impact of "garbage time" statistics, we can add an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.\index{nflreadr!load\_pbp()!handling garbage time}
 
 Let's add the "garbage time" filter to the code we've already prepared:
 
@@ -567,11 +565,11 @@ aggressiveness_garbage
 
 We are now using the same code, but have included three new items to the `filter()`. First, we are stipulating that, aside from the down and distance inclusion, we only want those plays that occurred when the offense's win probability (the `wp` variable) was between 5% and 95%, as well as ensuring that the plays did not happen after the two-minute warning of either half.
 
-The decision on range of the win probability numbers is very much a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for the win probability cutoff point. However, Sebastian Carl - one of the creators of the `nflverse` explained in the package's Discord:
+The decision on range of the win probability numbers is very much a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for the win probability cutoff point. However, Sebastian Carl\index{Carl, Sebastian} - one of the creators of the `nflverse` explained in the package's Discord:
 
 > Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80%"garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
 
-Ben Baldwin followed up on Carl's thoughts:
+Ben Baldwin\index{Baldwin, Ben} followed up on Carl's thoughts:
 
 > Ben Baldwin: "agree with this. 20-80% should only be used as a filter for looking at how run-heavy a team is (because outside of this range is when teams change behavior a lot). and possibly how teams behave on 4th downs. but not for team or player performance."
 
@@ -583,7 +581,7 @@ That said, I more often than not do not concern myself with removing "garbage ti
 
 ### QB Air Yards EPA by Down
 
-To continue working with quarterback information using the `load_pbp()` function, we can explore each quarterback's air yards EPA for 1st, 2nd, and 3rd down.
+To continue working with quarterback information using the `load_pbp()` function, we can explore each quarterback's air yards EPA for 1st, 2nd, and 3rd down.\index{nflreadr!Examples!QB Air Yards}
 
 ```{r qb-mean-ayepa-down, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -611,7 +609,7 @@ Josh Allen, Dak Prescott, and Tua Tagovailoa were all outstanding on 3rd down du
 
 ### Measuring Impact of Offensive Line
 
-Brian Burke - prior to moving to ESPN - used to host his own blog where he showcased his analytics work. In November of 2014, he wrote a post that detailed his process in determining how to value an offensive line's performance over the course of an NFL season.
+Brian Burke - prior to moving to ESPN - used to host his own blog where he showcased his analytics work. In November of 2014, he wrote a post that detailed his process in determining how to value an offensive line's performance over the course of an NFL season.\index{nflreadr!Examples!Offensive Line Impact}
 
 The process of making such a valuation is understandably difficult as, as Burke pointed out, an offensive line's performance on the field is often characterized by the overall absence of stats. The less sacks, short yardage plays, tackles for loss, and quarterback scrambles - for example - the better. But how can the performance of an offensive line be quantified based on statistics that are absent?
 
@@ -711,7 +709,7 @@ In the case of both `load_pbp()` and `load_player_stats()`, it is possible to lo
 
 In our above example calculating average air yard per attempt, it is important to note that Russell Wilson's league-leading average of 9.89 air yards per attempt is calculated using *all* passing attempts, meaning pass attempts that were both complete and incomplete.
 
-In our first example of working with data across multiple seasons, let's examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:
+In our first example of working with data across multiple seasons, let's examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:\index{nflreadr!load\_pbp()!Multiple Seasons}
 
 ```{r avg-ay-5-years, echo = TRUE}
 
@@ -741,7 +739,7 @@ Of those QBs with at least 1,000 complete passes since the 2017 season, Jameis W
 
 ## Working with the Various `nflreadr` Functions
 
-The `nflreadr` package comes with a multitude of "under the hood" functions designed to provide you with supplemental data, items for data visualization, and utilities for efficiently collecting and storing the data on your system. You can view the entire list of these options using the `ls` to output all the objects in the package.
+The `nflreadr` package comes with a multitude of "under the hood" functions designed to provide you with supplemental data, items for data visualization, and utilities for efficiently collecting and storing the data on your system. You can view the entire list of these options using the `ls` to output all the objects in the package.\index{nflreadr!Functions}
 
 ```{r list-of-nfl-readr-functions, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -752,9 +750,9 @@ Going forward in this chapter, we will be exploring specific use cases for the f
 
 ### The `load_participation()` Function
 
-The `load_participation()` function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
+The `load_participation()`\index{nflreadr!Functions!load\_participation()} function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
 
-Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe) uses the data to create tables (built with the `gt` and `gtExtras` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluctuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/) that allows anybody to explore the data and output the results in .png format.
+Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe)\index{Hefner, Joseph} uses the data to create tables (built with the `gt` and `gtExtras` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluctuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/)\index{Hefner, Joseph!Team Formation ShinyApp} that allows anybody to explore the data and output the results in .png format.
 
 {{< tweet josephjefe 1621217561437409280 >}}
 
@@ -802,7 +800,7 @@ As is, the `load_participation()` data does not include any way to further ident
 
 ### The `load_rosters()` and `load_rosters_weekly()` Functions
 
-The `load_rosters()` function houses a multitude of useful tools for use in the `nflverse`. With player information dating back to 1920, `load_rosters()` will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.
+The `load_rosters()`\index{nflreadr!Functions!load\_rosters()} function houses a multitude of useful tools for use in the `nflverse`.\index{nflreadr!Functions!load\_rosters\_weekly()} With player information dating back to 1920, `load_rosters()` will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.
 
 Importantly, `load_rosters()` also provides the unique identifier for each player over nine different sources: the `gsis_id` (which is the core ID used in `nflverse` data), `sleeper_id`, `espn_id`, `yahoo_id`, `rotowire_id`, `pff_id`, `fantasy_data_id`, `sportradar_id`, and `pfr_id`. The different IDs become extremely useful when using data collected from outside the `nflverse`, or when combining data from two outside sources, as matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in `load_rosters()` data.
 
@@ -865,17 +863,17 @@ If your analysis requires providing great granularity, the `load_rosters_weekly(
 
 ### The `load_teams()` Function
 
-A tool heavily used in the data visualization process, the `load_teams()` function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge data frames that have differing values for teams.
+A tool heavily used in the data visualization process, the `load_teams()`\index{nflreadr!Functions!load\_teams()} function provides information pertaining to each NFL team's colors and logos, as well as providing a way to merge data frames that have differing values for teams.
 
 More often than not, we will be using `left_join` to bring in team information (colors, logos, etc.) into a another data frame. We will utilize this function heavily in the example below.
 
 However, it is important to note the one argument that `load_teams()` accepts: `current`. Depending on the time span of your data, it is possible that you have teams included prior to relation (like the St. Louis Rams). If you are sure that you do not have such a scenario, you can use `load_teams(current = TRUE)` which will bring in just the current 32 NFL teams.
 
-However, if you need to include teams before expansion, you can use `load_teams(current = FALSE)` which will result in a data frame with 36 NFL teams.
+However, if you need to include teams before expansion, you can use `load_teams(current = FALSE)` which will result in a data frame with 36 NFL teams.\index{nflreadr!Functions!load\_teams()}
 
 ### The `load_officials()` Function
 
-The `load_officials()` data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee's position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a `game_id` and `game_key` that are sorted by `season` and `week`, allowing you to merge the information other data frames.
+The `load_officials()`\index{nflreadr!Functions!load\_officials()} data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee's position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a `game_id` and `game_key` that are sorted by `season` and `week`, allowing you to merge the information other data frames.
 
 With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique `crew_id` to each stable of officials "working" under a lead referee.
 
@@ -949,7 +947,7 @@ nfl_officials %>%
 
 ### The `load_trades()` Function
 
-The `load_trades()` function returns a data frames that includes all trades in the NFL on a season-by-season basis with information pertaining to: `trade_id`, `season`, `trade_date`, `gave`, `received`, `pick_season`, `pick_round`, `pick_number`, `conditional`, `pfr_id`, `pfr_name`.
+The `load_trades()`\index{nflreadr!Functions!load\_trades()} function returns a data frames that includes all trades in the NFL on a season-by-season basis with information pertaining to: `trade_id`, `season`, `trade_date`, `gave`, `received`, `pick_season`, `pick_round`, `pick_number`, `conditional`, `pfr_id`, `pfr_name`.
 
 For example, we can gather every trade involving the New England Patriots with the following code:
 
@@ -983,7 +981,7 @@ top_ten_picks
 
 ### The `load_draft_picks()` Function
 
-The `load_draft_picks()` function will load information pertaining to every draft pick dating back to 1980. Aside from the information you would expect (the player's name, the team that draft, round, pick number, position, etc.), the `load_draft_picks()` function also includes data regarding how many seasons the player played, the amount of times they were named to Pro Bowls, and top-level statistics regarding rushing, passing, receiving, and defensive metrics.
+The `load_draft_picks()`\index{nflreadr!Functions!load\_draft\_picks()} function will load information pertaining to every draft pick dating back to 1980. Aside from the information you would expect (the player's name, the team that draft, round, pick number, position, etc.), the `load_draft_picks()` function also includes data regarding how many seasons the player played, the amount of times they were named to Pro Bowls, and top-level statistics regarding rushing, passing, receiving, and defensive metrics.
 
 The `load_draft_picks()` function can be used to explore multiple different facets of the NFL Draft. For example, there is a belief in the analytics community to never draft a running back in the first round. Without getting into the reasoning behind that belief, we can quickly create a visualization of career rushing yards per running back compared to their draft position.
 
@@ -1001,7 +999,7 @@ rb_picks <- rb_picks %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r running-back-plot, output = TRUE, fig.align='center', fig.dpi = 400, error = FALSE}
+```{r running-back-plot, echo = TRUE, fig.cap="Career Rushing Yards vs. Draft Pick"}
 
 ggplot(data = rb_picks, aes(x = rush_yards, y = pick)) +
   geom_point(color = rb_picks$team_color, size = rb_picks$rush_atts / 500) +
@@ -1023,7 +1021,7 @@ According to the plot, there has been a limited number of running backs draft in
 
 ### The `load_combine()` Function
 
-The `load_combine()` function provides NFL Combine data dating back to 2000. Aside from biographical information for each player (including eventual draft position), the data include the player's scores in the 40-yard dash, the bench press, the vertical, the broad jump, the cone drill, and the shuttle drill.
+The `load_combine()`\index{nflreadr!Functions!load\_combine()} function provides NFL Combine data dating back to 2000. Aside from biographical information for each player (including eventual draft position), the data include the player's scores in the 40-yard dash, the bench press, the vertical, the broad jump, the cone drill, and the shuttle drill.
 
 We can join information from `load_combine()` with outside information to determine if there is any correlation between a running back's 40-yard dash time in the combine and the total number of rushing yard accumulated during his career.
 
@@ -1059,7 +1057,7 @@ player_stats <- player_stats %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r running-back-40-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
+```{r rb-40-plot, echo = TRUE, fig.cap="Comparing RBs Forty-Yard Dash Time vs. Career Total Yards"}
 
 ggplot(data = player_stats, aes(x = forty, y = total_yards)) +
   geom_point(color = player_stats$team_color, size = 3.5) +
@@ -1083,7 +1081,7 @@ The visualization indicates that there is little, if any, direct correlation bet
 
 ### The `load_nextgen_stats()` Function
 
-The `load_nextgen_stats()` function retrieves player-level weekly statistics as provided by NFL Next Gen Stats dating back to the 2016 season. While three different stat types are provided (passing, receiving, and rushing), it is important to note that the data will only contain those players above a minimum number of attempts as determined by the NFL Next Gen Stats team.
+The `load_nextgen_stats()`\index{nflreadr!Functions!load\_nextgen\_stats()} function retrieves player-level weekly statistics as provided by NFL Next Gen Stats dating back to the 2016 season. While three different stat types are provided (passing, receiving, and rushing), it is important to note that the data will only contain those players above a minimum number of attempts as determined by the NFL Next Gen Stats team.
 
 To illustrate what can be done with the `load_nextgen_stats()` function, we will gather information to create two different plots. First, we can plot each quarterback's average time to throw against their average completed air yards. Second, we will construct a graph to highlight which running backs had more actual rushing yards than the NGS "expected rushing yards" model.
 
@@ -1099,7 +1097,7 @@ ngs_data_passing <- ngs_data_passing %>%
   left_join(teams, b = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-passing-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
+```{r ngs-passing-plot, echo = TRUE, fig.cap="Comparing a QB's average time to throw to their average completed air yards"}
 
 ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw,
                                     y = avg_completed_air_yards)) +
@@ -1138,7 +1136,7 @@ ngs_data_rushing <- ngs_data_rushing %>%
   left_join(teams, by = c("team_abbr" = "team_abbr"))
 ```
 
-```{r ngs-rushing-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
+```{r ngs-rushing-plot, echo = TRUE, fig.cap="Expected Rushing Yards vs. Actual Rushing Yards using Next Gen Stats"}
 
 ggplot(data = ngs_data_rushing, aes(x = expected_rush_yards,
                                     y = actual_rush_yards)) +
@@ -1167,7 +1165,7 @@ After plotting the rushing data from Next Gen Stats, we can see that Nick Chubb 
 
 ### The `load_espn_qbr()` Function
 
-With information dating back to the 2006 season, the `load_espn_qbr()` function provides a multitude of data points, including:
+With information dating back to the 2006 season, the `load_espn_qbr()`\index{nflreadr!Functions!load\_espn\_qbr()} function provides a multitude of data points, including:
 
 1.  `qbr_total` - the adjusted total QBR which is calculated on a scale of 0-100 based on the strength of the defenses played.
 2.  `pts_added` - the number of total points added by a quarterback adjusted above the average level of all other QBs.
@@ -1188,7 +1186,7 @@ espn_qbr <- espn_qbr %>%
   left_join(teams, by = c("team_abb" = "team_abbr"))
 ```
 
-```{r qbr-adjusted-plot, output = TRUE, fig.align='center', error = FALSE, warning = FALSE, message = FALSE, fig.dpi = 400}
+```{r qbr-adjusted-plot, echo = TRUE, fig.cap="Comparing Adjusted and Adjusted Quarterback Ratings"}
 
 ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
   geom_smooth(method = lm, se = FALSE,
@@ -1209,7 +1207,7 @@ ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
 
 ### The `load_pfr_advstats()` Function
 
-The `load_pfr_advstats()` function provides statistics from Pro Football Reference starting with the 2018 season for passing, rushing, receiving, and defense. The function allows for collecting the data at either the weekly or season level with the `summary_level` argument.
+The `load_pfr_advstats()`\index{nflreadr!Functions!load\_pfr\_advstats()} function provides statistics from Pro Football Reference starting with the 2018 season for passing, rushing, receiving, and defense. The function allows for collecting the data at either the weekly or season level with the `summary_level` argument.
 
 To begin exploring the data, let's examine the relationship between the number of dropped passes each quarterback endured during the 2022 regular season compared to the total number of `bad_throws` charted by Pro Football Reference. An argument can be made that a dropped pass without the pass being considered "bad" is the fault of the wide receiver, while a dropped pass that *is* charted as "bad" falls on the quarterback.
 
@@ -1231,7 +1229,7 @@ pfr_stats_pass <- pfr_stats_pass %>%
   left_join(teams, by = c("team" = "team_abbr"))
 ```
 
-```{r qb-pfr-stats-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r qb-pfr-stats-plot, echo = TRUE, fig.cap="Example RStudio Console Output"}
 
 ggplot(data = pfr_stats_pass, aes(x = bad_throws, y = drops)) +
   geom_hline(yintercept = mean(pfr_stats_pass$drops),
@@ -1277,7 +1275,7 @@ pfr_stats_rush <- pfr_stats_rush %>%
   left_join(teams, by = c("tm" = "team_abbr"))
 ```
 
-```{r pfr-rush-stats-plot}
+```{r pfr-rush-stats-plot, echo = TRUE, fig.cap="Exploring which running backs get more yards before and after contact"}
 
 ggplot(data = pfr_stats_rush, aes(x = ybc, y = yac)) +
   geom_hline(yintercept = mean(pfr_stats_rush$yac),
@@ -1311,7 +1309,7 @@ pfr_stats_rec <- pfr_stats_rec %>%
   left_join(teams, by = c("tm" = "team_abbr"))
 ```
 
-```{r pfr-rec-stats-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r rec-pfr-stats-plot, echo = TRUE, fig.cap="Which wide receivers gain the most yardage after catching the ball?"}
 
 ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
   geom_hline(yintercept = mean(pfr_stats_rec$yac),
@@ -1327,7 +1325,7 @@ ggplot(data = pfr_stats_rec, aes(x = ybc, y = yac)) +
                   family = "Roboto", fontface = "bold", size = 3.5) +
   xlab("Yards At Point of Catch") +
   ylab("Yards After Catch") +
-  labs(title = "**Yards at Point of Catch vs. Yards After Catch",
+  labs(title = "**Yards at Point of Catch vs. Yards After Catch**",
        subtitle = "2022 Regular Season",
        caption = "*An Introduction to NFL Analytics with R*<br>
        **Brad J. Congelio**")
@@ -1352,7 +1350,7 @@ pfr_stats_def <- pfr_stats_def %>%
   left_join(teams, by = c("tm" = "team_abbr"))
 ```
 
-```{r blitz-sacks-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r blitz-sacks-plot, echo = TRUE, fig.cap="Which defensive units are most efficient at creating sacks from blitzes?"}
 
 ggplot(data = pfr_stats_def, aes(x = total_blitz, y = total_sack)) +
   geom_hline(yintercept = mean(pfr_stats_def$total_sack),
@@ -1375,11 +1373,11 @@ The Philadelphia Eagles were absolutely dominate during the 2022 regular season 
 
 ### The `load_snap_counts()` Function
 
-The `load_snap_counts()` function returns week-level snap counts for all players from Pro Football Reference dating back to the 2012 season.
+The `load_snap_counts()`\index{nflreadr!Functions!load\_snap\_counts()} function returns week-level snap counts for all players from Pro Football Reference dating back to the 2012 season.
 
 ### The `load_contracts()` Function
 
-The `load_contracts()` function brings in data from [OverTheCap.com](https://overthecap.com/). It is important to remember that much of the information is "nested" and, if you wish to see the yearly information, you must use the `unnest()` function from `tidyr`. To highlight this, we can run the following code to bring in the data as it is stored in the `nflverse`.
+The `load_contracts()`\index{nflreadr!Functions!load\_contracts()} function brings in data from [OverTheCap.com](https://overthecap.com/). It is important to remember that much of the information is "nested" and, if you wish to see the yearly information, you must use the `unnest()`\index{Packages!tidyr!unnest()} function from `tidyr`. To highlight this, we can run the following code to bring in the data as it is stored in the `nflverse`.
 
 ```{r nfl-contracts-load, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -1433,7 +1431,7 @@ nfl_contracts_unnested <- nfl_contracts_unnested %>%
   distinct(player, year, .keep_all = TRUE)
 ```
 
-```{r cash-paid-dakota-plot, output = TRUE, fig.align='center', error = FALSE, fig.dpi = 400}
+```{r qb-dakota-cash-plot, echo = TRUE, fig.cap="The relationship between a QB's average DAKOTA and annual cash paid"}
 
 ggplot(data = nfl_contracts_unnested,
        aes(x = cash_paid, y = mean_dakota)) +
@@ -1458,9 +1456,19 @@ ggplot(data = nfl_contracts_unnested,
 
 Those players in the upper-right quadrant (Mahomes, Allen, Cousins, etc.) are among the highest paid quarterbacks in the league, but also are the highest performing players based on the DAKOTA composite. On the other hand, those QBs in the lower-right quadrant are - based on the DAKOTA composite - overpaid relevant to their performance on the field. The lower-left QBs are not highly paid, but also do not perform well. Those players in the upper-left performed extremely well (some better than those in the upper-right) but come with a team-friendly contract (in terms of pure cash paid).
 
+::: callout-tip
+As mentioned in the book's Preface, you can feel free to reach out to me with questions regarding the R programming language and NFL analytics.
+
+That said, there is a **fantastic** `nflverse` Discord channel\index{nflverse!Discord channel} that was created and currently maintained by the creators of the packages (Ben Baldwin, Sebastian Carl, Tan Ho, Thomas Mock, etc.).
+
+You can become a member here: <http://nfl-book.bradcongelio.com/discord-invite>
+
+However, before creating a thread and seeking assistance, be sure to visit the "#How To" section in the General Help area to learn to create a `reprex` (reproducible example). Providing a `reprex` allows other users to copy and paste your code in order to recreate the issue you are experiencing.
+:::
+
 ## Exercises
 
-The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch3-answers>.
+The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch3-answers>.\index{Exercises!Chapter 3}
 
 ### **Exercise 1**
 

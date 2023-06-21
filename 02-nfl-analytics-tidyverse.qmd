@@ -4,8 +4,6 @@
 
 source("book-functions.R")
 
-knitr::opts_chunk$set(def = 'pdf', cache = FALSE, fig.showtext = TRUE)
-
 library(showtext)
 library(tidyverse)
 library(nflreadr)
@@ -38,27 +36,30 @@ It is important that you download and successfully install R before proceeding t
 
 ### Downloading RStudio
 
-1.  To download RStudio, visit the official RStudio website at <https://posit.co>
+1.  To download RStudio\index{RStudio!download}, visit the official RStudio website at <https://posit.co>
 2.  Click on the 'Download RStudio' button in the top-right of the page.
 3.  Scroll down and select 'Download' within the 'RStudio Desktop - Free' box.
 4.  Open the downloaded file and follow the provided installation instructions.
 
 ### The Layout of RStudio
 
-When you open RStudio for the first time, you will see the interface laid out as in the picture below (sourced from the [official RStudio documentation from posit](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html)).
+When you open RStudio for the first time, you will see the interface laid out as in the picture below (sourced from the [official RStudio documentation from posit](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html)).\index{RStudio!layout}
 
-![](images/rstudio-panes-with-labels.jpeg){fig-align="center" width="440"}
+```{r rstudio-layout, echo = FALSE, fig.cap="RStudio Layout"}
+
+knitr::include_graphics('images/rstudio-panes-with-labels.jpeg')
+```
 
 As you can see, RStudio provides a graphical interface for working with R and is sorted into four main panes, each of which serves a specific purpose.
 
-1.  **The source pane**: In the upper-left, the source pane is where you write and run your R code. It serves as the main working pane within RStudio.
-2.  **The console pane:** the console pane serves multiple functions, including allowing you to interact directly with R by typing commands and receiving the output. Additionally, any errors outputted by code ran in the source pane will be detailed in the console, allowing you to troubleshoot and debug.
-3.  **Environment and history pane**: this pane, in the upper-right, displays information about the current R environment and command history. Perhaps more important, it displays the information of all the R-created objects currently stored in your computer's memory including data sets, vectors, lists, etc.
-4.  **Files, plots, packages, and help pane**: in the bottom-right, this pane provides access to numerous RStudio tools and resources including the ability to browse and navigate through the files and folders on your computer and view the output of plots and graphics. As well, the 'Packages' tab gives you the ability to manage any R packages that you have installed on your system and to view each packages' help documentation.
+1.  **The source pane**:\index{RStudio!layout!source pane} In the upper-left, the source pane is where you write and run your R code. It serves as the main working pane within RStudio.
+2.  **The console pane:**\index{RStudio!layout!console pane} the console pane serves multiple functions, including allowing you to interact directly with R by typing commands and receiving the output. Additionally, any errors outputted by code ran in the source pane will be detailed in the console, allowing you to troubleshoot and debug.
+3.  **Environment and history pane**:\index{RStudio!layout!environment pane} this pane, in the upper-right, displays information about the current R environment and command history. Perhaps more important, it displays the information of all the R-created objects currently stored in your computer's memory including data sets, vectors, lists, etc.
+4.  **Files, plots, packages, and help pane**:\index{RStudio!layout!files, plots, and help pane} in the bottom-right, this pane provides access to numerous RStudio tools and resources including the ability to browse and navigate through the files and folders on your computer and view the output of plots and graphics. As well, the 'Packages' tab gives you the ability to manage any R packages that you have installed on your system and to view each packages' help documentation.
 
 ### Running Code in RStudio
 
-To begin writing code in RStudio you first need to open a new R script. To do so, select 'File -\> New File -\> R Script.' A new script tab, titled `Untitled 1` will open in your RStudio's source pane. To run a line of code - or multiple lines of code - you can do one of two options:
+To begin writing code in RStudio you first need to open a new R script. To do so, select 'File -\> New File -\> R Script.' A new script tab, titled `Untitled 1` will open in your RStudio's source pane. To run a line of code - or multiple lines of code - you can do one of two options:\index{RStudio!running code}
 
 1.  Place your cursor directly at the end of the last line of code, or highlight all the code you wish to run, and press 'Ctrl + Enter' (Windows) or 'Command + Enter' (Mac).
 2.  Place your cursor directly at the end of the last line of code, or highlight all the code you wish to run, and then use your mouse to click the 'Run' button in the source pane's toolbar.
@@ -72,7 +73,10 @@ As a working example, let's do a simple addition problem within the the source p
 
 After following one of the two above options for running the addition problem, the output in your console should appear like below:
 
-![](images/example_console_output.jpg){fig-align="center"}
+```{r rstudio-console-output, echo = FALSE, fig.cap="Example RStudio Console Output"}
+
+knitr::include_graphics('images/example_console_output.jpg')
+```
 
 ::: callout-tip
 It is important to notice the `>` after the output in the console. That indicates that the coding process has completely run and RStudio is ready to run the next task that you submit. If you have an error in your code, you will notice that the `>` is replaced by what my students refer to as the 'hanging plus sign', `+`.
@@ -84,9 +88,9 @@ In any case, when you see the `+` in the console, simply use your mouse to click
 
 ## Installing and Loading Necessary Packages
 
-Installing and loading packages is an important part of working with RStudio, as they provide additional functionality that allow you to more efficiently conduct data analysis and/or modeling. Several packages are widely used through this book, including the ever-important `tidyverse`, the `nflverse` family of packages to retrieve NFL statistics and data, and many others such as `tidymodels` when we tackle building and testing advanced models in Chapter 5.
+Installing and loading packages\index{Packages!installing} is an important part of working with RStudio, as they provide additional functionality that allow you to more efficiently conduct data analysis and/or modeling. Several packages are widely used through this book, including the ever-important `tidyverse`, the `nflverse` family of packages to retrieve NFL statistics and data, and many others such as `tidymodels` when we tackle building and testing advanced models in Chapter 5.
 
-To begin, let's install both `tidyverse` and `nflverse`. In your source pane, you can install a package by using the `install.packages()` function. To complete the code, you simply supply the package name within quotation marks.
+To begin, let's install both `tidyverse`\index{tidyverse!install} and `nflverse`\index{nflverse!install}. In your source pane, you can install a package by using the `install.packages()` function. To complete the code, you simply supply the package name within quotation marks.
 
 ```{r installing-packages, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -94,7 +98,7 @@ install.packages("tidyverse")
 install.packages("nflverse")
 ```
 
-After running the code, your console pane will output what is going on "behind the scenes." When complete, you will again see the `>` symbol within the console. At this point, you are able to load the packages you just installed.
+After running the code, your console pane will output what is going on "behind the scenes." When complete, you will again see the `>` symbol within the console. At this point, you are able to load the packages you just installed.\index{Packages!loading}
 
 ```{r loading-installed-packages, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -104,28 +108,28 @@ library(nflverse)
 
 ## The `tidyverse` and Its Verbs
 
-The `tidyverse`, now installed and loaded within RStudio, is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at Posit, and a varied team of contributors. The goal of the `tidyverse` is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.
+The `tidyverse`\index{tidyverse!introduction to}, now installed and loaded within RStudio, is a collection of R packages designed for data manipulation, visualization, and analysis. It was developed by Hadley Wickham, the Chief Scientist at Posit, and a varied team of contributors. The goal of the `tidyverse` is to provide a consistent, easy-to-understand set of functions and syntax for working with data in R.
 
 The core principle of the `tidyverse` is "tidy data," which is the development team's belief in creating a standard way of organizing data sets. To that end, a "tidy" data set is one that is comprised of observations (rows) and variables (columns) with each variable being a distinct piece of information and each observation being a unit of analysis.
 
 Installing and loading the `tidyverse` results eight of the core packages automatically being loaded and ready to use:
 
 1.  **dplyr**\index{dplyr}**:** "dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges."
-2.  **tidyr**\index{tidyr}**:** "tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable."
-3.  **readr**\index{readr}**:** "readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes."
-4.  **purrr**\index{purrr}**:** "purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive."
-5.  **tibble**\index{tibble}: "tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code."
-6.  **stringr**\index{stringr}**:** "stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations."
-7.  **forcats**\index{forcats}**:** "forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values."
-8.  **ggplot2**\index{ggplot2}**:** "ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details" [@tidyverse].
+2.  **tidyr**\index{Packages!tidyr}**:** "tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable."
+3.  **readr**\index{Packages!readr}**:** "readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is deigned to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes."
+4.  **purrr**\index{Packages!purrr}**:** "purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive."
+5.  **tibble**\index{Packages!tibble}: "tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly; they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code."
+6.  **stringr**\index{Packages!stringr}**:** "stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations."
+7.  **forcats**\index{Packages!forcats}**:** "forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values."
+8.  **ggplot2**\index{Packages!ggplot2}**:** "ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map the variables to aesthetics, what graphical primitives to use, and it takes care of the details" [@tidyverse].
 
-Aside from the core eight packages, the `tidyverse` will also install a multiple of other packages such as `rvest` (for web scraping), `readxl` (for reading Excel sheets in the RStudio environment), `lubridate` (a very powerful tool for working with times and dates), and `magrittr` (the package that provides the pipe `%>%`). As well, prior versions of the `tidyverse` utilized the `modelr` package. Modeling is now handled in the `tidyverse` by the `tidymodels` package.
+Aside from the core eight packages, the `tidyverse` will also install a multiple of other packages such as `rvest`\index{Packages!rvest} (for web scraping), `readxl`\index{Packages!readxl} (for reading Excel sheets in the RStudio environment), `lubridate`\index{Packages!lubridate} (a very powerful tool for working with times and dates), and `magrittr`\index{Packages!magrittr} (the package that provides the pipe `%>%`). As well, prior versions of the `tidyverse` utilized the `modelr` package. Modeling is now handled in the `tidyverse` by the `tidymodels`\index{Packages!tidymodels} package.
 
 ## The Flow of the `tidyverse`
 
-The underlying design of coding in the `tidyverse`, aside from the `dplyr`\index{dplyr} verbs, are both the assignment statement (`<-`) and the pipe (`%>%`). Please note, as mentioned in the book's Preface, that I still use the pipe (`%>%`) that is part of the `magrittr` package and not the native pipe operator (`|>`) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.
+The underlying design of coding in the `tidyverse`, aside from the `dplyr`\index{dplyr} verbs, are both the assignment statement (`<-`)\index{tidyverse!assignment statement} and the pipe (`%>%`)\index{tidyverse!pipe}. Please note, as mentioned in the book's Preface, that I still use the pipe (`%>%`) that is part of the `magrittr` package and not the native pipe operator (`|>`) included in the 4.1 release of R. The choice of pipe operator you use is your decision to make, as either will work seamlessly within the examples and activities provided in this book.
 
-As I explain to my Sports Analytics students, the language and flow of the `tidyverse` can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in's and out's of the `tidyverse` in the below section, let's first dissect an example of the `tidyverse` workflow.
+As I explain to my Sports Analytics students, the language and flow of the `tidyverse` can seem like a foreign language at first. But, it is important that you stick with it because, sooner rather than later, the light bulb above your head will go off. Before detailing the in's and out's of the `tidyverse` in the below section, let's first dissect an example of the `tidyverse` workflow.\index{tidyverse!workflow}
 
 ```{r example-tidyverse, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -158,18 +162,20 @@ pbp <- "is" nflreadr::load_pbp(2022) %>% "... and then"
 
 ## Working With NFL Data and the `dplyr` Verbs
 
-Of the packages nestled within the `tidyverse`, `dplyr` is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, `dplyr` is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to use and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four `dplyr` verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.
+Of the packages nestled within the `tidyverse`, `dplyr`\index{dplyr!introduction to} is perhaps the most important in terms of wrangling and cleaning data. As mentioned above, `dplyr` is a powerful tool for data manipulation in R as it provides a key set of functions, known as verbs, that are designed to be easy to use and understand. The verbs can be used to filter, group, summarize, rearrange, and transform all types of data sets. For those just starting their NFL analytics endeavors in the R programming language, the following four `dplyr` verbs are perhaps the most important. Specific examples of working with these verbs, as well as others, follow below.
 
-1.  `filter()`: the `filter()` verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter()` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
-2.  `group_by()`: the `group_by()` verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.
-3.  `summarize()`: the `summarize()` verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by()` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
-4.  `mutate()`: the `mutate()` verbs allows you to create new variables within your data while also preserving existing ones.
+1.  `filter()`: the `filter()`\index{dplyr!filter()} verb allows you to subset data based on certain criteria. For example, you can use `filter()` to keep only those rows in a data set where a certain variable meets a certain conditions (ie., more than 100 completed passes). Moreover, the `filter()` verb can be used in conjunction with logical operators such as `&` and `|` to create more complex criteria.
+2.  `group_by()`: the `group_by()`\index{dplyr!group\_by()} verb allows you to group a data set by one or more variables. It is a useful tool when you want to perform an operation on each group, such as calculating a summary statistic (ie, intended air yards per quarterback) or when creating a plot.
+3.  `summarize()`: the `summarize()`\index{dplyr!summarize()} verb allows you to reduce a data set to a single summary value. The `summarize()` verb is often used in conjunction with the `group_by()` function, allowing you to group the data by one or more variables. The `summarize()` verb allows for a wide range of summary statistics, including means, medians, standard deviations, and more. You can also use it to calculate custom summary statistics.
+4.  `mutate()`: the `mutate()`\index{dplyr!mutate()} verbs allows you to create new variables within your data while also preserving existing ones.
 
 ### NFL Data and the `filter()` verb
 
-The `filter()` verb allows you to extract specific rows from your dataset based on one, or multiple, supplied conditions. The conditions are supplied to the `filter()` verb by using logical operators, listed in the below table, that ultimately evaluate to either `TRUE` or `FALSE` in each row of the dataset. The `filter()` process returns a data set that includes only those rows that meet the specified conditions.
+The `filter()`\index{dplyr!filter()!introduction to} verb allows you to extract specific rows from your dataset based on one, or multiple, supplied conditions. The conditions are supplied to the `filter()` verb by using logical operators, listed in the below table, that ultimately evaluate to either `TRUE` or `FALSE` in each row of the dataset. The `filter()` process returns a data set that includes only those rows that meet the specified conditions.
 
 <center>
+
+\index{dplyr!filter()!logical operators}
 
 | Logical Operator |                 Meaning                 |
 |:----------------:|:---------------------------------------:|
@@ -205,7 +211,7 @@ If you have difficult with the above step, please see the [Installing and Loadin
 pbp <- nflreadr::load_pbp(2022)
 ```
 
-After running the above code, you will have a data set titled `pbp` placed into your RStudio environment consisting of 50,147 observations over 372 variables. With the data set loaded, let's create a new data set titled `ne_offense` that contains *only those plays where the New England Patriots are the offensive team*.
+After running the above code, you will have a data set titled `pbp` placed into your RStudio environment consisting of 50,147 observations over 372 variables. With the data set loaded, let's create a new data set titled `ne_offense` that contains *only those plays where the New England Patriots*\index{NFL Teams!New England Patriots} *are the offensive team*.
 
 ```{r ne-offense-filter, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -220,9 +226,9 @@ The output shows that the `posteam` variable contains only `NE`, which is the ab
 1.  the "equal to" logical operator consist of *TWO* equal signs, not one.
 2.  the team abbreviation (`NE`) is in quotation marks.
 
-In the first, a single equal sign (`=`) can be used as a synonym for assignment (`<-`) but is most often used when passing values into functions. To avoid confusion with this possibility, **the test for equality when using `filter()`** **is always `==`**.
+In the first, a single equal sign (`=`) can be used as a synonym for assignment (`<-`) but is most often used when passing values into functions. To avoid confusion with this possibility, **the test for equality when using `filter()`** **is always `==`**.\index{dplyr!filter()!test for equality}
 
-In the second, you must use quotation marks around the character-based value you are placing into the `filter()` verb because, if not, R will interpret `posteam` incorrectly and ultimately generate an error. On the other hand, you *do not* need to include quotation marks if you are filtering out numeric-based variables. Below are incorrect and correct examples of both:
+In the second, you must use quotation marks around the character-based value you are placing into the `filter()` verb because, if not, R will interpret `posteam` incorrectly and ultimately generate an error. On the other hand, you *do not* need to include quotation marks if you are filtering out numeric-based variables. Below are incorrect and correct examples of both:\index{dplyr!filter()!character vs. numeric observations}
 
 ```{r correct-incorrect-filter, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -242,7 +248,7 @@ ne_offense <- pbp %>%
 
 ```
 
-How do we approach the logical operators if we want to retrieve every offensive team in the `pbp` data *except* for New England? In that case, we can use the "not equal to" (`!=`) operator:
+How do we approach the logical operators if we want to retrieve every offensive team in the `pbp` data *except* for New England? In that case, we can use the "not equal to" (`!=`) operator:\index{dplyr!filter()!not equal to}
 
 ```{r not-ne-offense, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -252,7 +258,7 @@ not_ne_offense <- pbp %>%
 
 The resulting data set titled `not_ne_offense` will still include all 372 variables housed within the `nflreadr` play-by-play data, but will not include any row in which New England is the offensive (`posteam`) team.
 
-**Continuing with examples, how do we use the `filter()`** **verb on multiple teams at once?** For instance, let's use the above filtering process for offensive teams but only retrieve information from the play-by-play data for the four teams that comprise the AFC East (Buffalo Bills, Miami Dolphins, New England Patriots, and the New York Jets). There are, in fact, two logical operators that can produce the results we are looking for: the "or" logical operator (`|`) or by using the "includes" logical operator (`%in%`) combined with the "concatenate" operator (`c()`). Let's start with using the "or" operator.
+**Continuing with examples, how do we use the `filter()`** **verb on multiple teams at once?** For instance, let's use the above filtering process for offensive teams but only retrieve information from the play-by-play data for the four teams that comprise the AFC East (Buffalo Bills, Miami Dolphins, New England Patriots, and the New York Jets). There are, in fact, two logical operators that can produce the results we are looking for: the "or" logical operator (`|`)\index{dplyr!filter()!"or" logical operator} or by using the "includes" logical operator (`%in%`)\index{dplyr!filter()!includes logical operator} combined with the "concatenate" operator (`c()`).\index{dplyr!filter()!concatenate operator} Let's start with using the "or" operator.\index{dplyr!filter()!"or" operator}
 
 ```{r afc-east-filter, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -291,11 +297,11 @@ afc_east <- pbp %>%
 afc_east_teams_vector
 ```
 
-In other cases, we may need to do the opposite of above - that is, select all teams *except* for specific ones. For example, using data from [Pro Football Focus](pff.com) regarding a quarterback's average time to throw, let's determine how to *remove* all AFC North teams (Pittsburgh, Cleveland, Baltimore, and Cincinnati) from the data set while leaving all other teams intact. Such a procedure is necessary, for example, if we wanted to explore the average time to throw for the combined AFC North teams against the rest of the NFL.
+In other cases, we may need to do the opposite of above - that is, select all teams *except* for specific ones. For example, using data from [Pro Football Focus](pff.com)\index{Data Sources!Pro Football Focus} regarding a quarterback's average time to throw\index{Metrics!time to throw}, let's determine how to *remove* all AFC North teams (Pittsburgh\index{NFL Teams!Pittsburgh Steelers}, Cleveland\index{NFL Teams!Cleveland Browns}, Baltimore\index{NFL Teams!Baltimore Ravens}, and Cincinnati\index{NFL Teams!Cincinnati Bengals}) from the data set while leaving all other teams intact. Such a procedure is necessary, for example, if we wanted to explore the average time to throw for the combined AFC North teams against the rest of the NFL.
 
-We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid "baking them into" the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the `!` ("is not") logical operator.
+We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid "baking them into" the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the `!` ("is not") logical operator.\index{dplyr!filter()!"is not" logical operator}
 
-To begin, we will use the `vroom` package to read in the data.
+To begin, we will use the `vroom`\index{Packages!vroom} package to read in the data.
 
 ```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -331,7 +337,7 @@ time_in_pocket %>%
 
 The AFC North quarterbacks had an average time to throw of 2.76 seconds while the rest of the NFL averaged 2.89 seconds, meaning the AFC North QBs released the ball, on average, 0.13 seconds quicker than the rest of the quarterbacks in the league.
 
-So far, all our `filter()` operations have include just one logical operator, or multiple values built into one operator using the `%in%` option. However, because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:
+So far, all our `filter()` operations have include just one logical operator, or multiple values built into one operator using the `%in%` option. However, because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:\index{dplyr!filter()!multiple logical operators}
 
 1.  that play occurs on 2nd down.
 2.  the play must be a pass play.
@@ -360,7 +366,7 @@ multiple_filters <- pbp %>%
 
 The resulting data set, `multiple_filters`, indicates that exactly 105 such instances took place during the 2002 NFL season.
 
-Lastly, in some instances, it is necessary to use `filter()` to remove rows that may provide you with incorrect information if include. To showcase this, it is necessary to also include the `summarize()` verb, which is covered in greater detail in the following two section. For example, let's gather information from the play-by-play data that will provide the total amount of yards per scrimmage - combined - for the 2022 regular season. Using our knowledge from the prior example, we can write code that first uses the `filter()` verb to retrieve just those rows that took place during the regular season and then uses the `summarize()` verb to distill the information down to the singular, combined total:
+Lastly, in some instances, it is necessary to use `filter()` to remove rows that may provide you with incorrect information if include. To showcase this, it is necessary to also include the `summarize()` verb, which is covered in greater detail in the following two section. For example, let's gather information from the play-by-play data that will provide the total amount of yards per scrimmage - combined - for the 2022 regular season. Using our knowledge from the prior example, we can write code that first uses the `filter()` verb to retrieve just those rows that took place during the regular season and then uses the `summarize()` verb to distill the information down to the singular, combined total. In the example below, please note the use of `na.rm = TRUE`. When completing computation operations within the `summarize()` verb, it is often necessary to include `na.rm = TRUE` in order to drop any missing values in the data. This is especially important when using the `mean()` calculation, as any missing data will result in `NA` values being returned.\index{dplyr!summarize()!na.rm}
 
 ```{r nfl-total-scrimmage-yards, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -371,7 +377,7 @@ total_yards <- pbp %>%
 total_yards
 ```
 
-How many total scrimmage yards did NFL teams earn during the 2022 NFL regular season? According to the results from our above code, the answer is 184,444. However, that is incorrect.
+How many total scrimmage yards did NFL teams earn during the 2022 NFL regular season? According to the results from our above code, the answer is 184,444. However, that is incorrect.\index{nflreadr!matching official statistics}
 
 The right answer, in fact, is 184,332 total scrimmage yards. How did the results of our above coding come up 112 shorts of the correct answer (as provided by the [2022 Team Stats page on Pro Football Reference](https://www.pro-football-reference.com/years/2022/#all_team_stats))?
 
@@ -414,7 +420,7 @@ By filtering out any row that does not include the `down` for a given play, we c
 
 ### NFL Data and the `group_by()` verb
 
-As mentioned above, the `group_by()`\index{dplyr!Verbs!group_by()} verb allows you to group data by one or more specific variables in order to retrieve, among other actions, summary statistics. To showcase how `group_by()` is used within the `nflverse` data, let's first gather the 2022 regular season statistics and then use the `summarize()` verb to get the average success rate on rushing plays.
+As mentioned above, the `group_by()`\index{dplyr!group\_by()!introduction to} verb allows you to group data by one or more specific variables in order to retrieve, among other actions, summary statistics. To showcase how `group_by()` is used within the `nflverse` data, let's first gather the 2022 regular season statistics and then use the `summarize()` verb to get the average success rate on rushing plays.
 
 As well, we immediately make use of the `filter()` function to sort the data : (1.) we first instruct to `filter()` the data to include just those instances where the `play_type` equals `run`, (2.) we then say it must also be `play == 1`, meaning there was no penalty or other interruption that "cancelled out" the play, and (3.) we lastly pass the argument that the `down` cannot be missing by using `!is.na` as a missing down is indicative of a two-point conversion attempt.
 
@@ -448,7 +454,7 @@ rushing_success_grouped %>%
   slice(1:10)
 ```
 
-In the above example, we have added the offensive team into the `group_by()` verb, while also arranging the data in descending order by `success_rate`, and then used `slice()` to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles led the NFL in rushing success rate during the 2022 NFL regular season at 52.3%. By removing the `slice()` function in the above example, we can see that Tampa Bay maintained the worst rushing success rate in the league at 37.3%.
+In the above example, we have added the offensive team into the `group_by()` verb, while also arranging the data in descending order by `success_rate`, and then used `slice()`\index{dplyr!slice()} to gather just the ten teams with the highest rushing success rate. The Philadelphia Eagles\index{NFL Teams!Philadelphia Eagles} led the NFL in rushing success rate during the 2022 NFL regular season at 52.3%. By removing the `slice()` function in the above example, we can see that Tampa Bay maintained the worst rushing success rate in the league at 37.3%.
 
 While determining the rushing success rate of teams is interesting, we can also determine the same metric for individual running backs as well. To do so, we simply replace the variable in the `group_by()` verb. In the below example, we replace the `posteam` variable with the `rusher` variable to see which running backs have the highest success rate.
 
@@ -484,7 +490,7 @@ running_back_success_min %>%
   slice(1:10)
 ```
 
-Unsurprisingly, Miles Sanders - a running back for the Eagles, who lead the NFL in team success rate - is the leader in rushing success among individual players with 49% of his attempts gaining positive EPA.
+Unsurprisingly, Miles Sanders - a running back for the Eagles\index{NFL Teams!Philadelphia Eagles} , who lead the NFL in team success rate - is the leader in rushing success among individual players with 49% of his attempts gaining positive EPA.
 
 Much like the `filter()` verb, we are able to supply multiple arguments within one `group_by()` verb. This is necessary, for example, when you want to examine results over the course of multiple seasons. Let's explore this by determining each team's yards after catch between 2010 and 2022. To start, we will retrieve all NFL play-by-play data from those seasons.
 
@@ -511,9 +517,9 @@ yac_seasons <- multiple_seasons %>%
 
 ### NFL Data and the `summarize()` verb
 
-As we've seen, the `summarize()` function can be used to find summary statistics based whichever option we pass to it via the `group_by()` verb. However, it can also be used to create new metrics built off data included in the `nflverse` play-by-play data.
+As we've seen, the `summarize()`\index{dplyr!summarize()!introduction to} function can be used to find summary statistics based whichever option we pass to it via the `group_by()` verb. However, it can also be used to create new metrics built off data included in the `nflverse` play-by-play data.
 
-Let's examine which teams were the most aggressive on 3rd and short passing attempts during the 2022 season. Of course, determining our definition of both what "short" is on 3rd down and "aggressive" is quite subjective. For the purposes of this example, however, let's assume that 3rd and short is considered 3rd down with five or less yards to go and that "aggressive" is a quarterback's air yards being to, at minimum, the first-down marker.
+Let's examine which teams were the most aggressive on 3rd and short passing attempts\index{Metrics!3rd Down Aggressiveness} during the 2022 season. Of course, determining our definition of both what "short" is on 3rd down and "aggressive" is quite subjective. For the purposes of this example, however, let's assume that 3rd and short is considered 3rd down with five or less yards to go and that "aggressive" is a quarterback's air yards being to, at minimum, the first-down marker.
 
 Must like our above examples working with rushing success rate, we begin constructing the metric with the `filter()` argument. In this case, we are filtering for just pass plays, we want the down to equal 3, the yards to go to be equal to or less than 5, we want it to be an official play, and we do not want it to be missing the down information. After the initial `filter()` process, we include the `posteam` variable within our `group_by()` verb.
 
@@ -537,15 +543,15 @@ team_aggressiveness %>%
   slice(1:10)
 ```
 
-The Las Vegas Raiders, based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 83% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants were the least aggressive team during the 2022 regular season, at 49.1%.
+The Las Vegas Raiders\index{NFL Teams!Las Vegas Raiders} , based on our definitions, are the most aggressive passing team in the league on 3rd and short as just over 83% of their air yards were at - or past - the required yardage for a first down. On the other end of the spectrum, the New York Giants\index{NFL Teams!New York Giants} were the least aggressive team during the 2022 regular season, at 49.1%.
 
 ### NFL Data and the `mutate()` verb
 
 In the our example above working with the `summarize()` verb, our output includes only the information contained in our `group_by()` and then whatever information we provided in the `summarize()` (such as `total`, `aggressiveness`, and `percentage`).
 
-What if, however, you wanted to create new variables and then `summarize()` those? That is where the `mutate()` verb is used.
+What if, however, you wanted to create new variables and then `summarize()` those? That is where the `mutate()` verb is used.\index{dplyr!mutate()!introduction to}
 
-As an example, let's explore individual quarterback's average completion percentage over expected for specific air yard distances. To start, we can attempt to do this simply by including both `passer` and `air_yards` in the `group_by` verb.
+As an example, let's explore individual quarterback's average completion percentage over expected for specific air yard distances\index{Metrics!Completion Percentage Over Expected vs. Air Yards} . To start, we can attempt to do this simply by including both `passer` and `air_yards` in the `group_by` verb.
 
 ```{r qb-cpoe-no-mutate, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -556,7 +562,7 @@ airyards_cpoe <- pbp %>%
 
 Your output is going to include the `avg_cpoe` for each quarterback at each and every distance of `air_yards`. Not only is it difficult to find meaning in, but it would prove to be difficult - if not impossible - to visualize with `ggplot()`. To correct this issue, we must use the `mutate()` verb.
 
-Rather than `summarize()` the completion percentage over expected for each distance of `air_yards`, we can use the `mutate()` verb to bundle together a grouping of distances. In the below example, we are using the `mutate()` verb to create a new variable titled `ay_distance` using the `case_when()` verb.
+Rather than `summarize()` the completion percentage over expected for each distance of `air_yards`, we can use the `mutate()` verb to bundle together a grouping of distances. In the below example, we are using the `mutate()` verb to create a new variable titled `ay_distance` using the `case_when()`\index{dplyr!case\_when()} verb.
 
 ```{r qb-cpoe-mutate, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -584,9 +590,9 @@ airyards_cpoe_mutate %>%
 
 ## Core Skills for Tidy Data
 
-With your new understanding of the `tidyverse` flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by [Sports Info Solutions](https://www.sportsinfosolutions.com/)\index{Sports Info Solutions)}. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).
+With your new understanding of the `tidyverse`\index{tidyverse!core skills} flow in the R programming language, we are now going to hone these core skills by taking a dataset from ingestion through the cleaning and prepping process so that it is prepared for eventual data visualization (which will be done in Chapter 4 of this book). To do so, we are going to use data provided by [Sports Info Solutions](https://www.sportsinfosolutions.com/)\index{Data Sources:Sports Info Solutions}. Based out of Allentown, Pennsylvania, SIS collects its play-by-play and then does a manual hand-charting process to provide weekly data that covers a vast array of specific occurrences in football (defensive scheme, pre-snap motion, wide receivers formations, offensive personnel, drop type, and more).
 
-In this example, we are going to compare the `Boom%` and the `Bust%` for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA)\index{Expected Points Added} of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in `ggplot`, we will:
+In this example, we are going to compare the `Boom%`\index{Metrics!Boom Percentage} and the `Bust%`\index{Metrics!Bust Percentage} for each quarterback in the data, wherein the `Boom%` correlates to any pass attempt by the quarterback that resulted in an expected points add (EPA)\index{Metrics:Expected Points Added} of at least 1 and `Bust%` is any pass attempt that resulted in an EPA of at least -1. In order to prepare the data for visualization in `ggplot`, we will:
 
 1.  Import and examine the data.
 2.  Deal with missing values in the data.
@@ -596,14 +602,14 @@ In this example, we are going to compare the `Boom%` and the `Bust%` for each qu
 
 ### Importing and Conducting Exploratory Data Analysis
 
-To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `vroom` package.
+To start, let's examine data from Sports Info Solutions by reading in the data from this book's Git repository using the `vroom` package.\index{Exploratory Data Analysis}
 
 ```{r sis-boom-bust, eval = TRUE, echo = TRUE, output = FALSE}
 
 sis_data <- vroom("http://nfl-book.bradcongelio.com/sis-bb")
 ```
 
-Using `vroom`, we are reading in the `.csv` file into our environment and assigning it the name `sis_data`. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:
+Using `vroom`\index{Packages!vroom} , we are reading in the `.csv` file into our environment and assigning it the name `sis_data`. With access to the data, we can begin our exploratory data analysis - the importance of which cannot be understated. The process of EDA results in several key items:
 
 1.  EDA helps to identify potential issues in the data set, such as missing or erroneous data, outliers, or inconsistent values - all of which must be addressed prior to further analysis or visualization.
 2.  Conducting an EDA allows you to gain a deeper understanding of the distribution, variability, and relationships between all the variables contained in the data set, thus allowing you to make informed decisions on appropriate statistical techniques, models, and visualizations that can best analyze and communicate the data effectively.
@@ -622,7 +628,7 @@ The results immediately bring to light several issues in the data:
 2.  Many of the column names are not in `tidy` format. Specifically, the `Boom%` and `Bust%` columns, because of the inclusion of the percentage sign, require the small ticks at either end of the word. The same issue is apparent in `Points Earned` as it includes a space between the word and, finally, many of the variable names are in full caps.
 3.  The `Boom%` and `Bust%` columns are both listed as `<chr>` which indicates that they are currently character-based columns, rather than the needed numeric-based column.
 4.  The above issue is caused by all the values within `Boom%` and `Bust%` containing a percentage sign at the tail end.
-5.  Lastly, the `team` variable for Baker Mayfield's has a value of "2 teams" since he played for both the Carolina Panthers and Los Angeles Rams during the 2022 season.
+5.  Lastly, the `team` variable for Baker Mayfield's has a value of "2 teams" since he played for both the Carolina Panthers\index{NFL Teams!Carolina Panthers} and Los Angeles Rams\index{NFL Teams!Los Angeles Rams} during the 2022 season.
 
 To begin dealing with these issues, let's first tackle cleaning the variable names and then selecting just those columns relevant to our forthcoming data visualization in Chapter 4:
 
@@ -635,11 +641,11 @@ sis_data <- sis_data %>%
 sis_data
 ```
 
-In the above code, we are using the `clean_names()` function within the `janitor`package to automatically rework the column names into a `tidy` format. After, we use the `select()` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
+In the above code, we are using the `clean_names()`\index{Packages!janitor} function within the `janitor`\index{Packages!janitor!clean\_names()} package to automatically rework the column names into a `tidy` format. After, we use the `select()` verb to keep only five of the included columns of data (`player`, `team`, `att`, `boom_percent`, and `bust_percent`). With the column names clean and easy to implement within our code, and with the relevant columns selected, we can move to the process of dealing with the missing data.
 
 ### Dealing with Missing Data
 
-Dealing with missing data is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by `NA` values and there are several different approaches to handling the missing data in an effective manner.
+Dealing with missing data\index{tidyverse!core skills!handling NA data} is an important step in the exploratory data analysis process, as its inclusion can introduce bias, reduce statistical power, and ultimately influence the validity of your research findings. In any case, a missing value within an RStudio dataset is represented by `NA` values and there are several different approaches to handling the missing data in an effective manner.
 
 A data set can present missing data for a variety of reasons, including participant non-responses (such in social science research), measurement error, or simple data processing issues. The process of handling missing data is ultimately the result of the end goal of the analysis. In some case, conducting a imputation (such as replacing all `NA` values with the mean of all existing data) is used. In other cases, a more complex method can be utilized such as using the `mice` package, which can impute missing data based on several different machine learning approaches (predictive mean matching, logistic regression, Bayesian polytomous regression, proportional odds model, etc.). Ultimately, the choice of method for handling missing data depends on the attributes of the data set, your research question, and your domain knowledge of what the data represents.
 
@@ -653,7 +659,7 @@ sis_data_missing <- sis_data %>%
 sis_data_missing
 ```
 
-By using `filter_all()` across all of our variables (`any_vars`), we can filter for any missing value, indicated by including `is.na` in the `filter()`. The output shows each row within the data set that includes at least one missing value. In this case, we only have one row with missing data, with values for `player`, `team`, and `boom_percent` all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.
+By using `filter_all()`\index{dplyr!filter\_all()} across all of our variables (`any_vars`), we can filter for any missing value, indicated by including `is.na` in the `filter()`. The output shows each row within the data set that includes at least one missing value. In this case, we only have one row with missing data, with values for `player`, `team`, and `boom_percent` all missing. Given the nature of our data, it is not prudent to impute a value in place of the missing data as we have no ability to accurately determine who the player is.
 
 Instead, we will return to our original data set (`sis_data`) and use the `na.omit()` function to drop any row that includes missing data:
 
@@ -666,7 +672,7 @@ In the above code, we are simply "recreating" our existing dataset but using `na
 
 ### Changing Variable Types
 
-As discovered in the exploratory data analysis process, we know that four columns (`player`, `team`, `boom_percent`, and `bust_percent`) are listed as a `character` data type while each quarterback's number of attempts (`att`) is listed as a numeric. While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.
+As discovered in the exploratory data analysis process, we know that four columns (`player`, `team`, `boom_percent`, and `bust_percent`) are listed as a `character` data type while each quarterback's number of attempts (`att`) is listed as a numeric.\index{tidyverse!core skills!changing variable types} While we do want both player and team names to be a character-based datatype, we need both the boom and bust percentage for each quarterback to be a numeric value rather than a character.
 
 Moreover, the values in each `boom_percent` and `bust_percent` include a percentage sign at the tail-end.
 
@@ -687,11 +693,11 @@ As mentioned, there are typically multiple ways to get to the same endpoint in t
 
 #### Method #1: Using `stringr` and Changing Variables
 
-In the below example, we are creating an "example" data frame titled `sis_data_stringr` from our current iteration of SIS data and then pipe into the `mutate()` verb (covered in more depth in the below `Creating New Variables` section). It is within this `mutate()` verb that we can drop the percentage sign.
+In the below example, we are creating an "example" data frame titled `sis_data_stringr` from our current iteration of SIS data and then pipe into the `mutate()` verb (covered in more depth in the below `Creating New Variables` section). It is within this `mutate()` verb that we can drop the percentage sign.\index{Packages!stringr}
 
 We first indicate that we are going to `mutate()` our already existing columns (both `boom_percent` and `bust_percent`). After, we use an `=` sign to indicate that the following string is the argument to create or, in our case, edit the existing values in the column.
 
-We then use the `str_remove()` function from the `stringr` package to locate the `%` sign in each value and remove it.
+We then use the `str_remove()`\index{Packages!stringr!str\_remove()} function from the `stringr` package to locate the `%` sign in each value and remove it.
 
 Afterwards, we dive into base R (that is, not `tidyverse` structure) and use the `as.numeric()` function to change both of the boom and bust columns to the correct data type (using the `$` sign to notate that we are working on just one specific column in the data.
 
@@ -713,7 +719,7 @@ Our output shows that `att`, `boom_percent`, and `bust_percent` are now all thre
 
 #### Method #2: Using the `parse_number` Function in `readr`
 
-While the above example using `stringr` and base R is suitable for our needs, we can use the `readr` package - and its `parse_number()` function - to achieve the same results in a less verbose manner.
+While the above example using `stringr` and base R is suitable for our needs, we can use the `readr`\index{Packages!readr} package - and its `parse_number()`\index{Packages!readr!parse\_number()} function - to achieve the same results in a less verbose manner.
 
 ```{r readr-examples-variables, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -730,7 +736,7 @@ While both examples get us to the same endpoint, using the `readr` package allow
 
 ### Correct and Create New Variables Using `mutate`
 
-The `mutate()` verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our data set. To that end, the `mutate()` verb applies a user-supplied argument to each row of the data set to create the new metric. Additionally, the `mutate()` verb - when combined with the `case_when()` argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield's teams).
+The `mutate()`\index{tidyverse!core skills!correcting observations} verb is a powerful and widely used tool that allows us to create new variables (columns) based on existing ones within our data set. To that end, the `mutate()` verb applies a user-supplied argument to each row of the data set to create the new metric. Additionally, the `mutate()` verb - when combined with the `case_when()` argument - allows us to make correction to the data (such as the aforementioned issues with Mayfield's teams).
 
 The syntax of the `mutate()` verb follows the `tidyverse` flow like many of the other `dplyr` verbs:
 
@@ -758,7 +764,7 @@ In the above example, by using the `mutate()` verb, we created a new column in o
 
 As mentioned in the introduction to this section, it is possible to include other function within the `mutate()` verb. In fact, doing so is necessary if we wish to make the correction to Baker Mayfield's team. Currently, Mayfield's value for `team` is listed as `2 teams`. Instead, let's replace that with his most recent team in the 2022 NFL season (Rams).
 
-To make this correction, we will begin by using the `mutate()` verb on the existing `team` column in our data set. However, where we calculated the different between boom and bust percent in the above example of `mutate()`, we will now use the `case_when()` function.
+To make this correction, we will begin by using the `mutate()` verb on the existing `team` column in our data set. However, where we calculated the different between boom and bust percent in the above example of `mutate()`, we will now use the `case_when()`\index{dplyr!case\_when()} function.
 
 The `case_when()` function allows us to either correct values, or create new columns, based on multiple conditions and values. The syntax of `case_when()` is as follows:
 
@@ -797,16 +803,16 @@ With that, our `sis_data` data set is nearly complete and ready for visualizatio
 
 ### Merging Datasets with `dplyr` and Mutating Joins
 
-Mutating joins are a manipulation technique that allows us to add, modify, or remove columns in a data set based on a shared variable or a set of variables. The process is done by matching rows in the data sets based on an matching identifier between the two. Once completed, the matching data from the second data set is added to the first or, conversely, the data within the first dataset is modified as needed to include the incoming data from the second data set.
+Mutating joins are a manipulation technique that allows us to add, modify, or remove columns in a data set based on a shared variable or a set of variables.\index{dplyr!merging data} The process is done by matching rows in the data sets based on an matching identifier between the two. Once completed, the matching data from the second data set is added to the first or, conversely, the data within the first dataset is modified as needed to include the incoming data from the second data set.
 
 There are four common mutating joins in the `dplyr` package:
 
-1.  `left_join()`: a `left_join()` adds all the columns from the first dataset by only matching columns from the second data set.
-2.  `right_join()`: a `right_join()` is the opposite of the `left_join()` process in that it adds all the columns from the second data set and only matches those columns from the first.
-3.  `inner_join()`: a `inner_join()` will only match rows found in both data sets.
-4.  `full_join()`: a `full_join()` will include all the rows and columns from both data sets.
+1.  `left_join()`: a `left_join()`\index{dplyr!left\_join()} adds all the columns from the first dataset by only matching columns from the second data set.
+2.  `right_join()`: a `right_join()`\index{dplyr!right\_join()} is the opposite of the `left_join()` process in that it adds all the columns from the second data set and only matches those columns from the first.
+3.  `inner_join()`: a `inner_join()`\index{dplyr!inner\_join()} will only match rows found in both data sets.
+4.  `full_join()`: a `full_join()`\index{dplyr!full\_join()} will include all the rows and columns from both data sets.
 
-In this instance, using our `sis_data` data set, we will need to conduct a `left_join()` to bring in NFL team color information. To start, we can use the `load_teams()` function in `nflreadr` to load the team information and then use `select()` to keep just the information we needed for the merging process:
+In this instance, using our `sis_data` data set, we will need to conduct a `left_join()` to bring in NFL team color information. To start, we can use the `load_teams()`\index{nflreadr!load\_teams()} function in `nflreadr` to load the team information and then use `select()` to keep just the information we needed for the merging process:
 
 ::: callout-note
 Please note that a much deeper dive into the `nflverse` functions is included in Chapter 3, including a more detailed approach to working with individual team data. The below code will be expanded upon in the next chapter but, for now, allows us to walk through the merging process.
@@ -822,7 +828,7 @@ teams
 
 For educational purposes, we use the above code to bring in each NFL's team abbreviation, nickname, and full name. Along with identifying information for each team, we also have selected `team_color` and `team_color2` (which correspond to each team's primary and secondary colors).
 
-As mentioned, we will use the `left_join()` function to merge this information into our `sis_data`. The basic syntax of a `left_join` includes a call to the original data set, the data set to be merged in, and then an argument to stipulate which variable the join should match on:
+As mentioned, we will use the `left_join()`\index{dplyr!left\_join()} function to merge this information into our `sis_data`. The basic syntax of a `left_join` includes a call to the original data set, the data set to be merged in, and then an argument to stipulate which variable the join should match on:
 
 ```{r left-join-example-syntax, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -832,7 +838,7 @@ data_set1 <- data_set1 %>%
 
 The above code is stating: "use `data_set1`, *and then* conduct a `left_join` with `data_set2`, by matching `variable_1` from `data_set1` to corresponding `variable_2` from `data_set2`."
 
-To conduct the join, **we must determine which variable in `teams`** **matching a corresponding variable in `sis_data`**. We can use the `slice()` function to compare the first row of data from each:
+To conduct the join, **we must determine which variable in `teams`** **matching a corresponding variable in `sis_data`**. We can use the `slice()`\index{dplyr!slice()} function to compare the first row of data from each:
 
 ```{r comparing-data, eval = TRUE, echo = TRUE, output = TRUE}
 
@@ -868,7 +874,7 @@ You can see in the output that our two data sets correctly merged on the `team` 
 
 The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch2-answers>.
 
-Create a data frame titled `pbp` that contains the play-by-play information for the 2022 regular season by running the following code:
+Create a data frame titled `pbp` that contains the play-by-play information for the 2022 regular season by running the following code:\index{Exercises!Chapter 2}
 
 ```{r chap-1-exercise-1, eval = FALSE, echo = TRUE, output = FALSE}
 

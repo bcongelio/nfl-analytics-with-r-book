@@ -28,7 +28,8 @@ In the end, quarterbacks with higher air yards per attempt are generally assumed
 
 <center>
 
-```{r air-yards-101, echo = FALSE}
+```{r air-yards-graphic, echo = FALSE, fig.cap="Visual representation of air yards"}
+
 knitr::include_graphics(rep("images/airyards_101.png"))
 ```
 
@@ -288,7 +289,7 @@ Pass Over Expected is the probability that a play will be a pass scaled from 0 t
 
 For example, we can use the metric to determine the pass over expected value for Buffalo, Cincinnati, Kansas City, and Philadelphia on 1st down with between 1 and 10 yards to go.
 
-```{r pass-oe-dictionary, eval = TRUE, echo = TRUE, output = TRUE, warning = FALSE, error = FALSE, message = FALSE, fig.align='center', fig.dpi = 400}
+```{r pass-over-expected-dictionary, echo = TRUE, fig.cap="Pass Over Expected Values on 1st Down for Buffalo, Cincinnati, Kansas City, and Philadelphia"}
 
 pbp <- nflreadr::load_pbp(2022) %>%
   filter(season_type == "REG")
