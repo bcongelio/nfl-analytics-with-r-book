@@ -47,10 +47,6 @@ format:
     fig-align: center
     fig-cap-location: bottom
     author-meta: "Bradley Congelio"
-    include-in-header: 
-      text: |
-        <script defer data-domain="bradcongelio.com"
-        src="https://plausible.io/js/script.js"></script>
 
   pdf:
     documentclass: krantz
