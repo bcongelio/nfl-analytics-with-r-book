@@ -47,8 +47,7 @@ format:
     fig-align: center
     fig-cap-location: bottom
     author-meta: "Bradley Congelio"
-    include-in-header: plausible.html
-    include-before-body: plausible.html
+    include-in-header: "plausible.html"
 
   pdf:
     documentclass: krantz
