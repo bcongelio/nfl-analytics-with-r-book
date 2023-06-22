@@ -47,10 +47,7 @@ format:
     fig-align: center
     fig-cap-location: bottom
     author-meta: "Bradley Congelio"
-    include-in-header: 
-      text: |
-        <script defer data-domain="bradcongelio.com/nfl-analytics-with-r-book"
-        src="https://plausible.io/js/script.js"></script>
+    include-in-header: plausible.html
 
   pdf:
     documentclass: krantz
