@@ -42,6 +42,9 @@ format:
     theme:
       - cosmo
       - nfl-analytics.scss
+    include-in-header: 
+      text: | 
+        <script defer data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
     code-link: true
     code-overflow: wrap
     fig-align: center
