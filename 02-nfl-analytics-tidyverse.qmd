@@ -340,7 +340,7 @@ time_in_pocket %>%
   summarize(combined_average = mean(avg_time_to_throw))
 ```
 
-The AFC North quarterbacks had an average time to throw of 2.76 seconds while the rest of the NFL averaged 2.89 seconds, meaning the AFC North QBs released the ball, on average, 0.13 seconds quicker than the rest of the quarterbacks in the league.
+The AFC North quarterbacks had an average time to throw of 2.89 seconds while the rest of the NFL averaged 2.76 seconds, meaning the AFC North QBs released the ball, on average, 0.13 seconds slower than the rest of the quarterbacks in the league.
 
 So far, all our `filter()` operations have include just one logical operator, or multiple values built into one operator using the `%in%` option. However, because of the structure of the logical operators, we are able to construct a single `filter()` combined with various operator requests. For example, let's gather only those rows that fit the following specifications:\index{dplyr!filter()!multiple logical operators}
 
