@@ -580,7 +580,7 @@ airyards_cpoe_mutate <- pbp %>%
       air_yards >= 10 & air_yards < 20 ~ "Medium",
       air_yards >= 20 ~ "Deep")) %>%
   group_by(passer, ay_distance) %>%
-  summarize(avg_cpoe = mean(cpoe))
+  summarize(avg_cpoe = mean(cpoe), .groups = 'drop')
 ```
 
 With the `air_yards` data now binned into four different groupings, we can examine quarterbacks at specific distances.
