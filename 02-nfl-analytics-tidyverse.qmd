@@ -301,7 +301,12 @@ In other cases, we may need to do the opposite of above - that is, select all te
 
 We cannot leave the data as is and find the averages outright. We must remove the AFC North teams in order to avoid "baking them into" the league-wide average, thus skewing the results of our analysis. To complete this process, we turn to the `!` ("is not") logical operator.\index{dplyr!filter()!"is not" logical operator}
 
-To begin, we will use the `vroom`\index{Packages!vroom} package to read in the data.
+To begin, we will use the `vroom`\index{Packages!vroom} package to read in the data. Let's load the 'vroom'\index{Packages!vroom} package before using it.
+
+```{r loading-installed-packages, eval = FALSE, echo = TRUE, output = FALSE}
+
+library(vroom)
+```
 
 ```{r add-pff-pocket-data, eval = TRUE, echo = TRUE, output = FALSE}
 
