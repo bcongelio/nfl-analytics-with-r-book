@@ -193,7 +193,24 @@ With the data cleaned and prepared, let's use it to create a `ggplot` graph and 
 
 ### Unique Offensive Line Combinations vs. Win Percentage
 
-To bring in the individual winning percentages\index{Metrics!O-Line Combos vs. Win Percentage}, we will use the `get_nfl_standings()`\index{Packages!espnscrapeR!get\_nfl\_standings()} function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join()`\index{dplyr!left\_join()}. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs()`\index{nflreadr!Functions!clean\_team\_abbrs()} function in the `nflreadr` package.
+To bring in the individual winning percentages\index{Metrics!O-Line Combos vs. Win Percentage}, we will use the `get_nfl_standings()`\index{Packages!espnscrapeR!get\_nfl\_standings()} function from `espnscrapeR` and then combine the two sets of data on team abbreviations via a `left_join()`\index{dplyr!left\_join()}. Unfortunately, the team abbreviation returned from `espnscrapeR` does not match up with those used in the `nflverse` for both the Los Angeles Rams and the Washington Commanders (LAR vs. LA and WSH vs. WAS). As evidenced in the below code, correcting this issue is simple with the `clean_team_abbrs()`\index{nflreadr!Functions!clean\_team\_abbrs()} function in the `nflreadr` package. Before using `espnscrapeR`\index{tidyverse!install}, we need to install it from github using a package called `devtools`. `devtools` allows the installation of packages that are made by people on Github.
+
+::: callout-important
+If you have not already done so, please install `devtools` and load it.\index{Packages!devtools!installing}
+
+```{r installing-devtools, eval = FALSE, echo = TRUE, output = FALSE}
+
+install.packages("devtools")
+library(devtools)
+
+```
+:::
+
+```{r installing-espnscrapeR, eval = FALSE, echo = TRUE, output = FALSE}
+
+devtools::install_github("jthomasmock/espnscrapeR")
+library(espnscrapeR)
+```
 
 ```{r add-records-to-combos, output = TRUE, message = FALSE}
 
