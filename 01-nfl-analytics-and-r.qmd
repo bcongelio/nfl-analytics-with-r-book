@@ -610,7 +610,7 @@ ggplot(explosive, aes(y = reorder(posteam, percent_w_exp),
   nflplotR::scale_color_nfl(type = "secondary") +
   nflplotR::scale_fill_nfl(alpha = 0.5) +
   nfl_analytics_theme() +
-  theme(axis.text.y = element_nfl_logo(size = .65)) +
+  theme(axis.text.y = nflplotR::element_nfl_logo(size = .65)) +
   scale_x_continuous(expand = c(0,0),
                      breaks = scales::pretty_breaks(n = 5),
                      label = scales::percent_format()) +
