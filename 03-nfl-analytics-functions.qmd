@@ -1115,7 +1115,7 @@ ggplot(data = ngs_data_passing, aes(x = avg_time_to_throw,
   nfl_analytics_theme() +
   xlab("Average Time to Throw") +
   ylab("Average Completed Air Yards") +
-  labs(title = "**Avgerage Time to Throw vs. Average Air Yards**",
+  labs(title = "**Average Time to Throw vs. Average Air Yards**",
        subtitle = "2022 Regular Season",
        caption = "*An Introduction to NFL Analytics with R*<br>
        **Brad J. Congelio**")
@@ -1199,7 +1199,7 @@ ggplot(data = espn_qbr, aes(x = qbr_total, y = qbr_raw)) +
   nfl_analytics_theme() +
   xlab("QBR - Adjusted") +
   ylab("QBR - Unadjusted") +
-  labs(title = "QBR: Adjusted vs. Adjusted Scores",
+  labs(title = "QBR: Adjusted vs. Unadjusted Scores",
        subtitle = "Based on ESPN's Model: 2022 Regular Season",
        caption = "*An Introduction to NFL Analytics with R*<br>
        **Brad J. Congelio**")
