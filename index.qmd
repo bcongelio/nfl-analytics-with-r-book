@@ -7,29 +7,33 @@ library(tidyverse)
 font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
+Welcome to the online home of ***Introduction to NFL Analytics with R***, which is slated to be published with CRC Press (in the Data Science series) in December 2023. It will be available for purchase in both paperback and hardback, with pre-ordering beginning on November 28, 2023 on both [Amazon](https://www.amazon.com/Introduction-Analytics-Chapman-Hall-Science/dp/1032427957/ref=sr_1_1?crid=1LJAG2HWMP13F&keywords=introduction+to+nfl+analytics+with+r&qid=1689882779&sprefix=%2Caps%2C139&sr=8-1) and the [Routledge website](https://www.routledge.com/Introduction-to-NFL-Analytics-with-R/Congelio/p/book/9781032427751) (as well as numerous other outlets).
+
+If you wish to further support the development of this book, please consider one of the following:
+
+1.  Submitting an issue or making a pull request the [book's official GitHub repository](https://github.com/bcongelio/nfl-analytics-with-r-book).
+
+2.  [Buy me a coffee](https://bmc.link/nflanalyticsbook) to help me fuel up for the ongoing edits and updates to the book.
+
+**Early praise for *Introduction to NFL Analytics with R:***
+
+> This is the best resource an aspiring data scientist looking to work with football data can use. It has something for all levels, including data analysis, visualization, advanced modeling, and more. The code and the insights in *Introduction to NFL Analytics with R* are invaluable and can help everyone from beginners to those who have worked with data for years. - ***Tej Seth, Data Scientist (SumerSports)***
+
+> Place holding for Sarah Bailey's incoming information. *- **Sarah Bailey, Director of Football Research (Tennessee Titans) & former Manager of Football Analytics (Los Angeles Rams)***
+
+> As someone with a non-traditional path into data science, I'll often read tutorials on fundamentals of DS/ML and still learn something new. That said, Brad Congelio's *NFL Analytics with R* book is great for those trying to get into coding and ML in sport. *- **Sam Hoppen, Data Scientist (Fantasy Pros)***
+
+**Social media reactions to *Introduction to NFL Analytics with R:***
+
+{{< tweet LowBuffa 1668955496470966272 >}}
+
+{{< tweet TAlbTree 1668947096198844425 >}}
+
+{{< tweet MrCondeMx 1665201271446405120 >}}
+
+{{< tweet tejfbanalytics 1677014911669395459 >}}
+
 # Preface {.unnumbered}
-
-::: callout-note
-<center>Welcome to the open-source, online home of *Introduction to NFL Analytics with R*.</center>
-
-*Introduction to NFL Analytics with R* was published with CRC Press in 2023 and is available for purchase in both paperback and hardback:
-
-1.  Purchase on [Amazon](https://www.amazon.com/Introduction-Analytics-Chapman-Hall-Science/dp/1032427752/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1689872885&sr=8-1)
-
-2.  Purchase from [Routledge](https://www.routledge.com/Introduction-to-NFL-Analytics-with-R/Congelio/p/book/9781032427751)
-
-The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-
-If you wish to support further development of this book, please consider one of the following:
-
-1.  Submitting an issue or making a pull request at the [book's official GitHub repository.](https://github.com/bcongelio/nfl-analytics-with-r-book)
-
-<center>**Early Praise for *Introduction to NFL Analytics with R*:**</center>
-
-> This is the best resource an aspiring data scientist looking to work with football data can use. It has something for all levels, including data analysis, visualization, advanced modeling, and more. The code and the insights in *Introduction to NFL Analytics with R* are invaluable and can help everyone from beginners to those who have worked with data for years. - *Tej Seth, Data Scientist (SumerSports)*
-
-> Place holding for Sarah Bailey's incoming information. *- Sarah Bailey, Director of Football Research (Tennessee Titans) & former Manager of Football Analytics (Los Angeles Rams)*
-:::
 
 On April 27, 2020, Ben Baldwin\index{Baldwin, Ben} hit send on a Tweet that announced the birth of `nflfastR`\index{nflfastR}, an R package designed to scrape NFL play-by-play data, allowing the end-user to access it at speeds quicker than similar predecessors (hence the name).
 
@@ -275,3 +279,7 @@ style_data(df, nrow(df), "Packages Used In This Book")
 ```
 
 Finally, please note that this book uses the `dplyr` pipe operator (`%>%`) as opposed to the new, built-in pipe operator released with version 4.1 of R (`|>`). It is likely that you can work through the exercises and examples in this book by using either operator. I maintain my use of the `dplyr` pipe operator for no other reason than a personal (and problematic) dislike of change.
+
+## License
+
+The online version of this book is published with the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.](https://creativecommons.org/licenses/by-nc-nd/4.0/)

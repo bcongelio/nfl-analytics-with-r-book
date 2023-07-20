@@ -82,6 +82,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./05-nfl-analytics-advanced-methods.html" rel="next">
 <link href="./03-nfl-analytics-functions.html" rel="prev">
+<link href="./web-favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,6 +111,20 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script><script defer="" data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
+<meta property="og:title" content="Introduction to NFL Analytics with R - 4&nbsp; Data Visualization with NFL Data">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://bradcongelio.com/nfl-analytics-with-r-book/images/feature.png">
+<meta property="og:site-name" content="Introduction to NFL Analytics with R">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1344">
+<meta name="twitter:title" content="Introduction to NFL Analytics with R - 4&nbsp; Data Visualization with NFL Data">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://bradcongelio.com/nfl-analytics-with-r-book/images/feature.png">
+<meta name="twitter:creator" content="@bradcongelio">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar floating">
 
@@ -225,6 +240,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./a3-nfl-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
       </ul>
@@ -447,7 +468,7 @@ Important
 </div>
 <p>After collecting the team information needed, we can conduct a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> to match the information by <code>team</code> in <code>play_action_data</code> and <code>team_nick</code> in the team information from <code>load_teams()</code> and then confirm the merge was successful by viewing the columns names in <code>play_action_data</code> with <code><a href="https://rdrr.io/r/base/colnames.html">colnames()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflreadr/man/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_nick</span>, <span class="va">team_color</span>, <span class="va">team_color2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">play_action_data</span> <span class="op">&lt;-</span> <span class="va">play_action_data</span> <span class="op">%&gt;%</span></span>
@@ -494,7 +515,7 @@ Important
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">play_action_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yds</span>, y <span class="op">=</span> <span class="va">pa_yds</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">team_abbr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/scale_nfl.html">scale_color_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_color_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04-nfl-analytics-visualization_files/figure-html/adding-color-with-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
@@ -1435,7 +1456,7 @@ Note
 </div>
 <p>Because of the above explanation, we can collect just the team nicknames and the Wikipedia version of the logo to merge into our existing <code>team_playaction</code> data.</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflreadr/man/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">team_nick</span>, <span class="va">team_logo_wikipedia</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">team_playaction</span> <span class="op">&lt;-</span> <span class="va">team_playaction</span> <span class="op">%&gt;%</span></span>
@@ -1571,7 +1592,7 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">eagles_fourth_downs</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/phi-4th-downs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The data frames includes information regarding the <code>season</code>, the <code>total</code> fourth downs in each season, the number of fourth-down attempts in <code>total_go</code>, and the conversion percentage in <code>go_pct</code>. As well, the data has already been joined with information from <code><a href="https://rdrr.io/pkg/nflreadr/man/load_teams.html">nflreadr::load_teams()</a></code> to include colors and logos.</p>
+<p>The data frames includes information regarding the <code>season</code>, the <code>total</code> fourth downs in each season, the number of fourth-down attempts in <code>total_go</code>, and the conversion percentage in <code>go_pct</code>. As well, the data has already been joined with information from <code><a href="https://nflreadr.nflverse.com/reference/load_teams.html">nflreadr::load_teams()</a></code> to include colors and logos.</p>
 <p>Let’s build the foundation of the plot by using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> and placing the <code>season</code> on the x-axis and the <code>go_pct</code> on the y-axis.</p>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">eagles_fourth_downs</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">season</span>, y <span class="op">=</span> <span class="va">go_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1838,7 +1859,7 @@ Note
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/element.html">element_nfl_headshot</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/element.html">element_nfl_headshot</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1867,7 +1888,7 @@ Note
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent_format</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/element.html">element_nfl_headshot</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/element.html">element_nfl_headshot</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"QB Aggressiveness on 3rd Down"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1937,7 +1958,7 @@ Note
 <span>                                         fill <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_jitter</span><span class="op">(</span>color <span class="op">=</span> <span class="va">playoff_airyards_plot</span><span class="op">$</span><span class="va">team_color</span>, alpha <span class="op">=</span> <span class="fl">0.09</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_boxplot</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1980,7 +2001,7 @@ Note
 <span>  <span class="fu">geom_density_ridges</span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                      quantile_fun <span class="op">=</span> <span class="va">meansd</span>,</span>
 <span>                      color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2026,7 +2047,7 @@ Note
 <span>       subtitle <span class="op">=</span> <span class="st">"**KC Chiefs vs. NFL: 2022 Regular Season**"</span>,</span>
 <span>       caption <span class="op">=</span> <span class="st">"*An Introduction to NFL Analytics with R*&lt;br&gt;</span></span>
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/element.html">element_nfl_logo</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/element.html">element_nfl_logo</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
 <span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>        strip.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Roboto"</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
 <span>        strip.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f7f7f7"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2047,7 +2068,7 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">def_yards_allowed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">yards_allowed</span>, fill <span class="op">=</span> <span class="va">defteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">500</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">defteam</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2196,7 +2217,7 @@ Important
 <div class="cell">
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">complete_wr_ay</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">air_yards</span>, fill <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflplotR/man/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_fill_nfl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_image</span><span class="op">(</span>data <span class="op">=</span> <span class="va">complete_wr_ay</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">40</span>, y <span class="op">=</span> <span class="fl">0.04</span>,</span>
 <span>                                        image <span class="op">=</span> <span class="va">image</span><span class="op">)</span>,</span>
 <span>             size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2234,12 +2255,12 @@ Important
 <span>  <span class="fu">cols_hide</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">headshot</span>, <span class="va">team_logo_wikipedia</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="bnxlotarwt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bxyegwkybe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bnxlotarwt .gt_table {
+#bxyegwkybe .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2264,7 +2285,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_heading {
+#bxyegwkybe .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2276,12 +2297,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_caption {
+#bxyegwkybe .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bnxlotarwt .gt_title {
+#bxyegwkybe .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2293,7 +2314,7 @@ Important
   border-bottom-width: 0;
 }
 
-#bnxlotarwt .gt_subtitle {
+#bxyegwkybe .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2305,13 +2326,13 @@ Important
   border-top-width: 0;
 }
 
-#bnxlotarwt .gt_bottom_border {
+#bxyegwkybe .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_col_headings {
+#bxyegwkybe .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2326,7 +2347,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_col_heading {
+#bxyegwkybe .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2346,7 +2367,7 @@ Important
   overflow-x: hidden;
 }
 
-#bnxlotarwt .gt_column_spanner_outer {
+#bxyegwkybe .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2358,15 +2379,15 @@ Important
   padding-right: 4px;
 }
 
-#bnxlotarwt .gt_column_spanner_outer:first-child {
+#bxyegwkybe .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bnxlotarwt .gt_column_spanner_outer:last-child {
+#bxyegwkybe .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bnxlotarwt .gt_column_spanner {
+#bxyegwkybe .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2378,7 +2399,7 @@ Important
   width: 100%;
 }
 
-#bnxlotarwt .gt_group_heading {
+#bxyegwkybe .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2404,7 +2425,7 @@ Important
   text-align: left;
 }
 
-#bnxlotarwt .gt_empty_group_heading {
+#bxyegwkybe .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2419,15 +2440,15 @@ Important
   vertical-align: middle;
 }
 
-#bnxlotarwt .gt_from_md > :first-child {
+#bxyegwkybe .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bnxlotarwt .gt_from_md > :last-child {
+#bxyegwkybe .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bnxlotarwt .gt_row {
+#bxyegwkybe .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2446,7 +2467,7 @@ Important
   overflow-x: hidden;
 }
 
-#bnxlotarwt .gt_stub {
+#bxyegwkybe .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2459,7 +2480,7 @@ Important
   padding-right: 5px;
 }
 
-#bnxlotarwt .gt_stub_row_group {
+#bxyegwkybe .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2473,11 +2494,11 @@ Important
   vertical-align: top;
 }
 
-#bnxlotarwt .gt_row_group_first td {
+#bxyegwkybe .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bnxlotarwt .gt_summary_row {
+#bxyegwkybe .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2487,16 +2508,16 @@ Important
   padding-right: 5px;
 }
 
-#bnxlotarwt .gt_first_summary_row {
+#bxyegwkybe .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_first_summary_row.thick {
+#bxyegwkybe .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bnxlotarwt .gt_last_summary_row {
+#bxyegwkybe .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2506,7 +2527,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_grand_summary_row {
+#bxyegwkybe .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2516,7 +2537,7 @@ Important
   padding-right: 5px;
 }
 
-#bnxlotarwt .gt_first_grand_summary_row {
+#bxyegwkybe .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2526,11 +2547,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_striped {
+#bxyegwkybe .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bnxlotarwt .gt_table_body {
+#bxyegwkybe .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2539,7 +2560,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_footnotes {
+#bxyegwkybe .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2553,7 +2574,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_footnote {
+#bxyegwkybe .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2562,7 +2583,7 @@ Important
   padding-right: 5px;
 }
 
-#bnxlotarwt .gt_sourcenotes {
+#bxyegwkybe .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2576,7 +2597,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-#bnxlotarwt .gt_sourcenote {
+#bxyegwkybe .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2584,64 +2605,64 @@ Important
   padding-right: 5px;
 }
 
-#bnxlotarwt .gt_left {
+#bxyegwkybe .gt_left {
   text-align: left;
 }
 
-#bnxlotarwt .gt_center {
+#bxyegwkybe .gt_center {
   text-align: center;
 }
 
-#bnxlotarwt .gt_right {
+#bxyegwkybe .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bnxlotarwt .gt_font_normal {
+#bxyegwkybe .gt_font_normal {
   font-weight: normal;
 }
 
-#bnxlotarwt .gt_font_bold {
+#bxyegwkybe .gt_font_bold {
   font-weight: bold;
 }
 
-#bnxlotarwt .gt_font_italic {
+#bxyegwkybe .gt_font_italic {
   font-style: italic;
 }
 
-#bnxlotarwt .gt_super {
+#bxyegwkybe .gt_super {
   font-size: 65%;
 }
 
-#bnxlotarwt .gt_footnote_marks {
+#bxyegwkybe .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#bnxlotarwt .gt_asterisk {
+#bxyegwkybe .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bnxlotarwt .gt_indent_1 {
+#bxyegwkybe .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bnxlotarwt .gt_indent_2 {
+#bxyegwkybe .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bnxlotarwt .gt_indent_3 {
+#bxyegwkybe .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bnxlotarwt .gt_indent_4 {
+#bxyegwkybe .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bnxlotarwt .gt_indent_5 {
+#bxyegwkybe .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2729,12 +2750,12 @@ Important
 <span>    subtitle <span class="op">=</span> <span class="fu">md</span><span class="op">(</span><span class="st">"*2010-2022  |  Pure Passing is &gt;= 70% Chance of Pass Attempt*"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="ikqctyirbw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="zwrmpxllhs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#ikqctyirbw) .gt_table {
+:where(#zwrmpxllhs) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2759,7 +2780,7 @@ Important
   border-left-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_heading {
+:where(#zwrmpxllhs) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2771,12 +2792,12 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_caption {
+:where(#zwrmpxllhs) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#ikqctyirbw) .gt_title {
+:where(#zwrmpxllhs) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2788,7 +2809,7 @@ Important
   border-bottom-width: 0;
 }
 
-:where(#ikqctyirbw) .gt_subtitle {
+:where(#zwrmpxllhs) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2800,13 +2821,13 @@ Important
   border-top-width: 0;
 }
 
-:where(#ikqctyirbw) .gt_bottom_border {
+:where(#zwrmpxllhs) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_col_headings {
+:where(#zwrmpxllhs) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2821,7 +2842,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_col_heading {
+:where(#zwrmpxllhs) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2841,7 +2862,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#ikqctyirbw) .gt_column_spanner_outer {
+:where(#zwrmpxllhs) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2853,15 +2874,15 @@ Important
   padding-right: 4px;
 }
 
-:where(#ikqctyirbw) .gt_column_spanner_outer:first-child {
+:where(#zwrmpxllhs) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#ikqctyirbw) .gt_column_spanner_outer:last-child {
+:where(#zwrmpxllhs) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#ikqctyirbw) .gt_column_spanner {
+:where(#zwrmpxllhs) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2873,7 +2894,7 @@ Important
   width: 100%;
 }
 
-:where(#ikqctyirbw) .gt_group_heading {
+:where(#zwrmpxllhs) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2899,7 +2920,7 @@ Important
   text-align: left;
 }
 
-:where(#ikqctyirbw) .gt_empty_group_heading {
+:where(#zwrmpxllhs) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2914,15 +2935,15 @@ Important
   vertical-align: middle;
 }
 
-:where(#ikqctyirbw) .gt_from_md > :first-child {
+:where(#zwrmpxllhs) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#ikqctyirbw) .gt_from_md > :last-child {
+:where(#zwrmpxllhs) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#ikqctyirbw) .gt_row {
+:where(#zwrmpxllhs) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2941,7 +2962,7 @@ Important
   overflow-x: hidden;
 }
 
-:where(#ikqctyirbw) .gt_stub {
+:where(#zwrmpxllhs) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2954,7 +2975,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#ikqctyirbw) .gt_stub_row_group {
+:where(#zwrmpxllhs) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2968,11 +2989,11 @@ Important
   vertical-align: top;
 }
 
-:where(#ikqctyirbw) .gt_row_group_first td {
+:where(#zwrmpxllhs) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#ikqctyirbw) .gt_summary_row {
+:where(#zwrmpxllhs) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2982,16 +3003,16 @@ Important
   padding-right: 5px;
 }
 
-:where(#ikqctyirbw) .gt_first_summary_row {
+:where(#zwrmpxllhs) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_first_summary_row.thick {
+:where(#zwrmpxllhs) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#ikqctyirbw) .gt_last_summary_row {
+:where(#zwrmpxllhs) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3001,7 +3022,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_grand_summary_row {
+:where(#zwrmpxllhs) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3011,7 +3032,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#ikqctyirbw) .gt_first_grand_summary_row {
+:where(#zwrmpxllhs) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3021,11 +3042,11 @@ Important
   border-top-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_striped {
+:where(#zwrmpxllhs) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#ikqctyirbw) .gt_table_body {
+:where(#zwrmpxllhs) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3034,7 +3055,7 @@ Important
   border-bottom-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_footnotes {
+:where(#zwrmpxllhs) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3048,7 +3069,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_footnote {
+:where(#zwrmpxllhs) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3057,7 +3078,7 @@ Important
   padding-right: 5px;
 }
 
-:where(#ikqctyirbw) .gt_sourcenotes {
+:where(#zwrmpxllhs) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3071,7 +3092,7 @@ Important
   border-right-color: #D3D3D3;
 }
 
-:where(#ikqctyirbw) .gt_sourcenote {
+:where(#zwrmpxllhs) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3079,64 +3100,64 @@ Important
   padding-right: 5px;
 }
 
-:where(#ikqctyirbw) .gt_left {
+:where(#zwrmpxllhs) .gt_left {
   text-align: left;
 }
 
-:where(#ikqctyirbw) .gt_center {
+:where(#zwrmpxllhs) .gt_center {
   text-align: center;
 }
 
-:where(#ikqctyirbw) .gt_right {
+:where(#zwrmpxllhs) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#ikqctyirbw) .gt_font_normal {
+:where(#zwrmpxllhs) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#ikqctyirbw) .gt_font_bold {
+:where(#zwrmpxllhs) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#ikqctyirbw) .gt_font_italic {
+:where(#zwrmpxllhs) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#ikqctyirbw) .gt_super {
+:where(#zwrmpxllhs) .gt_super {
   font-size: 65%;
 }
 
-:where(#ikqctyirbw) .gt_footnote_marks {
+:where(#zwrmpxllhs) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#ikqctyirbw) .gt_asterisk {
+:where(#zwrmpxllhs) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#ikqctyirbw) .gt_indent_1 {
+:where(#zwrmpxllhs) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#ikqctyirbw) .gt_indent_2 {
+:where(#zwrmpxllhs) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#ikqctyirbw) .gt_indent_3 {
+:where(#zwrmpxllhs) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#ikqctyirbw) .gt_indent_4 {
+:where(#zwrmpxllhs) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#ikqctyirbw) .gt_indent_5 {
+:where(#zwrmpxllhs) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3383,7 +3404,7 @@ Important
 <span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span> <span class="va">ryoe_shiny</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ydstogo</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflreadr/man/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_logo_wikipedia</span>, <span class="va">team_color</span>, <span class="va">team_color2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ryoe_shiny</span> <span class="op">&lt;-</span> <span class="va">ryoe_shiny</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -3534,7 +3555,7 @@ Important
 <span class="header-section-number">4.18.1</span> Exercise 1</h3>
 <p>To begin, run the following code to create the data frame titled <code>rb_third_down</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflreadr/man/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rb_third_down</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -3566,7 +3587,7 @@ Important
 <span class="header-section-number">4.18.2</span> Exercise 2</h3>
 <p>Run the code below to create the <code>offensive_epa</code> data frame, then follow the instructions below to complete the exercise.</p>
 <div class="cell">
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nflreadr/man/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">offensive_epa</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>

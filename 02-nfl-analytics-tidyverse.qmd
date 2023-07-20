@@ -303,7 +303,7 @@ We cannot leave the data as is and find the averages outright. We must remove th
 
 To begin, we will use the `vroom`\index{Packages!vroom} package to read in the data. Let's load the 'vroom'\index{Packages!vroom} package before using it.
 
-```{r loading-installed-packages, eval = FALSE, echo = TRUE, output = FALSE}
+```{r loading-installed-vroom, eval = FALSE, echo = TRUE, output = FALSE}
 
 library(vroom)
 ```
