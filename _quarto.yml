@@ -15,6 +15,7 @@ book:
   publisher: "CRC Press"
   publisher-place: "Boca Raton, FL."
   repo-actions: [edit, issue]
+  cover-image: cover-for-web.png
   favicon: web-favicon.png
   twitter-card:
     creator: "@bradcongelio"
