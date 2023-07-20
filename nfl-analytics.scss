@@ -6,7 +6,7 @@ $font-size-root: 18px !default;
 /*-- scss:rules --*/
 
 .sidebar-title {
-  color:#013369;
+  color:#6C6C6C;
 }
 
 div.sidebar-item-container .active {
@@ -15,6 +15,10 @@ div.sidebar-item-container .active {
 
 .sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active{
   font-weight: bold;
+}
+
+img.quarto-cover-image {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
 }
 
 /* Headings ------------------------------------------------------ */

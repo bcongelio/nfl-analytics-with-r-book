@@ -15,6 +15,14 @@ book:
   publisher: "CRC Press"
   publisher-place: "Boca Raton, FL."
   repo-actions: [edit, issue]
+  favicon: web-favicon.png
+  twitter-card:
+    creator: "@bradcongelio"
+    image: "/images/feature.png"
+  open-graph:
+    locale: es_ES
+    site-name: Introduction to NFL Analytics with R
+    image: "images/feature.png"
   
   chapters:
     - index.qmd
@@ -26,6 +34,7 @@ book:
   appendices:
     - a1-nfl-analytics-dictionary.qmd
     - a2-nfl-further-reading.qmd
+    - a3-nfl-errata.qmd
 
 search: true
 
