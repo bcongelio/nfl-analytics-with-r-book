@@ -17,11 +17,17 @@ If you wish to further support the development of this book, please consider one
 
 **Early praise for *Introduction to NFL Analytics with R:***
 
+> ::: {.blockquote style="color: #373a3c"}
 > This is the best resource an aspiring data scientist looking to work with football data can use. It has something for all levels, including data analysis, visualization, advanced modeling, and more. The code and the insights in *Introduction to NFL Analytics with R* are invaluable and can help everyone from beginners to those who have worked with data for years. - ***Tej Seth, Data Scientist (SumerSports)***
+> :::
 
+> ::: {.blockquote style="color: #373a3c"}
 > Place holding for Sarah Bailey's incoming information. *- **Sarah Bailey, Director of Football Research (Tennessee Titans) & former Manager of Football Analytics (Los Angeles Rams)***
+> :::
 
+> ::: {.blockquote style="color: #373a3c"}
 > As someone with a non-traditional path into data science, I'll often read tutorials on fundamentals of DS/ML and still learn something new. That said, Brad Congelio's *NFL Analytics with R* book is great for those trying to get into coding and ML in sport. *- **Sam Hoppen, Data Scientist (Fantasy Pros)***
+> :::
 
 **Social media reactions to *Introduction to NFL Analytics with R:***
 
@@ -63,7 +69,9 @@ In just under five years time since the publishing of that article, it has becom
 
 Compared to both the NBA and MLB, the NFL is playing catch up in analytics driving changes equivalent to the death of the midrange shot or the plethora of additional tactics and changes to baseball because of sabermetrics. Joe Banner\index{Banner, Joe}, who served as the President of the Eagles\index{NFL Teams!Philadelphia Eagles} from 2001-2012 and then the Chief Executive Officer of the Browns\index{NFL Teams!Cleveland Browns} from 2012-2013, explained that some of the hesitation to incorporate analytics into NFL game planning was a result of the game being "very much driven by conventional wisdom to an extreme degree" [@fortier2020]. Perhaps nobody encapsulates this better than Pittsburgh Steelers\index{NFL Teams!Pittsburgh Steelers}Head Coach Mike Tomlin\index{Tomlin, Mike}. When asked about his position on analytics during the 2015 season, Tomlin explained:
 
+> ::: {.blockquote style="color: #373a3c"}
 > I think that's why you play the game. You can take analytics to baseball and things like that but football is always going to be football. I got a lot of respect for analytics and numbers, but I'm not going to make judgements based on those numbers. The game is the game. It's an emotional one played by emotional and driven men. That's an element of the game you can't measure. Often times decisions such as that weigh heavily into the equation [@kozora2015].\index{Kozora, Alex}
+> :::
 
 Given that Tomlin's quote is from 2015, perhaps the Steelers\index{NFL Teams!Pittsbugh Steelers} pivoted since and are now more analytically inclined. That does not seem to be the case. In a poll of NFL analytics staffers conducted by ESPN, [the Steelers were voted as one of the least analytically advanced teams in the league.](https://www.espn.com/nfl/story/_/id/29939438/2020-nfl-analytics-survey-which-teams-most-least-analytically-inclined#least)
 

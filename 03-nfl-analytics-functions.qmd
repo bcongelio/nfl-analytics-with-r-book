@@ -567,11 +567,15 @@ We are now using the same code, but have included three new items to the `filter
 
 The decision on range of the win probability numbers is very much a personal preference. When `nflfastR` was first released, analyst often used a 20-80% range for the win probability cutoff point. However, Sebastian Carl\index{Carl, Sebastian} - one of the creators of the `nflverse` explained in the package's Discord:
 
+> ::: {.blockquote style="color: #373a3c"}
 > Sebastian Carl: "I am generally very conservative with filtering plays using wp. Especially the vegas wp model can reach \>85% probs early in the game because it incorporates market lines. I never understood the 20% \<= wp \<= 80%"garbage time" filter. This is removing a ton of plays. My general advice is a lower boundary of something around 5% (i.e., 5% \<= wp \<= 95%).
+> :::
 
 Ben Baldwin\index{Baldwin, Ben} followed up on Carl's thoughts:
 
+> ::: {.blockquote style="color: #373a3c"}
 > Ben Baldwin: "agree with this. 20-80% should only be used as a filter for looking at how run-heavy a team is (because outside of this range is when teams change behavior a lot). and possibly how teams behave on 4th downs. but not for team or player performance."
+> :::
 
 Based on that advice, I typically stick to the 5-95% range when filtering for win probability in the `nflverse` play-by-play data. And, in this case, it did have an impact. In fact, when accounting for "garbage time," Kenny Pickett went from being the second most aggressive QB in the league to not even being in the top ten. Conversely, Kirk Cousin went from being the ninth most aggressive quarterback to the second when accounting for win probability and the time left in the half.
 
