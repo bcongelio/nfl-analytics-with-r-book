@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/index.html</loc>
-    <lastmod>2023-07-21T17:44:12.885Z</lastmod>
+    <lastmod>2023-07-21T20:38:49.943Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/01-nfl-analytics-and-r.html</loc>
-    <lastmod>2023-07-21T17:44:33.605Z</lastmod>
+    <lastmod>2023-07-21T20:38:49.995Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/02-nfl-analytics-tidyverse.html</loc>
-    <lastmod>2023-07-21T17:44:13.012Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.063Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/03-nfl-analytics-functions.html</loc>
-    <lastmod>2023-07-21T17:44:13.167Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.187Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/04-nfl-analytics-visualization.html</loc>
-    <lastmod>2023-07-21T17:44:13.354Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.388Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/05-nfl-analytics-advanced-methods.html</loc>
-    <lastmod>2023-07-21T17:44:13.524Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.554Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bradcongelio.com/nfl-analytics-with-r-book/06-nfl-references.html</loc>
+    <lastmod>2023-07-21T20:47:38.642Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a1-nfl-analytics-dictionary.html</loc>
-    <lastmod>2023-07-21T17:44:13.552Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.590Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a2-nfl-further-reading.html</loc>
-    <lastmod>2023-07-21T17:44:13.557Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.595Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a3-nfl-errata.html</loc>
-    <lastmod>2023-07-21T17:44:13.563Z</lastmod>
+    <lastmod>2023-07-21T20:38:50.599Z</lastmod>
   </url>
 </urlset>

@@ -80,7 +80,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./a1-nfl-analytics-dictionary.html" rel="next">
+<link href="./06-nfl-references.html" rel="next">
 <link href="./04-nfl-analytics-visualization.html" rel="prev">
 <link href="./web-favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -222,6 +222,12 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nfl-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -303,7 +309,7 @@ div.csl-indent {
 
 </header><section id="introduction-to-statistical-modeling-with-nfl-data" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="introduction-to-statistical-modeling-with-nfl-data">
 <span class="header-section-number">5.1</span> Introduction to Statistical Modeling with NFL Data</h2>
-<p>The process of conducting statistical modeling with NFL data is difficult to cover in a single chapter of a book, as the topic realistically deserves an entire book as the field of modeling and machine learning is vast and complex, and continues to grow as a result of access to new data and the releases of packages (as of November 2020, over 16,000 packages are available in the R ecosystem).<span class="citation" data-cites="Wikipedia">(<a href="#ref-Wikipedia" role="doc-biblioref">Wikipedia 2023</a>)</span> The list of options for conducting statistical analysis and machine learning is vast, with the more widely-used ones including <code>caret</code> (combined functions for creating predictive models), <code>mgcv</code> (for generalized additive models), <code>lme4</code> (for linear mixed effects models), <code>randomForest</code> (for creating random forests models), <code>torch</code> (for image recognition, time series forecasting, and audio processing), and <code>glmnet</code> (for lasso and elastic-net regression methods). A newer addition to the modeling and machine learning ecosystem is <code>tidymodels</code>, which is a collection of various packages that operate cohesively using <code>tidyverse</code> principles.</p>
+<p>The process of conducting statistical modeling with NFL data is difficult to cover in a single chapter of a book, as the topic realistically deserves an entire book as the field of modeling and machine learning is vast and complex, and continues to grow as a result of access to new data and the releases of packages (as of November 2020, over 16,000 packages are available in the R ecosystem).<span class="citation" data-cites="Wikipedia">(<a href="06-nfl-references.html#ref-Wikipedia" role="doc-biblioref">Wikipedia, 2023</a>)</span> The list of options for conducting statistical analysis and machine learning is vast, with the more widely-used ones including <code>caret</code> (combined functions for creating predictive models), <code>mgcv</code> (for generalized additive models), <code>lme4</code> (for linear mixed effects models), <code>randomForest</code> (for creating random forests models), <code>torch</code> (for image recognition, time series forecasting, and audio processing), and <code>glmnet</code> (for lasso and elastic-net regression methods). A newer addition to the modeling and machine learning ecosystem is <code>tidymodels</code>, which is a collection of various packages that operate cohesively using <code>tidyverse</code> principles.</p>
 <p>While it is not possible for this chapter to cover every aspect of modeling and machine learning, its goal is to provide the foundation in both to provide you with the necessary skills, understanding, and knowledge to independently explore and analyze NFL data using different methodologies and tools. The techniques covered in this chapter, from creating a simple linear regression to a predictive XGBoost model, are building blocks to all further analysis and machine learning you will conduct. In doing so, you will learn how to use built-in options such as <code>stats</code> to more technical packages such as <code>tidymodels</code>.</p>
 <p>To that end, by mastering these introductory concepts and techniques, you not only learn the process and coding needed to create models or do machine learning, but you will begin developing an analytical mindset which will allow you to understand why one statistical approach is not correct for your data and which one is, how to interpret the results of your model, and - when necessary - how to correct issues and problems in the process as they arise. The fundamentals provided in this chapter, I believe, serve as a actionable stepping stone for a further journey into the modeling and machine learning in the R programming language, with or without the use of NFL data.</p>
 </section><section id="regression-models-with-nfl-data" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="regression-models-with-nfl-data">
@@ -1275,7 +1281,7 @@ P(Y_{i} = k | X_{i}) = \frac{e^{(\beta_{k0} + \beta_{k1}X_{i1} + \beta_{k2}X_{i2
 <li>medium pass (passes with air yards between 6-10 yards)</li>
 <li>long passes (passes with air yards of 11+ yards)</li>
 </ol>
-<p>The construction of a multinomial regression will allow us to find the probability of each play type based on factors in the game. Such a model speaks directly to coach play-calling tendencies given the situation. To begin, we will gather data from the 2010-2022 NFL regular season. After loading the data, we will select the predictor variables and then conduct some featured engineering (which is, in this case, inspired by a presentation given by Thomas Mock on how to use <code>tidymodels</code> to predict a run or pass using binary regression)<span class="citation" data-cites="thomas_mock">(<a href="#ref-thomas_mock" role="doc-biblioref">Mock 2020</a>)</span>.</p>
+<p>The construction of a multinomial regression will allow us to find the probability of each play type based on factors in the game. Such a model speaks directly to coach play-calling tendencies given the situation. To begin, we will gather data from the 2010-2022 NFL regular season. After loading the data, we will select the predictor variables and then conduct some featured engineering (which is, in this case, inspired by a presentation given by Thomas Mock on how to use <code>tidymodels</code> to predict a run or pass using binary regression)<span class="citation" data-cites="thomas_mock">(<a href="06-nfl-references.html#ref-thomas_mock" role="doc-biblioref">Mock, 2020</a>)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -3121,7 +3127,7 @@ html {
 </section></section><section id="creating-an-xgboost-model-for-rushing-yards-over-expected" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="creating-an-xgboost-model-for-rushing-yards-over-expected">
 <span class="header-section-number">5.3.2</span> Creating an XGBoost Model for Rushing Yards over Expected</h3>
 <p>Back in January of 2021, Tej Seth posted an article to the <a href="https://mfootballanalytics.com/2021/01/14/creating-a-public-expected-rushing-yards-model/">Michigan Football Analytics Society blog</a> that outlined his vision for creating a “public expected rushing yards model.” The structure of his model, as explained by Seth, was inspired by the prior work of Michael Egle, an honorable mention in both the 2021 and 2023 NFL Big Data Bowls, who previously used the college football equivalent of open-source data (<a href="https://cfbfastr.sportsdataverse.org/"><code>cfbfastR</code></a>) to create an RYOE model for the collegiate game.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In Tej’s case, his approach to creating an NFL-centric RYOE model culminated with the creation of his <a href="https://mfbanalytics.shinyapps.io/RYOE/">RYOE Shiny App</a> that allows anybody to explore his RYOE metric by season or team and even through three-way rusher comparisons.</p>
-<p>Despite a slightly intimidating title, rushing yards over expected is a fantastic entry point into exploring model creation and analysis in NFL analytics - in fact, the growing number of “over expected” metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greer, the owner of <a href="https://www.nfeloapp.com/">nfeloapp.com</a> - a website that provides “data-driven analytics, picks, and predictions for the NFL” - explains that over expected metrics are a increasingly popular avenue in which analysts can “paint a more accurate picture of performance by adjusting familiar statistics like ‘completion percentage’ or ‘yards per rush’ for conflating factors like degree of difficulty or game text” <span class="citation" data-cites="nfelo">(<a href="#ref-nfelo" role="doc-biblioref">Greerre 2022</a>)</span>.</p>
+<p>Despite a slightly intimidating title, rushing yards over expected is a fantastic entry point into exploring model creation and analysis in NFL analytics - in fact, the growing number of “over expected” metrics in the NFL are all great ways to begin learning about and understanding advanced modeling. Robby Greer, the owner of <a href="https://www.nfeloapp.com/">nfeloapp.com</a> - a website that provides “data-driven analytics, picks, and predictions for the NFL” - explains that over expected metrics are a increasingly popular avenue in which analysts can “paint a more accurate picture of performance by adjusting familiar statistics like ‘completion percentage’ or ‘yards per rush’ for conflating factors like degree of difficulty or game text” <span class="citation" data-cites="nfelo">(<a href="06-nfl-references.html#ref-nfelo" role="doc-biblioref">Greerre, 2022</a>)</span>.</p>
 <p>Some of these metrics, like completion percentage over expected (CPOE), are widely accepted. Specifically, CPOE calculates how likely any quarterback’s pass is going to be complete or incomplete compared to other passing attempts. It is considered “widely accepted” because the metric itself is considered “stable” in that the R Squared retains a strong correlation for individual quarterbacks across several seasons. In fact, as Greer points out, the R Squared value for CPOE for just one season is 0.226 which is extremely strong based on NFL analytics standards.</p>
 <p>On the other hand, RYOE - based on Greer’s analysis - maintains an R Squared value below 0.15 until a running back’s fourth season, wherein the average improves to 0.263 (an otherwise stable value). But that does not mean that RYOE is not a metric worth further exploration. The effectiveness of any one metric to account for factors such as degree of difficulty or game text largely relies on our ability to provide adequate feature engineering - specifically, how much relevant data the machine learning model can ingest to begin making predictions.</p>
 <p>Because of that, significant machine learning models have been built with information provided by the NFL’s Big Data Bowl as it is the one chance that the public receives to feature engineer with the NFL’s tracking data (which provides a player’s position, speed, direction, etc. via tracking data that is recorded every 1/10th of a second). Unfortunately, only small windows of data exist from the Big Data Bowl releases and, as a result, we are often required to find creative ways to provide further context to each play/player for the machine learning model.</p>
@@ -3609,15 +3615,15 @@ Note
 <p>Reproduce the above model into a data frame called <code>fieldgoal_regression_2</code> and include information pertaining to the field playing surface, the temperature, and the wind. Use <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> to exclude those plays with missing information. After, rerun the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> model and view the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-nfelo" class="csl-entry" role="listitem">
-Greerre, Robby. 2022. <span>“Over Expected Metrics Explained – What Are CPOE, RYOE, and YACOE.”</span> <a href="https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/">https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/</a>.
+Greerre, R. (2022). <em>Over expected metrics explained – what are CPOE, RYOE, and YACOE</em>. Retrieved from <a href="https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/">https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/</a>
 </div>
 <div id="ref-thomas_mock" class="csl-entry" role="listitem">
-Mock, Thomas. 2020. <span>“Intro to Tidyodels with nflscrapR Play-by-Play.”</span> <a href="https://jthomasmock.github.io/nfl_hanic/#1">https://jthomasmock.github.io/nfl_hanic/#1</a>.
+Mock, T. (2020). <em>Intro to tidyodels with nflscrapR play-by-play</em>. Retrieved from <a href="https://jthomasmock.github.io/nfl_hanic/#1">https://jthomasmock.github.io/nfl_hanic/#1</a>
 </div>
 <div id="ref-Wikipedia" class="csl-entry" role="listitem">
-Wikipedia. 2023. <span>“R Package.”</span> <a href="https://en.wikipedia.org/wiki/R_package">https://en.wikipedia.org/wiki/R_package</a>.
+Wikipedia. (2023). <em>R package</em>. Retrieved from <a href="https://en.wikipedia.org/wiki/R_package">https://en.wikipedia.org/wiki/R_package</a>
 </div>
 </div>
 </section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
@@ -3862,8 +3868,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./a1-nfl-analytics-dictionary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-nfl-references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

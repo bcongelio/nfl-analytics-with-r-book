@@ -32,6 +32,7 @@ book:
     - 03-nfl-analytics-functions.qmd
     - 04-nfl-analytics-visualization.qmd
     - 05-nfl-analytics-advanced-methods.qmd
+    - 06-nfl-references.qmd
   appendices:
     - a1-nfl-analytics-dictionary.qmd
     - a2-nfl-further-reading.qmd
@@ -46,6 +47,7 @@ page-footer:
     This book was built with <a href = "https://quarto.org/">Quarto</a>
     
 bibliography: citations.bib
+csl: apa-6th-edition.csl
 
 
 format:

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Bradley Congelio">
 
-<title>Introduction to NFL Analytics with R - Appendix B — Further Reading Suggestions</title>
+<title>Introduction to NFL Analytics with R - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,7 +21,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -31,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./a3-nfl-errata.html" rel="next">
-<link href="./a1-nfl-analytics-dictionary.html" rel="prev">
+<link href="./a1-nfl-analytics-dictionary.html" rel="next">
+<link href="./05-nfl-analytics-advanced-methods.html" rel="prev">
 <link href="./web-favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -67,15 +86,13 @@ ul.task-list li input[type="checkbox"] {
 <script defer="" data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
 
 
-<meta property="og:title" content="Introduction to NFL Analytics with R - Appendix B — Further Reading Suggestions">
-<meta property="og:description" content="">
+<meta property="og:title" content="Introduction to NFL Analytics with R - References">
 <meta property="og:image" content="https://bradcongelio.com/nfl-analytics-with-r-book/images/feature.png">
 <meta property="og:site-name" content="Introduction to NFL Analytics with R">
 <meta property="og:locale" content="es_ES">
 <meta property="og:image:height" content="960">
 <meta property="og:image:width" content="1344">
-<meta name="twitter:title" content="Introduction to NFL Analytics with R - Appendix B — Further Reading Suggestions">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Introduction to NFL Analytics with R - References">
 <meta name="twitter:image" content="https://bradcongelio.com/nfl-analytics-with-r-book/images/feature.png">
 <meta name="twitter:creator" content="@bradcongelio">
 <meta name="twitter:image-height" content="960">
@@ -92,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./a1-nfl-analytics-dictionary.html">Appendices</a></li><li class="breadcrumb-item"><a href="./a2-nfl-further-reading.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-nfl-references.html">References</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -186,7 +203,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-nfl-references.html" class="sidebar-item-text sidebar-link">
+  <a href="./06-nfl-references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -207,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link active">
+  <a href="./a2-nfl-further-reading.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Further Reading Suggestions</span></span></a>
   </div>
 </li>
@@ -225,22 +242,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction-to-r-programming-books" id="toc-introduction-to-r-programming-books" class="nav-link active" data-scroll-target="#introduction-to-r-programming-books"><span class="header-section-number">B.1</span> Introduction to R Programming Books</a></li>
-  <li><a href="#data-visualization-in-r-and-visualization-guides" id="toc-data-visualization-in-r-and-visualization-guides" class="nav-link" data-scroll-target="#data-visualization-in-r-and-visualization-guides"><span class="header-section-number">B.2</span> Data Visualization in R and Visualization Guides</a></li>
-  <li><a href="#sport-analytics-guidesbooks" id="toc-sport-analytics-guidesbooks" class="nav-link" data-scroll-target="#sport-analytics-guidesbooks"><span class="header-section-number">B.3</span> Sport Analytics Guides/Books</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/a2-nfl-further-reading.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-appendix-reading" class="quarto-section-identifier">Appendix B — Further Reading Suggestions</span></h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -255,42 +264,70 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This book is, of course, not comprehensive when it comes to highlighting the R programming language. Because of this, the list below are suggested readings that will increase your knowledge/skill of R.</p>
-<section id="introduction-to-r-programming-books" class="level2" data-number="B.1">
-<h2 data-number="B.1" class="anchored" data-anchor-id="introduction-to-r-programming-books"><span class="header-section-number">B.1</span> Introduction to R Programming Books</h2>
-<ol type="1">
-<li><p><a href="https://amzn.to/3ovLXUB">R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</a></p></li>
-<li><p><a href="https://amzn.to/3PYUVWf">Hands-On Programming with R: Write Your Own Functions and Simulations</a></p></li>
-<li><p><a href="https://amzn.to/3J8lWEv">The Book of R: A First Course in Programming and Statistics</a></p></li>
-<li><p><a href="https://amzn.to/3zcjYhA">Learning R: A Step-by-Step Function Guide to Data Analysis</a></p></li>
-<li><p><a href="https://amzn.to/3OBMjn2">The Art of R Programming: A Tour of Statistical Software Design</a></p></li>
-<li><p><a href="https://amzn.to/3zbBT8f">Advanced R (Second Edition)</a></p></li>
-</ol>
-</section>
-<section id="data-visualization-in-r-and-visualization-guides" class="level2" data-number="B.2">
-<h2 data-number="B.2" class="anchored" data-anchor-id="data-visualization-in-r-and-visualization-guides"><span class="header-section-number">B.2</span> Data Visualization in R and Visualization Guides</h2>
-<ol type="1">
-<li><p><a href="https://amzn.to/3oulxTa">R Graphics Cookbook: Practicl Recipes for Visualizing Data</a></p></li>
-<li><p><a href="https://amzn.to/3PAOB7y">Storytelling with Data: A Data Visualization Guides for Business Professionals</a></p></li>
-<li><p><a href="https://amzn.to/3PE3QfP">Better Data Visualizations: A Guide for Scholars, Researchers, and Wonks</a></p></li>
-</ol>
-</section>
-<section id="sport-analytics-guidesbooks" class="level2" data-number="B.3">
-<h2 data-number="B.3" class="anchored" data-anchor-id="sport-analytics-guidesbooks"><span class="header-section-number">B.3</span> Sport Analytics Guides/Books</h2>
-<ol type="1">
-<li><p><a href="https://amzn.to/3PE2LEK">The Midrange Theory: Basketball’s Evolution in the Age of Analytics</a></p></li>
-<li><p><a href="https://amzn.to/3vgIyNl">Analyzing Baseball Data with R (2nd edition)</a></p></li>
-<li><p><a href="https://amzn.to/3zwXcCA">A Fan’s Guide to Baseball Analytics: Why WAR, WHIP, wOBA, and other Advanced Sabermetrics Are Essential to Understanding Modern Baseball</a></p></li>
-<li><p><a href="https://amzn.to/3vgR3rM">The Book: Playing the Percentages in Baseball</a></p></li>
-<li><p><a href="https://amzn.to/3oy66t4">The Hidden Game of Baseball: A Revolutionary Approach to Baseball and Its Statistics</a></p></li>
-<li><p><a href="https://amzn.to/3PZt7kf">The Hidden Game of Football: A Revealing and Lively Look at the Pro Game, With New Stats, Revolutionary Strategies, and Keys to Picking the Winners</a></p></li>
-<li><p><a href="https://amzn.to/3zwXysU">Mathletics: How Gamblers, Managers, and Fans Use Mathematics in Sports</a></p></li>
-<li><p><a href="https://amzn.to/3Bnd23U">Basketball Data Science: With Applications in R</a></p></li>
-<li><p><a href="https://amzn.to/3PE4bPA">Data Analytics in Football (Soccer): Positional Data Collection, Modelling, and Analysis</a></p></li>
-</ol>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
+<div id="ref-awbrey2020" class="csl-entry" role="listitem">
+Awbrey, J. (2020). <em>The future of NFL analytics</em>. Retrieved from
+<a href="https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics">https://www.samford.edu/sports-analytics/fans/2020/The-Future-of-NFL-Data-Analytics</a>
+</div>
+<div id="ref-bechtold2021" class="csl-entry" role="listitem">
+Bechtold, T. (2021). <em>How the analytics movement has changed the NFL
+and where it has fallen short</em>. Retrieved from <a href="https://theanalyst.com/na/2021/04/evolution-of-the-analytics-movement-in-the-nfl/">https://theanalyst.com/na/2021/04/evolution-of-the-analytics-movement-in-the-nfl/</a>
+</div>
+<div id="ref-bigdatabowl-ws" class="csl-entry" role="listitem">
+<em>Big data bowl: The annual analytics contest explores statistical
+innovations in football</em>. (n.d.). Retrieved from <a href="https://operations.nfl.com/gameday/analytics/big-data-bowl/">https://operations.nfl.com/gameday/analytics/big-data-bowl/</a>
+</div>
+<div id="ref-bushnell2021" class="csl-entry" role="listitem">
+Bushnell, H. (2021). <em>NFL teams are taking 4th-down risks more than
+ever - but still not often enough</em>. Retrieved from <a href="https://sports.yahoo.com/nfl-teams-are-taking-4th-down-risks-more-than-ever-but-still-not-often-enough-163650973.html">https://sports.yahoo.com/nfl-teams-are-taking-4th-down-risks-more-than-ever-but-still-not-often-enough-163650973.html</a>
+</div>
+<div id="ref-carl2022" class="csl-entry" role="listitem">
+Carl, S. (2022). <em>nflplotR</em>. Retrieved from <a href="https://nflplotr.nflverse.com/">https://nflplotr.nflverse.com/</a>
+</div>
+<div id="ref-fortier2020" class="csl-entry" role="listitem">
+Fortier, S. (2020). <em>The NFL’s analytics movement has finally reached
+the sport’s mainstream</em>. Retrieved from <a href="https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/">https://www.washingtonpost.com/sports/2020/01/16/nfls-analytics-movement-has-finally-reached-sports-mainstream/</a>
+</div>
+<div id="ref-nfelo" class="csl-entry" role="listitem">
+Greerre, R. (2022). <em>Over expected metrics explained – what are CPOE,
+RYOE, and YACOE</em>. Retrieved from <a href="https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/">https://www.nfeloapp.com/analysis/over-expected-explained-what-are-cpoe-ryoe-and-yacoe/</a>
+</div>
+<div id="ref-heifetz2019" class="csl-entry" role="listitem">
+Heifetz, D. (2019). <em>We salute you, founding father of the NFL’s
+analytics movement</em>. Retrieved from <a href="https://www.theringer.com/nfl-preview/2019/8/15/20806241/nfl-analytics-pro-football-focus">https://www.theringer.com/nfl-preview/2019/8/15/20806241/nfl-analytics-pro-football-focus</a>
+</div>
+<div id="ref-kirschner2022" class="csl-entry" role="listitem">
+Kirschner, A. (2022). <em>The rams’ super bowl afterparty turned into a
+historic hangover</em>. Retrieved from <a href="https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/">https://fivethirtyeight.com/features/the-rams-super-bowl-afterparty-turned-into-a-historic-hangover/</a>
+</div>
+<div id="ref-kozora2015" class="csl-entry" role="listitem">
+Kozora, A. (2015). <em>Tomlin prefers "feel over analytics"</em>.
+Retrieved from <a href="http://steelersdepot.com/2015/09/tomlin-prefers-feel-over-analytics/">http://steelersdepot.com/2015/09/tomlin-prefers-feel-over-analytics/</a>
+</div>
+<div id="ref-thomas_mock" class="csl-entry" role="listitem">
+Mock, T. (2020). <em>Intro to tidyodels with nflscrapR
+play-by-play</em>. Retrieved from <a href="https://jthomasmock.github.io/nfl_hanic/#1">https://jthomasmock.github.io/nfl_hanic/#1</a>
+</div>
+<div id="ref-rosenthal2018" class="csl-entry" role="listitem">
+Rosenthal, G. (2018). <em>Super bowl LII: How the 2017 philadelphia
+eagles were built</em>. Retrieved from <a href="https://www.nfl.com/news/super-bowl-lii-how-the-2017-philadelphia-eagles-were-built-0ap3000000912753">https://www.nfl.com/news/super-bowl-lii-how-the-2017-philadelphia-eagles-were-built-0ap3000000912753</a>
+</div>
+<div id="ref-silge" class="csl-entry" role="listitem">
+Silge, J. (n.d.). <em>Tidymodels</em>. Retrieved from <a href="https://tidymodels.org">https://tidymodels.org</a>
+</div>
+<div id="ref-stikeleather2013" class="csl-entry" role="listitem">
+Stikeleather, J. (2013). <em>The three elements of successful data
+visualizations</em>. Retrieved from <a href="https://hbr.org/2013/04/the-three-elements-of-successf">https://hbr.org/2013/04/the-three-elements-of-successf</a>
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="listitem">
+Wickham, H. (2022). <em>Tidyverse packages</em>. Retrieved from <a href="https://www.tidyverse.org/packages/">https://www.tidyverse.org/packages/</a>
+</div>
+<div id="ref-Wikipedia" class="csl-entry" role="listitem">
+Wikipedia. (2023). <em>R package</em>. Retrieved from <a href="https://en.wikipedia.org/wiki/R_package">https://en.wikipedia.org/wiki/R_package</a>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -528,13 +565,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./a1-nfl-analytics-dictionary.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></span>
+      <a href="./05-nfl-analytics-advanced-methods.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Model Creation with NFL Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./a3-nfl-errata.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Errata</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./a1-nfl-analytics-dictionary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">NFL Analytics Quick Reference Guide</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -542,5 +579,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/edit/origin/06-nfl-references.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/bcongelio/nfl-analytics-with-r-book/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
