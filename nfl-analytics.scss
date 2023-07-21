@@ -1,12 +1,12 @@
 /*-- scss:defaults --*/
 
-$primary: #013369 !default;
+$primary: #935300 !default;
 $font-size-root: 18px !default;
 
 /*-- scss:rules --*/
 
 .sidebar-title {
-  color:#6C6C6C;
+  color:#000000;
 }
 
 div.sidebar-item-container .active {
@@ -18,7 +18,7 @@ div.sidebar-item-container .active {
 }
 
 img.quarto-cover-image {
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.50);
 }
 
 /* Headings ------------------------------------------------------ */
@@ -38,14 +38,14 @@ h4 { margin-top: 1.5em; font-size: 1.1rem; }
 h5 { margin-top: 1.5em; font-size: 1rem; }
 
 .quarto-section-identifier {
-  color: #6C6C6C;
+  color: #000000;
   font-weight: bold;
 }
 
 /* Code ------------------------------------------------ */
 
 code {
-  color: #D50A0A;
+  color: #461e76;
 }
 
 code a:any-link {
@@ -56,3 +56,4 @@ code a:any-link {
 pre {
   background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
 }
+

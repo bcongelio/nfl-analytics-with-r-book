@@ -1,7 +1,7 @@
 project:
   type: book
   output-dir: docs
-
+  
 book:
   title: "Introduction to NFL Analytics with R"
   reader-mode: true
@@ -41,9 +41,10 @@ search: true
 
 page-footer: 
   left: |
-    NFL Analytics with R was written by Bradley J. Congelio.
+    Introduction to NFL Analytics with R was written by Bradley J. Congelio.
   right: |
     This book was built with <a href = "https://quarto.org/">Quarto</a>
+    
 bibliography: citations.bib
 
 
@@ -55,12 +56,12 @@ format:
     include-in-header: 
       text: | 
         <script defer data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
+    smooth-scroll: true
     code-link: true
     code-overflow: wrap
     fig-align: center
     fig-cap-location: bottom
     author-meta: "Bradley Congelio"
-    
 
   pdf:
     documentclass: krantz

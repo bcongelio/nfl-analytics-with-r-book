@@ -11,7 +11,7 @@ Welcome to the online home of ***Introduction to NFL Analytics with R***, which 
 
 If you wish to further support the development of this book, please consider one of the following:
 
-1.  Submitting an issue or making a pull request the [book's official GitHub repository](https://github.com/bcongelio/nfl-analytics-with-r-book).
+1.  Submitting an issue or making a pull request at the [book's official GitHub repository](https://github.com/bcongelio/nfl-analytics-with-r-book).
 
 2.  [Buy me a coffee](https://bmc.link/nflanalyticsbook) to help me fuel up for the ongoing edits and updates to the book.
 
@@ -32,6 +32,8 @@ If you wish to further support the development of this book, please consider one
 {{< tweet MrCondeMx 1665201271446405120 >}}
 
 {{< tweet tejfbanalytics 1677014911669395459 >}}
+
+Lastly, the football illustration on the cover of the book was created by [Corinne Deichmeister](https://inkyfingers.design/), a May 2023 graduate of [Kutztown University's Communication Design program](https://www.kutztown.edu/academics/colleges-and-departments/visual-and-performing-arts/majors-minors-and-certificates/art-and-design/bachelor-of-fine-arts-in-communication-design-(bfa).html).
 
 # Preface {.unnumbered}
 
