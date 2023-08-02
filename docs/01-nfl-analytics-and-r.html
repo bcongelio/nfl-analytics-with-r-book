@@ -610,24 +610,30 @@ Important
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/pressure-rate"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">team_abbr</span>, <span class="va">team_nick</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pressure_rate</span> <span class="op">&lt;-</span> <span class="va">pressure_rate</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_nick"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">total_combos</span> <span class="op">&lt;-</span> <span class="va">total_combos</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">pressure_rate</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">pressure_rate</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 32 x 5
-   team  combos win_pct season pressure_percent
-   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;            &lt;dbl&gt;
- 1 LA        13   0.294     NA               NA
- 2 ARI       12   0.235     NA               NA
- 3 CHI       10   0.176     NA               NA
- 4 WAS       10   0.5       NA               NA
- 5 DEN        9   0.294     NA               NA
- 6 NO         9   0.412     NA               NA
- 7 NYJ        9   0.412     NA               NA
- 8 GB         8   0.471     NA               NA
- 9 TB         8   0.471     NA               NA
-10 BUF        7   0.812     NA               NA
+<pre><code># A tibble: 32 x 6
+   team  combos win_pct season team.y     pressure_percent
+   &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt;
+ 1 LA        13   0.294   2022 Rams                   34.7
+ 2 ARI       12   0.235   2022 Cardinals              26.5
+ 3 CHI       10   0.176   2022 Bears                  42.3
+ 4 WAS       10   0.5     2022 Commanders             38.4
+ 5 DEN        9   0.294   2022 Broncos                33.8
+ 6 NO         9   0.412   2022 Saints                 28.2
+ 7 NYJ        9   0.412   2022 Jets                   33.9
+ 8 GB         8   0.471   2022 Packers                25.4
+ 9 TB         8   0.471   2022 Buccaneers             19.6
+10 BUF        7   0.812   2022 Bills                  31.8
 # i 22 more rows</code></pre>
 </div>
 </div>
@@ -962,8 +968,8 @@ Important
 <span class="header-section-number">1.4</span> Exploring Explosive Plays per Touchdown Drive</h2>
 <p>In November of 2022, Warren Sharp - of <a href="https://www.sharpfootballanalysis.com/">Sharp Football Analysis</a> - tweeted perhaps the most ridiculous statistic of the 2022 NFL season.</p>
 <p></p>
-<div id="tweet-96143"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-96143").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
+<div id="tweet-41102"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112","author_name":"Warren Sharp","author_url":"https:\/\/twitter.com\/SharpFootball","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Eyardage of longest 2022 TD scored:\u003Cbr\u003E\u003Cbr\u003E98: BUF\u003Cbr\u003E79: BAL\u003Cbr\u003E75: LAR, WAS, ATL, CAR, HOU\u003Cbr\u003E74: SEA\u003Cbr\u003E67: DEN\u003Cbr\u003E66: NYJ\u003Cbr\u003E65: NYG\u003Cbr\u003E61: CHI, JAX\u003Cbr\u003E60: CIN, MIA, NO\u003Cbr\u003E58: LV\u003Cbr\u003E57: SF, DAL\u003Cbr\u003E53: PHI, MIN\u003Cbr\u003E51: DET\u003Cbr\u003E45: KC\u003Cbr\u003E44: NE\u003Cbr\u003E41: CLE\u003Cbr\u003E38: ARI\u003Cbr\u003E37: GB\u003Cbr\u003E32: IND\u003Cbr\u003E29: TEN\u003Cbr\u003E28: TB\u003Cbr\u003E23: LAC\u003Cbr\u003E  8: PIT\u003C\/p\u003E&mdash; Warren Sharp (@SharpFootball) \u003Ca href=\"https:\/\/twitter.com\/SharpFootball\/status\/1590489624518234112?ref_src=twsrc%5Etfw\"\u003ENovember 9, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-41102").innerHTML = tweet["html"];</script><p>Heading into their week 9 bye week, the Steelers’ longest play resulting in a touchdown was just eight yards, or less than what is required for a 1st down. Perhaps making it worse, the touchdown came early in the season, on a pass from Mitch Trubisky to Pat Freiermuth in a week 2 contest against the New England Patriots.</p>
 <p>However, the statistic as presented by Sharp does not tell the complete story as it isolates the entirety of a touchdown drive to a single play. While the team’s longest touchdown scoring play was just eight yards, this does not mean that there was a lack of explosive, high-yardage plays earlier in the drive that helped the Steelers get closer to the endzone.</p>
 <p>To determine if this is the case, we can construct a metric that explore explosive plays per touchdown drive during the 2022 season.</p>
 <div class="cell">

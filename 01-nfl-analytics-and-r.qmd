@@ -277,8 +277,14 @@ Rather than calculate the data ourselves (which is the total number dropbacks di
 
 pressure_rate <- vroom("http://nfl-book.bradcongelio.com/pressure-rate")
 
+teams <- nflreadr::load_teams() %>%
+  select(team_abbr, team_nick)
+
+pressure_rate <- pressure_rate %>%
+  left_join(teams, by = c("team" = "team_nick"))
+
 total_combos <- total_combos %>%
-  left_join(pressure_rate, by = c("team" = "team"))
+  left_join(pressure_rate, by = c("team" = "team_abbr"))
 ```
 
 ```{r show-total-combos-df, eval = TRUE, echo = FALSE, output = TRUE}
