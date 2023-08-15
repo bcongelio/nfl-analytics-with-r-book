@@ -21,7 +21,7 @@ font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.
 
 It might seem odd to begin an introductory book with coding and visualization in Chapter 1, while placing information about learning the basics of the `tidyverse` in a later chapter. But there is good reason for this pedagogical approach being utilized in this book. As explained by Hadley Wickham\index{Wickham, Hadley} and Garrett Grolemund\index{Grolemund, Garrett} in their outstanding book [*R for Data Science*](https://r4ds.had.co.nz/index.html)*,* the process of reading in and then cleaning data is not exactly the most exciting part of doing analytics. As evidence suggest, early excitement about and integration into a topic increases the likelihood of following up and learning the "boring" material.
 
-Because of this, I follow the approach of Wickham and Grolemund and provide data that is already, for the most part, "tidied" and ready to be used. We will however, in later chapters, pull raw data directly from it source (such as `nflreadr`, Pro Football Reference, and Sports Info Solutions) that requires manipulation and cleaning before any significant analysis can begin.
+Because of this, I follow the approach of Wickham and Grolemund and provide data that is already, for the most part, "tidied" and ready to be used. We will however, in later chapters, pull raw data directly from its source (such as `nflreadr`, Pro Football Reference, and Sports Info Solutions) that requires manipulation and cleaning before any significant analysis can begin.
 
 ::: callout-important
 I am assuming, while you may not have a full grasp of the `tidyverse` yet, **that you do currently have base R and RStudio installed**. If you do not, more detailed instructions are provided in Chapter 2. If you would rather jump right into this material, you can download base R and RStudio at the following links. Once both are installed, you can return to this point in the chapter to follow along.
@@ -316,7 +316,7 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
        **Brad J. Congelio**")
 ```
 
-Again, there does not seem to be any statistical correlation between a team's number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between a the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from `nflreadr` to collect total QB hits.
+Again, there does not seem to be any statistical correlation between a team's number of unique offensive line combinations and the pressure rate per dropback allowed. Rather than examining the pressure per dropback rate, perhaps there is a correlation between the number of unique offensive line combinations and the total number of quarterback hits allowed through the season? To determine the validity of that hypothesis, we can use data from `nflreadr` to collect total QB hits.
 
 ### Unique Offensive Line Combinations vs. QB Hits Allowed
 
@@ -525,7 +525,7 @@ ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
   nfl_analytics_theme()
 ```
 
-Comparing a team's unique offensive line combinations to adjusted line yards is more promising than power and stuffed rank, as the team's with the highest amount of combinations begin to fall under the league-average line for ALY. There are still several teams that, despite having a low number of combinations through the season, performed poorly such as the Houston Texans\index{NFL Teams!Houston Texans}, Seattle Seahawks\index{NFL Teams!Seattle Seahawks}, and the Jaguars\index{NFL Teams!Jacksonville Jaguars}.
+Comparing a team's unique offensive line combinations to adjusted line yards is more promising than power and stuffed rank, as the teams with the highest amount of combinations begin to fall under the league-average line for ALY. There are still several teams that, despite having a low number of combinations through the season, performed poorly such as the Houston Texans\index{NFL Teams!Houston Texans}, Seattle Seahawks\index{NFL Teams!Seattle Seahawks}, and the Jaguars\index{NFL Teams!Jacksonville Jaguars}.
 
 So what do we make of this?
 
@@ -604,7 +604,7 @@ explosive <- pbp %>%
   select(posteam, percent_w_exp, percent_no_exp)
 ```
 
-After collecting the play-by-play information for the 2022 NFL season, we use `filter()` to gather only those `fixed_drive_result` rows that include `Touchdown` and then remove any play that is a special teams play and includes a fumble or interception. This is done as we only want those touchdowns scored by the offense, not a fumble or interception return for a score. Because of this, the results of total touchdowns is lower than the "official" number from Pro Football Reference, as the site's "Touchdown Log" includes this data.
+After collecting the play-by-play information for the 2022 NFL season, we use `filter()` to gather only those `fixed_drive_result` rows that include `Touchdown` and then remove any play that is a special teams play and includes a fumble or interception. This is done as we only want those touchdowns scored by the offense, not a fumble or interception return for a score. Because of this, the total touchdowns result is lower than the "official" number from Pro Football Reference, as the site's "Touchdown Log" includes this data.
 
 We then use `group_by()` on `posteam`, `game_id`, and `drive` in order to create the column `max_yards` with `summarize()`. The resulting numeric value in `max_yards` represents the largest amount of yards gained on a single play, per drive. The important `explosive_play` metric is returned, in a binary `1` or `0` format, based on whether or not the `max_yards` in each drive was greater than or equal to 20 yards. With this calculation complete, we `ungroup()` the data and then group it only by `posteam` to determine the results. After finding the percent of drives with an explosive play and those without, we can plot the results.
 
