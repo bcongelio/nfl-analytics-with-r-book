@@ -17,7 +17,7 @@ font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.
 
 ## Downloading R and RStudio
 
-Prior to downloading R and RStudio, it is important to explain the difference between the two, as they are separate pieces of our analytics puzzle that are used for differing purposes. R\index{R programming language} is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer's command line, it is also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.
+Prior to downloading R and RStudio, it is important to explain the difference between the two, as they are separate pieces of our analytics puzzle that are used for differing purposes. R\index{R programming language} is the core programming language used for statistical computing and graphics. R provides a wide range of statistical and graphical techniques and has a large community of users who develop and maintain a multitude of packages (essentially libraries of pre-written functions) that extend the capabilities and ease of coding. While R can be run from your computer's command line, it also has an integrated development environment (IDE) in RStudio that provides a graphical user interface for working with R scripts, data files, and packages.
 
 RStudio\index{RStudio} is free to download and use and provides a user-friendly interface for writing R code, organizing projects and files, and working with both big and small data. Regularly updated by the [Posit team](https://posit.co/), RStudio includes many features that are specifically designed to making working with R easier, including syntax highlighting, code suggestions, robust debugging tools, and a built-in package manager.
 
@@ -620,7 +620,7 @@ Using `vroom`\index{Packages!vroom} , we are reading in the `.csv` file into our
 2.  Conducting an EDA allows you to gain a deeper understanding of the distribution, variability, and relationships between all the variables contained in the data set, thus allowing you to make informed decisions on appropriate statistical techniques, models, and visualizations that can best analyze and communicate the data effectively.
 3.  The EDA process can help you discover patterns or trends in the data that may be of interest or relevance to your research question, or help you discover to questions to answer.
 
-To start the process of EDA on our newly created `sis_data` dataset, let's examine the current status fo the data set:
+To start the process of EDA on our newly created `sis_data` dataset, let's examine the current status of the data set:
 
 ```{r sis-data-eda, eval = TRUE, echo = TRUE, output = TRUE}
 
