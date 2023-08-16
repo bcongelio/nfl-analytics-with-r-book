@@ -64,16 +64,3 @@ format:
     fig-align: center
     fig-cap-location: bottom
     author-meta: "Bradley Congelio"
-
-  pdf:
-    documentclass: krantz
-    keep-tex: true
-    include-in-header:
-      text: |
-        \usepackage{makeidx}
-        \makeindex
-    include-after-body:
-      text: |
-        \printindex
-    fig-align: center
-    fig-cap-location: bottom

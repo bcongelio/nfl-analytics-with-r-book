@@ -503,7 +503,7 @@ Much like the `filter()` verb, we are able to supply multiple arguments within o
 Loading in multiple seasons of play-by-play data can be taxing on your computer's memory. RStudio's memory usage monitor, located in 'Environment' toolbar tell you how much data is currently being stored in memory. As needed, you can click on the usage monitor and select 'Free Unused Memory' to purge any data that is no longer also in your 'Environment.'
 :::
 
-```{r loading-multiple-seasons-group, eval = TRUE, echo = TRUE, output = FALSE}
+```{r loading-multiple-seasons-group, eval = TRUE, echo = TRUE, output = FALSE, cache = FALSE}
 
 multiple_seasons <- nflreadr::load_pbp(2010:2022)
 ```

@@ -319,10 +319,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As you will see in this chapter, using <code>nflreadr::</code> while coding provides nearly identical functions to those available when using <code>nflfastR::</code>. In fact, <code>nflfastR::</code>, in many instances, now calls, “under the hood,” the equivalent function in <code>nflreadr::</code>. Because of the coalescing between the two, many of the new functions being developed are available only when using <code>nflreadr::</code>. For example, <code>nflreadr::</code> allows you to access data pertaining to the NFL Combine, draft picks, contracts, trades, injury information, and access to statistics on Pro Football Reference.</p>
 <p>While <code>nflfastR</code> did initially serve as the foundation of the “amateur NFL analytics” movement, the <code>nflreadr</code> package has superseded it and now serves as the “catchall” package for all the various bits and pieces of the <code>nflverse</code>. Because of this, and to maintain consistency throughout, this book - nearly exclusively - will use <code>nflreadr::</code> when calling functions housed within the <code>nflverse</code> rather than <code>nflfastR::</code>.</p>
 <p>The below diagram visualizes the relationship between <code>nflfastR</code> and <code>nflreadr</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/nflverse-comparison_0f11bdc2a5dabddb99944258391866a9">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/updated-diagram.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="images/updated-diagram.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Comparison of nflreadr and nflfastR</figcaption></figure>
 </div>
 </div>
@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The most important part of the <code>nflverse</code> is, of course, the data. To begin, we will examine the core data that underpins the <code>nflverse</code>: weekly player stats and the more detailed play-by–play data. Using <code>nflreadr</code>, the end user is able to collect weekly top-level stats via the <code>load_player_stats()</code> function or the much more robust play-by-play numbers by using the <code>load_pbp()</code> function.</p>
 <p>As you may imagine, there is a <strong>very important distinction between the <code>load_player_stats()</code></strong> <strong>and <code>load_pbp()</code></strong>. As mentioned, <code>load_player_stats()</code> will provide you with weekly, pre-calculated statistics for either offense or kicking. Conversely, <code>load_pbp()</code> will provide over 350 metrics for every single play of every single game dating back to 1999.</p>
 <p>The <code>load_player_stats()</code> function includes the following offensive information:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/load_player_stats-information_98d77168f0031ce329b24ee134d88651">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">offensive.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">offensive.stats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>As well, switching the <code>stat_type</code> to “kicking” provides the following information:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/load_player_stats-kicking_6fe238c7ae7c2952b03612c9904109bd">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kicking.stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2021</span>,</span>
 <span>                                             stat_type <span class="op">=</span> <span class="st">"kicking"</span><span class="op">)</span></span>
 <span></span>
@@ -395,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">3.1.1</span> Getting Player Stats via <code>load_player_stats()</code>
 </h3>
 <p>We can generate a data frame titled <code>mahomes_pyards</code> but running the following code:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/loading-mahomes-stats_5907687f3a7bede5bfb742926843c4f3">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_pyards</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the above example, we specified that the returned data be from the 2022 season. It needs to be noted that running <code>load_player_stats()</code> (without a specific season) will return the newest season in the data. Moreover, separating two seasons with a colon (<code>:</code>) will provide multiple seasons of data. In our working example, the <code>mahomes_pyards</code> data frame contains statistics for every player from every week of the 2022 season.</p>
@@ -416,7 +416,7 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>The relevant passing statistics housed in <code>load_player_stats()</code> includes:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/player-stats-passing_f122579a31a6da150fd12f8b2c5e505e">
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "completions"               "attempts"                 
  [3] "passing_yards"             "passing_tds"              
@@ -429,7 +429,7 @@ Tip
 </div>
 </div>
 <p>The columns relevant to rushing statistics in <code>load_player_stats()</code> are:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/player-stats-rushing_d352a72c198a21a0ad2567e51bc37b1b">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "carries"                 "rushing_yards"          
 [3] "rushing_tds"             "rushing_fumbles"        
@@ -438,7 +438,7 @@ Tip
 </div>
 </div>
 <p>Lastly, the columns for receiving statistics in <code>load_player_stats()</code> include:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/player-stats-receiving_0f39619aa06242d8ed9b99a601a88876">
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "receptions"                  "targets"                    
  [3] "receiving_yards"             "receiving_tds"              
@@ -452,7 +452,7 @@ Tip
 </div>
 </div>
 <p>Continuing with our above example working with <code>load_player_stats()</code> and Patrick Mahomes, we can find his total passing yards during the 2022 regular season by using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to sort the data for either <code>player_name</code> or <code>player_display_name</code> as well the the <code>season_type</code> and then use <code>summarize()</code> to get the total of his <code>passing_yards</code> over the course of the regular season.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/getting-mahomes-pyards_5bf6099c3b8243632b48f109b983a468">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_pyards</span> <span class="op">&lt;-</span> <span class="va">mahomes_pyards</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"P.Mahomes"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>passing_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">passing_yards</span><span class="op">)</span><span class="op">)</span></span>
@@ -467,7 +467,7 @@ Tip
 </div>
 <p>The above code returns a result of 5,250 passing yards which is an exact match from the data provided by <a href="https://www.pro-football-reference.com/players/M/MahoPa00.htm">Pro Football Reference.</a> In the above example, we used the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function on the <code>player_name</code> column in the data. You will get the same result if you replace that with <code>player_display_name == "Patrick Mahomes"</code>. While there is no difference in how the data is collected, there will be a difference if you were to visualize the data frame and wished to display the player names along with their respective statistics. In most cases, in order to maintain a clean design, using the <code>player_name</code> option is best as it allows you to plot just the player’s first initial and last name.</p>
 <p>We can build upon the passing yards example to replicate the vast majority of statistics found in the<a href="https://www.pro-football-reference.com/players/M/MahoPa00.htm#passing">“Passing” data table for Mahomes from Pro Football Reference</a>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/mahomes-replicate-pfr_0e7ecf1b0ab08090182325ae8d8dfca4">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_pfr</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"P.Mahomes"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span></span>
@@ -499,7 +499,7 @@ Tip
 </div>
 </div>
 <p>What if we wanted to find Mahomes’ adjusted yards gained per pass attempt for every one of his seasons between 2018 and 2022? It is as simple as gathering all the data from years (<code>seasons = 2018:2022</code>), using the same <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> from above, and then using <code>group_by()</code> on the <code>season</code> variable.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/mahomes-career-adjusted_bfcf2b85ed91bbd7af93b3c655612ab9">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mahomes_adjusted_yards</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2018</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"P.Mahomes"</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">season</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -521,7 +521,7 @@ Tip
 </div>
 </div>
 <p>Based on the data output, Mahomes’ best year for adjusted yards gained per pass attempt was 2018 with 9.58 adjusted yards. How does this compare to other quarterbacks from the same season? We can find the answer by doing slight modifications to our above code. Rather than filtering the information out to just Patrick Mahomes, we will add the <code>player_name</code> variable as the argument in the <code>group_by()</code> function.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/all-qbs-adjusted_b501f6a3912a856485ed2dcea0a20a58">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_qbs_adjusted</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -561,7 +561,7 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p>You will often discover artificially-inflated statistics like above when the players have limited number of pass attempts/rushing attempts/receptions/etc. compared to the other players on the list. To confirm this, we can add <code>pass_attempts = sum(attempts)</code> to the above code to compare the number of attempts Sudfeld and Gilbert had compared to the rest of the list.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qbs-adjusted-w-attempts_dfaee6c5f023ea3104bf9347668eebe9">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_qbs_adjusted_with_attempts</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -600,7 +600,7 @@ Important
 <li>Chris Henne (3 attempts, 9.67 adjusted yards).</li>
 </ol>
 <p>To remove those players with inflated statistics resulting from a lack of attempts, we can apply a second <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> at the end of our above code to limit the results to just those quarterbacks with no less than 100 pass attempts in the 2018 season.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/all-qbs-attempts-100_ef483ce6a56c9e747c79c00233f30202">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_qbs_attempts_100</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -619,7 +619,7 @@ Important
 </div>
 <p>After including a <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to the code to remove those quarterbacks with less than 100 attempts, it is clear that Mahomes has the best adjusted pass yards per attempt (9.58) in the 2018 season with Drew Brees in second place with 9.01. Based on our previous examples, we know that a Mahomes 9.58 adjusted pass yards per attempt in 2018 was his career high (and is also the highest in the 2018 season). How do his other seasons stack up? Is his lowest adjusted pass yards (7.59) in 2021 still the best among NFL quarterbacks in that specific season?</p>
 <p>To find the answer, we can make slight adjustments to our existing code.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/best-adjusted-yards_8d576fc9db0f1b919250f4fcc03f94a4">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">best_adjusted_yards</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2018</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -650,7 +650,7 @@ Important
 </div>
 <p>To get the answer, we’ve created code that follows along with our prior examples. However, after using <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to limit the number of attempts each quarterback must have, we use <code>ungroup()</code> to remove the previous grouping between <code>season</code> and <code>player_name</code> and then use <code>group_by()</code> again on just the <code>season</code> information in the data. After, we use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to select just the highest adjusted yards per attempt for each individual season. As a result, we can see that Mahomes only led the NFL in this specific metric in the 2018 season. In fact, between the 2018 and 2022 seasons, Ryan Tannehill had the highest adjusted yards per attempt with 10.2 (but notice he had just 286 passing attempts).</p>
 <p>As mentioned, the <code>load_player_stats()</code> information is provided on a week-by-week basis. In our above example, we are aggregating all regular season weeks into a season-long metric. Given the structure of the data, we can take a similar approach but to determine the leaders on a week-by-week basis. To showcase this, we can determine the leader in rushing EPA for every week during the 2022 regular season.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/rushing-epa-leaders_268031ea85c40589dcd1b7d4924e938a">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_epa_leader</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"RB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rushing_epa</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -663,7 +663,7 @@ Important
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">week</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rush_epa</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">rush_epa</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/showing-rushing-epa-leader_4bb9f1969e119123643f9393f6b74151">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 x 4
 # Groups:   week [18]
@@ -691,7 +691,7 @@ Important
 </div>
 <p>Rather than using the <code>season</code> variable in the <code>group_by()</code> function, we instead use <code>week</code> to calculate the leader in rushing EPA. The results show that the weekly leader is varied, with only Austin Ekeler and Aaron Jones appearing on the list more than once. The Bengals’ Joe Mixon produced the largest rushing EPA in the 2022 season, recording 11.3 in week 9 while James Cook’s 2.92 output in week 11 was the “least” of the best weekly performances.</p>
 <p>Much like we did with the passing statistics, we can use the rushing data in <code>load_player_stats()</code> to replicate the majority found on Pro Football Reference. To do so, let’s use Joe Mixon’s week 9 performance from the 2022 season.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/mixon-week-9_a421a8fc143547df4e4d37f33464c108">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mixon_week_9</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"J.Mixon"</span> <span class="op">&amp;</span> <span class="va">week</span> <span class="op">==</span> <span class="fl">9</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span></span>
@@ -715,7 +715,7 @@ Important
 1.5 * target share + 0.7 * air yards share
 \]</span></p>
 <p>We can use <code>wopr</code> to determine which wide receiver was the most valuable to fantasy football owners during the 2022 season.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/receivers-wopr_f9c8942cfb0215a8df4ff2f7f988fc7c">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">receivers_wopr</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"WR"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -742,7 +742,7 @@ Important
 </div>
 </div>
 <p>D.J. Moore led the NFL in the 2022 season with a 13.9 Weighted Opportunity Rating, followed closely by Davante Adams with 13.4. However, before deciding that D.J. Moore is worth the number one pick in your upcoming fantasy football draft, it is worth exploring if there is a relationship between a high Weight Opportunity Rating and a player’s total fantasy points. To do so, we can take our above code that was used to gather each player’s <code>WOPR</code> over the course of the season and add <code>total_ff = sum(fantasy_points)</code> and also calculate a new metric called “Fantasy Points per Weighted Opportunity” which is simply the total of a player’s points divided by the <code>wopr</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/wopr-plus-fantasy_a287af5f80e3a41facfbaf4e94ec0c16">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">receivers_wopr_ff_context</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"WR"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -778,7 +778,7 @@ Important
 <span class="header-section-number">3.2</span> Using <code>load_pbp()</code> to Add Context to Statistics</h2>
 <p>Using the <code>load_pbp()</code> function is preferable when you are looking to add context to a player’s statistics, as the <code>load_player_stats()</code> function is, for all intents and purposes, aggregated statistics that limit your ability to find deeper meaning.</p>
 <p>The <code>load_pbp()</code> function provides over 350 various metrics, as listed below:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pbp-data-ls_bf0a580d8d091b905e9e7bf7c70cee84">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp.data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">pbp.data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1158,7 +1158,7 @@ Important
 </div>
 <p>The amount of information contained in the <code>nflverse</code> play-by-play data can be overwhelming. Luckily, the <code>nflreadr</code> website includes a searchable directory of all the variables with a brief description of what each one means. You can visit that here: <a href="https://nflreadr.nflverse.com/articles/dictionary_pbp.html">nflreadr Field Descriptions</a>.</p>
 <p>We can recreate our examination of 2018 adjusted pass yards per attempt to just those passes on 3rd down with 10 or less yards to go by running the following code:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/adjusted-yards-with-pbp_a6c93e0eaf1d062d0bdb77968c49d97f">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
@@ -1208,7 +1208,7 @@ Tip
 <div class="callout-body-container callout-body">
 <p>Why is it necessary to use such a long list of specifications in the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function in order to match the official QB statistics found elsewhere?</p>
 <p>That is a good question, especially since there are other variables within the play-by-play data that would seemingly return the correct results (such as <code>pass == 1</code> or <code>play_type == "pass"</code>. We can view the differences in all three methods by doing the following.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/passing-number-differences_75c9f466a01558d9dce48b139b296f30">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
@@ -1241,7 +1241,7 @@ Tip
 </div>
 <p>We know that Patrick Mahomes attempted 580 passes during the 2022 regular season. We can match that number exactly using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> method for <code>complete_pass</code>, <code>incomplete_pass</code>, <code>interception</code>, and removing plays with a missing <code>down</code> observation. When trying to replicate this number using either the <code>pass == 1</code> variable in the play-by-play data or <code>play_type == "pass"</code>, we get just over 20 more passes than expected.</p>
 <p>The main reason for this is the inclusion of the <code>qb_spike</code>, <code>qb_scramble</code>, and <code>sack</code> variables. We can actually use the code above that was used to create the <code>pass_numbers</code> data frame, add an additional <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to account for these, and get the correct number of passing attempts for each method.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pass_numbers_correct_4fd7b9dde0cdefa045c31d8c77ca8744">
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pass_numbers_correct</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">passer_player_name</span> <span class="op">==</span> <span class="st">"P.Mahomes"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">qb_spike</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">qb_scramble</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">sack</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1262,7 +1262,7 @@ Tip
 <p><strong><em>What about the use of <code>passer</code> vs.&nbsp;<code>passer_player_name</code>?</em></strong></p>
 <p>It is also important to remember that you will receive differing numbers based on your use of <code>passer</code> and <code>passer_player_name</code>. The <code>passer</code> variable is created internally by the <code>nflverse</code> system and is used to “mimic” the statistics without spikes, scrambles, or sacks in the data. The <code>passer_player_name</code> variable comes from the official statistics and inherently includes this information.</p>
 <p>The following, with the first method using <code>group_by(passer)</code> and the second using <code>group_by(passer_player_name)</code> returns differing results.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/passer-vs-passer-player-name_aef9733f201a78dbacca5573bbd82c1d">
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">passer_grouping</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
 <span>           <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
@@ -1306,7 +1306,7 @@ Tip
 </div>
 <p>When grouping by <code>passer</code>, we get a total attempts of 672 for Ben Roethlisberger. That number increases to 675 when grouping by <code>passer_player_name</code>. Again, this is because the <code>passer</code> variable is created by the <code>nflverse</code> and automatically removes spikes, scrambles, and sacks while <code>passer_player_name</code> includes all three.</p>
 <p>We can run the following code to determine where the difference of three passing attempts is coming from between <code>passer</code> and <code>passer_player_name</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/locating-attempt-difference_5af4d9e30946e8abf47f7ce4ae40140f">
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roethlisberger_difference</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
 <span>           <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
@@ -1335,7 +1335,7 @@ Tip
 </div>
 </div>
 <p>To continue working with <code>load_pbp()</code> data, let’s create a metric that examines a QB’s aggressiveness on 3rd down passing attempts. The metric is designed to determine which QBs in the NFL are most aggressive in 3rd down situations by gauging how often they throw the ball to, or pass, the first down line. It is an interesting metric to explore as, just like many metrics in the NFL, not all air yards are created equal. For example, eight air yards on 1st and 10 are less valuable than the same eight air yards on 3rd and 5.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/3rd-down-aggressive_4009903ef9f217c8eda2404483a57c20">
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">aggressiveness</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
@@ -1376,9 +1376,9 @@ Tip
 <p>One item to consider, however, is the concept of “garbage time.” Are the above results, perhaps, skewed by including quarterbacks that were forced to work the ball downfield while attempting a game-winning drive?</p>
 <section id="qb-aggressiveness-filtering-for-garbage-time" class="level4" data-number="3.2.0.1"><h4 data-number="3.2.0.1" class="anchored" data-anchor-id="qb-aggressiveness-filtering-for-garbage-time">
 <span class="header-section-number">3.2.0.1</span> QB Aggressiveness: Filtering for “Garbage Time?”</h4>
-<p>To examine the impact of “garbage time” statistics, we can add an additional <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.</p>
+<p>To examine the impact of “garbage time” statistics, we can add an additional <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under 5%.</p>
 <p>Let’s add the “garbage time” filter to the code we’ve already prepared:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qb-aggressiveness-garage-time_b0d62e7520cbf86a5d2a90b78c1f2728">
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">aggressiveness_garbage</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
 <span>           <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span></span>
@@ -1433,7 +1433,7 @@ Tip
 <section id="qb-air-yards-epa-by-down" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="qb-air-yards-epa-by-down">
 <span class="header-section-number">3.3.1</span> QB Air Yards EPA by Down</h3>
 <p>To continue working with quarterback information using the <code>load_pbp()</code> function, we can explore each quarterback’s air yards EPA for 1st, 2nd, and 3rd down.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qb-mean-ayepa-down_b7d8969356d9de4ba8b5582198ea8817">
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
@@ -1468,7 +1468,7 @@ Tip
 <li>forcing a QB scramble</li>
 </ol>
 <p>To add more context, we can also create two new variables in the data that dictate whether a <code>qb_hit</code> and <code>incomplete_pass</code> are present in the same play, and the same for <code>qb_hit</code> and <code>interception</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/oline-impact-start_72656e2b2c4995ac6223e4c04eeed76a">
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>qbh_inc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">qb_hit</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>,</span>
@@ -1497,7 +1497,7 @@ Tip
 <span>            avg_wpa <span class="op">=</span> <span class="op">(</span><span class="va">sum_wpa</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">total_plays</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>However, as Burke pointed out in his initial study of the topic, calculating the number for just Pittsburgh, as above, does not provide enough information to draw a meaningful conclusion because even the most elite offensive lines in the NFL cannot avoid negative-pointed plays. In order to build this assumption into the data, we can gather the same information as above, but for the entire NFL minus the Steelers, and then calculate the difference in the Steelers’ weekly WPA to the league-wide average WPA.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/adding-league-wide-epa_77eb818746d5e8d5a8c4662fcc81cb95">
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_plays</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">!=</span> <span class="st">"PIT"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">week</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1521,7 +1521,7 @@ Tip
 <span>            nfl_avg_wpa <span class="op">=</span> <span class="op">(</span><span class="va">nfl_sum_wpa</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">nfl_weekly_plays</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now merge the NFL data back into the Steelers data to conduct the final calculation.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/add-nfl-to-pitt_a6f727d3f7cb25c96da17827937b1b4e">
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pitt_line_value</span> <span class="op">&lt;-</span> <span class="va">pitt_line_value</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">nfl_line_value</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"week"</span> <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -1545,7 +1545,7 @@ Tip
 </div>
 <p>To retrieve multiple seasons of data, a colon <code>:</code> is placed between the years that you want. When you run the code, <code>nflreadr</code> will output the data to include the play-by-play data starting with the oldest season (in this case, the 2017 NFL season).</p>
 <p>Once you have the data collected, we can run code that looks quite similar to our code above that explored 2021’s air yards per attempt leaders using <code>load_player_stats()</code>. In this case, however, we are including an additional <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to gather those passing attempts that resulted <em>only</em> in complete passes:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/avg-ay-5-results_8de140a679a1ab86282baa33fbe44d9e">
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">average_airyards</span> <span class="op">&lt;-</span> <span class="va">ay_five_years</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1578,7 +1578,7 @@ Tip
 </section><section id="working-with-the-various-nflreadr-functions" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="working-with-the-various-nflreadr-functions">
 <span class="header-section-number">3.5</span> Working with the Various <code>nflreadr</code> Functions</h2>
 <p>The <code>nflreadr</code> package comes with a multitude of “under the hood” functions designed to provide you with supplemental data, items for data visualization, and utilities for efficiently collecting and storing the data on your system. You can view the entire list of these options using the <code>ls</code> to output all the objects in the package.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/list-of-nfl-readr-functions_29c95f0e122f8059b9c944789881cff2">
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:nflreadr"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "clean_homeaway"               "clean_player_names"          
@@ -1622,9 +1622,9 @@ Tip
 <p>The <code>load_participation()</code> function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing <code>nflreadr</code> play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.</p>
 <p>Despite the <code>load_participation()</code> function being one of the newest editions to the <code>nflreadr</code> package, it is already being used to create contextual analysis regarding a team’s use of its players out out formations. For example, <a href="https://twitter.com/josephjefe">Joseph Hefner</a> uses the data to create tables (built with the <code>gt</code> and <code>gtExtras</code> packages) that calculates not only each player’s rate of usage out of different personnel packages, but how the team’s EPA per play and pass rate fluctuate with each. In the spirit of R’s open-source nature, he also created a <a href="https://josephjefe.shinyapps.io/formations_app/">Team Formation ShinyApp</a> that allows anybody to explore the data and output the results in .png format.</p>
 <p></p>
-<div id="tweet-33348"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-33348").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
-<div class="cell">
+<div id="tweet-44356"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-44356").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/loading-2022-participation_5d41a6f4f225480c33ff701797b9f2f8">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -1663,7 +1663,7 @@ Tip
 <p>The same is not true when looking at defensive participation data. A defensive team variable is not provided without including the play-by-play in the data. Once set to <code>TRUE</code>, the defensive team is housed under the typical <code>defteam</code> column.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/prepping-participation-data_141c4f96d648d79292256f225293db08">
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation_split</span> <span class="op">&lt;-</span> <span class="va">participation</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">offense_formation</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">posteam</span> <span class="op">==</span> <span class="st">"PIT"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1708,7 +1708,7 @@ Tip
 <p>The <code>load_rosters()</code> function houses a multitude of useful tools for use in the <code>nflverse</code>. With player information dating back to 1920, <code>load_rosters()</code> will provide you with basic demographic information about each player in the NFL such as their name, birth date, height, weight, the college and high school they attended, and items regarding primary position and depth chart position.</p>
 <p>Importantly, <code>load_rosters()</code> also provides the unique identifier for each player over nine different sources: the <code>gsis_id</code> (which is the core ID used in <code>nflverse</code> data), <code>sleeper_id</code>, <code>espn_id</code>, <code>yahoo_id</code>, <code>rotowire_id</code>, <code>pff_id</code>, <code>fantasy_data_id</code>, <code>sportradar_id</code>, and <code>pfr_id</code>. The different IDs become extremely useful when using data collected from outside the <code>nflverse</code>, or when combining data from two outside sources, as matching the information can be done by matching the various IDs as needed. As well, as outlined in Chapter 4: Data Visualization with NFL Analytics, the URLs for player headshots are included in <code>load_rosters()</code> data.</p>
 <p>Let’s return to our <code>participation_split</code> data frame that we just built while working with the <code>load_participation()</code> function. While the data is formatted and prepared for analysis, there is no information that allows for easy identification of each player (aside from unique IDs, which is not helpful). To correct this, we can bring in the 2022 Pittsburgh Steelers roster information.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/loading-rosters-for-partic_8b97e9f48dbda450a67ebe80c2e3a4b7">
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rosters</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The only argument you must provide the <code>load_rosters()</code> function is the years in which you want to collect roster information (in this specific case, 2022). While we know we only want the Steelers’ roster, it is not suggested to use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to gather any specific team at this point. Case in point: doing so with this example will result in the <code>gsis_id</code> <em>00-0036326</em> having an “NA” value for a name, despite having over 380 snaps in the 1 RB, 1TE, 3 WR offensive formation. The player associated with that <code>gsis_id</code> is Chase Claypool, who the Steelers traded to the Bears on November 1 of 2022. Because of this, no player name will be associated with that specific <code>gsis_id</code> on the Steelers’ roster (with the end result being a missing value).</p>
@@ -1727,7 +1727,7 @@ Note
 </div>
 </div>
 <p>Despite the wealth of information in the roster information, only the <code>gsis_id</code> and the <code>full_name</code> is required to complete our <code>participation_split</code> data frame. Rather than bringing unnecessary information over during the merge, we can select just the two columns we need and then use <code>left_join()</code> to merge each player’s name on the matching ID in the <code>offense_players</code> column and <code>gsis_id</code> from the roster information.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/merging-rosters-participation_3f56822a3d3400e43e2686277f3e6216">
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rosters</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rosters</span> <span class="op">&lt;-</span> <span class="va">rosters</span> <span class="op">%&gt;%</span></span>
@@ -1765,7 +1765,7 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>The <code>load_rosters()</code> data is capable of providing data for multiple seasons at once. Through each season, a player’s <code>gsis_id</code> will remain static. Despite this, when merging multiple years of participation data with multiple years of roster information, the data must be matched on the <code>season</code> variable was well. This process involves including <code>season</code> in both the participation data <code>group_by()</code> and the roster information, as seen below.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/roster-multi-year-merge_deed9104f039cc1a185e5e0a4189d623">
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation_multi_years</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">load_participation</span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2018</span><span class="op">:</span><span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -1797,7 +1797,7 @@ Tip
 <p>The <code>load_officials()</code> data will return data, from 2015 to present, outlining which officials were assigned to which game. The data also includes information regarding each referee’s position, jersey number, and their official NFL ID number. Importantly, the data is structured to also include both a <code>game_id</code> and <code>game_key</code> that are sorted by <code>season</code> and <code>week</code>, allowing you to merge the information other data frames.</p>
 <p>With the data, we can - for example - examine which NFL officiating crews called the most penalties during the 2022 NFL season. Doing so requires a bit of work in order to assign a unique <code>crew_id</code> to each stable of officials “working” under a lead referee.</p>
 <p>As an example, we can create data frame called <code>nfl_officials</code> that contains the official and referee information for each game during the 2022 season. After, in order to get the referee for each crew, use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to select those crew members with the “Referee” position and then create a new column titled <code>crew_id</code> that takes the numeric official ID for each distinct Referee.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/officials-starting-data_88591df4bf44aaf784ddf1f01eaf669c">
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_officials.html">load_officials</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">referees</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
@@ -1805,12 +1805,12 @@ Tip
 <span>  <span class="fu">mutate</span><span class="op">(</span>crew_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">official_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">official_id</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With a unique <code>crew_id</code> associated with each Referee, we can now use <code>left_join()</code> to bring that information back into our <code>nfl_officials</code> data by merging the <code>game_id</code> and <code>crew_id</code> to the corresponding <code>game_id</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/merging-crew-id-to-data_f24059a639881bfd8df5af1e4e944a2e">
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span> <span class="op">&lt;-</span> <span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">referees</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">crew_id</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"game_id"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The resulting <code>nfl_officials</code> data frame now includes all the original information and now a consistent <code>crew_id</code> for each team that the referee works with.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/showcasing-data_bff0ea11162eba71fc7bed1c98e55284">
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,065 x 10
@@ -1832,7 +1832,7 @@ Tip
 </div>
 <p>To calculate the total number of penalties flagged by each crew, we must first bring in the play-by-play from the 2022 season. After, we will use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to gather only those plays where a flag was thrown, and then <code>select()</code> the relevant columns, and finally <code>summarize()</code> by the <code>old_game_id</code> to get the total penalties called and the total penalty yards as a result of those penalties.</p>
 <p>After, we conduct another <code>left_join()</code> to bring in the specific penalty information into our <code>nfl_officials</code> data frame.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/penalties-from-pbp_6c0e4f60007192157915d40eb9ec4731">
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">penalty_pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">penalties</span> <span class="op">&lt;-</span> <span class="va">penalty_pbp</span> <span class="op">%&gt;%</span></span>
@@ -1852,7 +1852,7 @@ Tip
 <span>         <span class="va">crew_id</span>, <span class="va">total_called</span>, <span class="va">total_yards</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the data now combined, we can <code>group_by()</code> each game’s unique <code>game_id</code> and then use <code>summarize()</code> to sum the penalties called and the penalty yardage. After arranging the results in descending order by the total number of penalties, we can see that Referee Carl Cheffers, and his crew, called the most penalties during the 2022 NFL season with 223 and, unsurprisingly, also had the highest amount of penalty yards with 1,916.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/summarizing-referee-information_5e1679a3d0619a8290c4c5c24844a955">
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_officials</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span> <span class="op">==</span> <span class="st">"Referee"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1883,7 +1883,7 @@ Tip
 <span class="header-section-number">3.5.5</span> The <code>load_trades()</code> Function</h3>
 <p>The <code>load_trades()</code> function returns a data frames that includes all trades in the NFL on a season-by-season basis with information pertaining to: <code>trade_id</code>, <code>season</code>, <code>trade_date</code>, <code>gave</code>, <code>received</code>, <code>pick_season</code>, <code>pick_round</code>, <code>pick_number</code>, <code>conditional</code>, <code>pfr_id</code>, <code>pfr_name</code>.</p>
 <p>For example, we can gather every trade involving the New England Patriots with the following code:</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/collecting-ne-trade_d602339bca4341f659e31233fd06873a">
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ne_trades</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_trades.html">load_trades</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">gave</span> <span class="op">==</span> <span class="st">"NE"</span> <span class="op">|</span> <span class="va">received</span> <span class="op">==</span> <span class="st">"NE"</span><span class="op">)</span></span>
 <span></span>
@@ -1907,7 +1907,7 @@ Tip
 </div>
 </div>
 <p>If you want to view a trade that involves a specific player, you can do the same as above but <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> for a specific player. As an example, we do search for the trade that resulted in the New England Patriots sending Drew Bledsoe to the Buffalo Bills.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/bledsoe-to-bills_7ace40c2a1c6dfc6f9a83b4109f404bd">
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bledsoe_trade</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_trades.html">load_trades</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">trade_id</span> <span class="op">==</span> <span class="va">trade_id</span><span class="op">[</span><span class="va">pfr_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Drew Bledsoe"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
@@ -1923,7 +1923,7 @@ Tip
 </div>
 </div>
 <p>Since the <code>load_trades()</code> function also includes NFL Draft round and pick numbers (if included in a trade), we can also - for example - determine all trades that involved a top ten pick switching hands.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/top-ten-picks-trades_e8a6b0359bc18930b09d8efc5e98d2ec">
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">top_ten_picks</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_trades.html">load_trades</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pick_round</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">pick_number</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
@@ -1950,7 +1950,7 @@ Tip
 <span class="header-section-number">3.5.6</span> The <code>load_draft_picks()</code> Function</h3>
 <p>The <code>load_draft_picks()</code> function will load information pertaining to every draft pick dating back to 1980. Aside from the information you would expect (the player’s name, the team that draft, round, pick number, position, etc.), the <code>load_draft_picks()</code> function also includes data regarding how many seasons the player played, the amount of times they were named to Pro Bowls, and top-level statistics regarding rushing, passing, receiving, and defensive metrics.</p>
 <p>The <code>load_draft_picks()</code> function can be used to explore multiple different facets of the NFL Draft. For example, there is a belief in the analytics community to never draft a running back in the first round. Without getting into the reasoning behind that belief, we can quickly create a visualization of career rushing yards per running back compared to their draft position.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/running-back-draft-position_5bb55724b2dc45220b7e56373620dba5">
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draft_picks</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_draft_picks.html">load_draft_picks</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -1962,7 +1962,7 @@ Tip
 <span><span class="va">rb_picks</span> <span class="op">&lt;-</span> <span class="va">rb_picks</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/running-back-plot_39b454e2e022a841e90696fe75b3dfbc">
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rb_picks</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">rush_yards</span>, y <span class="op">=</span> <span class="va">pick</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">rb_picks</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="va">rb_picks</span><span class="op">$</span><span class="va">rush_atts</span> <span class="op">/</span> <span class="fl">500</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1978,7 +1978,7 @@ Tip
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/running-back-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/running-back-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Career Rushing Yards vs.&nbsp;Draft Pick</figcaption></figure>
 </div>
 </div>
@@ -1988,7 +1988,7 @@ Tip
 <span class="header-section-number">3.5.7</span> The <code>load_combine()</code> Function</h3>
 <p>The <code>load_combine()</code> function provides NFL Combine data dating back to 2000. Aside from biographical information for each player (including eventual draft position), the data include the player’s scores in the 40-yard dash, the bench press, the vertical, the broad jump, the cone drill, and the shuttle drill.</p>
 <p>We can join information from <code>load_combine()</code> with outside information to determine if there is any correlation between a running back’s 40-yard dash time in the combine and the total number of rushing yard accumulated during his career.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/40-dash-yards-correlation_b8a64bc00f42cd8b8de7faf0c3d798a7">
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combine_data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_combine.html">load_combine</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">pfr_id</span>, <span class="va">forty</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">pfr_id</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">forty</span><span class="op">)</span><span class="op">)</span></span>
@@ -2018,7 +2018,7 @@ Tip
 <span><span class="va">player_stats</span> <span class="op">&lt;-</span> <span class="va">player_stats</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/rb-40-plot_446c841d7d2133539a57eb6de1780d95">
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">player_stats</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">forty</span>, y <span class="op">=</span> <span class="va">total_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="va">player_stats</span><span class="op">$</span><span class="va">team_color</span>, size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -2037,7 +2037,7 @@ Tip
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/rb-40-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/rb-40-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Comparing RBs Forty-Yard Dash Time vs.&nbsp;Career Total Yards</figcaption></figure>
 </div>
 </div>
@@ -2047,7 +2047,7 @@ Tip
 <span class="header-section-number">3.5.8</span> The <code>load_nextgen_stats()</code> Function</h3>
 <p>The <code>load_nextgen_stats()</code> function retrieves player-level weekly statistics as provided by NFL Next Gen Stats dating back to the 2016 season. While three different stat types are provided (passing, receiving, and rushing), it is important to note that the data will only contain those players above a minimum number of attempts as determined by the NFL Next Gen Stats team.</p>
 <p>To illustrate what can be done with the <code>load_nextgen_stats()</code> function, we will gather information to create two different plots. First, we can plot each quarterback’s average time to throw against their average completed air yards. Second, we will construct a graph to highlight which running backs had more actual rushing yards than the NGS “expected rushing yards” model.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/ngs-passing-data_dc739f9de80587b18af84960c6e032ea">
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ngs_data_passing</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                                                 stat_type <span class="op">=</span> <span class="st">"passing"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2057,7 +2057,7 @@ Tip
 <span><span class="va">ngs_data_passing</span> <span class="op">&lt;-</span> <span class="va">ngs_data_passing</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team_abbr"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/ngs-passing-plot_f841a3fe4c6eba6b320ed9adb22c40ae">
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ngs_data_passing</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">avg_time_to_throw</span>,</span>
 <span>                                    y <span class="op">=</span> <span class="va">avg_completed_air_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">ngs_data_passing</span><span class="op">$</span><span class="va">avg_completed_air_yards</span><span class="op">)</span>,</span>
@@ -2080,13 +2080,13 @@ Tip
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/ngs-passing-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/ngs-passing-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Comparing a QB’s average time to throw to their average completed air yards</figcaption></figure>
 </div>
 </div>
 </div>
 <p>The resulting plot shows that Dak Prescott, Jalen Hurts, and Ryan Tannehill had an average completed air yard above the NFL average despite getting rid of the ball quicker than most other quarterbacks in the league. Conversely, Patrick Mahomes, Daniel Jones, and Justin Herbert has under average completed air yards despite holding on to the ball longer than the rest of the league (on average).</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/nga-rushing-data_749f7f286400d19fa12ee77779f5f423">
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ngs_data_rushing</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_nextgen_stats.html">load_nextgen_stats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                                                 stat_type <span class="op">=</span> <span class="st">"rushing"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2097,7 +2097,7 @@ Tip
 <span><span class="va">ngs_data_rushing</span> <span class="op">&lt;-</span> <span class="va">ngs_data_rushing</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team_abbr"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/ngs-rushing-plot_8c270bafbb6d2c5ac03c0bf09b64c289">
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">ngs_data_rushing</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">expected_rush_yards</span>,</span>
 <span>                                    y <span class="op">=</span> <span class="va">actual_rush_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -2121,7 +2121,7 @@ Tip
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/ngs-rushing-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/ngs-rushing-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Expected Rushing Yards vs.&nbsp;Actual Rushing Yards using Next Gen Stats</figcaption></figure>
 </div>
 </div>
@@ -2147,14 +2147,14 @@ Tip
 <code>sack</code> - the adjustment for expected points added for sacks.</li>
 </ol>
 <p>While the QBR metric has fallen out of grace among the analytics community in recent years, we can still compare the difference between the adjusted and unadjusted QBR scores to visualize the impact of defensive strength on the total.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qbr-adjusted-unadjusted_ec18a2d45b16e8cb518ec4eba7070b77">
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">espn_qbr</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_espn_qbr.html">load_espn_qbr</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">name_short</span>, <span class="va">team_abb</span>, <span class="va">qbr_total</span>, <span class="va">qbr_raw</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">espn_qbr</span> <span class="op">&lt;-</span> <span class="va">espn_qbr</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team_abb"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qbr-adjusted-plot_c6cdf85b6f5099282abfc7b5deb666fe">
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">espn_qbr</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">qbr_total</span>, y <span class="op">=</span> <span class="va">qbr_raw</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>              color <span class="op">=</span> <span class="st">"black"</span>,</span>
@@ -2172,7 +2172,7 @@ Tip
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qbr-adjusted-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qbr-adjusted-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Comparing Adjusted and Adjusted Quarterback Ratings</figcaption></figure>
 </div>
 </div>
@@ -2194,7 +2194,7 @@ Important
 <p>When working with data from <code>load_pfr_advstats()</code>, it is important to remember that you must use the <code>clean_team_abbrs()</code> function from <code>nflreadr</code> as there is a difference between the abbreviations used by PFR and the abbreviations used within the <code>nflverse</code>.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pfr-stats-qb_83e595a9a16531637795ee412bbd9e27">
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_stats_pass</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pfr_advstats.html">load_pfr_advstats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                                              stat_type <span class="op">=</span> <span class="st">"pass"</span>,</span>
 <span>                                              summary_level <span class="op">=</span> <span class="st">"season"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2206,7 +2206,7 @@ Important
 <span><span class="va">pfr_stats_pass</span> <span class="op">&lt;-</span> <span class="va">pfr_stats_pass</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qb-pfr-stats-plot_6be320e6ef2ace89c3cb4e8adc95750d">
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pfr_stats_pass</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">bad_throws</span>, y <span class="op">=</span> <span class="va">drops</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pfr_stats_pass</span><span class="op">$</span><span class="va">drops</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2226,7 +2226,7 @@ Important
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qb-pfr-stats-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qb-pfr-stats-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Example RStudio Console Output</figcaption></figure>
 </div>
 </div>
@@ -2246,7 +2246,7 @@ Important
 <p>Because the list of running backs with more than 200 attempts includes Christian McCaffrey, it is necessary to use the <code>case_when()</code> function to switch his <code>tm</code> from <code>2TMS</code> to the team that he finished the season with (<code>SF</code>). Otherwise, using <code>left_join()</code> for team colors would not work for McCafffrey since <code>2TMS</code> is not a recognized team abbreviation.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pfr-rush-stats_aa66a8738e76de854431ddf7e771d936">
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_stats_rush</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pfr_advstats.html">load_pfr_advstats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                                              stat_type <span class="op">=</span> <span class="st">"rush"</span>,</span>
 <span>                                              summary_level <span class="op">=</span> <span class="st">"season"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2261,7 +2261,7 @@ Important
 <span><span class="va">pfr_stats_rush</span> <span class="op">&lt;-</span> <span class="va">pfr_stats_rush</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tm"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pfr-rush-stats-plot_1b3c4839c4b79f879c5aa178f84ea6d8">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pfr_stats_rush</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ybc</span>, y <span class="op">=</span> <span class="va">yac</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pfr_stats_rush</span><span class="op">$</span><span class="va">yac</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2281,13 +2281,13 @@ Important
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/pfr-rush-stats-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/pfr-rush-stats-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Exploring which running backs get more yards before and after contact</figcaption></figure>
 </div>
 </div>
 </div>
 <p>In the same vein as the running back statistics, we can use <code>load_pfr_advstats()</code> to explore which wide receivers gained the most yardage after catching the ball.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/pfr-rec-stats_dd97f08d51aba4ffbd0f326cfa842ea6">
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_stats_rec</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pfr_advstats.html">load_pfr_advstats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>, stat_type <span class="op">=</span> <span class="st">"rec"</span>,</span>
 <span>                                             summary_level <span class="op">=</span> <span class="st">"season"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rec</span> <span class="op">&gt;=</span> <span class="fl">80</span> <span class="op">&amp;</span> <span class="va">pos</span> <span class="op">==</span> <span class="st">"WR"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2296,7 +2296,7 @@ Important
 <span><span class="va">pfr_stats_rec</span> <span class="op">&lt;-</span> <span class="va">pfr_stats_rec</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tm"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/rec-pfr-stats-plot_35c87e6691ad5617d85ed32c684364f5">
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pfr_stats_rec</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ybc</span>, y <span class="op">=</span> <span class="va">yac</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pfr_stats_rec</span><span class="op">$</span><span class="va">yac</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2317,14 +2317,14 @@ Important
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/rec-pfr-stats-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/rec-pfr-stats-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Which wide receivers gain the most yardage after catching the ball?</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Given the outstanding season that Justin Jefferson had in 2022, it is unsurprising to see him in the upper-right quadrant of the plot. Of his 1,809 receiving yards in the season, just under 1,200 of them came through air yards while he gained just over an additional 600 yards on the ground after the catch. On the other hand, D.K. Metcalf and Diontae Johnson were more often than not tackled almost immediately after catching the football.</p>
 <p>Given the structure of the data collected from <code>load_pfr_advstats()</code>, the information can also be aggregated to define team total. For example, we can use the defensive statistics for blitzes and sacks from individual players to calculate the relationship between a team’s total number of blitzes against the number of sacks those blitzes produce.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/blitze-sacks-code_4aeb1d04747a0f643c7e08d823791d11">
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_stats_def</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pfr_advstats.html">load_pfr_advstats</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                                             stat_type <span class="op">=</span> <span class="st">"def"</span>,</span>
 <span>                                             summary_level <span class="op">=</span> <span class="st">"season"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2337,7 +2337,7 @@ Important
 <span><span class="va">pfr_stats_def</span> <span class="op">&lt;-</span> <span class="va">pfr_stats_def</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tm"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/blitz-sacks-plot_f6984cea6899c40d14048179b33ab1c0">
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pfr_stats_def</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">total_blitz</span>, y <span class="op">=</span> <span class="va">total_sack</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pfr_stats_def</span><span class="op">$</span><span class="va">total_sack</span><span class="op">)</span>,</span>
 <span>             color <span class="op">=</span> <span class="st">"black"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2355,7 +2355,7 @@ Important
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/blitz-sacks-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/blitz-sacks-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Which defensive units are most efficient at creating sacks from blitzes?</figcaption></figure>
 </div>
 </div>
@@ -2367,7 +2367,7 @@ Important
 </section><section id="the-load_contracts-function" class="level3" data-number="3.5.12"><h3 data-number="3.5.12" class="anchored" data-anchor-id="the-load_contracts-function">
 <span class="header-section-number">3.5.12</span> The <code>load_contracts()</code> Function</h3>
 <p>The <code>load_contracts()</code> function brings in data from <a href="https://overthecap.com/">OverTheCap.com</a>. It is important to remember that much of the information is “nested” and, if you wish to see the yearly information, you must use the <code>unnest()</code> function from <code>tidyr</code>. To highlight this, we can run the following code to bring in the data as it is stored in the <code>nflverse</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/nfl-contracts-load_6cb0e3bc490ab95998194f1e3a64be47">
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_contracts</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_contracts.html">load_contracts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">nfl_contracts</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2383,7 +2383,7 @@ Important
 </div>
 </div>
 <p>The returned data includes the contract information for the year in which it was signed, but does not include a year-by-year breakdown of money paid and other relevant information. This data is stored in the <code>cols</code> information and needs to be “opened” up in order to view, like below.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/unnesting-contract-information_d01e53c8965dc1075a13a1ae3e25a6d4">
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_contracts_unnested</span> <span class="op">&lt;-</span> <span class="va">nfl_contracts</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">cols</span>, name_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">player</span>, <span class="va">year</span>, <span class="va">cash_paid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2392,7 +2392,7 @@ Important
 </div>
 <p>After using the <code>unnest</code> function, we use <code>select()</code> to gather just the player’s name, the year, and the cash paid for each year. After, we use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to remove the column that tallies the total of the player’s contact and then <code>mutate()</code> the <code>cash_paid</code> column in order to turn it into a number rather than a character.</p>
 <p>We can now bring in other information to compare a player’s cash paid to their performance on the field. I am going to use an example from the final research project from one of my former Sport Analytics students, Matt Dougherty.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We will compare a player’s yearly pay against their DAKOTA score (which is the adjusted EPA + CPOE composite based on the coefficients which best predict adjusted EPA/play). In order to do so, we must merge each quarterback’s DAKOTA composite based on the year.</p>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qb-contract-dakota_521f947772816c725afc21b33dad7ff2">
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nfl_contracts_unnested</span> <span class="op">&lt;-</span> <span class="va">nfl_contracts</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">cols</span>, name_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">player</span>, <span class="va">year</span>, <span class="va">cash_paid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -2418,7 +2418,7 @@ Important
 <span><span class="va">nfl_contracts_unnested</span> <span class="op">&lt;-</span> <span class="va">nfl_contracts_unnested</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">distinct</span><span class="op">(</span><span class="va">player</span>, <span class="va">year</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/qb-dakota-cash-plot_7822782774a77ef1a26826c732ebf813">
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">nfl_contracts_unnested</span>,</span>
 <span>       <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cash_paid</span>, y <span class="op">=</span> <span class="va">mean_dakota</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">nfl_contracts_unnested</span><span class="op">$</span><span class="va">mean_dakota</span><span class="op">)</span>,</span>
@@ -2440,7 +2440,7 @@ Important
 <span><span class="st">       **Brad J. Congelio**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qb-dakota-cash-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/qb-dakota-cash-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">The relationship between a QB’s average DAKOTA and annual cash paid</figcaption></figure>
 </div>
 </div>

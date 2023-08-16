@@ -39,7 +39,13 @@ If you wish to further support the development of this book, please consider one
 
 {{< tweet tejfbanalytics 1677014911669395459 >}}
 
-Lastly, the football illustration on the cover of the book was created by [Corinne Deichmeister](https://inkyfingers.design/), a May 2023 graduate of [Kutztown University's Communication Design program](https://www.kutztown.edu/academics/colleges-and-departments/visual-and-performing-arts/majors-minors-and-certificates/art-and-design/bachelor-of-fine-arts-in-communication-design-(bfa).html).
+***Acknowledgements***
+
+Ultimately, this book would not have been possible if not for Rob Calver, a Senior Publisher with Chapman & Hall/CRC, instantly believing in the slightly disjointed vision and idea of a random person (me!) e-mailing him out of the blue back in June of 2022. His guidance during the process of writing, receiving reviews, editing, and moving the book into production has been phenomenal. The same can be said for Sherry Thomas, a Senior Editorial Assistant, who assisted in getting the book prepared for production.
+
+Several members of the `nflverse` family also played a significant role in the creation of this book. First and foremost is Ben Baldwin, who provided the necessary "this book is a great idea, you should do it!" push to get me started on the project. Moreover, the `nflverse` family of packages are obviously a major part of this project and, without them, the end result would not be nearly as robust. Ben, along with Tan Ho and Sebastian Carl, have done more for the NFL analytics movement than they are ever willing to admit. This book is a testament to their hard work, vision, and ability. As well, many members of the `nflverse` Discord graciously took the time to submit issues to the book's repository highlighting issues in both spelling/grammar and coding/data. Because of this, I'll argue that *Introduction to NFL Analytics with R* was created, in part, in the same open-source vision as the `nflverse` and, more broadly, the R programming language.
+
+The football illustration on the cover of the book was created by [Corinne Deichmeister](https://inkyfingers.design/), a Spring 2023 graduate of [Kutztown University's Communication Design program](https://www.kutztown.edu/academics/colleges-and-departments/visual-and-performing-arts/majors-minors-and-certificates/art-and-design/bachelor-of-fine-arts-in-communication-design-(bfa).html). In the same vein, Dr. Anne Carroll - the Dean of the College of Business at Kutztown University of Pennsylvania - provided financial assistance above and beyond what I had in my professional development account to fund the creation of the book's illustration.
 
 # Preface {.unnumbered}
 

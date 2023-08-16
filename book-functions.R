@@ -16,9 +16,18 @@ style_data <- function(dat, n_rows = NULL, caption = NULL) {
     )
 }
 
+### preloading font packages
 library(showtext)
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE,
-                      out.width = "100%", out.height = "100%", fig.showtext = TRUE)
+library(extrafont)
+library(ggtext)
+
+### adding roboto font from file and then loading
+font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
+extrafont::loadfonts(quiet = TRUE)
+
+### setting options for chunks in output
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE, fig.showtext = TRUE,
+                      cache = TRUE, out.width = "95%", out.height = "95%")
 
 options(
   pillar.max_footer_lines = 2,

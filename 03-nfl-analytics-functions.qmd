@@ -537,7 +537,7 @@ One item to consider, however, is the concept of "garbage time." Are the above r
 
 #### QB Aggressiveness: Filtering for "Garbage Time?"
 
-To examine the impact of "garbage time" statistics, we can add an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under .05%.\index{nflreadr!load\_pbp()!handling garbage time}
+To examine the impact of "garbage time" statistics, we can add an additional `filter()` that removes those plays that take place within the last 2-minutes of the half and when the probability of winning for either team is over 95% or under 5%.\index{nflreadr!load\_pbp()!handling garbage time}
 
 Let's add the "garbage time" filter to the code we've already prepared:
 
@@ -715,7 +715,7 @@ In our above example calculating average air yard per attempt, it is important t
 
 In our first example of working with data across multiple seasons, let's examine average air yards for only completed passes. To begin, we will retrieve the play-by-play data for the last five seasons:\index{nflreadr!load\_pbp()!Multiple Seasons}
 
-```{r avg-ay-5-years, echo = TRUE}
+```{r avg-ay-5-years, echo = TRUE, cache = FALSE}
 
 ay_five_years <- nflreadr::load_pbp(2017:2022)
 ```

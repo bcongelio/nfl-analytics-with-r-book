@@ -355,11 +355,11 @@ Note
 </div>
 </div>
 <p>To put theory into action, <strong>let’s build a simple linear regression model that explores the relationship between the total yardage earned by a team over the course of a season and the number of points scored</strong>. To begin, gather the prepared information into a data frame titled <code>simple_regression_data</code> by running the code below.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/load-simple-regression-data_b0833576dbb3fa4c97c0a5110b7f341e">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">simple_regression_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/simple-reg"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The data contains the total yardage and points scored for each NFL team between the 2012 and 2022 seasons (not including the playoffs). Before running our first linear regression, let’s first begin by selecting just the 2022 data and create a basic visualization to examine the baseline relationship between the two variables.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/simple-linear-lobf_3fd6539d8780a6fe0f4d4282a9667d15">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">regression_2022</span> <span class="op">&lt;-</span> <span class="va">simple_regression_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season</span> <span class="op">==</span> <span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
@@ -384,7 +384,7 @@ Note
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/simple-linear-lobf-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/simple-linear-lobf-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">An example regression between total yards and total points</figcaption></figure>
 </div>
 </div>
@@ -392,12 +392,12 @@ Note
 <p>The plot shows that a regression between <code>total_yards</code> and <code>total_points</code> results in several teams - the Titans, Giants, Packers, Raiders, Jaguars, and Chiefs - being fitted nearly perfectly with the line of best fit. These teams scored points based on total yards in a <em>linear fashion</em>. The Cowboys, however, are well above the regression line. This indicates that Dallas scored more total points than what the relationship between <code>total_yards</code> and <code>total_points</code> found as “normal” for a team that earned just a hair over 6,000 total yards. The opposite is true for the Colts, Jets, and Denver. In each case, the <code>total_points</code> scored is below what is expected for teams that gained approximately 5,500 total yards.</p>
 <p>The line of best fit can explain this relationship in slightly more detail. For example, the <code>total_yards</code> value of 5,500 cross the regression line just below the <code>total_points</code> value of 350. This means that a team that gains a total of 5,500 yards should - based on this fit - score just under 350 points during the season. Viewing it the other way, if you want your team to score 450 points during the upcoming season, you will need the offensive unit to gain roughly 6,500 total yards.</p>
 <p>To further examine this relationship, we can pass the data into a simple linear regression model to start exploring the summary statistics.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/lm-model-2022_75154e3c59cbc203dba9f652d8f667de">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">results_2022</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">total_points</span> <span class="op">~</span> <span class="va">total_yards</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">regression_2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function, the <span class="math inline">\(Y\)</span> variable (the dependent) is <code>total_yards</code> and the <span class="math inline">\(X\)</span> variable (the predictor) is entered as <code>total_yards</code> with the argument that the <code>data</code> is coming from the <code>regression_2022</code> data frame. We can view the results of the regression model by using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/viewing-regression-summary_8ebe794e159f74c5989d793680f2b9f6">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results_2022</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -435,7 +435,7 @@ Reading &amp; Understanding Regression Results
 <p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output of any regression models contains two core components: <strong>the residuals and the coefficients.</strong></p>
 <p><strong><em>Residuals</em></strong></p>
 <p>A model’s residuals are the calculated difference between the actual values of the predictor variables as found in the data and the values <em>predicted</em> by the regression model. In a perfect uniform relationship, all of the values in the data frame would sit perfectly on the line of best fit. Take the below graph, for example.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/perfect-line-of-fit_271f5808fff650450665c348521120ef">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">example_fit</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
 <span>  y <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -457,7 +457,7 @@ Reading &amp; Understanding Regression Results
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/perfect-line-of-fit-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/perfect-line-of-fit-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">An example of a perfect line of best fit</figcaption></figure>
 </div>
 </div>
@@ -507,7 +507,7 @@ Reading &amp; Understanding Regression Results
 <p>A model’s residuals allow you to quickly get a broad view of accurately it is predicting the data. Ideally, a well-performing model will return residuals that are small and distributed evenly around zero. In such cases, it is good first sign that the predictions are close to the actual value in the data and the model is not producing over or under estimates.</p>
 <p><strong>But that is not always the case</strong>.</p>
 <p>For example, we can compare our above example residuals to the residuals produced by manually created data.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/creating-example-residuals_c7645a6eeeea17ad900f941e05f68ff3">
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  -13.70   -2.18   -0.60    0.00    4.16   10.54 </code></pre>
@@ -540,7 +540,7 @@ Reading &amp; Understanding Regression Results
 </div>
 <p>Returning to the summary statistics of our analysis of the 2022 season, the residuals have a wide spread and an inconsistent deviation from zero. While the <code>median</code> residual value is the closest to zero at 1.157, it is still a bit too high to safely conclude that the model is making predictions that adequately reflect the actual values. Moreover, both tail ends of the residual values (<code>Min</code> and <code>Max</code>) are a large negative and positive number, respectively, which is a possible indication that the regression model is both over- and underestimating a team’s <code>total_points</code> by statistically significant amount.</p>
 <p>However, as mentioned, this widespread deviation from zero is likely the result of numerous factors outside the model’s purview that occur in any one NFL game. To get a better idea of what the residual values represent, we can plot the data and include NFL team logos.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/plotting-residual-values_0d7775ad330395a66a62e00660d175de">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">regression_2022</span><span class="op">$</span><span class="va">residuals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">results_2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">regression_2022</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">total_yards</span>, y <span class="op">=</span> <span class="va">residuals</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -561,13 +561,13 @@ Reading &amp; Understanding Regression Results
 <span>  <span class="fu">theme</span><span class="op">(</span>panel.grid.minor.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/plotting-residual-values-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/plotting-residual-values-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Plotting a simple linear regression’s residual values</figcaption></figure>
 </div>
 </div>
 </div>
 <p>With the data visualized, it is clear that the model’s <code>Min</code> distribution of -71.44 is associated with the Tampa Bay Buccaneers, while the <code>Max</code> distribution of 68.08 is the prediction for the total points earned by the Dallas Cowboys. Because a negative residual means that the model’s predicted value is too high, and a positive residual means it was too low, we can conclude that the Buccaneers actually scored 71.4 points less than the the results of the model, while the Cowboys scored 68.08 more than predicted.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/showing-cofficients-lm_ddda8e61c1e11f64cfc0bc993465a376">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">`Coefficients:</span></span>
 <span><span class="va">             Estimate Std. Error t value      Pr(&gt;|t|)    </span></span>
 <span><span class="va">(Intercept) -225.0352    65.4493   -3.44        0.0017 ** </span></span>
@@ -598,7 +598,7 @@ Important
 </div>
 </div>
 <p>The results from including the <code>total_points</code> and <code>total_yards</code> for each NFL team from 2012-2022 show an improvement of the model, specifically with the residual values.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/all-seasons-regression_04360dcfb4289ce82638287f8a1cf8b4">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">regression_all_seasons</span> <span class="op">&lt;-</span> <span class="va">simple_regression_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">season</span><span class="op">)</span></span>
 <span></span>
@@ -621,7 +621,7 @@ Tip
 <p>To further examine the residual values, we can use a <strong>Shapiro-Wilk Test</strong> to test the whether results are normally distributed.</p>
 <p>The Shapiro-Wilk Test provides two values with the output: the test statistic (provided as a <code>W</code> score) and the model’s <code>p-value</code>. Scores for <code>W</code> can range between 0 and 1, where results closer to 1 mean the residuals are in a normal distribution. The <code>p-value</code> is used make a decision on the null hypothesis (that there <em>is</em> enough evidence to conclude that there is uneven distribution). In most cases, if the <code>p-value</code> is larger than the regression’s level of significance (typically 0.05), than you may <strong>reject</strong> the null hypothesis.</p>
 <p>We can run the Shapiro-Wilk Test on our 2012-2022 data using the <code>shapiro.test</code> function that is part of the <code>stats</code> package in R.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/running-shapiro-wilk_ad88271f1e757363c78d60f9941a0542">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">results_2012_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">all_season_results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">shapiro_test_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">results_2012_2020</span><span class="op">)</span></span>
@@ -638,7 +638,7 @@ W = 1, p-value = 0.8</code></pre>
 <p>The <code>W</code> score for the residual is 1, meaning a very strong indication that the data in our model is part of a normal distribution. The <code>p-value</code> is 0.8, which is much larger than the regression’s level of significance (0.05). As a result, we can reject the null hypothesis and again conclude that the data is in a normal distribution.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/residual-values-all-seasons_867cad9036a47210bd565fe931e307e2">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">regression_all_seasons</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">regression_all_seasons</span>,</span>
@@ -666,7 +666,7 @@ W = 1, p-value = 0.8</code></pre>
 <span>  <span class="fu">theme</span><span class="op">(</span>panel.grid.minor.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/residual-values-all-seasons-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/residual-values-all-seasons-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Residual values for 20 seasons of data</figcaption></figure>
 </div>
 </div>
@@ -700,7 +700,7 @@ Adjusted R-squared:  0.727</code></pre>
 <strong>Special Teams Touchdowns</strong>: The number of touchdowns scored by special teams (kick/punt returns).</li>
 </ol>
 <p>To begin building the multiple linear regression model for the 2022 season, we can read in the data below using <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom::vroom()</a></code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/getting-m-lm-data_7363dcfdb53a83adb9317e49c5fe93ed">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_lm_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/multiple-lm"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">multiple_lm_data</span> <span class="op">&lt;-</span> <span class="va">multiple_lm_data</span> <span class="op">%&gt;%</span></span>
@@ -723,7 +723,7 @@ Caution
 </div>
 </div>
 <p>The construction of the multiple linear regression model is the same process of the simple regression, with the inclusion of additional predictors to the formula using the <code>+</code> sign. We are also applying a <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to our <code>multiple_lm_data</code> to retrieve just the 2022 season.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/running-mlm-model_6b7c665392b7d17cb9fde94a7346ffbe">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm_multiple_2022</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">total_points</span> <span class="op">~</span> <span class="va">total_yards</span> <span class="op">+</span> <span class="va">rz_eff</span> <span class="op">+</span> <span class="va">rz_td_eff</span> <span class="op">+</span> <span class="va">rz_fg_eff</span></span>
 <span>                       <span class="op">+</span> <span class="va">total_to</span> <span class="op">+</span> <span class="va">def_td</span> <span class="op">+</span> <span class="va">spec_tds</span>, data <span class="op">=</span> <span class="va">multiple_lm_data</span><span class="op">)</span></span>
 <span></span>
@@ -758,7 +758,7 @@ F-statistic: 22.6 on 6 and 25 DF,  p-value: 5.81e-09</code></pre>
 </div>
 <p>The summary statistic residuals for the multiple linear regression are more evenly distributed towards the mean than our simple linear regression. Based on the residuals, we can conclude that - for 50% of the teams - the model either over or underestimated their <code>total_points</code> by just -0.35 (as listed in the <code>Median</code> residual). The interquartile range (within the <code>1Q</code> and <code>3Q</code> quartiles) are both close to the median and the <code>Min</code> and <code>Max</code> residuals both decreased significantly from our simple linear model, indicating a overall better line of fit.</p>
 <p>We can confirm that the multiple linear regression resulted in an even distribution of the residuals by again using a Shapiro-Wilk Test.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multiple-lm-shapiro_bd166e845921e8938a1a5237d6599ed2">
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -768,7 +768,7 @@ W = 1, p-value = 0.9</code></pre>
 </div>
 </div>
 <p>The results of the Shapiro-Wilk test (<code>W = 1</code> and <code>p-value = 0.9</code>) confirm that residuals are indeed evenly distributed. A visualization showcases the model’s even distribution of the residuals.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multiple-regression-plot_2aed4b707c17d628750b283eca3b2c5e">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mlm_2022_fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm_multiple_2022</span><span class="op">)</span></span>
 <span><span class="va">mlm_2022_residuals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">lm_multiple_2022</span><span class="op">)</span></span>
 <span></span>
@@ -800,7 +800,7 @@ W = 1, p-value = 0.9</code></pre>
 <span>  <span class="fu">theme</span><span class="op">(</span>panel.grid.minor.y <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d0d0"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/multiple-regression-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/multiple-regression-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Visualizing residuals of a multiple linear regression</figcaption></figure>
 </div>
 </div>
@@ -819,7 +819,7 @@ Important
 <p>“Singularities” occur in the data as a result of the dreaded multicollinearity between two or more predictors. The involved predictors were found to have a high amount of correlation between one another, meaning <strong>that one of the variables can be predicted in a near linear fashion with one or more of the other predictive variables</strong>. As a result, it is difficult for the regression model to correctly estimate the contribution of these dependent variables to the response variable.</p>
 <p>The model’s Coefficients of our multiple linear regression shows <code>NA</code> values for the <code>rz_fg_eff</code> predictor (the percentage of times a team made a field goal in the red zone rather than a touchdown). This is because <code>rz_fg_eff</code> was one of the predictive variables strongly correlated and was the one dropped by the regression model to avoid producing flawed statistics as a result of the multicollinearity.</p>
 <p><strong>If you are comfortable producing the linear regression with <code>rz_fg_eff</code></strong> <strong>being a dropped predictor, there are no issues with that</strong>. However, we can create a correlation plot that allows is to determine which predictors have high correlation values with others. Examining the issue allows us to determine if <code>rz_fg_eff</code> is, indeed, the predictive variable we want the regression to drop or if we’d rather, for example, drop <code>rz_eff</code> and keep just the split between touchdowns and field goals.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/building-corr-matrix_206c9a6c99015d6273491b283ea9c17d">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">regression_corr</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">multiple_lm_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"total_yards"</span>,</span>
 <span>                           <span class="st">"rz_eff"</span>, <span class="st">"rz_td_eff"</span>,</span>
@@ -849,7 +849,7 @@ Important
 <span>        legend.key <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#F7F7F7"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/building-corr-matrix-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/building-corr-matrix-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Using a correlation matrix to determine which predictor have high correlation values with others</figcaption></figure>
 </div>
 </div>
@@ -861,7 +861,7 @@ Important
 </div>
 </div>
 <p>To run the multiple linear regression again, without the predictors relating to red zone touchdown and field efficiency, we will drop both from our <code>multiple_lm_2022</code> data frame, rerun the regression model, and then examine the ensuing summary statistics.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/removing-predictor-corr_bdd9747456d86bee70702587d0acf4b1">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm_multiple_2022_edit</span> <span class="op">&lt;-</span> <span class="va">multiple_lm_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">rz_td_eff</span>, <span class="op">-</span><span class="va">rz_fg_eff</span><span class="op">)</span></span>
 <span></span>
@@ -898,7 +898,7 @@ F-statistic: 23.5 on 5 and 26 DF,  p-value: 7.03e-09</code></pre>
 </div>
 <p>We have certainly simplified the model by removing both <code>rz_td_eff</code> and <code>rz_fg_eff</code> but the impact of this change is a fair trade off to avoid further issues with multicollinearity. Our new adjusted R is still high (0.784), only dropping a bit from the original model that included both predictors (0.807). Both models did well at explaining the amount of variance between the predictors and the response variable. While the <code>F-statistic</code> and the <code>p-value</code> are strong in both models, it is important to note that the <code>Residual standard error</code> dropped from 27 in the original model to 28 in the more simplified version. Given that this value is the average difference between the actual values and the predicted equivalents in the regression, both would ideally be smaller.</p>
 <p>With multiple linear regression model producing acceptable results over the course of the 2022 season, we can now see if the results remain stable when produced over the course of the 2012-2022 seasons.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/running-lm-all-seasons_2c3499d7a7b553b16c7d2e57c3cfbb2d">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multiple_lm_data_all</span> <span class="op">&lt;-</span> <span class="va">multiple_lm_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">rz_td_eff</span>, <span class="op">-</span><span class="va">rz_fg_eff</span>, <span class="op">-</span><span class="va">season</span><span class="op">)</span></span>
 <span></span>
@@ -947,7 +947,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/checking-scale-against-rse_b3dcb99f55b62fd3ea17ecfdd15b63fa">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">total_mean_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">multiple_lm_data_all</span><span class="op">$</span><span class="va">total_points</span><span class="op">)</span></span>
 <span><span class="va">total_points_median</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">multiple_lm_data_all</span><span class="op">$</span><span class="va">total_points</span><span class="op">)</span></span>
 <span></span>
@@ -971,7 +971,7 @@ Important
 <div class="callout-body-container callout-body">
 <p>The final step of our multiple linear regression model is feeding it new data to make predictions on.</p>
 <p>To begin, we need to create a new data frame that holds the new predictor variables. For nothing more than fun, let’s grab the highest value from each predictive variable between the 2012-2022 seasons.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/creating-predictor-variabes_9d8b63cfe2b23115e8b725624177911d">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new_observations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  total_yards <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">multiple_lm_data</span><span class="op">$</span><span class="va">total_yards</span><span class="op">)</span>,</span>
 <span>  rz_eff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">multiple_lm_data</span><span class="op">$</span><span class="va">rz_eff</span><span class="op">)</span>,</span>
@@ -981,7 +981,7 @@ Important
 </div>
 <p>This hypothetical team gained a total of 7,317 yards in one season and was incredibly efficient in the red zone, scoring 96% of the time. It also scored nine defensive touchdowns and returned a punt or a kickoff to the house four times. Unfortunately, the offense also turned the ball over a whopping total of 41 times.</p>
 <p>We can now pass this information into our existing model using the <code>predict</code> function and it will output the predicted <code>total_points</code> earned by this hypothetical team based on the multiple linear regression model we built with 20 years of NFL data.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/prediction-output_81ea34a210d1f8e685e08c694d0bac69">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lm_multiple_all</span>, newdata <span class="op">=</span> <span class="va">new_observations</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">new_predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1016,7 +1016,7 @@ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_
 <p>A binary regression model is used when the dependent variable is in binary format (that is, <code>1</code> for “yes” or <code>0</code> for “no). This binary represents two - and only two - possible outcomes such as a a team converting on third down or not or if a team won or lost the game. Constructing binary regression models allows use to predict the likelihood of the dependent event occurring based on the provided set of predictor variables.</p>
 <p>We will build a binary regression model to predict the probability that an NFL QB will win the MVP at the conclusion of the season.</p>
 <p>Let’s first create a data frame, called <code>qb_mvp</code>, that contains the statistics for quarterbacks that we intuitively believe impact the likelihood of a QB being named MVP.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/qb_mvp_model_data_c314154293e17e77d9846b18bc5fc235">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">player_stats</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_player_stats.html">load_player_stats</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span> <span class="op">&amp;</span> <span class="va">position</span> <span class="op">==</span> <span class="st">"QB"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season</span> <span class="op">!=</span> <span class="fl">2000</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">!=</span> <span class="fl">2005</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">!=</span> <span class="fl">2006</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">!=</span> <span class="fl">2012</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1033,7 +1033,7 @@ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_
 </div>
 <p>We are using data from over the course of 22 NFL seasons (2000 to 2022), but then removing the 2000, 2005, 2006, and 2012 seasons as the MVP for each was not a quarterback (Marshall Faulk, Shaun Alexander, LaDainian Tomlison, and Adrian Peterson, respectively). To begin building the model, we collect QB-specific metric from the <code>load_player_stats()</code> function from <code>nflreadr</code>, including: total completions, total attempts, total yards (passing + rushing), total touchdowns (passing + rushing), and the QB’s average EPA (only for pass attempts).</p>
 <p>Because the style of play in the NFL has changed between the earliest seasons in the data frame and the 2022 season, it may not be fair to compare the specific statistics to each other. Rather, we can rank the quarterbacks for each season, per statistic, in a decreasing fashion as the statistical numbers increase. For example, Patrick Mahomes led the league in passing yards in the 2022 season. As a result, he is ranked as <code>1</code> in the forthcoming <code>yds_rank</code> column while the QB with the second-most yards (Justin Herbert, with 4,739) will be ranked as <code>2</code> in the <code>yds_rank</code> column. This process allows us to normalize the data and takes into the account the change in play style in the NFL over the time span of the data frame. To add the rankings to our data, we will create a new data frame titled <code>qb_mvp_stats</code> from the existing <code>player_stats</code> and then use the <code>order</code> function from base R to provide the rankings in descending order. After, we use the <code>select()</code> function to gather the <code>season</code>, <code>player_display_name</code>, and <code>player_id</code> as well as the rankings that we created using <code><a href="https://rdrr.io/r/base/order.html">order()</a></code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/add-rankings-to-qb-mvp_1794ac32bd67b2c33078ba77afc1d081">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">qb_mvp_stats</span> <span class="op">&lt;-</span> <span class="va">player_stats</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">season</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>cmp_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">total_cmp</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -1046,7 +1046,7 @@ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_
 <span>         <span class="va">int_rank</span>, <span class="va">epa_rank</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The data, as collected from <code>load_player_stats()</code>, does not contain information pertaining to MVP winners. To include this, we can load a prepared file using data from Pro Football Reference. The data contains two variables: <code>season</code> and <code>player_name</code> wherein the name represents the player that won that season’s MVP. After reading the data in, we can use the <code>mutate</code> function to create a new variable called <code>mvp</code> that is in binary (<code>1</code> representing that the player was the MVP). After, we can merge this data into our <code>qb_mvp_stats</code> data frame. After merging, you will notice that the <code>mvp</code> column has mainly <code>NA</code> values. We must set all the <code>NA</code> values to <code>0</code> to indicate that those players did not win the MVP that season.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/load-pfr-mvp-data_f58838c53b7a925b206f8c4e28acfb73">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pfr_mvp_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/pfr-mvp"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pfr_mvp_data</span><span class="op">$</span><span class="va">mvp</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
@@ -1069,7 +1069,7 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p>If you have not already done so, please install <code>tidymodels</code> and load it.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/installing-tidymodels_e3a1d546ee7f39dcd23ace6500f96ef8">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidymodels"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1098,7 +1098,7 @@ Important
 </div>
 </div>
 <p>The process of splitting the data into a training and testing set involves three lines of code with the <code>rsample</code> package. Prior to splitting the data, we will create a new data frame titled <code>mvp_model_data</code> that is our existing <code>qb_mvp_stats</code> information after using the <code>ungroup()</code> function to overwrite any prior <code>group_by()</code> that was applied to the data frame. We first use the <code>initial_split</code> function to create a split of the data into a training and testing set. Moreover, we use the <code>strata</code> argument to conduct what is called “stratified sampling.” Because there are very few MVPs in our data compared to those non-MVP players, using the <code>strata</code> argument allows us to create a training and test set with a similar amount of MVPs in each. We then use the <code>training</code> and <code>testing</code> argument to create the data for each from the initial split.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/qb-mvp-initial-split_8a45687f5d2de63a5f5a5185e78ff99d">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mvp_model_data</span> <span class="op">&lt;-</span> <span class="va">qb_mvp_stats</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -1107,7 +1107,7 @@ Important
 <span><span class="va">mvp_model_test</span> <span class="op">&lt;-</span> <span class="fu">rsample</span><span class="fu">::</span><span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">mvp_model_split</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the MVP data split into both a training and testing set, we use the <code>glm</code> package to conduct the regression analysis on the <code>mvp_model_train</code> data frame.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/running-mvp-regression_31c07c9c0714a9a3a3f586f8cac374be">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mvp_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mvp</span> <span class="op">~</span> <span class="va">cmp_rank</span> <span class="op">+</span> <span class="va">att_rank</span> <span class="op">+</span> <span class="va">yds_rank</span> <span class="op">+</span></span>
 <span>                   <span class="va">tds_rank</span> <span class="op">+</span> <span class="va">int_rank</span> <span class="op">+</span> <span class="va">epa_rank</span>,</span>
 <span>                 data <span class="op">=</span> <span class="va">mvp_model_train</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1115,15 +1115,15 @@ Important
 <p>While the model does run, and placing the <code>mvp_model</code> results in the RStudio environment, we receive the following warning message in the Console:</p>
 <p><code>Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></p>
 <p>As the message indicates, this is not necessarily an error in the modeling process, but an indication that some of the fitted probabilities in the model are fitted numerically to 0 or 1. This most often occurs in binomial regression models when there is nearly perfect separation within the data underpinning the model, meaning there is one or more predictor variables (passing yards, passing touchdowns, etc.) that are able to perfectly classify the outcome (MVP) of the model. This type of “perfect separation” in modeling is usual when working with data that is both limited and “rare” - only one QB per season in our data is able to win the MVP award. We can create a quick histogram of the fitted probabilities wherein multitudes of probabilities close to either 0 or 1 is a good explanation for the warning message.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/mvp-model-histogram_922bdff91db58e052dbd4231cb55055e">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">mvp_model</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="05-nfl-analytics-advanced-methods_files/figure-html/mvp-model-histogram-1.png" style="width:100.0%;height:100.0%"></p>
+<p><img src="05-nfl-analytics-advanced-methods_files/figure-html/mvp-model-histogram-1.png" style="width:95.0%;height:95.0%"></p>
 </div>
 </div>
 <p>The histogram clearly shows the separation issue in the model’s data. The majority of the QBs in the data have a 0% to an incredibly slim chance to win the MVP, while the bar for those with a fitted probability from 0.2 to 1.0 are barely visible in the plot. While a warning that “fitted probabilities numerically 0 or 1 occurred” is cause for further examination, we are able to diagnose the issue by using our “domain knowledge” of the data - that is, of course separation is going to occur since only one QB can be MVP in any season.</p>
 <p>To verify that the model is predicting reasonable probabilities, we can calculate the predicted values and probabilities on the existing training data.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/predict-probs-mvp_23042058f4e5fe531777985f16e59b1f">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">training_probs</span> <span class="op">&lt;-</span> <span class="va">mvp_model_train</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mvp_model</span>, <span class="va">mvp_model_train</span>,</span>
 <span>                        type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1132,14 +1132,14 @@ Important
 <span>         mvp_prob <span class="op">=</span> <span class="va">pred</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the model now trained, we can take the results of the model and apply it to our withheld <code>mvp_model_test</code> data frame. Using the <code>predict</code> function, we instruct to take the modeled predictions from the trained <code>mvp_model</code> and generate further predictions on the <code>mvp_model_test</code> data frame. Because the <code>type = "response"</code> argument results in a probability between <code>0</code> and <code>1</code>, we use <code>ifelse</code> to create a “cutoff” for the probabilities, where any number above 0.5 will be <code>1</code> while any number below will be <code>0</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/applying-model-to-test_8a73f919f2e1457a19ae2d475572e861">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">test_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mvp_model</span>,</span>
 <span>                            newdata <span class="op">=</span> <span class="va">mvp_model_test</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">test_class_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">test_predictions</span> <span class="op">&gt;</span> <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the model now fitted to previously unseen data (the withheld <code>mvp_model_test</code> data frame), we can calculate its accuracy.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/glm-model-accuracy_7a1105d5fe8d11f38b89b6afff8c5911">
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">accuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">test_class_predictions</span> <span class="op">==</span> <span class="va">mvp_model_test</span><span class="op">$</span><span class="va">mvp</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mvp_model_test</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">accuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">accuracy</span>, <span class="fl">2</span><span class="op">)</span></span>
@@ -1164,7 +1164,7 @@ Important
 <p><strong>Because of this, a model could always predict “not MVP” and, as a result, also have an accuracy of 97%.</strong></p>
 <p>While a high accuracy score like the model produced is a promising first sign, it is important to remember that accuracy - as a metric - only gives the broad picture. It does not depict how the model is performing on each individual class (that is, <code>0</code> and <code>1</code>). To get a more granular understanding of the model’s performance, we can turn to metrics such as precision , recall , and the F1 score.</p>
 <p>To begin determining the scores for each, we must conduct a bit of data preparation by ensuring that both <code>test_class_predictions</code> and <code>mvp_model_test$mvp</code> are both <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code>. After, we use the <code>confusionMatrix</code> function from the <code>caret</code> package to build a matrix between the binary class predictions (from <code>test_class_predictions</code>) and the true labels (from <code>mvp_model_test$mvp</code>).</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/turn-to-as-factor_8bc3a45afd674a43d04ce2398bac47bd">
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">test_class_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">test_class_predictions</span><span class="op">)</span></span>
@@ -1173,7 +1173,7 @@ Important
 <span><span class="va">mvp_cm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">test_class_predictions</span>, <span class="va">mvp_model_test</span><span class="op">$</span><span class="va">mvp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After constructing the confusion matrix, we can calculate the results for precision, recall, and F1.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/precision-recall-f1-scores_9e6912cd2f1a818474832f523021637d">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">precision</span> <span class="op">&lt;-</span> <span class="va">mvp_cm</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span><span class="st">'Pos Pred Value'</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">recall</span> <span class="op">&lt;-</span> <span class="va">mvp_cm</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span><span class="st">'Sensitivity'</span><span class="op">]</span></span>
@@ -1206,7 +1206,7 @@ Important
 </div>
 </div>
 <p>Based on the results of accuracy, precision, recall, and the F1 score, our model is quite accurate. We can now create our own “fictional” data frame with corresponding predictor variables to determine the probabilities for each of the quarterbacks to be named MVP.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/fictional-qb-test_862b496907a92c247f4d20f66f80dd84">
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">new_mvp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  cmp_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  att_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
@@ -1226,7 +1226,7 @@ Important
 </div>
 <p>According to our fully trained and tested model, fictional quarterback 2 has just over a 90% probability of winning the MVP when compared to the two other opposing quarterbacks.</p>
 <p>Finally, we can use the <code>broom</code> package to transform the model’s information into a tidyverse-friendly data frame allowing us to visualize the information using <code>ggplot</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/visualizing-glm-model_e260af77d6cd0b7da79456f851e66ae9">
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tidy_mvp_model</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">mvp_model</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">)</span></span>
 <span></span>
@@ -1244,7 +1244,7 @@ Important
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/visualizing-glm-model-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/visualizing-glm-model-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Visualizing the results of the GLM model</figcaption></figure>
 </div>
 </div>
@@ -1306,7 +1306,7 @@ Important
 <p>Below, we will take our newly created <code>model_data_clean</code> data frame and conduct a multinomial logistic regression using the <code>tidymodels</code> package.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-data-prep-2_259076b20fe1d88238afcab0750e4b9c">
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2006</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
@@ -1344,7 +1344,7 @@ Warning
 <p>After switching to <code>fcase()</code>, the code finished running in 17.69 seconds. After upgrading to <code>dplyr</code> 1.1.1, the <code>case_when()</code> version of the code completed in 18.94 seconds.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-data-prep-3_821fe910eb218558ab01fba0f5836c77">
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_data</span> <span class="op">&lt;-</span> <span class="va">pbp_prep</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">posteam</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>run_inside <span class="op">=</span> <span class="fu">fcase</span><span class="op">(</span></span>
@@ -1396,7 +1396,7 @@ Warning
 <p>Before moving on to building out the model, we use <code>mutate(across(c())</code> to turn categorical variables into factors, as well as those numeric variables that are not continuous in nature. Variables <strong>that can take on just a limited number of unique values are typically made into a factor.</strong> For example, the <code>previous_play</code> variable is categorical and is only capable of being one of two values: <code>run</code> or <code>pass</code>. Because of this, it will be converted into a factor.</p>
 <p>Deciding which numeric variables to convert with <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> can be a bit more tricky. We can compare the <code>down</code> and <code>half_seconds_remaining</code> variables, as you see the first in the <code>mutate()</code> function but not the second. This is because <code>down</code> is not a continuous variable as it can only take on a specific number of unique values (1, 2, 3, or 4). On the other hand, <code>half_seconds_remaining</code> is not continuous as there is no rhyme or reason to how it appears in the data - or, in other hands, there is no specific amount by which the <code>half_seconds_remaining</code> decreases for each individual play (while there <em>is</em> an ordered way in how <code>down</code> changes).</p>
 <p>Because we are focusing on completing a multinomial regression, we must now convert the various play type columns (<code>run_inside</code>, <code>run_outside</code>, etc.) from binary format and then unite all five into a single response variable column titled <code>play_call</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-data-prep-4_42386fdd708ecab438fe594a4caf7929">
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_data</span> <span class="op">&lt;-</span> <span class="va">model_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>play_call <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
 <span>    <span class="va">run_outside</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"run_outside"</span>,</span>
@@ -1414,7 +1414,7 @@ Warning
 <p>Before doing any feature engineering with the <code>recipes</code> package, we will first split the data into training and testing sets using the <code>rsample</code> package. The model is first trained on the training data and then evaluated on the testing data. This crucial first step ensures that the model is able to generalize well to any unseen data. As well, splitting the data helps in avoiding overfitting, which occurs when the model is able to recognize any random noise in the data. As a result, the model may perform very well on training data but then fail to reach acceptable evaluation metrics when fit on the withheld testing data.</p>
 <p>To start the splitting process of the <code>model_data_clean</code> data frame, we first use <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> and pick a random number to run with it. The number inside <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> does not matter, as it is simply the initial value of what is otherwise a random-number as the rows are split - at random - into training and testing sets. However, using <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> allows for reproducible results in that conducting the split a second time, as the same initial value in <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> will result in an identical split in future splitting of the data.</p>
 <p>We then use the <code>initial_split</code> function in <code>rsample</code> to create the <code>multinom_play_split</code> data frame. The <code>initial_split</code> process take the provided data frame and creates a single binary split of the information. With the <code>initial_split()</code> process completed, the data is divided into a <code>multinom_play_train</code> data frame and a <code>multinom_play_test</code> data frame using the <code>training()</code> and <code>testing()</code> functions within <code>rsample</code> to conduct the process on the <code>multinom_play_split</code> data. Last, we create folds of the data using the <code>vfold_cv</code> function in <code>rsample</code> that will allow use to conduct K-fold cross validation during the training process.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-data-split_905652000482c96bbdd85e8d7f1d15c2">
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1984</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">multinom_play_split</span> <span class="op">&lt;-</span> <span class="fu">rsample</span><span class="fu">::</span><span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span><span class="op">(</span><span class="va">model_data_clean</span>,</span>
@@ -1462,7 +1462,7 @@ Tip
 <li>
 <strong><code>step_dummy()</code></strong> - the <code>step_dummy()</code> function creates a set of binary variables from the inputted factor.</li>
 </ol>
-<div class="cell" data-ehco="true">
+<div class="cell" data-ehco="true" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-data-recipe_2f828845ab2846271ae70c8d9856acc8">
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multinom_play_recipe</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">recipe</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">play_call</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">multinom_play_train</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">posteam</span>, new_role <span class="op">=</span> <span class="st">"variable_id"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1477,7 +1477,7 @@ Tip
 <span>             <span class="va">two_min_drill</span>, <span class="va">previous_play</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the recipe for our model created, we can build the model itself and then pass both <code>multinom_play_recipe</code> and the below <code>multinom_play_model</code> into a combined <code>workflow()</code> created within the <code>tidymodels</code> framework.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/creating-model-and-workflow_f448e93a9cb35a44a6cbddb9f19e706a">
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multinom_play_model</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">multinom_reg</span><span class="op">(</span>penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, mixture <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"classification"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -1511,7 +1511,7 @@ Note
 </div>
 <p>Because we provided specific tuning parameters in the model type, it is necessary to provide a grid for the process of finding the best hyperparameters - which are those parameters within the model (again, <code>penalty</code> and <code>mixture</code>) that are not provided in the original data frame. The use of these parameters ultimately control the learning process of the model and, as a result, can have a significant impact on the performance and accuracy of the final results. Because of this, we create what is called a “grid” in order to allow the model to run over and over again on a set range of each parameter, a process coined hyperparameter tuning. The end result is a model that has determined the best <code>penalty</code> and <code>mixture</code>.</p>
 <p>We will use the <code>crossing</code> function from the <code>tidyr</code> package to manually create a grid for the hyperparameter tuning process.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/creating-multinom-grid_7cb2382dbbfb68b11aff34516a5d9c02">
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multinom_play_grid</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span>penalty <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">1</span>,</span>
 <span>                                                       length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
 <span>                                      mixture <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>,</span>
@@ -1525,7 +1525,7 @@ Note
 <strong>Mixture</strong> - to tune the <code>mixture</code> parameter, we create a simple sequence of 6 values between 0.05 and 1.</li>
 </ol>
 <p>The model will use <code>multinom_play_grid</code> to train and evaluate against every possible combination of <code>penalty</code> and <code>mixture</code> as defined in our above arguments. With the hyperparameter tuning grid created, we now turn to actually running the model.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinomial-parallel-tune_727802cda9cb09ee5ac9cb57e7226d70">
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_cores</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="fu">registerDoParallel</span><span class="op">(</span><span class="va">all_cores</span><span class="op">)</span></span>
@@ -1588,7 +1588,7 @@ Note
 <li>
 <code>.config</code> - the unique identifier for each model.</li>
 </ol>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/viewing-best-rocauc-multinom_063b9459b3bae550f757bbc7576133d0">
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">show_best</span><span class="op">(</span><span class="va">multinom_play_tune</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">`</span></span>
@@ -1602,18 +1602,18 @@ Note
 </div>
 <p>There is very little difference among the five top-performing models from the tuning process. Among the five best, the <code>mixture</code> is the same (0.2), the <code>mean</code> is the same (0.668), as well as the <code>n</code> (10) and <code>std_err</code> (0.000537). The only difference between each model is found in the <code>penalty</code>, wherein a smaller number equates to a model with less regularization, allowing the model to fit more closely to the training data. On the other hand, a larger <code>penalty</code> value provides a model with more regularization, forcing the model to fit less closely to the training data. However, the amount of regularization in the model had no significant impact on any other performance metric, as they remained static across all models.</p>
 <p>Rather than make an arbitrary choice in the model to take forward in the process, we will use the <code>select_by_one_std_err()</code> function to select the appropriate model. The function operates under the “one-standard-error-rule”, which argues that we should move forward with the model whose standard error is no more than one standard error above the error of the best model. Moreover, we can sort the models in descending order by <code>penalty</code>, thus following the principles of Occam’s Razor, as selecting the model with the largest <code>penalty</code> is essentially selecting simplest model we can based on the criteria of the “one-standard-error-rule.”</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinom-final-penalty_e1b9f59d2680fad38a166ebeb90151d3">
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">final_penalty</span> <span class="op">&lt;-</span> <span class="va">multinom_play_tune</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select_by_one_std_err</span><span class="op">(</span>metric <span class="op">=</span> <span class="st">"roc_auc"</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">penalty</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After identifying the best model in the above step and storing it in <code>final_penalty</code>, we pass it along into the <code>finalize_workflow()</code>. This “finalized workflow” cancels out our previously constructed <code>workflow()</code> and replaces it with <em>only</em> our selected best model. We then use the <code>last_fit()</code> function to run the <code>finalize_workflow()</code> over the previously created <code>multinom_play_split</code>, which again fits the model on the training data and evaluates it on the withheld validation data.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinom-final-fit_3ded31ec88f574bb451c24b9369d5e96">
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">multinom_final_results</span> <span class="op">&lt;-</span> <span class="va">multinom_play_workflow</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">finalize_workflow</span><span class="op">(</span><span class="va">final_penalty</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">last_fit</span><span class="op">(</span><span class="va">multinom_play_split</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the the <code>finalize_workflow()</code> fitted to our data, we can now make and collect predictions on both the training and test data frames and then combine both to explore the model’s performance.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/multinom-augmenting_718d4136b1f80fed0f83c31d2e6e404d">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">workflow_for_merging</span> <span class="op">&lt;-</span> <span class="va">multinom_final_results</span><span class="op">$</span><span class="va">.workflow</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">multinom_all_predictions</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span></span>
@@ -1624,7 +1624,7 @@ Note
 </div>
 <p>In the first step, we are extracting the final workflow created in the prior step and placed the information into an object called <code>workflow_for_merging</code>. Next, we create a data frame called <code>multinom_all_predictions</code> that uses the <code>augment</code> function to make predictions on both the training and testing data using the workflow that holds the parameters of the best model. After creating a column called <code>type</code> that indicates whether the play was from the training or testing data, we combine both sets of predictions using the <code>bind_rows()</code> function.</p>
 <p>With both sets of predictions combined, we can use the <code>collect_predictions</code> function to gather the predictions into a data frame that allows us to further evaluate how the model performed. Additionally, by piping into the <code>roc_curve()</code> function, we can calculate the curve for each class in our data frame (<code>long_pass</code>, <code>short_pass</code>, etc.). The resulting <code>predictions_with_auc</code> data frame includes the true positive and false positive rates for each different play type at various classification thresholds. Including the calculated ROC curve gives us the ability to visualize the model’s performance using the area under the curve (AUC).</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/collecting-predictions_f0bf87e22d78bd4a90af99a10566bcd4">
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predictions_with_auc</span> <span class="op">&lt;-</span> <span class="fu">collect_predictions</span><span class="op">(</span><span class="va">multinom_final_results</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">roc_curve</span><span class="op">(</span>truth <span class="op">=</span> <span class="va">play_call</span>, <span class="va">.pred_long_pass</span><span class="op">:</span><span class="va">.pred_short_pass</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1641,7 +1641,7 @@ Important
 <p>The area under the curve (AUC) is a single-value of the model’s performance. In this case, we are calculating it for each play type classification. An AUC score ranges from 0 to 1, wherein a score of 1 (100%) means the model’s predictions were never incorrect. A score of 0.5 (50%) indicates that the model’s performance was no more predictive than flipping a coin to determine the response variable.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/roc-curve-for-coding_f83f87f5202aabadaaf56e943a0a8bc5">
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predictions_with_auc</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">specificity</span>,</span>
 <span>                                        <span class="va">sensitivity</span>, color <span class="op">=</span> <span class="va">.level</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span>, lty <span class="op">=</span> <span class="fl">23</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1660,17 +1660,17 @@ Important
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"1 - Specificity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Sensitivity"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/roc-curve-for-show_b6207cb5866d6fe50954b88887c9fd76">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/roc-curve-for-show-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/roc-curve-for-show-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Area Under Curve (AOC) for the playtype predictive model</figcaption></figure>
 </div>
 </div>
 </div>
 <p>This visualization is a Receiver Operating Characteristic (ROC) curve, which is created by plotting the <code>True Positive Rate</code> against the <code>False Positive Rate</code> for each of the different play types in the data frame. The “arching” of the <code>run_outside</code> line towards the 0.80 mark indicates that the model is doing a commendable job at recognizing the patterns that result in the <code>run_outside</code> class against the others. The model had slightly more difficulty in distinguishing the other play types (<code>long_pass</code>, <code>medium_pass</code>, <code>run_inside</code>, and <code>short_pass</code>) from one another. But, each is still solidly above the line of no-discrimination (shown as the dashed, diagonal line in the plot) where the model’s performance would be no better than random guesses.</p>
 <p>With reasonably good results given the complexity in both NFL offenses and decision making, we can use the results of our model to determine which teams over the course of the time period were most predictable. To start, we will create a data frame titled <code>predictions_by_team</code> from the combined <code>multinom_all_predictions</code>. Next, we need to switch <code>.pred_class</code> to <code>as.character</code> as well as <code>play_call</code> and <code>posteam</code>. After using <code>summarize()</code> to find the <code>total_plays</code>, the <code>total_pred</code>, and <code>pred_pct</code> for each team by season, we find that the 2017 New Orleans Saints were the most predictable team in the data, with the model selecting the right play type nearly 59% of the time.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/predictions-by-team_814995720973b67a26e110071915227a">
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predictions_by_team</span> <span class="op">&lt;-</span> <span class="va">multinom_all_predictions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>.pred_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">.pred_class</span><span class="op">)</span>,</span>
 <span>         play_call <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">play_call</span><span class="op">)</span>,</span>
@@ -1684,7 +1684,7 @@ Important
 <span><span class="va">predictions_by_team</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">predictions_by_team</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, to conclude the process of designing a multinomial regression model, we can use the data we just created in <code>predictions_by_team</code> and use knowledge we’ve gained in the Data Visualization chapter to place the results into a visually appealing table using <code>gt</code> and <code>gtExtra</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/team-predictions-table_826fcdf907b7d52a65847ca0cc7d6366">
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">predictions_by_team</span> <span class="op">&lt;-</span> <span class="va">predictions_by_team</span> <span class="op">%&gt;%</span></span>
@@ -2250,10 +2250,10 @@ html {
 <strong>Noise Reduction</strong> - Because the principal components outputted in the PCA process are ranked in the order of variance explained, the higher-numbered ones that provide little cumulative impact are typically the ones holding the noise and other minor nuances in the data. To provide a more robust data frame to the K-means process, we can drop these components that contain unhelpful data.</li>
 </ol>
 <p>To begin this process, first download the <code>rushing_kmeans_data</code>. After, we create a vector of each rusher’s name and unique ID number from the <code>rushing_kmeans_data</code> data frame, as we will want to use the names as the data frame’s row names during the data visualization process and have the player’s ID to merge in further data, if needed (such as headshot URLs). After, we create a data frame titled <code>rushers_pca</code> that is a copy of <code>rushing_kmeans_data</code> but using <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to drop both <code>player</code> and <code>player_id</code>, and then add each name back into the data frame using the <code>rownames</code> function. Now, rather than each row being associated by a number, each rusher’s name will be the identification method.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/download-rushing-kmean_2806ac840db4a8752b2aaefe2c1bb2f2">
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_kmeans_data</span> <span class="op">&lt;-</span> <span class="fu">vroom</span><span class="op">(</span><span class="st">"http://nfl-book.bradcongelio.com/kmeans-data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-process-1_cb57ecc237f5a7fcc5087ae2da1a67c5">
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rusher_names</span> <span class="op">&lt;-</span> <span class="va">rushing_kmeans_data</span><span class="op">$</span><span class="va">player</span></span>
 <span><span class="va">rusher_ids</span> <span class="op">&lt;-</span> <span class="va">rushing_kmeans_data</span><span class="op">$</span><span class="va">player_id</span></span>
 <span></span>
@@ -2265,7 +2265,7 @@ html {
 <span><span class="va">rushers_pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="va">rushers_pca</span>, center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After that brief bit of data cleaning and preparation, we use the <code>prcomp</code> function from the <code>stats</code> package to both center and scale the variables in the data frame. The results of the PCA process includes the first look at relationship between all of our variables.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-process-2_2157452d8edd913ce37585bc0f9414dc">
 <div class="cell-output cell-output-stdout">
 <pre><code>Standard deviations (1, .., p=7):
 [1] 1.583 1.312 0.987 0.869 0.731 0.546 0.456
@@ -2304,7 +2304,7 @@ Note
 </div>
 </div>
 <p>We can also visualize these results using the <code>factoextra</code> package which provides the ability to extract and visualize the output of various types of multivariate data analyses, including a Principal Component Analysis. Using <code>factoextra</code>, we can explore the results in three different arrangements: the individual data points (in this case, the play callers) using <code>fviz_pca_ind()</code>, the variables using <code>fviz_pca_var()</code>, or a combination of both using <code>fviz_pca_biplot()</code>. As an example, let’s construct a biplot that shows <code>PC1</code> on the x-axis and <code>PC2</code> on the y-axis along with the positioning of the variables and rusher names.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-biplot_3582a9c2b5b8bf51d98e342a14de34c0">
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">fviz_pca_biplot</span><span class="op">(</span><span class="va">rushers_pca</span>, geom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"point"</span>, <span class="st">"text"</span><span class="op">)</span>,</span>
 <span>                ggtheme <span class="op">=</span> <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2313,7 +2313,7 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"PC2 - 24.6%"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-biplot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-biplot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Using a biplot to view the relationship between principal components</figcaption></figure>
 </div>
 </div>
@@ -2323,7 +2323,7 @@ Note
 </section><section id="determining-the-amount-of-k" class="level4" data-number="5.3.1.2"><h4 data-number="5.3.1.2" class="anchored" data-anchor-id="determining-the-amount-of-k">
 <span class="header-section-number">5.3.1.2</span> Determining the Amount of K</h4>
 <p>In our biplot, we determined that <code>PC1</code> and <code>PC2</code> accounted for 60.4% of the variance in the data. The total number of principal components we select, based on cumulative variance explained, will be the number of clusters the running backs are grouped into during the K-means process. To get a better understanding of the amount being explained, we can use the <code>get_eigenvalue</code> function from <code>factoextra</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-eigenvalue_58f11f2467b4771ae9afed5c66799335">
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">get_eigenvalue</span><span class="op">(</span><span class="va">rushers_pca</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      eigenvalue variance.percent cumulative.variance.percent
@@ -2339,7 +2339,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <p>The output provides the amount of variance explained by each principal (<code>Dim</code>) along with the cumulative value. We can see what we already discovered about <code>PC1</code> (35.8%) and <code>PC2</code> (24.6%) with the cumulative total of the two being correct at 60.4%. Going further, <code>PC3</code> explains 13.9% more of the variance in the data, bringing the cumulative total to 74.3%. Adding <code>PC4</code> brings the cumulative total to 85.1%. The fifth principal component brings the cumulative total to over 90%, with the remaining two (<code>PC6</code>, <code>PC7</code>) more than likely accounting for noise and small nuances within the data.</p>
 <p>Unfortunately, there is no widely-accepted process to decide with certainty how many components are enough. A popular method, however, is called the “elbow method” or the Scree plot wherein the “elbow of the curve” reflects the correct number of components to select, as the resulting cumulative amount of variance explained is not worth the noise brought in.</p>
 <p>We can product a Scree plot using the <code>fviz_eig</code> function.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-scree-plot_3f02cd03636bc9acde9f58947a47b002">
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">fviz_eig</span><span class="op">(</span><span class="va">rushers_pca</span>, addlabels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         ggtheme <span class="op">=</span> <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Principal Component"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2347,14 +2347,14 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**PCA Analysis: Scree Plot**"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-scree-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-scree-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Using a Scree plot to help determine the correct number of components</figcaption></figure>
 </div>
 </div>
 </div>
 <p>In the plot, each bar represents the amount of variance explained for each principal component with the included numeric value at top. In this case, there is a fairly evident “elbow” in the plot at the third principal component. Compared to the rapid growth in the cumulative gain in the first three principal components, the final six provide diminishing returns.</p>
 <p>We can view the contribution to the variables of each component in a combined manner using the <code>fviz_contrib</code> function and then arranging the results together using the <code>plot_grid</code> function from <code>cowplot</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/pca-contributions_fbc7da2f5f0766887d642b1c1fafa1b6">
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pc1</span> <span class="op">&lt;-</span> <span class="fu">fviz_contrib</span><span class="op">(</span><span class="va">rushers_pca</span>, choice <span class="op">=</span> <span class="st">"var"</span>, axes <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">pc2</span> <span class="op">&lt;-</span> <span class="fu">fviz_contrib</span><span class="op">(</span><span class="va">rushers_pca</span>, choice <span class="op">=</span> <span class="st">"var"</span>, axes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">pc3</span> <span class="op">&lt;-</span> <span class="fu">fviz_contrib</span><span class="op">(</span><span class="va">rushers_pca</span>, choice <span class="op">=</span> <span class="st">"var"</span>, axes <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -2362,7 +2362,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span><span class="fu">plot_grid</span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc2</span>, <span class="va">pc3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-contributions-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/pca-contributions-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Viewing the contribution of each variable to each component</figcaption></figure>
 </div>
 </div>
@@ -2372,20 +2372,20 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 </section><section id="conducting-the-k-means-process" class="level4" data-number="5.3.1.3"><h4 data-number="5.3.1.3" class="anchored" data-anchor-id="conducting-the-k-means-process">
 <span class="header-section-number">5.3.1.3</span> Conducting the K-means Process</h4>
 <p>As a result of the PCA process, we know we will be grouping the running back into four distinctive clusters, so we will create a value in our environment called <code>k</code> and set it to <code>4</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/setting-k_93fb73b45e22336eb0dede56c063074c">
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We then must extract the values created during the PCA process and write them into a new data frame in order to pass the information into the <code><a href="https://rdrr.io/r/stats/kmeans.html">kmeans()</a></code> function. This information is stored within <code>rushers_pca$x</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/extracting-pca-scores_dcb55943ca3561615cb579e15727d507">
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pca_scores</span> <span class="op">&lt;-</span> <span class="va">rushers_pca</span><span class="op">$</span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We write the PCA results into a data frame called <code>pca_scores</code> and are now able to conduct the K-means process on the data, passing the correct number of <code>K</code> into the function’s required arguments.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/conducting-kmeans_0a54c97602e99c01386c0ef4767dcd0b">
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1928</span><span class="op">)</span></span>
 <span><span class="va">rushing_kmeans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span><span class="op">(</span><span class="va">pca_scores</span>, centers <span class="op">=</span> <span class="va">k</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Compared to other models in this chapter, a K-means process completes almost instantly. After, the created <code>rushing_kmeans</code> provides access to eight components pertaining to the results, including <code>cluster</code>, <code>centers</code>, <code>totss</code>, <code>withinss</code>, <code>tot.withinss</code>, <code>betweenss</code>, <code>size</code>, <code>iter</code>, and <code>ifault</code>. For our purposes, we can view the cluster assigned to each running back. After, we write this information out into a data frame called <code>cluster_assignment</code> and then merge it back into the original data frame.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/cluster-results_e353277594cf83da94ea2bb938bb8d05">
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_kmeans</span><span class="op">$</span><span class="va">cluster</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Derrick Henry         Josh Jacobs      Saquon Barkley 
@@ -2416,7 +2416,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span><span class="va">rushing_kmeans_data</span><span class="op">$</span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="va">cluster_assignment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The results of the K-means process placed, for example, Derrick Henry, Josh Jacobs, and Nick Chubb all into cluster <code>2</code> and Najee Harris, Tony Pollard, Aaron Jones into cluster <code>3</code>. To better visualize the traits and attributes associated with each cluster, we can conduct some preparation and then produce a plot.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/attribute-trait-plot-prep_4917a8b93fec51ee4ccfe987688dcbd5">
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kmean_dataviz</span> <span class="op">&lt;-</span> <span class="va">rushing_kmeans_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">rename</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Elusiveness"</span> <span class="op">=</span> <span class="va">elusive_rating</span>,</span>
 <span>           <span class="st">"Broken/Missed"</span> <span class="op">=</span> <span class="va">broken_missed</span>,</span>
@@ -2435,7 +2435,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span><span class="va">kmean_data_long</span> <span class="op">&lt;-</span> <span class="va">kmean_dataviz</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">gather</span><span class="op">(</span><span class="st">"Variable"</span>, <span class="st">"Value"</span>, <span class="op">-</span><span class="va">player</span>, <span class="op">-</span><span class="va">player_id</span>, <span class="op">-</span><span class="va">cluster</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/cluster-plot_c3a55c8d58425326e5935b99671dabf8">
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">kmean_data_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Variable</span>, y <span class="op">=</span> <span class="va">Value</span>, color <span class="op">=</span> <span class="va">cluster</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">cluster</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2447,7 +2447,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 <span>        legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/cluster-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/cluster-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Visualizing the results of the k-means clustering process</figcaption></figure>
 </div>
 </div>
@@ -2486,7 +2486,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 </li>
 </ol>
 <p>To complete the process, we can take the completed model and transition the data into a presentable <code>gt</code> table. Before creating it, though, we must complete a bit of data preparation, such as merging in player headshots and team logos.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/gt-table-prep_e4cb677bae6c0ccd29a22d3f844328f7">
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roster</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_rosters.html">load_rosters</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">pff_id</span>, <span class="va">team</span>, <span class="va">headshot_url</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>pff_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">pff_id</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -2513,7 +2513,7 @@ Dim.7      0.208             2.98                       100.0</code></pre>
 </div>
 <p>First, we use the <code>load_rosters</code> and <code>load_teams</code> function from <code>nflreadr</code> to bring in the necessary columns that contain the information for player headshots and team logos (matching on <code>pff_id</code> for roster information and the <code>team</code> column to bring in logos). Unfortunately, a small number of the running backs are missing headshot URLS<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Rather than including missing images in the table, we will use <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> to drop these players. Next, we create a data frame called <code>gt_table_data</code> that includes just the <code>player</code>, <code>cluster</code>, <code>headshot_url</code>, and <code>team_logo_wikipedia</code>. Last, we format the <code>cluster</code> information from numeric values to a character-based description based on the previous created titles for each.</p>
 <p>With the data addition and preparation completed, we can use both the <code>gt</code> and <code>gtExtras</code> package to create the table.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/rb-kmean-table_d9b7df2492e8e8c297ead39ff8ebc4dd">
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gt_table_data</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>cluster <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">cluster</span>,</span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Cluster 1 - Feast or Famine"</span>,</span>
@@ -3134,10 +3134,10 @@ html {
 <p>To showcase this idea, we are going to begin exploring ways to add additional feature engineering to Tej Seth’s already fantastic Rushing Yard Over Expected model. While not the most stable metric, as mentioned, the idea of RYOE is generally easy to understand for even the most novice analyst. Broadly, given what we know about every other rushing play during a specific span of seasons, what is the most likely amount of yards a running back is going to gain on a specific rushing play as predicted by the model on other similar situations?</p>
 <p>That difference is rushing yards over expected.</p>
 <p>Using Tej’s Shiny app, we can explore all seasons between 2015 and 2022 for those running backs that had a minimum of 755 rushing attempts.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/tej-seth-shiny-results_34a8a979ec2b510000684702130745da">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/ryoe_2015_2022.jpg" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="images/ryoe_2015_2022.jpg" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Example results from Tej Seth’s RYOE model</figcaption></figure>
 </div>
 </div>
@@ -3171,7 +3171,7 @@ Important
 <p>As always, the first step in the modeling process is gathering the data and conducting the necessary feature engineering. In the case of our XGBoost model, we will gather play-by-play data from the 2016-2022 season and begin the work of creating additional metrics from the information contained in the data.</p>
 <section id="data-preparation-and-feature-engineering" class="level5" data-number="5.3.2.2.1"><h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="data-preparation-and-feature-engineering">
 <span class="header-section-number">5.3.2.2.1</span> Data Preparation and Feature Engineering</h5>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-model-prep_cfdb903fca584acfebe19c9f124d9aa6">
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2016</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rush_attempts</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
@@ -3189,7 +3189,7 @@ Important
 </div>
 <p>After gathering the play-by-play data from 2016-2022 and doing a bit of preparation, we conduct our first bit of feature engineering by determining the average yards per carry allowed by each defense by season and then merge the results back into the main <code>rush_attempts</code> data frame.</p>
 <p>Aside from the typical contextual variables such as down, yards to go, score, time remaining, etc., we can use the <code>load_participation</code> function from <code>nflreadr</code> to include information regarding what formation both the offense and defense were in, per play, as well as the personnel on the field for each and the total number of defenders in the box.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-model-participation_fa928988f6fdb98b72f40469794bb7cf">
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2016</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">nflverse_game_id</span>, <span class="va">play_id</span>, <span class="va">possession_team</span>, <span class="va">offense_formation</span>,</span>
 <span>         <span class="va">offense_personnel</span>, <span class="va">defense_personnel</span>, <span class="va">defenders_in_box</span><span class="op">)</span></span>
@@ -3200,7 +3200,7 @@ Important
 <span>                                  <span class="st">"posteam"</span> <span class="op">=</span> <span class="st">"possession_team"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>After collecting the information for each <code>play_id</code> in the data from 2016-2022, we again use <code>left_join()</code> to bring it into the <code>rush_attempts</code> data frame, joining by the matching <code>game_id</code>, <code>play_id</code>, and <code>posteam</code>. Before continuing with the feature engineering process, we will create a secondary data frame to work with called <code>rushing_data_join</code> that will allow us to bring player names back into the data after the modeling process is complete.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-more-feature-engineering_88aeab3b0d9cdba9f21a91da12cc7405">
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_data_join</span> <span class="op">&lt;-</span> <span class="va">rush_attempts</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">game_id</span>, <span class="va">rusher</span>, <span class="va">fixed_drive</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>drive_rush_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">rush_attempt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -3232,7 +3232,7 @@ Important
 <li>Finally, numeric <code>1</code> and <code>0</code> values are provided based on if the offense is in the <code>red_zone</code>, in <code>fg_range</code>, or if it is in a two-minute drill scenario.</li>
 </ol>
 <p>We can continue to add to the data frame using information from the <code>next_gen_stats()</code> function, specifically information pertaining to the percent of rushing attempts that had eight defenders in the box and each running back’s average time from handoff to the line of scrimmage.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-nextgen-stats_b6c91e630eb1a6dba2c606ce3c771285">
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">next_gen_stats</span> <span class="op">&lt;-</span> <span class="fu">load_nextgen_stats</span><span class="op">(</span>seasons <span class="op">=</span> <span class="fl">2016</span><span class="op">:</span><span class="fl">2022</span>,</span>
 <span>                                     stat_type <span class="op">=</span> <span class="st">"rushing"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">week</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
@@ -3247,7 +3247,7 @@ Important
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Last, we will conduct a bit of engineering on both the <code>offense_personnel</code> and <code>defense_personnel</code> we previously added into the data. Currently, the information for each is structured, for example, as <code>1 RB, 1 TE, 3 WR</code>. Instead, we can create a new column for each position with the numeric value indicating the number on the field for each play.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-personnel-cleaning_f9ce353f8c5df440e841077bcf353520">
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_data_join</span> <span class="op">&lt;-</span> <span class="va">rushing_data_join</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span></span>
 <span>    ol <span class="op">=</span> <span class="fu">str_extract</span><span class="op">(</span><span class="va">offense_personnel</span>,</span>
@@ -3274,7 +3274,7 @@ Important
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">defense_personnel</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use the <code>str_extract</code> function to identify the abbreviation for each position, and then place the associated number with each with the specific <code>play_id</code>. The offensive personnel includes the additional output of including a column for offensive linemen, but only if there are more than six downed linemen on the line of scrimmage. In this case, we use the <code>ol</code> column to determine if there is an extra lineman on the field (indicated by the new <code>extra_ol</code> variable).</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-final-prep_85248e4dafd218124f36531a31228843">
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_data_join</span> <span class="op">&lt;-</span> <span class="va">rushing_data_join</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">qtr</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>qtr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">qtr</span><span class="op">)</span>,</span>
@@ -3296,7 +3296,7 @@ Important
 <span class="header-section-number">5.3.2.2.2</span> Model Creation in <code>tidymodels</code>
 </h5>
 <p>To begin creating the model, we will follow much the same steps as we did with our multinomial regression by following the <code>tidymodels</code> framework which needs split data, folds for cross-validation, a recipe, a model specification, a grid for hyperparameter tuning, and a workflow that combines all these elements. Using the <code>rushes</code> data frame, we will use the <code>rsample</code> package to create an initial split of the data and then produce the model’s training and testing data sets from that split. Lastly, we utilize the <code>vfold_cv()</code> function to create folds of the training data to pass into the hyperparameter tuning grid.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-splitting-data_2c2d4aa7bf97c437a873b20111581319">
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1988</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rushing_split</span> <span class="op">&lt;-</span> <span class="fu">initial_split</span><span class="op">(</span><span class="va">rushes</span><span class="op">)</span></span>
@@ -3305,14 +3305,14 @@ Important
 <span><span class="va">rushing_folds</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">rushing_train</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With the data split into the required components, we can create the recipe for our XGBoost model.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-model_f3c31fb7ee4f56689ef6b3208138f349">
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_recipe</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">recipe</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">label</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">rushing_train</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal_predictors</span><span class="op">(</span><span class="op">)</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The formula in our recipe is <code>label ~ .</code> (which is what the rushing yards gained column was renamed) and all other columns in the data frame are the predictive variables. We are also using <code>step_dummy</code> to one hot encode all the model’s nominal predictors, which are those variables that contain two or more categories but do not contain any intrinsic order.</p>
 <p>The next required component to push into the model’s <code>workflow()</code> is the model specification.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-model-spec_d82abfdebafa1d05d5d94781e776680c">
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_specs</span> <span class="op">&lt;-</span> <span class="fu">boost_tree</span><span class="op">(</span></span>
 <span>  trees <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  tree_depth <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, </span>
@@ -3342,7 +3342,7 @@ Note
 </div>
 </div>
 <p>Regardless of using <code>lightgbm</code> or <code>xgboost</code> as the model’s engine, we have the ability to tune the same items, including <code>tree</code>, <code>tree_depth</code>, <code>min_n</code>, <code>mtry</code>, <code>loss_reduction</code>, <code>sample_size</code>, <code>learn_rate</code>, and <code>stop_iter</code>. The <code>lightgbm</code> engine, specifically, can tune for the <code>num_leaves</code> in the vertical growth pattern. After creating the model’s specifications, we pass the required <code>tune()</code> information into <code>grid_latin_hypercube()</code> and then pass the created recipe and model specifications into our <code>workflow()</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-grid-workflow_2eaad53eac063858e9a776ff16faccd7">
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_grid</span> <span class="op">&lt;-</span> <span class="fu">grid_latin_hypercube</span><span class="op">(</span></span>
 <span>  <span class="fu">trees</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="fu">tree_depth</span><span class="op">(</span><span class="op">)</span>,</span>
@@ -3361,7 +3361,7 @@ Note
 <span>  <span class="fu">add_model</span><span class="op">(</span><span class="va">rushing_specs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With a completed workflow that contains the recipe and the model’s engine and tuning requirements, we can tune the hyperparameters using the <code>tune_grid()</code> function.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-tune-grid_2137b8490f746a5aa82acb0fbf731973">
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_tune</span> <span class="op">&lt;-</span> <span class="fu">tune_grid</span><span class="op">(</span><span class="va">rushing_workflow</span>,</span>
 <span>                          resample <span class="op">=</span> <span class="va">rushing_folds</span>,</span>
 <span>                          grid <span class="op">=</span> <span class="va">rushing_grid</span>,</span>
@@ -3369,7 +3369,7 @@ Note
 </div>
 <p>Depending on your computing power, the process of tuning the hyperparameters can take a significant amount of time, even when using <code>DoParallel</code> to conduct the process under parallel processing. Manually setting for 100 trees over 30 grids took just 5 minutes, while increasing it to 1,000 trees over 60 grids took 96 minutes. Tuning for the number of trees over 100 grids took, as mentioned, 4.5 hours.</p>
 <p>With the hyperparameter tuning process complete we can view the best performing ones based on RMSE (Root Mean Square Error).</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-viewing-best_9fea5837dedfcf277ccc08c526f58599">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">best_params</span> <span class="op">&lt;-</span> <span class="va">rushing_tune</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select_best</span><span class="op">(</span>metric <span class="op">=</span> <span class="st">"rmse"</span><span class="op">)</span></span>
 <span></span>
@@ -3406,7 +3406,7 @@ Note
 </ol>
 <p>In totality , the tuning of our model’s hyperparameters suggest that it is fairly complex, as indicated by the number of <code>trees</code> and <code>tree_depth</code>. Specifically, the high number of <code>trees</code> suggests that the model is likely detecting and capturing very subtle patterns within the data. The low <code>learning_rate</code> and <code>stop_itr</code> will help the model avoid overfitting, while the moderate <code>sample_size</code> and <code>mtry</code> values indicate the potential for a robust final result.</p>
 <p>With the tuning process complete and the best hyperparameters selected, we can take those parameters and pass them into a final workflow to verify the model on the testing data using only those metrics.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-verify-on-testing_0d70b27f85bc78885019171c4f3c5cbb">
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rushing_final_workflow</span> <span class="op">&lt;-</span> <span class="va">rushing_workflow</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">finalize_workflow</span><span class="op">(</span><span class="va">best_params</span><span class="op">)</span></span>
 <span></span>
@@ -3422,7 +3422,7 @@ Note
 <p>In the above code, we are creating a second <code>workflow</code> titled <code>rushing_final_workflow</code> that will still contain the information from <code>rushing_recipe</code> and <code>rushing_specs</code> but will now only conduct the process using the tuned hyperparamters. We then take the final workflow and fit it to the testing data.</p>
 <p>When the final fitting process is complete, which is typically much faster than the tuning process, we can take the results of <code>final_model</code> and use the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function to create a combined data frame and then, in the next step, use <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code> to create a file containing all of the projections created by the model called <code>ryoe_projs</code>.</p>
 <p>At this point, the modeling process is complete and all there is left to do is explore the results To do so, we will use basic commands from <code>tidyverse</code> to make some necessary manipulations, merge in team color information from <code>nflreadr</code> and then visualize the data.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-data-viz-prep_8eb54aa2094a9477af858b5b302f0ce7">
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_ryoe</span> <span class="op">&lt;-</span> <span class="va">ryoe_projs</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">season</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>nfl_mean_ryoe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">actual_yards</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">exp_yards</span><span class="op">)</span><span class="op">)</span></span>
@@ -3450,7 +3450,7 @@ Note
 <span><span class="va">for_plot</span> <span class="op">&lt;-</span> <span class="va">for_plot</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"team"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-plot_54270f8ea3d0ab4f29e77de7459f9170">
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">for_plot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">yards</span>, y <span class="op">=</span> <span class="va">exp_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">stat_poly_line</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                 linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -3477,14 +3477,14 @@ Note
 <span>                  family <span class="op">=</span> <span class="st">"Roboto"</span>, size <span class="op">=</span> <span class="fl">4</span>, fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/ryoe-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/ryoe-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Actual Yards vs.&nbsp;Expected Yards</figcaption></figure>
 </div>
 </div>
 </div>
 <p>The graph shows the “line of best fit” between <code>Actual Rushing Yards</code> and <code>Expected Rushing Yards</code>. Those running backs that outperformed the model’s expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model’s expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook’s 5,656 actual yards and 5,342 expected yards).</p>
 <p>However, these results are over all of 2016-2022. We can use the results stored in our <code>ryoe_projs</code> data frame to produce more granular results to see which running backs performed the best against the model’s expectation based on a number of different factors. For example, let’s view the data by season and determine which rusher had the largest positive difference between their actual yards and expected yards.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-leaders-per-season-prep_1362adb0b3094e5edd9db12bcd9a0868">
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diff_per_season</span> <span class="op">&lt;-</span> <span class="va">ryoe_projs</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">season</span>, <span class="va">rusher</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span></span>
@@ -3502,7 +3502,7 @@ Note
 <span>  <span class="fu">mutate</span><span class="op">(</span>is_max_diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">yards_diff</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">yards_diff</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To plot the leaders per season required just two additions to the current <code>ryoe_projs</code> data frame. We first use <code>summarize()</code> to gather each running back’s rushes, team, actual yards, and expected rushing yards per season and then created the <code>yards_diff</code> column which is simply the difference between the player’s <code>yards</code> and <code>exp_yards</code>. In order to label just the leader’s name in the plot for each season, we use <code>mutate()</code> to create the <code>is_max_diff</code> column where a rusher is provided a numeric <code>1</code> if their <code>yards_diff</code> was the highest positive value for the season.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ryoe-leaders-per-season_595ce111705ca1b98ced2b747eb3fe51">
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diff_per_season</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">yards</span>, y <span class="op">=</span> <span class="va">exp_yards</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">stat_poly_line</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                 linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -3536,13 +3536,13 @@ Note
 <span>        strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#F6F6F6"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/ryoe-leaders-per-season-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/ryoe-leaders-per-season-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">RYOE Leaders per Season</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Last, given the success of Jonathan Taylor’s 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against the his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/jtaylor-2021-prep_f04cabe80acd2a4f422f840b4e15d49f">
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">j_taylor_2021</span> <span class="op">&lt;-</span> <span class="va">ryoe_projs</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">rusher</span> <span class="op">==</span> <span class="st">"J.Taylor"</span> <span class="op">&amp;</span> <span class="va">posteam</span> <span class="op">==</span> <span class="st">"IND"</span> <span class="op">&amp;</span> <span class="va">season</span> <span class="op">==</span> <span class="fl">2021</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">reframe</span><span class="op">(</span></span>
@@ -3557,7 +3557,7 @@ Note
 </div>
 <p>In order to create the <code>j_taylor_2021</code> data frame, we first create a new variable titled <code>cumulative_rushes</code> that is copying the numeric row names so that each subsequent rushing attempt increases this number, resulting in his total number of carries in the season. Similarly , the <code>cumulative_yards</code> and <code>cumulative_exyards</code> are calculated using the <code>cumsum</code> function which sums the results, play by play, in a rolling fashion.</p>
 <p>Lastly, in order to provide a bit of “eye candy” to the plot, we use the <code>readPNG()</code> function from the <code>png</code> package to read in an image of Taylor rushing the football. We will place this image into the plot.</p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/j-taylor-2021-plot_02ec58d9f920418a3332a237fc129857">
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">j_taylor_2021</span><span class="op">$</span><span class="va">cumulative_rushes</span>,</span>
 <span>                y <span class="op">=</span> <span class="va">j_taylor_2021</span><span class="op">$</span><span class="va">cumulative_yards</span><span class="op">)</span>,</span>
@@ -3588,7 +3588,7 @@ Note
 <span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/j-taylor-2021-plot-1.png" style="width:100.0%;height:100.0%" class="figure-img"></p>
+<figure class="figure"><p><img src="05-nfl-analytics-advanced-methods_files/figure-html/j-taylor-2021-plot-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
 <figcaption class="figure-caption">Jonathan Taylor’s 2021 Cumulative Actual Yards vs.&nbsp;Expected Yards</figcaption></figure>
 </div>
 </div>
@@ -3599,7 +3599,7 @@ Note
 <section id="exercise-1" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="exercise-1">
 <span class="header-section-number">5.4.1</span> Exercise 1</h3>
 <p>First, run the code below to create the data frame titled <code>fieldgoal_regression</code></p>
-<div class="cell">
+<div class="cell" data-hash="05-nfl-analytics-advanced-methods_cache/html/ch-5-ex-1_45e8864210932f04356522708df6f02c">
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span></span>
 <span></span>
