@@ -18,7 +18,7 @@ This book is, of course, not comprehensive when it comes to highlighting the R p
 
 ## Data Visualization in R and Visualization Guides
 
-1.  [R Graphics Cookbook: Practicl Recipes for Visualizing Data](https://amzn.to/3oulxTa)
+1.  [R Graphics Cookbook: Practical Recipes for Visualizing Data](https://amzn.to/3oulxTa)
 
 2.  [Storytelling with Data: A Data Visualization Guides for Business Professionals](https://amzn.to/3PAOB7y)
 

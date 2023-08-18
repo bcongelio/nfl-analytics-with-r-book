@@ -89,7 +89,7 @@ It is important to note that the structure of the data returned by `load_player_
 1     409           531          18   -0.740
 ```
 
-Knowing that Peyton's average rushing EPA from 2000 to the end of his career was -0.740 is not going to win you final Jeopardy nor is it going to be helpful in any sort of Twitter football discourse. When working with `load_player_stats()`, it is important that you know the variable names that are useful to the research you are doing.
+Knowing that Peyton's average rushing EPA from 2000 to the end of his career was -0.740 is not going to win you final Jeopardy nor is it going to be helpful in any sort of Twitter football discourse (as opposed to knowing the rushing EPA for Patrick Mahomes who is, for lack of a better term, a bit more nimble on the run). When working with `load_player_stats()`, it is important that you know the variable names that are useful to the research you are doing.
 
 ::: callout-tip
 The relevant passing statistics housed in `load_player_stats()` includes:\index{nflreadr!load\_player\_stats()!passing data}
@@ -756,7 +756,7 @@ Going forward in this chapter, we will be exploring specific use cases for the f
 
 The `load_participation()`\index{nflreadr!Functions!load\_participation()} function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing `nflreadr` play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.
 
-Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe)\index{Hefner, Joseph} uses the data to create tables (built with the `gt` and `gtExtras` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluctuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://josephjefe.shinyapps.io/formations_app/)\index{Hefner, Joseph!Team Formation ShinyApp} that allows anybody to explore the data and output the results in .png format.
+Despite the `load_participation()` function being one of the newest editions to the `nflreadr` package, it is already being used to create contextual analysis regarding a team's use of its players out out formations. For example, [Joseph Hefner](https://twitter.com/josephjefe)\index{Hefner, Joseph} uses the data to create tables (built with the `gt` and `gtExtras` packages) that calculates not only each player's rate of usage out of different personnel packages, but how the team's EPA per play and pass rate fluctuate with each. In the spirit of R's open-source nature, he also created a [Team Formation ShinyApp](https://www.jefeshandiwork.com/shiny/team-formations)\index{Hefner, Joseph!Team Formation ShinyApp} that allows anybody to explore the data and output the results in .png format.
 
 {{< tweet josephjefe 1621217561437409280 >}}
 

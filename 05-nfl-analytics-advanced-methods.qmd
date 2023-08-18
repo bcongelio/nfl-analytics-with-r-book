@@ -182,7 +182,7 @@ A regression model that is not overfitted will have data points that do not fall
 Information about these residual values are included first in our `summary(results_2022)` output and provide insight into the distribution of the model's residual errors.
 
 |                           |                                                                                                                                                                                                                                                                                                                                      |
-|:--------------------:|:------------------------------------------------:|
+|:----------------------:|:----------------------------------------------:|
 | **Summary Distribution**  |                                                                                                                                                             **Meaning**                                                                                                                                                              |
 |  The `Min` Distribution   | The `Min` distribution provides the smallest difference between the actual values of the model's predictor variable (total points) and the predicted. In the example summary, **the minimum residual is -71.443 which means that the `lm()` model predicted that one specific team scored 71.443 more points than it actually did.** |
 |   The `1Q` Distribution   |                   The `1Q` distribution is based on the first quartile of the data (or where the first 25% of the model's residual fall on the line of best fit). **The `1Q` residual is -22.334, which means the `lm()` model predicted that 25% of the teams scored 22.334 more points than the actual values.**                   |
@@ -608,7 +608,7 @@ $$
 
 To better explain the formula, let's assume we want to predict the probability of any one NFL team winning a game (again, in a binary `1` for winning, or `0` for losing). These binary outcome is represented by the $Y$. The predictor variables, such as the team's average points scored, the average points allowed by the opposing defense, home-field advantage, and any other statistics likely to be important in making the prediction are represented by $X1, X2, ..., Xn$. The model's coefficients, or the relationship between the predictors and a team's chance of winning, are represented by $\beta_0 + \beta_1X_1 + \beta_2$. In the event that a team's average passing yards is represented by the $B1$ coefficient, a positive number suggests that higher average passing yards results in an increase in the probability of winning. Conversely, a negative coefficient number indicates the statistic has a negative impact on winning probability.
 
-To that end, there are three distinct types of logistic regressions: binary, multinomial, and ordinal (we will only be covering binary and ordinal in this chapter). All three allow for working with various types of dependent variables.
+To that end, there are three distinct types of logistic regressions: binary, multinomial, and ordinal (we will only be covering binary and multinomial in this chapter, however). All three allow for working with various types of dependent variables.
 
 **Binary regression models**\index{Models!logistic regression!binary} are used when the dependent variable (the outcome) has just two outcomes (typically presented in binary format - `1` or `0`). Using the logistic function, a binary regression model determines the probability of the dependent event occurring given the predictor variables. As highlighted below, a binary regression model can be used to predict the probability that a QB is named MVP at the conclusion of the season. The response variable is a binary (`1` indicating that the player was named MVP and `0` indicating that the player did not win MVP). Various passing statistics can serve as the predictor variables.
 
@@ -866,10 +866,10 @@ In our previous example building a binomial regression model, there were only tw
 The specific formula for a multinomial regression is as follows:\index{Models!multinomial regression!equation}
 
 $$
-P(Y_{i} = k | X_{i}) = \frac{e^{(\beta_{k0} + \beta_{k1}X_{i1} + \beta_{k2}X_{i2} + … + \beta_{kp}X_{ip})}}{\sum_{j=1}^{K} e^{(\beta_{j0} + \beta_{j1}X_{i1} + \beta_{j2}X_{i2} + … + \beta_{jp}X_{ip})}}
+\log \left( \frac{P(Y = k)}{P(Y = K)} \right) = \beta_{k0} + \beta_{k1} X_1 + \beta_{k2} X_2 + \ldots + \beta_{kp} X_p
 $$
 
-1.  $P(Y_{i} = k | X_{i})$ is the likelihood of the observation $i$ belonging to class $k$ given the model's predictive variables
+1.  $Y$ is the categorical dependent variable
 2.  In the formula, $X_{i1}, X_{i2}, ..., X_{ip}$ are the predictive variables
 3.  The coefficients are represented by $\beta_{k0}, \beta_{k1}, ...,\beta_{kp}$
 4.  Finally, $K$ represents the number of categories the dependent variable has
@@ -1369,7 +1369,7 @@ The results of conducting a PCA and a K-means on the running backs data is a div
 
 The Principal Component Analysis\index{Models!principal component analysis} process is a common part of data preprocessing prior to conducting the k-means analysis, allowing us to achieve several results with the data.
 
-1.  **Variable scaling** - In many cases, the variables within a data frame will be in different units (such as in our case, as some of the statistics are provided in whole numbers, like attempts and touchdowns, while others are in "per attempt" like fumbles and designed gap.). Because of this, scaling the data ensures that each of the variables - regardless of numeric unit - contributes equally to the K-means process. Otherwise, it is possible that one variable could become dominant, thus introducing bias into the process. The scaling process computers the data frame so that each variable has a standard deviation of one and a mean of zero, with the equation to produce these results below.\index{Models!principal component analysis!equation}
+1.  **Variable scaling** - In many cases, the variables within a data frame will be in different units (such as in our case, as some of the statistics are provided in whole numbers, like attempts and touchdowns, while others are in "per attempt" like fumbles and designed gap.). Because of this, scaling the data ensures that each of the variables - regardless of numeric unit - contributes equally to the K-means process. Otherwise, it is possible that one variable could become dominant, thus introducing bias into the process. The scaling process computes the data frame so that each variable has a standard deviation of one and a mean of zero, with the equation to produce these results below.\index{Models!principal component analysis!equation}
 
 $$
 \frac{x-1 - \text{mean}(x)}{\text{sd}(x)}
@@ -1469,7 +1469,7 @@ With the PCA completed and knowing that four components account for an acceptabl
 
 #### Conducting the K-means Process
 
-As a result of the PCA process, we know we will be grouping the running back into four distinctive clusters, so we will create a value in our environment called `k` and set it to `4`.\index{Models!k-means clustering!conducting a}
+As a result of the PCA process, we know we will be grouping the running back into four distinctive clusters, so we will create a value in our environment called `k` and set it to `3`.\index{Models!k-means clustering!conducting a}
 
 ```{r setting-k, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -2014,7 +2014,7 @@ ggplot(data = for_plot, aes(x = yards, y = exp_yards)) +
                   family = "Roboto", size = 4, fontface = "bold")
 ```
 
-The graph shows the "line of best fit" between `Actual Rushing Yards` and `Expected Rushing Yards`. Those running backs that outperformed the model's expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model's expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook's 5,656 actual yards and 5,342 expected yards).
+In the completed plot, hose running backs that outperformed the model's expectations (that is, more actual rushing yards than expected rushing yards) fall below the line, while those that underperformed the model are above the line of best fit. Nick Chubb, for example, accumulated a total of 5,982 rushing yards while the model expected him to gain just 5,097 (a net difference of 885 yards over expected). On the other side of the line of best fit is Joe Mixon, whose 5,025 actual rushing yards fell short of the model's expectation of 5,156 (a net difference of -131 rushing yards over expected). Those rushers very close to being on the line of best fit had an expected rushing yards prediction nearly identical to their actual performs (such as Dalvin Cook's 5,656 actual yards and 5,342 expected yards).
 
 However, these results are over all of 2016-2022. We can use the results stored in our `ryoe_projs` data frame to produce more granular results to see which running backs performed the best against the model's expectation based on a number of different factors. For example, let's view the data by season and determine which rusher had the largest positive difference between their actual yards and expected yards.
 

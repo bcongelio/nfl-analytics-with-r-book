@@ -149,7 +149,7 @@ First, we obtain snap count data from the 2022 season and write it into a data f
 
 And this is where a decision needs to be made on how to best construct the five starting offensive linemen for each team. By including `slice(1:5)`, we are essentially selecting *just* the five offensive linemen with the most snap counts in that singular game.
 
-Are these five plays necessarily the same five that started the game as the two tackles, two guards, and one center? Perhaps not. But, hypothetically, a team's starting center could have been injured a series or two into the game and the second-string center played the bulk of the snaps in that game.
+Are these five players necessarily the same five that started the game as the two tackles, two guards, and one center? Perhaps not. But, hypothetically, a team's starting center could have been injured a series or two into the game and the second-string center played the bulk of the snaps in that game.
 
 Because of such situations, we can make the argument that the five offensive line players with the highest percentage of snap counts for each unique `game_id` are to be considered the combination of players used most often in that game.
 
