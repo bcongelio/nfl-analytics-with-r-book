@@ -250,7 +250,7 @@ ggplot(data = total_combos, aes(x = combos, y = win_pct)) +
   geom_line(stat = "smooth", method = "lm",
             linewidth = .7, color = "blue",
             alpha = 0.25) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = win_pct),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = win_pct),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   nfl_analytics_theme() +
@@ -300,7 +300,7 @@ ggplot(data = total_combos, aes(x = combos, y = pressure_percent)) +
   geom_line(stat = "smooth", method = "lm",
             size = .7, color = "blue",
             alpha = 0.25) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = pressure_percent),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = pressure_percent),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks(n = 12)) +
@@ -343,7 +343,7 @@ ggplot(data = qb_hits_combined, aes(x = combos, y = total_qb_hits)) +
     geom_line(stat = "smooth", method = "lm",
               size = .7, color = "blue",
               alpha = 0.25) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = total_qb_hits),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = total_qb_hits),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
@@ -388,7 +388,7 @@ adjusted_sack_rate %>%
             size = .7,
             color = "blue",
             alpha = 0.25) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = adj_sack_rate),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
@@ -416,7 +416,7 @@ adjusted_sack_rate %>%
             size = .7,
             color = "blue",
             alpha = 0.25) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_sack_rate),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = adj_sack_rate),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
@@ -470,8 +470,8 @@ You can see in the output of the data that `power_rank` and `stuffed_rank` are b
 
 power_rank_plot <- ggplot(fb_outsiders_oline,
                           aes(x = combos, y = power_rank)) +
-  nflplotR::geom_mean_lines(aes(v_var = combos,
-                                h_var = power_rank),
+  nflplotR::geom_mean_lines(aes(x0 = combos,
+                                y0 = power_rank),
                             color = "black",
                             size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -487,8 +487,8 @@ power_rank_plot <- ggplot(fb_outsiders_oline,
 stuffed_rank_plot <- ggplot(fb_outsiders_oline,
                             aes(x = combos, y = stuffed_rank)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
-  nflplotR::geom_mean_lines(aes(v_var = combos,
-                                h_var = stuffed_rank),
+  nflplotR::geom_mean_lines(aes(x0 = combos,
+                                y0 = stuffed_rank),
                             color = "black",
                             size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
@@ -510,7 +510,7 @@ Based on the results, it does not seem that the number of unique offensive line 
 
 ggplot(fb_outsiders_oline, aes(x = combos, y = adj_line_yards)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = adj_line_yards),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = adj_line_yards),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +
@@ -551,7 +551,7 @@ online_combo_test <- oline_combo_elusive %>%
 
 ggplot(oline_combo_elusive, aes(x = combos, y = weighted_aly)) +
   geom_smooth(method = "lm", se = FALSE, size = 0.8, alpha = .08) +
-  nflplotR::geom_mean_lines(aes(v_var = combos, h_var = weighted_aly),
+  nflplotR::geom_mean_lines(aes(x0 = combos, y0 = weighted_aly),
                             color = "black", size = .8) +
   nflplotR::geom_nfl_logos(aes(team_abbr = team), width = 0.065) +
   scale_x_reverse(breaks = scales::pretty_breaks()) +

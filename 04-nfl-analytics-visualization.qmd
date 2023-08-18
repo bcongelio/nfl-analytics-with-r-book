@@ -25,6 +25,22 @@ library(gtExtras)
 font_add(family = "Roboto", regular = "C:/Windows/Fonts/RobotoCondensed-Regular.ttf")
 ```
 
+::: callout-warning
+During the original writing of this book, version 1.1.0 of `nflplotR` was used. However, a pending update (as of 8/18/2023) was going to result the plots using `nflplotR` for mean lines to "break" - that is, any plot that used the `nflplotR::geom_mean_lines()` function. In the prior version, the aesthetics were provided via `v_var` and `h_var`.
+
+Previously, the necessary aesthetics for `nflplotR::geom_mean_lines()` were `v_var` (for the x-axis mean line) and `h_var` (for the y-axis mean line).
+
+In response to a pending change in `ggplot2`, the aesthetics for mean lines with `nflplotR` in the forthcoming release will be `x0` and `y0`.
+
+**Because the new release is not yet on CRAN, you *must* download the current development version of `nflplotR`** **using the below code.**
+
+```{r nflplot-r-development, echo = TRUE, eval = FALSE, output = FALSE}
+
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("nflverse/nflplotR")
+```
+:::
+
 Effective data visualization is an important part of any data analysis project as it helps in highlighting key insights into the data, identifying trends, patterns, and anomalies, as while as allowing you to communicate results to the outside world.
 
 Jim Stikeleather, writing for the *Harvard Business Review*, outlined three key elements that make a successful data visualization (albeit, leaving *us* to decide the definition of what a "successful" data visualization is). Despite that philosophical gap, the three elements provided by Stikeleather are succinct enough to allow us to build a framework in this chapter for how to successfully craft an NFL analytics data visualization. In his piece, Stikeleather outlines the following three characteristics of a successful data visualization: it understands the audience, it sets up a clear framework, and it tells a story [@stikeleather2013].
@@ -301,7 +317,7 @@ ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
 While it is a good first attempt at adding the names, many of them are awkwardly close to the respective point. Luckily, the `ggrepel` package provides plenty of built-in customization options:\index{Packages!ggrepel!options}
 
 | `ggrepel` Option[^04-nfl-analytics-visualization-1] |                            Description of Option                            |
-|:---------------------------------------------------:|:---------------------------------------------------------------------------:|
+|:----------------------------:|:----------------------------------------:|
 |                        seed                         | a random numeric seed number for the purposes of recreating the same layout |
 |                        force                        |             force of repulsion between overlapping text labels              |
 |                     force_pull                      |       force of attraction between each text label and its data point        |
@@ -580,7 +596,7 @@ Even though we were not able to use `nflplotR` to handle the colors in this plot
 ```{r means-lines-with-nflplotr, echo = TRUE, fig.cap="Adding mean lines with nflplotR"}
 
 ggplot(data = play_action_data, aes(x = yds, y = pa_yds)) +
-  geom_mean_lines(aes(v_var = yds, h_var = pa_yds), 
+  geom_mean_lines(aes(x0 = yds, y0 = pa_yds), 
                   size = 0.8,
                   color = "black", 
                   linetype = "dashed",
