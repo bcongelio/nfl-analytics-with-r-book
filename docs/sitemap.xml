@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/index.html</loc>
-    <lastmod>2023-08-18T20:04:53.707Z</lastmod>
+    <lastmod>2023-08-19T18:43:48.476Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/01-nfl-analytics-and-r.html</loc>
-    <lastmod>2023-08-18T20:04:53.760Z</lastmod>
+    <lastmod>2023-08-19T18:43:48.530Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/02-nfl-analytics-tidyverse.html</loc>
-    <lastmod>2023-08-18T20:04:53.824Z</lastmod>
+    <lastmod>2023-08-19T18:43:48.599Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/03-nfl-analytics-functions.html</loc>
-    <lastmod>2023-08-18T20:04:53.964Z</lastmod>
+    <lastmod>2023-08-19T18:43:48.752Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/04-nfl-analytics-visualization.html</loc>
-    <lastmod>2023-08-18T20:05:27.086Z</lastmod>
+    <lastmod>2023-08-19T18:43:48.970Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/05-nfl-analytics-advanced-methods.html</loc>
-    <lastmod>2023-08-18T20:04:54.342Z</lastmod>
+    <lastmod>2023-08-19T18:43:49.143Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/06-nfl-references.html</loc>
-    <lastmod>2023-08-18T20:04:54.347Z</lastmod>
+    <lastmod>2023-08-19T18:43:49.148Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a1-nfl-analytics-dictionary.html</loc>
-    <lastmod>2023-08-18T20:04:54.378Z</lastmod>
+    <lastmod>2023-08-19T18:43:49.179Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a2-nfl-further-reading.html</loc>
-    <lastmod>2023-08-18T20:04:54.383Z</lastmod>
+    <lastmod>2023-08-19T18:43:49.184Z</lastmod>
   </url>
   <url>
     <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a3-nfl-errata.html</loc>
-    <lastmod>2023-08-18T20:04:54.387Z</lastmod>
+    <lastmod>2023-08-19T18:43:49.188Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bradcongelio.com/nfl-analytics-with-r-book/a4-personalized-instruction.html</loc>
+    <lastmod>2023-08-19T18:44:34.488Z</lastmod>
   </url>
 </urlset>

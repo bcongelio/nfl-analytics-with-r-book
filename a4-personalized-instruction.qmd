@@ -1,0 +1,119 @@
+# Personalized Instruction {#sec-appendix-instruction}
+
+Welcome to the personalized instruction extension of my book, [*Introduction to NFL Analytics with R*](https://bradcongelio.com/nfl-analytics-with-r-book/). While the book is written for those in the beginning stages of learning the R programming language and the world of NFL analytics, I also understand that learning to code can be an overwhelming process if it is a process you are undergoing alone.
+
+Diving deep into the world of NFL analytics can be both exhilarating and challenging. The nuances o the game, combined with the intricacies of the R programming language, can create a steep learning curve. Indeed, I am asked quite often whether or not I provide individualized instruction for those who are either (1.) having difficulty understanding and coding the material in specific chapters or (2.) those who grasped the concepts but do not know how to continue on to more advanced material.
+
+```{=html}
+<center><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1NgZ9iCr8diugQq7B1PtUpzn"
+publishable-key="pk_live_M7b5LjR8dmGdsFYbnzZ9SMKR00McK5iRwi">
+</stripe-pricing-table></center>
+```
+## Why Choose Personalized Instruction?
+
+1.  **Tailored Learning Experience**. Everyone learns at their own pace and has unique questions. Which this service, you are not just getting generic instruction. **Rather, you are getting a lesson that is tailored to your specific needs and queries.**
+
+2.  **Direct Access to the Author**. Who better to guide you through the complexities of NFL Analytics with R than the person who wrote the book? As a college professor that teaches a Sport Analytics course, I bring both academic rigor and practical experience to the table. This is not just about understanding the content; it is about understanding the context, the application, and the nuances that only someone deeply entrenched in the field can provide. **With me, you are not just getting answers; you are gaining insights from someone who teaches this material at the collegiate level and understands the challenges learners face.**
+
+3.  **Flexible Timing**. Whether you opt for the 1-hour or 2-hour session, you can be assured of a focused, uninterrupted learning experience. My system allows you to schedule a session at a time that is convenient for you, ensuring that you are prepared for an invigorating learning process.
+
+4.  **Hands-on Approach**. Instead of just reading about concepts, our session allows you to be actively coding alongside me and analyzing real NFL data. This approach ensures you not only understand the process behind the coding and analytics but can also apply it effectively.
+
+## Who Is This For?
+
+-   Beginners who have just started their journey with R and NFL analytics and are looking to build a solid foundation.
+
+-   Intermediate learners who have specific questions or are facing challenges with certain concepts.
+
+-   Anyone who has read the book and wants to delve deeper into certain topics or needs clarification on specific areas.
+
+## Dive Deeper into Each Chapter
+
+Learning coding and NFL analytics is like navigating a vast and intricate landscape. Each chapter of *Introduction to NFL Analytics with R* offers a unique vista, a new set of tools, and a different perspective of the game. Whether you are grappling with a specific concept or seeking to enhance your overall grasp, this breakdown will guide you in pinpointing areas where personalized instruction can be most beneficial. My personalized instruction can help you with the following topics from the book:
+
+1.  **Wrangling NFL Data in the `tidyverse`**
+
+    -   **Focus**: grasping the art of data wrangling in the `tidyverse` ecosystem
+    -   **How I Can Help:** Struggling with the flow of the `dplyr` verbs like `filter()`, `select()`, `arrange()`, `summarize()`, `mutate()`, and `group_by()`? Let's unravel the in intricacies together, ensuring you can seamlessly manipulate and transform NFL data.
+
+2.  **Navigating the `nflverse`**
+
+    -   **Focus:** the `nflverse` is the epicenter of the amateur NFL analytics movement, and provides a comprehensive and dynamic set of tools.
+    -   **How I Can Help:** Feel overwhelmed by the myriad of functions like `load_pbp()`, `load_player_stats()`, `load_nextgen_stats()`, `load_pfr_stats()`, and `load_contracts()`? I will guide you through the maze, ensuring you harness the full potential of the `nflverse`.
+
+3.  **Visualizing NFL Data**
+
+    -   **Focus:** crafting compelling data visualizations that captivate your audience
+    -   **How I Can Help:** Whether you are aiming for publication-quality graphics or eye-catching social media posts, I will walk you through the power of `ggplot2` and other visualization tools. Together, we will bring your data stories to life.
+
+4.  **Creating Advanced Models with NFL Data**
+
+    -   **Focus:** leveraging the `tidymodels` package to build sophisticated models
+    -   **How I Can Help:** if you have dabbled with `tidymodels` but feel you are not tapping into its full potential, let's change that. We will collaborate to craft models that exceed expectations, from clustering techniques to predictive analytics.
+
+::: callout-important
+To ensure the highest quality of instruction and clarity of focus, **this service is exclusively tailored to the material covered in *Introduction to NFL Analytics with R*.** While I am passionate about R programming and NFL analytics, I cannot assist with unrelated homework, projects, or topics beyond the scope of the book.
+
+If you are uncertain about the applicability of your inquiry, please do not hesitate to reach out. I am here to help and clarify.
+
+**Contact information:**\
+E-mail: bradcongelio\@gmail.com\
+Twitter: \@BradCongelio
+:::
+
+```{=html}
+<center><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1NgZ9iCr8diugQq7B1PtUpzn"
+publishable-key="pk_live_M7b5LjR8dmGdsFYbnzZ9SMKR00McK5iRwi">
+</stripe-pricing-table></center>
+```
+## Why Book An Appointment with You?
+
+With a current role as an Assistant Professor in the College of Business at Kutztown University of Pennsylvania, my academic journey and passion for teaching are deeply intertwined. Beyond my primary responsibilities, I teach the sought-after Sport Analytics (SPT 313) course. As well, **my academic credentials include a Ph.D. from the University of Western Ontario and a specialized certificate in R for Data Analytics from the University of California, San Diego, earned in 2021.**
+
+A question I often encounter is, "Why teach when you could be applying your expertise in the NFL or a related industry?"
+
+The answer is simple: I am fueled by the joy of teaching. In my Sport Analytics course, the initial weeks are often marked by students' palpable frustration, likening the learning process to deciphering a "foreign language." Despite the challenges, I encourage perseverance, often finding my office hours bustling with students from this course.
+
+But then, a transformation happens.
+
+Around mid-semester, I witness those "aha" moments. Students transition from grappling with the "foreign language" to exclaiming in exhilaration as the `tidyverse` language begins to resonate. This new clarity propels them forward, making even the more intricate packages, like `tidymodels`, seems within reach.
+
+This is the essence of why I teach: witnessing the culmination of my guidance, explanations, and encouragement in those pivotal moments of understanding. It is not about my success, but theirs.
+
+**My book, and the personalized instruction I offer, is an extension of this classroom ethos.** As you embark on this journey, consider yourself my student. My goal? To guide you to that "light bulb moment" where it all starts making sense.
+
+## How Will The Process Work?
+
+Navigating the booking process is as straightforward as the instruction you will receive. Here is a step-by-step guide to ensure a seamless experience.
+
+1.  **Select and Purchase:** begin by choosing either the 1-hour or 2-hour instruction option. You will then securely complete your purchase via Stripe.
+2.  **Schedule Your Session:** Upon successful payment, you will be redirected to my online booking system. During the scheduling process, you will be prompted to briefly answer a question about which material from the book you are seeking instruction on. This helps me prepare and tailor the session to your specific needs. Once you have selected a day and time that best suits your schedule, you are all set.
+3.  **Receive Your Meeting Details:** Once your booking is confirmed, an automatic e-mail will be dispatched to you containing all the necessary Microsoft Teams meeting information. This ensures you have everything you need to join our session without any hitches.
+4.  **Working With a Specific Data Frame in RStudio?** If you are grappling with a particular data frame in RStudio and would like to use it as a reference during our session, I would be happy to provide assistance. While scheduling your appointment, you will be asked if this is the case. If "yes", I will provide you with access to a dedicated Google Drive folder. Simply upload your data frame file there, ensuring it is ready for our discussion. This will allow us to dive directly into your challenges and work through them together.
+
+::: callout-note
+If you need to save a data frame to provide prior to our meeting, you can save it using the below code in RStudio:
+
+`save(your_dataframe, file = "your_dataframe.RData")`
+
+Once saved, simply drop the file into the Google Drive folder that I will supply you before our scheduled instructional session.
+:::
+
+Remember, the goal is to make this process as smooth and hassle-free as possible, allowing us to focus entirely on enhancing your understanding of NFL analytics with R.
+
+::: callout-note
+Due to my teaching commitments, I typically schedule appointments on **Tuesdays and Thursdays**. However, I offer a wide window on these days, with slots available from **9am to 2pm**. I appreciate your understanding and flexibility, and I am eager to make the most of our time together during these hours.
+:::
+
+## Ready to Elevate Your NFL Analytics Journey?
+
+The world of NFL analytics, combined with the power of R, is vast and filled with potential. Whether you're a beginner seeking foundation-building knowledge or an enthusiast aiming to refine specific skills, personalized instruction can be the catalyst for your growth. **Don't miss this unique opportunity to learn directly from an expert in the field, someone who's not only written the book on the subject but is deeply passionate about teaching it**. Book your session today.
+
+```{=html}
+<center><script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+<stripe-pricing-table pricing-table-id="prctbl_1NgZ9iCr8diugQq7B1PtUpzn"
+publishable-key="pk_live_M7b5LjR8dmGdsFYbnzZ9SMKR00McK5iRwi">
+</stripe-pricing-table></center>
+```
