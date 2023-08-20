@@ -16,7 +16,7 @@ book:
   publisher-place: "Boca Raton, FL."
   repo-actions: [edit, issue]
   cover-image: cover-for-web.png
-  favicon: web-favicon.png
+  favicon: favicon.ico
   twitter-card:
     creator: "@bradcongelio"
     image: "/images/feature.png"
