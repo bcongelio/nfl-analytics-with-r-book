@@ -41,7 +41,7 @@ book:
 
 search: true
 
-page-footer: 
+body-footer:
   left: |
     Introduction to NFL Analytics with R was written by Bradley J. Congelio.
   right: |
@@ -59,6 +59,8 @@ format:
     include-in-header: 
       text: | 
         <script defer data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
+        <link rel = "shortcut icon" href = "favicon.ico" />
+        
     smooth-scroll: true
     code-link: true
     code-overflow: wrap
