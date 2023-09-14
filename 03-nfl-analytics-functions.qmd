@@ -1470,6 +1470,58 @@ You can become a member here: <http://nfl-book.bradcongelio.com/discord-invite>
 However, before creating a thread and seeking assistance, be sure to visit the "#How To" section in the General Help area to learn to create a `reprex` (reproducible example). Providing a `reprex` allows other users to copy and paste your code in order to recreate the issue you are experiencing.
 :::
 
+### The `load_ftn_charting()` Function
+
+As one of the newest additions to the `nflverse`, users can use the `load_ftn_charting()` function to pull data compiled by the [FTN Network](https://twitter.com/FTNNetwork). The data is manually charted and includes the following variables:
+
+1.  `starting_hash`
+2.  `qb_location`
+3.  `n_offense_backfield`
+4.  `is_no_huddle`
+5.  `is_motion`
+6.  `is_play_action`
+7.  `is_screen_pass`
+8.  `is_rpo`
+9.  `is_trick_play`
+10. `is_qb_out_of_pocket`
+11. `is_interception_worthy`
+12. `is_throw_away`
+13. `read_thrown`
+14. `is_catchable_ball`
+15. `is_contested_ball`
+16. `is_created_reception`
+17. `is_drop`
+18. `is_qb_sneak`
+19. `n_blitzers`
+20. `n_pass_rushers`
+21. `is_qb_fault_sack`
+
+```{r}
+
+ftn_data <- nflreadr::load_ftn_charting(2022) %>%
+  select(-week, -season)
+
+pbp <- nflreadr::load_pbp(2022)
+
+pbp <- pbp %>%
+  left_join(ftn_data, by = c("game_id" = "nflverse_game_id", "play_id" = "nflverse_play_id"))
+
+airyards_accu <- pbp %>%
+  filter(season_type == "REG") %>%
+  filter(complete_pass == 1 | incomplete_pass == 1, !is.na(down)) %>%
+  group_by(passer) %>%
+  mutate(total_passes = n()) %>%
+  filter(total_passes >= 500) %>%
+  ungroup() %>%
+  group_by(passer, air_yards) %>%
+  summarize(
+    total_att = n(),
+    total_catchable = sum(is_catchable_ball == "TRUE", na.rm = TRUE),
+    total_pct = total_catchable / total_att) %>%
+  filter(air_yards >= 0 & air_yards <= 25)
+
+```
+
 ## Exercises
 
 The answers for the following answers can be found here: <http://nfl-book.bradcongelio.com/ch3-answers>.\index{Exercises!Chapter 3}

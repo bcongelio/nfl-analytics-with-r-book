@@ -41,15 +41,8 @@ book:
 
 search: true
 
-body-footer:
-  left: |
-    Introduction to NFL Analytics with R was written by Bradley J. Congelio.
-  right: |
-    This book was built with <a href = "https://quarto.org/">Quarto</a>
-    
 bibliography: citations.bib
 csl: apa-6th-edition.csl
-
 
 format:
   html:
