@@ -1630,8 +1630,8 @@ Tip
 <p>The <code>load_participation()</code> function allows us to create a data frame of player participation data dating back to 2016 with an option to infuse that information into the existing <code>nflreadr</code> play-by-play data. The resulting data frame, when not including play-by-play data, includes information pertaining to: the individual game ID, the play ID, the possession team, what formation the offense was in, the layout of the offensive personnel, how many defenders were in the box, the defensive personnel, the number of rushers on pass players, and the unique ID number for each player on the field for that specific play.</p>
 <p>Despite the <code>load_participation()</code> function being one of the newest editions to the <code>nflreadr</code> package, it is already being used to create contextual analysis regarding a team’s use of its players out out formations. For example, <a href="https://twitter.com/josephjefe">Joseph Hefner</a> uses the data to create tables (built with the <code>gt</code> and <code>gtExtras</code> packages) that calculates not only each player’s rate of usage out of different personnel packages, but how the team’s EPA per play and pass rate fluctuate with each. In the spirit of R’s open-source nature, he also created a <a href="https://www.jefeshandiwork.com/shiny/team-formations">Team Formation ShinyApp</a> that allows anybody to explore the data and output the results in .png format.</p>
 <p></p>
-<div id="tweet-95590"></div>
-<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-95590").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
+<div id="tweet-18363"></div>
+<script>tweet={"url":"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280","author_name":"Joseph Hefner","author_url":"https:\/\/twitter.com\/josephjefe","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EFormations from KC vs CIN! Chiefs offense first. Our 11 personnel was very not great. Probably due to all the attrition. But the other formations were pretty spectacular. Look at that 3TE 2WR set!!! Reid is a wizard. \u003Ca href=\"https:\/\/twitter.com\/hashtag\/nflverse?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#nflverse\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/rstats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rstats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/UR87Wdu0mG\"\u003Epic.twitter.com\/UR87Wdu0mG\u003C\/a\u003E\u003C\/p\u003E&mdash; Joseph Hefner (@josephjefe) \u003Ca href=\"https:\/\/twitter.com\/josephjefe\/status\/1621217561437409280?ref_src=twsrc%5Etfw\"\u003EFebruary 2, 2023\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-18363").innerHTML = tweet["html"];</script><p>To build a data frame of 2022 participation data, that includes complete play-by-play, you must pass both the <code>season</code> and <code>include_pbp</code> argument with the <code>load_participation()</code> function.</p>
 <div class="cell" data-hash="03-nfl-analytics-functions_cache/html/loading-2022-participation_5d41a6f4f225480c33ff701797b9f2f8">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">participation</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_participation.html">load_participation</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, include_pbp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -2472,8 +2472,28 @@ Tip
 </div>
 </section><section id="the-load_ftn_charting-function" class="level3" data-number="3.5.13"><h3 data-number="3.5.13" class="anchored" data-anchor-id="the-load_ftn_charting-function">
 <span class="header-section-number">3.5.13</span> The <code>load_ftn_charting()</code> Function</h3>
-<p>As one of the newest additions to the <code>nflverse</code>, users can use the <code>load_ftn_charting()</code> function to pull data compiled by the <a href="https://twitter.com/FTNNetwork">FTN Network</a>. The data is manually charted and includes the following variables:</p>
+<p>As one of the newest additions to the <code>nflverse</code>, users can use the <code>load_ftn_charting()</code> function to pull data compiled by the <a href="https://twitter.com/FTNNetwork">FTN Network</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>FTN charting data is only available in the <code>nflverse</code> starting with the 2023 season.</p>
+</div>
+</div>
+<p>The data is manually charted and includes the following variables:</p>
 <ol type="1">
+<li><code>ftn_game_id</code></li>
+<li><code>nflverse_game_id</code></li>
+<li><code>season</code></li>
+<li><code>week</code></li>
+<li><code>ftn_play_id</code></li>
+<li><code>nflverse_play_id</code></li>
 <li><code>starting_hash</code></li>
 <li><code>qb_location</code></li>
 <li><code>n_offense_backfield</code></li>
@@ -2496,28 +2516,69 @@ Tip
 <li><code>n_pass_rushers</code></li>
 <li><code>is_qb_fault_sack</code></li>
 </ol>
-<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/unnamed-chunk-1_60549ba314be407cd6bef41c756b06cc">
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ftn_data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_ftn_charting.html">load_ftn_charting</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">week</span>, <span class="op">-</span><span class="va">season</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2022</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">ftn_data</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"nflverse_game_id"</span>, <span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"nflverse_play_id"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">airyards_accu</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<p>You may notice that the charting data provided by FTN <strong>does not include player information</strong>. Because of this, it is important to take the data as provided from FTN and then merge it into the regular <code>nflverse</code> play-by-play data. Fortunately, because the FTN data includes both the <code>nflverse_game_id</code> and <code>nflverse_play_id</code> variables, the merging process is simple.</p>
+<p>To begin, we can collect the FTN charting data from the 2023 season. Since the data includes <em>only</em> the 2023 season, we can go ahead and drop both the <code>week</code> and <code>season</code> variables so that we do not created duplicate versions during the merge.</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/reading-in-ftn-data_8a1dc505afd81498fc9dae6c2d09ca9a">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ftn_data</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_ftn_charting.html">load_ftn_charting</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">week</span>, <span class="op">-</span><span class="va">season</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In order to merge with the play-by-play data from <code>nflverse</code>, we must bring in the equivalent season of data.</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/reading-in-pbp-for-merge_4d0cc0b250d8ee292b1175a94f6bff73">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_pbp.html">load_pbp</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can merge the two sets of data using the unique game and play identifiers provided in each wherein the <code>game_id</code> in <code>pbp</code> matches with <code>nflverse_game_id</code> from <code>ftn_data</code> and <code>play_id</code> from <code>pbp</code> matches with <code>nflverse_play_id</code> from <code>ftn_data</code>.</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/merging-ftn-and-nflverse_965e2ed99fc88b96fb0dc99088e25d05">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pbp</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">ftn_data</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"game_id"</span> <span class="op">=</span> <span class="st">"nflverse_game_id"</span>,</span>
+<span>                             <span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"nflverse_play_id"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We have now successfully merged the FTN charting data into the <code>nflverse</code> play-by-play data. In order to conduct an exploratory analysis, let’s examine the <code>is_catchable_ball</code> variable from FTN to determine a QB’s accuracy based on air yards (specifically looking at Brock Purdy, Josh Allen, Patrick Mahomes, and Tua Tagovailoa).</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/is-catchable-ball_4fad19abb284dfc1cfd7ebcf9631611a">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airyards_accu</span> <span class="op">&lt;-</span> <span class="va">pbp</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">season_type</span> <span class="op">==</span> <span class="st">"REG"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">complete_pass</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">incomplete_pass</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">down</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>total_passes <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_passes</span> <span class="op">&gt;=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">total_passes</span> <span class="op">&gt;=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">air_yards</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">passer</span>, <span class="va">posteam</span>, <span class="va">air_yards</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span></span>
 <span>    total_att <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    total_catchable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">is_catchable_ball</span> <span class="op">==</span> <span class="st">"TRUE"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    total_pct <span class="op">=</span> <span class="va">total_catchable</span> <span class="op">/</span> <span class="va">total_att</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">air_yards</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">air_yards</span> <span class="op">&lt;=</span> <span class="fl">25</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We first collect the data for the entire NFL using <code>complete_pass</code>, <code>incomplete_pass</code>, and <code>!is.na(down)</code> to filter down to just pure passing attempts. After, we use <code>group_by()</code> to gather each QB with both their respective teams and then each individual air yard distance (before using a <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> at the very end to limit those attempts that had between 0 and 25 air yards).</p>
+<p>Next, we use the <code>load_teams</code> function to gather the team colors for each player, select just the four quarterbacks we want to visualize, and then use <code>ggplot</code> to create the plot.</p>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/prepping-for-ftn-plot_1abc7b109b26ad302f40bef8ddb6e4cb">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">teams</span> <span class="op">&lt;-</span> <span class="fu">nflreadr</span><span class="fu">::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/load_teams.html">load_teams</a></span><span class="op">(</span>current <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">airyards_accu</span> <span class="op">&lt;-</span> <span class="va">airyards_accu</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">teams</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"posteam"</span> <span class="op">=</span> <span class="st">"team_abbr"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">airyards_accu</span> <span class="op">&lt;-</span> <span class="va">airyards_accu</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">passer</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B.Purdy"</span>, <span class="st">"J.Allen"</span>, <span class="st">"T.Tagovailoa"</span>, <span class="st">"P.Mahomes"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="03-nfl-analytics-functions_cache/html/plotting-ftn-data_c1fac27c33af416e59e819f6de6e3dc3">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">airyards_accu</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">air_yards</span>, y <span class="op">=</span> <span class="va">total_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">posteam</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nflplotR</span><span class="fu">::</span><span class="fu"><a href="https://nflplotr.nflverse.com/reference/scale_nfl.html">scale_color_nfl</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"primary"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pretty_breaks.html">pretty_breaks</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">label_percent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">passer</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="st">"Air Yards"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ylab</span><span class="op">(</span><span class="st">"Total % of Catchable Attempts"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"**Total % of Catchable Attempts Based on Air Yards**"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"*Minimu 100 Attempts  |  Through Week 5 of 2023 Season*"</span>,</span>
+<span>       caption <span class="op">=</span> <span class="st">"*Introduction to NFL Analytics With R*&lt;br&gt;**Bradley J. Congelio**"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">nfl_analytics_theme</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="03-nfl-analytics-functions_files/figure-html/plotting-ftn-data-1.png" style="width:95.0%;height:95.0%" class="figure-img"></p>
+<figcaption class="figure-caption">Using FTN Data To Examine QB Accuracy Based on Air Yards Distance</figcaption></figure>
+</div>
+</div>
 </div>
 </section></section><section id="exercises" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="exercises">
 <span class="header-section-number">3.6</span> Exercises</h2>
