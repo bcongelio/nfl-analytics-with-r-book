@@ -1580,7 +1580,7 @@ ggplot(data = airyards_accu, aes(x = air_yards, y = total_pct)) +
   xlab("Air Yards") +
   ylab("Total % of Catchable Attempts") +
   labs(title = "**Total % of Catchable Attempts Based on Air Yards**",
-       subtitle = "*Minimu 100 Attempts  |  Through Week 5 of 2023 Season*",
+       subtitle = "*Minimum 100 Attempts  |  Through Week 5 of 2023 Season*",
        caption = "*Introduction to NFL Analytics With R*<br>**Bradley J. Congelio**") +
   nfl_analytics_theme()
 ```
