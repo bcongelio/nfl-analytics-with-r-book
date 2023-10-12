@@ -1472,54 +1472,117 @@ However, before creating a thread and seeking assistance, be sure to visit the "
 
 ### The `load_ftn_charting()` Function
 
-As one of the newest additions to the `nflverse`, users can use the `load_ftn_charting()` function to pull data compiled by the [FTN Network](https://twitter.com/FTNNetwork). The data is manually charted and includes the following variables:
+As one of the newest additions to the `nflverse`, users can use the `load_ftn_charting()` function to pull data compiled by the [FTN Network](https://twitter.com/FTNNetwork).
 
-1.  `starting_hash`
-2.  `qb_location`
-3.  `n_offense_backfield`
-4.  `is_no_huddle`
-5.  `is_motion`
-6.  `is_play_action`
-7.  `is_screen_pass`
-8.  `is_rpo`
-9.  `is_trick_play`
-10. `is_qb_out_of_pocket`
-11. `is_interception_worthy`
-12. `is_throw_away`
-13. `read_thrown`
-14. `is_catchable_ball`
-15. `is_contested_ball`
-16. `is_created_reception`
-17. `is_drop`
-18. `is_qb_sneak`
-19. `n_blitzers`
-20. `n_pass_rushers`
-21. `is_qb_fault_sack`
+::: callout-note
+FTN charting data is only available in the `nflverse` starting with the 2023 season.
+:::
 
-```{r}
+The data is manually charted and includes the following variables:
 
-ftn_data <- nflreadr::load_ftn_charting(2022) %>%
+1.  `ftn_game_id`
+2.  `nflverse_game_id`
+3.  `season`
+4.  `week`
+5.  `ftn_play_id`
+6.  `nflverse_play_id`
+7.  `starting_hash`
+8.  `qb_location`
+9.  `n_offense_backfield`
+10. `is_no_huddle`
+11. `is_motion`
+12. `is_play_action`
+13. `is_screen_pass`
+14. `is_rpo`
+15. `is_trick_play`
+16. `is_qb_out_of_pocket`
+17. `is_interception_worthy`
+18. `is_throw_away`
+19. `read_thrown`
+20. `is_catchable_ball`
+21. `is_contested_ball`
+22. `is_created_reception`
+23. `is_drop`
+24. `is_qb_sneak`
+25. `n_blitzers`
+26. `n_pass_rushers`
+27. `is_qb_fault_sack`
+
+You may notice that the charting data provided by FTN **does not include player information**. Because of this, it is important to take the data as provided from FTN and then merge it into the regular `nflverse` play-by-play data. Fortunately, because the FTN data includes both the `nflverse_game_id` and `nflverse_play_id` variables, the merging process is simple.
+
+To begin, we can collect the FTN charting data from the 2023 season. Since the data includes *only* the 2023 season, we can go ahead and drop both the `week` and `season` variables so that we do not created duplicate versions during the merge.
+
+```{r reading-in-ftn-data, eval = TRUE, echo = TRUE, output = FALSE}
+
+ftn_data <- nflreadr::load_ftn_charting(2023) %>%
   select(-week, -season)
+```
 
-pbp <- nflreadr::load_pbp(2022)
+In order to merge with the play-by-play data from `nflverse`, we must bring in the equivalent season of data.
+
+```{r reading-in-pbp-for-merge, eval = TRUE, echo = TRUE, output = FALSE}
+
+pbp <- nflreadr::load_pbp(2023)
+```
+
+Now we can merge the two sets of data using the unique game and play identifiers provided in each wherein the `game_id` in `pbp` matches with `nflverse_game_id` from `ftn_data` and `play_id` from `pbp` matches with `nflverse_play_id` from `ftn_data`.
+
+```{r merging-ftn-and-nflverse, eval = TRUE, echo = TRUE, output = FALSE}
 
 pbp <- pbp %>%
-  left_join(ftn_data, by = c("game_id" = "nflverse_game_id", "play_id" = "nflverse_play_id"))
+  left_join(ftn_data, by = c("game_id" = "nflverse_game_id",
+                             "play_id" = "nflverse_play_id"))
+```
+
+We have now successfully merged the FTN charting data into the `nflverse` play-by-play data. In order to conduct an exploratory analysis, let's examine the `is_catchable_ball` variable from FTN to determine a QB's accuracy based on air yards (specifically looking at Brock Purdy, Josh Allen, Patrick Mahomes, and Tua Tagovailoa).
+
+```{r is-catchable-ball, eval = TRUE, echo = TRUE, output = FALSE}
 
 airyards_accu <- pbp %>%
   filter(season_type == "REG") %>%
   filter(complete_pass == 1 | incomplete_pass == 1, !is.na(down)) %>%
   group_by(passer) %>%
   mutate(total_passes = n()) %>%
-  filter(total_passes >= 500) %>%
+  filter(total_passes >= 100) %>%
   ungroup() %>%
-  group_by(passer, air_yards) %>%
+  group_by(passer, posteam, air_yards) %>%
   summarize(
     total_att = n(),
     total_catchable = sum(is_catchable_ball == "TRUE", na.rm = TRUE),
     total_pct = total_catchable / total_att) %>%
   filter(air_yards >= 0 & air_yards <= 25)
+```
 
+We first collect the data for the entire NFL using `complete_pass`, `incomplete_pass`, and `!is.na(down)` to filter down to just pure passing attempts. After, we use `group_by()` to gather each QB with both their respective teams and then each individual air yard distance (before using a `filter()` at the very end to limit those attempts that had between 0 and 25 air yards).
+
+Next, we use the `load_teams` function to gather the team colors for each player, select just the four quarterbacks we want to visualize, and then use `ggplot` to create the plot.
+
+```{r prepping-for-ftn-plot, eval = TRUE, echo = TRUE, output = FALSE}
+
+teams <- nflreadr::load_teams(current = TRUE)
+
+airyards_accu <- airyards_accu %>%
+  left_join(teams, by = c("posteam" = "team_abbr"))
+
+airyards_accu <- airyards_accu %>%
+  filter(passer %in% c("B.Purdy", "J.Allen", "T.Tagovailoa", "P.Mahomes"))
+```
+
+```{r plotting-ftn-data, echo = TRUE, fig.cap="Using FTN Data To Examine QB Accuracy Based on Air Yards Distance"}
+
+ggplot(data = airyards_accu, aes(x = air_yards, y = total_pct)) +
+  geom_smooth(se = FALSE, aes(color = posteam)) +
+  nflplotR::scale_color_nfl(type = "primary") +
+  scale_x_continuous(breaks = scales::pretty_breaks()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(),
+                     labels = scales::label_percent()) +
+  facet_wrap(vars(passer), scales = "free_y") +
+  xlab("Air Yards") +
+  ylab("Total % of Catchable Attempts") +
+  labs(title = "**Total % of Catchable Attempts Based on Air Yards**",
+       subtitle = "*Minimu 100 Attempts  |  Through Week 5 of 2023 Season*",
+       caption = "*Introduction to NFL Analytics With R*<br>**Bradley J. Congelio**") +
+  nfl_analytics_theme()
 ```
 
 ## Exercises
