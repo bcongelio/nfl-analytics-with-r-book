@@ -236,12 +236,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./a4-personalized-instruction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Personalized Instruction</span></span></a>
-  </div>
-</li>
       </ul>
 </li>
     </ul>
@@ -352,8 +346,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="va">total_ay_share</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 x 3
-# i 3 variables: player_name &lt;chr&gt;, total_rec &lt;int&gt;, ay_share &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 1 x 3
+  player_name total_rec ay_share
+  &lt;chr&gt;           &lt;int&gt;    &lt;dbl&gt;
+1 K.Allen           102     5.02</code></pre>
 </div>
 </div>
 </section><section id="average-cushion" class="level2" data-number="A.3"><h2 data-number="A.3" class="anchored" data-anchor-id="average-cushion">
@@ -502,9 +498,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="va">mean_dakota</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 x 3
-# i 3 variables: player_name &lt;chr&gt;, total_cmp &lt;int&gt;,
-#   mean_dakota &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 10 x 3
+   player_name  total_cmp mean_dakota
+   &lt;chr&gt;            &lt;int&gt;       &lt;dbl&gt;
+ 1 T.Tagovailoa       281      0.175 
+ 2 D.Prescott         288      0.173 
+ 3 J.Allen            295      0.165 
+ 4 J.Hurts            268      0.141 
+ 5 P.Mahomes          301      0.136 
+ 6 T.Lawrence         271      0.133 
+ 7 J.Goff             291      0.125 
+ 8 J.Love             250      0.115 
+ 9 C.Stroud           265      0.111 
+10 G.Smith            259      0.0941</code></pre>
 </div>
 </div>
 </section><section id="running-back-efficiency" class="level2" data-number="A.8"><h2 data-number="A.8" class="anchored" data-anchor-id="running-back-efficiency">

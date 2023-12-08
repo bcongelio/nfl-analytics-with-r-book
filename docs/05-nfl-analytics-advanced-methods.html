@@ -256,12 +256,6 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./a4-personalized-instruction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Personalized Instruction</span></span></a>
-  </div>
-</li>
       </ul>
 </li>
     </ul>
@@ -1347,7 +1341,7 @@ Warning
 <div class="callout-body-container callout-body">
 <p>Before running the next bit of code, <strong>be sure that your installed version of <code>dplyr</code></strong> <strong>is 1.1.1 or newer</strong>.</p>
 <p>An issue was discovered in version 1.1.0 that created major computational slowdowns when using <code>case_when()</code> and <code>mutate()</code> together within a <code>group_by()</code> variable. Prior to discovering this issue, running the below code took an absurd 22 minutes.</p>
-<p>As a result, you will notice I resorted to using the <code>fcase()</code> function from the <code>data.table()</code> package. You can also use the <code>dt_case_when()</code> function from <code>tidyfast</code> if you prefer to use the same syntax of <code>case_when()</code> but utilize the speed of <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">data.table::ifelse()</a></code>.</p>
+<p>As a result, you will notice I resorted to using the <code>fcase()</code> function from the <code>data.table()</code> package. You can also use the <code>dt_case_when()</code> function from <code>tidyfast</code> if you prefer to use the same syntax of <code>case_when()</code> but utilize the speed of <code><a href="https://rdatatable.gitlab.io/data.table/reference/fifelse.html">data.table::ifelse()</a></code>.</p>
 <p>After switching to <code>fcase()</code>, the code finished running in 17.69 seconds. After upgrading to <code>dplyr</code> 1.1.1, the <code>case_when()</code> version of the code completed in 18.94 seconds.</p>
 </div>
 </div>
