@@ -4,6 +4,4 @@ While every effort was made to write and produce a clean book (from both myself 
 
 Because of this, this page enumerates errors in the print version of *Introduction to NFL Analytics with R*. Please notify me if you find issues (typos, lack of figure captions, issues with variables names, incorrect URLs, etc.) so that I may keep the online version updated here.
 
-::: callout-note
-The print version of *Introduction to NFL Analytics with R* will begin shipping in December 2023. This page will begin populating with corrections/updates shortly after.
-:::
+-   **Chapter 5** (p. 241): Both variables are labeled as `total_yards`. The Y (dependent variable) should be `total_points` and the X (predictor variable) should remain `total_yards`.
