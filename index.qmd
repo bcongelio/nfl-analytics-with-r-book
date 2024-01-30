@@ -186,7 +186,7 @@ As this book is published online, it allows me to continue real-time development
 
 -   Please feel free to contribute to the book by filing an issue or making a pull request at the book's GitHub repository: [*Introduction to NFL Analytics with R* Github Repository](https://github.com/bcongelio/nfl-analytics-with-r-book)
 
--   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the answers to the exercises are include in the book's Git repository: [Answers to Chapter Exercises](http://nfl-book.bradcongelio.com/ex-answers).
+-   The majority of the chapters conclude with exercises. In some cases, prepared data will be provided with a link to download the file. In other cases, you are expected to use the `nflverse` to collect the data yourself. In either case, the answers to the exercises are included in the book's Git repository: [Answers to Chapter Exercises](http://nfl-book.bradcongelio.com/ex-answers).
 
 -   Soon there will be a YouTube series to go along with the written version of this book. In brief, the videos will include my going over each chapter, step-by-step, with additional instruction and/or approaches.
 
