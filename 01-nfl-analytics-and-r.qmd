@@ -70,7 +70,7 @@ Of those six teams to not achieve a .500 record after winning the Super Bowl, on
 
 As explained by Mike Ehrmann\index{Ehrmann, Mike}, the Rams' poor Super Bowl defense is "what happens when a laundry list of things go wildly wrong at the same time" [@kirschner2022]. As outlined above in our investigative inquiry outline, one of the core items on the Rams' laundry list of bad luck was the absurd amount of offensive linemen ending up on the injured list. This, combined with losing Andrew Whitworth to retirement after the Super Bowl, led to quarterback Matthew Stafford being sacked on 8.6-percent of his dropback attempts (a rate that nearly doubled from the previous season).
 
-Given that context, just *how* historically bad was the Rams' 2022 offensive line turnover? We can being diving into the data to find our results and build our story.
+Given that context, just *how* historically bad was the Rams' 2022 offensive line turnover? We can begin by diving into the data to find our results and build our story.
 
 ### Unique Offensive Line Combinations: How to Collect The Data?
 
