@@ -124,7 +124,7 @@ In the first case, the data is correct that the teams ran their first offensive 
 knitr::include_graphics('images/all-22-screenshot.jpg')
 ```
 
-In the second case, Dallas'\index{NFL Teams!Dallas Cowboys} offense personnel on its "first play" from scrimmage is the result of the Cowboys returning a fumble for a touchdown on the Rams' first offensive possession with a botched snap on the ensuing extra point attempt. Because of that, the extra point attempt is no longer scored as an `extra_point` in the `play_type` variable within the play-by-play data, but a rushing attempt. As a result of this oddity, the data is correct in listing Dallas' first offensive play as coming out of an extra point personnel grouping.
+In the second case, Dallas'\index{NFL Teams!Dallas Cowboys} offensive personnel on its "first play" from scrimmage is the result of the Cowboys returning a fumble for a touchdown on the Rams' first offensive possession with a botched snap on the ensuing extra point attempt. Because of that, the extra point attempt is no longer scored as an `extra_point` in the `play_type` variable within the play-by-play data, but a rushing attempt. As a result of this oddity, the data is correct in listing Dallas' first offensive play as coming out of an extra point personnel grouping.
 
 Both of these examples are problematic as a team's "starting offensive line" is considered to be just five players: the left tackle, the left guard, the center, the right guard, and the right tackle. In order to correctly determine the number of combinations used, we need to first determine the five most-commonly used offensive linemen for each team. Because of the off-the-wall situations that can occur in football, building offensive line combinations through personnel groupings in the play-by--play data is tricky, at best.
 
@@ -177,7 +177,7 @@ The end result includes the `game_id`, the `week`, the `team` abbreviation, and 
 oline_final_data
 ```
 
-With the data cleaned and prepared, we are now able to take our first look at the results. In the code below, we are grouping by all 32 NFL team and then summarizing the total number of unique offensive line combinations used during the 2022 regular season.
+With the data cleaned and prepared, we are now able to take our first look at the results. In the code below, we are grouping by all 32 NFL teams and then summarizing the total number of unique offensive line combinations used during the 2022 regular season.
 
 ```{r oline-combos-results, output = TRUE}
 
@@ -211,7 +211,7 @@ total_combos
 After collecting team records and merging them into the offensive line combination data, we can use `ggplot` to visualize the data. Individual team logos are used in place of the typical `geom_point` by using the `nflplotR` package.
 
 ::: callout-important
-Please note in the below `ggplot()` coding that we are using a custom theme, `nfl_analytics_theme()`\index{Data Visualization!nfl\_analytics\_theme()}. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`. Be sure to install and run the `ggtext`\index{Packages!ggtext} package as the theme uses the package's `element_markdown()`\index{Packages!ggtext!element\_markdown()} function.
+Please note in the below `ggplot()` code that we are using a custom theme, `nfl_analytics_theme()`\index{Data Visualization!nfl\_analytics\_theme()}. If you wish to replicate the below visualization using the theme, run the below code to place the theme into your RStudio environment allowing you to call it within `ggplot`. Be sure to install and run the `ggtext`\index{Packages!ggtext} package as the theme uses the package's `element_markdown()`\index{Packages!ggtext!element\_markdown()} function.
 :::
 
 ```{r example-theme, eval = FALSE, echo = TRUE, output = FALSE}
