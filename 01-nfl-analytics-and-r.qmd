@@ -76,7 +76,7 @@ Given that context, just *how* historically bad was the Rams' 2022 offensive lin
 
 To begin obtaining and preparing the data to determine the number of unique offensive line combinations the Rams had in the 2022 season, we turn to two possible options: the `load_participation()` and `load_snap_counts()` functions within the `nflreadr` package. The `load_participation()`\index{nflreadr!Functions!load\_participation()} function will return, if `include_pbp = TRUE,` a list of every player ID number that was on the field for each play, whereas `load_snap_counts()`\index{nflreadr!Functions!load\_snap\_counts()} returns - on a per game basis - the percentage of snaps each player was on the field for.
 
-In the end, using `load_snap_counts()` creates the most accurate, reliable, and straightforward way in each to collect unique offensive line combinations. The `load_participation()` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, of the 2022 season.
+In the end, using `load_snap_counts()` creates the most accurate, reliable, and straightforward way to collect unique offensive line combinations. The `load_participation()` function results in several oddities in the data (not with the collection of it by the `nflverse` maintainers, but with individual NFL team strategies and formations). To highlight this, the following code selects the first offensive play for each team, in each game, of the 2022 season.
 
 ```{r using-participation-function, output = FALSE}
 
