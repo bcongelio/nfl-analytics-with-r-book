@@ -2161,7 +2161,8 @@ rb_third_down <- pbp %>%
   summarize(
     total = n(),
     total_first = sum(yards_gained >= ydstogo, na.rm = TRUE),
-    total_pct = total_first / total) %>%
+    total_pct = total_first / total,
+    team = last(posteam)) %>%
   filter(total >= 20) %>%
   arrange(-total_pct)
 ```
