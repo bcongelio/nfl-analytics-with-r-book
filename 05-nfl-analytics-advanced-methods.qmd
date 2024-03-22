@@ -263,7 +263,7 @@ ggplot(regression_2022, aes(x = total_yards, y = residuals)) +
   theme(panel.grid.minor.y = element_line(color = "#d0d0d0"))
 ```
 
-With the data visualized, it is clear that the model's `Min` distribution of -71.44 is associated with the Tampa Bay Buccaneers, while the `Max` distribution of 68.08 is the prediction for the total points earned by the Dallas Cowboys. Because a negative residual means that the model's predicted value is too high, and a positive residual means it was too low, we can conclude that the Buccaneers actually scored 71.4 points less than the the results of the model, while the Cowboys scored 68.08 more than predicted.
+With the data visualized, it is clear that the model's `Min` distribution of -71.44 is associated with the Tampa Bay Buccaneers, while the `Max` distribution of 68.08 is the prediction for the total points earned by the Dallas Cowboys. Because a negative residual means that the model's predicted value is too high, and a positive residual means it was too low, we can conclude that the Buccaneers actually scored 71.4 points less than the results of the model, while the Cowboys scored 68.08 more than predicted.
 
 ```{r showing-cofficients-lm, eval = FALSE, echo = TRUE, output = FALSE}
 
@@ -379,7 +379,7 @@ In order to account for this "epp and flow" in both team performance and the cha
 
 ### Multiple Linear Regression
 
-A multiple linear regression is extremely similar to a simple linear regression (both in design and implementation in RStudio).\index{Models!multiple linear regression}The main difference is that a multiple linear regression allows for us to include additional predictor variables by using the `+` sign in the model's formula. The inclusion of these additional predictive variables, in theory, allows the model to compute more complex relationships in NFL data and improve on the model's final performance.
+A multiple linear regression is extremely similar to a simple linear regression (both in design and implementation in RStudio).\index{Models!multiple linear regression} The main difference is that a multiple linear regression allows for us to include additional predictor variables by using the `+` sign in the model's formula. The inclusion of these additional predictive variables, in theory, allows the model to compute more complex relationships in NFL data and improve on the model's final performance.
 
 We will again create our first multiple regression linear regression with data from just the 2022 regular season that includes the same predictor (`total_yards`) and response variable (`total_points`). For additional predictors, we must consider what circumstances may lead a team to have high `total_yards` but an amount of `total_points` that would fall below the model's predicted value. We will include the following as additional predictors:
 
@@ -692,7 +692,7 @@ While we will not be building the binary model with the `tidymodels` package, we
 Like many of the models to follow in this chapter, it is important to have both a training and testing set of data when performing a binary regression study for three reasons:\index{Packages!tidymodels!introduction to}
 
 1.  **Assess model performance**. Having a trained set of data allows us to evaluate the model's performance on the testing set, allowing us to gather information regarding how we can expect the model to handle new data.
-2.  **It allowd us to avoid overfitting**. Overfitting is a process that occurs when the regression model recognizes the "statistical noise" in the training data but not necessarily the underlying patterns. When this happens, the model will perform quite well on the training data but will then fail when fed new, unseen data. By splitting the data, we can use the withheld testing data to make sure the model is not "memorizing" the information in the training set.
+2.  **It allowed us to avoid overfitting**. Overfitting is a process that occurs when the regression model recognizes the "statistical noise" in the training data but not necessarily the underlying patterns. When this happens, the model will perform quite well on the training data but will then fail when fed new, unseen data. By splitting the data, we can use the withheld testing data to make sure the model is not "memorizing" the information in the training set.
 3.  **Model selection**. In the case that you are evaluating several different model types to identify the best performing one, having a testing set allows you to determine which model type is likely to perform best when provided unseen data.
 :::
 
@@ -1036,7 +1036,7 @@ multinom_play_folds <- rsample::vfold_cv(model_data_clean,
                                          strata = play_call)
 ```
 
-The `recipes` package within `tidymodels`, first and foremost, is where the formula for the model is passed into the eventful `workflow`. However, it also provides the opportunity for further preprocessing of the data by using the the `step_` function\index{Packages!tidymodels!data preprocessing} that allows for multitudes of refinement, including imputation, individual transformations, discretization, the creation of dummy variables and encodings, interactions, normalization, multivariate transformations, filters, and row operations. The complete list of possible `step_` functions can be fond on the [reference section of the `recipes` website.](https://recipes.tidymodels.org/reference/index.html)\index{Packages!tidymodels!preprocessing options} We use several of these `step_` functions below in preparing the `recipes` for our multinomial logisitic regression model.
+The `recipes` package within `tidymodels`, first and foremost, is where the formula for the model is passed into the eventful `workflow`. However, it also provides the opportunity for further preprocessing of the data by using the `step_` function\index{Packages!tidymodels!data preprocessing} that allows for multitudes of refinement, including imputation, individual transformations, discretization, the creation of dummy variables and encodings, interactions, normalization, multivariate transformations, filters, and row operations. The complete list of possible `step_` functions can be fond on the [reference section of the `recipes` website.](https://recipes.tidymodels.org/reference/index.html)\index{Packages!tidymodels!preprocessing options} We use several of these `step_` functions below in preparing the `recipes` for our multinomial logistic regression model.
 
 ::: callout-tip
 When building your recipe in the `tidymodels` framework, there is a general suggested order that your steps should be in to avoid issues with how the data becomes structured for the tuning/modeling process.\index{Packages!tidymodels!recipe steps}
@@ -1097,7 +1097,7 @@ There are three important items provided to `multinom_play_model`: the **model t
 3.  **Engine**\index{Packages!tidymodels!model engine} - the engine provides instructions on how the model is to be fit. In many cases, the provide engine type results in `tidymodels` calling in outside R packages (such as `randomForest` or `ranger`) to complete the process. In the case of a `multinom_reg()` model, there are six available type of engines: `nnet`, `brulee`, `glmnet`, `h20`, `keras`, and `spark`. While not wanting to over complicate the process for first-time users of `tidymodels`, it is important to know that each engine type within a model type comes with various options for tuning parameters (if that is a desired part of your model design). Our model will be using the `glmnet` engine which provides the ability to tune for `penalty` (the amount of regularization within the model) and `mixture` (the proportion of Lasso Penalty, if desired, wherein a `mixture` of `1` results in a pure Lasso model, `0` results in a ridge regression and anything between is an elastic net model). Other engines, like `brulee` provide upwards of nine tuning parameters (such as `epochs`, `learn_rate`, `momentum`, and `class_weights`). The parameters you wish to tune during the training process are inputted when providing your model type. We will be conducting a tuning process for both `penalty` and `mixture`.
 
 ::: callout-note
-You will notice that we've included `family = "multinomial"` in the construction of our model's engine, which makes since as the model we are using is a multinomial regression. However, the `glmnet` engine allows you to fit multiple family types, including gaussian, binomial, and Possion.
+You will notice that we've included `family = "multinomial"` in the construction of our model's engine, which makes since as the model we are using is a multinomial regression. However, the `glmnet` engine allows you to fit multiple family types, including gaussian, binomial, and Poisson.
 :::
 
 Because we provided specific tuning parameters in the model type, it is necessary to provide a grid for the process of finding the best hyperparameters\index{Packages!tidymodels!hyperparameter tuning} - which are those parameters within the model (again, `penalty` and `mixture`) that are not provided in the original data frame. The use of these parameters ultimately control the learning process of the model and, as a result, can have a significant impact on the performance and accuracy of the final results. Because of this, we create what is called a "grid" in order to allow the model to run over and over again on a set range of each parameter, a process coined hyperparameter tuning. The end result is a model that has determined the best `penalty` and `mixture`.
@@ -1137,9 +1137,9 @@ doParallel::stopImplicitCluster()
 ```
 
 ::: callout-warning
-The process of using the `paralell`\index{Packages!parallel} package is included in the above code.
+The process of using the `parallel`\index{Packages!parallel} package is included in the above code.
 
-The process is important if you want to speed up the training of your model as, by default, RStudio runs **one just one core of your CPU**. The processor in my computer, an Intel Core i5-10400F, has 6 cores. The `paralell` package allows us to provide more computational cores to RStudio, which in turns allows the modeling process to be conducting different tasks on different cores, then compiling the information back together when completed.
+The process is important if you want to speed up the training of your model as, by default, RStudio runs **one just one core of your CPU**. The processor in my computer, an Intel Core i5-10400F, has 6 cores. The `parallel` package allows us to provide more computational cores to RStudio, which in turns allows the modeling process to be conducting different tasks on different cores, then compiling the information back together when completed.
 
 When using the `parallel` package, our multinomial model took 25 minutes to complete on my computer. Out of curiosity, I spun up an Ubuntu server running R and RStudio in the Amazon cloud on an instance with 16 cores. Just this small increase in computing power dropped the model's training time to under three minutes.\index{Packages!tidymodels!parallel processing}
 :::
@@ -1195,7 +1195,7 @@ multinom_final_results <- multinom_play_workflow %>%
   last_fit(multinom_play_split)
 ```
 
-With the the `finalize_workflow()` fitted to our data, we can now make and collect predictions on both the training and test data frames and then combine both to explore the model's performance.
+With the `finalize_workflow()` fitted to our data, we can now make and collect predictions on both the training and test data frames and then combine both to explore the model's performance.
 
 ```{r loading-combined-predictions, eval = TRUE, echo = FALSE, output = FALSE}
 
@@ -1591,7 +1591,7 @@ gt_table_data <- gt_table_data %>%
 
 First, we use the `load_rosters` and `load_teams` function from `nflreadr` to bring in the necessary columns that contain the information for player headshots and team logos (matching on `pff_id` for roster information and the `team` column to bring in logos). Unfortunately, a small number of the running backs are missing headshot URLS[^05-nfl-analytics-advanced-methods-1]. Rather than including missing images in the table, we will use `na.omit()` to drop these players. Next, we create a data frame called `gt_table_data` that includes just the `player`, `cluster`, `headshot_url`, and `team_logo_wikipedia`. Last, we format the `cluster` information from numeric values to a character-based description based on the previous created titles for each.
 
-[^05-nfl-analytics-advanced-methods-1]: At the time of writing this book, this was an ongoing issue. Most missing headshots in the data are those belonging to rookies. The issue is a result of an issue with how the the data is collected and a change to the API that provides access to the information.
+[^05-nfl-analytics-advanced-methods-1]: At the time of writing this book, this was an ongoing issue. Most missing headshots in the data are those belonging to rookies. The issue is a result of an issue with how the data is collected and a change to the API that provides access to the information.
 
 With the data addition and preparation completed, we can use both the `gt`\index{Packages!gt} and `gtExtras`\index{Packages!gtExtras} package to create the table.
 
@@ -2073,7 +2073,7 @@ ggplot(diff_per_season, aes(x = yards, y = exp_yards)) +
         strip.background = element_rect(fill = "#F6F6F6"))
 ```
 
-Last, given the success of Jonathan Taylor's 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against the his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.
+Last, given the success of Jonathan Taylor's 2021 season, it may be interesting to plot the trajectory of both his cumulative actual rushing yards and cumulative expected rushing yards against his carries. Given the difference between his actual rushing yards and expected rushing yards was 414, there should be a increasingly growing gap between the lines on the plot that represent each.
 
 ```{r jtaylor-2021-prep, eval = TRUE, echo = TRUE, output = FALSE}
 
@@ -2090,7 +2090,7 @@ j_taylor_2021$cumulative_rushes = as.numeric(rownames(j_taylor_2021))
 j_taylor_image <- png::readPNG("./images/j_taylor_background.png")
 ```
 
-In order to create the `j_taylor_2021` data frame, we first create a new variable titled `cumulative_rushes` that is copying the numeric row names so that each subsequent rushing attempt increases this number, resulting in his total number of carries in the season. Similarly , the `cumulative_yards` and `cumulative_exyards` are calculated using the `cumsum` function which sums the results, play by play, in a rolling fashion.
+In order to create the `j_taylor_2021` data frame, we first create a new variable titled `cumulative_rushes` that is copying the numeric row names so that each subsequent rushing attempt increases this number, resulting in his total number of carries in the season. Similarly, the `cumulative_yards` and `cumulative_exyards` are calculated using the `cumsum` function which sums the results, play by play, in a rolling fashion.
 
 Lastly, in order to provide a bit of "eye candy" to the plot, we use the `readPNG()` function from the `png` package to read in an image of Taylor rushing the football. We will place this image into the plot.
 
