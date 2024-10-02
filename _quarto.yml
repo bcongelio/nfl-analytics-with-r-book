@@ -52,6 +52,7 @@ format:
       text: | 
         <script defer data-domain="bradcongelio.com/nfl-analytics-with-r-book" src="https://plausible.io/js/script.js"></script>
         <link rel = "shortcut icon" href = "favicon.ico" />
+        <meta name='impact-site-verification' value='b2e66cb5-912e-43cc-86c5-cc6133e8d3a2'>
         
     smooth-scroll: true
     code-link: true
