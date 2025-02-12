@@ -71,7 +71,7 @@ As an example, let's say you need to get Patrick Mahomes' total passing yard and
 
 ### Getting Player Stats via `load_player_stats()`
 
-We can generate a data frame titled `mahomes_pyards` but running the following code:\index{nflreadr!load\_player\_stats()!introduction to}
+We can generate a data frame titled `mahomes_pyards` by running the following code:\index{nflreadr!load\_player\_stats()!introduction to}
 
 ```{r loading-mahomes-stats, eval = TRUE, echo = TRUE, output = FALSE}
 
