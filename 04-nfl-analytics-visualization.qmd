@@ -93,7 +93,7 @@ The basics of any `ggplot` visualization involves three basic calls to informati
 
 ```{r example-ggplot-call, eval = FALSE, echo = TRUE, output = FALSE}
 
-ggplot(data = 'dataset_name', aes(x = 'x_axsis', y = 'y_axis')) +
+ggplot(data = 'dataset_name', aes(x = 'x_axis', y = 'y_axis')) +
   geom_type()
 ```
 
